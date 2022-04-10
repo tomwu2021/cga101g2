@@ -42,30 +42,6 @@ public class PictureDAO implements PictureDAO_Interface {
 		return pv;
 	}
 
-//	public void insertToMapping(String tableName, String columnName1, String columnName2, String mappingId1,String mappingId2,
-	
-//			List<PictureVO> picList) {
-//		con = new JDBCConnection().getRDSConnection();
-//		Integer dMapping_id = (Integer) Integer.parseInt(Mapping_id);
-//		String sql = "insert into " + tableName + "(" + mappingColumnName + ",picture_id) values(?,?);";
-//		List<PictureVO> picList2 = insertPictures(picList);
-//		if (con != null) {
-//			try {
-//				PreparedStatement stmt = con.prepareStatement(sql);
-//				for (PictureVO pic : picList2) {
-//					stmt.setInt(1, pic.getPicture_id());
-//					stmt.setInt(2, dMapping_id);
-//					stmt.addBatch();
-//				}
-//				stmt.executeBatch();
-//				con.close();
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//	}
-
 	@Override
 	public void delete() {
 		// TODO Auto-generated method stub
