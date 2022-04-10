@@ -5,18 +5,18 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JDBCConnection {
-	
+
 	private static final String username = "cga_02";
 	private static final String password = "cga_02";
 	private static final String theURL = "jdbc:mysql://database-1.czlvj0ycwyxq.ap-northeast-1.rds.amazonaws.com:3306/cga_02?serverTimezone=Asia/Taipei";
-	
-	public Connection getRDSConnection() {
+
+	public static Connection getRDSConnection() {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(theURL, username, password);
-			if(con!=null) {
-				System.out.println("≥sΩu¶®•\!");
+			if (con != null) {
+				System.out.println("ÈÄ£Á∑öÊàêÂäü!");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -27,5 +27,5 @@ public class JDBCConnection {
 		}
 		return con;
 	}
-	
+
 }

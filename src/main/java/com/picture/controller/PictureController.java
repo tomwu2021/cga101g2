@@ -15,6 +15,7 @@ import javax.servlet.http.Part;
 
 import com.picture.model.PictureVO;
 import com.picture.service.PictureService;
+import com.util.TransferTool;
 
 @WebServlet("/uploadFromAlbum")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 10 * 10 * 1024 * 1024, maxRequestSize = 10 * 10 * 1024
@@ -28,22 +29,23 @@ public class PictureController extends HttpServlet {
 	 */
 	private static final long serialVersionUID = -6376892214189069235L;
 
-	public PrintWriter getPrintWriter(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		req.setCharacterEncoding("UTF-8"); // 處理中文檔名
-		res.setContentType("application/json");
-		res.setCharacterEncoding("UTF-8");
-		PrintWriter out = res.getWriter();
-		return out;
-	}
-
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		PrintWriter out = getPrintWriter(req, res);
-		Integer albumId = Integer.parseInt(req.getParameter("albumId"));
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = res.getWriter();
+		Integer albumId = null;
+		if (!"".equals(req.getParameter("albumId"))) {
+			albumId = Integer.parseInt(req.getParameter("albumId"));
+		}
 		Collection<Part> parts = req.getParts();
 
-		// Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
 		List<PictureVO> pics = pictureService.uploadImage(parts, albumId);
-		out.print(pics);
+		pics.forEach(pic -> {
+			out.println("<p>" + pic.getFileName() + "(" + TransferTool.transferSize(pic.getSize()) + ")</p>");
+			out.println("<img src='" + pic.getpUrl() + "' alt='" + pic.getFileName() + "' >");
+			out.println("<br>");
+		});
 	}
 
 }

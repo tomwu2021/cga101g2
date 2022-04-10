@@ -16,7 +16,7 @@ public class AlbumDAO implements Album_DAO_Interface {
 	
 	@Override
 	public AlbumVO insert(AlbumVO albumvo) {
-		con = new JDBCConnection().getRDSConnection();
+		con = JDBCConnection.getRDSConnection();
 		String sql ="insert into album(member_id,name,authority) values(?,?,0);";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
@@ -33,14 +33,14 @@ public class AlbumDAO implements Album_DAO_Interface {
 		return albumvo;
 	}
 	public AlbumVO makeDefaultAlbum(AlbumVO albumvo) {
-		con = new JDBCConnection().getRDSConnection();
+		con = JDBCConnection.getRDSConnection();
 		String sql ="insert into album(member_id,name,authority) values(?,?,0);";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, albumvo.getMember_id());
-			stmt.setString(2, "¥¼¤ÀÃþ");
+			stmt.setString(2, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			stmt.execute();
-			albumvo.setName("¥¼¤ÀÃþ");
+			albumvo.setName("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			albumvo.setAuthority(0);
 			con.close();
 		} catch (SQLException e) {
@@ -58,7 +58,7 @@ public class AlbumDAO implements Album_DAO_Interface {
 
 	@Override
 	public AlbumVO update(AlbumVO albumvo) {
-		con = new JDBCConnection().getRDSConnection();
+		con = JDBCConnection.getRDSConnection();
 		String sql ="UPDATE album SET name=?,authority=? where album_id=?; ;";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql);
@@ -104,6 +104,11 @@ public class AlbumDAO implements Album_DAO_Interface {
 	}
 	@Override
 	public List<AlbumVO> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Integer selectDefaultAlbumByMemberId(Integer mid) {
 		// TODO Auto-generated method stub
 		return null;
 	}

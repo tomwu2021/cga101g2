@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import aws.S3Service;
 import connection.JDBCConnection;
 
 public class PictureDAO implements PictureDAO_Interface {
@@ -16,7 +15,7 @@ public class PictureDAO implements PictureDAO_Interface {
 
 	@Override
 	public PictureVO insert(PictureVO pv) {
-		con = new JDBCConnection().getRDSConnection();
+		con = JDBCConnection.getRDSConnection();
 		String sql = "insert into picture(p_url, file_key, file_name, size) values(?,?,?,?)";
 		if (con != null) {
 			try {
@@ -37,7 +36,7 @@ public class PictureDAO implements PictureDAO_Interface {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("沒有連線");
+			System.out.println("嚙磅嚙踝蕭嚙編嚙線");
 		}
 		return pv;
 	}
