@@ -1,0 +1,25 @@
+package connection;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class JNDIConnection {
+	Connection con;
+	
+	public Connection getRDSConnectionByJNDI(){
+		try {
+			DataSource ds = (DataSource) new javax.naming.InitialContext().lookup("java:comp/env/jdbc/cga_02");
+			con = ds.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		return con;
+	}
+}
