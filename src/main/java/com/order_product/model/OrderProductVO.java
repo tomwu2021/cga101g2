@@ -1,12 +1,12 @@
 package com.order_product.model;
 
-public class Order_productVO implements java.io.Serializable{
+public class OrderProductVO implements java.io.Serializable{
 	 private Integer order_id;
 	 private Integer product_id;
 	 private Integer product_amount;
 	 private Integer order_price;
 	 
-	 public Order_productVO() {
+	 public OrderProductVO() {
 	 }
 
 	public Integer getOrder_id() {

@@ -1,6 +1,6 @@
 package com.group_buyer.model;
 
-public class Group_buyerVO  implements java.io.Serializable{
+public class GroupBuyerVO  implements java.io.Serializable{
 	private Integer group_order_id;
 	 private Integer member_id;
 	 private Integer product_amount;
@@ -8,7 +8,7 @@ public class Group_buyerVO  implements java.io.Serializable{
 	 private String address;
 	 private String recipients;
 
-	 public Group_buyerVO() {
+	 public GroupBuyerVO() {
 	 }
 
 	 public Integer getGroup_order_id() {

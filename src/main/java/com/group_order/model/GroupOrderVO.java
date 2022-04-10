@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import javax.tools.JavaCompiler;
 
-public class Group_orderVO implements java.io.Serializable {
+public class GroupOrderVO implements java.io.Serializable {
  private Integer group_order_id;
  private Integer product_id;
  private Timestamp create_time;
@@ -13,7 +13,7 @@ public class Group_orderVO implements java.io.Serializable {
  private Integer final_price;
  private Integer status;
 
- public Group_orderVO() {
+ public GroupOrderVO() {
  }
 
  public Integer getGroup_order_id() {
