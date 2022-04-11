@@ -11,7 +11,7 @@ public class TestAlbum {
 //			AlbumVO avo2 = ado.makeDefaultAlbum(avo);
 //			System.out.println("aid:"+avo2.getAlbum_id()+"\nmid:"+avo.getMember_id()+"\nauthority:"+avo2.getAuthority()+"\nname:"+avo2.getName());
 //		}
-		avo.setMember_id(2);
+		avo.setMemberId(2);
 		avo.setName("好吃食物");
 		ado.insert(avo);
 	}

@@ -16,12 +16,12 @@ import com.picture.model.PictureVO;
 
 public class S3Service {
 
-	private static final String bucketName = "cga101-02";
+	private static final String BUCKETNAME = "cga101-02";
 
 	public PictureVO uploadImageToS3(InputStream in, String fileName) {
 		PictureVO vo = new PictureVO();
 		String key = getGenerateFileKey(fileName);
-		String url = "https://" + bucketName + ".s3.ap-northeast-1.amazonaws.com/";
+		String url = "https://" + BUCKETNAME + ".s3.ap-northeast-1.amazonaws.com/";
 		url += key;
 		AmazonS3 s3client = new AwsService().getS3Client();
 		try {
@@ -31,7 +31,7 @@ public class S3Service {
 			ObjectMetadata metadata = new ObjectMetadata();
 			metadata.setContentLength(contentLength);
 
-			PutObjectRequest req = new PutObjectRequest(bucketName, key, in, metadata)
+			PutObjectRequest req = new PutObjectRequest(BUCKETNAME, key, in, metadata)
 					.withCannedAcl(CannedAccessControlList.PublicRead);
 			s3client.putObject(req);
 			// Put the object in S3
