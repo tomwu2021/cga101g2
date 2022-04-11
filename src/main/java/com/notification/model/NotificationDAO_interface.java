@@ -3,7 +3,7 @@ package com.notification.model;
 import java.util.List;
 import com.notification.model.NotificationVO;
 
-public interface NotificationDVO_interface {
+public interface NotificationDAO_interface {
 
 	public void insert(NotificationVO notificationVO);
 

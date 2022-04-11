@@ -3,7 +3,7 @@ package com.ranks.model;
 import java.util.List;
 import com.ranks.model.RanksVO;
 
-public interface RanksDVO_interface {
+public interface RanksDAO_interface {
 
 	public void insert(RanksVO ranksVO);
 

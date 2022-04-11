@@ -2,13 +2,13 @@ package com.chargeRecord.model;
 
 import java.sql.Timestamp;
 
-public class Charge_recordVO implements java.io.Serializable {
+public class ChargeRecordVO implements java.io.Serializable {
 	private Integer record_id;
 	private Integer member_id;
 	private Integer charge_amount;
 	private Timestamp record_time;
 
-	public Charge_recordVO() {
+	public ChargeRecordVO() {
 	}
 
 	public Integer getRecord_id() {
