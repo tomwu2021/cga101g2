@@ -38,9 +38,9 @@ public class AlbumDAO implements Album_DAO_Interface {
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, albumvo.getMember_id());
-			stmt.setString(2, "������");
+			stmt.setString(2, "未分類");
 			stmt.execute();
-			albumvo.setName("������");
+			albumvo.setName("未分類");
 			albumvo.setAuthority(0);
 			con.close();
 		} catch (SQLException e) {
