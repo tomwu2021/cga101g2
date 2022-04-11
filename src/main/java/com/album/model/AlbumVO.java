@@ -3,51 +3,42 @@ package com.album.model;
 import java.sql.Timestamp;
 
 public class AlbumVO {
-
-	private Integer albumId;
-	private Integer memberId;
+	
+	private Integer album_id;
+	private Integer member_id;
 	private String name;
 	private Integer authority;
-	private Timestamp createTime;
-
-	public Integer getAlbumId() {
-		return albumId;
+	private Timestamp create_time;
+	
+	public Integer getAlbum_id() {
+		return album_id;
 	}
-
-	public void setAlbumId(Integer albumId) {
-		this.albumId = albumId;
+	public void setAlbum_id(Integer album_id) {
+		this.album_id = album_id;
 	}
-
-	public Integer getMemberId() {
-		return memberId;
+	public Integer getMember_id() {
+		return member_id;
 	}
-
-	public void setMemberId(Integer memberId) {
-		this.memberId = memberId;
+	public void setMember_id(Integer member_id) {
+		this.member_id = member_id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public Integer getAuthority() {
 		return authority;
 	}
-
 	public void setAuthority(Integer authority) {
 		this.authority = authority;
 	}
-
-	public Timestamp getCreateTime() {
-		return createTime;
+	public Timestamp getCreate_time() {
+		return create_time;
 	}
-
-	public void setCreateTime(Timestamp createTime) {
-		this.createTime = createTime;
+	public void setCreate_time(Timestamp create_time) {
+		this.create_time = create_time;
 	}
 
 }
