@@ -16,7 +16,7 @@ public class AlbumDAO implements Album_DAO_Interface {
 	
 	@Override
 	public AlbumVO insert(AlbumVO albumvo) {
-		con = JDBCConnection.getRDSConnection();
+		con = new JDBCConnection().getRDSConnection();
 		String sql ="insert into album(member_id,name,authority) values(?,?,0);";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
@@ -33,7 +33,7 @@ public class AlbumDAO implements Album_DAO_Interface {
 		return albumvo;
 	}
 	public AlbumVO makeDefaultAlbum(AlbumVO albumvo) {
-		con = JDBCConnection.getRDSConnection();
+		con = new JDBCConnection().getRDSConnection();
 		String sql ="insert into album(member_id,name,authority) values(?,?,0);";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
@@ -58,7 +58,7 @@ public class AlbumDAO implements Album_DAO_Interface {
 
 	@Override
 	public AlbumVO update(AlbumVO albumvo) {
-		con = JDBCConnection.getRDSConnection();
+		con = new JDBCConnection().getRDSConnection();
 		String sql ="UPDATE album SET name=?,authority=? where album_id=?; ;";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql);

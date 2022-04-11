@@ -12,7 +12,7 @@ public class TestAlbum {
 //			System.out.println("aid:"+avo2.getAlbum_id()+"\nmid:"+avo.getMember_id()+"\nauthority:"+avo2.getAuthority()+"\nname:"+avo2.getName());
 //		}
 		avo.setMember_id(2);
-		avo.setName("¨Ø¨Ø½Ş¥®¸X¶é·Ó¤ù");
+		avo.setName("å¥½åƒé£Ÿç‰©");
 		ado.insert(avo);
 	}
 

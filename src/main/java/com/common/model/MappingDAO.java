@@ -13,7 +13,7 @@ public class MappingDAO {
 
 	public void insertOneMapping(MappingTableDto mtd) {
 
-		con = JDBCConnection.getRDSConnection();
+		con = new JDBCConnection().getRDSConnection();
 
 		String sql = "insert into " + mtd.getTableName() + "(" + mtd.getColumn1() + ", " + mtd.getColumn2()
 				+ ") values(?,?);";
@@ -32,7 +32,7 @@ public class MappingDAO {
 	}
 
 	public void insertMultiMapping(List<MappingTableDto> mtds) {
-		con = JDBCConnection.getRDSConnection();
+		con = new JDBCConnection().getRDSConnection();
 		if (con != null) {
 			try {
 				PreparedStatement stmt = null;

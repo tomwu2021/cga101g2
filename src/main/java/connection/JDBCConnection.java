@@ -10,7 +10,7 @@ public class JDBCConnection {
 	private static final String password = "cga_02";
 	private static final String theURL = "jdbc:mysql://database-1.czlvj0ycwyxq.ap-northeast-1.rds.amazonaws.com:3306/cga_02?serverTimezone=Asia/Taipei";
 
-	public static Connection getRDSConnection() {
+	public Connection getRDSConnection() {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");

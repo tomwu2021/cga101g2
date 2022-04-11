@@ -15,7 +15,7 @@ public class PictureDAO implements PictureDAO_Interface {
 
 	@Override
 	public PictureVO insert(PictureVO pv) {
-		con = JDBCConnection.getRDSConnection();
+		con = new JDBCConnection().getRDSConnection();
 		String sql = "insert into picture(p_url, file_key, file_name, size) values(?,?,?,?)";
 		if (con != null) {
 			try {
@@ -36,7 +36,7 @@ public class PictureDAO implements PictureDAO_Interface {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("�S���s�u");
+			System.out.println("沒有連線");
 		}
 		return pv;
 	}
