@@ -1,4 +1,4 @@
-package com.charge_record.model;
+package com.chargeRecord.model;
 
 import java.util.List;
 import com.members.model.MembersVO;
