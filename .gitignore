@@ -1,2 +1,3 @@
-/build/*
-*.class
+/build/classes/
+/.idea/
+/CGA101G2.iml
