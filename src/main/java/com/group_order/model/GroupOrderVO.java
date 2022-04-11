@@ -5,71 +5,73 @@ import java.sql.Timestamp;
 import javax.tools.JavaCompiler;
 
 public class GroupOrderVO implements java.io.Serializable {
- private Integer group_order_id;
- private Integer product_id;
- private Timestamp create_time;
- private Timestamp end_time;
- private Integer end_type;
- private Integer final_price;
+ private Integer groupOrderId;
+ private Integer productId;
+ private Timestamp createTime;
+ private Timestamp endTime;
+ private Integer endType;
+ private Integer finalPrice;
  private Integer status;
 
  public GroupOrderVO() {
  }
 
- public Integer getGroup_order_id() {
-  return group_order_id;
- }
+public Integer getGroupOrderId() {
+	return groupOrderId;
+}
 
- public void setGroup_order_id(Integer group_order_id) {
-  this.group_order_id = group_order_id;
- }
+public void setGroupOrderId(Integer groupOrderId) {
+	this.groupOrderId = groupOrderId;
+}
 
- public Integer getProduct_id() {
-  return product_id;
- }
+public Integer getProductId() {
+	return productId;
+}
 
- public void setProduct_id(Integer product_id) {
-  this.product_id = product_id;
- }
+public void setProductId(Integer productId) {
+	this.productId = productId;
+}
 
- public Timestamp getCreate_time() {
-  return create_time;
- }
+public Timestamp getCreateTime() {
+	return createTime;
+}
 
- public void setCreate_time(Timestamp create_time) {
-  this.create_time = create_time;
- }
+public void setCreateTime(Timestamp createTime) {
+	this.createTime = createTime;
+}
 
- public Timestamp getEnd_time() {
-  return end_time;
- }
+public Timestamp getEndTime() {
+	return endTime;
+}
 
- public void setEnd_time(Timestamp end_time) {
-  this.end_time = end_time;
- }
+public void setEndTime(Timestamp endTime) {
+	this.endTime = endTime;
+}
 
- public Integer getEnd_type() {
-  return end_type;
- }
+public Integer getEndType() {
+	return endType;
+}
 
- public void setEnd_type(Integer end_type) {
-  this.end_type = end_type;
- }
+public void setEndType(Integer endType) {
+	this.endType = endType;
+}
 
- public Integer getFinal_price() {
-  return final_price;
- }
+public Integer getFinalPrice() {
+	return finalPrice;
+}
 
- public void setFinal_price(Integer final_price) {
-  this.final_price = final_price;
- }
+public void setFinalPrice(Integer finalPrice) {
+	this.finalPrice = finalPrice;
+}
 
- public Integer getStatus() {
-  return status;
- }
+public Integer getStatus() {
+	return status;
+}
 
- public void setStatus(Integer status) {
-  this.status = status;
- }
+public void setStatus(Integer status) {
+	this.status = status;
+}
+
+ 
 
 }
