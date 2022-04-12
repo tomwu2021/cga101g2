@@ -1,7 +1,7 @@
 package com.post_pic.model;
 
 import java.util.List;
-
+	
 public interface Post_PicDAO_interface {
 	public void insert(Post_PicVO post_picVO);
 	public void update(Post_PicVO post_picVO);
