@@ -1,15 +1,10 @@
 package com.sort1.model;
 
-import static connection.JDBCConnection.username;
-import static connection.JDBCConnection.password;
-import static connection.JDBCConnection.theURL;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
+import static connection.JDBCConnection.*;
 
 public class Sort1JDBCDAO implements Sort1DAO_interface{
 	
@@ -33,7 +28,7 @@ public class Sort1JDBCDAO implements Sort1DAO_interface{
 
 		try {
 			
-			con = DriverManager.getConnection(theURL, username, password);
+			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, sort1VO.getSort1_name());
@@ -65,7 +60,7 @@ public class Sort1JDBCDAO implements Sort1DAO_interface{
 
 		try {
 			
-			con = DriverManager.getConnection(theURL, username, password);
+			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, sort1VO.getSort1_name());
@@ -104,7 +99,7 @@ public class Sort1JDBCDAO implements Sort1DAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(theURL, username, password);
+			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -137,18 +132,18 @@ public class Sort1JDBCDAO implements Sort1DAO_interface{
 		
 		Sort1JDBCDAO dao = new Sort1JDBCDAO();
 		
-		// ·s¼W
+		// ï¿½sï¿½W
 		Sort1VO sort1VO1= new Sort1VO();
 		sort1VO1.setSort1_name("SALA");
 		dao.insert(sort1VO1);
 		
-		//§ó§ï
+		//ï¿½ï¿½ï¿½
 		Sort1VO sort1VO2= new Sort1VO();
 		sort1VO2.setSort1_name("333");
 		sort1VO2.setSort1_id(2);
 		dao.update(sort1VO2);
 		
-		//¬d¸ß¥þ³¡
+		//ï¿½dï¿½ß¥ï¿½ï¿½ï¿½
 //		List<Sort1VO> list = dao.getAll();
 //		for (Sort1VO aSort1 : list) {
 //			System.out.print(aSort1.getSort1_id() + ",");

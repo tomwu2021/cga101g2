@@ -1,15 +1,10 @@
 package com.sort2.model;
 
-import static connection.JDBCConnection.username;
-import static connection.JDBCConnection.password;
-import static connection.JDBCConnection.theURL;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
+import static connection.JDBCConnection.*;
 
 public class Sort2JDBCDAO implements Sort2DAO_interface{
 	
@@ -32,7 +27,7 @@ public class Sort2JDBCDAO implements Sort2DAO_interface{
 		PreparedStatement pstmt = null;
 
 		try {
-			con = DriverManager.getConnection(theURL, username, password);
+			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, sort2VO.getSort2_name());
@@ -64,7 +59,7 @@ public class Sort2JDBCDAO implements Sort2DAO_interface{
 
 		try {
 			
-			con = DriverManager.getConnection(theURL, username, password);
+			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, sort2VO.getSort2_name());
@@ -102,7 +97,7 @@ public class Sort2JDBCDAO implements Sort2DAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(theURL, username, password);
+			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 

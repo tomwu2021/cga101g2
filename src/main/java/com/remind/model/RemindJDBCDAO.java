@@ -5,51 +5,50 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static connection.JDBCConnection.URL;
-import static connection.JDBCConnection.USER;
+import static connection.JDBCConnection.USERNAME;
 import static connection.JDBCConnection.PASSWORD;
 
 public class RemindJDBCDAO implements RemindDAO_interface {
 
 	private static final String INSERT = "INSERT INTO remind (member_id, content, time) VALUES (?, ?, ?);";
-	/* §ï¤@µ§´£¿ô */
+	/* ï¿½ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 	private static final String UPDATE = "UPDATE remind SET content = ?, time = ? WHERE remind_id = ?;";
 	private static final String DELETE = "DELETE FROM remind WHERE remind_id = ?;";
-	/* ¬d¤@µ§´£¿ô */
+	/* ï¿½dï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 	private static final String GET_ONE = "SELECT remind_id, member_id, content, time FROM remind WHERE remind_id = ?;";
-	/* ¬d¤@·|­û©Ò¦³´£¿ô¡A¥H´£¿ô®É¶¡±Æ§Ç */
+	/* ï¿½dï¿½@ï¿½|ï¿½ï¿½ï¿½Ò¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Hï¿½ï¿½ï¿½ï¿½ï¿½É¶ï¿½ï¿½Æ§ï¿½ */
 	private static final String GET_ALL = "SELECT remind_id, member_id, content, time FROM remind WHERE member_id = ? ORDER BY time;";
 
 	public static void main(String[] args) {
 
 		RemindJDBCDAO dao = new RemindJDBCDAO();
-		// ·s¼W
+		// ï¿½sï¿½W
 //		RemindVO rVO1 = new RemindVO();
 //		rVO1.setMemberID(1);
-//		rVO1.setContent("pclub§K¹B");
+//		rVO1.setContent("pclubï¿½Kï¿½B");
 //		rVO1.setTime(Timestamp.valueOf("2022-04-09 19:00:00"));
 //		dao.insert(rVO1);
 
-		// ­×§ï
+		// ï¿½×§ï¿½
 //		RemindVO rVO2 = new RemindVO();
-//		rVO2.setContent("¨ì³½¤¤³½¶R¹}®Æ");
+//		rVO2.setContent("ï¿½ì³½ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½}ï¿½ï¿½");
 //		rVO2.setTime(Timestamp.valueOf("2022-04-09 17:00:00"));
 //		rVO2.setRemindID(3);
 //		dao.update(rVO2);
 
-		// §R°£
+		// ï¿½Rï¿½ï¿½
 //		dao.delete(4);
 
-		// ¬d¤@µ§
+		// ï¿½dï¿½@ï¿½ï¿½
 //		RemindVO rVO3 = dao.findByPrimaryKey(5);
 //		System.out.println(rVO3);
 
-		// ¬d¤@·|­û
+		// ï¿½dï¿½@ï¿½|ï¿½ï¿½
 		List<RemindVO> rlist = dao.getAll(1);
 		
 		for(RemindVO rVO:rlist) {
@@ -60,7 +59,7 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 	@Override
 	public void insert(RemindVO remindVO) {
 
-		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 				PreparedStatement pstmt = con.prepareStatement(INSERT);) {
 
 			pstmt.setInt(1, remindVO.getMemberID());
@@ -68,9 +67,9 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 			pstmt.setTimestamp(3, remindVO.getTime());
 
 			pstmt.executeUpdate();
-			System.out.println("·s¼W¦¨¥\¡I");
+			System.out.println("ï¿½sï¿½Wï¿½ï¿½ï¿½I");
 		} catch (SQLException e) {
-			System.err.println("¸ê®Æ®wµo¥Í¿ù»~\n" + e.getMessage());
+			System.err.println("ï¿½ï¿½Æ®wï¿½oï¿½Í¿ï¿½ï¿½~" + e.getMessage());
 		}
 
 	}
@@ -78,7 +77,7 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 	@Override
 	public void update(RemindVO remindVO) {
 
-		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 				PreparedStatement pstmt = con.prepareStatement(UPDATE);) {
 
 			pstmt.setString(1, remindVO.getContent());
@@ -86,9 +85,9 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 			pstmt.setInt(3, remindVO.getRemindID());
 
 			pstmt.executeUpdate();
-			System.out.println("­×§ï¦¨¥\¡I");
+			System.out.println("ï¿½×§ï¦¨ï¿½I");
 		} catch (SQLException e) {
-			System.err.println("¸ê®Æ®wµo¥Í¿ù»~\n" + e.getMessage());
+			System.err.println("ï¿½ï¿½Æ®wï¿½oï¿½Í¿ï¿½ï¿½~\n" + e.getMessage());
 		}
 
 	}
@@ -96,15 +95,15 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 	@Override
 	public void delete(Integer recordID) {
 
-		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 				PreparedStatement pstmt = con.prepareStatement(DELETE);) {
 
 			pstmt.setInt(1, recordID);
 
 			pstmt.executeUpdate();
-			System.out.println("§R°£¦¨¥\¡I");
+			System.out.println("ï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½I");
 		} catch (SQLException e) {
-			System.err.println("¸ê®Æ®wµo¥Í¿ù»~\n" + e.getMessage());
+			System.err.println("ï¿½ï¿½Æ®wï¿½oï¿½Í¿ï¿½ï¿½~\n" + e.getMessage());
 		}
 
 	}
@@ -114,7 +113,7 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 
 		RemindVO rVO = new RemindVO();
 
-		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 				PreparedStatement pstmt = con.prepareStatement(GET_ONE);) {
 
 			pstmt.setInt(1, recordID);
@@ -128,7 +127,7 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 			}
 
 		} catch (SQLException e) {
-			System.err.println("¸ê®Æ®wµo¥Í¿ù»~\n" + e.getMessage());
+			System.err.println("ï¿½ï¿½Æ®wï¿½oï¿½Í¿ï¿½ï¿½~" + e.getMessage());
 		}
 		return rVO;
 
@@ -139,7 +138,7 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 
 		List<RemindVO> list = new ArrayList<RemindVO>();
 		
-		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 				PreparedStatement pstmt = con.prepareStatement(GET_ALL);) {
 
 			pstmt.setInt(1, memberID);
@@ -155,7 +154,7 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 			}
 
 		} catch (SQLException e) {
-			System.err.println("¸ê®Æ®wµo¥Í¿ù»~\n" + e.getMessage());
+			System.err.println("ï¿½ï¿½Æ®wï¿½oï¿½Í¿ï¿½ï¿½~\n" + e.getMessage());
 		}
 		return list;
 	}
