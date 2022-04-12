@@ -3,28 +3,28 @@ package com.members.model;
 import java.sql.Timestamp;
 
 public class MembersVO implements java.io.Serializable {
-	private Integer member_id;
+	private Integer memberId;
 	private String account;
 	private String password;
 	private String name;
 	private String address;
 	private String phone;
-	private Integer rank_id;
-	private Integer e_wallet_amount;
-	private String e_wallet_password;
-	private Integer bonus_amount;
+	private Integer rankId;
+	private Integer eWalletAmount;
+	private String eWalletPassword;
+	private Integer bonusAmount;
 	private Integer status;
-	private Timestamp create_time;
+	private Timestamp createTime;
 
 	public MembersVO() {
 	}
 
-	public Integer getMember_id() {
-		return member_id;
+	public Integer getMemberId() {
+		return memberId;
 	}
 
-	public void setMember_id(Integer member_id) {
-		this.member_id = member_id;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 
 	public String getAccount() {
@@ -67,36 +67,36 @@ public class MembersVO implements java.io.Serializable {
 		this.phone = phone;
 	}
 
-	public Integer getRank_id() {
-		return rank_id;
+	public Integer getRankId() {
+		return rankId;
 	}
 
-	public void setRank_id(Integer rank_id) {
-		this.rank_id = rank_id;
+	public void setRankId(Integer rankId) {
+		this.rankId = rankId;
 	}
 
-	public Integer getE_wallet_amount() {
-		return e_wallet_amount;
+	public Integer geteWalletAmount() {
+		return eWalletAmount;
 	}
 
-	public void setE_wallet_amount(Integer e_wallet_amount) {
-		this.e_wallet_amount = e_wallet_amount;
+	public void seteWalletAmount(Integer eWalletAmount) {
+		this.eWalletAmount = eWalletAmount;
 	}
 
-	public String getE_wallet_password() {
-		return e_wallet_password;
+	public String geteWalletPassword() {
+		return eWalletPassword;
 	}
 
-	public void setE_wallet_password(String e_wallet_password) {
-		this.e_wallet_password = e_wallet_password;
+	public void seteWalletPassword(String eWalletPassword) {
+		this.eWalletPassword = eWalletPassword;
 	}
 
-	public Integer getBonus_amount() {
-		return bonus_amount;
+	public Integer getBonusAmount() {
+		return bonusAmount;
 	}
 
-	public void setBonus_amount(Integer bonus_amount) {
-		this.bonus_amount = bonus_amount;
+	public void setBonusAmount(Integer bonusAmount) {
+		this.bonusAmount = bonusAmount;
 	}
 
 	public Integer getStatus() {
@@ -107,12 +107,12 @@ public class MembersVO implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public Timestamp getCreate_time() {
-		return create_time;
+	public Timestamp getCreateTime() {
+		return createTime;
 	}
 
-	public void setCreate_time(Timestamp create_time) {
-		this.create_time = create_time;
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
 	}
 
 }
