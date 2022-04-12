@@ -8,7 +8,8 @@ public class JDBCConnection {
 
 	private static final String USERNAME = "cga_02";
 	private static final String PASSWORD = "cga_02";
-	private static final String URL = "jdbc:mysql://database-1.czlvj0ycwyxq.ap-northeast-1.rds.amazonaws.com:3306/cga_02?serverTimezone=Asia/Taipei";
+	private static final String URL = 
+			"jdbc:mysql://database-1.czlvj0ycwyxq.ap-northeast-1.rds.amazonaws.com:3306/cga_02?serverTimezone=Asia/Taipei";
 
 	public static Connection getRDSConnection() {
 		Connection con = null;

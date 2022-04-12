@@ -12,8 +12,8 @@ public class TestAlbum {
 //			System.out.println("aid:"+avo2.getAlbum_id()+"\nmid:"+avo.getMember_id()+"\nauthority:"+avo2.getAuthority()+"\nname:"+avo2.getName());
 //		}
 		avo.setMemberId(2);
-		avo.setName("好吃食物");
-		ado.insert(avo);
+		avo.setName("好吃食物啦啦啦");
+		System.out.println(ado.insert(avo));
 	}
 
 }
