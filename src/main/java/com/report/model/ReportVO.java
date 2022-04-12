@@ -13,7 +13,6 @@ public class ReportVO implements java.io.Serializable {
 	
 	public ReportVO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ReportVO(Integer report_id, Integer reporter_id, Integer post_id, String report_reason, Date report_time,
