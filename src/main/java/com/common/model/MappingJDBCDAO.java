@@ -7,7 +7,7 @@ import java.util.List;
 
 import connection.JDBCConnection;
 
-public class MappingDAO {
+public class MappingJDBCDAO {
 
 	Connection con;
 
@@ -20,7 +20,6 @@ public class MappingDAO {
 				stmt.setInt(1, mtd.getId1());
 				stmt.setInt(2, mtd.getId2());
 				stmt.execute();
-				con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

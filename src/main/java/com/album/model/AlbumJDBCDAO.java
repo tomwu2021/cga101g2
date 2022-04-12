@@ -10,7 +10,7 @@ import java.util.List;
 
 import connection.JDBCConnection;
 
-public class AlbumDAO implements AlbumDAO_Interface {
+public class AlbumJDBCDAO implements AlbumDAO_Interface {
 
 	Connection con;
 

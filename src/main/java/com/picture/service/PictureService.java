@@ -6,17 +6,18 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.Part;
 
-import com.album.model.AlbumDAO;
-import com.common.model.MappingDAO;
+import com.album.model.AlbumJDBCDAO;
+import com.common.model.MappingJDBCDAO;
 import com.common.model.MappingTableDto;
 import com.mysql.cj.jdbc.Driver;
-import com.picture.model.PictureDAO;
+import com.picture.model.PictureJDBCDAO;
 import com.picture.model.PictureVO;
 
 import aws.S3Service;
@@ -24,9 +25,9 @@ import connection.JDBCConnection;
 
 public class PictureService {
 	S3Service s3Service = new S3Service();
-	PictureDAO picDAO = new PictureDAO();
-	MappingDAO mappingDAO = new MappingDAO();
-	AlbumDAO AlbumDao = new AlbumDAO();
+	PictureJDBCDAO picDAO = new PictureJDBCDAO();
+	MappingJDBCDAO mappingDAO = new MappingJDBCDAO();
+	AlbumJDBCDAO AlbumDao = new AlbumJDBCDAO();
 
 	/**
 	 * 上傳圖檔, 不帶相簿ID(多為後台上傳圖檔使用)
@@ -55,35 +56,35 @@ public class PictureService {
 		mappingTableDto.setColumn2("album_id");
 		mappingTableDto.setId2(albumId);
 		Connection con = null;
+		PictureVO pv2 = null;
 		try {
 			for (Part part : parts) {
+				con = JDBCConnection.getRDSConnection();
 				PictureVO pv = new PictureVO();
 				String fileName = getFileNameFromPart(part);
 				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
 					System.out.println(fileName);
 					InputStream in = part.getInputStream();
 					pv = s3Service.uploadImageToS3(in, fileName);
-					pvs.add(pv);
-					con = JDBCConnection.getRDSConnection();
-					con.setAutoCommit(false);
-					con.setSavepoint();
-					picDAO.insert(pv,con);
+					pvs.add(picDAO.insert(pv,con));
 				}
-
+				con.setAutoCommit(false);
+				Savepoint sp = con.setSavepoint();
 				if (albumId != null && pv.getPictureId() != null) {
 					mappingTableDto.setId1(pv.getPictureId());
-					mappingDAO.insertOneMapping(mappingTableDto, con);
+					mappingDAO.insertOneMapping(mappingTableDto,con);
 					con.commit();
+					con.setAutoCommit(true);
 					con.close();
 				} else {
-					con.rollback();
+					con.rollback(sp);
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return pvs;
+
 	}
 
 	/**
@@ -100,7 +101,7 @@ public class PictureService {
 
 	String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");
-		System.out.println("header=" + header); // ���ե�
+		System.out.println("header=" + header);
 		String filename = "";
 		if (header.contains("*=UTF-8")) {
 			filename = new File(header.substring(header.lastIndexOf("=") + 8, header.length())).getName();

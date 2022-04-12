@@ -9,7 +9,7 @@ import java.util.List;
 
 import connection.JDBCConnection;
 
-public class PictureDAO implements PictureDAO_Interface {
+public class PictureJDBCDAO implements PictureDAO_Interface {
 
 	Connection con;
 
@@ -29,7 +29,6 @@ public class PictureDAO implements PictureDAO_Interface {
 					pv.setPictureId(rs.getInt(1));
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else {

@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 public class AlbumVO {
 
+
+
 	private Integer albumId;
 	private Integer memberId;
 	private String name;
@@ -49,5 +51,9 @@ public class AlbumVO {
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
-
+	@Override
+	public String toString() {
+		return "AlbumVO:[{albumId:" + albumId + ", memberId:" + memberId + ", name:" + name + ", authority:" + authority
+				+ ", createTime:" + createTime + "}]";
+	}
 }
