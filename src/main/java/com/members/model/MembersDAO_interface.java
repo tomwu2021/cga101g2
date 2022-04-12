@@ -1,18 +1,7 @@
 package com.members.model;
+import com.common.model.JDBC_DAO_Interface;
 
-import java.util.List;
-import com.emp.model.EmpVO;
-
-public interface MembersDAO_interface {
+public interface MembersDAO_interface extends JDBC_DAO_Interface<MembersVO>{
 	
-	public void insert(MembersVO memberVO);
-
-	public void update(MembersVO memberVO);
-
-	public void delete(Integer member_id);
-
-	public MembersVO findByPrimaryKey(Integer member_id);
-
-	public List<MembersVO> getAll();
 	
 }
