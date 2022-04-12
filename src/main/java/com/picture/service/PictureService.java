@@ -3,6 +3,9 @@ package com.picture.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -12,10 +15,12 @@ import javax.servlet.http.Part;
 import com.album.model.AlbumDAO;
 import com.common.model.MappingDAO;
 import com.common.model.MappingTableDto;
+import com.mysql.cj.jdbc.Driver;
 import com.picture.model.PictureDAO;
 import com.picture.model.PictureVO;
 
 import aws.S3Service;
+import connection.JDBCConnection;
 
 public class PictureService {
 	S3Service s3Service = new S3Service();
@@ -23,9 +28,9 @@ public class PictureService {
 	MappingDAO mappingDAO = new MappingDAO();
 	AlbumDAO AlbumDao = new AlbumDAO();
 
-
 	/**
 	 * 上傳圖檔, 不帶相簿ID(多為後台上傳圖檔使用)
+	 * 
 	 * @param parts
 	 * @return 已上傳圖檔集合
 	 * @throws IOException
@@ -33,11 +38,11 @@ public class PictureService {
 	public List<PictureVO> uploadImage(Collection<Part> parts) throws IOException {
 		return this.uploadImage(parts, null);
 	}
-	
 
 	/**
 	 * 上傳圖檔
-	 * @param parts multipart/form-data POST 
+	 * 
+	 * @param parts   multipart/form-data POST
 	 * @param albumId 相簿ID
 	 * @return 已上傳圖檔集合
 	 * @throws IOException
@@ -49,31 +54,42 @@ public class PictureService {
 		mappingTableDto.setColumn1("picture_id");
 		mappingTableDto.setColumn2("album_id");
 		mappingTableDto.setId2(albumId);
+		Connection con = null;
+		try {
+			for (Part part : parts) {
+				PictureVO pv = new PictureVO();
+				String fileName = getFileNameFromPart(part);
+				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
+					System.out.println(fileName);
+					InputStream in = part.getInputStream();
+					pv = s3Service.uploadImageToS3(in, fileName);
+					pvs.add(pv);
+					con = JDBCConnection.getRDSConnection();
+					con.setAutoCommit(false);
+					con.setSavepoint();
+					picDAO.insert(pv,con);
+				}
 
-		for (Part part : parts) {
-			PictureVO pv = new PictureVO();
-			String fileName = getFileNameFromPart(part);
-			if (getFileNameFromPart(part) != null && part.getContentType() != null) {
-				System.out.println(fileName);
-				InputStream in = part.getInputStream();
-				pv = s3Service.uploadImageToS3(in, fileName);
-				pvs.add(pv);
-				picDAO.insert(pv);
+				if (albumId != null && pv.getPictureId() != null) {
+					mappingTableDto.setId1(pv.getPictureId());
+					mappingDAO.insertOneMapping(mappingTableDto, con);
+					con.commit();
+					con.close();
+				} else {
+					con.rollback();
+				}
 			}
-
-			if (albumId != null && pv.getPictureId() != null) {
-				mappingTableDto.setId1(pv.getPictureId());
-				mappingDAO.insertOneMapping(mappingTableDto);
-			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
 		return pvs;
-
 	}
 
 	/**
 	 * 取得會員預設相簿並上傳圖檔(多為前台使用)
-	 * @param parts 
+	 * 
+	 * @param parts
 	 * @param memberId 會員ID
 	 * @return 已上傳圖檔集合
 	 * @throws IOException

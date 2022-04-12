@@ -13,9 +13,7 @@ public class PictureDAO implements PictureDAO_Interface {
 
 	Connection con;
 
-	@Override
-	public PictureVO insert(PictureVO pv) {
-		con = JDBCConnection.getRDSConnection();
+	public PictureVO insert(PictureVO pv, Connection con) {
 		String sql = "insert into picture(p_url, file_key, file_name, size) values(?,?,?,?)";
 		if (con != null) {
 			try {
@@ -30,21 +28,27 @@ public class PictureDAO implements PictureDAO_Interface {
 				if (rs.next()) {
 					pv.setPictureId(rs.getInt(1));
 				}
-				con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else {
-			System.out.println("沒有連線");
+		}else {
+			return null;
 		}
 		return pv;
 	}
 
 	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-
+	public PictureVO insert(PictureVO pictureVO) {
+		con = JDBCConnection.getRDSConnection();
+		PictureVO pictureVO2 = insert(pictureVO, con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pictureVO2;
 	}
 
 	@Override
@@ -63,6 +67,12 @@ public class PictureDAO implements PictureDAO_Interface {
 	public List<PictureVO> getAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean delete(PictureVO t) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

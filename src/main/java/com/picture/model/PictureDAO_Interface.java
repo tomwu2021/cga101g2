@@ -1,8 +1,8 @@
 package com.picture.model;
 
-import com.common.model.JDBC_DAO_Interface;
+import com.common.model.JDBCDAO_Interface;
 
-public interface PictureDAO_Interface extends JDBC_DAO_Interface<PictureVO> {
+public interface PictureDAO_Interface extends JDBCDAO_Interface<PictureVO> {
 
 	
 	

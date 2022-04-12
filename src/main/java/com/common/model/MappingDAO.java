@@ -11,10 +11,7 @@ public class MappingDAO {
 
 	Connection con;
 
-	public void insertOneMapping(MappingTableDto mtd) {
-
-		con = new JDBCConnection().getRDSConnection();
-
+	public void insertOneMapping(MappingTableDto mtd,Connection con) {
 		String sql = "insert into " + mtd.getTableName() + "(" + mtd.getColumn1() + ", " + mtd.getColumn2()
 				+ ") values(?,?);";
 		if (con != null) {
@@ -31,8 +28,7 @@ public class MappingDAO {
 		}
 	}
 
-	public void insertMultiMapping(List<MappingTableDto> mtds) {
-		con = new JDBCConnection().getRDSConnection();
+	public void insertMultiMapping(List<MappingTableDto> mtds,Connection con) {
 		if (con != null) {
 			try {
 				PreparedStatement stmt = null;
@@ -45,7 +41,6 @@ public class MappingDAO {
 					stmt.addBatch();
 				}
 				stmt.executeBatch();
-				con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

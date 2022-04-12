@@ -56,12 +56,6 @@ public class AlbumDAO implements AlbumDAO_Interface {
 	}
 
 	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public AlbumVO update(AlbumVO albumvo) {
 		con = JDBCConnection.getRDSConnection();
 		String sql = "UPDATE album SET name=?,authority=? where album_id=?";
@@ -119,6 +113,12 @@ public class AlbumDAO implements AlbumDAO_Interface {
 	public Integer selectDefaultAlbumByMemberId(Integer mid) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean delete(AlbumVO t) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
