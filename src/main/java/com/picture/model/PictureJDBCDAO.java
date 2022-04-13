@@ -17,7 +17,7 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 	Connection con;
 
 	public PictureVO insert(PictureVO pv, Connection con) {
-		String sql = "insert into picture(p_url, file_key, file_name, size) values(?,?,?,?)";
+		String sql = "INSERT INTO picture(p_url, file_key, file_name, size) VALUES(?,?,?,?)";
 		if (con != null) {
 			try {
 				PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -34,7 +34,7 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}else {
+		} else {
 			return null;
 		}
 		return pv;
@@ -58,14 +58,17 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public List<PictureVO> queryPicturesMapping(MappingTableDto mtd) {
-		String sql = "SELECT * FROM picture p JOIN " + mtd.getTableName1() + " t ON(p.picture_id=t.picture_id) where "
-				+ mtd.getColumn1() + "=" + mtd.getId1();
+
+	public List<PictureVO> queryPicturesByMapping(MappingTableDto mtd) {
+		String sql = "SELECT * FROM picture p JOIN ? ON(p.picture_id=t.picture_id) where ?=?";
 		Connection con = JDBCConnection.getRDSConnection();
 		if (con != null) {
 			try {
 				PreparedStatement stmt = con.prepareStatement(sql);
+				int index = 1;
+				stmt.setString(index++, mtd.getTableName1());
+				stmt.setString(index++, mtd.getColumn1());
+				stmt.setInt(index++, mtd.getId1());
 				ResultSet rs = stmt.executeQuery();
 				List<PictureVO> pvos = new ArrayList<PictureVO>();
 				while (rs.next()) {
@@ -88,7 +91,7 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public PictureVO getOneById(Integer pv) {
 		// TODO Auto-generated method stub
@@ -101,9 +104,30 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		return null;
 	}
 
+	public Integer deleteById(Integer pictureId, Connection con) {
+		String sql = "DELETE FROM picture where picture_id=?";
+		if (con != null) {
+			try {
+				PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				stmt.setInt(1, pictureId);
+				stmt.execute();
+				Integer deletedPictureId = stmt.getGeneratedKeys().getInt(1);
+				return deletedPictureId;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}else {
+			return -1;
+		}
+	}
+
 	@Override
 	public boolean delete(PictureVO t) {
-
 		return false;
 	}
 
