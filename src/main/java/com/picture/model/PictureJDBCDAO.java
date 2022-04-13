@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.common.model.MappingTableDto;
 
 import connection.JDBCConnection;
 
@@ -55,7 +58,37 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	public List<PictureVO> queryPicturesMapping(MappingTableDto mtd) {
+		String sql = "SELECT * FROM picture p JOIN " + mtd.getTableName1() + " t ON(p.picture_id=t.picture_id) where "
+				+ mtd.getColumn1() + "=" + mtd.getId1();
+		Connection con = JDBCConnection.getRDSConnection();
+		if (con != null) {
+			try {
+				PreparedStatement stmt = con.prepareStatement(sql);
+				ResultSet rs = stmt.executeQuery();
+				List<PictureVO> pvos = new ArrayList<PictureVO>();
+				while (rs.next()) {
+					PictureVO pvo = new PictureVO();
+					pvo.setPictureId(rs.getInt("picture_id"));
+					pvo.setFileKey(rs.getString("p_url"));
+					pvo.setCreateTime(rs.getTimestamp("create_time"));
+					pvo.setFileKey(rs.getString("file_key"));
+					pvo.setFileName(rs.getString("filename"));
+					pvo.setSize(rs.getLong("size"));
+					pvos.add(pvo);
+				}
+				con.close();
+				return pvos;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	public PictureVO getOneById(Integer pv) {
 		// TODO Auto-generated method stub
@@ -70,7 +103,7 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 
 	@Override
 	public boolean delete(PictureVO t) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 

@@ -51,28 +51,27 @@ public class PictureService {
 	public List<PictureVO> uploadImage(Collection<Part> parts, Integer albumId) throws IOException {
 		List<PictureVO> pvs = new ArrayList<>();
 		MappingTableDto mappingTableDto = new MappingTableDto();
-		mappingTableDto.setTableName("photo");
-		mappingTableDto.setColumn1("picture_id");
-		mappingTableDto.setColumn2("album_id");
-		mappingTableDto.setId2(albumId);
 		Connection con = null;
-		PictureVO pv2 = null;
 		try {
 			for (Part part : parts) {
 				con = JDBCConnection.getRDSConnection();
+				con.setAutoCommit(false);
+				Savepoint sp=con.setSavepoint();
 				PictureVO pv = new PictureVO();
 				String fileName = getFileNameFromPart(part);
 				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
 					System.out.println(fileName);
 					InputStream in = part.getInputStream();
 					pv = s3Service.uploadImageToS3(in, fileName);
-					pvs.add(picDAO.insert(pv,con));
+					pvs.add(picDAO.insert(pv, con));
 				}
-				con.setAutoCommit(false);
-				Savepoint sp = con.setSavepoint();
 				if (albumId != null && pv.getPictureId() != null) {
+					mappingTableDto.setTableName1("photo");
+					mappingTableDto.setColumn1("picture_id");
+					mappingTableDto.setColumn2("album_id");
 					mappingTableDto.setId1(pv.getPictureId());
-					mappingDAO.insertOneMapping(mappingTableDto,con);
+					mappingTableDto.setId2(albumId);
+					mappingDAO.insertOneMapping(mappingTableDto, con);
 					con.commit();
 					con.setAutoCommit(true);
 					con.close();
