@@ -1,5 +1,7 @@
 package com.members.model;
 
+import java.util.List;
+
 import com.common.model.JDBCDAO_Interface;
 
 public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
@@ -22,9 +24,13 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 	// select 情境八：會員查詢紅利帳戶 ( BONUS_AMOUNT )
 	public int selectBonusAmount(MembersVO membersVO);
 
-	// select 情境九：管理員查詢某一筆會員資料 (透過 account)
-
-	// select 情境十：管理員查詢所有會員資料
-
 	// select 情境十一：管理員查詢所有被停權的所有會員 ( status )
+	public List<MembersVO> getAllStatus();
+	
+	// select 情境十二：管理員使用 name 查詢某一筆會員資料
+	public MembersVO getOneByName(String name);
+	
+	// select 情境十三：查詢登入時帳號和密碼
+	public MembersVO selectForLogin(String name, String password);
+	
 }

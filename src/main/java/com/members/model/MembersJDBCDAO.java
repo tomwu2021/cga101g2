@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -159,7 +160,13 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	@Override
 	public boolean changeBonus(MembersVO membersVO) {
 		con = JDBCConnection.getRDSConnection();
-		Boolean b = changeBonus(membersVO, con);
+
+		// 現在的紅利 = 取得資料庫原本的紅利 + 管理員給的紅利
+		int currentBonusAmount = selectBonusAmount(membersVO, con) + membersVO.getBonusAmount();
+
+		// 變更紅利的金額
+		Boolean b = changeBonus(membersVO, con, currentBonusAmount);
+
 		try {
 			con.close();
 		} catch (SQLException e) {
@@ -168,12 +175,12 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return b;
 	}
 
-	public boolean changeBonus(MembersVO membersVO, Connection con) {
+	public boolean changeBonus(MembersVO membersVO, Connection con, int bouns) {
 		final String CHANGE_BONUS = "UPDATE members set bonus_amount=? where member_id = ?;";
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(CHANGE_BONUS);
-				pstmt.setInt(1, membersVO.getBonusAmount());
+				pstmt.setInt(1, bouns);
 				pstmt.setInt(2, membersVO.getMemberId());
 				pstmt.execute();
 			} catch (Exception e) {
@@ -233,7 +240,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return strGenAuthCode;
 	}
 
-// select 情境另：會員查詢會員等級 ( RANK_ID ) ---------------------------------------------------------
+// select 情境六：會員查詢會員等級 ( RANK_ID ) ---------------------------------------------------------
 	@Override
 	public int selectRankId(MembersVO membersVO) {
 		con = JDBCConnection.getRDSConnection();
@@ -301,18 +308,18 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	@Override
 	public int selectBonusAmount(MembersVO membersVO) {
 		con = JDBCConnection.getRDSConnection();
-		MembersVO membersVO2 = selectBonusAmount(membersVO, con);
+		int currentBonusAmount = selectBonusAmount(membersVO, con);
 		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return membersVO2.getBonusAmount();
+		return currentBonusAmount;
 	}
 
-	public MembersVO selectBonusAmount(MembersVO membersVO, Connection con) {
+	public int selectBonusAmount(MembersVO membersVO, Connection con) {
 		final String SELECT_BONUSAMOUNT = "SELECT bonus_amount from members where member_id = ?";
-		
+
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(SELECT_BONUSAMOUNT);
@@ -321,8 +328,193 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 				if (rs.next()) {
 					MembersVO newMember = new MembersVO();
 					newMember.setBonusAmount(rs.getInt("bonus_amount"));
+					return newMember.getBonusAmount();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return -1;
+	}
+
+// select 情境九：管理員使用 member_id 查詢某一筆會員資料 ----------------------------------------------------------------
+	@Override
+	public MembersVO getOneById(Integer id) {
+		con = JDBCConnection.getRDSConnection();
+		MembersVO membersVO2 = getOneById(id, con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return membersVO2;
+	}
+
+	public MembersVO getOneById(Integer id, Connection con) {
+		final String SELECT_ONE_BYID = "SELECT member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time "
+				+ "FROM members where member_id = ?;";
+		if (con != null) {
+			try {
+
+				PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_BYID);
+				pstmt.setInt(1, id);
+				ResultSet rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					MembersVO newMember = new MembersVO();
+					newMember.setMemberId(rs.getInt("member_id"));
+					newMember.setAccount(rs.getString("account"));
+					newMember.setName(rs.getString("name"));
+					newMember.setAddress(rs.getString("address"));
+					newMember.setPhone(rs.getString("phone"));
+					newMember.setRankId(rs.getInt("rank_id"));
+					newMember.seteWalletAmount(rs.getInt("e_wallet_amount"));
+					newMember.setBonusAmount(rs.getInt("bonus_amount"));
+					newMember.setStatus(rs.getInt("status"));
+					newMember.setCreateTime(rs.getTimestamp("create_time"));
 					return newMember;
 				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+// select 情境十：管理員查詢所有會員資料 ------------------------------------------------------------------
+	@Override
+	public List<MembersVO> getAll() {
+		final String GETALL = "SELECT member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time FROM members;";
+
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
+			ResultSet rs = pstmt.executeQuery();
+
+			List<MembersVO> list = new ArrayList<>();
+			while (rs.next()) {
+				MembersVO newMember = new MembersVO();
+				newMember.setMemberId(rs.getInt("member_id"));
+				newMember.setAccount(rs.getString("account"));
+				newMember.setName(rs.getString("name"));
+				newMember.setAddress(rs.getString("address"));
+				newMember.setPhone(rs.getString("phone"));
+				newMember.setRankId(rs.getInt("rank_id"));
+				newMember.seteWalletAmount(rs.getInt("e_wallet_amount"));
+				newMember.setBonusAmount(rs.getInt("bonus_amount"));
+				newMember.setStatus(rs.getInt("status"));
+				newMember.setCreateTime(rs.getTimestamp("create_time"));
+				list.add(newMember);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+// select 情境十一：管理員查詢所有被停權的所有會員 ( status )----------------------------------------------------------
+	public List<MembersVO> getAllStatus() {
+		final String GETALL_STATUS = "SELECT member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time FROM members where status = ?;";
+
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(GETALL_STATUS)) {
+
+			pstmt.setInt(1, 0);
+			ResultSet rs = pstmt.executeQuery();
+			List<MembersVO> list = new ArrayList<>();
+			while (rs.next()) {
+				MembersVO newMember = new MembersVO();
+				newMember.setMemberId(rs.getInt("member_id"));
+				newMember.setAccount(rs.getString("account"));
+				newMember.setName(rs.getString("name"));
+				newMember.setAddress(rs.getString("address"));
+				newMember.setPhone(rs.getString("phone"));
+				newMember.setRankId(rs.getInt("rank_id"));
+				newMember.seteWalletAmount(rs.getInt("e_wallet_amount"));
+				newMember.setBonusAmount(rs.getInt("bonus_amount"));
+				newMember.setStatus(rs.getInt("status"));
+				newMember.setCreateTime(rs.getTimestamp("create_time"));
+				list.add(newMember);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+// select 情境十二：管理員使用 name 查詢某一筆會員資料 ----------------------------------------------------------------
+	@Override
+	public MembersVO getOneByName(String name) {
+		final String GETONE_BY_NAME = "SELECT member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time FROM members where name = ?;";
+
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(GETONE_BY_NAME)) {
+
+			pstmt.setString(1, name);
+			ResultSet rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				MembersVO newMember = new MembersVO();
+				newMember.setMemberId(rs.getInt("member_id"));
+				newMember.setAccount(rs.getString("account"));
+				newMember.setName(rs.getString("name"));
+				newMember.setAddress(rs.getString("address"));
+				newMember.setPhone(rs.getString("phone"));
+				newMember.setRankId(rs.getInt("rank_id"));
+				newMember.seteWalletAmount(rs.getInt("e_wallet_amount"));
+				newMember.setBonusAmount(rs.getInt("bonus_amount"));
+				newMember.setStatus(rs.getInt("status"));
+				newMember.setCreateTime(rs.getTimestamp("create_time"));
+				return newMember;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public MembersVO selectForLogin(String name, String password) {
+		con = JDBCConnection.getRDSConnection();
+		MembersVO membersVO2 = selectForLogin(name, password, con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return membersVO2;
+	}
+
+	// select 情境十三：查詢登入時帳號和密碼
+	// -----------------------------------------------------------------------
+	public MembersVO selectForLogin(String name, String password, Connection con) {
+
+		final String SELECT_FOR_LOGIN = "select member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time from members where name = ? and PASSWORD = ?;";
+		if (con != null) {
+			try {
+
+				PreparedStatement pstmt = con.prepareStatement(SELECT_FOR_LOGIN);
+				pstmt.setString(1, name);
+				pstmt.setString(2, password);
+				ResultSet rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					MembersVO newMember = new MembersVO();
+					newMember.setMemberId(rs.getInt("member_id"));
+					newMember.setAccount(rs.getString("account"));
+					newMember.setName(rs.getString("name"));
+					newMember.setAddress(rs.getString("address"));
+					newMember.setPhone(rs.getString("phone"));
+					newMember.setRankId(rs.getInt("rank_id"));
+					newMember.seteWalletAmount(rs.getInt("e_wallet_amount"));
+					newMember.setBonusAmount(rs.getInt("bonus_amount"));
+					newMember.setStatus(rs.getInt("status"));
+					newMember.setCreateTime(rs.getTimestamp("create_time"));
+					return newMember;
+				}
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -331,26 +523,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	}
 
 	@Override
-	public MembersVO getOneById(Integer id) {
-		String GET_ONE_STMT = "SELECT " + "member_id,account,password,name,address,phone,"
-				+ "rank_id,e_wallet_amount,e_wallet_password,bonus_amount,status,create_time "
-				+ "FROM members where member_id = ?";
-
-		return null;
-	}
-
-	@Override
-	public List<MembersVO> getAll() {
-		String GET_ALL_STMT = "SELECT " + "member_id,account,password,name,address,phone,"
-				+ "rank_id,e_wallet_amount,e_wallet_password,bonus_amount,status,create_time "
-				+ "FROM members order by member_id";
-
-		return null;
-	}
-
-	@Override
 	public boolean delete(MembersVO t) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
