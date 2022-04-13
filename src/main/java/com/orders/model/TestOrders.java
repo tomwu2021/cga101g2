@@ -30,9 +30,13 @@ public class TestOrders {
 //		System.out.println(dao.getOneById(1));
 		
 		//會員編號查訂單
+//		OrdersJDBCDAO dao=new OrdersJDBCDAO();
+//		for(OrdersVO o:dao.getOneByMemberId(5)){
+//			System.out.println(o);
+//		}
+		
+		//訂單編號改出貨狀態
 		OrdersJDBCDAO dao=new OrdersJDBCDAO();
-		for(OrdersVO o:dao.getOneByMemberId(5)){
-			System.out.println(o);
-		}
+		dao.updateStatusByOrderId(2, 2);
 	}
 }
