@@ -13,22 +13,23 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/lib/activation.jar"/>
-	<classpathentry kind="lib" path="C:/lib/javax.mail.jar"/>
-	<classpathentry kind="lib" path="C:/lib/jsp-api.jar"/>
-	<classpathentry kind="lib" path="C:/lib/mysql-connector-java-8.0.18.jar"/>
-	<classpathentry kind="lib" path="C:/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="C:/lib/AWSS3連線/aws-java-sdk-core-1.12.191.jar"/>
-	<classpathentry kind="lib" path="C:/lib/AWSS3連線/aws-java-sdk-s3-1.12.191.jar"/>
-	<classpathentry kind="lib" path="C:/lib/AWSS3連線/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/lib/AWSS3連線/httpclient-4.5.12.jar"/>
-	<classpathentry kind="lib" path="C:/lib/AWSS3連線/httpcore-4.4.6.jar"/>
-	<classpathentry kind="lib" path="C:/lib/AWSS3連線/jackson-annotations-2.13.2.jar"/>
-	<classpathentry kind="lib" path="C:/lib/AWSS3連線/jackson-core-2.13.2.jar"/>
-	<classpathentry kind="lib" path="C:/lib/AWSS3連線/jackson-databind-2.13.2.2.jar"/>
-	<classpathentry kind="lib" path="C:/lib/AWSS3連線/java-uuid-generator-3.2.0.jar"/>
-	<classpathentry kind="lib" path="C:/lib/AWSS3連線/joda-time-2.10.13.jar"/>
-	<classpathentry kind="lib" path="C:/lib/commons-fileupload-1.2.2.jar"/>
-	<classpathentry kind="lib" path="C:/lib/commons-io-2.11.0.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/activation.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/aws-java-sdk-core-1.12.191.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/aws-java-sdk-s3-1.12.191.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/commons-fileupload-1.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/commons-io-2.11.0.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/httpclient-4.5.12.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/httpcore-4.4.6.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/jackson-annotations-2.13.2.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/jackson-core-2.13.2.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/jackson-databind-2.13.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/java-uuid-generator-3.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/jaxb-api-2.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/joda-time-2.10.13.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/mysql-connector-java-8.0.18.jar"/>
+	<classpathentry kind="lib" path="C:/Git/cga101g2/src/main/webapp/WEB-INF/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
