@@ -7,7 +7,7 @@ public class PostTestDAO {
 	public static void main(String[] args) {
 		PostJDBCDAO dao = new PostJDBCDAO();
 		
-		//¨d∏ﬂ•˛≥°
+		//select Êü•Ë©¢ÂÖ®ÈÉ®
 		List<PostVO> list = dao.getAll();
 		for(PostVO vo: list) {
 			System.out.print(vo.getPostId()+ ",");
@@ -21,37 +21,28 @@ public class PostTestDAO {
 			System.out.println();
 		}
 		
-		//∑sºW
-		//PostVO postVO1 = new PostVO();
-//		postVO1.setMemberId(2);
-//		postVO1.setContent("The Wolf and the Seven Little Kids");
+		//Êñ∞Â¢û
+//		PostVO postVO1 = new PostVO();
+//		postVO1.setMemberId(5);
+//		postVO1.setContent("Ë≤ºÊñáÂÖßÂÆπÊ∏¨Ë©¶1");
 //		postVO1.setLikeCount(100);
 //		postVO1.setStatus(0);
-//		postVO1.setAuthority(0);
-		
-		//¶A∑sºW§@µß
-//		postVO1.setMemberId(3);
-//		postVO1.setContent("Little Red-cap");
-//		postVO1.setLikeCount(50);
-//		postVO1.setStatus(0);
 //		postVO1.setAuthority(1);
-		
+//		
 //		dao.insert(postVO1);
+//		System.out.println(postVO1);
 		
 	
-		//≠◊ßÔ
+		//‰øÆÊîπ
 //		PostVO postVO2 = new PostVO();
 //		
-//		postVO2.setMemberId(4);
-//		postVO2.setContent("Snow-white");
-//		postVO2.setLikeCount(30);
-//		postVO2.setAuthority(1);
+//		postVO2.setContent("Ë≤ºÊñáÂÖßÂÆπÊ∏¨Ë©¶2");
 //		postVO2.setPostId(4);
 //		
 //		dao.update(postVO2);
 		
-		//¨d∏ﬂ§@µß
-//		PostVO postVO3 = dao.findByPrimaryKey(3);
+		//Âè™Êü•Ë©¢ÂÖ∂‰∏≠‰∏ÄÁ≠ÜË≥áÊñô
+//		PostVO postVO3 = dao.getOneById(5);
 //		
 //		System.out.println("-------------------------------------------");
 //		System.out.print(postVO3.getPostId()+ ",");

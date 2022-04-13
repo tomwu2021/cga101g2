@@ -95,6 +95,14 @@ public class PostVO implements java.io.Serializable{
 		this.updateTime = updateTime;
 	}
 
+	@Override
+	public String toString() {
+		return "PostVO [postId=" + postId + ", memberId=" + memberId + ", content=" + content + ", likeCount="
+				+ likeCount + ", status=" + status + ", authority=" + authority + ", createTime=" + createTime
+				+ ", updateTime=" + updateTime + "]";
+	}
+	
+	
 }
 
 

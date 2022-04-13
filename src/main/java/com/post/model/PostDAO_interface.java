@@ -1,11 +1,8 @@
 package com.post.model;
 
-import java.util.List;
+import com.common.model.JDBCDAO_Interface;
 
-public interface PostDAO_interface {
-	public void insert(PostVO postVO);
-	public void update(PostVO postVO);
-	public void delete(Integer postId);
-	public PostVO findByPrimaryKey(Integer postId);
-	public List<PostVO> getAll();
+public interface PostDAO_interface extends JDBCDAO_Interface<PostVO> {
+	
+	
 }
