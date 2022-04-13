@@ -107,9 +107,13 @@ public class OrdersVO implements java.io.Serializable{
 		this.createTime = createTime;
 	}
 
-	
-	 
-	
+	@Override
+	public String toString() {
+		  String text = String.format(
+		    "orderId:%d, memberId:%d, recipient:%s, phone:%s, address:%s, sumPrice:%d, bonus:%d, discount:%d, payPrice:%d, status:%d, createTime:%s",
+		    orderId, memberId, recipient, phone, address, sumPrice, bonus, discount, payPrice, status, createTime);
+		   return text;
+		 }
 	 
 	 
 }

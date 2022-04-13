@@ -35,4 +35,13 @@ public class OrdersDAO implements OrdersDAO_Interface{
 		return false;
 	}
 
+
+	@Override
+	public List<OrdersVO> getOneByMemberId(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+
 }
