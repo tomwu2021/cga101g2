@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class OrdersVO implements java.io.Serializable{
 	private Integer orderId;
 	private Integer memberId;
-	 private String recipients;
+	 private String recipient;
 	 private String phone;
 	 private String address;
 	 private Integer sumPrice;
@@ -35,12 +35,12 @@ public class OrdersVO implements java.io.Serializable{
 		this.memberId = memberId;
 	}
 
-	public String getRecipients() {
-		return recipients;
+	public String getRecipient() {
+		return recipient;
 	}
 
-	public void setRecipients(String recipients) {
-		this.recipients = recipients;
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
 	}
 
 	public String getPhone() {
@@ -106,8 +106,14 @@ public class OrdersVO implements java.io.Serializable{
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
-	 
-	
+
+	@Override
+	public String toString() {
+		  String text = String.format(
+		    "orderId:%d, memberId:%d, recipient:%s, phone:%s, address:%s, sumPrice:%d, bonus:%d, discount:%d, payPrice:%d, status:%d, createTime:%s",
+		    orderId, memberId, recipient, phone, address, sumPrice, bonus, discount, payPrice, status, createTime);
+		   return text;
+		 }
 	 
 	 
 }

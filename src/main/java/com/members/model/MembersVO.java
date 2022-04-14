@@ -115,4 +115,15 @@ public class MembersVO implements java.io.Serializable {
 		this.createTime = createTime;
 	}
 
+	@Override
+	public String toString() {
+		String text = String.format(
+				"memberId：%d, account：%s, name：%s, address：%s, phone：%s, rankId：%d, eWalletAmount：%d, bonusAmount：%d, status：createTime：%d",
+				memberId,account,password,name,phone,rankId,eWalletAmount,bonusAmount,status,createTime);
+			return text;
+	}
+	
+	
+	
+
 }

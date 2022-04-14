@@ -27,10 +27,9 @@ public class S3Service {
 		try {
 			byte[] buf = new byte[in.available()];
 			Long contentLength = Long.valueOf(buf.length);
-			// Obtain the Content length of the Input stream for S3 header
+//			 Obtain the Content length of the Input stream for S3 header
 			ObjectMetadata metadata = new ObjectMetadata();
 			metadata.setContentLength(contentLength);
-
 			PutObjectRequest req = new PutObjectRequest(BUCKETNAME, key, in, metadata)
 					.withCannedAcl(CannedAccessControlList.PublicRead);
 			s3client.putObject(req);

@@ -60,9 +60,11 @@ public class PictureVO {
 
 	@Override
 	public String toString() {
-		return "PictureVO: {\"pictureId\":\"" + pictureId + "\", \"pUrl\":\"" + pUrl + "\", \"createTime\":\""
-				+ createTime + "\", \"fileKey\":\"" + fileKey + "\", \"fileName\":\"" + fileName + "\", \"size\":\""
-				+ size + "\"}";
+		return "PictureVO:{pictureId:" + pictureId + ", pUrl:" + pUrl + ", createTime:" + createTime + ", fileKey:"
+				+ fileKey + ", fileName:" + fileName + ", size:" + size + "}";
 	}
+
+
+
 
 }

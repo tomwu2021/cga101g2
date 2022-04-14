@@ -10,7 +10,7 @@ import java.util.List;
 
 import connection.JDBCConnection;
 
-public class AlbumDAO implements AlbumDAO_Interface {
+public class AlbumJDBCDAO implements AlbumDAO_Interface {
 
 	Connection con;
 
@@ -20,8 +20,9 @@ public class AlbumDAO implements AlbumDAO_Interface {
 		String sql = "insert into album(member_id,name,authority) values(?,?,0);";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			stmt.setInt(1, albumvo.getMemberId());
-			stmt.setString(2, albumvo.getName());
+			int index = 1;
+			stmt.setInt(index++, albumvo.getMemberId());
+			stmt.setString(index++, albumvo.getName());
 			stmt.execute();
 			albumvo.setAlbumId(Statement.RETURN_GENERATED_KEYS);
 			albumvo.setAuthority(0);
@@ -37,17 +38,20 @@ public class AlbumDAO implements AlbumDAO_Interface {
 		return albumvo;
 	}
 
-	public AlbumVO makeDefaultAlbum(AlbumVO albumvo) {
-		con = JDBCConnection.getRDSConnection();
+	public AlbumVO makeDefaultAlbum(AlbumVO albumvo, Connection con) {
 		String sql = "insert into album(member_id,name,authority) values(?,?,0);";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			stmt.setInt(1, albumvo.getMemberId());
-			stmt.setString(2, "未分類");
+			int index = 1;
+			stmt.setInt(index++, albumvo.getMemberId());
+			stmt.setString(index++, "未分類");
 			stmt.execute();
+			ResultSet rs = stmt.getGeneratedKeys();
+			while (rs.next()) {
+				albumvo.setAlbumId(rs.getInt(1));
+			}
 			albumvo.setName("未分類");
 			albumvo.setAuthority(0);
-			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,12 +84,13 @@ public class AlbumDAO implements AlbumDAO_Interface {
 		return null;
 	}
 
-	public List<AlbumVO> getPersonalAlbum(Integer id) {
+	public List<AlbumVO> getPersonalAlbum(Integer memberId) {
+		con = JDBCConnection.getRDSConnection();
 		String sql = "select name from album where member_id = ?;";
 		List<AlbumVO> avoList = new ArrayList<AlbumVO>();
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql);
-			stmt.setInt(1, id);
+			stmt.setInt(1, memberId);
 			ResultSet rs = stmt.executeQuery();
 			AlbumVO albumvo = new AlbumVO();
 			while (rs.next()) {
@@ -96,11 +101,12 @@ public class AlbumDAO implements AlbumDAO_Interface {
 				avoList.add(albumvo);
 			}
 			con.close();
+			return avoList;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
-		return avoList;
 	}
 
 	@Override
@@ -111,7 +117,9 @@ public class AlbumDAO implements AlbumDAO_Interface {
 
 	@Override
 	public Integer selectDefaultAlbumByMemberId(Integer mid) {
-		// TODO Auto-generated method stub
+		String sql = "SELECT id FROM album WHERE member_id = ? ORDER BY create_time ASC LIMIT 1;";
+		
+		
 		return null;
 	}
 
