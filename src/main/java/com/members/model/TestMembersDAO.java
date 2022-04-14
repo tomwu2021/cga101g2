@@ -1,7 +1,5 @@
 package com.members.model;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-
 public class TestMembersDAO {
 
 	public static void main(String[] args) {
@@ -39,22 +37,22 @@ public class TestMembersDAO {
 		
 		// update 情境五：會員忘記密碼 ( password )
 		/*MembersVO membersVO5 = new MembersVO();
-		membersVO5.setMemberId(22);
+		membersVO5.setMemberId(23);
 		dao.forgotPassword(membersVO5);*/
 		
 		// select 情境六：會員查詢會員等級 ( RANK_ID )
 		/*MembersVO membersVO6 = new MembersVO();
-		membersVO6.setMemberId(8);
+		membersVO6.setMemberId(3);
 		System.out.println(dao.selectRankId(membersVO6));*/
-		
+
 		// select 情境七：會員查詢錢包餘額 ( E_WALLET_AMOUNT )
 		/*MembersVO membersVO7 = new MembersVO();
-		membersVO7.setMemberId(17);
+		membersVO7.setMemberId(3);
 		System.out.println(dao.selectEWalletAmount(membersVO7));*/
 		
 		// select 情境八：會員查詢紅利帳戶 ( BONUS_AMOUNT	 )
 		/*MembersVO membersVO8 = new MembersVO();
-		membersVO8.setMemberId(20);
+		membersVO8.setMemberId(3);
 		System.out.println(dao.selectBonusAmount(membersVO8));*/
 		
 		// select 情境九：管理員使用 member_id 查詢某一筆會員資料
@@ -64,7 +62,7 @@ public class TestMembersDAO {
 		
 		// select 情境十：管理員查詢所有會員資料
 		/*for(MembersVO m1:dao.getAll()) {
-			System.out.println(m);
+			System.out.println(m1);
 		}*/
 		
 		// select 情境十一：管理員查詢所有被停權的所有會員 ( status )

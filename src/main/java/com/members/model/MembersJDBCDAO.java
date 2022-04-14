@@ -11,15 +11,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import com.picture.model.PictureVO;
-
 import connection.JDBCConnection;
 
 public class MembersJDBCDAO implements MembersDAO_interface {
 
 	Connection con;
 
-// 情境一 insert：會員辦帳號時，輸入資料庫的內容 -------------------------------------------------------------------
+// 情境一 insert：會員辦帳號時，輸入資料庫的內容 -----------------------------------------------------------------------
 	@Override
 	public MembersVO insert(MembersVO membersVO) {
 		con = JDBCConnection.getRDSConnection();
@@ -54,7 +52,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return null;
 	}
 
-//  update 情境二：會員可修改的資料 ------------------------------------------------------------------------------
+//  update 情境二：會員可修改的資料 ---------------------------------------------------------------------------------
 	@Override
 	public MembersVO update(MembersVO membersVO) {
 		con = JDBCConnection.getRDSConnection();
@@ -128,7 +126,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return null;
 	}
 
-// update 情境三：管理員可以修改此會員的狀態( 0停權/1正常 ) ---------------------------------------------------------
+// update 情境三：管理員可以修改此會員的狀態( 0停權/1正常 ) -------------------------------------------------------------
 	@Override
 	public boolean changeStatus(MembersVO membersVO) {
 		con = JDBCConnection.getRDSConnection();
@@ -156,7 +154,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return false;
 	}
 
-// update 情境四：管理員可以發送紅利 ----------------------------------------------------------------------------
+// update 情境四：管理員可以發送紅利 ---------------------------------------------------------------------------------
 	@Override
 	public boolean changeBonus(MembersVO membersVO) {
 		con = JDBCConnection.getRDSConnection();
@@ -190,7 +188,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return false;
 	}
 
-// update 情境五：會員忘記密碼，將一組密碼亂數取代原本資料庫的密碼( password ) ----------------------------------------------------------------
+// update 情境五：會員忘記密碼，將一組密碼亂數取代原本資料庫的密碼( password ) ----------------------------------------------
 	@Override
 	public boolean forgotPassword(MembersVO membersVO) {
 		con = JDBCConnection.getRDSConnection();
@@ -240,7 +238,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return strGenAuthCode;
 	}
 
-// select 情境六：會員查詢會員等級 ( RANK_ID ) ---------------------------------------------------------
+// select 情境六：會員查詢會員等級 ( RANK_ID ) -----------------------------------------------------------------------
 	@Override
 	public int selectRankId(MembersVO membersVO) {
 		con = JDBCConnection.getRDSConnection();
@@ -272,7 +270,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return null;
 	}
 
-// select 情境七：會員查詢錢包餘額 ( E_WALLET_AMOUNT ) ------------------------------------------
+// select 情境七：會員查詢錢包餘額 ( E_WALLET_AMOUNT ) --------------------------------------------------------------
 	@Override
 	public int selectEWalletAmount(MembersVO membersVO) {
 		con = JDBCConnection.getRDSConnection();
@@ -337,7 +335,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return -1;
 	}
 
-// select 情境九：管理員使用 member_id 查詢某一筆會員資料 ----------------------------------------------------------------
+// select 情境九：管理員使用 member_id 查詢某一筆會員資料 ---------------------------------------------------------------
 	@Override
 	public MembersVO getOneById(Integer id) {
 		con = JDBCConnection.getRDSConnection();
@@ -382,7 +380,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return null;
 	}
 
-// select 情境十：管理員查詢所有會員資料 ------------------------------------------------------------------
+// select 情境十：管理員查詢所有會員資料 ------------------------------------------------------------------------------
 	@Override
 	public List<MembersVO> getAll() {
 		final String GETALL = "SELECT member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time FROM members;";
@@ -413,7 +411,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return null;
 	}
 
-// select 情境十一：管理員查詢所有被停權的所有會員 ( status )----------------------------------------------------------
+// select 情境十一：管理員查詢所有被停權的所有會員 ( status )------------------------------------------------------------
 	public List<MembersVO> getAllStatus() {
 		final String GETALL_STATUS = "SELECT member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time FROM members where status = ?;";
 
@@ -444,7 +442,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return null;
 	}
 
-// select 情境十二：管理員使用 name 查詢某一筆會員資料 ----------------------------------------------------------------
+// select 情境十二：管理員使用 name 查詢某一筆會員資料 ------------------------------------------------------------------
 	@Override
 	public MembersVO getOneByName(String name) {
 		final String GETONE_BY_NAME = "SELECT member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time FROM members where name = ?;";
@@ -487,8 +485,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return membersVO2;
 	}
 
-	// select 情境十三：查詢登入時帳號和密碼
-	// -----------------------------------------------------------------------
+// select 情境十三：查詢登入時帳號和密碼 ------------------------------------------------------------------------------
 	public MembersVO selectForLogin(String name, String password, Connection con) {
 
 		final String SELECT_FOR_LOGIN = "select member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time from members where name = ? and PASSWORD = ?;";
