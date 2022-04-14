@@ -4,22 +4,22 @@ import java.sql.Date;
 
 public class PetActivityVO {
 	
-	private Integer recordID;
-	private Integer petID;
+	private Integer recordId;
+	private Integer petId;
 	private String activity;
 	private Date recordTime;
 	
-	public Integer getRecordID() {
-		return recordID;
+	public Integer getRecordId() {
+		return recordId;
 	}
-	public void setRecordID(Integer recordID) {
-		this.recordID = recordID;
+	public void setRecordId(Integer recordId) {
+		this.recordId = recordId;
 	}
-	public Integer getPetID() {
-		return petID;
+	public Integer getPetId() {
+		return petId;
 	}
-	public void setPetID(Integer petID) {
-		this.petID = petID;
+	public void setPetId(Integer petId) {
+		this.petId = petId;
 	}
 	public String getActivity() {
 		return activity;

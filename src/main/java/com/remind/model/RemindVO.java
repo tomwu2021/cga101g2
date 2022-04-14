@@ -4,22 +4,22 @@ import java.sql.Timestamp;
 
 public class RemindVO {
 
-	private Integer remindID;
-	private Integer memberID;
+	private Integer remindId;
+	private Integer memberId;
 	private String content;
 	private Timestamp time;
 	
-	public Integer getRemindID() {
-		return remindID;
+	public Integer getRemindId() {
+		return remindId;
 	}
-	public void setRemindID(Integer remindID) {
-		this.remindID = remindID;
+	public void setRemindId(Integer remindId) {
+		this.remindId = remindId;
 	}
-	public Integer getMemberID() {
-		return memberID;
+	public Integer getMemberId() {
+		return memberId;
 	}
-	public void setMemberID(Integer memberID) {
-		this.memberID = memberID;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 	public String getContent() {
 		return content;
@@ -35,11 +35,11 @@ public class RemindVO {
 	}
 	@Override
 	public String toString() {
-		String remindID = this.remindID.toString();
-		String memberID = this.memberID.toString();
+
 		String content = this.content;
 		String time = this.time.toString();
-		return "["+ remindID+","+memberID+","+content+","+time+"]";
+
+		return "["+content+","+time+"]";
 	}
 	
 }

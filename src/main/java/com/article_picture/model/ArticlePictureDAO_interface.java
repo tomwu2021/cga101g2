@@ -3,11 +3,15 @@ package com.article_picture.model;
 import java.util.List;
 import java.util.Map;
 
-public interface ArticlePictureDAO_interface {
+import com.common.model.JDBCDAO_Interface;
+
+public interface ArticlePictureDAO_interface extends JDBCDAO_Interface<ArticlePictureVO>{
 	
-	public void insert(ArticlePictureVO articlePictureVO);
-    public void update(ArticlePictureVO articlePictureVO);
-    public List<ArticlePictureVO> getAll();
-    public List<ArticlePictureVO> getAll(Map<String, Object[]> map); 
+	public ArticlePictureVO insert(ArticlePictureVO articlePictureVO);
+	public boolean delete(ArticlePictureVO t);
+    public ArticlePictureVO update(ArticlePictureVO articlePictureVO);
+	public ArticlePictureVO getOneById(Integer id);
+	public List<ArticlePictureVO> getAll();
+
 
 }

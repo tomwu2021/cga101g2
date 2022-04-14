@@ -4,23 +4,23 @@ import java.sql.Timestamp;
 
 public class ArticleVO {
 
-	private Integer articleID;
-	private Byte type;
+	private Integer articleId;
+	private Integer type;
 	private String title;
 	private String content;
 	private Timestamp createTime;
 	private Integer empNo;
 	
-	public Integer getArticleID() {
-		return articleID;
+	public Integer getArticleId() {
+		return articleId;
 	}
-	public void setArticleID(Integer articleID) {
-		this.articleID = articleID;
+	public void setArticleId(Integer articleId) {
+		this.articleId = articleId;
 	}
-	public Byte getType() {
+	public Integer getType() {
 		return type;
 	}
-	public void setType(Byte type) {
+	public void setType(Integer type) {
 		this.type = type;
 	}
 	public String getTitle() {
@@ -46,6 +46,14 @@ public class ArticleVO {
 	}
 	public void setEmpNo(Integer empNo) {
 		this.empNo = empNo;
+	}
+	@Override
+	public String toString() {
+
+		String title = this.title;
+		String content = this.content;
+
+		return "["+title+":"+content+"]";
 	}
 	
 }

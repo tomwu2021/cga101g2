@@ -1,169 +1,207 @@
 package com.remind.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import static connection.JDBCConnection.URL;
-import static connection.JDBCConnection.USER;
-import static connection.JDBCConnection.PASSWORD;
+import connection.JDBCConnection;
+
 
 public class RemindJDBCDAO implements RemindDAO_interface {
+	
+	Connection con;
 
-	private static final String INSERT = "INSERT INTO remind (member_id, content, time) VALUES (?, ?, ?);";
-	/* ��@������ */
-	private static final String UPDATE = "UPDATE remind SET content = ?, time = ? WHERE remind_id = ?;";
-	private static final String DELETE = "DELETE FROM remind WHERE remind_id = ?;";
-	/* �d�@������ */
-	private static final String GET_ONE = "SELECT remind_id, member_id, content, time FROM remind WHERE remind_id = ?;";
-	/* �d�@�|���Ҧ������A�H�����ɶ��Ƨ� */
-	private static final String GET_ALL = "SELECT remind_id, member_id, content, time FROM remind WHERE member_id = ? ORDER BY time;";
-
-	public static void main(String[] args) {
-
-		RemindJDBCDAO dao = new RemindJDBCDAO();
-		// �s�W
-//		RemindVO rVO1 = new RemindVO();
-//		rVO1.setMemberID(1);
-//		rVO1.setContent("pclub�K�B");
-//		rVO1.setTime(Timestamp.valueOf("2022-04-09 19:00:00"));
-//		dao.insert(rVO1);
-
-		// �ק�
-//		RemindVO rVO2 = new RemindVO();
-//		rVO2.setContent("�쳽�����R�}��");
-//		rVO2.setTime(Timestamp.valueOf("2022-04-09 17:00:00"));
-//		rVO2.setRemindID(3);
-//		dao.update(rVO2);
-
-		// �R��
-//		dao.delete(4);
-
-		// �d�@��
-//		RemindVO rVO3 = dao.findByPrimaryKey(5);
-//		System.out.println(rVO3);
-
-		// �d�@�|��
-		List<RemindVO> rlist = dao.getAll(1);
+	private static final String INSERT = "INSERT INTO remind (member_id, content, time) VALUES (?, ?, ?)";
+	private static final String DELETE = "DELETE FROM remind WHERE remind_id = ?";
+	private static final String UPDATE = "UPDATE remind SET content = ?, time = ? WHERE remind_id = ?";
+	private static final String GET_ONE = "SELECT remind_id, member_id, content, time FROM remind WHERE remind_id = ?";
+	private static final String GET_ALL = "SELECT remind_id, member_id, content, time FROM remind ORDER BY time";
+	
+	
+	@Override
+	public RemindVO insert(RemindVO remindVO) {
 		
-		for(RemindVO rVO:rlist) {
-			System.out.println(rVO);
-		}
-	}
-
-	@Override
-	public void insert(RemindVO remindVO) {
-
-		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement pstmt = con.prepareStatement(INSERT);) {
-
-			pstmt.setInt(1, remindVO.getMemberID());
-			pstmt.setString(2, remindVO.getContent());
-			pstmt.setTimestamp(3, remindVO.getTime());
-
-			pstmt.executeUpdate();
-			System.out.println("�s�W���\�I");
-		} catch (SQLException e) {
-			System.err.println("��Ʈw�o�Ϳ��~\n" + e.getMessage());
-		}
-
-	}
-
-	@Override
-	public void update(RemindVO remindVO) {
-
-		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement pstmt = con.prepareStatement(UPDATE);) {
-
-			pstmt.setString(1, remindVO.getContent());
-			pstmt.setTimestamp(2, remindVO.getTime());
-			pstmt.setInt(3, remindVO.getRemindID());
-
-			pstmt.executeUpdate();
-			System.out.println("�ק令�\�I");
-		} catch (SQLException e) {
-			System.err.println("��Ʈw�o�Ϳ��~\n" + e.getMessage());
-		}
-
-	}
-
-	@Override
-	public void delete(Integer recordID) {
-
-		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement pstmt = con.prepareStatement(DELETE);) {
-
-			pstmt.setInt(1, recordID);
-
-			pstmt.executeUpdate();
-			System.out.println("�R�����\�I");
-		} catch (SQLException e) {
-			System.err.println("��Ʈw�o�Ϳ��~\n" + e.getMessage());
-		}
-
-	}
-
-	@Override
-	public RemindVO findByPrimaryKey(Integer recordID) {
-
-		RemindVO rVO = new RemindVO();
-
-		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement pstmt = con.prepareStatement(GET_ONE);) {
-
-			pstmt.setInt(1, recordID);
-			ResultSet rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				rVO.setRemindID(rs.getInt(1));
-				rVO.setMemberID(rs.getInt(2));
-				rVO.setContent(rs.getString(3));
-				rVO.setTime(rs.getTimestamp(4));
-			}
-
-		} catch (SQLException e) {
-			System.err.println("��Ʈw�o�Ϳ��~\n" + e.getMessage());
-		}
-		return rVO;
-
-	}
-
-	@Override
-	public List<RemindVO> getAll(Integer memberID) {
-
-		List<RemindVO> list = new ArrayList<RemindVO>();
+		con = JDBCConnection.getRDSConnection();
+		RemindVO remindVO2 = insert(remindVO, con);
 		
-		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement pstmt = con.prepareStatement(GET_ALL);) {
-
-			pstmt.setInt(1, memberID);
-			ResultSet rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				RemindVO rVO = new RemindVO();
-				rVO.setRemindID(rs.getInt(1));
-				rVO.setMemberID(rs.getInt(2));
-				rVO.setContent(rs.getString(3));
-				rVO.setTime(rs.getTimestamp(4));
-				list.add(rVO);
-			}
-
+		try {
+			con.close();
 		} catch (SQLException e) {
-			System.err.println("��Ʈw�o�Ϳ��~\n" + e.getMessage());
+			e.printStackTrace();
+		}
+		return remindVO2;
+	}
+	
+	public RemindVO insert(RemindVO remindVO, Connection con) {
+	
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+				int index = 1;
+				pstmt.setInt(index++, remindVO.getMemberId());
+				pstmt.setString(index++, remindVO.getContent());
+				pstmt.setTimestamp(index++, remindVO.getTime());
+				pstmt.execute();
+				ResultSet rs = pstmt.getGeneratedKeys();
+				if (rs.next()) {
+					remindVO.setRemindId(rs.getInt(1));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else {
+			return null;
+		}
+		return remindVO;
+	}
+
+	
+	@Override
+	public boolean delete(RemindVO remindVO) {
+		
+		con = JDBCConnection.getRDSConnection();
+		boolean boo = delete(remindVO, con);
+		
+		try {
+			con.close();
+			return boo;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	
+	public boolean delete(RemindVO remindVO, Connection con) {
+		
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(DELETE);
+				int index = 1;
+				pstmt.setInt(index, remindVO.getRemindId());
+				pstmt.execute();
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}	
+		} else {
+			return false;
+		}
+	}
+	
+	
+	@Override
+	public RemindVO update(RemindVO remindVO) {
+		
+		con = JDBCConnection.getRDSConnection();
+		RemindVO remindVO2 = update(remindVO, con);
+		
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return remindVO2;
+	}
+	
+	public RemindVO update(RemindVO remindVO, Connection con) {
+		
+		if (con != null) {
+			try {
+				
+				PreparedStatement pstmt = con.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
+				int index = 1;
+				pstmt.setString(index++, remindVO.getContent());
+				pstmt.setTimestamp(index++, remindVO.getTime());
+				pstmt.setInt(index++, remindVO.getRemindId());
+				pstmt.execute();
+				ResultSet rs = pstmt.getGeneratedKeys();
+				if (rs.next()) {
+					remindVO.setRemindId(rs.getInt(1));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else {
+			return null;
+		}
+		return remindVO;
+		
+	}
+
+	
+	@Override
+	public RemindVO getOneById(Integer id) {
+		
+		con = JDBCConnection.getRDSConnection();
+		RemindVO remindVO =new RemindVO();
+			
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(GET_ONE);
+				int index = 1;
+				pstmt.setInt(index, id);
+				ResultSet rs = pstmt.executeQuery();
+				while (rs.next()) {
+					remindVO.setRemindId(rs.getInt(index++));
+					remindVO.setMemberId(rs.getInt(index++));
+					remindVO.setContent(rs.getString(index++));
+					remindVO.setTime(rs.getTimestamp(index++));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else {
+			return null;
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return remindVO;
+		
+	}
+		
+		
+	@Override
+	public List<RemindVO> getAll() {
+		
+		con = JDBCConnection.getRDSConnection();
+				List<RemindVO> list = new ArrayList<RemindVO>();
+		
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(GET_ALL);
+				int index = 1;
+				ResultSet rs = pstmt.executeQuery();
+				while (rs.next()) {
+					RemindVO remindVO =new RemindVO();
+					remindVO.setRemindId(rs.getInt(index++));
+					remindVO.setMemberId(rs.getInt(index++));
+					remindVO.setContent(rs.getString(index++));
+					remindVO.setTime(rs.getTimestamp(index++));
+					list.add(remindVO);
+					index = 1;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else {
+			return null;
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return list;
 	}
 
-	@Override
-	public List<RemindVO> getAll(Map<String, Object[]> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 }

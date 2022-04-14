@@ -4,27 +4,27 @@ import java.sql.Date;
 
 public class PetVO {
 
-	private Integer petID;
-	private Integer memberID;
+	private Integer petId;
+	private Integer memberId;
 	private String petName;
 	private Integer type;
-	private Byte gender;
+	private Integer gender;
 	private String introduction;
-	private Integer pictureID;
+	private Integer pictureId;
 	private Date birthday;
-	private Byte status;
+	private Integer status;
 	
-	public Integer getPetID() {
-		return petID;
+	public Integer getPetId() {
+		return petId;
 	}
-	public void setPetID(Integer petID) {
-		this.petID = petID;
+	public void setPetId(Integer petId) {
+		this.petId = petId;
 	}
-	public Integer getMemberID() {
-		return memberID;
+	public Integer getMemberId() {
+		return memberId;
 	}
-	public void setMemberID(Integer memberID) {
-		this.memberID = memberID;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 	public String getPetName() {
 		return petName;
@@ -38,10 +38,10 @@ public class PetVO {
 	public void setType(Integer type) {
 		this.type = type;
 	}
-	public Byte getGender() {
+	public Integer getGender() {
 		return gender;
 	}
-	public void setGender(Byte gender) {
+	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
 	public String getIntroduction() {
@@ -50,11 +50,11 @@ public class PetVO {
 	public void setIntroduction(String introduction) {
 		this.introduction = introduction;
 	}
-	public Integer getPictureID() {
-		return pictureID;
+	public Integer getPictureId() {
+		return pictureId;
 	}
-	public void setPictureID(Integer pictureID) {
-		this.pictureID = pictureID;
+	public void setPictureId(Integer pictureId) {
+		this.pictureId = pictureId;
 	}
 	public Date getBirthday() {
 		return birthday;
@@ -62,11 +62,17 @@ public class PetVO {
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
-	public Byte getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(Byte status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
-		
+	
+	public String toString() {
+
+		String petName = this.petName;
+
+		return petName;
+	}
 }

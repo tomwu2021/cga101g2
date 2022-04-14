@@ -4,19 +4,19 @@ import java.sql.Timestamp;
 
 public class CustomerVO {
 
-	private Integer caseID;
+	private Integer caseId;
 	private String mailAddress;
 	private String nickname;
 	private String content;
 	private Timestamp sendTime;
-	private Byte replyStatus;
+	private Integer replyStatus;
 	private Integer empNo;
 	
-	public Integer getCaseID() {
-		return caseID;
+	public Integer getCaseId() {
+		return caseId;
 	}
-	public void setCaseID(Integer caseID) {
-		this.caseID = caseID;
+	public void setCaseId(Integer caseId) {
+		this.caseId = caseId;
 	}
 	public String getMailAddress() {
 		return mailAddress;
@@ -42,10 +42,10 @@ public class CustomerVO {
 	public void setSendTime(Timestamp sendTime) {
 		this.sendTime = sendTime;
 	}
-	public Byte getReplyStatus() {
+	public Integer getReplyStatus() {
 		return replyStatus;
 	}
-	public void setReplyStatus(Byte replyStatus) {
+	public void setReplyStatus(Integer replyStatus) {
 		this.replyStatus = replyStatus;
 	}
 	public Integer getEmpNo() {
@@ -53,6 +53,16 @@ public class CustomerVO {
 	}
 	public void setEmpNo(Integer empNo) {
 		this.empNo = empNo;
+	}
+	@Override
+	public String toString() {
+
+		String nickname = this.nickname;
+		String content = this.content;
+		if(nickname == null || content == null) {
+			return "OK";
+		}else
+		return "["+nickname+","+content+"]";
 	}
 	
 }

@@ -2,20 +2,20 @@ package com.article_picture.model;
 
 public class ArticlePictureVO {
 	
-	private Integer pictureID;
-	private Integer articleID;
+	private Integer pictureId;
+	private Integer articleId;
 	
-	public Integer getPictureID() {
-		return pictureID;
+	public Integer getPictureId() {
+		return pictureId;
 	}
-	public void setPictureID(Integer pictureID) {
-		this.pictureID = pictureID;
+	public void setPictureId(Integer pictureId) {
+		this.pictureId = pictureId;
 	}
-	public Integer getArticleID() {
-		return articleID;
+	public Integer getArticleId() {
+		return articleId;
 	}
-	public void setArticleID(Integer articleID) {
-		this.articleID = articleID;
+	public void setArticleId(Integer articleId) {
+		this.articleId = articleId;
 	}
 	
 }

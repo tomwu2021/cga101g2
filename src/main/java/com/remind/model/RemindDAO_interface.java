@@ -1,15 +1,16 @@
 package com.remind.model;
 
 import java.util.List;
-import java.util.Map;
 
-public interface RemindDAO_interface {
+import com.common.model.JDBCDAO_Interface;
+
+public interface RemindDAO_interface extends JDBCDAO_Interface<RemindVO>{
 	
-	public void insert(RemindVO remindVO);
-    public void update(RemindVO remindVO);
-    public void delete(Integer recordID);
-    public RemindVO findByPrimaryKey(Integer recordID);
-    public List<RemindVO> getAll(Integer memberID);
-    public List<RemindVO> getAll(Map<String, Object[]> map); 
-
+	public RemindVO insert(RemindVO remindVO);
+	public boolean delete(RemindVO remindVO);
+    public RemindVO update(RemindVO remindVO);
+    public RemindVO getOneById(Integer id);
+    public List<RemindVO> getAll();
+    
+    
 }

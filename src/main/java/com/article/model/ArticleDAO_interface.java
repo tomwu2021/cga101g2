@@ -1,16 +1,15 @@
 package com.article.model;
 
 import java.util.List;
-import java.util.Map;
+import com.common.model.JDBCDAO_Interface;
 
 
-public interface ArticleDAO_interface {
+public interface ArticleDAO_interface extends JDBCDAO_Interface<ArticleVO>{
 	
-	public void insert(ArticleVO articleVO);
-    public void update(ArticleVO articleVO);
-    public void delete(Integer articleID);
-    public ArticleVO findByPrimaryKey(Integer articleID);
+	public ArticleVO insert(ArticleVO articleVO);
+    public boolean delete(ArticleVO articleVO);
+    public ArticleVO update(ArticleVO articleVO);
+    public ArticleVO getOneById(Integer articleID);
     public List<ArticleVO> getAll();
-    public List<ArticleVO> getAll(Map<String, Object[]> map); 
 
 }
