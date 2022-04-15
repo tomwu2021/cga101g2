@@ -158,7 +158,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	@Override
 	public boolean changeBonus(MembersVO membersVO) {
 		con = JDBCConnection.getRDSConnection();
-
+//		System.out.println(con);
 		// 現在的紅利 = 取得資料庫原本的紅利 + 管理員給的紅利
 		int currentBonusAmount = selectBonusAmount(membersVO, con) + membersVO.getBonusAmount();
 
@@ -181,6 +181,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 				pstmt.setInt(1, bouns);
 				pstmt.setInt(2, membersVO.getMemberId());
 				pstmt.execute();
+//				System.out.println("3：" + con);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -317,7 +318,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 
 	public int selectBonusAmount(MembersVO membersVO, Connection con) {
 		final String SELECT_BONUSAMOUNT = "SELECT bonus_amount from members where member_id = ?";
-
+//		System.out.println(con);
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(SELECT_BONUSAMOUNT);

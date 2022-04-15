@@ -4,30 +4,30 @@ import java.sql.Timestamp;
 
 public class EmpVO implements java.io.Serializable {
 
-	private Integer emp_no;
-	private String emp_name;
+	private Integer empNo;
+	private String empName;
 	private String account;
 	private String password;
-	private Timestamp create_time;
+	private Timestamp createTime;
 	private Integer status;
 
 	public EmpVO() {
 	}
 
-	public Integer getEmp_no() {
-		return emp_no;
+	public Integer getEmpNo() {
+		return empNo;
 	}
 
-	public void setEmp_no(Integer emp_no) {
-		this.emp_no = emp_no;
+	public void setEmpNo(Integer empNo) {
+		this.empNo = empNo;
 	}
 
-	public String getEmp_name() {
-		return emp_name;
+	public String getEmpName() {
+		return empName;
 	}
 
-	public void setEmp_name(String emp_name) {
-		this.emp_name = emp_name;
+	public void setEmpName(String empName) {
+		this.empName = empName;
 	}
 
 	public String getAccount() {
@@ -46,12 +46,12 @@ public class EmpVO implements java.io.Serializable {
 		this.password = password;
 	}
 
-	public Timestamp getCreate_time() {
-		return create_time;
+	public Timestamp getCreateTime() {
+		return createTime;
 	}
 
-	public void setCreate_time(Timestamp create_time) {
-		this.create_time = create_time;
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
 	}
 
 	public Integer getStatus() {
@@ -62,4 +62,11 @@ public class EmpVO implements java.io.Serializable {
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		return "EmpVO [empNo=" + empNo + ", empName=" + empName + ", account=" + account + ", password=" + password
+				+ ", createTime=" + createTime + ", status=" + status + "]";
+	}
+
+	
 }
