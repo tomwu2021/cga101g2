@@ -59,6 +59,13 @@ public class GroupBuyerVO  implements java.io.Serializable{
 		this.recipients = recipients;
 	}
 
-	 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		String text = String.format(
+				"groupOrderId:%d, memberId;:%d, productAmount:%s, phone:%s, address:%s, recipients:%s",
+				groupOrderId, memberId, productAmount, phone, address, recipients);
+		return text;
+	}
 
 }
