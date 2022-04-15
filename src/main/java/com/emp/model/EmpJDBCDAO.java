@@ -7,13 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import connection.JDBCConnection;
 
 public class EmpJDBCDAO implements EmpDAO_interface {
 
 	Connection con;
-	
+
 // 情境一 insert：新增一筆員工資料 --------------------------------------------------
 	@Override
 	public EmpVO insert(EmpVO empVO) {
@@ -63,6 +62,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	}
 
 	public EmpVO update(EmpVO empVO, Connection con) {
+
 		final StringBuilder UPDATE = new StringBuilder().append("UPDATE emp SET ");
 
 		final String empName = empVO.getEmpName();
@@ -72,11 +72,9 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 		if (empName != null && !empName.isEmpty()) {
 			UPDATE.append("emp_name = ?,");
 		}
-
 		if (account != null && !account.isEmpty()) {
 			UPDATE.append("account = ?,");
 		}
-
 		if (password != null && !password.isEmpty()) {
 			UPDATE.append("password = ?,");
 		}
@@ -92,19 +90,16 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 					pstmt.setString(offset, empVO.getEmpName());
 					offset += 1;
 				}
-
 				if (account != null && !account.isEmpty()) {
 					pstmt.setString(offset, empVO.getAccount());
 					offset += 1;
 				}
-
 				if (password != null && !password.isEmpty()) {
 					pstmt.setString(offset, empVO.getPassword());
 					offset += 1;
 				}
 
 				pstmt.setInt(offset, empVO.getEmpNo());
-
 				pstmt.executeUpdate();
 				return empVO;
 
@@ -132,7 +127,6 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 		final String SELECT_ONE_BYID = "SELECT emp_no, emp_name, account, create_time, status FROM emp where emp_no = ?;";
 
 		if (con != null) {
-
 			try {
 				PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_BYID);
 				pstmt.setInt(1, id);
@@ -148,11 +142,9 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 
 					return newEmp;
 				}
-
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
 		return null;
 	}
@@ -160,6 +152,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 // 情境四 select：查詢全部員工資料 --------------------------------------------------
 	@Override
 	public List<EmpVO> getAll() {
+
 		final String GETALL = "SELECT emp_no, emp_name, account, create_time, status FROM emp;";
 
 		try (Connection con = JDBCConnection.getRDSConnection();
@@ -186,6 +179,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 // 情境五 select：使用 account 查詢某一筆員工資料
 	@Override
 	public EmpVO getOneByAccount(String account) {
+
 		final String SELECT_ONE_BY_EMPNAME = "SELECT emp_no, emp_name, account, create_time, status FROM emp where account = ?;";
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_BY_EMPNAME);) {
@@ -212,6 +206,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 // 情境六 update：修改員工的狀態
 	@Override
 	public boolean changeStatus(EmpVO empVO) {
+
 		con = JDBCConnection.getRDSConnection();
 		EmpVO empVO2 = getOneById(empVO.getEmpNo(), con);
 
@@ -220,6 +215,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 		}
 
 		Boolean b = changeStatus(empVO2, empVO.getStatus(), con);
+		
 		try {
 			con.close();
 		} catch (SQLException e) {

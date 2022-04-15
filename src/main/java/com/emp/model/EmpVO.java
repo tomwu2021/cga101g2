@@ -67,6 +67,5 @@ public class EmpVO implements java.io.Serializable {
 		return "EmpVO [empNo=" + empNo + ", empName=" + empName + ", account=" + account + ", password=" + password
 				+ ", createTime=" + createTime + ", status=" + status + "]";
 	}
-
 	
 }
