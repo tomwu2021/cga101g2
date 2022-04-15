@@ -11,6 +11,7 @@ public class AwsService {
 	private static final String accessKey = "AKIATRU576IJDQJ4TVWP";
 	private static final String secretAccessKey = "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";
 
+	
 	public BasicAWSCredentials getAWSCredentials() {
 		BasicAWSCredentials creds = new BasicAWSCredentials(accessKey, secretAccessKey);
 		return creds;

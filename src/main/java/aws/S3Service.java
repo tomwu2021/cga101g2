@@ -8,6 +8,7 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
@@ -26,7 +27,7 @@ public class S3Service {
 		AmazonS3 s3client = new AwsService().getS3Client();
 		try {
 			byte[] buf = new byte[in.available()];
-			Long contentLength = Long.valueOf(buf.length);
+			long contentLength = Long.valueOf(buf.length);
 //			 Obtain the Content length of the Input stream for S3 header
 			ObjectMetadata metadata = new ObjectMetadata();
 			metadata.setContentLength(contentLength);
@@ -51,8 +52,27 @@ public class S3Service {
 			System.out.println("Error Message: " + e.getMessage());
 			e.printStackTrace();
 		}
-
 		return vo;
+	}
+
+	public boolean deleteS3Image(String fileKey) {
+		AmazonS3 s3client = new AwsService().getS3Client();
+		try {
+//			 delete picture from S3 
+			s3client.deleteObject(new DeleteObjectRequest(BUCKETNAME, fileKey));
+
+			return true;
+		} catch (AmazonServiceException ase) {
+			System.out.println("Error Message:    " + ase.getMessage());
+			System.out.println("HTTP Status Code: " + ase.getStatusCode());
+			System.out.println("AWS Error Code:   " + ase.getErrorCode());
+			System.out.println("Error Type:       " + ase.getErrorType());
+			System.out.println("Request ID:       " + ase.getRequestId());
+			return false;
+		} catch (AmazonClientException ace) {
+			System.out.println("Error Message: " + ace.getMessage());
+			return false;
+		} 
 	}
 
 	public String getGenerateFileKey(String fileName) {
