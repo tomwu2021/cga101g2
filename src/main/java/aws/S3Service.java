@@ -39,7 +39,7 @@ public class S3Service {
 			// Put the object in S3
 			vo.setFileKey(key);
 			vo.setFileName(fileName);
-			vo.setpUrl(url);
+			vo.setUrl(url);
 			vo.setSize(contentLength);
 
 		} catch (AmazonServiceException ase) {

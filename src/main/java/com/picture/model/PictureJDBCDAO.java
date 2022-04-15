@@ -17,15 +17,15 @@ import connection.JDBCConnection;
 public class PictureJDBCDAO implements PictureDAO_Interface {
 
 	public PictureVO insert(PictureVO pv, Connection con) {
-		String sql = "INSERT INTO picture(p_url, file_key, file_name, size) VALUES(?,?,?,?)";
+		String sql = "INSERT INTO picture(url, file_key, file_name, size) VALUES(?,?,?,?)";
 		if (con != null) {
 			try {
 				PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				int index = 1;
-				stmt.setString(index++, pv.getpUrl());
-				stmt.setString(index++, pv.getFileKey());
-				stmt.setString(index++, pv.getFileName());
-				stmt.setLong(index++, pv.getSize());
+				int index = 0;
+				stmt.setString(++index, pv.getUrl());
+				stmt.setString(++index, pv.getFileKey());
+				stmt.setString(++index, pv.getFileName());
+				stmt.setLong(++index, pv.getSize());
 				stmt.execute();
 				ResultSet rs = stmt.getGeneratedKeys();
 				if (rs.next()) {
@@ -63,21 +63,21 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 	}
 
 	public List<PictureVO> queryPicturesByMapping(MappingTableDto mtd) {
-		String sql = "SELECT * FROM picture p JOIN ? ON(p.picture_id=t.picture_id) where ?=?";
+		String sql = "SELECT * FROM picture p JOIN ? ON(p.picture_id=t.picture_id) WHERE ?=?";
 		Connection con = JDBCConnection.getRDSConnection();
 		if (con != null) {
 			try {
 				PreparedStatement stmt = con.prepareStatement(sql);
-				int index = 1;
-				stmt.setString(index++, mtd.getTableName1());
-				stmt.setString(index++, mtd.getColumn1());
-				stmt.setInt(index++, mtd.getId1());
+				int index = 0;
+				stmt.setString(++index, mtd.getTableName1());
+				stmt.setString(++index, mtd.getColumn1());
+				stmt.setInt(++index, mtd.getId1());
 				ResultSet rs = stmt.executeQuery();
 				List<PictureVO> pvos = new ArrayList<PictureVO>();
 				while (rs.next()) {
 					PictureVO pvo = new PictureVO();
 					pvo.setPictureId(rs.getInt("picture_id"));
-					pvo.setFileKey(rs.getString("p_url"));
+					pvo.setUrl(rs.getString("url"));
 					pvo.setCreateTime(rs.getTimestamp("create_time"));
 					pvo.setFileKey(rs.getString("file_key"));
 					pvo.setFileName(rs.getString("filename"));
@@ -108,7 +108,7 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				pvo.setPictureId(rs.getInt("picture_id"));
-				pvo.setFileKey(rs.getString("p_url"));
+				pvo.setUrl(rs.getString("url"));
 				pvo.setCreateTime(rs.getTimestamp("upload_time"));
 				pvo.setFileKey(rs.getString("file_key"));
 				pvo.setFileName(rs.getString("file_name"));
@@ -134,7 +134,7 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 	}
 
 	public Integer deleteById(Integer pictureId) {
-		String sql = "DELETE FROM picture where picture_id=?";
+		String sql = "DELETE FROM picture WHERE picture_id=?";
 		Connection con = JDBCConnection.getRDSConnection();
 		if (con != null) {
 			try {

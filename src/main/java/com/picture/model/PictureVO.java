@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class PictureVO {
 	private Integer pictureId;
-	private String pUrl;
+	private String url;
 	private Timestamp createTime;
 	private String fileKey;
 	private String fileName;
@@ -18,12 +18,12 @@ public class PictureVO {
 		this.pictureId = pictureId;
 	}
 
-	public String getpUrl() {
-		return pUrl;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setpUrl(String pUrl) {
-		this.pUrl = pUrl;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public Timestamp getCreateTime() {
@@ -60,7 +60,7 @@ public class PictureVO {
 
 	@Override
 	public String toString() {
-		return "PictureVO:{pictureId:" + pictureId + ", pUrl:" + pUrl + ", createTime:" + createTime + ", fileKey:"
+		return "PictureVO:{pictureId:" + pictureId + ", pUrl:" + url + ", createTime:" + createTime + ", fileKey:"
 				+ fileKey + ", fileName:" + fileName + ", size:" + size + "}";
 	}
 

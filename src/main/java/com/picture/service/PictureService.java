@@ -20,6 +20,7 @@ import com.picture.model.PictureJDBCDAO;
 import com.picture.model.PictureVO;
 
 import aws.S3Service;
+import connection.DruidConnection;
 import connection.JDBCConnection;
 
 public class PictureService {
@@ -50,7 +51,7 @@ public class PictureService {
 	public List<PictureVO> uploadImage(Collection<Part> parts, Integer albumId) throws IOException {
 		List<PictureVO> pvs = new ArrayList<>();
 		MappingTableDto mappingTableDto = new MappingTableDto();
-		Connection con = JDBCConnection.getRDSConnection();
+		Connection con = DruidConnection.getRDSConnection();
 		mappingTableDto.setTableName1("photo");
 		mappingTableDto.setColumn1("picture_id");
 		mappingTableDto.setColumn2("album_id");
@@ -58,6 +59,7 @@ public class PictureService {
 		try {
 			con.setAutoCommit(false);
 			sp = con.setSavepoint();
+			int i =1;
 			for (Part part : parts) {
 				PictureVO pv = new PictureVO();
 				String fileName = getFileNameFromPart(part);
@@ -66,7 +68,9 @@ public class PictureService {
 					InputStream in = part.getInputStream();
 					pv = s3Service.uploadImageToS3(in, fileName);
 					pvs.add(picDAO.insert(pv, con));
+					
 				}
+				System.out.println(i++);
 				if (albumDao.isAlbum(albumId,con)!=null && pv.getPictureId() != null) {
 					mappingTableDto.setId1(pv.getPictureId());
 					mappingTableDto.setId2(albumId);
@@ -77,7 +81,7 @@ public class PictureService {
 			}
 			con.commit();
 			con.setAutoCommit(true);
-			con.close();
+//			con.close();
 		} catch (SQLException e) {
 			for(PictureVO pv:pvs) {
 				deletePicture(pv.getPictureId());
