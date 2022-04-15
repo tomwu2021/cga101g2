@@ -44,7 +44,7 @@ public class OrdersDAO implements OrdersDAO_Interface{
 
 
 	@Override
-	public Integer updateStatusByOrderId(Integer status,Integer id) {
+	public Integer updateStatusByOrderId(Integer id,Integer status) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

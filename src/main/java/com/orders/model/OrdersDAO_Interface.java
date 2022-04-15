@@ -10,5 +10,5 @@ public interface OrdersDAO_Interface extends JDBCDAO_Interface<OrdersVO>{
 	public List<OrdersVO> getOneByMemberId(Integer id);
 	
 	//修改訂單狀態
-	public Integer updateStatusByOrderId(Integer status,Integer id);
+	public Integer updateStatusByOrderId(Integer id,Integer status);
 }

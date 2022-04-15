@@ -175,12 +175,12 @@ public class OrdersJDBCDAO implements OrdersDAO_Interface{
 
 
 	@Override
-	public Integer updateStatusByOrderId(Integer status,Integer id) {
+	public Integer updateStatusByOrderId(Integer id,Integer status) {
 		PreparedStatement ps=null;
 		String updateStatusByOrderIdSql="UPDATE orders SET status=? WHERE order_id=?;";	
 		OrdersVO ordersVO=null;
 		try (Connection con=JDBCConnection.getRDSConnection()){
-			ps=con.prepareStatement(updateStatusByOrderIdSql, Statement.RETURN_GENERATED_KEYS,ResultSet.CONCUR_READ_ONLY);
+			ps=con.prepareStatement(updateStatusByOrderIdSql, Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, status);
 			ps.setInt(2, id);
 			ps.executeUpdate();
