@@ -122,8 +122,5 @@ public class MembersVO implements java.io.Serializable {
 				memberId,account,password,name,phone,rankId,eWalletAmount,bonusAmount,status,createTime);
 			return text;
 	}
-	
-	
-	
 
 }
