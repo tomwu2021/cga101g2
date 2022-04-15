@@ -1,18 +1,8 @@
 package com.chargeRecord.model;
 
-import java.util.List;
-import com.members.model.MembersVO;
+import com.common.model.JDBCDAO_Interface;
 
-public interface ChargeRecordDAO_interface {
+public interface ChargeRecordDAO_interface extends JDBCDAO_Interface<ChargeRecordVO>{
 
-	public void insert(ChargeRecordVO charge_recordVO);
-
-	public void update(ChargeRecordVO charge_recordVO);
-
-	public void delete(Integer record_id);
-
-	public MembersVO findByPrimaryKey(Integer record_id);
-
-	public List<ChargeRecordVO> getAll();
 
 }

@@ -3,44 +3,45 @@ package com.chargeRecord.model;
 import java.sql.Timestamp;
 
 public class ChargeRecordVO implements java.io.Serializable {
-	private Integer record_id;
-	private Integer member_id;
-	private Integer charge_amount;
-	private Timestamp record_time;
+
+	private Integer recordId;
+	private Integer memberId;
+	private Integer chargeAmount;
+	private Timestamp recordTime;
 
 	public ChargeRecordVO() {
 	}
 
-	public Integer getRecord_id() {
-		return record_id;
+	public Integer getRecordId() {
+		return recordId;
 	}
 
-	public void setRecord_id(Integer record_id) {
-		this.record_id = record_id;
+	public void setRecordId(Integer recordId) {
+		this.recordId = recordId;
 	}
 
-	public Integer getMember_id() {
-		return member_id;
+	public Integer getMemberId() {
+		return memberId;
 	}
 
-	public void setMember_id(Integer member_id) {
-		this.member_id = member_id;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 
-	public Integer getCharge_amount() {
-		return charge_amount;
+	public Integer getChargeAmount() {
+		return chargeAmount;
 	}
 
-	public void setCharge_amount(Integer charge_amount) {
-		this.charge_amount = charge_amount;
+	public void setChargeAmount(Integer chargeAmount) {
+		this.chargeAmount = chargeAmount;
 	}
 
-	public Timestamp getRecord_time() {
-		return record_time;
+	public Timestamp getRecordTime() {
+		return recordTime;
 	}
 
-	public void setRecord_time(Timestamp record_time) {
-		this.record_time = record_time;
+	public void setRecordTime(Timestamp recordTime) {
+		this.recordTime = recordTime;
 	}
 
 }
