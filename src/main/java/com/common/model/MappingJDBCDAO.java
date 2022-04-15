@@ -66,6 +66,7 @@ public class MappingJDBCDAO {
 				stmt.setInt(1, mtd.getId1());
 				stmt.setInt(2, mtd.getId2());
 				stmt.execute();
+				stmt.close();
 				return true;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -74,6 +75,50 @@ public class MappingJDBCDAO {
 			}
 		}
 		return false;
+	}
+
+	public boolean deleteOnePictureMapping(MappingTableDto mtd, Connection con) {
+		String sql = "DELETE FROM `"+mtd.getTableName1()+"` WHERE picture_id = ?";
+		if (con != null) {
+			try {
+				PreparedStatement stmt = con.prepareStatement(sql);
+				stmt.setInt(1, mtd.getId1());
+				stmt.executeUpdate();
+				stmt.close();
+				return true;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public boolean deleteOnePictureMapping(MappingTableDto mtd) {
+		Connection con = JDBCConnection.getRDSConnection();
+		deleteOnePictureMapping(mtd, con);
+		try {
+			con.close();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean deleteOneMapping(MappingTableDto mtd) {
+		Connection con = JDBCConnection.getRDSConnection();
+		deleteOneMapping(mtd, con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
 	}
 
 	public boolean deleteMultiMapping(MappingTableDto mtd, Connection con) {
@@ -93,6 +138,4 @@ public class MappingJDBCDAO {
 		return false;
 	}
 
-	
-	
 }

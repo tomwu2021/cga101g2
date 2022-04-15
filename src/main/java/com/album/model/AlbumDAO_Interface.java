@@ -1,6 +1,10 @@
 package
 com.album.model;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
 import com.common.model.JDBCDAO_Interface;
 
 public interface AlbumDAO_Interface extends JDBCDAO_Interface<AlbumVO> {
@@ -10,4 +14,6 @@ public interface AlbumDAO_Interface extends JDBCDAO_Interface<AlbumVO> {
 	 * @return
 	 */
 	public Integer selectDefaultAlbumByMemberId(Integer mid);
+	public List<AlbumVO> getPersonalAlbum(Integer memberId);
+	public AlbumVO getOneById(Integer id);
 }
