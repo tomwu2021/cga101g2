@@ -178,14 +178,11 @@ public class OrdersJDBCDAO implements OrdersDAO_Interface{
 	public Integer updateStatusByOrderId(Integer id,Integer status) {
 		PreparedStatement ps=null;
 		String updateStatusByOrderIdSql="UPDATE orders SET status=? WHERE order_id=?;";	
-		OrdersVO ordersVO=null;
 		try (Connection con=JDBCConnection.getRDSConnection()){
 			ps=con.prepareStatement(updateStatusByOrderIdSql, Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, status);
 			ps.setInt(2, id);
 			ps.executeUpdate();
-			ordersVO=new OrdersVO();
-			ordersVO.setStatus(id);
 		
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -37,6 +37,6 @@ public class TestOrders {
 		
 		//訂單編號改出貨狀態
 		OrdersJDBCDAO dao=new OrdersJDBCDAO();
-		dao.updateStatusByOrderId(2, 1);
+		dao.updateStatusByOrderId(2, 2);
 	}
 }

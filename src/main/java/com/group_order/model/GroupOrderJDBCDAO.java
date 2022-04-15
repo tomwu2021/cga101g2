@@ -43,10 +43,11 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface{
 	}
 
 	@Override
-	public GroupOrderVO update(GroupOrderVO t) {
+	public GroupOrderVO update(GroupOrderVO groupOrderVO) {
+		
 		// TODO Auto-generated method stub
-
 		return null;
+
 	}
 
 	@Override
