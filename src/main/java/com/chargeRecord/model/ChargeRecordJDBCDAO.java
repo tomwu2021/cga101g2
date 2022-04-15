@@ -5,25 +5,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import com.members.model.MembersJDBCDAO;
 import com.members.model.MembersVO;
-
 import connection.JDBCConnection;
 
 public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 
 	Connection con;
 
-// 情境一 insert：會員儲值成功後，新增一筆儲值紀錄，並將金額加入到 member 表格中的 E_WALLET_AMOUNT
+// 情境一 insert：會員儲值或消費成功後，新增一筆儲值紀錄，並將金額加入到 member 表格中的 E_WALLET_AMOUNT
 	@Override
 	public ChargeRecordVO insert(ChargeRecordVO chargeRecordVO) {
 		con = JDBCConnection.getRDSConnection();
 
-		// 新增一筆儲值紀錄
+		// 新增一筆儲值或消費紀錄
 		ChargeRecordVO chargeRecordVO2 = insert(chargeRecordVO, con);
 
-		// 儲值成功後，將金額加入 member 表格中的 E_WALLET_AMOUNT
+		// 儲值或消費成功後，將金額加入 member 表格中的 E_WALLET_AMOUNT
 		MembersJDBCDAO memberDao = new MembersJDBCDAO();
 		MembersVO membersVO1 = new MembersVO();
 
@@ -68,15 +68,55 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 		return null;
 	}
 
+// 情境二 select：管理員查詢所有儲值與消費紀錄 ( 顯示：日期、商品圖片、商品名稱、商品價格)
 	@Override
-	public boolean delete(ChargeRecordVO chargeRecordVO) {
-		// TODO Auto-generated method stub
-		return false;
+	public List<ChargeRecordVO> getAll() {
+
+		final String GETALL = "SELECT record_id, member_id, charge_amount, record_time FROM charge_record;";
+
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
+
+			ResultSet rs = pstmt.executeQuery();
+			List<ChargeRecordVO> list = new ArrayList<>();
+			while (rs.next()) {
+				ChargeRecordVO newchargeRecord = new ChargeRecordVO();
+				newchargeRecord.setRecordId(rs.getInt("record_id"));
+				newchargeRecord.setMemberId(rs.getInt("member_id"));
+				newchargeRecord.setChargeAmount(rs.getInt("charge_amount"));
+				newchargeRecord.setRecordTime(rs.getTimestamp("record_time"));
+				list.add(newchargeRecord);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
+// 情境三　select：管理員查詢某會員所有儲值與消費紀錄 ( 顯示：日期、商品圖片、商品名稱、商品價格)
 	@Override
-	public ChargeRecordVO update(ChargeRecordVO chargeRecordVO) {
-		// TODO Auto-generated method stub
+	public List<ChargeRecordVO> getAll(Integer id) {
+
+		final String GETALL = "SELECT record_id, member_id, charge_amount, record_time FROM charge_record WHERE member_id =?;";
+
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			List<ChargeRecordVO> list = new ArrayList<>();
+			while (rs.next()) {
+				ChargeRecordVO newchargeRecord = new ChargeRecordVO();
+				newchargeRecord.setRecordId(rs.getInt("record_id"));
+				newchargeRecord.setMemberId(rs.getInt("member_id"));
+				newchargeRecord.setChargeAmount(rs.getInt("charge_amount"));
+				newchargeRecord.setRecordTime(rs.getTimestamp("record_time"));
+				list.add(newchargeRecord);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -87,7 +127,13 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 	}
 
 	@Override
-	public List<ChargeRecordVO> getAll() {
+	public boolean delete(ChargeRecordVO chargeRecordVO) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ChargeRecordVO update(ChargeRecordVO chargeRecordVO) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -44,4 +44,10 @@ public class ChargeRecordVO implements java.io.Serializable {
 		this.recordTime = recordTime;
 	}
 
+	@Override
+	public String toString() {
+		return "ChargeRecordVO [recordId=" + recordId + ", memberId=" + memberId + ", chargeAmount=" + chargeAmount
+				+ ", recordTime=" + recordTime + "]";
+	}
+
 }
