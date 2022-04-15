@@ -1,10 +1,12 @@
 package com.picture.service;
 
+import com.album.model.AlbumJDBCDAO;
+import com.album.model.AlbumVO;
+import com.common.model.MappingJDBCDAO;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.util.ArrayList;
@@ -13,10 +15,7 @@ import java.util.List;
 
 import javax.servlet.http.Part;
 
-import com.album.model.AlbumJDBCDAO;
-import com.common.model.MappingJDBCDAO;
 import com.common.model.MappingTableDto;
-import com.mysql.cj.jdbc.Driver;
 import com.picture.model.PictureJDBCDAO;
 import com.picture.model.PictureVO;
 
@@ -27,7 +26,7 @@ public class PictureService {
 	S3Service s3Service = new S3Service();
 	PictureJDBCDAO picDAO = new PictureJDBCDAO();
 	MappingJDBCDAO mappingDAO = new MappingJDBCDAO();
-	AlbumJDBCDAO AlbumDao = new AlbumJDBCDAO();
+	AlbumJDBCDAO albumDao = new AlbumJDBCDAO();
 
 	/**
 	 * 上傳圖檔, 不帶相簿ID(多為後台上傳圖檔使用)
@@ -51,12 +50,15 @@ public class PictureService {
 	public List<PictureVO> uploadImage(Collection<Part> parts, Integer albumId) throws IOException {
 		List<PictureVO> pvs = new ArrayList<>();
 		MappingTableDto mappingTableDto = new MappingTableDto();
-		Connection con = null;
+		Connection con = JDBCConnection.getRDSConnection();
+		mappingTableDto.setTableName1("photo");
+		mappingTableDto.setColumn1("picture_id");
+		mappingTableDto.setColumn2("album_id");
+		Savepoint sp;
 		try {
+			con.setAutoCommit(false);
+			sp = con.setSavepoint();
 			for (Part part : parts) {
-				con = JDBCConnection.getRDSConnection();
-				con.setAutoCommit(false);
-				Savepoint sp=con.setSavepoint();
 				PictureVO pv = new PictureVO();
 				String fileName = getFileNameFromPart(part);
 				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
@@ -65,21 +67,21 @@ public class PictureService {
 					pv = s3Service.uploadImageToS3(in, fileName);
 					pvs.add(picDAO.insert(pv, con));
 				}
-				if (albumId != null && pv.getPictureId() != null) {
-					mappingTableDto.setTableName1("photo");
-					mappingTableDto.setColumn1("picture_id");
-					mappingTableDto.setColumn2("album_id");
+				if (albumDao.isAlbum(albumId,con)!=null && pv.getPictureId() != null) {
 					mappingTableDto.setId1(pv.getPictureId());
 					mappingTableDto.setId2(albumId);
 					mappingDAO.insertOneMapping(mappingTableDto, con);
-					con.commit();
-					con.setAutoCommit(true);
-					con.close();
 				} else {
 					con.rollback(sp);
 				}
 			}
+			con.commit();
+			con.setAutoCommit(true);
+			con.close();
 		} catch (SQLException e) {
+			for(PictureVO pv:pvs) {
+				deletePicture(pv.getPictureId());
+			}
 			e.printStackTrace();
 		}
 		return pvs;
@@ -95,7 +97,22 @@ public class PictureService {
 	 * @throws IOException
 	 */
 	public List<PictureVO> uploadImageByDefaultAlbum(Collection<Part> parts, int memberId) throws IOException {
-		return this.uploadImage(parts, AlbumDao.selectDefaultAlbumByMemberId(memberId));
+		return this.uploadImage(parts, albumDao.selectDefaultAlbumByMemberId(memberId));
+	}
+
+	public boolean deletePicture(Integer pictureId) {
+		System.out.println(pictureId);
+		PictureVO pic2 = picDAO.getOneById(pictureId);
+		MappingTableDto mtd = new MappingTableDto();
+		mtd.setTableName1("photo");
+		mtd.setId1(pictureId);
+
+		if (mappingDAO.deleteOnePictureMapping(mtd)) {
+			picDAO.deleteById(pic2.getPictureId());
+		}
+
+		System.out.println(pic2);
+		return s3Service.deleteS3Image(pic2.getFileKey());
 	}
 
 	String getFileNameFromPart(Part part) {

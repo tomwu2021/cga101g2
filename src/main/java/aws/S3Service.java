@@ -2,6 +2,7 @@ package aws;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.util.UUID;
 
 import com.amazonaws.AmazonClientException;
@@ -18,6 +19,7 @@ import com.picture.model.PictureVO;
 public class S3Service {
 
 	private static final String BUCKETNAME = "cga101-02";
+
 
 	public PictureVO uploadImageToS3(InputStream in, String fileName) {
 		PictureVO vo = new PictureVO();
@@ -72,7 +74,7 @@ public class S3Service {
 		} catch (AmazonClientException ace) {
 			System.out.println("Error Message: " + ace.getMessage());
 			return false;
-		} 
+		}
 	}
 
 	public String getGenerateFileKey(String fileName) {

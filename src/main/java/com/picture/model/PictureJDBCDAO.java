@@ -8,13 +8,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.album.model.AlbumVO;
 import com.common.model.MappingTableDto;
+import com.mysql.cj.exceptions.RSAException;
 
 import connection.JDBCConnection;
 
 public class PictureJDBCDAO implements PictureDAO_Interface {
-
-	Connection con;
 
 	public PictureVO insert(PictureVO pv, Connection con) {
 		String sql = "INSERT INTO picture(p_url, file_key, file_name, size) VALUES(?,?,?,?)";
@@ -31,18 +31,21 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 				if (rs.next()) {
 					pv.setPictureId(rs.getInt(1));
 				}
+				rs.close();
+				stmt.close();
+				return pv;
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return null;
 			}
 		} else {
 			return null;
 		}
-		return pv;
 	}
 
 	@Override
 	public PictureVO insert(PictureVO pictureVO) {
-		con = JDBCConnection.getRDSConnection();
+		Connection con = JDBCConnection.getRDSConnection();
 		PictureVO pictureVO2 = insert(pictureVO, con);
 		try {
 			con.close();
@@ -81,6 +84,8 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 					pvo.setSize(rs.getLong("size"));
 					pvos.add(pvo);
 				}
+				rs.close();
+				stmt.close();
 				con.close();
 				return pvos;
 			} catch (SQLException e) {
@@ -94,8 +99,32 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 
 	@Override
 	public PictureVO getOneById(Integer pv) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = JDBCConnection.getRDSConnection();
+		String sql = "SELECT * FROM picture where picture_id=?";
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, pv);
+			PictureVO pvo = new PictureVO();
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				pvo.setPictureId(rs.getInt("picture_id"));
+				pvo.setFileKey(rs.getString("p_url"));
+				pvo.setCreateTime(rs.getTimestamp("upload_time"));
+				pvo.setFileKey(rs.getString("file_key"));
+				pvo.setFileName(rs.getString("file_name"));
+				pvo.setSize(rs.getLong("size"));
+				rs.close();
+				stmt.close();
+				con.close();
+				return pvo;
+			}else {
+				return null;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -104,15 +133,15 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		return null;
 	}
 
-	public Integer deleteById(Integer pictureId, Connection con) {
+	public Integer deleteById(Integer pictureId) {
 		String sql = "DELETE FROM picture where picture_id=?";
+		Connection con = JDBCConnection.getRDSConnection();
 		if (con != null) {
 			try {
 				PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				stmt.setInt(1, pictureId);
-				stmt.execute();
-				Integer deletedPictureId = stmt.getGeneratedKeys().getInt(1);
-				return deletedPictureId;
+				stmt.executeUpdate();
+				return pictureId;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -121,7 +150,7 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 				e.printStackTrace();
 				return null;
 			}
-		}else {
+		} else {
 			return -1;
 		}
 	}
