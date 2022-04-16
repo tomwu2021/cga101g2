@@ -34,6 +34,24 @@ public class MappingJDBCDAO {
 		return false;
 	}
 
+	public boolean insertOneMapping(MappingTableDto mtd) {
+		Connection con = JDBCConnection.getRDSConnection();
+
+		try {
+			if (insertOneMapping(mtd, con)) {
+				con.close();
+				return true;
+			} else {
+				con.close();
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
 	public boolean insertMultiMapping(List<MappingTableDto> mtds, Connection con) {
 		if (con != null) {
 			try {
@@ -78,7 +96,7 @@ public class MappingJDBCDAO {
 	}
 
 	public boolean deleteOnePictureMapping(MappingTableDto mtd, Connection con) {
-		String sql = "DELETE FROM `"+mtd.getTableName1()+"` WHERE picture_id = ?";
+		String sql = "DELETE FROM `" + mtd.getTableName1() + "` WHERE picture_id = ?";
 		if (con != null) {
 			try {
 				PreparedStatement stmt = con.prepareStatement(sql);
