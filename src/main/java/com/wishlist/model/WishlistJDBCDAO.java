@@ -5,17 +5,17 @@ import java.util.List;
 public class WishlistJDBCDAO implements WishlistDAO_interface{
 
 	@Override
-	public WishlistVO insert(WishlistVO t) {
+	public WishlistVO insert(WishlistVO wishlistVO) {
 		return null;
 	}
 
 	@Override
-	public boolean delete(WishlistVO t) {
+	public boolean delete(WishlistVO wishlistVO) {
 		return false;
 	}
 
 	@Override
-	public WishlistVO update(WishlistVO t) {
+	public WishlistVO update(WishlistVO wishlistVO) {
 		return null;
 	}
 

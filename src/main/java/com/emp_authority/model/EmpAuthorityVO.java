@@ -1,27 +1,27 @@
 package com.emp_authority.model;
 
-public class Emp_authorityVO implements java.io.Serializable {
-	// Ω∆¶X•D¡‰ emp_no°Bfunction_id
-	private Integer emp_no;
-	private Integer function_id;
+public class EmpAuthorityVO implements java.io.Serializable {
 
-	public Emp_authorityVO() {
+	private Integer empNo;
+	private Integer functionId;
+
+	public EmpAuthorityVO() {
 	}
 
-	public Integer getEmp_no() {
-		return emp_no;
+	public Integer getEmpNo() {
+		return empNo;
 	}
 
-	public void setEmp_no(Integer emp_no) {
-		this.emp_no = emp_no;
+	public void setEmpNo(Integer empNo) {
+		this.empNo = empNo;
 	}
 
-	public Integer getFunction_id() {
-		return function_id;
+	public Integer getFunctionId() {
+		return functionId;
 	}
 
-	public void setFunction_id(Integer function_id) {
-		this.function_id = function_id;
+	public void setFunctionId(Integer functionId) {
+		this.functionId = functionId;
 	}
 
 }
