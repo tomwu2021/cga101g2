@@ -52,7 +52,7 @@ public class PictureService {
 		List<PictureVO> pvs = new ArrayList<>();
 		MappingTableDto mappingTableDto = new MappingTableDto();
 		Connection con = DruidConnection.getRDSConnection();
-		mappingTableDto.setTableName1("photo");
+		mappingTableDto.setTableName1("photos");
 		mappingTableDto.setColumn1("picture_id");
 		mappingTableDto.setColumn2("album_id");
 		Savepoint sp;
@@ -68,7 +68,6 @@ public class PictureService {
 					InputStream in = part.getInputStream();
 					pv = s3Service.uploadImageToS3(in, fileName);
 					pvs.add(picDAO.insert(pv, con));
-					
 				}
 				System.out.println(i++);
 				if (albumDao.isAlbum(albumId,con)!=null && pv.getPictureId() != null) {
@@ -81,7 +80,7 @@ public class PictureService {
 			}
 			con.commit();
 			con.setAutoCommit(true);
-//			con.close();
+			con.close();
 		} catch (SQLException e) {
 			for(PictureVO pv:pvs) {
 				deletePicture(pv.getPictureId());
@@ -89,7 +88,6 @@ public class PictureService {
 			e.printStackTrace();
 		}
 		return pvs;
-
 	}
 
 	/**
@@ -108,13 +106,11 @@ public class PictureService {
 		System.out.println(pictureId);
 		PictureVO pic2 = picDAO.getOneById(pictureId);
 		MappingTableDto mtd = new MappingTableDto();
-		mtd.setTableName1("photo");
+		mtd.setTableName1("photos");
 		mtd.setId1(pictureId);
-
 		if (mappingDAO.deleteOnePictureMapping(mtd)) {
 			picDAO.deleteById(pic2.getPictureId());
 		}
-
 		System.out.println(pic2);
 		return s3Service.deleteS3Image(pic2.getFileKey());
 	}

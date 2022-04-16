@@ -23,6 +23,7 @@ public class PictureDeleteController extends HttpServlet {
 	 */
 	private static final long serialVersionUID = -6376892214189069235L;
 
+	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
@@ -32,6 +33,5 @@ public class PictureDeleteController extends HttpServlet {
 		System.out.println(pictureId);
 		pictureService.deletePicture(pictureId);
 		out.print("<p>成功刪除圖片</p>");
-
 	}
 }

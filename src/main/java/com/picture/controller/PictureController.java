@@ -34,7 +34,7 @@ public class PictureController extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = -6376892214189069235L;
-
+	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
@@ -66,6 +66,17 @@ public class PictureController extends HttpServlet {
 			out.println("<p>" + pic.getFileName() + "(" + TransferTool.transferSize(pic.getSize()) + ")</p>");
 			out.println("<br>");
 		});
+	}
+	@Override
+	public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = res.getWriter();
+		Integer pictureId =Integer.parseInt(req.getParameter("pictureId"));
+		System.out.println(pictureId);
+		pictureService.deletePicture(pictureId);
+		out.print("<p>成功刪除圖片</p>");
 	}
 
 }
