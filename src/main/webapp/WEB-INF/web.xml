@@ -38,7 +38,7 @@
     <init-param>  
     <!-- 允許清空統計數據 -->  
     <param-name>resetEnable</param-name>  
-    <param-value>true</param-value>  
+    <param-value>false</param-value>  
     </init-param>  
     <init-param>  
     <!-- 用戶名 -->  

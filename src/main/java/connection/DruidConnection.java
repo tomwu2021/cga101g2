@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
-
+import static connection.MyBatisUtil.MybatisConfResource;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
@@ -15,11 +15,13 @@ import com.alibaba.druid.pool.DruidDataSourceFactory;
 public class DruidConnection {
     
     static DruidDataSource dataSource;
+//非mybatis連線用
+    static final String DRUID_RESOURCE = "/resources/druid.properties";
     
     static {
         Properties prop = new Properties();
         try {
-            prop.load(DruidConnection.class.getClassLoader().getResourceAsStream("/resources/druid.properties"));
+            prop.load(DruidConnection.class.getClassLoader().getResourceAsStream(DRUID_RESOURCE));
             dataSource = (DruidDataSource)DruidDataSourceFactory.createDataSource(prop);
             //dataSource.addFilters("stat,log4j,wall");
         } catch (IOException e) {

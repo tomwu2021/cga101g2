@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 import org.apache.ibatis.datasource.DataSourceFactory;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
+import static connection.MyBatisUtil.MybatisConfResource;
 
 public class DruidMybatisDataSourceFactory implements DataSourceFactory {
 
@@ -17,7 +18,7 @@ public class DruidMybatisDataSourceFactory implements DataSourceFactory {
 		try {
 
 			prop.load(DruidMybatisDataSourceFactory.class.getClassLoader()
-					.getResourceAsStream("/resources/druid.properties"));
+					.getResourceAsStream(MybatisConfResource));
 			dataSource = (DruidDataSource)DruidDataSourceFactory.createDataSource(prop);
 			dataSource.init();
 
