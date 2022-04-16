@@ -4,37 +4,37 @@ import java.math.BigDecimal;
 
 public class RanksVO implements java.io.Serializable {
 
-	private Integer rank_id;
-	private String rank_name;
-	private Integer charge_amount;
+	private Integer rankId;
+	private String rankName;
+	private Integer chargeAmount;
 	private BigDecimal discount;
 	private Integer bonus;
 
 	public RanksVO() {
 	}
 
-	public Integer getRank_id() {
-		return rank_id;
+	public Integer getRankId() {
+		return rankId;
 	}
 
-	public void setRank_id(Integer rank_id) {
-		this.rank_id = rank_id;
+	public void setRankId(Integer rankId) {
+		this.rankId = rankId;
 	}
 
-	public String getRank_name() {
-		return rank_name;
+	public String getRankName() {
+		return rankName;
 	}
 
-	public void setRank_name(String rank_name) {
-		this.rank_name = rank_name;
+	public void setRankName(String rankName) {
+		this.rankName = rankName;
 	}
 
-	public Integer getCharge_amount() {
-		return charge_amount;
+	public Integer getChargeAmount() {
+		return chargeAmount;
 	}
 
-	public void setCharge_amount(Integer charge_amount) {
-		this.charge_amount = charge_amount;
+	public void setChargeAmount(Integer chargeAmount) {
+		this.chargeAmount = chargeAmount;
 	}
 
 	public BigDecimal getDiscount() {
@@ -51,6 +51,12 @@ public class RanksVO implements java.io.Serializable {
 
 	public void setBonus(Integer bonus) {
 		this.bonus = bonus;
+	}
+
+	@Override
+	public String toString() {
+		return "RanksVO [rankId=" + rankId + ", rankName=" + rankName + ", chargeAmount=" + chargeAmount + ", discount="
+				+ discount + ", bonus=" + bonus + "]";
 	}
 
 }
