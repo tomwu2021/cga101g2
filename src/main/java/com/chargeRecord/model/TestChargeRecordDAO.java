@@ -17,7 +17,7 @@ public class TestChargeRecordDAO {
 //			System.out.println(cr);
 //		}
 		
-		// 情境三　select：查詢某會員所有儲值與消費紀錄 ( 顯示：日期、商品圖片、商品名稱、商品價格)
+		// 情境三　select：查詢某會員所有儲值與消費紀錄 
 //		for (ChargeRecordVO cr : dao.getAll(3)) {
 //			System.out.println(cr);
 //		}

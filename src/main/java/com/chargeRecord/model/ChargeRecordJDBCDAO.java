@@ -68,7 +68,7 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 		return null;
 	}
 
-// 情境二 select：管理員查詢所有儲值與消費紀錄 ( 顯示：日期、商品圖片、商品名稱、商品價格)
+// 情境二 select：管理員查詢所有儲值與消費紀錄
 	@Override
 	public List<ChargeRecordVO> getAll() {
 
@@ -94,7 +94,7 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 		return null;
 	}
 
-// 情境三　select：管理員查詢某會員所有儲值與消費紀錄 ( 顯示：日期、商品圖片、商品名稱、商品價格)
+// 情境三　select：管理員查詢某會員所有儲值與消費紀錄
 	@Override
 	public List<ChargeRecordVO> getAll(Integer id) {
 
@@ -122,19 +122,16 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 
 	@Override
 	public ChargeRecordVO getOneById(Integer id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean delete(ChargeRecordVO chargeRecordVO) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public ChargeRecordVO update(ChargeRecordVO chargeRecordVO) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
