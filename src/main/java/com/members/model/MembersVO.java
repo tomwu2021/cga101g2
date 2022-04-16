@@ -117,10 +117,10 @@ public class MembersVO implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		String text = String.format(
-				"memberId：%d, account：%s, name：%s, address：%s, phone：%s, rankId：%d, eWalletAmount：%d, bonusAmount：%d, status：createTime：%d",
-				memberId,account,password,name,phone,rankId,eWalletAmount,bonusAmount,status,createTime);
-			return text;
+		return "MembersVO [memberId=" + memberId + ", account=" + account + ", password=" + password + ", name=" + name
+				+ ", address=" + address + ", phone=" + phone + ", rankId=" + rankId + ", eWalletAmount="
+				+ eWalletAmount + ", eWalletPassword=" + eWalletPassword + ", bonusAmount=" + bonusAmount + ", status="
+				+ status + ", createTime=" + createTime + "]";
 	}
 
 }

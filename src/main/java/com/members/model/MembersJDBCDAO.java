@@ -30,7 +30,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	}
 
 	public MembersVO insert(MembersVO membersVO, Connection con) {
-		final String INSERT_STMT = "INSERT INTO members(account,password,name,rank_id,e_wallet_amount,bonus_amount,status) values(?,?,?,1,0,0,1);";
+		final String INSERT_STMT = "INSERT INTO members(account,password,name,rank_id,ewallet_amount,bonus_amount,status) values(?,?,?,1,0,0,1);";
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT, Statement.RETURN_GENERATED_KEYS);
@@ -82,9 +82,9 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		if (phone != null && !phone.isEmpty()) {
 			UPDATE.append("phone = ?,");
 		}
-		final String e_wallet_password = membersVO.geteWalletPassword();
-		if (e_wallet_password != null && !e_wallet_password.isEmpty()) {
-			UPDATE.append("e_wallet_password = ?,");
+		final String eWalletPassword = membersVO.geteWalletPassword();
+		if (eWalletPassword != null && !eWalletPassword.isEmpty()) {
+			UPDATE.append("ewallet_password = ?,");
 		}
 		UPDATE.append("status = 1 ").append("where member_id = ?");
 
@@ -109,7 +109,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 					pstmt.setString(offset, membersVO.getPhone());
 					offset += 1;
 				}
-				if (e_wallet_password != null && !e_wallet_password.isEmpty()) {
+				if (eWalletPassword != null && !eWalletPassword.isEmpty()) {
 					pstmt.setString(offset, membersVO.geteWalletPassword());
 					offset += 1;
 				}
@@ -276,7 +276,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return null;
 	}
 
-// select 情境七：會員查詢錢包餘額 ( E_WALLET_AMOUNT ) --------------------------------------------------------------
+// select 情境七：會員查詢錢包餘額 ( EWALLET_AMOUNT ) --------------------------------------------------------------
 	@Override
 	public int selectEWalletAmount(MembersVO membersVO) {
 
@@ -294,17 +294,17 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 
 	public MembersVO selectEWalletAmount(MembersVO membersVO, Connection con) {
 
-		final String SELECT_E_WALLET_AMOUNT = "SELECT e_wallet_amount from members where member_id = ?;";
+		final String SELECT_EWALLET_AMOUNT = "SELECT ewallet_amount from members where member_id = ?;";
 		if (con != null) {
 			try {
-				PreparedStatement pstmt = con.prepareStatement(SELECT_E_WALLET_AMOUNT);
+				PreparedStatement pstmt = con.prepareStatement(SELECT_EWALLET_AMOUNT);
 				pstmt.setInt(1, membersVO.getMemberId());
 
 				ResultSet rs = pstmt.executeQuery();
 
 				if (rs.next()) {
 					MembersVO newMember = new MembersVO();
-					newMember.seteWalletAmount(rs.getInt("e_wallet_amount"));
+					newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
 					newMember.setMemberId(membersVO.getMemberId());
 					return newMember;
 				}
@@ -367,7 +367,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 
 	public MembersVO getOneById(Integer id, Connection con) {
 
-		final String SELECT_ONE_BYID = "SELECT member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time "
+		final String SELECT_ONE_BYID = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time "
 				+ "FROM members where member_id = ?;";
 		if (con != null) {
 			try {
@@ -383,7 +383,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 					newMember.setAddress(rs.getString("address"));
 					newMember.setPhone(rs.getString("phone"));
 					newMember.setRankId(rs.getInt("rank_id"));
-					newMember.seteWalletAmount(rs.getInt("e_wallet_amount"));
+					newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
 					newMember.setBonusAmount(rs.getInt("bonus_amount"));
 					newMember.setStatus(rs.getInt("status"));
 					newMember.setCreateTime(rs.getTimestamp("create_time"));
@@ -400,7 +400,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	@Override
 	public List<MembersVO> getAll() {
 
-		final String GETALL = "SELECT member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time FROM members;";
+		final String GETALL = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time FROM members;";
 
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
@@ -414,7 +414,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 				newMember.setAddress(rs.getString("address"));
 				newMember.setPhone(rs.getString("phone"));
 				newMember.setRankId(rs.getInt("rank_id"));
-				newMember.seteWalletAmount(rs.getInt("e_wallet_amount"));
+				newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
 				newMember.setBonusAmount(rs.getInt("bonus_amount"));
 				newMember.setStatus(rs.getInt("status"));
 				newMember.setCreateTime(rs.getTimestamp("create_time"));
@@ -430,7 +430,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 // select 情境十一：管理員查詢所有被停權的所有會員 ( status )------------------------------------------------------------
 	public List<MembersVO> getAllStatus() {
 
-		final String GETALL_STATUS = "SELECT member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time FROM members where status = ?;";
+		final String GETALL_STATUS = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time FROM members where status = ?;";
 
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETALL_STATUS)) {
@@ -446,7 +446,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 				newMember.setAddress(rs.getString("address"));
 				newMember.setPhone(rs.getString("phone"));
 				newMember.setRankId(rs.getInt("rank_id"));
-				newMember.seteWalletAmount(rs.getInt("e_wallet_amount"));
+				newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
 				newMember.setBonusAmount(rs.getInt("bonus_amount"));
 				newMember.setStatus(rs.getInt("status"));
 				newMember.setCreateTime(rs.getTimestamp("create_time"));
@@ -462,7 +462,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 // select 情境十二：管理員使用 name 查詢某一筆會員資料 ------------------------------------------------------------------
 	@Override
 	public MembersVO getOneByName(String name) {
-		final String GETONE_BY_NAME = "SELECT member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time FROM members where name = ?;";
+		final String GETONE_BY_NAME = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time FROM members where name = ?;";
 
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETONE_BY_NAME)) {
@@ -477,7 +477,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 				newMember.setAddress(rs.getString("address"));
 				newMember.setPhone(rs.getString("phone"));
 				newMember.setRankId(rs.getInt("rank_id"));
-				newMember.seteWalletAmount(rs.getInt("e_wallet_amount"));
+				newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
 				newMember.setBonusAmount(rs.getInt("bonus_amount"));
 				newMember.setStatus(rs.getInt("status"));
 				newMember.setCreateTime(rs.getTimestamp("create_time"));
@@ -491,7 +491,6 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 
 	@Override
 	public MembersVO selectForLogin(String name, String password) {
-
 		con = JDBCConnection.getRDSConnection();
 		MembersVO membersVO2 = selectForLogin(name, password, con);
 
@@ -506,7 +505,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 // select 情境十三：查詢登入時帳號和密碼 ------------------------------------------------------------------------------
 	public MembersVO selectForLogin(String name, String password, Connection con) {
 
-		final String SELECT_FOR_LOGIN = "select member_id,account,name,address,phone,rank_id,e_wallet_amount,bonus_amount,status,create_time from members where name = ? and PASSWORD = ?;";
+		final String SELECT_FOR_LOGIN = "select member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time from members where name = ? and password = ?;";
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(SELECT_FOR_LOGIN);
@@ -522,7 +521,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 					newMember.setAddress(rs.getString("address"));
 					newMember.setPhone(rs.getString("phone"));
 					newMember.setRankId(rs.getInt("rank_id"));
-					newMember.seteWalletAmount(rs.getInt("e_wallet_amount"));
+					newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
 					newMember.setBonusAmount(rs.getInt("bonus_amount"));
 					newMember.setStatus(rs.getInt("status"));
 					newMember.setCreateTime(rs.getTimestamp("create_time"));
@@ -551,7 +550,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 
 	public boolean changeEWalletAmount(MembersVO membersVO, Connection con) {
 
-		final String UPDATEWALLETAMOUNT = "UPDATE members SET e_wallet_amount = ? where member_id = ?";
+		final String UPDATEWALLETAMOUNT = "UPDATE members SET ewallet_amount = ? where member_id = ?";
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(UPDATEWALLETAMOUNT);

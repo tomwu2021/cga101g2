@@ -7,46 +7,46 @@ public class TestMembersDAO {
 
 		// insert 情境一：會員辦帳號時，輸入資料庫的內容
 //		MembersVO membersVO1 = new MembersVO();
-//		membersVO1.setAccount("Program@pet.com");
+//		membersVO1.setAccount("lajuhoru@altmails.com");
 //		membersVO1.setPassword("!QAZ2wsx");
 //		dao.insert(membersVO1);
 //		System.out.println(membersVO1);
 
 		// update 情境二：會員可修改的資料 PASSWORD NAME ADDRESS PHONE E_WALLET_PASSWORD
 //		MembersVO membersVO2 = new MembersVO();
-//		membersVO2.setMemberId(23);
+//		membersVO2.setMemberId(24);
 //		membersVO2.setPassword("!QAZ2wsx");
-//		membersVO2.setName("張政勳");
-//		membersVO2.setAddress("臺北市文山區景福街23號");
-//		membersVO2.setPhone("0988425512");
-//		membersVO2.seteWalletPassword("337581");
+//		membersVO2.setName("何卓武");
+//		membersVO2.setAddress("630 雲林縣斗南鎮成功21號");
+//		membersVO2.setPhone("0943228515");
+//		membersVO2.seteWalletPassword("668125");
 //		dao.update(membersVO2);
 
 		// update 情境三：管理員可以修改此會員的狀態(停權/正常)
 //		MembersVO membersVO3 = new MembersVO();
-//		membersVO3.setMemberId(19);
-//		membersVO3.setStatus(0);
+//		membersVO3.setMemberId(20);
+//		membersVO3.setStatus(1);
 //		dao.changeStatus(membersVO3);
 
 		// update 情境四：管理員可以發送紅利
 //		MembersVO membersVO4 = new MembersVO();
 //		membersVO4.setMemberId(3);
-//		membersVO4.setBonusAmount(200);
+//		membersVO4.setBonusAmount(300);
 //		dao.changeBonus(membersVO4);
 
 		// update 情境五：會員忘記密碼 ( password )
 //		MembersVO membersVO5 = new MembersVO();
-//		membersVO5.setMemberId(23);
+//		membersVO5.setMemberId(3);
 //		dao.forgotPassword(membersVO5);
 
 		// select 情境六：會員查詢會員等級 ( RANK_ID )
 //		MembersVO membersVO6 = new MembersVO();
-//		membersVO6.setMemberId(3);
+//		membersVO6.setMemberId(2);
 //		System.out.println(dao.selectRankId(membersVO6));
 
-		// select 情境七：會員查詢錢包餘額 ( E_WALLET_AMOUNT )
+		// select 情境七：會員查詢錢包餘額 ( EWALLET_AMOUNT )
 //		MembersVO membersVO7 = new MembersVO();
-//		membersVO7.setMemberId(8);
+//		membersVO7.setMemberId(3);
 //		System.out.println(dao.selectEWalletAmount(membersVO7));
 
 		// select 情境八：會員查詢紅利帳戶 ( BONUS_AMOUNT )
@@ -74,12 +74,12 @@ public class TestMembersDAO {
 
 		// select 情境十三：查詢登入時帳號和密碼
 //		MembersVO membersVO10 = new MembersVO();
-//		System.out.println(dao.selectForLogin("閔皓","ooxxqaws"));
+//		System.out.println(dao.selectForLogin("閔皓","WH1NhjlC"));
 
 		// update 情境十四：會員儲值時，儲值紀錄改動，需要修改目前錢包餘額
 //		MembersVO membersVO11 = new MembersVO(); 
 //		membersVO11.setMemberId(3);
-//		membersVO11.seteWalletAmount(1050);
+//		membersVO11.seteWalletAmount(1111);
 //		System.out.println(dao.changeEWalletAmount(membersVO11));
 
 	}
