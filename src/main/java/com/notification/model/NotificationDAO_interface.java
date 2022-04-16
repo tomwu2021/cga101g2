@@ -1,18 +1,12 @@
 package com.notification.model;
 
 import java.util.List;
-import com.notification.model.NotificationVO;
+import com.common.model.JDBCDAO_Interface;
 
-public interface NotificationDAO_interface {
+public interface NotificationDAO_interface extends JDBCDAO_Interface<NotificationVO> {
 
-	public void insert(NotificationVO notificationVO);
-
-	public void update(NotificationVO notificationVO);
-
-	public void delete(Integer notification_id);
-
-	public NotificationVO findByPrimaryKey(Integer notification_id);
-
-	public List<NotificationVO> getAll();
+	List<NotificationVO> getAllById(Integer id);
+	
+	public Boolean updateStatus(NotificationVO notificationVO);
 
 }

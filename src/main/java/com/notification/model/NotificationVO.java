@@ -3,8 +3,9 @@ package com.notification.model;
 import java.sql.Timestamp;
 
 public class NotificationVO implements java.io.Serializable {
-	private Integer notification_id;
-	private Integer member_id;
+
+	private Integer notificationId;
+	private Integer memberId;
 	private String context;
 	private Timestamp time;
 	private Integer status;
@@ -12,20 +13,20 @@ public class NotificationVO implements java.io.Serializable {
 	public NotificationVO() {
 	}
 
-	public Integer getNotification_id() {
-		return notification_id;
+	public Integer getNotificationId() {
+		return notificationId;
 	}
 
-	public void setNotification_id(Integer notification_id) {
-		this.notification_id = notification_id;
+	public void setNotificationId(Integer notificationId) {
+		this.notificationId = notificationId;
 	}
 
-	public Integer getMember_id() {
-		return member_id;
+	public Integer getMemberId() {
+		return memberId;
 	}
 
-	public void setMember_id(Integer member_id) {
-		this.member_id = member_id;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 
 	public String getContext() {
@@ -50,6 +51,12 @@ public class NotificationVO implements java.io.Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return "NotificationVO [notificationId=" + notificationId + ", memberId=" + memberId + ", context=" + context
+				+ ", time=" + time + ", status=" + status + "]";
 	}
 
 }
