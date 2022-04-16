@@ -9,13 +9,14 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class MyBatisUtil {
 	private static SqlSessionFactory sessionFactory;
-	
+	public static final String MybatisConfResource = "resources/mybatis-config.xml";
+	public static final String MybatisConfTestResource = "resources/mybatis-config-main.xml";
 	private MyBatisUtil() {
 	}
 	
 	private static SqlSessionFactory getSessionFactory() {
 		if (sessionFactory == null) {
-			try(InputStream is = Resources.getResourceAsStream("/resources/mybatis-config.xml")){
+			try(InputStream is = Resources.getResourceAsStream(MybatisConfResource)){
 				sessionFactory = new SqlSessionFactoryBuilder().build(is);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -26,5 +27,21 @@ public class MyBatisUtil {
 	
 	public static SqlSession getSession() {
 		return getSessionFactory().openSession();
+	}
+	
+//main test
+	private static SqlSessionFactory getSessionFactoryTest() {
+		if (sessionFactory == null) {
+			try(InputStream is = Resources.getResourceAsStream(MybatisConfTestResource)){
+				sessionFactory = new SqlSessionFactoryBuilder().build(is);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return sessionFactory;
+	}
+	
+	public static SqlSession getSessionTest() {
+		return getSessionFactoryTest().openSession();
 	}
 }

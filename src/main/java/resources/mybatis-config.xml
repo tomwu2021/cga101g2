@@ -2,6 +2,7 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 	<properties resource="/resources/druid.properties" />
+
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 		<setting name="useGeneratedKeys" value="true" />
@@ -26,5 +27,6 @@
 	</environments>
 	<mappers>
 		<mapper class="com.picture.mapper.PictureMapper" />
+		<mapper class="com.chatroom.mapper.ChatroomMapper" />
 	</mappers>
 </configuration>
