@@ -2,7 +2,7 @@ package com.report.model;
 
 import java.util.List;
 
-public class ReportTestDAO {
+public class TestReport {
 	public static void main(String[] args) {
 		
 		ReportJDBCDAO dao = new ReportJDBCDAO();
