@@ -7,32 +7,26 @@ public class ReportTestDAO {
 		
 		ReportJDBCDAO dao = new ReportJDBCDAO();
 		
-		//¨d∏ﬂ•˛≥°
+		//Êü•Ë©¢ÂÖ®ÈÉ®
 		List<ReportVO> list = dao.getAll();
 		for(ReportVO vo: list) {
-			System.out.print(vo.getReport_id()+ ",");
-			System.out.print(vo.getReporter_id()+ ",");
-			System.out.print(vo.getPost_id()+ ",");
-			System.out.print(vo.getReport_reason()+ ",");
-			System.out.print(vo.getReport_time()+ ",");
+			System.out.print(vo.getReportId()+ ",");
+			System.out.print(vo.getReporterId()+ ",");
+			System.out.print(vo.getPostId()+ ",");
+			System.out.print(vo.getReportReason()+ ",");
+			System.out.print(vo.getReportTime()+ ",");
 			System.out.print(vo.getStatus());
 			System.out.println();	
 		}
 		
-		//∑sºW
-		
-		ReportVO reportvo1 = new ReportVO();
-		
-//		reportvo1.setReporter_id(1);
-//		reportvo1.setPost_id(3);
-//		reportvo1.setReport_reason("bloody violence");
+		//Êñ∞Â¢û
+//		ReportVO reportvo1 = new ReportVO();
+//		
+//		reportvo1.setReporterId(3);
+//		reportvo1.setPostId(4);
+//		reportvo1.setReportReason("ÂûÉÂúæË®äÊÅØ");
 //		reportvo1.setStatus(0);
-		
-//		reportvo1.setReporter_id(4);
-//		reportvo1.setPost_id(2);
-//		reportvo1.setReport_reason("reporting spam text messages");
-//		reportvo1.setStatus(1);
-	
-		dao.insert(reportvo1);	
+//	
+//		dao.insert(reportvo1);	
 	}
 }

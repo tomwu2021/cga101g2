@@ -1,11 +1,7 @@
 package com.report.model;
 
-import java.util.List;
+import com.common.model.JDBCDAO_Interface;
 
-public interface ReportDAO_interface {
-	public List<ReportVO> getAll();
-	public void insert(ReportVO reportVO);
-	public void update(ReportVO reportVO);
-	public void delete(Integer report_id);
-	public ReportVO findByPrimaryKey(Integer report_id);	
+public interface ReportDAO_interface extends JDBCDAO_Interface<ReportVO>{
+	
 }
