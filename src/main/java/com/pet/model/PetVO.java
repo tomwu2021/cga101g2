@@ -7,7 +7,7 @@ public class PetVO {
 	private Integer petId;
 	private Integer memberId;
 	private String petName;
-	private Integer type;
+	private Integer sort1Id;
 	private Integer gender;
 	private String introduction;
 	private Integer pictureId;
@@ -32,11 +32,11 @@ public class PetVO {
 	public void setPetName(String petName) {
 		this.petName = petName;
 	}
-	public Integer getType() {
-		return type;
+	public Integer getSort1Id() {
+		return sort1Id;
 	}
-	public void setType(Integer type) {
-		this.type = type;
+	public void setSort1Id(Integer sort1Id) {
+		this.sort1Id = sort1Id;
 	}
 	public Integer getGender() {
 		return gender;

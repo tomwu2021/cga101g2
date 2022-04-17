@@ -13,41 +13,54 @@ public class TestPet {
 		// 新增
 		PetVO pVO1 = new PetVO();
 		pVO1.setMemberId(1);
-		pVO1.setPetName("小小");
-		pVO1.setType(1);
-		pVO1.setGender(1);
-		pVO1.setIntroduction("哈哈哈");
-		pVO1.setPictureId(1);
-		pVO1.setBirthday(Date.valueOf("2011-04-10"));
+		pVO1.setPetName("白白 ");
+		pVO1.setSort1Id(1);
+		pVO1.setGender(null);
+		pVO1.setIntroduction(null);
+		pVO1.setPictureId(null);
+		Object birthday = "2011-04-10";//也可null
+		if(birthday != null) birthday = Date.valueOf((String) birthday);
+		pVO1.setBirthday((Date)birthday);
 		System.out.println(dao.insert(pVO1));
 		
 		// 刪除
-		PetVO pVO2 = new PetVO();
-		pVO2.setPetId(4);
-		System.out.println(dao.delete(pVO2));
+//		PetVO pVO2 = new PetVO();
+//		pVO2.setPetId(4);
+//		System.out.println(dao.delete(pVO2));
 		
-		// 修改
-		PetVO pVO3 = new PetVO();
-		pVO3.setPetName("Alex");
-		pVO3.setType(1);
-		pVO3.setGender(0);
-		pVO3.setIntroduction("OHIYO");
-		pVO3.setPictureId(1);
-		pVO3.setBirthday(Date.valueOf("2011-04-16"));
-		pVO3.setStatus(0);
-		pVO3.setPetId(1);
-		System.out.println(dao.update(pVO3));
+		// 修改資料
+//		PetVO pVO3 = new PetVO();
+//		pVO3.setPetName("Alex");
+//		pVO3.setSort1Id(1);
+//		pVO3.setGender(0);
+//		pVO3.setIntroduction("OHIYO");
+//		pVO3.setPictureId(1);
+//		Object birthdayU = "2011-04-10";//也可null
+//		if(birthday != null) birthdayU = Date.valueOf((String) birthday);
+//		pVO3.setBirthday((Date)birthdayU);
+//		pVO3.setPetId(9);
+//		System.out.println(dao.update(pVO3));
+		
+		// 修改公開/隱藏狀態
+//		System.out.println(dao.changeStatus(1, 0));
 
-		// 查一筆
-		System.out.println(dao.getOneById(5));
+		// 以寵物ID查詢
+//		System.out.println(dao.getOneById(8));
+
+		// 以會員ID查詢
+//		System.out.println(dao.getOneByMemberId(4));
 
 		// 查全部
-		List<PetVO> plist = dao.getAll();
+//		List<PetVO> pList = dao.getAll();
+//		for(PetVO pVO:pList) {
+//		System.out.println(pVO);
+//		}
 		
-		for(PetVO pVO:plist) {
-			System.out.println(pVO);
+		// 查公開且該月生日的寵物
+		List<PetVO> bList = dao.getAllByBirth(12);
+		for(PetVO pVO:bList) {
+		System.out.println(pVO);
 		}
 	}
-
 
 }
