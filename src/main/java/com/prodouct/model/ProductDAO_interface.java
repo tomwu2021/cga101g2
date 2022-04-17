@@ -1,21 +1,12 @@
 package com.prodouct.model;
 
-import java.util.List;
 
-public interface ProductDAO_interface {
-	public void insert(ProductVO productVO);
-	//§ó§ï°Ó«~»P¹ÎÁÊ»ù®æ
-    public void update(ProductVO productVO);
-	//§ó§ï¤@¯ë°Ó«~ªº±ÀÂËª¬ºA
-//    '0:«D±ÀÂËª¬ºA\n1:±ÀÂËª¬ºA',
-    public void updatetBytop_status(Integer top_status ,Integer product_id);
-    //ª`·N°Ó«~ªºdelete¬°§ó§ï¬°°Ó«~¤W¤U¬[ª¬ºA
-//    0:¤U¬[  1:¤@¯ë°Ó«~¤W¬[ 2:¤@¯ë°Ó«~+¹ÎÁÊ¤W¬[
-    public void delete(Integer status ,Integer product_id);
-    
-    
-    public ProductVO findByPrimaryKey(Integer product_id);
-    public List<ProductVO> getAll();
-    //¸U¥Î½Æ¦X¬d¸ß(¶Ç¤J°Ñ¼Æ«¬ºAMap)(¦^¶Ç List)
-//  public List<EmpVO> getAll(Map<String, String[]> map); 
+import com.common.model.JDBCDAO_Interface;
+
+public interface ProductDAO_interface extends  JDBCDAO_Interface<ProductVO>{
+	
+	//æ”¹è®Šæ¨è–¦ç‹€æ…‹ å›å‚³ 1/-1ä»£è¡¨æˆåŠŸæˆ–æ˜¯å¤±æ•—
+	  int deleteByTopStatus(ProductVO productVO);
+    //è¬ç”¨è¤‡åˆæŸ¥è©¢(å‚³å…¥åƒæ•¸å‹æ…‹Map)(å›å‚³ List)
+//  public List<EmpVO> getAll(Map<String, String[]> map);
 }

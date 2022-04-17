@@ -4,150 +4,129 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sort1.model.Sort1VO;
+import com.sort_mix.model.SortMixVO;
+
+import connection.JDBCConnection;
+
 import static connection.JDBCConnection.*;
 
-public class Sort2JDBCDAO implements Sort2DAO_interface{
-	
-	private static final String INSERT_STMT = 
-			"INSERT INTO cga_02.sort2(sort2_name) VALUES ( ? );";
-		private static final String GET_ALL_STMT = 
-			"SELECT sort2_id,sort2_name "
-			+ "FROM cga_02.sort2 "
-			+ "order by sort2_id;";
+public class Sort2JDBCDAO implements Sort2DAO_interface {
+
 //		private static final String DELETE = 
 //			"DELETE FROM emp2 where empno = ?";
-		private static final String UPDATE = 
-			"UPDATE cga_02.sort2 "
-			+ "SET sort2_name= ? "
-			+ "where sort2_id = ?;";
-		
+//	private static final String UPDATE = "UPDATE cga_02.sort2 " + "SET sort2_name= ? " + "where sort2_id = ?;";
+
 	@Override
-	public void insert(Sort2VO sort2VO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
+	public Sort2VO insert(Sort2VO sort2VO) {
+		final String INSERT_STMT = "INSERT INTO cga_02.sort2(sort2_name) VALUES ( ? );";
+		try (Connection connection = getRDSConnection();
+				PreparedStatement pstmt = connection.prepareStatement(INSERT_STMT, Statement.RETURN_GENERATED_KEYS)) {
 
-		try {
-			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-			pstmt = con.prepareStatement(INSERT_STMT);
+			pstmt.setString(1, sort2VO.getSort2Name());
 
-			pstmt.setString(1, sort2VO.getSort2_name());
-			
-			int rowCount = pstmt.executeUpdate();
-			System.out.println(rowCount + "row(s) updated!");
-
-			// Handle any driver errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-					System.out.println("insert successfully...");
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				sort2VO.setSort2Id(rs.getInt(1));
 			}
+
+			int rowCount = pstmt.executeUpdate();
+			System.out.println(rowCount + "row(s) insert!");
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return sort2VO;
 	}
 
 	@Override
-	public void update(Sort2VO sort2VO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
+	public boolean delete(Sort2VO t) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-		try {
-			
-			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-			pstmt = con.prepareStatement(UPDATE);
+	@Override
+	public Sort2VO update(Sort2VO sort2VO) {
 
-			pstmt.setString(1, sort2VO.getSort2_name());
-			pstmt.setInt(2, sort2VO.getSort2_id());
+		final StringBuilder UPDATE = new StringBuilder().append("UPDATE cga_02.sort2 SET ");
+
+		final String sort2Name = sort2VO.getSort2Name();
+		if (sort2Name != null && !sort2Name.isEmpty()) {
+			// "UPDATE members SET password = ?, phone = ?, "
+			UPDATE.append(" sort2_name = ? ");
+		}
+		UPDATE.append(" where sort2_id = ? ;");
+
+		try (Connection connection = getRDSConnection();
+				PreparedStatement pstmt = connection.prepareStatement(UPDATE.toString())) {
+			int offset = 1;
+			pstmt.setString(offset, sort2VO.getSort2Name());
+			offset += 1;
+			pstmt.setInt(2, sort2VO.getSort2Id());
 
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) updated!");
 
-			// Handle any driver errors
+			return sort2VO;
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured."
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-					System.out.println("update successfully...");
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Sort2VO getOneById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Sort2VO selectBySort2Name(String sort2Name) {
+		final String sql = "select * from sort2 where sort2_name = ?";
+		try (Connection conn =  getRDSConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, sort2Name);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					Sort2VO sort2VO = new Sort2VO();
+					sort2VO.setSort2Id(rs.getInt("sort2_id"));
+					sort2VO.setSort2Name(rs.getString("sort2_Name"));
+					return sort2VO;
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
+		return null;
 	}
 
 	@Override
 	public List<Sort2VO> getAll() {
+		final String GET_ALL_STMT = "SELECT sort2_id,sort2_name " + "FROM cga_02.sort2 " + "order by sort2_id;";
 		List<Sort2VO> list = new ArrayList<Sort2VO>();
-		Sort2VO sort2VO = null;
-		
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-			pstmt = con.prepareStatement(GET_ALL_STMT);
-			rs = pstmt.executeQuery();
-
+	
+		try (Connection connection = getRDSConnection();
+				PreparedStatement pstmt = connection.prepareStatement(GET_ALL_STMT)) {
+			ResultSet rs = pstmt.executeQuery();
+	
 			while (rs.next()) {
-				sort2VO = new Sort2VO();
-				sort2VO.setSort2_id(rs.getInt("sort2_id"));
-				sort2VO.setSort2_name(rs.getString("sort2_name"));
+				// 回傳sortMixVO 並且 加入 直到沒有下一筆
+				Sort2VO sort2VO = new Sort2VO();
+				sort2VO.setSort2Id(rs.getInt("sort2_id"));
+				sort2VO.setSort2Name(rs.getString("sort2_Name"));
 				list.add(sort2VO); // Store the row in the list
 			}
-
-			// Handle any driver errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return list;
-		
-	}
 	
-	public static void main(String[] args) {
-		
-		Sort2JDBCDAO dao = new Sort2JDBCDAO();
-		
-		//新增
-		Sort2VO sort2VO1= new Sort2VO();
-		sort2VO1.setSort2_name("433");
-		dao.insert(sort2VO1);
-		
-		//修改
-//		Sort2VO sort2VO2= new Sort2VO();
-//		sort2VO2.setSort2_name("SSS");
-//		sort2VO2.setSort2_id(3);
-//		dao.update(sort2VO2);
-		
-		//查詢全部
-		List<Sort2VO> list = dao.getAll();
-		for (Sort2VO aSort2 : list) {
-			System.out.print(aSort2.getSort2_id() + ",");
-			System.out.print(aSort2.getSort2_name());
-			System.out.println();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	
+		return list;
 	}
 }
-

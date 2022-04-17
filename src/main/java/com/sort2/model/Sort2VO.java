@@ -6,45 +6,33 @@ public class Sort2VO implements java.io.Serializable{
 	 * 定義Sort2VO
 	 */
 	private static final long serialVersionUID = 1L;
-	private  Integer sort2_id;
-	private  String sort2_name;
-	
-	
+	private  Integer sort2Id;
+	private  String sort2Name;
 	
 	public Sort2VO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	public Sort2VO(Integer sort2_id, String sort2_name) {
+	public Sort2VO(Integer sort2Id, String sort2Name) {
 		super();
-		this.sort2_id = sort2_id;
-		this.sort2_name = sort2_name;
+		this.sort2Id = sort2Id;
+		this.sort2Name = sort2Name;
+	}
+
+	public Integer getSort2Id() {
+		return sort2Id;
+	}
+	public void setSort2Id(Integer sort2Id) {
+		this.sort2Id = sort2Id;
+	}
+	public String getSort2Name() {
+		return sort2Name;
+	}
+	public void setSort2Name(String sort2Name) {
+		this.sort2Name = sort2Name;
 	}
 
 
-	public Integer getSort2_id() {
-		return sort2_id;
-	}
-
-
-	public void setSort2_id(Integer sort2_id) {
-		this.sort2_id = sort2_id;
-	}
-
-
-	public String getSort2_name() {
-		return sort2_name;
-	}
-
-
-	public void setSort2_name(String sort2_name) {
-		this.sort2_name = sort2_name;
-	}
-
-
-
-	
 	
 }
