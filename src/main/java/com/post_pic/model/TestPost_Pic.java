@@ -2,13 +2,13 @@ package com.post_pic.model;
 
 import java.util.List;
 
-public class Post_PicTestDAO {
+public class TestPost_Pic {
 	public static void main(String[] args) {
 		
 		Post_PicJDBCDAO dao = new Post_PicJDBCDAO();
 		
 		//新增
-		Post_PicVO post_picvo1 = new Post_PicVO();
+//		Post_PicVO post_picvo1 = new Post_PicVO();
 		
 //		post_picvo1.setPostId(1);
 //		post_picvo1.setPostId(2);
@@ -16,7 +16,7 @@ public class Post_PicTestDAO {
 //		post_picvo1.setPostId(4);
 //		post_picvo1.setPostId(5);
 		
-		dao.insert(post_picvo1);
+//		dao.insert(post_picvo1);
 		
 		//查詢全部
 		List<Post_PicVO> list = dao.getAll();
