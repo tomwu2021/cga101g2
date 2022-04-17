@@ -37,9 +37,8 @@ public class RemindVO {
 	public String toString() {
 
 		String content = this.content;
-		String time = this.time.toString();
-
-		return "["+content+","+time+"]";
+		
+		return "["+content+"]";
 	}
 	
 }
