@@ -2,7 +2,7 @@ package com.post.model;
 
 import java.util.List;
 
-public class PostTestDAO {
+public class TestPost {
 	
 	public static void main(String[] args) {
 		PostJDBCDAO dao = new PostJDBCDAO();
