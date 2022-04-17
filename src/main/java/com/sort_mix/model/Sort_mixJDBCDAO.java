@@ -1,4 +1,4 @@
-package com.sort_max.model;
+package com.sort_mix.model;
 
 import static connection.JDBCConnection.username;
 import static connection.JDBCConnection.password;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Sort_maxJDBCDAO implements Sort_maxDAO_interface {
+public class Sort_mixJDBCDAO implements Sort_mixDAO_interface {
 	
 	private static final String INSERT_STMT = 
 			"INSERT INTO cga_02.sort_mix(sort1_id,sort2_id) "
@@ -30,7 +30,7 @@ public class Sort_maxJDBCDAO implements Sort_maxDAO_interface {
 //			+ "where sort2_id = ?;";
 		
 	@Override
-	public void insert(Sort_maxVO sort_maxVO) {
+	public void insert(Sort_mixVO sort_maxVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -63,7 +63,7 @@ public class Sort_maxJDBCDAO implements Sort_maxDAO_interface {
 	}
 
 	@Override
-	public void delete(Sort_maxVO sort_maxVO) {
+	public void delete(Sort_mixVO sort_maxVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -97,10 +97,10 @@ public class Sort_maxJDBCDAO implements Sort_maxDAO_interface {
 	}
 
 	@Override
-	public List<Sort_maxVO> getAll() {
+	public List<Sort_mixVO> getAll() {
 		
-		List<Sort_maxVO> list = new ArrayList<Sort_maxVO>();
-		Sort_maxVO sort_maxVO = null;
+		List<Sort_mixVO> list = new ArrayList<Sort_mixVO>();
+		Sort_mixVO sort_maxVO = null;
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -113,8 +113,8 @@ public class Sort_maxJDBCDAO implements Sort_maxDAO_interface {
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				// empVO ¤]ºÙ¬° Domain objects
-				sort_maxVO = new Sort_maxVO();
+				// empVO ï¿½]ï¿½Ù¬ï¿½ Domain objects
+				sort_maxVO = new Sort_mixVO();
 				sort_maxVO.setSort1_id(rs.getInt("sort1_id"));
 				sort_maxVO.setSort2_id(rs.getInt("sort2_id"));
 				list.add(sort_maxVO); // Store the row in the list
@@ -141,23 +141,23 @@ public class Sort_maxJDBCDAO implements Sort_maxDAO_interface {
 	
 	public static void main(String[] args) {
 		
-		Sort_maxJDBCDAO dao = new Sort_maxJDBCDAO();
+		Sort_mixJDBCDAO dao = new Sort_mixJDBCDAO();
 		
-		// ·s¼W
-		Sort_maxVO sort_maxVO1= new Sort_maxVO();
+		// ï¿½sï¿½W
+		Sort_mixVO sort_maxVO1= new Sort_mixVO();
 		sort_maxVO1.setSort1_id(2);
 		sort_maxVO1.setSort2_id(1);
 		dao.insert(sort_maxVO1);
 		
-		//§R°£
+		//ï¿½Rï¿½ï¿½
 //		Sort_maxVO sort_maxVO2= new Sort_maxVO();
 //		sort_maxVO2.setSort1_id(1);
 //		sort_maxVO2.setSort2_id(4);
 //		dao.delete(sort_maxVO2);
 		
-		//¬d¸ß©Ò¦³
-		List<Sort_maxVO> list = dao.getAll();
-		for (Sort_maxVO aSort_max : list) {
+		//ï¿½dï¿½ß©Ò¦ï¿½
+		List<Sort_mixVO> list = dao.getAll();
+		for (Sort_mixVO aSort_max : list) {
 			System.out.print(aSort_max.getSort1_id() + ",");
 			System.out.print(aSort_max.getSort2_id());
 			System.out.println();

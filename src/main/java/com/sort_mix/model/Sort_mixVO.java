@@ -1,6 +1,6 @@
-package com.sort_max.model;
+package com.sort_mix.model;
 
-public class Sort_maxVO implements java.io.Serializable{
+public class Sort_mixVO implements java.io.Serializable{
 
 	/**
 	 * Sort_maxVO
