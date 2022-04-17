@@ -1,16 +1,13 @@
 package com.sort_mix.model;
 
-import static connection.JDBCConnection.*;
+import static connection.JDBCConnection.getRDSConnection;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import connection.JDBCConnection;
 
 public class SortMixJDBCDAO implements SortMixDAO_interface {
 

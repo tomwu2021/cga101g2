@@ -9,10 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sort2.model.Sort2VO;
-
-import connection.JDBCConnection;
-
 public class Sort1JDBCDAO implements Sort1DAO_interface{
 
 	//private static final String DELETE = 
