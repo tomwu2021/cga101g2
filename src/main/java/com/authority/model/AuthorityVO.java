@@ -1,26 +1,26 @@
 package com.authority.model;
 
 public class AuthorityVO implements java.io.Serializable {
-	private Integer function_id;
-	private String function_name;
+	private Integer functionId;
+	private String functionName;
 
 	public AuthorityVO() {
 	}
 
-	public Integer getFunction_id() {
-		return function_id;
+	public Integer getFunctionId() {
+		return functionId;
 	}
 
-	public void setFunction_id(Integer function_id) {
-		this.function_id = function_id;
+	public void setFunctionId(Integer functionId) {
+		this.functionId = functionId;
 	}
 
-	public String getFunction_name() {
-		return function_name;
+	public String getFunctionName() {
+		return functionName;
 	}
 
-	public void setFunction_name(String function_name) {
-		this.function_name = function_name;
+	public void setFunctionName(String functionName) {
+		this.functionName = functionName;
 	}
 
 }
