@@ -8,7 +8,7 @@ public class LikelistTestDAO {
 		LikelistJDBCDAO dao = new LikelistJDBCDAO();
 		
 		
-		//¬d¸ß¥þ³¡
+		//æŸ¥è©¢å…¨éƒ¨
 		List<LikelistVO> list = dao.getAll();
 		for(LikelistVO vo: list) {
 			System.out.print(vo.getPostId()+ ",");
@@ -16,24 +16,10 @@ public class LikelistTestDAO {
 			System.out.println();
 		}
 		
-		//·s¼W
-		LikelistVO likelistVO1 = new LikelistVO();
-//		likelistVO1.setPost_id(2);
-//		likelistVO1.setMember_id(1);
-		
-		//¦A·s¼W¨ä¥Lµ§
-//		likelistVO1.setPost_id(3);
-//		likelistVO1.setMember_id(2);
-		
-//		likelistVO1.setPost_id(4);
-//		likelistVO1.setMember_id(4);
-		
-//		likelistVO1.setPost_id(5);
-//		likelistVO1.setMember_id(3);
-	
-//		dao.insert(likelistVO1);
+		//æ–°å¢ž
+//		LikelistVO likelistVO1 = new LikelistVO();
+//		likelistVO1.setPostId(6);
+//		likelistVO1.setMemberId(5);
+//		dao.insert(likelistVO1);	
 	}
-		
-		//§R°£
-
 }
