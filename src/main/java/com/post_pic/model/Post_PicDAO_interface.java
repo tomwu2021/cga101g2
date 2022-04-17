@@ -1,11 +1,7 @@
 package com.post_pic.model;
 
-import java.util.List;
+import com.common.model.JDBCDAO_Interface;
 	
-public interface Post_PicDAO_interface {
-	public void insert(Post_PicVO post_picVO);
-	public void update(Post_PicVO post_picVO);
-	public void delete(Integer pictureId);
-	public Post_PicVO findByPrimaryKey(Integer pictureId);
-	public List<Post_PicVO> getAll();
+public interface Post_PicDAO_interface extends JDBCDAO_Interface<Post_PicVO>{
+	
 }
