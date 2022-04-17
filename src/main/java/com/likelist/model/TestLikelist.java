@@ -2,7 +2,7 @@ package com.likelist.model;
 
 import java.util.List;
 
-public class LikelistTestDAO {
+public class TestLikelist {
 	
 	public static void main(String[] args) {
 		LikelistJDBCDAO dao = new LikelistJDBCDAO();
