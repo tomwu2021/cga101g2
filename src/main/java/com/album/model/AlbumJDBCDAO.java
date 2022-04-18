@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.cookie.params.CookieSpecPNames;
 
@@ -26,7 +28,6 @@ public class AlbumJDBCDAO implements AlbumDAO_Interface {
 			stmt.setInt(++index, albumvo.getMemberId());
 			stmt.setString(++index, albumvo.getName());
 			stmt.execute();
-			albumvo.setAlbumId(Statement.RETURN_GENERATED_KEYS);
 			albumvo.setAuthority(0);
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
@@ -164,8 +165,7 @@ public class AlbumJDBCDAO implements AlbumDAO_Interface {
 	@Override
 	public Integer selectDefaultAlbumByMemberId(Integer mid) {
 		Connection con = JDBCConnection.getRDSConnection();
-		String sql = "SELECT album_id FROM album WHERE member_id = ? " 
-					+ "ORDER BY create_time ASC LIMIT 1;";
+		String sql = "SELECT album_id FROM album WHERE member_id = ? " + "ORDER BY create_time ASC LIMIT 1;";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, mid);
@@ -184,12 +184,15 @@ public class AlbumJDBCDAO implements AlbumDAO_Interface {
 		}
 	}
 
-	public List<PictureVO> getFirstPictureOfAlbums(Integer memberId) {
+	public Map<Integer,PictureVO> getFirstPictureOfAlbums(Integer memberId) {
 		Connection con = JDBCConnection.getRDSConnection();
-		String sql = " SELECT p.* FROM picture p " + " JOIN photos ph ON(p.picture_id=ph.picture_id) "
+		String sql = " SELECT a.album_id, p.* FROM picture p " 
+				+ " JOIN photos ph ON(p.picture_id=ph.picture_id) "
 				+ " JOIN album a ON(ph.album_id=a.album_id) "
-				+ " WHERE ph.album_id IN(SELECT album_id FROM album WHERE member_id = ?) GROUP BY a.album_id ";
-		List<PictureVO> pictureList = new ArrayList<PictureVO>();
+				+ " WHERE ph.album_id "
+				+ "	IN(SELECT album_id FROM album WHERE member_id = ?) "
+				+ " GROUP BY a.album_id ";
+		Map<Integer,PictureVO> pictureList = new HashMap<Integer,PictureVO>();
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, memberId);
@@ -202,7 +205,7 @@ public class AlbumJDBCDAO implements AlbumDAO_Interface {
 				pictureVo.setFileKey(rs.getString("file_key"));
 				pictureVo.setFileName(rs.getString("filename"));
 				pictureVo.setSize(rs.getLong("size"));
-				pictureList.add(pictureVo);
+				pictureList.put(rs.getInt("album_id"),pictureVo);
 			}
 			rs.close();
 			stmt.close();
