@@ -189,7 +189,7 @@ public class PageQuery {
         if (this.order == null || "".equals(this.order)) {
             return "";
         }
-        if (this.sort != null && !("".equals(this.sort)) && "DESC".equals(this.sort.toUpperCase())) {
+        if (this.sort != null && !("".equals(this.sort)) && "DESC".equalsIgnoreCase(this.sort)) {
             return " ORDER BY " + this.order + " DESC ";
         } else {
             return " ORDER BY " + this.order + " ASC ";
