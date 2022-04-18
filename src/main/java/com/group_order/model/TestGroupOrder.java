@@ -1,5 +1,8 @@
 package com.group_order.model;
 
+import org.hibernate.Session;
+
+import connection.HibernateUtil;
 
 public class TestGroupOrder {
 	public static void main(String[] args) {
@@ -46,6 +49,9 @@ public class TestGroupOrder {
 //		GroupOrderJDBCDAO dao=new GroupOrderJDBCDAO();
 //		dao.updateStatusByGroupOrderId(3,1);
 
-			
+		Session session=HibernateUtil.getSessionFactory().openSession();
+		GroupOrderHibernateVO vo= session.get(GroupOrderHibernateVO.class, 1);
+		System.out.println(vo.getCreateTime());
+		HibernateUtil.shutdown();
 	}
 }
