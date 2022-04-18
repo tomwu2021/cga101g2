@@ -78,13 +78,7 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 				ResultSet rs = stmt.executeQuery();
 				List<PictureVO> pvos = new ArrayList<PictureVO>();
 				while (rs.next()) {
-					PictureVO pvo = new PictureVO();
-					pvo.setPictureId(rs.getInt("picture_id"));
-					pvo.setUrl(rs.getString("url"));
-					pvo.setCreateTime(rs.getTimestamp("create_time"));
-					pvo.setFileKey(rs.getString("file_key"));
-					pvo.setFileName(rs.getString("filename"));
-					pvo.setSize(rs.getLong("size"));
+					PictureVO pvo = buildPictureVO(rs);
 					pvos.add(pvo);
 				}
 				rs.close();
@@ -145,11 +139,8 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 				stmt.setInt(1, pictureId);
 				stmt.executeUpdate();
 				return pictureId;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return null;
 			} catch (Exception e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return null;
 			}
@@ -166,36 +157,28 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 	@Override
 	public PageResult<PictureVO> getPageResult(PageQuery pageQuery) {
 		// sql查結果全部指令
-		String sqlAll = "SELECT count(*) FROM picture p JOIN photos ph ON ph.picture_id = p.picture_id ";
-		String baseSQL = " SELECT * FROM picture p JOIN photos ph ON ph.picture_id = p.picture_id ";
-		Integer total = 0;
+		String baseSQL = "SELECT * FROM picture p JOIN photos ph ON ph.picture_id = p.picture_id ";
+		int total = 0;
 		List<PictureVO> pics = new ArrayList<PictureVO>();
-		try {
-			Connection con = DruidConnection.getRDSConnection();
-			PreparedStatement stmt = con.prepareStatement(pageQuery.getTotalCountSql(sqlAll));
+		try (Connection con = DruidConnection.getRDSConnection()) {
+
+			//Step1. 取得總筆數
+			PreparedStatement stmt = con.prepareStatement(pageQuery.getTotalCountSQL(baseSQL));
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
 			total = rs.getInt(1);
 			rs.close();
 			stmt.close();
 
-			PreparedStatement stmt2 = con.prepareStatement(pageQuery.getQuerySQL(baseSQL));
-			stmt2.setInt(1, pageQuery.getLimitStart());
-			System.out.println(" start:" + pageQuery.getLimitStart()+" end:"+pageQuery.getLimitEnd());
-			stmt2.setInt(2, pageQuery.getLimitEnd());
-			ResultSet rs2 = stmt2.executeQuery();
-			while (rs2.next()) {
-				PictureVO pvo = new PictureVO();
-				pvo.setPictureId(rs2.getInt("picture_id"));
-				pvo.setUrl(rs2.getString("url"));
-				pvo.setCreateTime(rs2.getTimestamp("upload_time"));
-				pvo.setFileKey(rs2.getString("file_key"));
-				pvo.setFileName(rs2.getString("file_name"));
-				pvo.setSize(rs2.getLong("size"));
+			//Step2. 取得QueryData
+			stmt = con.prepareStatement(pageQuery.getQuerySQL(baseSQL));
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				PictureVO pvo = buildPictureVO(rs);
 				pics.add(pvo);
 			}
-			rs2.close();
-			stmt2.close();
+			rs.close();
+			stmt.close();
 			con.close();
 
 			return new PageResult<PictureVO>(pageQuery, pics, total);
@@ -205,4 +188,15 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		}
 	}
 
+
+	public PictureVO buildPictureVO(ResultSet rs) throws SQLException {
+		PictureVO pvo = new PictureVO();
+		pvo.setPictureId(rs.getInt("picture_id"));
+		pvo.setUrl(rs.getString("url"));
+		pvo.setCreateTime(rs.getTimestamp("upload_time"));
+		pvo.setFileKey(rs.getString("file_key"));
+		pvo.setFileName(rs.getString("file_name"));
+		pvo.setSize(rs.getLong("size"));
+		return pvo;
+	}
 }

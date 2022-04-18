@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.picture.model.PictureJDBCDAO;
 import org.apache.http.cookie.params.CookieSpecPNames;
 
 import com.picture.model.PictureVO;
@@ -186,7 +187,7 @@ public class AlbumJDBCDAO implements AlbumDAO_Interface {
 
 	public Map<Integer,PictureVO> getFirstPictureOfAlbums(Integer memberId) {
 		Connection con = JDBCConnection.getRDSConnection();
-		String sql = " SELECT a.album_id, p.* FROM picture p " 
+		String sql = " SELECT a.album_id, p.* FROM picture p "
 				+ " JOIN photos ph ON(p.picture_id=ph.picture_id) "
 				+ " JOIN album a ON(ph.album_id=a.album_id) "
 				+ " WHERE ph.album_id "
@@ -198,14 +199,8 @@ public class AlbumJDBCDAO implements AlbumDAO_Interface {
 			stmt.setInt(1, memberId);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				PictureVO pictureVo = new PictureVO();
-				pictureVo.setPictureId(rs.getInt("picture_id"));
-				pictureVo.setUrl(rs.getString("url"));
-				pictureVo.setCreateTime(rs.getTimestamp("create_time"));
-				pictureVo.setFileKey(rs.getString("file_key"));
-				pictureVo.setFileName(rs.getString("filename"));
-				pictureVo.setSize(rs.getLong("size"));
-				pictureList.put(rs.getInt("album_id"),pictureVo);
+				PictureVO pictureVo = new PictureJDBCDAO().buildPictureVO(rs);
+                pictureList.put(rs.getInt("album_id"),pictureVo);
 			}
 			rs.close();
 			stmt.close();
