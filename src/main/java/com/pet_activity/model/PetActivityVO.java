@@ -33,5 +33,12 @@ public class PetActivityVO {
 	public void setRecordTime(Date recordTime) {
 		this.recordTime = recordTime;
 	}
+	@Override
+	public String toString() {
+
+		String activity = this.activity;
+		
+		return "["+activity+"]";
+	}
 	
 }
