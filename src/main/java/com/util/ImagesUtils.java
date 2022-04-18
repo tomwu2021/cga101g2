@@ -4,13 +4,12 @@ import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
 
 
 public class ImagesUtils {
-    public File changeToSmallImg_w(InputStream original, String fileName, String imgType, int maxWidth) {
-        File foSmall = new File(fileName);
+    public InputStream changeToSmallImg_w(InputStream original, String imgType, int maxWidth) {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             AffineTransform transform = new AffineTransform();
             BufferedImage bis = ImageIO.read(original);
@@ -36,10 +35,11 @@ public class ImagesUtils {
                     (imgType.compareToIgnoreCase("png") == 0)
                             ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_3BYTE_BGR);
             ato.filter(bis, bid);
-            ImageIO.write(bid, imgType, foSmall);
+
+            ImageIO.write(bid, imgType, os);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return foSmall;
+        return new ByteArrayInputStream(os.toByteArray());
     }
 }

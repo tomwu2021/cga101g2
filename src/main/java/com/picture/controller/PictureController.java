@@ -73,12 +73,15 @@ public class PictureController extends HttpServlet {
 		res.setContentType("application/json; charset=UTF-8");
 //		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
+
 		Integer thisPage = Integer.parseInt(req.getParameter("thisPage")); //設置當前頁數
 		Integer pageSize = Integer.parseInt(req.getParameter("pageSize")); //設置每頁顯示筆數
 		String sort = req.getParameter("sort"); //設置排序方式 (升降冪)
 		String order = req.getParameter("order"); //設置排序欄位
+
+
 		Integer albumId = Integer.parseInt(req.getParameter("albumId")); //取得查詢album_id 條件值
-		String[] pictureIds = (req.getParameter("pictureId")).split(",");; //取得picture_id
+		String[] pictureIds = (req.getParameter("pictureId")).split(","); //取得picture_id
 		String[] keywords = req.getParameter("fileName").split(" "); //使用空格切割關鍵字
 
 		long days = Long.parseLong(req.getParameter("uploadTime")); //取得天數

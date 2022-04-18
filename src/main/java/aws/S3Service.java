@@ -31,10 +31,8 @@ public class S3Service {
         AmazonS3 s3client = new AwsService().getS3Client();
         // 複製InputStream 給原圖和縮圖使用
         ByteArrayOutputStream baos = new StreamUtils().CloneInputStream(in);
-        new ByteArrayInputStream(baos.toByteArray());
         InputStream originalIn = new ByteArrayInputStream(baos.toByteArray());
         InputStream ready4SmallIn = new ByteArrayInputStream(baos.toByteArray());
-
 
         try {
             // Put the small image in S3
@@ -44,13 +42,14 @@ public class S3Service {
             String smallImageUrl = "https://" + BUCKETNAME + ".s3.ap-northeast-1.amazonaws.com/" + smallImageKey;
 
             //產生縮圖file start
-            File smallImage = new ImagesUtils().changeToSmallImg_w(ready4SmallIn, smallImageName, "png", compressPx);
+            InputStream smallImage = new ImagesUtils().changeToSmallImg_w(ready4SmallIn, "png", compressPx);
             // 將stream 讀取成byte陣列
-            byte[] f = IOUtils.toByteArray(new FileInputStream(smallImage));
+            byte[] buf2 = new byte[smallImage.available()];
+            long contentLength2 = buf2.length;
             ObjectMetadata metadata2 = new ObjectMetadata();
-            metadata2.setContentLength(f.length);
+            metadata2.setContentLength(contentLength2);
             //上傳至S3
-            PutObjectRequest req2 = new PutObjectRequest(BUCKETNAME, smallImageKey, new ByteArrayInputStream(f), metadata2)
+            PutObjectRequest req2 = new PutObjectRequest(BUCKETNAME, smallImageKey, smallImage, metadata2)
                     .withCannedAcl(CannedAccessControlList.PublicRead);
             s3client.putObject(req2);
             //產生縮圖file end
