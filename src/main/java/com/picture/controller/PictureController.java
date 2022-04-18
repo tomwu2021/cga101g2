@@ -42,7 +42,7 @@ public class PictureController extends HttpServlet {
 	PictureService pictureService = new PictureService();
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -6376892214189069235L;
 
@@ -62,7 +62,7 @@ public class PictureController extends HttpServlet {
 
 		pics.forEach(pic -> {
 			out.println("<p>" + pic.getFileName() + "(" + TransferTool.transferSize(pic.getSize()) + ")</p>");
-			out.println("<img src='" + pic.getUrl() + "' alt='" + pic.getFileName() + "' >");
+			out.println("<img src='" + pic.getPreviewUrl() + "' alt='" + pic.getFileName() + "' >");
 			out.println("<br>");
 		});
 	}
@@ -82,19 +82,19 @@ public class PictureController extends HttpServlet {
 		Long days = Long.parseLong(req.getParameter("uploadTime"));
 		//long 避免int overflow
 		Timestamp uploadTime = new Timestamp(System.currentTimeMillis()-days*24*3600*1000);
-		
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("album_id", albumId);
 		map.put("file_name", fileName);
 		PageQuery pq = new PageQuery(thisPage, pageSize, sort, order, map);
 		pq.setFindByAfterTime("upload_time", uploadTime);
 		PageResult<PictureVO> rpq = pictureService.getPageResult(pq);
-		
+
 		Gson gson = new Gson();
 		out.print(gson.toJson(rpq));
 		//out.print()->位元流->html(跳頁)
 		//ajax->JSON物件-不跳頁
-		
+
 		List<PictureVO> pics = rpq.getItems();
 //		pics.forEach(pic -> {
 //			out.println("<p>" + pic.getFileName() + "(" + TransferTool.transferSize(pic.getSize()) + ")</p>");

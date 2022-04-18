@@ -21,7 +21,7 @@ import connection.JDBCConnection;
 public class PictureJDBCDAO implements PictureDAO_Interface {
 
     public PictureVO insert(PictureVO pv, Connection con) {
-        String sql = "INSERT INTO picture(url, file_key, file_name, size) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO picture(url, file_key, file_name, size, preview_url, preview_key) VALUES(?,?,?,?,?,?)";
         if (con != null) {
             try {
                 PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -30,6 +30,8 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
                 stmt.setString(++index, pv.getFileKey());
                 stmt.setString(++index, pv.getFileName());
                 stmt.setLong(++index, pv.getSize());
+                stmt.setString(++index, pv.getPreviewUrl());
+                stmt.setString(++index, pv.getPreviewKey());
                 stmt.execute();
                 ResultSet rs = stmt.getGeneratedKeys();
                 if (rs.next()) {

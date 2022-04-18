@@ -9,6 +9,8 @@ public class PictureVO {
 	private String fileKey;
 	private String fileName;
 	private Long size;
+	private String previewUrl;
+	private String previewKey;
 
 	public Integer getPictureId() {
 		return pictureId;
@@ -58,13 +60,33 @@ public class PictureVO {
 		this.size = size;
 	}
 
-	@Override
-	public String toString() {
-		return "PictureVO:{pictureId:" + pictureId + ", pUrl:" + url + ", createTime:" + createTime + ", fileKey:"
-				+ fileKey + ", fileName:" + fileName + ", size:" + size + "}";
+	public String getPreviewUrl() {
+		return previewUrl;
 	}
 
+	public void setPreviewUrl(String previewUrl) {
+		this.previewUrl = previewUrl;
+	}
 
+	public String getPreviewKey() {
+		return previewKey;
+	}
 
+	public void setPreviewKey(String previewKey) {
+		this.previewKey = previewKey;
+	}
 
+	@Override
+	public String toString() {
+		return "PictureVO{" +
+				"pictureId=" + pictureId +
+				", url='" + url + '\'' +
+				", createTime=" + createTime +
+				", fileKey='" + fileKey + '\'' +
+				", fileName='" + fileName + '\'' +
+				", size=" + size +
+				", previewUrl='" + previewUrl + '\'' +
+				", previewKey='" + previewKey + '\'' +
+				'}';
+	}
 }

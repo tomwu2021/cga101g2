@@ -1,8 +1,8 @@
 package aws;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.sql.Connection;
+import java.util.Map;
 import java.util.UUID;
 
 import com.amazonaws.AmazonClientException;
@@ -15,73 +15,108 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.fasterxml.uuid.Generators;
 import com.picture.model.PictureVO;
+import com.util.ImagesUtils;
+import com.util.StreamUtils;
+import org.apache.commons.io.IOUtils;
 
 public class S3Service {
 
-	private static final String BUCKETNAME = "cga101-02";
+    private static final String BUCKETNAME = "cga101-02";
 
 
-	public PictureVO uploadImageToS3(InputStream in, String fileName) {
-		PictureVO vo = new PictureVO();
-		String key = getGenerateFileKey(fileName);
-		String url = "https://" + BUCKETNAME + ".s3.ap-northeast-1.amazonaws.com/";
-		url += key;
-		AmazonS3 s3client = new AwsService().getS3Client();
-		try {
-			byte[] buf = new byte[in.available()];
-			long contentLength = Long.valueOf(buf.length);
-//			 Obtain the Content length of the Input stream for S3 header
-			ObjectMetadata metadata = new ObjectMetadata();
-			metadata.setContentLength(contentLength);
-			PutObjectRequest req = new PutObjectRequest(BUCKETNAME, key, in, metadata)
-					.withCannedAcl(CannedAccessControlList.PublicRead);
-			s3client.putObject(req);
-			// Put the object in S3
-			vo.setFileKey(key);
-			vo.setFileName(fileName);
-			vo.setUrl(url);
-			vo.setSize(contentLength);
+    public PictureVO uploadImageToS3(InputStream in, String fileName) {
+        PictureVO vo = new PictureVO();
+        String key = getGenerateFileKey(fileName);
+        String url = "https://" + BUCKETNAME + ".s3.ap-northeast-1.amazonaws.com/" + key;
+        AmazonS3 s3client = new AwsService().getS3Client();
+        // 複製InputStream 給原圖和縮圖使用
+        ByteArrayOutputStream baos = new StreamUtils().CloneInputStream(in);
+        new ByteArrayInputStream(baos.toByteArray());
+        InputStream originalIn = new ByteArrayInputStream(baos.toByteArray());
+        InputStream ready4SmallIn = new ByteArrayInputStream(baos.toByteArray());
 
-		} catch (AmazonServiceException ase) {
-			System.out.println("Error Message:    " + ase.getMessage());
-			System.out.println("HTTP Status Code: " + ase.getStatusCode());
-			System.out.println("AWS Error Code:   " + ase.getErrorCode());
-			System.out.println("Error Type:       " + ase.getErrorType());
-			System.out.println("Request ID:       " + ase.getRequestId());
-		} catch (AmazonClientException ace) {
-			System.out.println("Error Message: " + ace.getMessage());
-		} catch (IOException e) {
-			System.out.println("Error Message: " + e.getMessage());
-			e.printStackTrace();
-		}
-		return vo;
-	}
 
-	public boolean deleteS3Image(String fileKey) {
-		AmazonS3 s3client = new AwsService().getS3Client();
-		try {
-//			 delete picture from S3 
-			s3client.deleteObject(new DeleteObjectRequest(BUCKETNAME, fileKey));
+        try {
+            // Put the small image in S3
+            int compressPx = 400; //縮圖寬度尺寸
+            String smallImageName = compressPx + "px_" + fileName;
+            String smallImageKey = getGenerateFileKey(smallImageName);
+            String smallImageUrl = "https://" + BUCKETNAME + ".s3.ap-northeast-1.amazonaws.com/" + smallImageKey;
 
-			return true;
-		} catch (AmazonServiceException ase) {
-			System.out.println("Error Message:    " + ase.getMessage());
-			System.out.println("HTTP Status Code: " + ase.getStatusCode());
-			System.out.println("AWS Error Code:   " + ase.getErrorCode());
-			System.out.println("Error Type:       " + ase.getErrorType());
-			System.out.println("Request ID:       " + ase.getRequestId());
-			return false;
-		} catch (AmazonClientException ace) {
-			System.out.println("Error Message: " + ace.getMessage());
-			return false;
-		}
-	}
+            //產生縮圖file start
+            File smallImage = new ImagesUtils().changeToSmallImg_w(ready4SmallIn, smallImageName, "png", compressPx);
+            // 將stream 讀取成byte陣列
+            byte[] f = IOUtils.toByteArray(new FileInputStream(smallImage));
+            ObjectMetadata metadata2 = new ObjectMetadata();
+            metadata2.setContentLength(f.length);
+            //上傳至S3
+            PutObjectRequest req2 = new PutObjectRequest(BUCKETNAME, smallImageKey, new ByteArrayInputStream(f), metadata2)
+                    .withCannedAcl(CannedAccessControlList.PublicRead);
+            s3client.putObject(req2);
+            //產生縮圖file end
 
-	public String getGenerateFileKey(String fileName) {
-		String keyName = "thumbs/";
-		UUID uuid = Generators.timeBasedGenerator().generate();
-		keyName += uuid + "-" + fileName;
-		return keyName;
-	}
+
+            // 將原圖上傳至S3 start
+            byte[] buf = new byte[originalIn.available()];
+            long contentLength = buf.length;
+            new Thread(() -> {
+                ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentLength(contentLength);
+                PutObjectRequest req = new PutObjectRequest(BUCKETNAME, key, originalIn, metadata)
+                        .withCannedAcl(CannedAccessControlList.PublicRead);
+                s3client.putObject(req);
+            }).start();
+            // 將原圖上傳至S3 end
+
+
+            //設置VO
+            vo.setFileKey(key);
+            vo.setFileName(fileName);
+            vo.setUrl(url);
+            vo.setSize(contentLength);
+            vo.setPreviewUrl(smallImageUrl);
+            vo.setPreviewKey(smallImageKey);
+
+        } catch (AmazonServiceException ase) {
+            System.out.println("Error Message:    " + ase.getMessage());
+            System.out.println("HTTP Status Code: " + ase.getStatusCode());
+            System.out.println("AWS Error Code:   " + ase.getErrorCode());
+            System.out.println("Error Type:       " + ase.getErrorType());
+            System.out.println("Request ID:       " + ase.getRequestId());
+        } catch (AmazonClientException ace) {
+            System.out.println("Error Message: " + ace.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error Message: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return vo;
+    }
+
+    public boolean deleteS3Image(String fileKey) {
+        AmazonS3 s3client = new AwsService().getS3Client();
+        try {
+//			 delete picture from S3
+            s3client.deleteObject(new DeleteObjectRequest(BUCKETNAME, fileKey));
+
+            return true;
+        } catch (AmazonServiceException ase) {
+            System.out.println("Error Message:    " + ase.getMessage());
+            System.out.println("HTTP Status Code: " + ase.getStatusCode());
+            System.out.println("AWS Error Code:   " + ase.getErrorCode());
+            System.out.println("Error Type:       " + ase.getErrorType());
+            System.out.println("Request ID:       " + ase.getRequestId());
+            return false;
+        } catch (AmazonClientException ace) {
+            System.out.println("Error Message: " + ace.getMessage());
+            return false;
+        }
+    }
+
+    public String getGenerateFileKey(String fileName) {
+        String keyName = "thumbs/";
+        UUID uuid = Generators.timeBasedGenerator().generate();
+        keyName += uuid + "-" + fileName;
+        return keyName;
+    }
 
 }
