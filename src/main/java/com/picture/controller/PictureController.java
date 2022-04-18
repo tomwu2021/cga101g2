@@ -73,21 +73,26 @@ public class PictureController extends HttpServlet {
 		res.setContentType("application/json; charset=UTF-8");
 //		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
-		Integer thisPage = Integer.parseInt(req.getParameter("thisPage"));
-		Integer pageSize = Integer.parseInt(req.getParameter("pageSize"));
-		String sort = req.getParameter("sort");
-		String order = req.getParameter("order");
-		Integer albumId = Integer.parseInt(req.getParameter("albumId"));
-		String fileName = req.getParameter("fileName");
-		Long days = Long.parseLong(req.getParameter("uploadTime"));
-		//long 避免int overflow
-		Timestamp uploadTime = new Timestamp(System.currentTimeMillis()-days*24*3600*1000);
+		Integer thisPage = Integer.parseInt(req.getParameter("thisPage")); //設置當前頁數
+		Integer pageSize = Integer.parseInt(req.getParameter("pageSize")); //設置每頁顯示筆數
+		String sort = req.getParameter("sort"); //設置排序方式 (升降冪)
+		String order = req.getParameter("order"); //設置排序欄位
+		Integer albumId = Integer.parseInt(req.getParameter("albumId")); //取得查詢album_id 條件值
+		String[] pictureIds = (req.getParameter("pictureId")).split(",");; //取得picture_id
+		String[] keywords = req.getParameter("fileName").split(" "); //使用空格切割關鍵字
 
-		Map<String, Object> map = new HashMap<>();
-		map.put("album_id", albumId);
-		map.put("file_name", fileName);
-		PageQuery pq = new PageQuery(thisPage, pageSize, sort, order, map);
-		pq.setFindByAfterTime("upload_time", uploadTime);
+		long days = Long.parseLong(req.getParameter("uploadTime")); //取得天數
+		//long 避免int overflow
+		Timestamp uploadTime = new Timestamp(System.currentTimeMillis()-days*24*3600*1000); //天數轉換
+
+		Map<String, Object> map = new HashMap<>(); //創建多筆指定欄位條件 Map
+		map.put("album_id", albumId); //添加比對 album_id欄位值比較條件
+
+		PageQuery pq = new PageQuery(thisPage, pageSize, sort, order, map); //創建分頁查訊物件
+		pq.setFindByLikeMultiValues("file_name", keywords); //設置關鍵字條件
+		pq.setFindByEqualMultiValues("p.picture_id", pictureIds); //設值多筆pictureId 條件
+		pq.setFindByAfterTime("upload_time", uploadTime); //設置時間條件
+
 		PageResult<PictureVO> rpq = pictureService.getPageResult(pq);
 
 		Gson gson = new Gson();
