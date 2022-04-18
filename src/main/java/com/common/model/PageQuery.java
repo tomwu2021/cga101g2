@@ -14,33 +14,7 @@ public class PageQuery {
 	private Map<String, Object> map;
 	private String whereSQL = "";
 
-	// 查詢條件 1.file_name 2.member_id
 
-	public void buildWhereSQL() {
-		String sql = "";
-		for (String column : map.keySet()) {
-			Object value = map.get(column);
-			if (value == null || (value instanceof String && "".equals((String) value))) {
-				continue;
-			}
-			if ("".equals(sql)) {
-				sql += " WHERE " + column;
-				if (value instanceof Integer) {
-					sql += " = " + (Integer) value;
-				} else if (value instanceof String) {
-					sql += " LIKE '%" + (String) value + "%' ";
-				}
-			} else {
-				sql += " AND " + column;
-				if (value instanceof Integer) {
-					sql += " = " + (Integer) value;
-				} else if (value instanceof String) {
-					sql += " LIKE '%" + (String) value + "%' ";
-				}
-			}
-		}
-		this.whereSQL = sql;
-	}
 	/**
 	 * 生成PageQuery物件 
 	 * @param thisPage 當前頁數 
@@ -133,24 +107,43 @@ public class PageQuery {
 		this.whereSQL = whereSQL;
 	}
 
-	public String getOrderBySql() {
-		if (this.order == null || "".equals(this.order)) {
-			return "";
+	// 查詢條件 1.file_name 2.member_id
+	
+	//從controller呼叫建構子，傳入參數時會被呼叫，呼叫後取得map<欄位,條件值>生成WHERE條件句(時間條件於其他方法生成)
+	 
+	public void buildWhereSQL() {
+		String sql = "";
+		for (String column : map.keySet()) {
+			Object value = map.get(column);
+			if (value == null || (value instanceof String && "".equals((String) value))) {
+				continue;
+			}
+			if ("".equals(sql)) {
+				sql += " WHERE " + column;
+				if (value instanceof Integer) {
+					sql += " = " + (Integer) value;
+				} else if (value instanceof String) {
+					sql += " LIKE '%" + (String) value + "%' ";
+				}
+			} else {
+				sql += " AND " + column;
+				if (value instanceof Integer) {
+					sql += " = " + (Integer) value;
+				} else if (value instanceof String) {
+					sql += " LIKE '%" + (String) value + "%' ";
+				}
+			}
 		}
-		if (this.sort != null && !("".equals(this.sort)) && "DESC".equals(this.sort.toUpperCase())) {
-			return " ORDER BY " + this.order + " DESC ";
-		} else {
-			return " ORDER BY " + this.order + " ASC ";
-		}
-
+		this.whereSQL = sql;
 	}
-
-	/**
+		
+	/** 形成WHERE 時間條件指令
 	 * 設置時間條件大於指定欄位
 	 * 
 	 * @param column 欄位名稱
 	 * @param time   指定時間
 	 */
+	//時間條件值來自controller
 	public void setFindByAfterTime(String column, Timestamp time) {
 		String sql = this.whereSQL;
 		if ("".equals(sql)) {
@@ -161,12 +154,13 @@ public class PageQuery {
 		this.whereSQL = sql;
 	}
 
-	/**
+	/**形成WHERE 時間條件指令
 	 * 設置時間條件小於指定欄位
 	 * 
 	 * @param column 欄位名稱
 	 * @param time   指定時間
 	 */
+	//時間條件值來自controller
 	public void setFindByBeforeTime(String column, Timestamp time) {
 		String sql = this.whereSQL;
 		if ("".equals(sql)) {
@@ -177,13 +171,14 @@ public class PageQuery {
 		this.whereSQL = sql;
 	}
 
-	/**
+	/**形成WHERE 時間條件指令
 	 * 設置時間條件BETWEEN指定欄位
 	 * 
 	 * @param column    欄位名稱
 	 * @param startTime 起始時間
 	 * @param endTime   結束時間
 	 */
+	//時間條件值來自controller
 	public void setFindByBetweenTime(String column, Timestamp startTime, Timestamp endTime) {
 		String sql = this.whereSQL;
 		if ("".equals(sql)) {
@@ -193,22 +188,38 @@ public class PageQuery {
 		}
 		this.whereSQL = sql;
 	}
+	
+	// countSQL來自DAO，取得計算總筆數的sql指令(條件須與取回資料之SQL指令相同,總筆數才會一致)
+	public String getTotalCountSql(String countSQL) {
+		return countSQL + this.whereSQL;
+	}
+	
+	//取得來自前端order排序條件 與 升冪降冪 形成ORDER BY指令 
+	public String getOrderBySQL() {
+		if (this.order == null || "".equals(this.order)) {
+			return "";
+		}
+		if (this.sort != null && !("".equals(this.sort)) && "DESC".equals(this.sort.toUpperCase())) {
+			return " ORDER BY " + this.order + " DESC ";
+		} else {
+			return " ORDER BY " + this.order + " ASC ";
+		}
 
+	}
+	
 	/**
 	 * 取得組合好之查詢SQL指令
 	 * 
 	 * @param sql 查詢SQL指令
 	 * @return
 	 */
-	public String getQuerySQL(String sql) {
-		String querySql = sql + this.whereSQL + this.getOrderBySql() + " LIMIT ?,? ";
-		System.out.println(querySql);
-		return querySql;
+	//baseSQL來自DAO 事先寫好的SQL指令基底，組裝完成後，Limit 參數由各DAO實作
+	public String getQuerySQL(String baseSQL) {
+		String querySQL = baseSQL + this.whereSQL + this.getOrderBySQL() + " LIMIT ?,? ";
+		System.out.println(querySQL);
+		return querySQL;
 	}
 
-	public String getTotalCountSql(String sql) {
-		return sql + this.whereSQL;
-	}
 
 	@Override
 	public String toString() {

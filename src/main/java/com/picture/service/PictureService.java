@@ -16,12 +16,15 @@ import java.util.List;
 import javax.servlet.http.Part;
 
 import com.common.model.MappingTableDto;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
 import com.picture.model.PictureJDBCDAO;
 import com.picture.model.PictureVO;
 
 import aws.S3Service;
 import connection.DruidConnection;
 import connection.JDBCConnection;
+import connection.JNDIConnection;
 
 public class PictureService {
 	S3Service s3Service = new S3Service();
@@ -51,7 +54,7 @@ public class PictureService {
 	public List<PictureVO> uploadImage(Collection<Part> parts, Integer albumId) throws IOException {
 		List<PictureVO> pvs = new ArrayList<>();
 		MappingTableDto mappingTableDto = new MappingTableDto();
-		Connection con = DruidConnection.getRDSConnection();
+		Connection con = JDBCConnection.getRDSConnection();
 		mappingTableDto.setTableName1("photos");
 		mappingTableDto.setColumn1("picture_id");
 		mappingTableDto.setColumn2("album_id");
@@ -113,6 +116,10 @@ public class PictureService {
 		}
 		System.out.println(pic2);
 		return s3Service.deleteS3Image(pic2.getFileKey());
+	}
+	
+	public PageResult<PictureVO> getPageResult(PageQuery pageQuery){
+		return picDAO.getPageResult(pageQuery);
 	}
 
 	String getFileNameFromPart(Part part) {
