@@ -14,8 +14,7 @@ public class ChatroomVO {
 	private Timestamp createTime;
 
 	public ChatroomVO() {
-		super();
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	public ChatroomVO(Integer chatroomId, String chatroomName, Integer chatroomType, Timestamp createTime) {

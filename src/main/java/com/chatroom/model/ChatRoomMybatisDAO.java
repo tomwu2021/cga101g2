@@ -1,11 +1,8 @@
 package com.chatroom.model;
 
 import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
-
 import com.chatroom.mapper.ChatroomMapper;
-
 import connection.MyBatisUtil;
 
 public class ChatRoomMybatisDAO {
@@ -51,5 +48,10 @@ public class ChatRoomMybatisDAO {
 		}else {
 			return null;
 		}	
+	}
+	public List<ChatroomVO> searchChatrooms(Integer memberId,String keyword){
+		SqlSession session = MyBatisUtil.getSessionTest();
+		ChatroomMapper cm = session.getMapper(ChatroomMapper.class);
+		return cm.searchChatrooms(memberId,keyword);
 	}
 }
