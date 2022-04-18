@@ -18,7 +18,7 @@ public class GroupOrderHibernateVO {
 	private Integer groupOrderId;
 	@Column(name = "product_id")
 	private Integer productId;
-	@Column(name = "create_time")
+	@Column(name = "create_time",updatable = false,insertable = false)
 	private Timestamp createTime;
 	@Column(name = "end_time")
 	private Timestamp endTime;
@@ -71,7 +71,14 @@ public class GroupOrderHibernateVO {
 		this.status = status;
 	}
 	
-	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		String text = String.format(
+				"groupOrderId:%d, productId:%d, createTime:%s, endTime:%s, endType:%d, finalPrice:%d, status:%d",
+				groupOrderId, productId, createTime, endTime, endType, finalPrice, status);
+		return text;
+	}
 	
 	
 }
