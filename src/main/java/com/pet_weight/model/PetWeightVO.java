@@ -34,5 +34,18 @@ public class PetWeightVO {
 	public void setRecordTime(Date recordTime) {
 		this.recordTime = recordTime;
 	}
+	public String toString() {
+		String weight;
+		String recordTime;
+		if(this.weightRecord != null)
+		weight = this.weightRecord.toString();
+		else weight = "";
+		if(this.recordTime != null)
+		recordTime = this.recordTime.toString();
+		else recordTime = "";
+		
+		
+		return "["+weight+","+recordTime+"]";
+	}
 	
 }
