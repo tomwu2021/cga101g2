@@ -116,24 +116,15 @@ public class PageQuery {
         String sql = "";
         for (String column : map.keySet()) {
             Object value = map.get(column);
-            if (value == null || (value instanceof String && "".equals((String) value))) {
+            if (value == null || (value instanceof String && "".equals(value))) {
                 continue;
             }
             if ("".equals(sql)) {
                 sql += " WHERE " + column;
-                if (value instanceof Integer) {
-                    sql += " = " + (Integer) value;
-                } else if (value instanceof String) {
-                    sql += " LIKE '%" + (String) value + "%' ";
-                }
             } else {
                 sql += " AND " + column;
-                if (value instanceof Integer) {
-                    sql += " = " + (Integer) value;
-                } else if (value instanceof String) {
-                    sql += " LIKE '%" + (String) value + "%' ";
-                }
             }
+            sql += " = " + value;
         }
         this.whereSQL = sql;
     }
