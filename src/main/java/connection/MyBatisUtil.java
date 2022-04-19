@@ -9,8 +9,8 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class MyBatisUtil {
 	private static SqlSessionFactory sessionFactory;
-	public static final String MybatisConfResource = "resources/mybatis-config.xml";
-	public static final String MybatisConfTestResource = "resources/mybatis-config-main.xml";
+	public static final String MybatisConfResource = "mybatis-config.xml";
+	public static final String MybatisConfTestResource = "mybatis-config-main.xml";
 	private MyBatisUtil() {
 	}
 	

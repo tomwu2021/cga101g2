@@ -10,32 +10,37 @@ import com.alibaba.druid.pool.DruidDataSourceFactory;
 
 /**
  * Druid连接池
+ * 
  * @author tangpengfei
  */
 public class DruidConnection {
-    
-    static DruidDataSource dataSource;
+
+	static DruidDataSource dataSource;
 //非mybatis連線用
-    static final String DRUID_RESOURCE = "/resources/druid.properties";
-    
-    static {
-        Properties prop = new Properties();
-        try {
-            prop.load(DruidConnection.class.getClassLoader().getResourceAsStream(DRUID_RESOURCE));
-            dataSource = (DruidDataSource)DruidDataSourceFactory.createDataSource(prop);
-            //dataSource.addFilters("stat,log4j,wall");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public static Connection getRDSConnection() {
-        try {
-            return dataSource.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
+	static final String DRUID_RESOURCE = "druid.properties";
+
+	static {
+		Properties prop = new Properties();
+		try {
+			prop.load(DruidConnection.class.getClassLoader().getResourceAsStream(DRUID_RESOURCE));
+			dataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(prop);
+			if (dataSource != null) {
+				System.out.println("DRUID取得DataSource成功");
+			}
+			// dataSource.addFilters("stat,log4j,wall");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static Connection getRDSConnection() {
+		try {
+			return dataSource.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
 			return null;
-        }
-    }
+		}
+	}
 }

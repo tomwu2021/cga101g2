@@ -10,7 +10,7 @@
 	OF ANY KIND, either express or implied. See the License for the specific 
 	language governing permissions and limitations under the License. --><!-- The contents of this file will be loaded for each web application -->
 <Context antiResourceLocking="false" crossContext="true"
-	privileged="true" reloadable="false">
+	privileged="true" reloadable="true">
 
 	<Resource auth="Container"
 		driverClassName="oracle.jdbc.driver.OracleDriver" maxIdle="10"

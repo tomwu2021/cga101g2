@@ -17,7 +17,7 @@ public class JDBCConnection {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			if (con != null) {
-				System.out.println("連線成功!");
+				System.out.println("JDBC連線成功!");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
