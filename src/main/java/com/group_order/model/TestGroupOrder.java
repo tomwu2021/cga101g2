@@ -53,6 +53,9 @@ public class TestGroupOrder {
 //		GroupOrderJDBCDAO dao=new GroupOrderJDBCDAO();
 //		dao.updateStatusByGroupOrderId(3,1);
 
+		
+//----------------------------------------------------hibernate---------------------------------------------------------//
+		
 		// 測試hibernate連線
 //		Session session = HibernateUtil.getSessionFactory().openSession();
 //		GroupOrderHibernateVO vo = session.get(GroupOrderHibernateVO.class, 1);
@@ -81,21 +84,28 @@ public class TestGroupOrder {
 		
 		//用商品編號取得所有團購訂單
 //		GroupOrderHibernateDAO dao = new GroupOrderHibernateDAO();
-//		for(GroupOrderHibernateVO a:dao.getAllByProductId(1)) {
+//		for(GroupOrderHibernateVO a:dao.getAllByProductId(2)) {
 //			System.out.println(a);
 //		}
 		
 		// 用商品編號取得所有進行中團購訂單
 //		GroupOrderHibernateDAO dao = new GroupOrderHibernateDAO();
-//		for(GroupOrderHibernateVO a:dao.getAllInProgressByProductId(2)) {
+//		for(GroupOrderHibernateVO a:dao.getAllInProgressByProductId(1)) {
 //			System.out.println(a);
 //		}
 		
 		// 取得所有進行中團購訂單
+//		GroupOrderHibernateDAO dao = new GroupOrderHibernateDAO();
+//		for(GroupOrderHibernateVO a:dao.getAllInProgress()) {
+//			System.out.println(a);
+//		}
+		
+		// 更該團購訂單截止時間
+//		GroupOrderHibernateDAO dao = new GroupOrderHibernateDAO();
+//		dao.updateEndTimeByGroupOrderId(1);
+		
+		// 更該團購訂單狀態
 		GroupOrderHibernateDAO dao = new GroupOrderHibernateDAO();
-		for(GroupOrderHibernateVO a:dao.getAllInProgress()) {
-			System.out.println(a);
-		}
-
+		dao.updateStatusByGroupOrderId(6,1);
 	}
 }

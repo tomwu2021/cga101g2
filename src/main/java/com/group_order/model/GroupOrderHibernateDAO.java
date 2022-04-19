@@ -91,7 +91,8 @@ public class GroupOrderHibernateDAO implements GroupOrderHibernateDAO_interface{
 	public List<GroupOrderHibernateVO> getAllByProductId(Integer id) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
-		Query query = session.createQuery("FROM GroupOrderHibernateVO where product_id="+String.valueOf(id));
+		Query query = session.createQuery("FROM GroupOrderHibernateVO where product_id=:id");
+		query.setParameter("id",id);
 		List<GroupOrderHibernateVO> groupOrderList = query.list();
 
 		return groupOrderList;
@@ -101,7 +102,8 @@ public class GroupOrderHibernateDAO implements GroupOrderHibernateDAO_interface{
 	public List<GroupOrderHibernateVO> getAllInProgressByProductId(Integer id) {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
-		Query query = session.createQuery("FROM GroupOrderHibernateVO where product_id="+String.valueOf(id)+" and status=0");
+		Query query = session.createQuery("FROM GroupOrderHibernateVO where product_id=:id and status=0");
+		query.setParameter("id",id);
 		List<GroupOrderHibernateVO> groupOrderList = query.list();
 
 		return groupOrderList;
@@ -120,12 +122,27 @@ public class GroupOrderHibernateDAO implements GroupOrderHibernateDAO_interface{
 	@Override
 	public Integer updateEndTimeByGroupOrderId(Integer id) {
 		// TODO Auto-generated method stub
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		Long datetime = System.currentTimeMillis();
+	    Timestamp timestamp = new Timestamp(datetime);
+	    Transaction transaction = session.beginTransaction();
+	    Query query = session.createQuery("update GroupOrderHibernateVO set end_time=:endTime where group_order_id=:groupOrderId");
+	    query.setParameter("endTime",timestamp);
+	    query.setParameter("groupOrderId",id).executeUpdate();
+	    transaction.commit();
 		return null;
 	}
 
 	@Override
 	public Integer updateStatusByGroupOrderId(Integer id, Integer status) {
-		// TODO Auto-generated method stub
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+	    Transaction transaction = session.beginTransaction();
+	    Query query = session.createQuery("update GroupOrderHibernateVO set status=:status where group_order_id=:groupOrderId");
+	    query.setParameter("status",status);
+	    query.setParameter("groupOrderId",id).executeUpdate();
+	    transaction.commit();
 		return null;
 	}
 
