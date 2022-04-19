@@ -9,8 +9,6 @@ public class Sort1VO implements java.io.Serializable{
 	private String sort1Name;
 	
 	public Sort1VO() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Sort1VO(Integer sort1Id, String sort1Name) {
 		super();
@@ -28,6 +26,10 @@ public class Sort1VO implements java.io.Serializable{
 	}
 	public void setSort1Name(String sort1Name) {
 		this.sort1Name = sort1Name;
+	}
+	@Override
+	public String toString() {
+		return "Sort1VO [sort1Id=" + sort1Id + ", sort1Name=" + sort1Name + "]";
 	}
 	
 

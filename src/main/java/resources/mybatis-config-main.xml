@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
-<!-- 	<properties resource="/resources/druid.properties" /> -->
+	<!-- <properties resource="/resources/druid.properties" /> -->
 
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 		<setting name="useGeneratedKeys" value="true" />
+		<!--以下兩個搭配使用,可傳回空實體 mybatis版本3.4.2以上 -->
+		<setting name="returnInstanceForEmptyRow" value="true" />
+		<setting name="callSettersOnNulls" value="true" />
+		 <!--使用緩存-->
+        <setting name="cacheEnabled" value="true" />
+        <!-- 顯示查詢語句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+        <!--可使用別名 (視驅動兼容性) default:true-->
+        <setting name="useColumnLabel" value="true"/>
 	</settings>
 	<typeAliases>
 		<typeAlias alias="Boolean" type="java.lang.Boolean" />
@@ -29,5 +38,6 @@
 	<mappers>
 		<mapper class="com.picture.mapper.PictureMapper" />
 		<mapper class="com.chatroom.mapper.ChatroomMapper" />
+		<mapper class="com.sort1.mapper.Sort1Mapper" />
 	</mappers>
 </configuration>
