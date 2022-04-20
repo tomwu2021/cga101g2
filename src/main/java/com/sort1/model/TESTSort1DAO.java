@@ -1,7 +1,6 @@
 package com.sort1.model;
 
 import java.util.List;
-
 public class TESTSort1DAO {
 
 	public static void main(String[] args) {

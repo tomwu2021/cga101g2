@@ -1,60 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-	id="WebApp_ID" version="4.0">
-	<display-name>CGA101G2</display-name>
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-	</welcome-file-list>
-	<servlet>
-		<servlet-name>PictureController</servlet-name>
-		<servlet-class>com.picture.controller.PictureController</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>PictureController</servlet-name>
-		<url-pattern>/PictureController</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>PictureDeleteController</servlet-name>
-		<servlet-class>com.picture.controller.PictureDeleteController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>PictureDeleteController</servlet-name>
-		<url-pattern>/PictureDeleteController</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>cga101g2</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>PictureController</servlet-name>
+    <servlet-class>com.picture.controller.PictureController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PictureController</servlet-name>
+    <url-pattern>/PictureController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PictureDeleteController</servlet-name>
+    <servlet-class>com.picture.controller.PictureDeleteController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PictureDeleteController</servlet-name>
+    <url-pattern>/PictureDeleteController</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>StatViewServlet</servlet-name>
     <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
-    <init-param>  
-    <!-- 允許清空統計數據 -->  
-    <param-name>resetEnable</param-name>  
-    <param-value>false</param-value>  
-    </init-param>  
-    <init-param>  
-    <!-- 用戶名 -->  
-    <param-name>loginUsername</param-name>  
-    <param-value>cga-02</param-value>  
-    </init-param>  
-    <init-param>  
-    <!-- 密碼 -->  
-    <param-name>loginPassword</param-name>  
-    <param-value>cga-02</param-value>  
-    </init-param>  
+    <init-param>
+      <param-name>resetEnable</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <init-param>
+      <param-name>loginUsername</param-name>
+      <param-value>cga-02</param-value>
+    </init-param>
+    <init-param>
+      <param-name>loginPassword</param-name>
+      <param-value>cga-02</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>StatViewServlet</servlet-name>
     <url-pattern>/druid/*</url-pattern>
   </servlet-mapping>
-  
-  
 </web-app>

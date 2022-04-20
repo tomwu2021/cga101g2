@@ -8,13 +8,6 @@ public class Sort1VO implements java.io.Serializable{
 	private Integer sort1Id;
 	private String sort1Name;
 	
-	public Sort1VO() {
-	}
-	public Sort1VO(Integer sort1Id, String sort1Name) {
-		super();
-		this.sort1Id = sort1Id;
-		this.sort1Name = sort1Name;
-	}
 	public Integer getSort1Id() {
 		return sort1Id;
 	}

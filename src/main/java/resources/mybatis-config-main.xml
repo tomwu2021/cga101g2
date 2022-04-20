@@ -9,14 +9,14 @@
 		<!--以下兩個搭配使用,可傳回空實體 mybatis版本3.4.2以上 -->
 		<setting name="returnInstanceForEmptyRow" value="true" />
 		<setting name="callSettersOnNulls" value="true" />
-		 <!--使用緩存-->
-        <setting name="cacheEnabled" value="true" />
-        <!-- 顯示查詢語句 -->
-        <setting name="logImpl" value="STDOUT_LOGGING" />
-        <!--可使用別名 (視驅動兼容性) default:true-->
-        <setting name="useColumnLabel" value="true"/>
+		<!-- 顯示查詢語句 -->
+		<setting name="logImpl" value="STDOUT_LOGGING" />
+		<!--可使用別名 (視驅動兼容性) default:true -->
+		<setting name="useColumnLabel" value="true" />
 	</settings>
 	<typeAliases>
+		<typeAlias alias="Sort1VO" type="com.sort1.model.Sort1VO" />
+		<typeAlias alias="Timestamp" type="java.sql.Timestamp" />
 		<typeAlias alias="Boolean" type="java.lang.Boolean" />
 		<typeAlias alias="String" type="java.lang.String" />
 		<typeAlias alias="Timestamp" type="java.sql.Timestamp" />
@@ -28,7 +28,7 @@
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.cj.jdbc.Driver" />
-				<property name="url"
+			<property name="url"
 					value="jdbc:mysql://database-1.czlvj0ycwyxq.ap-northeast-1.rds.amazonaws.com:3306/cga_02?serverTimezone=Asia/Taipei" />
 				<property name="username" value="cga_02" />
 				<property name="password" value="cga_02" />
@@ -38,6 +38,6 @@
 	<mappers>
 		<mapper class="com.picture.mapper.PictureMapper" />
 		<mapper class="com.chatroom.mapper.ChatroomMapper" />
-		<mapper class="com.sort1.mapper.Sort1Mapper" />
+		<mapper resource="mapper/Sort1Mapper.xml" />
 	</mappers>
 </configuration>
