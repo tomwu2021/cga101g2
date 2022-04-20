@@ -28,7 +28,7 @@
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.cj.jdbc.Driver" />
-			<property name="url"
+				<property name="url"
 					value="jdbc:mysql://database-1.czlvj0ycwyxq.ap-northeast-1.rds.amazonaws.com:3306/cga_02?serverTimezone=Asia/Taipei" />
 				<property name="username" value="cga_02" />
 				<property name="password" value="cga_02" />
