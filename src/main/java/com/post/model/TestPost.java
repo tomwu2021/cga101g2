@@ -1,6 +1,9 @@
 package com.post.model;
 
+import java.util.Iterator;
 import java.util.List;
+
+import oracle.net.aso.r;
 
 public class TestPost {
 	
@@ -8,18 +11,18 @@ public class TestPost {
 		PostJDBCDAO dao = new PostJDBCDAO();
 		
 		//select 查詢全部
-		List<PostVO> list = dao.getAll();
-		for(PostVO vo: list) {
-			System.out.print(vo.getPostId()+ ",");
-			System.out.print(vo.getMemberId()+ ",");
-			System.out.print(vo.getContent()+ ",");
-			System.out.print(vo.getLikeCount()+ ",");
-			System.out.print(vo.getStatus()+ ",");
-			System.out.print(vo.getAuthority()+ ",");
-			System.out.print(vo.getCreateTime()+ ",");
-			System.out.print(vo.getUpdateTime());
-			System.out.println();
-		}
+//		List<PostVO> list = dao.getAll();
+//		for(PostVO vo: list) {
+//			System.out.print(vo.getPostId()+ ",");
+//			System.out.print(vo.getMemberId()+ ",");
+//			System.out.print(vo.getContent()+ ",");
+//			System.out.print(vo.getLikeCount()+ ",");
+//			System.out.print(vo.getStatus()+ ",");
+//			System.out.print(vo.getAuthority()+ ",");
+//			System.out.print(vo.getCreateTime()+ ",");
+//			System.out.print(vo.getUpdateTime());
+//			System.out.println();
+//		}
 		
 		//新增
 //		PostVO postVO1 = new PostVO();
@@ -53,6 +56,25 @@ public class TestPost {
 //		System.out.print(postVO3.getAuthority()+ ",");
 //		System.out.print(postVO3.getCreateTime()+ ",");
 //		System.out.print(postVO3.getUpdateTime());	
+		
+		//查看個人頁面（個人貼文）
+//		for(PostVO p1: dao.selectPost(5)) {
+//			System.out.println(p1);
+//		}
+		
+		//查看熱門貼文
+		List<PostVO> list = dao.selectHotPost();
+		for(PostVO vo1: list) {
+			System.out.print(vo1.getPostId()+ ",");
+			System.out.print(vo1.getMemberId()+ ",");
+			System.out.print(vo1.getContent()+ ",");
+			System.out.print(vo1.getLikeCount()+ ",");
+			System.out.print(vo1.getStatus()+ ",");
+			System.out.print(vo1.getAuthority()+ ",");
+			System.out.print(vo1.getCreateTime()+ ",");
+			System.out.print(vo1.getUpdateTime());
+			System.out.println();
+		}
 	}
 
 }
