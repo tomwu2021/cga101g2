@@ -27,18 +27,23 @@ public class TestChatroom {
 //		mtd.setColumn1("chatroom_id");
 //		mtd.setColumn2("member_id");
 //		crv.setChatroomType(1);
-//		crv.setChatroomName("噴火龍");
+//		crv.setChatroomName("菊草葉");
 //		System.out.println(crbd.insertChatroom(crv));
 //		mtd.setId1(crv.getChatroomId());
 //		for (int i = 1; i < 10; i++) {
 //			mtd.setId2(i);
 //			mjd.insertOneMapping(mtd);
 //		}
-		crv.setChatroomId(10);
-		crv.setChatroomName("hello");
-		System.out.println(crbd.getPersonalChatroom(3));
-		System.out.println(crbd.deleteById(7));
-		System.out.println(crbd.updateChatroomName(crv));
+//		crv.setChatroomId(10);
+//		crv.setChatroomName("hello");
+//		System.out.println(crbd.getPersonalChatroom(709));
+//		System.out.println(crbd.deleteById(7));
+//		System.out.println(crbd.updateChatroomName(crv));
+//		List<ChatroomVO> ccv=crbd.searchChatrooms(1,"火");
+//		int i = 0;
+		System.out.println(crbd.getChatroomMessage(3));
+//		(3)getMessages().forEach(m->{
+//			System.out.println(m);
+//		});
 	}
-
 }

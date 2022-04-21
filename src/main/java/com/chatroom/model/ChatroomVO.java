@@ -1,20 +1,23 @@
 package com.chatroom.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-
+import com.messages.model.MessagesVO;
 
 public class ChatroomVO {
-
+	
 	private Integer chatroomId;
 	private String chatroomName;
 	private Integer chatroomType;
 	private Timestamp createTime;
 
+	private List<MessagesVO> messageList;
+
 	public ChatroomVO() {
-	
+
 	}
 
 	public ChatroomVO(Integer chatroomId, String chatroomName, Integer chatroomType, Timestamp createTime) {
@@ -57,10 +60,18 @@ public class ChatroomVO {
 		this.createTime = createTime;
 	}
 
+	public List<MessagesVO> getMessageList() {
+		return messageList;
+	}
+
+	public void setMessagesList(List<MessagesVO> messageList) {
+		this.messageList = messageList;
+	}
+
 	@Override
 	public String toString() {
 		return "ChatroomVO:{chatroomId:" + chatroomId + ", chatroomName:" + chatroomName + ", chatroomType:"
-				+ chatroomType + ", createTime:" + createTime + "}";
+				+ chatroomType + ", createTime:" + createTime + ", messageList:" + messageList + "}";
 	}
 
 }
