@@ -124,11 +124,8 @@ public class GroupOrderHibernateDAO implements GroupOrderHibernateDAO_interface{
 		// TODO Auto-generated method stub
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
-		Long datetime = System.currentTimeMillis();
-	    Timestamp timestamp = new Timestamp(datetime);
 	    Transaction transaction = session.beginTransaction();
-	    Query query = session.createQuery("update GroupOrderHibernateVO set end_time=:endTime where group_order_id=:groupOrderId");
-	    query.setParameter("endTime",timestamp);
+	    Query query = session.createQuery("update GroupOrderHibernateVO set end_time=now() where group_order_id=:groupOrderId");
 	    query.setParameter("groupOrderId",id).executeUpdate();
 	    transaction.commit();
 		return null;
