@@ -92,5 +92,26 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 			e.printStackTrace();
 		}
 		return list;
+		
+		
+	}
+
+	@Override
+	public boolean delete(Integer postId, Integer memberId) {
+		
+		final String DELETE = "delete from likelist where post_id =? and member_id=?";
+		
+		try(Connection con =JDBCConnection.getRDSConnection();
+			PreparedStatement pstmt = con.prepareStatement(DELETE)){
+				
+				pstmt.setInt(1, postId);
+				pstmt.setInt(2, memberId);
+				pstmt.executeUpdate();
+					
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
 	}	
 }
+
