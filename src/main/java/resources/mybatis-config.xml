@@ -6,6 +6,7 @@
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 		<setting name="useGeneratedKeys" value="true" />
+		<setting name="logImpl" value="STDOUT_LOGGING" />
 	</settings>
 	<typeAliases>
 		<typeAlias alias="Boolean" type="java.lang.Boolean" />
@@ -28,5 +29,7 @@
 	<mappers>
 		<mapper class="com.picture.mapper.PictureMapper" />
 		<mapper class="com.chatroom.mapper.ChatroomMapper" />
+		<mapper class="com.messages.mapper.MessagesMapper" />
+		<mapper class="com.sort1.mapper.Sort1Mapper" />
 	</mappers>
 </configuration>

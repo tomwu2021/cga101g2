@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.common.model.MappingTableDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import aws.S3Service;
@@ -24,7 +25,7 @@ import aws.S3Service;
 public class TestPicture {
 	
 	public static void main(String[] args) {
-//		PictureDAO pdao = new PictureDAO();
+		PictureJDBCDAO pdao = new PictureJDBCDAO();
 //		PictureVO pvo = new PictureVO();
 //		PictureVO pvo3 = new PictureVO();
 //		List<PictureVO> picList = new ArrayList<PictureVO>();
@@ -38,6 +39,12 @@ public class TestPicture {
 //		for(PictureVO pic2:picList2) {
 //			System.out.println(pic2);
 //		}
+		MappingTableDto mtd =new MappingTableDto();
+		mtd.setTableName1("photos");
+		mtd.setColumn1("album_id");
+		mtd.setId1(80);
+		System.out.println(pdao.queryPicturesByMapping(mtd));
+		
 	}
 
 
