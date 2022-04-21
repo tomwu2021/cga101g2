@@ -152,5 +152,66 @@ public class PostJDBCDAO implements PostDAO_interface {
 		}
 		return list;
 	}
+
+	@Override
+	public List<PostVO> selectPost(Integer id) {
+		final String SELECT_POST = "select post_id from post where member_id =? order by create_time desc ";
+		
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(SELECT_POST);) {
+
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			
+			List< PostVO> list = new ArrayList<PostVO>();
+			
+			
+			while (rs.next()) {
+				PostVO postVO = new PostVO();
+				postVO.setPostId(rs.getInt("post_id"));
+				postVO.setMemberId(rs.getInt("member_id"));
+
+				list.add(postVO);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<PostVO> selectHotPost() {
+		final String SELECT_HOTPOST = "select * from post "
+				+ "where DateDiff(curdate(), create_time) <= 7 "
+				+ "order by like_count desc "
+				+ "limit 0,3";
+		
+		List< PostVO> list = new ArrayList<PostVO>();
+		
+		try (Connection con = JDBCConnection.getRDSConnection();
+			 PreparedStatement pstmt = con.prepareStatement(SELECT_HOTPOST);
+			 ResultSet rs = pstmt.executeQuery();) {
+
+			while (rs.next()) {
+				PostVO postVO = new PostVO();
+				postVO.setPostId(rs.getInt("post_id"));
+				postVO.setContent(rs.getString("content"));
+				postVO.setLikeCount(rs.getInt("like_count"));
+				postVO.setStatus(rs.getInt("status"));
+				postVO.setAuthority(rs.getInt("authority"));
+				postVO.setCreateTime(rs.getDate("create_time"));
+				postVO.setUpdateTime(rs.getDate("update_time"));
+
+				list.add(postVO);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	
+	}
+
 	
 }
