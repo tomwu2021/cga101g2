@@ -13,5 +13,6 @@
   
   
   <mapping class="com.group_order.model.GroupOrderHibernateVO" />
+  <mapping class="com.group_buyer.model.GroupBuyerHibernateVO" />
  </session-factory>
 </hibernate-configuration>
