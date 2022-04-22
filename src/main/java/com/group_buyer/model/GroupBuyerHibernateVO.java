@@ -22,7 +22,7 @@ public class GroupBuyerHibernateVO {
 	@Column(name = "address")
 	 private String address;
 	@Column(name = "recipient")
-	 private String recipients;
+	 private String recipient;
 	public Integer getGroupOrderId() {
 		return groupOrderId;
 	}
@@ -54,10 +54,10 @@ public class GroupBuyerHibernateVO {
 		this.address = address;
 	}
 	public String getRecipients() {
-		return recipients;
+		return recipient;
 	}
 	public void setRecipients(String recipients) {
-		this.recipients = recipients;
+		this.recipient = recipients;
 	}
 	
 	@Override
@@ -65,7 +65,7 @@ public class GroupBuyerHibernateVO {
 		// TODO Auto-generated method stub
 		String text = String.format(
 				"groupOrderId:%d, memberId;:%d, productAmount:%s, phone:%s, address:%s, recipients:%s",
-				groupOrderId, memberId, productAmount, phone, address, recipients);
+				groupOrderId, memberId, productAmount, phone, address, recipient);
 		return text;
 	}
 }

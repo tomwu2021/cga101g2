@@ -3,15 +3,8 @@ package com.group_buyer.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-//@Entity
-//@Table(name = "group_buyer")
 public class GroupBuyerPK implements Serializable{
-//	@Column(name = "group_order_id")
 	 private Integer groupOrderId;
-//	@Column(name = "member_id")
 	 private Integer memberId;
 	 
 	 public GroupBuyerPK() {

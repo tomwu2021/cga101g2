@@ -1,5 +1,13 @@
 package com.group_buyer.model;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
+
+import connection.HibernateUtil;
+
 public class TestGroupBuyer {
 	public static void main(String[] args) {
 		//新增參團者
@@ -36,14 +44,21 @@ public class TestGroupBuyer {
 //		dao.deleteByPK(2,1);
 		
 		//更改資料
-		GroupBuyerJDBCDAO dao=new GroupBuyerJDBCDAO();
-		GroupBuyerVO groupBuyerVO=new GroupBuyerVO();
-		groupBuyerVO.setGroupOrderId(1);
+//		GroupBuyerJDBCDAO dao=new GroupBuyerJDBCDAO();
+//		GroupBuyerVO groupBuyerVO=new GroupBuyerVO();
+//		groupBuyerVO.setGroupOrderId(1);
 //		groupBuyerVO.setRecipients("維尼熊雄");
-		groupBuyerVO.setPhone("0988765684");
-		groupBuyerVO.setAddress("台南屠宰場");
-		groupBuyerVO.setMemberId(1);
-		dao.update(groupBuyerVO);
+//		groupBuyerVO.setPhone("0988765684");
+//		groupBuyerVO.setAddress("台南屠宰場");
+//		groupBuyerVO.setMemberId(1);
+//		dao.update(groupBuyerVO);
+		
+		//測試hibernate複合主鍵
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		GroupBuyerPK groupBuyerPK=new GroupBuyerPK(1,1);
+		GroupBuyerHibernateVO vo = session.get(GroupBuyerHibernateVO.class, groupBuyerPK);
+		System.out.println(vo);
+		HibernateUtil.shutdown();
 		
 
 	}
