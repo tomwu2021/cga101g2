@@ -1,0 +1,74 @@
+/*  會員註冊 */
+#box {
+    display: none;
+    position: absolute;
+    width: 520px;
+    height: 300px;
+    border: #f60 solid 2px;
+    z-index: 200;
+    background: #fff;
+}
+
+
+/*  會員註冊 */
+#closeBtn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    /*手指狀*/
+}
+
+/*  會員註冊 */
+#greybackground {
+    background: #000;
+    display: block;
+    z-index: 100;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+body {
+    position: absolute;
+}
+
+
+
+.forget {
+    width: 80px;
+    height: 25px;
+}
+
+/* 忘記密碼 */
+#box2 {
+    display: none;
+    position: absolute;
+    width: 520px;
+    height: 300px;
+    border: #f60 solid 2px;
+    z-index: 200;
+    background: #fff;
+}
+
+
+/* 忘記密碼 */
+#closeBtn2 {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    /*手指狀*/
+}
+
+/* 忘記密碼 */
+#greybackground2 {
+    background: #000;
+    display: block;
+    z-index: 100;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

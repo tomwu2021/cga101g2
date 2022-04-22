@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>login</title>
+
+  <!-- 表單css -->
+  <link rel="stylesheet" href="css/login.css" />
+  <!-- register 註冊 css -->
+  <link rel="stylesheet" type="text/css" href="./css/register.css">
+</head>
+
+
+<body>
+
+
+  <form action="" class="login">
+    <div>
+      <h1>登 入 帳 號</h1>
+      <img src="img/logo_icon.png">
+    </div>
+
+    <h2>帳號</h2>
+    <input type="text" placeholder="請輸入電子郵件" />
+    <h2>密碼</h2>
+    <input type="password" placeholder="請輸入密碼" />
+    <div class="btns">
+
+      <button id="memberlogin" class="btn1" style="vertical-align:middle"><span>會員登入</span></button>
+      <div>
+        <div id="wrapper">
+          <!-- 會員註冊視窗 -->
+          <div id="popup" class="opoups_height_width">帳號註冊</div>
+          <!-- 忘記密碼視窗 -->
+          <div id="popup2" class="opoups_height_width">忘記密碼</div>
+          <div id="popup3" class="opoups_height_width">訪客進入</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </form>
+
+  <!-- 註冊視窗 -->
+  <div id="box">
+    <form action="">
+      <h2>帳號</h2>
+      <input type="text" placeholder="請輸入電子郵件" />
+      <h2>密碼</h2>
+      <input type="password" placeholder="請輸入密碼" />
+    </form>
+
+    　<span id="closeBtn">關閉</span>
+  </div>
+
+  <!-- 忘記密碼視窗 -->
+  <div id="box2">
+    <form action="">
+      <h2>帳號</h2>
+      <input type="text" placeholder="請輸入電子郵件" />
+    </form>
+    　<span id="closeBtn2">關閉</span>
+  </div>
+
+
+  <!-- 表單 -->
+  <script src="https://kit.fontawesome.com/38d40adfbe.js" crossorigin="anonymous"></script>
+
+  <!-- 會員註冊 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="./js/register.js"></script>
+  <!-- login.js -->
+  <script type="text/javascript" src="./js/login.js"></script>
+
+
+
+
+
+</body>
+
+</html>
