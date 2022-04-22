@@ -1,17 +1,77 @@
 package com.wishlist.model;
 
-import java.util.List;
+import java.sql.*;
+import java.util.*;
+
+import com.emp_authority.model.EmpAuthorityVO;
+
+import connection.JDBCConnection;
 
 public class WishlistJDBCDAO implements WishlistDAO_interface{
 
+	Connection con;
+	
+	// 情境一 insert：新增一筆資料
 	@Override
 	public WishlistVO insert(WishlistVO wishlistVO) {
+		con = JDBCConnection.getRDSConnection();
+		WishlistVO wishlistVO2 = insert(wishlistVO, con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return wishlistVO2;
+	}
+	public WishlistVO insert(WishlistVO wishlistVO, Connection con) {
+		final String INSERT_STMT = "INSERT INTO wishlist(member_id, product_id) values(?,?);";
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT, Statement.RETURN_GENERATED_KEYS);
+				pstmt.setInt(1, wishlistVO.getMemberId());
+				pstmt.setInt(2, wishlistVO.getProductId());
+				pstmt.executeUpdate();
+
+				ResultSet rs = pstmt.getGeneratedKeys();
+				return wishlistVO;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return null;
 	}
 
+	// 情境二 delete：刪除一筆資料
 	@Override
 	public boolean delete(WishlistVO wishlistVO) {
-		return false;
+		con = JDBCConnection.getRDSConnection();
+		boolean boo = delete(wishlistVO, con);
+		
+		try {
+			con.close();
+			return boo;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public boolean delete(WishlistVO wishlistVO,Connection con) {
+		final String DELETE = "DELETE FROM wishlist WHERE member_id = ? and product_id = ?";
+		
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(DELETE);
+				pstmt.setInt(1, wishlistVO.getMemberId());
+				pstmt.setInt(2, wishlistVO.getProductId());
+				pstmt.execute();
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}	
+		} else {
+			return false;
+		}
 	}
 
 	@Override
@@ -26,6 +86,29 @@ public class WishlistJDBCDAO implements WishlistDAO_interface{
 
 	@Override
 	public List<WishlistVO> getAll() {
+		return null;
+	}
+	@Override
+	public List<WishlistVO> getAllByMemberId(Integer memberId) {
+		final String GETALL = "SELECT member_id, product_id FROM wishlist where member_id = ?;";
+
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
+			
+			pstmt.setInt(1, memberId);
+			ResultSet rs = pstmt.executeQuery();
+
+			List<WishlistVO> list = new ArrayList<>();
+			while (rs.next()) {
+				WishlistVO newWishlist = new WishlistVO();
+				newWishlist.setMemberId(rs.getInt("member_id"));
+				newWishlist.setProductId(rs.getInt("product_id"));
+				list.add(newWishlist);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

@@ -35,4 +35,9 @@ public class WishlistVO implements java.io.Serializable {
 		this.createTime = create_time;
 	}
 
+	@Override
+	public String toString() {
+		return "WishlistVO [memberId=" + memberId + ", productId=" + productId + ", createTime=" + createTime + "]";
+	}
+
 }
