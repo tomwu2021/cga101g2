@@ -1,7 +1,5 @@
 package com.emp_authority.model;
 
-import com.emp.model.EmpJDBCDAO;
-
 public class TestEmpAuthorityDAO {
 
 	public static void main(String[] args) {

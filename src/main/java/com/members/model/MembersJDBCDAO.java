@@ -1,15 +1,7 @@
 package com.members.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.sql.*;
+import java.util.*;
 import connection.JDBCConnection;
 
 public class MembersJDBCDAO implements MembersDAO_interface {

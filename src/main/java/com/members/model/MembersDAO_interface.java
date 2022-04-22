@@ -1,6 +1,5 @@
 package com.members.model;
 
-import java.sql.Connection;
 import java.util.List;
 import com.common.model.JDBCDAO_Interface;
 

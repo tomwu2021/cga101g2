@@ -1,9 +1,7 @@
 package com.emp_authority.model;
 
 import java.util.List;
-
 import com.common.model.JDBCDAO_Interface;
-import com.emp.model.EmpVO;
 
 public interface EmpAuthorityDAO_interface extends JDBCDAO_Interface<EmpAuthorityVO> {
 	
