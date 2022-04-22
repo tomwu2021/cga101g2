@@ -24,4 +24,9 @@ public class EmpAuthorityVO implements java.io.Serializable {
 		this.functionId = functionId;
 	}
 
+	@Override
+	public String toString() {
+		return "EmpAuthorityVO [empNo=" + empNo + ", functionId=" + functionId + "]";
+	}
+
 }
