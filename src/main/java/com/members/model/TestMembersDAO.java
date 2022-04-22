@@ -70,7 +70,7 @@ public class TestMembersDAO {
 
 		// select 情境十二：管理員使用 name 查詢某一筆會員資料
 //		MembersVO membersVO10 = new MembersVO();
-//		System.out.println(dao.getOneByName("閔皓"));
+//		System.out.println(dao.getOneByName("佩佩"));
 
 		// select 情境十三：查詢登入時帳號和密碼
 //		MembersVO membersVO10 = new MembersVO();

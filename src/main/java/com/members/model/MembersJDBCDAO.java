@@ -462,12 +462,12 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 // select 情境十二：管理員使用 name 查詢某一筆會員資料 ------------------------------------------------------------------
 	@Override
 	public MembersVO getOneByName(String name) {
-		final String GETONE_BY_NAME = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time FROM members where name = ?;";
+		final String GETONE_BY_NAME = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time FROM members where name like ?;";
 
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETONE_BY_NAME)) {
 
-			pstmt.setString(1, name);
+			pstmt.setString(1, "%" + name + "%");
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				MembersVO newMember = new MembersVO();
