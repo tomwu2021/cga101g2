@@ -180,6 +180,7 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 					PictureVO pvo = buildPictureVO(rs);
 					pics.add(pvo);
 				}
+				System.out.println(pics);
 				rs.close();
 				stmt.close();
 				con.close();
@@ -200,6 +201,7 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		pvo.setFileKey(rs.getString("file_key"));
 		pvo.setFileName(rs.getString("file_name"));
 		pvo.setSize(rs.getLong("size"));
+		pvo.setPreviewUrl(rs.getString("preview_url"));
 		return pvo;
 	}
 }

@@ -81,7 +81,7 @@ public class PictureController extends HttpServlet {
 
 
 		Integer albumId = Integer.parseInt(req.getParameter("albumId")); //取得查詢album_id 條件值
-		String[] pictureIds = (req.getParameter("pictureId")).split(","); //取得picture_id
+//		String[] pictureIds = (req.getParameter("pictureId")).split(","); //取得picture_id
 		String[] keywords = req.getParameter("fileName").split(" "); //使用空格切割關鍵字
 
 		long days = Long.parseLong(req.getParameter("uploadTime")); //取得天數
@@ -93,17 +93,17 @@ public class PictureController extends HttpServlet {
 
 		PageQuery pq = new PageQuery(thisPage, pageSize, sort, order, map); //創建分頁查訊物件
 		pq.setFindByLikeMultiValues("file_name", keywords); //設置關鍵字條件
-		pq.setFindByEqualMultiValues("p.picture_id", pictureIds); //設值多筆pictureId 條件
-		pq.setFindByAfterTime("upload_time", uploadTime); //設置時間條件
+//		pq.setFindByEqualMultiValues("p.picture_id", pictureIds); //設值多筆pictureId 條件
+		pq.setFindByAfter("upload_time", uploadTime); //設置時間條件
 
 		PageResult<PictureVO> rpq = pictureService.getPageResult(pq);
-
+		System.out.println("rpq:"+rpq + "\n pq:"+pq);
 		Gson gson = new Gson();
 		out.print(gson.toJson(rpq));
 		//out.print()->位元流->html(跳頁)
 		//ajax->JSON物件-不跳頁
 
-		List<PictureVO> pics = rpq.getItems();
+//		List<PictureVO> pics = rpq.getItems();
 //		pics.forEach(pic -> {
 //			out.println("<p>" + pic.getFileName() + "(" + TransferTool.transferSize(pic.getSize()) + ")</p>");
 //			out.print("<img src="+ pic.getUrl() +" style='height:250px', 'width=400px';>");

@@ -137,12 +137,13 @@ public class PageQuery {
      * @param time   指定時間
      */
     //時間條件值來自controller
-    public void setFindByAfterTime(String column, Timestamp time) {
+    public void setFindByAfter(String column, Object obj) {
         String sql = this.whereSQL;
+        obj = String.valueOf(obj);
         if ("".equals(sql)) {
-            sql += " WHERE " + column + " > '" + time + "' ";
+            sql += " WHERE " + column + " > '" + obj + "' ";
         } else {
-            sql += " AND " + column + " > '" + time + "' ";
+            sql += " AND " + column + " > '" + obj + "' ";
         }
         this.whereSQL = sql;
     }
@@ -155,12 +156,13 @@ public class PageQuery {
      * @param time   指定時間
      */
     //時間條件值來自controller
-    public void setFindByBeforeTime(String column, Timestamp time) {
+    public void setFindByBeforeTime(String column, Object obj) {
         String sql = this.whereSQL;
+        obj = String.valueOf(obj);
         if ("".equals(sql)) {
-            sql += " WHERE " + column + " < '" + time + "' ";
+            sql += " WHERE " + column + " < '" + obj + "' ";
         } else {
-            sql += " AND " + column + " < '" + time + "' ";
+            sql += " AND " + column + " < '" + obj + "' ";
         }
         this.whereSQL = sql;
     }
@@ -174,12 +176,14 @@ public class PageQuery {
      * @param endTime   結束時間
      */
     //時間條件值來自controller
-    public void setFindByBetweenTime(String column, Timestamp startTime, Timestamp endTime) {
+    public void setFindByBetweenTime(String column, Object startobj, Object endobj) {
         String sql = this.whereSQL;
+        startobj = String.valueOf(startobj);
+        endobj = String.valueOf(endobj);
         if ("".equals(sql)) {
-            sql += " WHERE " + column + " BETWEEN '" + startTime + "' AND '" + endTime + "' ";
+            sql += " WHERE " + column + " BETWEEN '" + startobj + "' AND '" + endobj + "' ";
         } else {
-            sql += " AND " + column + " BETWEEN '" + startTime + "' AND '" + endTime + "' ";
+            sql += " AND " + column + " BETWEEN '" + startobj + "' AND '" + endobj + "' ";
         }
         this.whereSQL = sql;
     }
@@ -247,7 +251,7 @@ public class PageQuery {
         Set<Object> checkedValues = new HashSet<>();
         StringBuilder sb = new StringBuilder();
 
-        //塞選出不重複且不為空字串的值
+        //篩選出不重複且不為空字串的值
         for (Object value : values) {
             if (value == null) {
                 //空值跳過

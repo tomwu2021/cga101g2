@@ -1,0 +1,106 @@
+@charset "UTF-8";
+
+.pic_page:hover {
+	cursor: pointer;
+	background-color: red;
+	color: white;
+}
+
+.current_page {
+	background-color: red !important;
+	color: white;
+}
+
+.photos:hover {
+	cursor: pointer;
+	-webkit-filter: brightness(0.5);
+}
+
+#cover-all {
+	z-index: 99;
+	position: fixed;
+	display: none;
+	background-color: black;
+	opacity: 0.5;
+	width: 100%;
+	height: 100%;
+	margin: auto;
+}
+
+#upload-box {
+	opacity: 1;
+	z-index: 100;
+	display: none;
+	top:30%;
+}
+
+form.box {
+	background-color: #e44242;
+	width: 700px;
+	height: 400px;
+	margin: auto;
+	outline: 2px dashed #A9D2FC;
+	outline-offset: -10px;
+	align-items: center;
+	justify-content: center;
+	-webkit-transition: outline-offset .15s ease-in-out, background-color
+		.15s linear;
+	transition: outline-offset .15s ease-in-out, background-color .15s
+		linear;
+}
+
+form.is-dragover {
+	background: #504949;
+	outline-offset: -15px;
+	-webkit-transition: outline-offset .15s ease-in-out, background-color
+		.15s linear;
+	transition: outline-offset .15s ease-in-out, background-color .15s
+		linear;
+}
+
+.box__input {
+	padding: 40px 0;
+	text-align: center;
+}
+
+.box__input p {
+	margin: 0;
+	color: #fff;
+}
+
+.box__icon path {
+	fill: #fff;
+}
+
+.box__upload {
+	display: none;
+}
+
+.box__buttons {
+	display: inline-flex;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.box__buttons span {
+	margin: 0 10px;
+	color: #fff;
+}
+
+.box__button-search, .box__button-camera {
+	border: 0;
+	background: #fff;
+	border-radius: 5px;
+	display: inline-flex;
+	align-items: center;
+	padding: 5px 10px;
+}
+
+.box__button-search svg, .box__button-camera svg {
+	margin-right: 10px;
+}
+
+.box__button-search:hover, .box__button-camera:hover {
+	background: rgba(255, 255, 255, .8);
+	cursor: pointer;
+}
