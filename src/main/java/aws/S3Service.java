@@ -26,7 +26,8 @@ public class S3Service {
 	public PictureVO uploadImageToS3(InputStream in, String fileName) {
 		PictureVO vo = new PictureVO();
 		String key = getGenerateFileKey(fileName);
-		String url = "https://" + BUCKETNAME + ".s3.ap-northeast-1.amazonaws.com/" + key;
+		String cdn = "https://d148yrb2gzai3l.cloudfront.net/";
+		String url = cdn + key;
 		AmazonS3 s3client = new AwsService().getS3Client();
 
 		try {
@@ -47,7 +48,7 @@ public class S3Service {
 			vo.setFileName(fileName);
 			vo.setUrl(url);
 			vo.setSize(contentLength);
-			String previewUrl = "https://d148yrb2gzai3l.cloudfront.net/" + key + "?d=600x400";
+			String previewUrl = url + "?d=600x400";
 			vo.setPreviewUrl(previewUrl);
 
 		} catch (AmazonServiceException ase) {

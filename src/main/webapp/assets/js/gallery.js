@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 
 let fileName = "";
@@ -19,7 +19,7 @@ function searchPicture() {
 	}
 	console.log('sort=' + sort + '&uploadTime=' + uploadTime);
 	$.get({
-		url: "/CGA101G2/PictureController?fileName=" + fileName + "&albumId=" + albumId + "&thisPage=" + thisPage + "&order=upload_time&pageSize="
+		url: "/cga101g2/PictureController?fileName=" + fileName + "&albumId=" + albumId + "&thisPage=" + thisPage + "&order=upload_time&pageSize="
 			+ pageSize + "&sort=" + sort + "&uploadTime=" + uploadTime,
 		success: function (result, status) {
 			total = result.total;
