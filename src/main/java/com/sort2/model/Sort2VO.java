@@ -8,7 +8,16 @@ public class Sort2VO implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	private  Integer sort2Id;
 	private  String sort2Name;
-	
+//	private List<Sort1VO> Sort1VOs;
+//
+//	public List<Sort1VO> getSort2VOs() {
+//		return Sort1VOs;
+//	}
+//
+//	public void setSort2VOs(List<Sort1VO> sort1VOs) {
+//		Sort1VOs = sort1VOs;
+//	}
+
 	public Sort2VO() {
 		super();
 		// TODO Auto-generated constructor stub

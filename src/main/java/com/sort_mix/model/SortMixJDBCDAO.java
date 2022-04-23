@@ -11,95 +11,117 @@ import java.util.List;
 
 public class SortMixJDBCDAO implements SortMixDAO_interface {
 
-	
 //		private static final String UPDATE = 
 //			"UPDATE sort_mix "
 //			+ "sort1_id= ? "
 //			+ "where sort2_id = ?;";
-
 	@Override
-	public SortMixVO insert(SortMixVO sortMixVO) {
-		final String INSERT_STMT = "INSERT INTO cga_02.sort_mix(sort1_id,sort2_id) " + "VALUES (?,?);";
-		try (Connection con = getRDSConnection(); 
-				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
+	public int insert(SortMixMapVO sortMixMapVO) {
+		final String INSERT_STMT = "INSERT INTO sort_mix VALUES(?,?);";
+		try (Connection con = getRDSConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
 
-			pstmt.setInt(1, sortMixVO.getSort1Id());
-			pstmt.setInt(2, sortMixVO.getSort2Id());
+			pstmt.setInt(1, sortMixMapVO.getSort1Id());
+			pstmt.setInt(2, sortMixMapVO.getSort2Id());
 
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) insert!");
-			return sortMixVO;
+			return rowCount;
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return -1;
 	}
 
 	@Override
-	public boolean delete(SortMixVO sortMixVO) {
-	final String DELETE = "DELETE FROM cga_02.sort_mix where sort1_id= ? and sort2_id = ?;";
-		try (Connection connection = getRDSConnection();
-				PreparedStatement pstmt = connection.prepareStatement(DELETE)) {
+	public int delete(SortMixMapVO sortMixMapVO) {
+		final String INSERT_STMT = "DELETE FROM sort_mix VALUES(?,?);";
+		try (Connection con = getRDSConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
 
-			pstmt.setInt(1, sortMixVO.getSort1Id());
-			pstmt.setInt(2, sortMixVO.getSort2Id());
+			pstmt.setInt(1, sortMixMapVO.getSort1Id());
+			pstmt.setInt(2, sortMixMapVO.getSort2Id());
 
 			int rowCount = pstmt.executeUpdate();
-			System.out.println(rowCount + "row(s) updated!");
-
-			return true;
+			System.out.println(rowCount + "row(s) insert!");
+			return 1;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		return -1;
 
 	}
 
+
 	@Override
-	public SortMixVO update(SortMixVO t) {
+	public int update(SortMixMapVO sortMixMapVO) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 	@Override
-	public SortMixVO getOneById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<SortMixVO> getAll() {
+	public List<SortMixMapVO> findAll() {
 		final String GET_ALL_STMT = 
-				"SELECT sort1_id,sort2_id " 
-				+ "FROM cga_02.sort_mix "
-				+ "order by sort1_id;";
-		
-		SortMixVO sortMixVO = null;
-		List<SortMixVO> list = new ArrayList<SortMixVO>();
-
+				" SELECT  sort1.sort1_id, sort1.sort1_name, sort2.sort2_id, sort2.sort2_name "
+				+ "FROM  sort_mix "
+				+ "Inner join sort1 on sort1.sort1_id = sort_mix.sort1_id "
+				+ "Inner join sort2 on sort2.sort2_id = sort_mix.sort2_id "
+				+ "order by sort_mix.sort1_id , sort_mix.sort2_id ; ";
+		List<SortMixMapVO> list = new ArrayList<SortMixMapVO>();
 		try (Connection connection = getRDSConnection();
 				PreparedStatement pstmt = connection.prepareStatement(GET_ALL_STMT)) {
-					ResultSet rs = pstmt.executeQuery();
-			
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				// 回傳sortMixVO 並且 加入 直到沒有下一筆
-				sortMixVO = new SortMixVO();
-				sortMixVO.setSort1Id(rs.getInt("sort1_id"));
-				sortMixVO.setSort2Id(rs.getInt("sort2_id"));
-				list.add(sortMixVO); // Store the row in the list
+				SortMixMapVO mtd = new SortMixMapVO();
+				mtd.setSort1Id(rs.getInt("sort1_id"));
+				mtd.setSort1Name(rs.getString("sort1_name"));
+				mtd.setSort2Id(rs.getInt("sort2_id"));
+				mtd.setSort2Name(rs.getString("sort2_name"));
+				list.add(mtd); // Store the row in the list
 			}
+	
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return list;
 	}
+
+	@Override
+	public List<SortMixMapVO> getBySet() {
+//		final String GET_ALL_STMT = 
+//				" SELECT  sort1.sort1_id, sort1.sort1_name, sort2.sort2_id, sort2.sort2_name "
+//				+ "FROM  sort_mix "
+//				+ "Inner join sort1 on sort1.sort1_id = sort_mix.sort1_id "
+//				+ "Inner join sort2 on sort2.sort2_id = sort_mix.sort2_id "
+//				+ "WHERE sort1.sort1_id = ? "
+//				+ "order by sort_mix.sort1_id , sort_mix.sort2_id ; ";
+//		List<MappingTableDto> list = new ArrayList<MappingTableDto>();
+//		try (Connection connection = getRDSConnection();
+//				PreparedStatement pstmt = connection.prepareStatement(GET_ALL_STMT)) {
+//			ResultSet rs = pstmt.executeQuery();
+//			while (rs.next()) {
+//				// 回傳sortMixVO 並且 加入 直到沒有下一筆
+//				MappingTableDto mtd = new MappingTableDto();
+//				mtd.setId1(rs.getInt("sort1_id"));
+//				mtd.setColumn1(rs.getString("sort1_name"));
+//				mtd.setId2(rs.getInt("sort2_id"));
+//				mtd.setColumn2(rs.getString("sort2_name"));
+//				list.add(mtd); // Store the row in the list
+//			}
+//	
+//		} catch (SQLException se) {
+//			throw new RuntimeException("A database error occured. " + se.getMessage());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		return null;
+	}
+
 
 }

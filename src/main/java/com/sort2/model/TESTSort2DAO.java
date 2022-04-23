@@ -1,7 +1,5 @@
 package com.sort2.model;
 
-import java.util.List;
-
 public class TESTSort2DAO {
 	public static void main(String[] args) {
 

@@ -1,25 +1,25 @@
-package com.sort1.model;
+package com.sort2.model;
+
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.sort1.mapper.Sort1Mapper;
-
+import com.sort2.mapper.Sort2Mapper;
 import connection.MyBatisUtil;
 
-public class Sort1MybatisDAO implements Sort1Mapper {
+public class Sort2MybatisDAO implements Sort2Mapper{
 
-
-	public int insert(Sort1VO sort1VO) {
+	@Override
+	public int insert(Sort2VO sort2VO) {
 		SqlSession session = null;
 		try {
 			session = MyBatisUtil.getSessionTest();
-			Sort1Mapper mapper = session.getMapper(Sort1Mapper.class);
-			int result = mapper.insert(sort1VO);
+			Sort2Mapper mapper = session.getMapper(Sort2Mapper.class);
+			int result = mapper.insert(sort2VO);
 			if (result == 1) {
 				session.commit();
 				System.out.println("rows inserted = "+result );
-				System.out.println("generated key value = " + sort1VO.getSort1Id());
+				System.out.println("generated key value = " + sort2VO.getSort2Id());
 				return result;
 			}
 		} catch (Exception e) {
@@ -31,44 +31,13 @@ public class Sort1MybatisDAO implements Sort1Mapper {
 		}
 		return -1;
 	}
-//	改版1
-//	public static int insert(Sort1VO sort1VO) {
-//		SqlSession session = null;
-//		Sort1Mapper mapper =null;
-//		try {
-//			session = MyBatisUtil.getSession();
-//			mapper = session.getMapper(Sort1Mapper.class);
-//			int result = mapper.insert(sort1VO);
-//			if (result == 1) {
-//				session.commit();
-//				System.out.println(result + "新增成功");
-//				return result;
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return -1;
-//	}
-//	老師的原版本
-//	public static int insert1(Sort1VO sort1VO) {
-//		try (SqlSession session = MyBatisUtil.getSession()) {
-//			Sort1Mapper mapper = session.getMapper(Sort1Mapper.class);
-//			int result = mapper.insert(sort1VO);
-//			session.commit();
-//			System.out.println(result + "新增成功");
-//			return result;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return -1;
-//	}
 
 	@Override
 	public int deleteById(Integer id) {
 		SqlSession session = null;
 		try {
 			session = MyBatisUtil.getSessionTest();
-			Sort1Mapper mapper = session.getMapper(Sort1Mapper.class);
+			Sort2Mapper mapper = session.getMapper(Sort2Mapper.class);
 			int result = mapper.deleteById(id);
 			if (result == 1) {
 				session.commit();
@@ -86,12 +55,12 @@ public class Sort1MybatisDAO implements Sort1Mapper {
 	}
 
 	@Override
-	public int updateById(Sort1VO sort1VO) {
+	public int updateById(Sort2VO sort2VO) {
 		SqlSession session = null; 
 		try {
 			session = MyBatisUtil.getSessionTest();
-			Sort1Mapper mapper = session.getMapper(Sort1Mapper.class);
-			int result = mapper.updateById(sort1VO);
+			Sort2Mapper mapper = session.getMapper(Sort2Mapper.class);
+			int result = mapper.updateById(sort2VO);
 			if (result == 1) {
 				session.commit();
 				System.out.println("rows updateById = "+result );
@@ -108,17 +77,18 @@ public class Sort1MybatisDAO implements Sort1Mapper {
 	}
 
 	@Override
-	public Sort1VO getOneById(Integer id) {
+	public Sort2VO getOneById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Sort1VO selectBySort1Name(String sort1Name) {
+	@Override
+	public Sort2VO selectBySort2Name(String sort2Name) {
 		SqlSession session = null; 
 		try {
 			session = MyBatisUtil.getSessionTest();
-			Sort1Mapper mapper = session.getMapper(Sort1Mapper.class);
-			return mapper.selectBySort1Name(sort1Name);
+			Sort2Mapper mapper = session.getMapper(Sort2Mapper.class);
+			return mapper.selectBySort2Name(sort2Name);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -130,11 +100,11 @@ public class Sort1MybatisDAO implements Sort1Mapper {
 	}
 
 	@Override
-	public List<Sort1VO> selectAll() {
+	public List<Sort2VO> selectAll() {
 		SqlSession session = null; 
 		try {
 			session = MyBatisUtil.getSessionTest();
-			Sort1Mapper mapper = session.getMapper(Sort1Mapper.class);
+			Sort2Mapper mapper = session.getMapper(Sort2Mapper.class);
 			return mapper.selectAll();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -146,5 +116,6 @@ public class Sort1MybatisDAO implements Sort1Mapper {
 		return null;
 	}
 
-	
+
+
 }

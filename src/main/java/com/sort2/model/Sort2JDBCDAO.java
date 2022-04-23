@@ -1,15 +1,14 @@
 package com.sort2.model;
 
-import java.sql.*;
+import static connection.JDBCConnection.getRDSConnection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.sort1.model.Sort1VO;
-import com.sort_mix.model.SortMixVO;
-
-import connection.JDBCConnection;
-
-import static connection.JDBCConnection.*;
 
 public class Sort2JDBCDAO implements Sort2DAO_interface {
 

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.product_img.mapper.ProductImgMapper">
+
+	<resultMap id="ProductImgVOMap" type="ProductImgVO">
+		<id property="productImgId" column="product_img_id" javaType="Integer"
+			jdbcType="INTEGER"/>
+			<result property="productId" column="product_id"
+			javaType="Integer" jdbcType="INTEGER" />
+			<result property="productImgUrl" column="product_img_url" javaType="String" jdbcType="VARCHAR" />
+			<result property="fileKey" column="file_key" javaType="String" jdbcType="VARCHAR" />
+
+	<!--一對一 一張照片屬於一個商品 -->
+<!-- 		<association property="ProductVO" javaType="com.product.model.ProductVO"> -->
+<!-- 				<id property="productId" column="product_id" /> -->
+<!-- 				<result property="productId" column="product_id" /> -->
+<!-- 				<result property="productImgUrl" column="product_img_url" /> -->
+<!-- 				<result property="fileKey" column="file_key" /> -->
+<!-- 		</association> -->
+	</resultMap>
+
+<!-- 	<insert id="insert" parameterType="Sort2VO" -->
+<!-- 		useGeneratedKeys="true" keyProperty="sort2Id" keyColumn="sort2_id"> -->
+<!-- 		INSERT INTO -->
+<!-- 		cga_02.sort2(sort2_name) VALUES (#{sort2_name}) -->
+<!-- 	</insert> -->
+
+<!-- 	<delete id="deleteById" parameterType="Integer"> -->
+<!-- 		DELETE FROM cga_02.sort2 -->
+<!-- 		WHERE sort2_id = (#{sort2Id}) -->
+<!-- 	</delete> -->
+
+<!-- 	<update id="updateById" parameterType="Sort1VO"> -->
+<!-- 		update cga_02.sort2 SET -->
+<!-- 		sort2_name = (#{sort2Name}) -->
+<!-- 		WHERE sort2_id = (#{sort2Id}) -->
+<!-- 	</update> -->
+
+<!-- 	<select id="getOneById" parameterType="Integer" -->
+<!-- 		resultType="Sort2VO"> -->
+<!-- 		SELECT * FROM cga_02.sort2 WHERE sort2_id = (#{sort2Id}) -->
+<!-- 	</select> -->
+
+<!-- 	防止重複 --> 
+<!-- 	<select id="selectBySort2Name" parameterType="String" -->
+<!-- 		resultType="Sort2VO"> -->
+<!-- 		SELECT * FROM cga_02.sort2 WHERE sort2_name = -->
+<!-- 		(#{sort2Name}) -->
+<!-- 	</select> -->
+
+<!-- 	<select id="selectAll" resultMap="Sort2VOMap"> -->
+<!-- 		SELECT * FROM cga_02.sort2 -->
+<!-- 		ORDER BY sort2_id -->
+<!-- 	</select> -->
+</mapper>

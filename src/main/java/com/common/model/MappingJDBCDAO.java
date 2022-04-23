@@ -26,7 +26,6 @@ public class MappingJDBCDAO {
 				stmt.execute();
 				return true;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			}
@@ -67,7 +66,6 @@ public class MappingJDBCDAO {
 				stmt.executeBatch();
 				return true;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			}
@@ -87,7 +85,6 @@ public class MappingJDBCDAO {
 				stmt.close();
 				return true;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			}
@@ -105,7 +102,6 @@ public class MappingJDBCDAO {
 				stmt.close();
 				return true;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			}
@@ -121,7 +117,6 @@ public class MappingJDBCDAO {
 			con.close();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -133,7 +128,6 @@ public class MappingJDBCDAO {
 		try {
 			con.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return true;
@@ -148,7 +142,6 @@ public class MappingJDBCDAO {
 				stmt.execute();
 				return true;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			}

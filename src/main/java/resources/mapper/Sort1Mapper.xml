@@ -1,35 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
 <mapper namespace="com.sort1.mapper.Sort1Mapper">
-	<resultMap id="Sort1VOMap" type="Sort1VO">
-		<id property="sort1Id" column="sort1_id" javaType="Integer" jdbcType="INTEGER" />
-		<result property="sort1Name" column="sort1_name" javaType="String" jdbcType="VARCHAR" />
+
+	<resultMap type="Sort1VO" id="Sort1VOMap">
+		<result property="sort1Id" column="sort1_id" javaType="Integer"
+			jdbcType="INTEGER" />
+		<result property="sort1Name" column="sort1_name" javaType="String"
+			jdbcType="VARCHAR" />
 	</resultMap>
-	
-	<insert id="insert" parameterType="Sort1VO" keyProperty="sort1Id" keyColumn="sort1_id">
-	INSERT INTO cga_02.sort1(sort1_name) VALUES (#{sort1Name})
+
+	<insert id="insert" parameterType="Sort1VO"
+		keyProperty="sort1Id" keyColumn="sort1_id">
+		INSERT INTO cga_02.sort1(sort1_name)
+		VALUES (#{sort1Name})
 	</insert>
-	
+
 	<delete id="deleteById" parameterType="Integer">
-	DELETE FROM cga_02.sort1 WHERE sort1_id = #{sort1Id}
+		DELETE FROM cga_02.sort1
+		WHERE sort1_id = (#{sort1Id})
 	</delete>
 
 	<update id="updateById" parameterType="Sort1VO">
-	update cga_02.sort1 SET sort1_name = #{sort1Name}
-	WHERE sort1_id = #{sort1Id}
+		update cga_02.sort1 SET
+		sort1_name = (#{sort1Name})
+		WHERE sort1_id = (#{sort1Id})
 	</update>
 
-	<select id="getOneById" parameterType="Integer" resultType="Sort1VO">
-	SELECT * FROM cga_02.sort1 WHERE sort1_id = #{sort1Id}
+	<select id="getOneById" parameterType="Integer"
+		resultType="Sort1VO">
+		SELECT * FROM cga_02.sort1 WHERE sort1_id =(#{sort1Id})
 	</select>
 
-<!-- 	參照帳號重複 -->
-	<select id="selectBySort1Name" parameterType="String" resultType="Sort1VO">
-	SELECT * FROM cga_02.sort1  WHERE sort1_name = #{sort1Name}
+	<!-- 防止重複 -->
+	<select id="selectBySort1Name" parameterType="String"
+		resultType="Sort1VO">
+		SELECT * FROM cga_02.sort1 WHERE sort1_name =
+		(#{sort1Name})
 	</select>
 
 	<select id="selectAll" resultMap="Sort1VOMap">
-	SELECT * FROM cga_02.sort1 ORDER BY sort1_id
+		SELECT * FROM cga_02.sort1
+		ORDER BY sort1_id
+	</select>
+
+	<select id="getSort2BySortId" resultMap="Sort1VOMap">
+		SELECT * FROM cga_02.sort1
+		ORDER BY sort1_id
 	</select>
 
 </mapper>

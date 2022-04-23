@@ -6,17 +6,12 @@
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 		<setting name="useGeneratedKeys" value="true" />
-		<!--以下兩個搭配使用,可傳回空實體 mybatis版本3.4.2以上 -->
-		<setting name="returnInstanceForEmptyRow" value="true" />
-		<setting name="callSettersOnNulls" value="true" />
-		<!--使用緩存 -->
-		<setting name="cacheEnabled" value="true" />
 		<!-- 顯示查詢語句 -->
 		<setting name="logImpl" value="STDOUT_LOGGING" />
-		<!--可使用別名 (視驅動兼容性) default:true -->
-		<setting name="useColumnLabel" value="true" />
 	</settings>
 	<typeAliases>
+		<typeAlias alias="Sort1VO" type="com.sort1.model.Sort1VO" />
+		<typeAlias alias="Sort2VO" type="com.sort2.model.Sort2VO" />
 		<typeAlias alias="Boolean" type="java.lang.Boolean" />
 		<typeAlias alias="String" type="java.lang.String" />
 		<typeAlias alias="Timestamp" type="java.sql.Timestamp" />
@@ -39,6 +34,9 @@
 		<mapper class="com.picture.mapper.PictureMapper" />
 		<mapper class="com.messages.mapper.MessagesMapper" />
 		<mapper class="com.chatroom.mapper.ChatroomMapper" />
-		<mapper class="com.sort1.mapper.Sort1Mapper" />
+		<mapper resource="mapper/Sort1Mapper.xml" />
+		<mapper resource="mapper/Sort2Mapper.xml" />
+<!-- 		<mapper resource="mapper/ProductMapper.xml" /> -->
+<!-- 		<mapper resource="mapper/ProductImgMapper.xml" /> -->
 	</mappers>
 </configuration>

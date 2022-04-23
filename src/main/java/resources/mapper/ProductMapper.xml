@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.product.mapper.ProductMapper">
+
+	<resultMap id="ProductMap" type="ProductVO">
+		<id property="productId" column="product_id" javaType="Integer" jdbcType="INTEGER" />
+		<result property="productName" column="product_name" javaType="String" jdbcType="VARCHAR" />
+		<result property="price" column="price" javaType="Integer" jdbcType="INTEGER" />
+		<result property="amount" column="amount" javaType="Integer" jdbcType="INTEGER" />
+		<result property="updateTime" column="update_time" javaType="Timestamp" jdbcType="TIMESTAMP" />
+		<result property="group_amount1" column="groupAmount1" javaType="Integer" jdbcType="INTEGER" />
+		<result property="group_amount2" column="groupAmount2" javaType="Integer" jdbcType="INTEGER" />
+		<result property="group_amount3" column="groupAmount3" javaType="Integer" jdbcType="INTEGER" />
+		<result property="group_price1" column="groupPrice1" javaType="Integer" jdbcType="INTEGER" />
+		<result property="sort2_id" column="sort2Id" javaType="Integer" jdbcType="INTEGER" />
+		<result property="description" column="description" javaType="String" jdbcType="VARCHAR" />
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER" />
+		<result property="top_status" column="topStatus" javaType="Integer" jdbcType="INTEGER" />
+	
+	<!--一對多 一個商品有多張照片 -->
+		<collection property="productImgList" javaType="ArrayList" ofType="com.product_img.model.ProductImgVO">
+				<id property="productImgId" column="product_img_id" jdbcType="INTEGER"/>
+				<result property="productId" column="product_id" jdbcType="INTEGER" />
+				<result property="productImgUrl" column="product_img_url" jdbcType="VARCHAR"/>
+		</collection>
+	</resultMap>
+
+	<insert id="insert" parameterType="ProductVO"
+		useGeneratedKeys="true" keyProperty="productId" keyColumn="product_id">
+		INSERT INTO
+		cga_02.product(product_name,price,amount,
+		group_amount1,group_amount2,group_amount3,group_price1,sort2_id,description,status,top_status)
+		VALUES (#{productName},#{price},#{amount},#{groupAmount1},#{groupAmount2},#{groupAmount3},
+		#{groupPrice1},#{sort2Id},#{description},0,0);
+	</insert>
+
+	<delete id="deleteById" parameterType="Integer">
+		UPDATE product SET status = #{status}
+		WHERE product_id = #{sort2Id}
+	</delete>
+
+	<select id="getOneById" parameterType="Integer"
+		resultType="Sort2VO">
+		SELECT * FROM cga_02.sort2 WHERE sort2_id = (#{sort2Id})
+	</select>
+
+
+	<select id="getAll" resultMap="ProductMap">
+select product.*, product_img.product_img_id AS product_img_id, 
+product_img.product_id AS product_id, 
+product_img.product_img_id AS product_img_id,
+product_img.product_img_url AS product_img_url
+FROM product 
+LEFT JOIN product_img 
+ON product.product_id = product_img.product_id
+	</select>
+</mapper>

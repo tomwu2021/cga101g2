@@ -1,29 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.sort1.mapper.Sort1Mapper">
-	<resultMap id="Sort1Map" type="Sort1">
-		<id property="sort1Id" column="sort1_id" javaType="Integer" jdbcType="INTEGER" />
-		<result property="sort1Name" column="sort1_name" javaType="String" jdbcType="VARCHAR" />
+<mapper namespace="com.sort2.mapper.Sort2Mapper">
+
+	<resultMap id="Sort2VOMap" type="Sort2VO">
+		<id property="sort2Id" column="sort2_id" javaType="Integer"
+			jdbcType="INTEGER" />
+		<result property="sort2Name" column="sort2_name"
+			javaType="String" jdbcType="VARCHAR" />
 	</resultMap>
-	
-	<insert id="insert" parameterType="Sort1" useGeneratedKeys="true" keyProperty="sort1Id" keyColumn="sort1_id">
-	insert into cga_01.SORT1(sort1_name) values (#{sort1Name})
+
+	<insert id="insert" parameterType="Sort2VO"
+		useGeneratedKeys="true" keyProperty="sort2Id" keyColumn="sort2_id">
+		INSERT INTO
+		cga_02.sort2(sort2_name) VALUES (#{sort2_name})
 	</insert>
-	
+
 	<delete id="deleteById" parameterType="Integer">
-	delete from cga_01.SORT1 where sort1_id = #{sort1Id}
+		DELETE FROM cga_02.sort2
+		WHERE sort2_id = (#{sort2Id})
 	</delete>
 
-	<update id="updateById" parameterType="Sort1">
-	update cga_01.SORT1 set sort1_name = #{sort1Name}
-	where sort1_id = #{sort1Id}
+	<update id="updateById" parameterType="Sort1VO">
+		update cga_02.sort2 SET
+		sort2_name = (#{sort2Name})
+		WHERE sort2_id = (#{sort2Id})
 	</update>
 
-	<select id="getOneById" parameterType="Integer" resultType="Sort1">
-	SELECT * from cga_01.SORT1 where sort1_id = #{sort1Id}
+	<select id="getOneById" parameterType="Integer"
+		resultType="Sort2VO">
+		SELECT * FROM cga_02.sort2 WHERE sort2_id = (#{sort2Id})
 	</select>
 
-	<select id="selectAll" resultMap="Sort1Map">
-	select * from cga_01.SORT1
+	<!-- 防止重複 -->
+	<select id="selectBySort2Name" parameterType="String"
+		resultType="Sort2VO">
+		SELECT * FROM cga_02.sort2 WHERE sort2_name =
+		(#{sort2Name})
+	</select>
+
+	<select id="selectAll" resultMap="Sort2VOMap">
+		SELECT * FROM cga_02.sort2
+		ORDER BY sort2_id
 	</select>
 </mapper>
