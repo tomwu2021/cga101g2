@@ -11,11 +11,6 @@
     color: white;
 }
 
-.photos:hover {
-    cursor: pointer;
-    -webkit-filter: brightness(0.5);
-}
-
 #cover-all {
     z-index: 99;
     position: fixed;
@@ -115,4 +110,9 @@ form.is-dragover {
 }
 .services_thumb:hover .services_thumb_ul{
     display: block;
+    cursor: pointer;
+}
+.services_thumb:hover .photos{
+    cursor: pointer;
+    -webkit-filter: brightness(0.5);
 }

@@ -871,7 +871,8 @@
         position: relative;
         display: inline-block;
         font-size: 0;
-        z-index: 999;
+    }
+    .img-wraps .img-fluid {
         transition: all 0.3s;
     }
 
@@ -879,22 +880,27 @@
         display: block;
     }
 
+    .img-wraps:hover .img-fluid {
+        -webkit-filter: brightness(0.5);
+    }
+
     .img-wraps .closes {
         position: absolute;
-        top: 40%;
-        right: 176px;
-        z-index: 1;
+        top: 0;
+        right: 0;
+        z-index: 2;
         padding: 4px 3px;
-        color: #f14141d1;;
+        color: #fff;
         font-weight: 500;
         cursor: pointer;
         text-align: center;
-        font-size: 70px;
-        line-height: 44px;
+        font-size: 50px;
+        line-height: 30px;
         border-radius: 50%;
-        border: 3px solid #f14141d1;
+        border: 3px solid #fff;
         display: none;
         transition: all 0.7s;
+        margin: 5px;
     }
 </style>
 <script>
@@ -937,7 +943,6 @@
     }
 
     function deletePreview(key) {
-        let temp = [];
         files.splice(key, 1);
         buildPreviewSection(files);
     }
@@ -949,8 +954,8 @@
             previewHtml +=
                 `
             <div class="col-lg-4 col-md-6" style="padding:10px;overflow:hidden;" id="${key}">
-                <div class="services_thumb img-wraps photos" style="width:400px;height:240px;margin:0px; auto;overflow:hidden;" onclick="deletePreview(${key})">
-                    <span class="closes" title="Delete">×</span>
+                <div class="services_thumb img-wraps photos" style="width:400px;height:240px;margin:0px; auto;overflow:hidden;" >
+                    <span class="closes" title="Delete" onclick="deletePreview(${key})">×</span>
                     <img class="img-fluid rounded" src="${url}" style="min-height:300px;margin:auto;overflow:hidden;">
                 </div>
             </div>
