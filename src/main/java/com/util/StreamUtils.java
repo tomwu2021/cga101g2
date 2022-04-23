@@ -23,6 +23,8 @@ public class StreamUtils {
 
         // Open new InputStreams using recorded bytes
         // Can be repeated as many times as you wish
+        // InputStream is1 = new ByteArrayInputStream(baos.toByteArray());
+        // InputStream is2 = new ByteArrayInputStream(baos.toByteArray());
         return baos;
     }
 }

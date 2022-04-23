@@ -2,12 +2,11 @@ package com.picture.service;
 
 import com.album.model.AlbumJDBCDAO;
 import com.album.model.AlbumVO;
+import com.amazonaws.util.IOUtils;
 import com.common.exception.JDBCException;
 import com.common.model.MappingJDBCDAO;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
@@ -24,6 +23,7 @@ import com.picture.model.PictureJDBCDAO;
 import com.picture.model.PictureVO;
 
 import aws.S3Service;
+import com.util.StreamUtils;
 import connection.DruidConnection;
 import connection.JDBCConnection;
 import connection.JNDIConnection;
@@ -71,8 +71,13 @@ public class PictureService {
                 if (getFileNameFromPart(part) != null && part.getContentType() != null) {
                     System.out.println(fileName);
                     InputStream in = part.getInputStream();
+//                    ByteArrayOutputStream clone = new StreamUtils().CloneInputStream(in);
+//                    InputStream forS3 = new ByteArrayInputStream(clone.toByteArray());
+//                    InputStream forDB = new ByteArrayInputStream(clone.toByteArray());
+//                    pv.setBody(IOUtils.toByteArray(forDB));
                     pv = s3Service.uploadImageToS3(in, fileName);
                     pvs.add(picDAO.insert(pv, con));
+                    //byte[] bytes = IOUtils.toByteArray(is);
                 }
                 System.out.println(i++);
                 if (albumDao.isAlbum(albumId, con) != null && pv.getPictureId() != null) {
@@ -149,4 +154,6 @@ public class PictureService {
         return filename;
 
     }
+
+
 }
