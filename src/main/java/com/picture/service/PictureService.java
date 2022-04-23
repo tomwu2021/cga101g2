@@ -130,6 +130,10 @@ public class PictureService {
         return picDAO.getPageResult(pageQuery);
     }
 
+    public PictureVO getOne(Integer id){
+        return picDAO.getOneById(id);
+    }
+
     String getFileNameFromPart(Part part) {
         String header = part.getHeader("content-disposition");
         System.out.println("header=" + header);

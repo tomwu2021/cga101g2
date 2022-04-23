@@ -21,13 +21,15 @@ import org.apache.commons.io.IOUtils;
 
 public class S3Service {
 
-	private static final String BUCKETNAME = "cga101-02";
+	public static final String BUCKETNAME = "cga101-02";
+	public static final String CDN = "https://d148yrb2gzai3l.cloudfront.net/";
 
 	public PictureVO uploadImageToS3(InputStream in, String fileName) {
 		PictureVO vo = new PictureVO();
 		String key = getGenerateFileKey(fileName);
-		String cdn = "https://d148yrb2gzai3l.cloudfront.net/";
-		String url = cdn + key;
+
+		String url = (CDN + key).replace(" ","%20");
+		String previewUrl = (url + "?d=600x400").replace("%20","%2520");
 		AmazonS3 s3client = new AwsService().getS3Client();
 
 		try {
@@ -48,7 +50,6 @@ public class S3Service {
 			vo.setFileName(fileName);
 			vo.setUrl(url);
 			vo.setSize(contentLength);
-			String previewUrl = url + "?d=600x400";
 			vo.setPreviewUrl(previewUrl);
 
 		} catch (AmazonServiceException ase) {

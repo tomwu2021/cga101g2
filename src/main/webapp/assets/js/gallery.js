@@ -28,6 +28,11 @@ function searchPicture() {
 			for (let item of result.items) {
 				html += "<div class='col-lg-4 col-md-6' style='padding:10px;overflow:hidden;'>";
 				html += " <div class='services_thumb' style='width:400px;height:240px';margin:0px auto;overflow:hidden;>";
+				html += `<ui class="services_thumb_ul">
+							<li>Title: ${item.fileName}</li>
+							<li>Size: ${item.size}</li>
+							<li>Create Time: ${item.createTime}</li>
+						  </ui>`
 				html += "<a href=" + item.url + " data-toggle='lightbox' data-gallery=gallery class='col-md-4'>";
 				html += "<img class='photos img-fluid rounded' src='" + item.previewUrl + "' alt='" + item.fileName + "' style='min-height:300px;margin:auto;overflow:hidden;'>";
 				html += "</a>";
