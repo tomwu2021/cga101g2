@@ -1,6 +1,4 @@
-
-
-// 會員註冊
+// 會員註冊 --------------
 $(function () {
     var screenwidth, screenheight, mytop, getPosLeft, getPosTop
     screenwidth = $(window).width();
@@ -111,3 +109,34 @@ $(function () {
     });
 
 });
+
+
+// 傳送資料到 register.jsp
+function getInfo() {
+    let xhr = null;
+    function createXHR() {
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        return xhr;
+    }
+    createXHR();
+    xhr.onload = (e) => {
+        if (xhr.status == 200) {
+            document.getElementById("show").innerHTML = xhr.responseText;
+        } else {
+            alert(xhr.status);
+        }
+    };
+
+    xhr.open("post", "../front/register.jsp");
+    xhr.setRequestHeader(
+        "content-type",
+        "application/x-www-form-urlencoded"
+    );
+
+    let datas_info = "account=" + document.getElementById("account").value;
+    xhr.send(datas_info);
+}
