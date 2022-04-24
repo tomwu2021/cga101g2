@@ -39,6 +39,7 @@ public class RanksJDBCDAO implements RanksDAO_interface {
 		return null;
 	}
 
+	// 情境二 select：查詢所有會員等級
 	@Override
 	public List<RanksVO> getAll() {
 		final String GETALL = "SELECT rank_id, rank_name, charge_amount, discount, bonus FROM ranks;";

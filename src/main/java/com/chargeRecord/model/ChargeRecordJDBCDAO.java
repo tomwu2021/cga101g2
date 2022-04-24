@@ -88,7 +88,7 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 		return null;
 	}
 
-// 情境三　select：管理員查詢某會員所有儲值與消費紀錄
+// 情境三　select：管理員查詢某會員所有儲值與消費紀錄 
 	@Override
 	public List<ChargeRecordVO> getAll(Integer id) {
 
