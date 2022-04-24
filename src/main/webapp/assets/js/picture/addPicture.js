@@ -64,25 +64,22 @@ function buildPreviewSection(files) {
 }
 
 function save() {
-    //模擬form表單
-    let myform = new FormData();
-    files.forEach((file, key) => {
-        myform.append(`file${key}`, file);
-    })
-    myform.append(`albumId`, 9);
-
-    $.ajax({
-        url: "/cga101g2/PictureController",
-        data: myform,
-        processData: false,
-        contentType: false,
-        type: 'POST',
-        success: function (dataofconfirm) {
-            location.href = "/cga101g2/front/Gallery.html"
-        }
-    });
+    // arraylist to FilesList
+    $('#upload-input')[0].files = getFileListItems(files);
+    $('#main-form').submit();
 }
 
 function cancel() {
+    location.href = "/cga101g2/picture?albumId=" + $('#albumId').val();
+}
 
+/**
+ * array to fileList
+ */
+function getFileListItems (files) {
+    let fileList = new DataTransfer();
+    files.forEach(file=>{
+        fileList.items.add(file)
+    })
+    return fileList.files
 }

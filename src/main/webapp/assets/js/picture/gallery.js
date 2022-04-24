@@ -4,7 +4,7 @@
 
 let fileName = "";
 let uploadTime = 7;
-let albumId = 9;
+let albumId = $("#albumId").val();
 let pageSize = 12;
 let sort = "DESC";
 let thisPage = 1;
@@ -12,7 +12,6 @@ let total = 0;
 let pageCount = 0;
 
 $('document').ready(() => {
-    alert('ready!')
     searchPicture();
 })
 
@@ -23,7 +22,7 @@ function searchPicture() {
     }
     console.log('sort=' + sort + '&uploadTime=' + uploadTime);
     $.get({
-        url: "/cga101g2/PictureController?fileName=" + fileName + "&albumId=" + albumId + "&thisPage=" + thisPage + "&order=upload_time&pageSize="
+        url: "/cga101g2/picture?action=search&fileName=" + fileName + "&albumId=" + albumId + "&thisPage=" + thisPage + "&order=upload_time&pageSize="
             + pageSize + "&sort=" + sort + "&uploadTime=" + uploadTime,
         success: function (result, status) {
             total = result.total;

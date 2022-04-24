@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/gallery.css">
-
+<input type="hidden" name="albumId" value="${albumId}" id="albumId">
 <!--services img area-->
 <div class="services_gallery mt-100" >
   <div class="container">
@@ -54,7 +54,7 @@
 
 <!--our services area-->
 
-<a class="upload-button" id="scrollUp" href="addPicture.html"
+<a class="upload-button" id="scrollUp" href="<%=request.getContextPath()%>/picture?action=add&albumId=${albumId}"
    style="position: fixed; z-index: 2147483647; display: inline; right: 4px; bottom: 300px;">
   <i class="fa fa-plus"></i>
 </a>

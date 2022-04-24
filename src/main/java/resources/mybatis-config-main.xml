@@ -38,5 +38,6 @@
 		<mapper resource="mapper/Sort2Mapper.xml" />
 <!-- 		<mapper resource="mapper/ProductMapper.xml" /> -->
 <!-- 		<mapper resource="mapper/ProductImgMapper.xml" /> -->
+		<mapper class="com.menu.mapper.MenuMapper" />
 	</mappers>
 </configuration>
