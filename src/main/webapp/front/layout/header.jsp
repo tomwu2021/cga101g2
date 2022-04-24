@@ -1,58 +1,4 @@
-<!doctype html>
-<html class="no-js" lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Gallery page</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon"
-          href="../assets/img/favicon.ico">
-
-
-    <!-- CSS
-        ========================= -->
-    <!--bootstrap min css-->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-    <!--owl carousel min css-->
-    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
-    <!--slick min css-->
-    <link rel="stylesheet" href="../assets/css/slick.css">
-    <!--magnific popup min css-->
-    <link rel="stylesheet" href="../assets/css/magnific-popup.css">
-    <!--font awesome css-->
-    <link rel="stylesheet" href="../assets/css/font.awesome.css">
-    <!--ionicons min css-->
-    <link rel="stylesheet" href="../assets/css/ionicons.min.css">
-    <!--animate css-->
-    <link rel="stylesheet" href="../assets/css/animate.css">
-    <!--jquery ui min css-->
-    <link rel="stylesheet" href="../assets/css/jquery-ui.min.css">
-    <!--slinky menu css-->
-    <link rel="stylesheet" href="../assets/css/slinky.menu.css">
-    <!--plugins css-->
-    <link rel="stylesheet" href="../assets/css/plugins.css">
-    <link rel="stylesheet" href="../assets/css/gallery.css">
-
-    <!-- Main Style CSS -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="">
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css"
-          integrity="sha512-Velp0ebMKjcd9RiCoaHhLXkR1sFoCCWXNp6w4zj1hfMifYB5441C+sKeBl/T/Ka6NjBiRfBBQRaQq65ekYz3UQ=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <!--modernizr min js here-->
-    <script src="../assets/js/vendor/modernizr-3.7.1.min.js"></script>
-
-</head>
-
-<body>
-
 <!--header area start-->
-
 <!--offcanvas menu area start-->
 <div class="off_canvars_overlay"></div>
 <div class="offcanvas_menu">
@@ -74,7 +20,7 @@
                                     <a href="#"><i class="ion-close-round"></i></a>
                                 </div>
                                 <form action="#">
-                                    <input placeholder="Search entire store here ..." type="text">
+                                    <input placeholder="Search entire store here <%=request.getContextPath()%>." type="text">
                                     <button type="submit">
                                         <span class="icon icon-Search"></span>
                                     </button>
@@ -90,7 +36,7 @@
                                     <div class="cart_item">
                                         <div class="cart_img">
                                             <a href="#"><img
-                                                    src="../assets/img/s-product/product.jpg" alt=""></a>
+                                                    src="<%=request.getContextPath()%>/assets/img/s-product/product.jpg" alt=""></a>
                                         </div>
                                         <div class="cart_info">
                                             <a href="#">Lorem ipsum dolor sit amet, consectetur</a>
@@ -105,7 +51,7 @@
                                     <div class="cart_item">
                                         <div class="cart_img">
                                             <a href="#"><img
-                                                    src="../assets/img/s-product/product2.jpg" alt=""></a>
+                                                    src="<%=request.getContextPath()%>/assets/img/s-product/product2.jpg" alt=""></a>
                                         </div>
                                         <div class="cart_info">
                                             <a href="#">impedit dolor sed soluta natus voluptas.</a>
@@ -155,14 +101,14 @@
                                 </div>
                                 <div class="dropdown_links_list">
                                     <h3>
-                                        <img src="../assets/img/icon/language.png" alt="">
+                                        <img src="<%=request.getContextPath()%>/assets/img/icon/language.png" alt="">
                                         English
                                     </h3>
                                     <ul>
                                         <li><a href="#"><img
-                                                src="../assets/img/icon/language.png" alt=""> English</a></li>
+                                                src="<%=request.getContextPath()%>/assets/img/icon/language.png" alt=""> English</a></li>
                                         <li><a href="#"><img
-                                                src="../assets/img/icon/language2.png" alt="">
+                                                src="<%=request.getContextPath()%>/assets/img/icon/language2.png" alt="">
                                             Germany</a></li>
                                     </ul>
                                 </div>
@@ -280,7 +226,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2">
                         <div class="logo">
-                            <a href="index.html"><img src="../assets/img/logo/logo.png"
+                            <a href="index.html"><img src="<%=request.getContextPath()%>/assets/img/logo/logo.png"
                                                       alt=""></a>
                         </div>
                     </div>
@@ -383,7 +329,7 @@
                                         <a href="#"><i class="ion-close-round"></i></a>
                                     </div>
                                     <form action="#">
-                                        <input placeholder="Search entire store here ..." type="text">
+                                        <input placeholder="Search entire store here <%=request.getContextPath()%>." type="text">
                                         <button type="submit">
                                             <span class="icon icon-Search"></span>
                                         </button>
@@ -400,7 +346,7 @@
                                         <div class="cart_item">
                                             <div class="cart_img">
                                                 <a href="#"><img
-                                                        src="../assets/img/s-product/product.jpg" alt=""></a>
+                                                        src="<%=request.getContextPath()%>/assets/img/s-product/product.jpg" alt=""></a>
                                             </div>
                                             <div class="cart_info">
                                                 <a href="#">Lorem ipsum dolor sit amet, consectetur</a>
@@ -415,7 +361,7 @@
                                         <div class="cart_item">
                                             <div class="cart_img">
                                                 <a href="#"><img
-                                                        src="../assets/img/s-product/product2.jpg" alt=""></a>
+                                                        src="<%=request.getContextPath()%>/assets/img/s-product/product2.jpg" alt=""></a>
                                             </div>
                                             <div class="cart_info">
                                                 <a href="#">impedit dolor sed soluta natus voluptas.</a>
@@ -465,15 +411,15 @@
                                     </div>
                                     <div class="dropdown_links_list">
                                         <h3>
-                                            <img src="../assets/img/icon/language.png" alt="">
+                                            <img src="<%=request.getContextPath()%>/assets/img/icon/language.png" alt="">
                                             English
                                         </h3>
                                         <ul>
                                             <li><a href="#"><img
-                                                    src="../assets/img/icon/language.png" alt="">
+                                                    src="<%=request.getContextPath()%>/assets/img/icon/language.png" alt="">
                                                 English</a></li>
                                             <li><a href="#"><img
-                                                    src="../assets/img/icon/language2.png" alt="">
+                                                    src="<%=request.getContextPath()%>/assets/img/icon/language2.png" alt="">
                                                 Germany</a></li>
                                         </ul>
                                     </div>
@@ -496,503 +442,3 @@
 </header>
 <!--header area end-->
 
-
-<!--breadcrumbs area start-->
-<div class="breadcrumbs_area">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="breadcrumb_content">
-                    <h3>Services</h3>
-                    <ul>
-                        <li><a href="index.html">home</a></li>
-                        <li>our services</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--breadcrumbs area end-->
-
-
-<!--services img area-->
-<div class="services_gallery mt-100">
-    <div class="container">
-        <div class="shop_toolbar_wrapper" id="file-zone">
-            <span style="display: block;margin: auto;font-size: 1.2em;letter-spacing: 0.4em;font-weight: 550;color: rgb(34, 34, 34); z-index: -199;">點擊上傳</span><input
-                type="file" id="file-btn" accept="image/*" multiple="multiple" style="display:none">
-
-        </div>
-        <div class="row" id="picture-row"></div>
-    </div>
-</div>
-<!--services img end-->
-<div class="container" style="display: none;margin-bottom: 30px;" id="btn-container">
-    <div class="product_tab_btn">
-        <ul class="nav" role="tablist">
-            <li>
-                <a class="" data-toggle="tab" role="tab" aria-controls="classic" aria-selected="false">
-                    Cancel
-                </a>
-            </li>
-            <li>
-                <a data-toggle="tab" role="tab" aria-controls="display" aria-selected="true" class="active show"
-                   onclick="save()">
-                    Save
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<footer class="footer_widgets foote_other">
-    <div class="container">
-        <div class="footer_top">
-            <div class="row">
-                <div class="col-lg-3 col-md-8 col-sm-8">
-                    <div class="widgets_container footer_contact">
-                        <h3>About us</h3>
-                        <p>We are a team of designers and developers that create high
-                            quality HTML Template, Woocommerce, Shopify Theme.</p>
-                        <p>
-                            <i class="icon icon-Pointer"></i> The Barn, Ullenhall, Henley in
-                            Arden B578 5CC, England
-                        </p>
-                        <p>
-                            <i class="icon icon-Phone"></i> <a href="tel:+123.456.789">+123.456.789</a>
-                            - <a href="tel:+123.456.678">+123.456.678</a>
-                        </p>
-                        <p>
-                            <i class="icon icon-Mail"></i> <a href="#">#</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-4">
-                    <div class="widgets_container widget_menu">
-                        <h3>Information</h3>
-                        <div class="footer_menu">
-                            <ul>
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="#">Delivery Information</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Terms & Conditions</a></li>
-                                <li><a href="contact.html">Contact us</a></li>
-                                <li><a href="#">Returns</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div class="widgets_container footer-linkup">
-                        <h3>Our Twitter Feed</h3>
-                        <p>
-                            Check out "Alice - Multipurpose Responsive #Magento #Theme" on <br>
-                            #Envato by <a href="#">@Plazathemes</a> <br> #Themeforest <a
-                                href="#">https://t.co/DNdhAwzm88</a>
-                        </p>
-                        <p>
-                            Check Out "Emos - Multi Store Responsive #Magento #Theme" on
-                            #Envato by <br> <a href="#">@Plazathemes</a> #Themeforest <a
-                                href="#">https://t.co/08oCVAr5dy</a>
-                        </p>
-
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-10">
-                    <div class="widgets_container footer_instragam">
-                        <h3>instagram</h3>
-                        <div class="instagram_container">
-                            <div class="instagram_thumb">
-                                <a href="#"><img src="../assets/img/about/instragam1.jpg"
-                                                 alt=""></a>
-                                <div class="instagram_boxcmt">
-                                    <span class="likecount">5</span> <span class="commentcount">1</span>
-                                </div>
-                            </div>
-                            <div class="instagram_thumb">
-                                <a href="#"><img src="../assets/img/about/instragam2.jpg"
-                                                 alt=""></a>
-                                <div class="instagram_boxcmt">
-                                    <span class="likecount">5</span> <span class="commentcount">1</span>
-                                </div>
-                            </div>
-                            <div class="instagram_thumb">
-                                <a href="#"><img src="../assets/img/about/instragam3.jpg"
-                                                 alt=""></a>
-                                <div class="instagram_boxcmt">
-                                    <span class="likecount">5</span> <span class="commentcount">1</span>
-                                </div>
-                            </div>
-                            <div class="instagram_thumb">
-                                <a href="#"><img src="../assets/img/about/instragam4.jpg"
-                                                 alt=""></a>
-                                <div class="instagram_boxcmt">
-                                    <span class="likecount">5</span> <span class="commentcount">1</span>
-                                </div>
-                            </div>
-                            <div class="instagram_thumb">
-                                <a href="#"><img src="../assets/img/about/instragam5.jpg"
-                                                 alt=""></a>
-                                <div class="instagram_boxcmt">
-                                    <span class="likecount">5</span> <span class="commentcount">1</span>
-                                </div>
-                            </div>
-                            <div class="instagram_thumb">
-                                <a href="#"><img src="../assets/img/about/instragam2.jpg"
-                                                 alt=""></a>
-                                <div class="instagram_boxcmt">
-                                    <span class="likecount">5</span> <span class="commentcount">1</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer_bottom">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-6">
-                    <div class="copyright_area">
-                        <p>
-                            Copyright &copy; 2022.Company name All rights reserved.<a
-                                target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="footer_social">
-                        <ul>
-                            <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                            <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                            <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                            <li><a href="#"><i class="ion-social-youtube-outline"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<!--footer area end-->
-
-<!-- modal area start-->
-<div class="modal fade" id="modal_box" tabindex="-1" role="dialog"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <button type="button" class="close" data-dismiss="modal"
-                    aria-label="Close">
-                <span aria-hidden="true"><i class="ion-android-close"></i></span>
-            </button>
-            <div class="modal_body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5 col-md-5 col-sm-12">
-                            <div class="modal_tab">
-                                <div class="tab-content product-details-large">
-                                    <div class="tab-pane fade show active" id="tab1"
-                                         role="tabpanel">
-                                        <div class="modal_tab_img">
-                                            <a href="#"><img
-                                                    src="../assets/img/product/productbig1.jpg" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="tab2" role="tabpanel">
-                                        <div class="modal_tab_img">
-                                            <a href="#"><img
-                                                    src="../assets/img/product/productbig2.jpg" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="tab3" role="tabpanel">
-                                        <div class="modal_tab_img">
-                                            <a href="#"><img
-                                                    src="../assets/img/product/productbig3.jpg" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="tab4" role="tabpanel">
-                                        <div class="modal_tab_img">
-                                            <a href="#"><img
-                                                    src="../assets/img/product/productbig4.jpg" alt=""></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal_tab_button">
-                                    <ul class="nav product_navactive owl-carousel" role="tablist">
-                                        <li><a class="nav-link active" data-toggle="tab"
-                                               href="#tab1" role="tab" aria-controls="tab1"
-                                               aria-selected="false"><img
-                                                src="../assets/img/product/product1.jpg" alt=""></a></li>
-                                        <li><a class="nav-link" data-toggle="tab" href="#tab2"
-                                               role="tab" aria-controls="tab2" aria-selected="false"><img
-                                                src="../assets/img/product/product2.jpg" alt=""></a></li>
-                                        <li><a class="nav-link button_three" data-toggle="tab"
-                                               href="#tab3" role="tab" aria-controls="tab3"
-                                               aria-selected="false"><img
-                                                src="../assets/img/product/product3.jpg" alt=""></a></li>
-                                        <li><a class="nav-link" data-toggle="tab" href="#tab4"
-                                               role="tab" aria-controls="tab4" aria-selected="false"><img
-                                                src="../assets/img/product/product8.jpg" alt=""></a></li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-7 col-md-7 col-sm-12">
-                            <div class="modal_right">
-                                <div class="modal_title mb-10">
-                                    <h2>Donec Ac Tempus</h2>
-                                </div>
-                                <div class="modal_price mb-10">
-                                    <span class="new_price">$64.99</span> <span class="old_price">$78.99</span>
-                                </div>
-                                <div class="modal_description mb-15">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit. Mollitia iste laborum ad impedit pariatur esse optio
-                                        tempora sint ullam autem deleniti nam in quos qui nemo ipsum
-                                        numquam, reiciendis maiores quidem aperiam, rerum vel
-                                        recusandae</p>
-                                </div>
-                                <div class="variants_selects">
-                                    <div class="variants_size">
-                                        <h2>size</h2>
-                                        <select class="select_option">
-                                            <option selected value="1">s</option>
-                                            <option value="1">m</option>
-                                            <option value="1">l</option>
-                                            <option value="1">xl</option>
-                                            <option value="1">xxl</option>
-                                        </select>
-                                    </div>
-                                    <div class="variants_color">
-                                        <h2>color</h2>
-                                        <select class="select_option">
-                                            <option selected value="1">purple</option>
-                                            <option value="1">violet</option>
-                                            <option value="1">black</option>
-                                            <option value="1">pink</option>
-                                            <option value="1">orange</option>
-                                        </select>
-                                    </div>
-                                    <div class="modal_add_to_cart">
-                                        <form action="#">
-                                            <input min="1" max="100" step="2" value="1" type="number">
-                                            <button type="submit">add to cart</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="modal_social">
-                                    <h2>Share this product</h2>
-                                    <ul>
-                                        <li class="facebook"><a href="#"><i
-                                                class="fa fa-facebook"></i></a></li>
-                                        <li class="twitter"><a href="#"><i
-                                                class="fa fa-twitter"></i></a></li>
-                                        <li class="pinterest"><a href="#"><i
-                                                class="fa fa-pinterest"></i></a></li>
-                                        <li class="google-plus"><a href="#"><i
-                                                class="fa fa-google-plus"></i></a></li>
-                                        <li class="linkedin"><a href="#"><i
-                                                class="fa fa-linkedin"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--our services area-->
-
-
-<!-- JS
-============================================ -->
-<!--jquery min js-->
-<script src="../assets/js/vendor/jquery-3.4.1.min.js"></script>
-<!--popper min js-->
-<script src="../assets/js/popper.js"></script>
-<!--bootstrap min js-->
-<script src="../assets/js/bootstrap.min.js"></script>
-<!--owl carousel min js-->
-<script src="../assets/js/owl.carousel.min.js"></script>
-<!--slick min js-->
-<script src="../assets/js/slick.min.js"></script>
-<!--magnific popup min js-->
-<script src="../assets/js/jquery.magnific-popup.min.js"></script>
-<!--counterup min js-->
-<script src="../assets/js/jquery.counterup.min.js"></script>
-<!--jquery countdown min js-->
-<script src="../assets/js/jquery.countdown.js"></script>
-<!--jquery ui min js-->
-<script src="../assets/js/jquery.ui.js"></script>
-<!--jquery elevatezoom min js-->
-<script src="../assets/js/jquery.elevatezoom.js"></script>
-<!--isotope packaged min js-->
-<script src="../assets/js/isotope.pkgd.min.js"></script>
-<!--slinky menu js-->
-<script src="../assets/js/slinky.menu.js"></script>
-<!-- Plugins JS -->
-<script src="../assets/js/plugins.js"></script>
-<!--	<script src="../assets/js/gallery.js"></script>-->
-<!-- Main JS -->
-<script src="../assets/js/main.js"></script>
-
-<script
-        src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"
-        integrity="sha512-YibiFIKqwi6sZFfPm5HNHQYemJwFbyyYHjrr3UT+VobMt/YBo1kBxgui5RWc4C3B4RJMYCdCAJkbXHt+irKfSA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script
-        src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"
-        integrity="sha512-Y2IiVZeaBwXG1wSV7f13plqlmFOx8MdjuHyYFVoYzhyRr3nH/NMDjTBSswijzADdNzMyWNetbLMfOpIPl6Cv9g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<style>
-    .shop_toolbar_wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border: 1px solid #ddd;
-        padding: 8px 10px;
-        margin: 0 0 30px;
-        font-family: '微軟正黑體';
-        cursor: pointer;
-        transition: all 0.3s ease 0s;
-        border-radius: 25px;
-    }
-
-    .shop_toolbar_wrapper :hover {
-        box-shadow: 2px 2px 2px 2px rgba(230 230 230 0.7), -2px -2px 2px 2px rgba(230 230 230 0.7);
-    }
-
-    .img-wraps {
-        position: relative;
-        display: inline-block;
-        font-size: 0;
-    }
-    .img-wraps .img-fluid {
-        transition: all 0.3s;
-    }
-
-    .img-wraps:hover .closes {
-        display: block;
-    }
-
-    .img-wraps:hover .img-fluid {
-        -webkit-filter: brightness(0.5);
-    }
-
-    .img-wraps .closes {
-        position: absolute;
-        top: 0;
-        right: 0;
-        z-index: 2;
-        padding: 4px 3px;
-        color: #fff;
-        font-weight: 500;
-        cursor: pointer;
-        text-align: center;
-        font-size: 50px;
-        line-height: 30px;
-        border-radius: 50%;
-        border: 3px solid #fff;
-        display: none;
-        transition: all 0.7s;
-        margin: 5px;
-    }
-</style>
-<script>
-    let files;
-
-    $(document).ready(() => {
-        $('#file-zone').click((event) => {
-            let id = $(event.target).attr('id');
-            if (id === 'file-zone') {
-                $('#file-btn').click();
-            }
-            return
-        })
-
-        $('#file-btn').change((event) => {
-            let el = event.target;
-            // fileList to Array
-            files = [...el.files];
-            if (el.files.length >= 10) {
-                alert('同時只能上傳10筆');
-                return
-            }
-
-            if (!isFileImage(files)) {
-                alert('格式不正確')
-                return
-            }
-            buildPreviewSection(files);
-        })
-    })
-
-    function isFileImage(files) {
-        let flag = true
-        files.forEach(file => {
-            if (file && file['type'].split('/')[0] !== 'image') {
-                return flag = false
-            }
-        })
-        return flag;
-    }
-
-    function deletePreview(key) {
-        files.splice(key, 1);
-        buildPreviewSection(files);
-    }
-
-    function buildPreviewSection(files) {
-        let previewHtml = '';
-        files.forEach((file, key) => {
-            const url = URL.createObjectURL(file);
-            previewHtml +=
-                `
-            <div class="col-lg-4 col-md-6" style="padding:10px;overflow:hidden;" id="${key}">
-                <div class="services_thumb img-wraps photos" style="width:400px;height:240px;margin:0px; auto;overflow:hidden;" >
-                    <span class="closes" title="Delete" onclick="deletePreview(${key})">×</span>
-                    <img class="img-fluid rounded" src="${url}" style="min-height:300px;margin:auto;overflow:hidden;">
-                </div>
-            </div>
-            `
-        })
-        $('#picture-row').html(previewHtml);
-        if (files.length > 0) {
-            $('#btn-container').show();
-        } else {
-            $('#btn-container').hide()
-        }
-    }
-
-    function save() {
-        //模擬form表單
-        let myform = new FormData();
-        files.forEach((file, key) => {
-            myform.append(`file${key}`, file);
-        })
-        myform.append(`albumId`, 9);
-
-        $.ajax({
-            url: "/cga101g2/PictureController",
-            data: myform,
-            processData: false,
-            contentType: false,
-            type: 'POST',
-            success: function (dataofconfirm) {
-                location.href = "/cga101g2/front/Gallery.html"
-            }
-        });
-    }
-
-    function cancel() {
-
-    }
-</script>
-</body>
-
-</html>

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.common.controller.CommonController;
 import org.apache.ibatis.javassist.expr.NewArray;
 import org.apache.ibatis.session.SqlSession;
 
@@ -38,7 +39,7 @@ import connection.MyBatisUtil;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 10 * 10 * 1024 * 1024, maxRequestSize = 10 * 10 * 1024
 		* 1024)
 
-public class PictureController extends HttpServlet {
+public class PictureController extends CommonController {
 	PictureService pictureService = new PictureService();
 
 	/**
@@ -65,6 +66,9 @@ public class PictureController extends HttpServlet {
 			out.println("<img src='" + pic.getPreviewUrl() + "' alt='" + pic.getFileName() + "' >");
 			out.println("<br>");
 		});
+
+		super.routeTo(req, res, "My Photos", "gallery");
+
 	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
