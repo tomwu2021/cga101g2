@@ -58,14 +58,13 @@ public class PictureController extends CommonController {
 			albumId = Integer.parseInt(req.getParameter("albumId"));
 		}
 		Collection<Part> parts = req.getParts();
-
 		List<PictureVO> pics = pictureService.uploadImage(parts, albumId);
-
-		pics.forEach(pic -> {
-			out.println("<p>" + pic.getFileName() + "(" + TransferTool.transferSize(pic.getSize()) + ")</p>");
-			out.println("<img src='" + pic.getPreviewUrl() + "' alt='" + pic.getFileName() + "' >");
-			out.println("<br>");
-		});
+//		System.out.println("controller");
+//		pics.forEach(pic -> {
+//			out.println("<p>" + pic.getFileName() + "(" + TransferTool.transferSize(pic.getSize()) + ")</p>");
+//			out.println("<img src='" + pic.getPreviewUrl() + "' alt='" + pic.getFileName() + "' >");
+//			out.println("<br>");
+//		});
 
 		super.routeTo(req, res, "My Photos", "gallery");
 
@@ -122,10 +121,11 @@ public class PictureController extends CommonController {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
-		Integer pictureId = Integer.parseInt(req.getParameter("pictureId"));
-		System.out.println(pictureId);
-		pictureService.deletePicture(pictureId);
-		out.print("<p>成功刪除圖片</p>");
+		String jsonStr = req.getParameter("picList");
+		Gson gson = new Gson();
+		List list = gson.fromJson(jsonStr,List.class);
+		for(Object pic:list) {
+			pictureService.deletePicture(((Double)pic).intValue());
+		}
 	}
-
 }
