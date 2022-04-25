@@ -2,7 +2,6 @@ package com.common.model;
 
 import com.sun.istack.NotNull;
 
-import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +16,8 @@ public class PageQuery {
     private String order;
     private Map<String, Object> map;
     private String whereSQL = "";
+    private String querySQL;
+    private String totalCountSQL;
 
     public PageQuery() {
         super();
@@ -134,7 +135,7 @@ public class PageQuery {
      * 形成WHERE 時間條件指令
      *
      * @param column 欄位名稱
-     * @param time   指定時間
+     * @param obj   指定時間
      */
     //時間條件值來自controller
     public void setFindByAfter(String column, Object obj) {
@@ -153,7 +154,7 @@ public class PageQuery {
      * 形成WHERE 時間條件指令
      *
      * @param column 欄位名稱
-     * @param time   指定時間
+     * @param obj   指定時間
      */
     //時間條件值來自controller
     public void setFindByBeforeTime(String column, Object obj) {
@@ -172,8 +173,8 @@ public class PageQuery {
      * 設置指定欄位之時間區間(BETWEEN)條件
      *
      * @param column    欄位名稱
-     * @param startTime 起始時間
-     * @param endTime   結束時間
+     * @param startobj 起始時間
+     * @param endobj   結束時間
      */
     //時間條件值來自controller
     public void setFindByBetweenTime(String column, Object startobj, Object endobj) {
@@ -323,6 +324,22 @@ public class PageQuery {
         String selectCountSQL = "SELECT COUNT(*) " + baseSQL.substring(getFrom) + this.whereSQL;
         System.out.println("selectCountSQL> " + selectCountSQL);
         return selectCountSQL;
+    }
+
+    public String getQuerySQL() {
+        return querySQL;
+    }
+
+    public String getTotalCountSQL() {
+        return totalCountSQL;
+    }
+
+    public void setQuerySQL(@NotNull String baseSQL) {
+        this.querySQL = this.getQuerySQL(baseSQL);
+    }
+
+    public void setTotalCountSQL(@NotNull String baseSQL) {
+        this.totalCountSQL = this.getTotalCountSQL(baseSQL);
     }
 
     @Override

@@ -1,40 +1,26 @@
 package com.picture.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.album.service.AlbumService;
+import com.common.controller.CommonController;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
+import com.google.gson.Gson;
+import com.picture.model.PictureVO;
+import com.picture.service.PictureService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-
-import com.album.service.AlbumService;
-import com.common.controller.CommonController;
-import org.apache.ibatis.javassist.expr.NewArray;
-import org.apache.ibatis.session.SqlSession;
-
-import com.common.model.PageQuery;
-import com.common.model.PageResult;
-import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
-import com.google.gson.Gson;
-import com.picture.mapper.PictureMapper;
-import com.picture.model.PictureJDBCDAO;
-import com.picture.model.PictureVO;
-import com.picture.service.PictureService;
-import com.util.TransferTool;
-
-import connection.MyBatisUtil;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet("/picture")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 10 * 10 * 1024 * 1024, maxRequestSize = 10 * 10 * 1024
@@ -139,8 +125,8 @@ public class PictureController extends CommonController {
 //		pq.setFindByEqualMultiValues("p.picture_id", pictureIds); //設值多筆pictureId 條件
         pq.setFindByAfter("upload_time", uploadTime); //設置時間條件
 
-        PageResult<PictureVO> rpq = pictureService.getPageResult(pq);
-        System.out.println("rpq:" + rpq + "\n pq:" + pq);
+//        PageResult<PictureVO> rpq = pictureService.getPageResult(pq);
+        PageResult<PictureVO> rpq = pictureService.getPageResultUseMyBatis(pq);
         Gson gson = new Gson();
         out.print(gson.toJson(rpq));
     }

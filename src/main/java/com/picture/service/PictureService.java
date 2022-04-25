@@ -1,12 +1,22 @@
 package com.picture.service;
 
+import aws.S3Service;
 import com.album.model.AlbumJDBCDAO;
-import com.album.model.AlbumVO;
-import com.amazonaws.util.IOUtils;
-import com.common.exception.JDBCException;
 import com.common.model.MappingJDBCDAO;
+import com.common.model.MappingTableDto;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
+import com.picture.mapper.PictureMapper;
+import com.picture.model.PictureJDBCDAO;
+import com.picture.model.PictureVO;
+import connection.JDBCConnection;
+import connection.MyBatisUtil;
+import org.apache.ibatis.session.SqlSession;
 
-import java.io.*;
+import javax.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
@@ -14,25 +24,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.servlet.http.Part;
-
-import com.common.model.MappingTableDto;
-import com.common.model.PageQuery;
-import com.common.model.PageResult;
-import com.picture.model.PictureJDBCDAO;
-import com.picture.model.PictureVO;
-
-import aws.S3Service;
-import com.util.StreamUtils;
-import connection.DruidConnection;
-import connection.JDBCConnection;
-import connection.JNDIConnection;
-
 public class PictureService {
     S3Service s3Service = new S3Service();
     PictureJDBCDAO picDAO = new PictureJDBCDAO();
     MappingJDBCDAO mappingDAO = new MappingJDBCDAO();
     AlbumJDBCDAO albumDao = new AlbumJDBCDAO();
+    SqlSession session = MyBatisUtil.getSessionTest();
+    PictureMapper pm = session.getMapper(PictureMapper.class);
 
     /**
      * 上傳圖檔, 不帶相簿ID(多為後台上傳圖檔使用)
@@ -84,13 +82,13 @@ public class PictureService {
                     mappingTableDto.setId1(pv.getPictureId());
                     mappingTableDto.setId2(albumId);
                     mappingDAO.insertOneMapping(mappingTableDto, con);
-                } else if(albumId != null || pv.getPictureId() == null){
+                } else if (albumId != null || pv.getPictureId() == null) {
                     con.rollback(sp);
-                    if(pv.getPictureId() != null){
+                    if (pv.getPictureId() != null) {
                         System.err.println("start delete picture from S3 where url is : " + pv.getUrl());
                         deletePicture(pv.getPictureId());
                     }
-                    System.err.println("INSERT picture failed, File name is : " + pv.getPictureId() + " :: rollback!" );
+                    System.err.println("INSERT picture failed, File name is : " + pv.getPictureId() + " :: rollback!");
                 }
             }
             con.commit();
@@ -135,7 +133,7 @@ public class PictureService {
         return picDAO.getPageResult(pageQuery);
     }
 
-    public PictureVO getOne(Integer id){
+    public PictureVO getOne(Integer id) {
         return picDAO.getOneById(id);
     }
 
@@ -155,5 +153,9 @@ public class PictureService {
 
     }
 
-
+    public PageResult<PictureVO> getPageResultUseMyBatis(PageQuery pageQuery) {
+        int total = pm.selectCountByPageQuery(pageQuery);
+        List<PictureVO> pics = pm.selectByPageQuery(pageQuery);
+        return new PageResult<>(pageQuery, pics, total);
+    }
 }
