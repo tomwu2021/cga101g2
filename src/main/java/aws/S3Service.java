@@ -21,15 +21,19 @@ import org.apache.commons.io.IOUtils;
 
 public class S3Service {
 
+	public static final String PREVIEW_KEY = "thumbs/600x400/webp/";
 	public static final String BUCKETNAME = "cga101-02";
 	public static final String CDN = "https://d148yrb2gzai3l.cloudfront.net/";
-
+	public static final String PRE_KEYNAME = "thumbs/600x400/webp/";
+	public static final String KEYNAME = "thumbs/";
+	
 	public PictureVO uploadImageToS3(InputStream in, String fileName) {
 		PictureVO vo = new PictureVO();
-		String key = getGenerateFileKey(fileName);
-
-		String url = (CDN + key).replace(" ","%20");
-		String previewUrl = (url + "?d=600x400").replace("%20","%2520");
+		String uuName = getUUIDName(fileName);
+		String key = getGenerateFileKey(uuName);
+		String previewKey = getPreviewKey(uuName);
+		String url = (CDN + key).replace(" ", "%20");
+		String previewUrl = (url + "?d=600x400").replace("%20", "%2520");
 		AmazonS3 s3client = new AwsService().getS3Client();
 
 		try {
@@ -51,6 +55,7 @@ public class S3Service {
 			vo.setUrl(url);
 			vo.setSize(contentLength);
 			vo.setPreviewUrl(previewUrl);
+			vo.setPreviewKey(previewKey);
 
 		} catch (AmazonServiceException ase) {
 			System.out.println("Error Message:    " + ase.getMessage());
@@ -67,12 +72,17 @@ public class S3Service {
 		return vo;
 	}
 
-	public boolean deleteS3Image(String fileKey) {
+	public boolean deleteS3Image(PictureVO pic) {
+
 		AmazonS3 s3client = new AwsService().getS3Client();
+		String fileKey = pic.getFileKey();
+		String previewKey = pic.getPreviewKey();
+		System.out.println(fileKey);
+		System.out.println(previewKey);
 		try {
 //			 delete picture from S3
 			s3client.deleteObject(new DeleteObjectRequest(BUCKETNAME, fileKey));
-
+			s3client.deleteObject(new DeleteObjectRequest(BUCKETNAME, previewKey));
 			return true;
 		} catch (AmazonServiceException ase) {
 			System.out.println("Error Message:    " + ase.getMessage());
@@ -87,10 +97,20 @@ public class S3Service {
 		}
 	}
 
-	public String getGenerateFileKey(String fileName) {
-		String keyName = "thumbs/";
+	public String getUUIDName(String fileName) {
 		UUID uuid = Generators.timeBasedGenerator().generate();
-		keyName += uuid + "-" + fileName;
+		String uuFileName = uuid + "-" + fileName;
+		return uuFileName;
+	}
+
+	public String getPreviewKey(String uuFileName) {
+		String previewKey = PRE_KEYNAME + uuFileName;
+		return previewKey;
+	}
+
+	public String getGenerateFileKey(String uuFileName) {
+		String keyName = KEYNAME + uuFileName;
+		getPreviewKey(uuFileName);
 		return keyName;
 	}
 

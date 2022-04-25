@@ -7,21 +7,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.album.model.AlbumVO;
 import com.common.exception.JDBCException;
 import com.common.model.MappingTableDto;
 import com.common.model.PageQuery;
 import com.common.model.PageResult;
-import com.mysql.cj.exceptions.RSAException;
-
-import connection.DruidConnection;
 import connection.JDBCConnection;
 
 public class PictureJDBCDAO implements PictureDAO_Interface {
 
 	public PictureVO insert(PictureVO pv, Connection con) {
-		String sql = "INSERT INTO picture(url, file_key, file_name, size, preview_url, preview_key) VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO picture(url, file_key, file_name, size, preview_url,preview_key) VALUES(?,?,?,?,?,?)";
 		if (con != null) {
 			try {
 				PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -67,7 +62,11 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	/**
+	 * tablename1 圖片mapping表名
+	 * column1 不是picture_id 如: article_id album_id post_id
+	 * id1 對應column1 表的值
+	 */
 	public List<PictureVO> queryPicturesByMapping(MappingTableDto mtd) {
 		String sql = "SELECT * FROM picture p JOIN " + mtd.getTableName1() + " t ON(p.picture_id=t.picture_id) WHERE " + mtd.getColumn1() + "=" + mtd.getId1();
 		Connection con = JDBCConnection.getRDSConnection();
@@ -100,26 +99,13 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 	@Override
 	public PictureVO getOneById(Integer pv) {
 		Connection con = JDBCConnection.getRDSConnection();
-		String sql = "SELECT * FROM picture where picture_id=?";
+		String sql = "SELECT * FROM picture WHERE picture_id=?";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, pv);
-			PictureVO pvo = new PictureVO();
 			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				pvo.setPictureId(rs.getInt("picture_id"));
-				pvo.setUrl(rs.getString("url"));
-				pvo.setCreateTime(rs.getTimestamp("upload_time"));
-				pvo.setFileKey(rs.getString("file_key"));
-				pvo.setFileName(rs.getString("file_name"));
-				pvo.setSize(rs.getLong("size"));
-				rs.close();
-				stmt.close();
-				con.close();
-				return pvo;
-			} else {
-				return null;
-			}
+			rs.next();
+			return buildPictureVO(rs);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,7 +149,7 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		String baseSQL = "SELECT * FROM picture p JOIN photos ph ON ph.picture_id = p.picture_id ";
 		int total = 0;
 		List<PictureVO> pics = new ArrayList<PictureVO>();
-		try (Connection con = DruidConnection.getRDSConnection()) {
+		try (Connection con = JDBCConnection.getRDSConnection()) {
 			if (con != null) {
 				// Step1. 取得總筆數
 				PreparedStatement stmt = con.prepareStatement(pageQuery.getTotalCountSQL(baseSQL));
@@ -180,7 +166,6 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 					PictureVO pvo = buildPictureVO(rs);
 					pics.add(pvo);
 				}
-				System.out.println(pics);
 				rs.close();
 				stmt.close();
 				con.close();
@@ -202,6 +187,7 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		pvo.setFileName(rs.getString("file_name"));
 		pvo.setSize(rs.getLong("size"));
 		pvo.setPreviewUrl(rs.getString("preview_url"));
+		pvo.setPreviewKey(rs.getString("preview_key"));
 		return pvo;
 	}
 }
