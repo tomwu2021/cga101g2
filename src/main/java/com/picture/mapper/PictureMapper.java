@@ -13,7 +13,7 @@ public interface PictureMapper {
 	@Select(value="SELECT * FROM picture")
 	List<PictureVO> selectAll();
 
-	@Select(value = "SELECT * FROM picture p JOIN photos ph ON ph.picture_id = p.picture_id ${ whereSQL }")
+	@Select(value = "SELECT * FROM picture p JOIN photos ph ON ph.picture_id = p.picture_id ${ limitWhereSQL }")
 	List<PictureVO> selectByPageQuery(PageQuery pq);
 
 	@Select(value = "SELECT COUNT(*) FROM picture p JOIN photos ph ON ph.picture_id = p.picture_id ${ whereSQL }")

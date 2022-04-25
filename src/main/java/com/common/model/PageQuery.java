@@ -16,8 +16,7 @@ public class PageQuery {
     private String order;
     private Map<String, Object> map;
     private String whereSQL = "";
-    private String querySQL;
-    private String totalCountSQL;
+    private String limitWhereSQL;
 
     public PageQuery() {
         super();
@@ -135,7 +134,7 @@ public class PageQuery {
      * 形成WHERE 時間條件指令
      *
      * @param column 欄位名稱
-     * @param obj   指定時間
+     * @param obj    指定時間
      */
     //時間條件值來自controller
     public void setFindByAfter(String column, Object obj) {
@@ -154,7 +153,7 @@ public class PageQuery {
      * 形成WHERE 時間條件指令
      *
      * @param column 欄位名稱
-     * @param obj   指定時間
+     * @param obj    指定時間
      */
     //時間條件值來自controller
     public void setFindByBeforeTime(String column, Object obj) {
@@ -172,7 +171,7 @@ public class PageQuery {
      * 形成WHERE 時間條件指令
      * 設置指定欄位之時間區間(BETWEEN)條件
      *
-     * @param column    欄位名稱
+     * @param column   欄位名稱
      * @param startobj 起始時間
      * @param endobj   結束時間
      */
@@ -199,7 +198,6 @@ public class PageQuery {
         } else {
             return " ORDER BY " + this.order + " ASC ";
         }
-
     }
 
     /**
@@ -326,20 +324,17 @@ public class PageQuery {
         return selectCountSQL;
     }
 
-    public String getQuerySQL() {
-        return querySQL;
+    public String getLimitWhereSQL() {
+        String querySQL = "";
+        querySQL = this.whereSQL + this.getOrderBySQL() + " LIMIT ?,? ";
+        querySQL = querySQL.replaceFirst("\\?", this.getLimitStart().toString());
+        querySQL = querySQL.replaceFirst("\\?", this.getLimitEnd().toString());
+        this.limitWhereSQL = querySQL;
+        return this.limitWhereSQL;
     }
 
-    public String getTotalCountSQL() {
-        return totalCountSQL;
-    }
-
-    public void setQuerySQL(@NotNull String baseSQL) {
-        this.querySQL = this.getQuerySQL(baseSQL);
-    }
-
-    public void setTotalCountSQL(@NotNull String baseSQL) {
-        this.totalCountSQL = this.getTotalCountSQL(baseSQL);
+    public void setLimitWhereSQL(String limitWhereSQL) {
+        this.limitWhereSQL = limitWhereSQL;
     }
 
     @Override

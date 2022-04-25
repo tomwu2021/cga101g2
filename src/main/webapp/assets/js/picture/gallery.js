@@ -23,7 +23,7 @@ function searchPicture() {
     console.log('sort=' + sort + '&uploadTime=' + uploadTime);
     $.get({
         url: "/cga101g2/picture?action=search&fileName=" + fileName + "&albumId=" + albumId + "&thisPage=" + thisPage + "&order=upload_time&pageSize="
-            + pageSize + "&sort=" + sort + "&uploadTime=" + uploadTime,
+            + pageSize + "&sort=" + sort + "&uploadTime=" + uploadTime + "&order=create_time",
         success: function (result, status) {
             total = result.total;
             pageCount = result.pageCount;
