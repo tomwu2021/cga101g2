@@ -90,7 +90,7 @@ public class TestGroupOrder {
 		
 		// 用商品編號取得所有進行中團購訂單
 //		GroupOrderHibernateDAO dao = new GroupOrderHibernateDAO();
-//		for(GroupOrderHibernateVO a:dao.getAllInProgressByProductId(1)) {
+//		for(GroupOrderHibernateVO a:dao.getAllInProgressByProductId(7)) {
 //			System.out.println(a);
 //		}
 		
@@ -101,11 +101,11 @@ public class TestGroupOrder {
 //		}
 		
 		// 更該團購訂單截止時間
-//		GroupOrderHibernateDAO dao = new GroupOrderHibernateDAO();
-//		dao.updateEndTimeByGroupOrderId(1);
+		GroupOrderHibernateDAO dao = new GroupOrderHibernateDAO();
+		dao.updateEndTimeByGroupOrderId(1);
 		
 		// 更該團購訂單狀態
-		GroupOrderHibernateDAO dao = new GroupOrderHibernateDAO();
-		dao.updateStatusByGroupOrderId(6,1);
+//		GroupOrderHibernateDAO dao = new GroupOrderHibernateDAO();
+//		dao.updateStatusByGroupOrderId(6,0);
 	}
 }

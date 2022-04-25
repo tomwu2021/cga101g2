@@ -10,7 +10,7 @@ public class GroupOrderVO implements java.io.Serializable {
 	private Timestamp createTime;
 	private Timestamp endTime;
 	private Integer endType;
-	private Integer finalPrice;
+	private Double finalPrice;
 	private Integer status;
 
 	public GroupOrderVO() {
@@ -56,12 +56,12 @@ public class GroupOrderVO implements java.io.Serializable {
 		this.endType = endType;
 	}
 
-	public Integer getFinalPrice() {
+	public Double getFinalPrice() {
 		return finalPrice;
 	}
 
-	public void setFinalPrice(Integer finalPrice) {
-		this.finalPrice = finalPrice;
+	public void setFinalPrice(double d) {
+		this.finalPrice = d;
 	}
 
 	public Integer getStatus() {

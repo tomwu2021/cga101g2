@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.group_order.model.GroupOrderVO;
+import com.prodouct.model.ProductVO;
+
 import connection.JDBCConnection;
 
 public class GroupBuyerJDBCDAO implements GroupBuyerDAO_Interface {
@@ -134,27 +137,65 @@ public class GroupBuyerJDBCDAO implements GroupBuyerDAO_Interface {
 		return groupBuyerList;
 	}
 
+//	@Override
+//	public List<GroupBuyerVO> getAllByMemberId(Integer id) {
+//		// TODO Auto-generated method stub
+//		PreparedStatement ps = null;
+//		ResultSet rs = null;
+//		String getAllByMemberIdSql = "select group_order_id, member_id, product_amount, recipient, phone, address from group_buyer "
+//				+ "where member_id=?;";
+//		List<GroupBuyerVO> groupBuyerList = new ArrayList<GroupBuyerVO>();
+//		GroupBuyerVO groupBuyerVO = null;
+//		try (Connection con = JDBCConnection.getRDSConnection()) {
+//			ps = con.prepareStatement(getAllByMemberIdSql);
+//			ps.setInt(1, id);
+//			rs = ps.executeQuery();
+//			while (rs.next()) {
+//				groupBuyerVO = new GroupBuyerVO();
+//				groupBuyerVO.setGroupOrderId(rs.getInt("group_order_id"));
+//				groupBuyerVO.setMemberId(rs.getInt("member_id"));
+//				groupBuyerVO.setAddress(rs.getString("address"));
+//				groupBuyerVO.setPhone(rs.getString("phone"));
+//				groupBuyerVO.setProductAmount(rs.getInt("product_amount"));
+//				groupBuyerVO.setRecipients(rs.getString("recipient"));
+//				groupBuyerList.add(groupBuyerVO);
+//
+//			}
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//		return groupBuyerList;
+//	}
+	
+	
 	@Override
 	public List<GroupBuyerVO> getAllByMemberId(Integer id) {
 		// TODO Auto-generated method stub
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String getAllByMemberIdSql = "select group_order_id, member_id, product_amount, recipient, phone, address from group_buyer "
-				+ "where member_id=?;";
+		String getAllByGroupOrderIdSql = "select member_id, product_amount,p.product_id,final_price,o.status,p.product_name "
+				+ "from group_buyer b "
+				+ "join group_order o on (b.group_order_id=o.group_order_id) "
+				+ "join product p on(p.product_id=o.product_id) "
+				+ "where member_id=?";
 		List<GroupBuyerVO> groupBuyerList = new ArrayList<GroupBuyerVO>();
 		GroupBuyerVO groupBuyerVO = null;
 		try (Connection con = JDBCConnection.getRDSConnection()) {
-			ps = con.prepareStatement(getAllByMemberIdSql);
+			ps = con.prepareStatement(getAllByGroupOrderIdSql);
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				groupBuyerVO = new GroupBuyerVO();
-				groupBuyerVO.setGroupOrderId(rs.getInt("group_order_id"));
 				groupBuyerVO.setMemberId(rs.getInt("member_id"));
-				groupBuyerVO.setAddress(rs.getString("product_amount"));
-				groupBuyerVO.setPhone(rs.getString("recipient"));
-				groupBuyerVO.setProductAmount(rs.getInt("phone"));
-				groupBuyerVO.setRecipients(rs.getString("address"));
+				groupBuyerVO.setProductAmount(rs.getInt("product_amount"));
+				GroupOrderVO groupOrderVO=new GroupOrderVO();
+				groupOrderVO.setProductId(rs.getInt("product_id"));
+				groupOrderVO.setFinalPrice((rs.getInt("final_price"))*0.9*groupBuyerVO.getProductAmount());
+				groupOrderVO.setStatus(rs.getInt("status"));
+				ProductVO productVO=new ProductVO();
+				productVO.setProductName(rs.getString("product_name"));
+				groupBuyerVO.setGroupOrderVO(groupOrderVO);
+				groupBuyerVO.setProductVO(productVO);
 				groupBuyerList.add(groupBuyerVO);
 
 			}
@@ -181,10 +222,10 @@ public class GroupBuyerJDBCDAO implements GroupBuyerDAO_Interface {
 				groupBuyerVO = new GroupBuyerVO();
 				groupBuyerVO.setGroupOrderId(rs.getInt("group_order_id"));
 				groupBuyerVO.setMemberId(rs.getInt("member_id"));
-				groupBuyerVO.setAddress(rs.getString("product_amount"));
-				groupBuyerVO.setPhone(rs.getString("recipient"));
-				groupBuyerVO.setProductAmount(rs.getInt("phone"));
-				groupBuyerVO.setRecipients(rs.getString("address"));
+				groupBuyerVO.setAddress(rs.getString("address"));
+				groupBuyerVO.setPhone(rs.getString("phone"));
+				groupBuyerVO.setProductAmount(rs.getInt("product_amount"));
+				groupBuyerVO.setRecipients(rs.getString("recipient"));
 				groupBuyerList.add(groupBuyerVO);
 
 			}

@@ -1,12 +1,17 @@
 package com.group_buyer.model;
 
+import com.group_order.model.GroupOrderVO;
+import com.prodouct.model.ProductVO;
+
 public class GroupBuyerVO  implements java.io.Serializable{
-	private Integer groupOrderId;
+	 private Integer groupOrderId;
 	 private Integer memberId;
 	 private Integer productAmount;
 	 private String phone;
 	 private String address;
 	 private String recipients;
+	 private GroupOrderVO groupOrderVO;
+	 private ProductVO productVO;
 
 	 public GroupBuyerVO() {
 	 }
@@ -58,12 +63,30 @@ public class GroupBuyerVO  implements java.io.Serializable{
 	public void setRecipients(String recipients) {
 		this.recipients = recipients;
 	}
+	
+	
+
+	public GroupOrderVO getGroupOrderVO() {
+		return groupOrderVO;
+	}
+
+	public void setGroupOrderVO(GroupOrderVO groupOrderVO) {
+		this.groupOrderVO = groupOrderVO;
+	}
+
+	public ProductVO getProductVO() {
+		return productVO;
+	}
+
+	public void setProductVO(ProductVO productVO) {
+		this.productVO = productVO;
+	}
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		String text = String.format(
-				"groupOrderId:%d, memberId;:%d, productAmount:%s, phone:%s, address:%s, recipients:%s",
+				"groupOrderId:%d, memberId;:%d, productAmount:%s, phone:%s, address:%s, recipients:%s,groupOrderVO,productVO",
 				groupOrderId, memberId, productAmount, phone, address, recipients);
 		return text;
 	}
