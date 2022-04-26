@@ -2,6 +2,8 @@ package com.product.model;
 
 import java.util.List;
 
+import com.product_img.model.ProductImgVO;
+
 public class TESTProduct {
 
 	public static void main(String[] args) {
@@ -85,5 +87,24 @@ public class TESTProduct {
 //		for (ProductVO m1 : dao.getAll()) {
 //			System.out.println(m1);
 //		}
+		
+		List<ProductVO> list = dao.getAll();
+		for (ProductVO aProductVO : list) {
+			System.out.print(aProductVO.getProductId() + ",");
+			System.out.print(aProductVO.getProductName() + ",");
+			System.out.print(aProductVO.getPrice() + ",");
+			System.out.print(aProductVO.getAmount() + ",");
+			System.out.print(aProductVO.getUpdateTime() + ",");
+			System.out.print(aProductVO.getGroupAmount1() + ",");
+			System.out.print(aProductVO.getGroupAmount2() + ",");
+			System.out.print(aProductVO.getGroupAmount3() + ",");
+			System.out.print(aProductVO.getGroupPrice1() + ",");
+			System.out.print(aProductVO.getSort2Id() + ",");
+			System.out.print(aProductVO.getDescription() + ",");
+			System.out.print(aProductVO.getStatus() + ",");
+			System.out.println(aProductVO.getTopStatus());
+			System.out.println("---------------------");
+		}
+		
 	}
 }

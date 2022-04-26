@@ -9,10 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sort1JDBCDAO implements Sort1DAO_interface{
+import com.sort2.model.Sort2VO;
 
-	//private static final String DELETE = 
-	//	"DELETE FROM emp2 where empno = ?";
+public class Sort1JDBCDAO implements Sort1DAO_interface{
 	
 	@Override
 	public Sort1VO insert(Sort1VO sort1VO) {
@@ -43,7 +42,6 @@ public class Sort1JDBCDAO implements Sort1DAO_interface{
 				PreparedStatement pstmt = connection.prepareStatement(DELETE)) {
 
 			pstmt.setInt(1, sort1VO.getSort1Id());
-			pstmt.setString(2, sort1VO.getSort1Name());
 
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) updated!");
@@ -136,6 +134,23 @@ public class Sort1JDBCDAO implements Sort1DAO_interface{
 		}
 
 		return list;
+	}
+
+	@Override
+	public int getSort1Count() {
+		int count = 0;
+		final String sql = "SELECT sort1_id FROM sort1;";
+		try (Connection conn =  getRDSConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+				++count;
+				}
+			}	return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 	
 	}

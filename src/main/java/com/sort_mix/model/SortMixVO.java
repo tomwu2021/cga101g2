@@ -8,18 +8,21 @@ public class SortMixVO implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	private  Integer sort1Id;
 	private  Integer sort2Id;
+	private  String sort1Name;
+	private  String sort2Name;
 	
-	public SortMixVO() {
-		super();
-		// TODO Auto-generated constructor stub
+	public String getSort1Name() {
+		return sort1Name;
 	}
-	
-	public SortMixVO(Integer sort1Id, Integer sort2Id) {
-		super();
-		this.sort1Id = sort1Id;
-		this.sort2Id = sort2Id;
+	public void setSort1Name(String sort1Name) {
+		this.sort1Name = sort1Name;
 	}
-
+	public String getSort2Name() {
+		return sort2Name;
+	}
+	public void setSort2Name(String sort2Name) {
+		this.sort2Name = sort2Name;
+	}
 	public Integer getSort1Id() {
 		return sort1Id;
 	}
@@ -32,7 +35,5 @@ public class SortMixVO implements java.io.Serializable{
 	public void setSort2Id(Integer sort2Id) {
 		this.sort2Id = sort2Id;
 	}
-
-
 
 }

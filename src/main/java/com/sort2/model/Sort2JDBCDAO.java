@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sort1.model.Sort1VO;
+
 public class Sort2JDBCDAO implements Sort2DAO_interface {
 
 //		private static final String DELETE = 
@@ -127,5 +129,11 @@ public class Sort2JDBCDAO implements Sort2DAO_interface {
 		}
 	
 		return list;
+	}
+
+	@Override
+	public List<Sort1VO> sort1VOList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

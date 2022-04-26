@@ -29,11 +29,6 @@ public class TESTSort1MybatisDAO {
 //			System.out.println("分類重複");
 //		}
 		
-		//查詢主子分類組合
-//		List<Sort1VO> list = dao.queryAll();
-//		System.out.println(list);
-		
-		
 	}
 	
 

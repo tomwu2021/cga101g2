@@ -2,20 +2,16 @@ package com.sort_mix.model;
 
 import java.util.List;
 
-import com.common.model.MappingTableDto;
-
-public interface SortMixDAO_interface {
+import com.common.model.JDBCDAO_Interface;
+import com.sort1.model.Sort1VO;
+import com.sort2.model.Sort2VO;
+//定義接口類別
+public interface SortMixDAO_interface extends JDBCDAO_Interface<SortMixVO>{
 	
-	int insert(SortMixMapVO sortMixMapVO);
+	//查詢某個主分類(包含對應的子分類)
+	public Sort1VO findAllBySort1Id (Integer sort1Id);
 	
-	int delete(SortMixMapVO sortMixMapVO);
-
-	int update(SortMixMapVO sortMixMapVO);
-
-	List<SortMixMapVO> findAll();
+	//查詢某個子分類(包含對應的主分類)
+	public Sort2VO findAllBySort2Id (Integer sort2Id);
 	
-	public List<SortMixMapVO> getBySet();
-	
-    //萬用複合查詢(傳入參數型態Map)(回傳 List)
-//  public List<EmpVO> getAll(Map<String, String[]> map);
 }

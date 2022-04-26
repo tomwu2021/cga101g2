@@ -2,9 +2,6 @@ package com.sort_mix.model;
 
 public class SortMixMapVO implements java.io.Serializable{
 
-	/**
-	 * 定義Sort2VO
-	 */
 	private static final long serialVersionUID = 1L;
 	private String tableName1;
 	private String tablename2;

@@ -2,11 +2,15 @@ package com.product.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
+import com.product_img.model.ProductImgService;
 import com.product_img.model.ProductImgVO;
 
-
 public class ProductVO implements java.io.Serializable{
+  /**
+	 * 定義ProductVO
+	 */
  private static final long serialVersionUID = 1L;
  
 // Date 型態改為Timestamp
@@ -22,15 +26,9 @@ public class ProductVO implements java.io.Serializable{
  private Integer sort2Id;
  private String description;
  private Integer status;
- private Integer topStatus;
- private List<ProductImgVO> productImgList;
+private Integer topStatus;
 
-public List<ProductImgVO> getProductImgList() {
-	return productImgList;
-}
-public void setProductImgList(List<ProductImgVO> productImgList) {
-	this.productImgList = productImgList;
-}
+
 public Integer getProductId() {
 	return productId;
 }
@@ -110,4 +108,5 @@ public void setTopStatus(Integer topStatus) {
 	this.topStatus = topStatus;
 }
  
+
 }

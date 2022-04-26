@@ -18,10 +18,16 @@
 		<result property="top_status" column="topStatus" javaType="Integer" jdbcType="INTEGER" />
 	
 	<!--一對多 一個商品有多張照片 -->
-		<collection property="productImgList" javaType="ArrayList" ofType="com.product_img.model.ProductImgVO">
-				<id property="productImgId" column="product_img_id" jdbcType="INTEGER"/>
-				<result property="productId" column="product_id" jdbcType="INTEGER" />
-				<result property="productImgUrl" column="product_img_url" jdbcType="VARCHAR"/>
+		<collection property="productImgList"  ofType="com.product_img.model.ProductImgVO">
+					<id property="productImgId" column="product_img_id" javaType="Integer"
+			jdbcType="INTEGER"/>
+			<result property="productId" column="product_id"
+			javaType="Integer" jdbcType="INTEGER" />
+			<result property="productImgUrl" column="product_img_url" javaType="String" jdbcType="VARCHAR" />
+			<result property="fileKey" column="file_key" javaType="String" jdbcType="VARCHAR" />
+			<result property="fileName" column="file_name" javaType="String" jdbcType="VARCHAR" />
+			<result property="size" column="size" javaType="String" jdbcType="VARCHAR" />
+			<result property="preview_url" column="previewUrl" javaType="String" jdbcType="VARCHAR" />
 		</collection>
 	</resultMap>
 
@@ -49,9 +55,14 @@
 select product.*, product_img.product_img_id AS product_img_id, 
 product_img.product_id AS product_id, 
 product_img.product_img_id AS product_img_id,
-product_img.product_img_url AS product_img_url
+product_img.product_img_url AS product_img_url,
+product_img.file_key AS file_key,
+product_img.file_name AS file_name,
+product_img.size AS size,
+product_img.preview_url AS preview_url,
 FROM product 
 LEFT JOIN product_img 
-ON product.product_id = product_img.product_id
+ON product_img.product_img_id = product.product_id 
+WHERE 1=1
 	</select>
 </mapper>

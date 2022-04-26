@@ -7,7 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
+
+import com.emp.model.EmpVO;
+import com.product_img.model.ProductImgVO;
 
 public class ProductJDBCDAO implements ProductDAO_interface {
 
@@ -24,6 +29,13 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 
 	private static final String DELETEBYTOP_STATUS = "UPDATE  cga_02.product " + "SET top_status = ? "
 			+ "WHERE product_id = ? ;";
+	
+	
+	private static final String GET_PIMGs_ByPId_STMT = 
+			"SELECT product_img_id,product_id,product_img_url,file_key,file_name,preview_url"
+			+ "	FROM product_img "
+			+ "	where product_id = ? "
+			+ "	order by product_id ; ";
 
 
 
@@ -100,7 +112,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 				pstmt.setString(1, productVO.getProductName());
 			}
 			if (price > 0) {
-				pstmt.setInt(2, productVO.getPrice());
+				pstmt.setInt(2, productVO.getAmount());
 			}
 			if (amount > 0) {
 				pstmt.setInt(3, productVO.getPrice());
@@ -208,6 +220,35 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 		return null;
 	}
 
+	
+		@Override
+		public Set<ProductImgVO> getPImgVOsByPdID(Integer pdID) {
+			try (Connection connection = getRDSConnection();
+					PreparedStatement pstmt = connection.prepareStatement(GET_PIMGs_ByPId_STMT)) {
+				Set<ProductImgVO> set = new LinkedHashSet<ProductImgVO>();
+				pstmt.setInt(1, pdID);
+				ResultSet rs = pstmt.executeQuery();
+				while (rs.next()) {
+					ProductImgVO pImgVO = new ProductImgVO();
+					pImgVO.setProductImgId(rs.getInt("product_img_id"));
+					pImgVO.setProductId(rs.getInt("product_id"));
+					pImgVO.setProductImgUrl(rs.getString("product_img_url"));
+					pImgVO.setFileKey(rs.getString("file_key"));
+					pImgVO.setFileName(rs.getString("file_name"));
+					pImgVO.setSize(rs.getString("size"));
+					pImgVO.setPreviewUrl(rs.getString("preview_url"));
+					set.add(pImgVO);
+				}
+				return set;
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+			
+		}
+
 	@Override
 	public List<ProductVO> getAll() {
 		try (Connection con = getRDSConnection();
@@ -240,4 +281,52 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 		return null;
 	}
 
+//	@Override
+	//	public ProductVO getProductVOByID(int id) {
+			
+	//		ProductVO productVO = new ProductVO();
+	//		List<ProductImgVO> productImgVOs = new ArrayList<ProductImgVO>();
+	//		try (Connection connection = getRDSConnection();
+	//				PreparedStatement pstmt = connection.prepareStatement(GET_ONE_STMT_ANDIMG)) {
+	//	
+	//			pstmt.setInt(1, id);
+	//			ResultSet rs = pstmt.executeQuery();
+	//			while (rs.next()) {
+	//				//儲存各自的數據
+	//				//儲存商品數據
+	//				productVO.setProductId(rs.getInt("product_id"));
+	//				productVO.setProductName(rs.getString("product_name"));
+	//				productVO.setPrice(rs.getInt("price"));
+	//				productVO.setAmount(rs.getInt("amount"));
+	//				productVO.setUpdateTime(rs.getTimestamp("update_time"));
+	//				productVO.setGroupAmount1(rs.getInt("group_amount1"));
+	//				productVO.setGroupAmount2(rs.getInt("group_amount2"));
+	//				productVO.setGroupAmount3(rs.getInt("group_amount3"));
+	//				productVO.setGroupPrice1(rs.getInt("group_price1"));
+	//				productVO.setSort2Id(rs.getInt("sort2_id"));
+	//				productVO.setDescription(rs.getString("description"));
+	//				productVO.setStatus(rs.getInt("status"));
+	//				productVO.setTopStatus(rs.getInt("top_status"));
+	//				//儲存照片數據
+	//				ProductImgVO pImgVO = new ProductImgVO();
+	//				pImgVO.setProductImgId(rs.getInt("product_img_id"));
+	//				pImgVO.setProductId(rs.getInt("product_id"));
+	//				pImgVO.setProductImgUrl(rs.getString("product_img_url"));
+	//				pImgVO.setFileKey(rs.getString("file_key"));
+	//				pImgVO.setFileName(rs.getString("file_name"));
+	//				pImgVO.setSize(rs.getString("size"));
+	//				pImgVO.setPreviewUrl(rs.getString("preview_url"));
+	//				//把一個pImgVO放入集合中
+	//				productImgVOs.add(pImgVO);
+	//			}
+	//			//3.建立商品跟照片"集合"實體的關係
+	//			productVO.setProductId(productImgVOs);
+	//			return productVO;
+	//		} catch (SQLException se) {
+	//			throw new RuntimeException("A database error occured. " + se.getMessage());
+	//		} catch (Exception e) {
+	//			e.printStackTrace();
+	//		}
+	//		return null;
+	//	}
 }

@@ -1,13 +1,15 @@
 package com.sort1.controller;
 
 import static com.util.GSONUtil.writePojo2Json;
-import com.sort1.service.Sort1Service;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sort1.model.Sort1Service;
 
 @WebServlet("/front/shop/getAllSort1")
 public class getAllSort1 extends HttpServlet {

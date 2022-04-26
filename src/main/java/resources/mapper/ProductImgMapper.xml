@@ -9,7 +9,9 @@
 			javaType="Integer" jdbcType="INTEGER" />
 			<result property="productImgUrl" column="product_img_url" javaType="String" jdbcType="VARCHAR" />
 			<result property="fileKey" column="file_key" javaType="String" jdbcType="VARCHAR" />
-
+			<result property="fileName" column="file_name" javaType="String" jdbcType="VARCHAR" />
+			<result property="size" column="size" javaType="String" jdbcType="VARCHAR" />
+			<result property="previewUrl" column="preview_url" javaType="String" jdbcType="VARCHAR" />
 	<!--一對一 一張照片屬於一個商品 -->
 <!-- 		<association property="ProductVO" javaType="com.product.model.ProductVO"> -->
 <!-- 				<id property="productId" column="product_id" /> -->
