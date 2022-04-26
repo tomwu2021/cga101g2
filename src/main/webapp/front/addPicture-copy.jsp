@@ -5,7 +5,8 @@
 <jsp:include page="./layout/head.jsp" />
 
 <!-- 額外添加CSS start -->
-<link rel="stylesheet" href="../assets/css/picture/addPicture.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/assets/css/picture/addPicture.css" />
 
 <!-- 額外添加CSS end -->
 
@@ -45,9 +46,11 @@
 		<div class="container">
 			<div class="shop_toolbar_wrapper" id="file-zone">
 				<form method="POST" action="/CGA101G2/PictureController"
-					enctype="multipart/form-data" style="text-align: center">
-					<span>點擊上傳</span> <input style="display: none" type="file"
-						id="file-btn" accept="image/*" multiple="multiple" name="upfile">
+					enctype="multipart/form-data"
+					style="font-size: 1.2em; letter-spacing: 0.4em; color: black; margin: auto;">
+					<span id="upload-word">點擊上傳</span> <input style="display: none"
+						type="file" id="file-btn" accept="image/*" multiple="multiple"
+						name="upfile">
 					<button style="display: none" id="reset-button" type="reset"></button>
 					<button style="display: none" id="save-button" type="submit"></button>
 					<input name="albumId" value="9" style="display: none">
@@ -73,7 +76,8 @@
 	<jsp:include page="./layout/footer.jsp" />
 
 	<!-- 額外添加JS start -->
-	<script src="../assets/js/picture/addPicture.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/assets/js/picture/addPicture.js"></script>
 
 	<!-- 額外添加JS end -->
 

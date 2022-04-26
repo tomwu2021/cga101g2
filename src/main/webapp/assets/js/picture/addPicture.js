@@ -2,64 +2,70 @@
 let files;
 
 $(document).ready(() => {
-    $('#file-zone').click((event) => {
-        let id = $(event.target).attr('id');
-        if (id === 'file-zone') {
-            $('#file-btn').click();
-        }
-        return
-    })
+	$('#file-zone').click((event) => {
+		let id = $(event.target).attr('id');
+		if (id === 'file-zone') {
+			$('#file-btn').click();
+		}
+		return
+	})
 
-    $('#file-btn').change((event) => {
-        let el = event.target;
-        console.log(el.getAttribute('accept'));
-        if (el.getAttribute('accept') === 'image/*') {
-            files = el.files;
-            buildPreviewSection(files);
-        }
-    })
+	$('#file-btn').change((event) => {
+		let el = event.target;
+		console.log(el.getAttribute('accept'));
+		if (el.getAttribute('accept') === 'image/*') {
+			files = el.files;
+			buildPreviewSection(files);
+		}
+	})
 })
 
 function deletePreview(key) {
-    let temp = [];
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i]
-        if (key !== i)
-            temp.push(file) // here you exclude the file. thus removing it.
-    }
+	let temp = [];
+	for (let i = 0; i < files.length; i++) {
+		const file = files[i]
+		if (key !== i)
+			temp.push(file) // here you exclude the file. thus removing it.
+	}
 
-    files = temp // Assign the updates list
-    console.log(temp)
-    buildPreviewSection(files);
+	files = temp // Assign the updates list
+	console.log(temp)
+	buildPreviewSection(files);
 }
 
 function buildPreviewSection(files) {
-    let previewHtml = '';
-    for (let key = 0; key < files.length; key++) {
-        const url = URL.createObjectURL(files[key]);
-        previewHtml +=
-            ` <div class="col-lg-4 col-md-6" style="padding:10px;overflow:hidden;" id="${key}">
+	let previewHtml = '';
+	for (let key = 0; key < files.length; key++) {
+		const url = URL.createObjectURL(files[key]);
+		previewHtml +=
+			` <div class="col-lg-4 col-md-6" style="padding:10px;overflow:hidden;" id="${key}">
          <div class="services_thumb img-wraps photos" style="width:400px;height:240px;margin:0px; auto;overflow:hidden;" onclick="deletePreview(${key})">
              <span class="closes" title="Delete">×</span>
              <img class="img-fluid rounded" src="${url}" style="min-height:300px;margin:auto;overflow:hidden;">
          </div>
      </div>
      `
-    }
-    $('#picture-row').html(previewHtml);
-    if (files.length > 0) {
-        $('#btn-container').show();
-        $('#upload-word').text('點擊圖片以刪除');
-    } else {
-        $('#btn-container').hide()
-        $('#upload-word').text('點擊上傳');
-    }
+	}
+	$('#picture-row').html(previewHtml);
+	if (files.length > 0) {
+		$('#btn-container').show();
+		$('#upload-word').text('點擊圖片取消上傳')
+		$('.shop_toolbar_wrapper>form').css("color", "white");
+		$('.shop_toolbar_wrapper>form').css("font-weight", "700");
+		$('.shop_toolbar_wrapper').css("background", "red");
+	} else {
+		$('#btn-container').hide()
+		$('#upload-word').text('點擊上傳');
+		$('.shop_toolbar_wrapper>form').css("color", "black");
+		$('.shop_toolbar_wrapper>form').css("font-weight", "550");
+		$('.shop_toolbar_wrapper').css("background", "white");
+	}
 }
 function deleteAllPreview() {
-    let temp = [];
-    files = temp // Assign the updates list
-    console.log(temp)
-    buildPreviewSection(files);
+	let temp = [];
+	files = temp // Assign the updates list
+	console.log(temp)
+	buildPreviewSection(files);
 }
 
 function cancel() {
@@ -68,10 +74,10 @@ function cancel() {
 	deleteAllPreview();
 }
 
-function save(){
+function save() {
 	console.log("save!");
 	$("#save-button").click();
-//	location.href="/CGA101G2/front/gallery.jsp";
+	//	location.href="/CGA101G2/front/gallery.jsp";
 }
 
 //function save() {

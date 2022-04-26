@@ -91,7 +91,7 @@
 
 <!--our services area-->
 
-<a class="upload-button" id="scrollUp" href="addPicture-copy.jsp"
+<a class="upload-button" id="scrollUp" href="<%=request.getContextPath()%>/front/addPicture-copy.jsp"
 	style="position: fixed; z-index: 2147483647; display: inline; right: 4px; bottom: 300px;">
 	<i class="fa fa-plus"></i>
 </a>

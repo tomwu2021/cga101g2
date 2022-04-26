@@ -1,73 +1,69 @@
 .shop_toolbar_wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #ddd;
-    padding: 8px 10px;
-    margin: 0 0 30px;
-    font-family: '微軟正黑體';
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-    border-radius: 25px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border: 1px solid #ddd;
+	padding: 8px 10px;
+	margin: 0 0 30px;
+	font-family: '微軟正黑體';
+	cursor: pointer;
+	transition: all 0.3s ease 0s;
+	border-radius: 25px;
+	font-weight: 700;
 }
 
 .shop_toolbar_wrapper :hover {
-    box-shadow: 2px 2px 2px 2px rgba(230 230 230 0.7), -2px -2px 2px 2px rgba(230 230 230 0.7);
+	box-shadow: 2px 2px 2px 2px rgba(230 230 230 0.7), -2px -2px 2px 2px
+		rgba(230 230 230 0.7);
 }
 
 .img-wraps {
-    position: relative;
-    display: inline-block;
-    font-size: 0;
+	position: relative;
+	display: inline-block;
+	font-size: 0;
 }
 
 .img-wraps .img-fluid {
-    transition: all 0.3s;
+	transition: all 0.3s;
 }
 
 .img-wraps:hover .closes {
-    display: block;
+	display: block;
 }
 
 .img-wraps:hover .img-fluid {
-    -webkit-filter: brightness(0.5);
+	-webkit-filter: brightness(0.5);
 }
 
 .img-wraps .closes {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 2;
-    padding: 4px 3px;
-    color: #fff;
-    font-weight: 500;
-    cursor: pointer;
-    text-align: center;
-    font-size: 50px;
-    line-height: 30px;
-    border-radius: 50%;
-    border: 3px solid #fff;
-    display: none;
-    transition: all 0.7s;
-    margin: 5px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 2;
+	padding: 4px 3px;
+	color: #fff;
+	font-weight: 500;
+	cursor: pointer;
+	text-align: center;
+	font-size: 50px;
+	line-height: 30px;
+	border-radius: 50%;
+	border: 3px solid #fff;
+	display: none;
+	transition: all 0.7s;
+	margin: 5px;
 }
 
-#file-zone > span {
-    display: block;
-    margin: auto;
-    font-size: 1.2em;
-    letter-spacing: 0.4em;
-    font-weight: 550;
-    color: rgb(34, 34, 34);
-    z-index: 0;
+#upload-word {
+	display: block;
+	margin: auto;
 }
 
-#file-zone > input {
-    display: none
+#file-zone>input {
+	display: none
 }
 
 .defined-btn {
-    display: none;
-    margin-bottom: 30px;
+	display: none;
+	margin-bottom: 30px;
 }
-
