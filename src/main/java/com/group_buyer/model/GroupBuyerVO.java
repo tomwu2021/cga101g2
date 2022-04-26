@@ -1,7 +1,8 @@
 package com.group_buyer.model;
 
 import com.group_order.model.GroupOrderVO;
-import com.prodouct.model.ProductVO;
+import com.product.model.ProductVO;
+
 
 public class GroupBuyerVO  implements java.io.Serializable{
 	 private Integer groupOrderId;

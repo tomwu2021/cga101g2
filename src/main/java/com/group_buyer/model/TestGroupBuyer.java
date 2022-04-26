@@ -11,15 +11,15 @@ import connection.HibernateUtil;
 public class TestGroupBuyer {
 	public static void main(String[] args) {
 		//新增參團者
-//		GroupBuyerJDBCDAO dao=new GroupBuyerJDBCDAO();
-//		GroupBuyerVO groupBuyerVO=new GroupBuyerVO();
-//		groupBuyerVO.setGroupOrderId(1);
-//		groupBuyerVO.setRecipients("佩佩豬媽媽");
-//		groupBuyerVO.setPhone("0999887766");
-//		groupBuyerVO.setAddress("台中屠宰場");
-//		groupBuyerVO.setMemberId(1);
-//		groupBuyerVO.setProductAmount(10);
-//		dao.insert(groupBuyerVO);
+		GroupBuyerJDBCDAO dao=new GroupBuyerJDBCDAO();
+		GroupBuyerVO groupBuyerVO=new GroupBuyerVO();
+		groupBuyerVO.setGroupOrderId(5);
+		groupBuyerVO.setRecipients("佩佩豬把拔");
+		groupBuyerVO.setPhone("0999887766");
+		groupBuyerVO.setAddress("台中屠宰場");
+		groupBuyerVO.setMemberId(1);
+		groupBuyerVO.setProductAmount(3);
+		System.out.println(dao.insert(groupBuyerVO));
 		
 		//查詢所有團購成員
 //		GroupBuyerJDBCDAO dao=new GroupBuyerJDBCDAO();
@@ -54,11 +54,11 @@ public class TestGroupBuyer {
 //		dao.update(groupBuyerVO);
 		
 		//測試hibernate複合主鍵
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		GroupBuyerPK groupBuyerPK=new GroupBuyerPK(1,1);
-		GroupBuyerHibernateVO vo = session.get(GroupBuyerHibernateVO.class, groupBuyerPK);
-		System.out.println(vo);
-		HibernateUtil.shutdown();
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		GroupBuyerPK groupBuyerPK=new GroupBuyerPK(1,1);
+//		GroupBuyerHibernateVO vo = session.get(GroupBuyerHibernateVO.class, groupBuyerPK);
+//		System.out.println(vo);
+//		HibernateUtil.shutdown();
 		
 
 	}

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.group_order.model.GroupOrderVO;
-import com.prodouct.model.ProductVO;
+import com.product.model.ProductVO;
 
 import connection.JDBCConnection;
 
@@ -190,7 +190,7 @@ public class GroupBuyerJDBCDAO implements GroupBuyerDAO_Interface {
 				groupBuyerVO.setProductAmount(rs.getInt("product_amount"));
 				GroupOrderVO groupOrderVO=new GroupOrderVO();
 				groupOrderVO.setProductId(rs.getInt("product_id"));
-				groupOrderVO.setFinalPrice((rs.getInt("final_price"))*0.9*groupBuyerVO.getProductAmount());
+				groupOrderVO.setFinalPrice(Integer.valueOf((int) ((int)(rs.getInt("final_price"))*0.9*groupBuyerVO.getProductAmount())));
 				groupOrderVO.setStatus(rs.getInt("status"));
 				ProductVO productVO=new ProductVO();
 				productVO.setProductName(rs.getString("product_name"));

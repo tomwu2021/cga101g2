@@ -2,7 +2,6 @@ package com.group_buyer.controller;
 import static com.util.GSONUtil.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,12 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
 import com.group_buyer.model.GroupBuyerService;
 import com.group_buyer.model.GroupBuyerVO;
 
-@WebServlet("/member/orders")
-public class GroupBuyerController extends HttpServlet{
+@WebServlet("/member/groupOrders")
+public class GetMemberGroupOrder extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 

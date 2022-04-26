@@ -1,6 +1,9 @@
 /**
  * 
  */
+
+let xhr2 = null;
+getMemberOder();
 let xhr = null;
 getGroupOrder();
 
@@ -42,14 +45,12 @@ function getGroupOrder() {
         let groupOrder = JSON.parse(json);
         console.log(groupOrder); // emp 經過 JSON.parse 變成物件
         let html = "";
-        console.log(groupOrder);
 
         /*
             先檢查是否有抓到資料
             接下來要在網頁上顯示
         */
 
-        // let str = "<tbody><tr><td>" + groupOrder[0].groupOrderId + "</td></tr></tbody>";
         let str = "<tbody>";
         for (let order of groupOrder) {
             str += "<tr><td>" + order.productVO.productName + "</td>";
@@ -62,24 +63,88 @@ function getGroupOrder() {
             } else {
                 str += "<td>已成團</td>";
             }
+            str += "<td><a href=" + "cart.html" + "class=" + "revise" + ">Revise</a></td>";
+            str += "<td><a href=" + "cart.html" + "class=" + "view" + ">View</a></td>";
+        }
+        str += "</tr></tbody>";
+        $("#memberGroupOrder").append(str);
+
+    }
+
+    let url = "/CGA101G2/member/groupOrders?memberId=1";
+    xhr.open("Get", url, true);
+    xhr.send(null);
+}
 
 
-            str += "<td><a href=" + "cart.html" + "class=" + "view" + ">view</a></td>";
+
+function createXHR2() {
+    if (window.XMLHttpRequest) {
+        xhr2 = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        xhr2 = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    return xhr2;
+}
+
+
+function getMemberOder() {
+    /*
+      創建 xhr 物件
+      解決瀏覽器相容性的問題
+    */
+    xhr2 = createXHR2();
+
+    xhr2.onload = function () {
+        if (xhr2.status == 200) {
+            /*
+                GetHsonWithJava.jsp 的 out 資料
+                在 xhr.responseText 接住回應
+                並丟到 showEmployee 做剖析
+            */
+            showMemberOder(xhr2.responseText);
+        } else {
+            alert(xhr2.status);
+        }
+    };
+
+    /*
+        剖析 json 字串，轉成 js 物件
+    */
+    function showMemberOder(json) {
+        /*
+            JSON.parse 將一個 JSON 字串轉換成 JavaScript 的數值或是物件
+        */
+        let orders = JSON.parse(json);
+        console.log(orders); // emp 經過 JSON.parse 變成物件
+        let html = "";
+
+        /*
+            先檢查是否有抓到資料
+            接下來要在網頁上顯示
+        */
+
+        let str = "<tbody>";
+        for (let order of orders) {
+            str += "<tr><td>" + order.orderId + "</td>";
+            str += "<td>" + order.payPrice + "</td>";
+            if (order.status === 0) {
+                str += "<td>處理中</td>";
+            } else if (order.status === 1) {
+                str += "<td>取消</td>";
+            } else {
+                str += "<td>已完成</td>";
+            }
+            str += "<td>" + order.createTime + "</td>";
+            str += "<td><a href=" + "cart.html" + "class=" + "view" + ">View</a></td>";
         }
         str += "</tr></tbody>";
         $("#memberOrder").append(str);
-        // str += "<tr><td class='mainTitle'>姓名</td><td class='mainData'>" + emp.ename + "</td></tr>";
-        // str += "<tr><td class='mainTitle'>電話</td><td class='mainData'><table class='phoneTable' align='left'>";
-        // str += "<tr><th>(O)</th><td>" + emp.phone.O + "</td></tr>";
-        // str += "<tr><th>(H)</th><td>" + emp.phone.H + "</td></tr>";
-        // str += "<tr><th>(M)</th><td>" + emp.phone.M + "</td></tr>";
-        // str += "</table></td></tr>";
-        // str += "</table>";
-        // document.getElementById("showPanel").innerHTML = str;
+
     }
 
     let url = "/CGA101G2/member/orders?memberId=1";
-    xhr.open("Get", url, true);
-    xhr.send(null);
+    xhr2.open("Get", url, true);
+    xhr2.send(null);
 }
 

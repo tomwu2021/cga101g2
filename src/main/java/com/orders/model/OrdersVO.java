@@ -3,8 +3,8 @@ package com.orders.model;
 import java.sql.Timestamp;
 
 public class OrdersVO implements java.io.Serializable{
-	private Integer orderId;
-	private Integer memberId;
+	 private Integer orderId;
+	 private Integer memberId;
 	 private String recipient;
 	 private String phone;
 	 private String address;
