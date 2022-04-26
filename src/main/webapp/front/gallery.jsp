@@ -1,15 +1,16 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"
+	pageEncoding="UTF-8"%>
 <!-- include <head></head> -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/gallery.css">
 
 <!--services img area-->
-<jsp:include page="./layout/head.jsp" />
+<%@ include file="./layout/head.jsp"%>
 <!-- include  common JS-->
-<jsp:include page="./layout/commonJS.jsp" />
 
 <!-- include  header -->
-<jsp:include page="./layout/header.jsp" />
+<%@ include file="./layout/header.jsp"%>
+<%@ include file="./layout/commonJS.jsp"%>
 
 <div class="services_gallery mt-100">
 	<div class="container">
@@ -81,17 +82,18 @@
 				</div>
 			</div>
 		</div>
-		<div id="button-area" style="display:none">
-		 <button class="col-sm-1.5" onclick="commitDelete()">Delete</button>
-		 <span class="col-sm-3"></span>
-		 <button class="col-sm-1.5" onclick="deleteAll()">Cancel</button>
+		<div id="button-area" style="display: none">
+			<button class="col-sm-1.5" onclick="commitDelete()">Delete</button>
+			<span class="col-sm-3"></span>
+			<button class="col-sm-1.5" onclick="deleteAll()">Cancel</button>
 		</div>
 	</div>
 </div>
 
 <!--our services area-->
 
-<a class="upload-button" id="scrollUp" href="<%=request.getContextPath()%>/front/addPicture-copy.jsp"
+<a class="upload-button" id="scrollUp"
+	href="<%=request.getContextPath()%>/front/addPicture-copy.jsp"
 	style="position: fixed; z-index: 2147483647; display: inline; right: 4px; bottom: 300px;">
 	<i class="fa fa-plus"></i>
 </a>

@@ -2,8 +2,8 @@
 <html class="no-js" lang="zh-Hans-TW">
 
 <!-- include <head></head> -->
-<jsp:include page="./layout/head.jsp" />
 
+<jsp:include page="./layout/head.jsp" />
 <!-- 額外添加CSS start -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/picture/addPicture.css" />
@@ -12,17 +12,10 @@
 
 <!-- body start -->
 <body>
-
-	<!-- include  common JS-->
-	<jsp:include page="./layout/commonJS.jsp" />
-
-	<!-- include  header -->
-	<jsp:include page="./layout/header.jsp" />
-
-
 	<!-- 主要內容 start -->
 	<!--breadcrumbs area start-->
-
+	<jsp:include page="./layout/header.jsp" />
+	
 	<div class="breadcrumbs_area">
 		<div class="container">
 			<div class="row">
@@ -75,10 +68,12 @@
 	<!-- include  footer -->
 	<jsp:include page="./layout/footer.jsp" />
 
+	<!-- include  common JS-->
+	<jsp:include page="./layout/commonJS.jsp" />
+
 	<!-- 額外添加JS start -->
 	<script
 		src="<%=request.getContextPath()%>/assets/js/picture/addPicture.js"></script>
-
 	<!-- 額外添加JS end -->
 
 </body>
