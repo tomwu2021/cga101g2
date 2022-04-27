@@ -3,6 +3,7 @@ package com.members.model;
 import java.sql.*;
 import java.util.*;
 import connection.JDBCConnection;
+import connection.JNDIConnection;
 
 public class MembersJDBCDAO implements MembersDAO_interface {
 
@@ -574,6 +575,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		}
 		return b;
 	}
+
 	public boolean deleteOneById(Integer memberId, Connection con) {
 		final String DELETE_ONE_MEMBER = "delete from members where member_id = ?;";
 		if (con != null) {
@@ -582,6 +584,50 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 				pstmt.setInt(1, memberId);
 				pstmt.executeUpdate();
 				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public Boolean getOneByAccount(String account) {
+		con = JDBCConnection.getRDSConnection();
+		Boolean boo = getOneByAccount(account, con);
+
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return boo;
+	}
+
+	public Boolean getOneByAccount(String account, Connection con) {
+
+		final String SELECT_ONE_BYACCOUNT = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time "
+				+ "FROM members where account = ?;";
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_BYACCOUNT);
+				pstmt.setString(1, account);
+				ResultSet rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					MembersVO newMember = new MembersVO();
+					newMember.setMemberId(rs.getInt("member_id"));
+					newMember.setAccount(rs.getString("account"));
+					newMember.setName(rs.getString("name"));
+					newMember.setAddress(rs.getString("address"));
+					newMember.setPhone(rs.getString("phone"));
+					newMember.setRankId(rs.getInt("rank_id"));
+					newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
+					newMember.setBonusAmount(rs.getInt("bonus_amount"));
+					newMember.setStatus(rs.getInt("status"));
+					newMember.setCreateTime(rs.getTimestamp("create_time"));
+					return true;
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
