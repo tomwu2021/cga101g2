@@ -1,5 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"
-	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <div class="main_header sticky-header">
 	<div class="container-fluid">
 		<div class="header_container">
