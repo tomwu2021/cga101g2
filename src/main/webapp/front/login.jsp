@@ -1,0 +1,106 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8" />
+<title>PCLUB</title>
+<!-- login 的 css -->
+<link rel="stylesheet" href="../assets/css/login.css" />
+<!-- register 註冊 css -->
+<link rel="stylesheet" type="text/css" href="../assets/css/register.css">
+
+</head>
+
+<body>
+
+	<!-- 	--------------------------- 登入視窗 -------------------------------- -->
+	x
+	<form method="post" action="member.do" class="login">
+		<div>
+			<h1>登 入 帳 號</h1>
+			<img src="../assets/img/logo/logo_icon.png">
+		</div>
+		<h2>
+			帳號<font color=red> ${errorMsgs.account}</font>
+		</h2>
+
+		<input type="text" name="account" placeholder="請輸入電子郵件"
+			value="${errorMsgs.errorAccount}" />
+
+		<h2>
+			密碼<font color=red> ${errorMsgs.passowrd}</font>
+		</h2>
+		<input type="password" name="passowrd" placeholder="請輸入密碼" />
+		<div class="btns">
+
+			<input type="hidden" name="action" value="forLogin">
+			<button id="memberlogin" class="btn1" style="vertical-align: middle"
+				type="submit">
+				<span>會員登入</span>
+			</button>
+			<div>
+				<div id="wrapper">
+					<!-- 會員註冊視窗 -->
+					<div id="popup" class="opoups_height_width" onclick="registerWindow()">帳號註冊</div>
+					<!-- 忘記密碼視窗 -->
+					<div id="popup2" class="opoups_height_width">忘記密碼</div>
+					<div id="popup3" class="opoups_height_width">訪客進入</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+
+	<!------------------------------ 註冊視窗 ------------------------------>
+	<div id="box">
+
+		<form method="post" action="member.do">
+			<h2>
+				帳號 
+				<font id="emra" color=red> ${errorMsgs.registerAccount} </font> 
+			</h2>
+			<input type="hidden" name="action" value="checkAccount"> 
+			
+			<input type="text" name="account" placeholder="請輸入電子郵件" value="${errorMsgs.errorAccount}" />
+			<input type="submit" value="Email 驗證" />
+		</form>
+		
+		<form method="post" action="member.do">
+			<h2>
+				密碼
+				<font color=red> ${errorMsgs.registerPassowrd}</font>
+			</h2>
+			<input type="password" name="passowrd" placeholder="請輸入密碼" />
+			<input type="hidden" name="action" value="memberRegister"> <input type="submit" value="送出"> 
+		</form>
+		
+		<span id="closeBtn">關閉</span>
+
+
+	</div>
+
+
+	<!------------------------------ 忘記密碼視窗視窗 ------------------------------>
+	<div id="box2">
+		<form action="">
+			<h2>帳號</h2>
+			<input type="text" placeholder="請輸入電子郵件" />
+		</form>
+		<span id="closeBtn2">關閉</span>
+	</div>
+
+
+	<!-- 會員註冊 -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- login.js -->
+	<script type="text/javascript" src="../assets/js/login.js"></script>
+	<!-- register.js -->
+	<script type="text/javascript" src="../assets/js/register.js"></script>
+
+
+</body>
+
+</html>

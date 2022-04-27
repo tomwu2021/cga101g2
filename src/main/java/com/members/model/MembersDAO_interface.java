@@ -34,5 +34,11 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 
 	// update 情境十四：會員儲值時，儲值紀錄改動，需要修改目前錢包餘額
 	public boolean changeEWalletAmount(MembersVO membersVO);
+	
+	// delete
+	public boolean deleteOneById(Integer memberId);
+	
+	// 判斷此帳號在資料庫使否有資料
+	Boolean getOneByAccount(String account);
 
 }

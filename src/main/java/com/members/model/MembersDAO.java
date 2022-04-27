@@ -2,17 +2,16 @@ package com.members.model;
 
 import java.sql.*;
 import java.util.*;
-import connection.JDBCConnection;
 import connection.JNDIConnection;
 
-public class MembersJDBCDAO implements MembersDAO_interface {
+public class MembersDAO implements MembersDAO_interface {
 
 	Connection con;
 
 // 情境一 insert：會員辦帳號時，輸入資料庫的內容 -----------------------------------------------------------------------
 	@Override
 	public MembersVO insert(MembersVO membersVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		MembersVO membersVO2 = insert(membersVO, con);
 		try {
 			con.close();
@@ -47,7 +46,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 //  update 情境二：會員可修改的資料 ---------------------------------------------------------------------------------
 	@Override
 	public MembersVO update(MembersVO membersVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		MembersVO membersVO2 = update(membersVO, con);
 		try {
 			con.close();
@@ -121,7 +120,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	@Override
 	public boolean changeStatus(MembersVO membersVO) {
 
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		Boolean b = changeStatus(membersVO, con);
 
 		try {
@@ -151,7 +150,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	@Override
 	public boolean changeBonus(MembersVO membersVO) {
 
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		int currentBonusAmount = selectBonusAmount(membersVO, con) + membersVO.getBonusAmount(); // 現在的紅利 = 取得資料庫原本的紅利 +
 																									// 管理員給的紅利
 		Boolean b = changeBonus(membersVO, con, currentBonusAmount); // 變更紅利的金額
@@ -184,7 +183,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	@Override
 	public boolean forgotPassword(MembersVO membersVO) {
 
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		Boolean b = forgotPassword(membersVO, con);
 
 		try {
@@ -238,7 +237,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	@Override
 	public int selectRankId(MembersVO membersVO) {
 
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		MembersVO membersVO2 = selectRankId(membersVO, con);
 
 		try {
@@ -273,7 +272,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	@Override
 	public int selectEWalletAmount(MembersVO membersVO) {
 
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		MembersVO membersVO2 = selectEWalletAmount(membersVO, con);
 		int queryAccount = membersVO2.geteWalletAmount();
 
@@ -312,7 +311,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	@Override
 	public int selectBonusAmount(MembersVO membersVO) {
 
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		int currentBonusAmount = selectBonusAmount(membersVO, con);
 
 		try {
@@ -347,7 +346,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	@Override
 	public MembersVO getOneById(Integer id) {
 
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		MembersVO membersVO2 = getOneById(id, con);
 
 		try {
@@ -395,7 +394,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 
 		final String GETALL = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time FROM members;";
 
-		try (Connection con = JDBCConnection.getRDSConnection();
+		try (Connection con = JNDIConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
 			ResultSet rs = pstmt.executeQuery();
 			List<MembersVO> list = new ArrayList<>();
@@ -425,7 +424,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 
 		final String GETALL_STATUS = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time FROM members where status = ?;";
 
-		try (Connection con = JDBCConnection.getRDSConnection();
+		try (Connection con = JNDIConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETALL_STATUS)) {
 
 			pstmt.setInt(1, 0);
@@ -457,7 +456,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	public MembersVO getOneByName(String name) {
 		final String GETONE_BY_NAME = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time FROM members where name like ?;";
 
-		try (Connection con = JDBCConnection.getRDSConnection();
+		try (Connection con = JNDIConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETONE_BY_NAME)) {
 
 			pstmt.setString(1, "%" + name + "%");
@@ -484,7 +483,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 
 	@Override
 	public MembersVO selectForLogin(String name, String password) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		MembersVO membersVO2 = selectForLogin(name, password, con);
 
 		try {
@@ -498,7 +497,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 // select 情境十三：查詢登入時帳號和密碼 ------------------------------------------------------------------------------
 	public MembersVO selectForLogin(String name, String password, Connection con) {
 
-		final String SELECT_FOR_LOGIN = "select member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time from members where name = ? and password = ?;";
+		final String SELECT_FOR_LOGIN = "select member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time from members where account = ? and password = ?;";
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(SELECT_FOR_LOGIN);
@@ -530,7 +529,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	@Override
 	public boolean changeEWalletAmount(MembersVO membersVO) {
 
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		Boolean b = changeEWalletAmount(membersVO, con);
 
 		try {
@@ -559,13 +558,8 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	}
 
 	@Override
-	public boolean delete(MembersVO t) {
-		return false;
-	}
-
-	@Override
 	public boolean deleteOneById(Integer memberId) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		Boolean b = deleteOneById(memberId, con);
 
 		try {
@@ -575,7 +569,6 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		}
 		return b;
 	}
-
 	public boolean deleteOneById(Integer memberId, Connection con) {
 		final String DELETE_ONE_MEMBER = "delete from members where member_id = ?;";
 		if (con != null) {
@@ -592,46 +585,54 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	}
 
 	@Override
-	public Boolean getOneByAccount(String account) {
-		con = JDBCConnection.getRDSConnection();
-		Boolean boo = getOneByAccount(account, con);
-
-		try {
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return boo;
-	}
-
-	public Boolean getOneByAccount(String account, Connection con) {
-
-		final String SELECT_ONE_BYACCOUNT = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time "
-				+ "FROM members where account = ?;";
-		if (con != null) {
-			try {
-				PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_BYACCOUNT);
-				pstmt.setString(1, account);
-				ResultSet rs = pstmt.executeQuery();
-
-				if (rs.next()) {
-					MembersVO newMember = new MembersVO();
-					newMember.setMemberId(rs.getInt("member_id"));
-					newMember.setAccount(rs.getString("account"));
-					newMember.setName(rs.getString("name"));
-					newMember.setAddress(rs.getString("address"));
-					newMember.setPhone(rs.getString("phone"));
-					newMember.setRankId(rs.getInt("rank_id"));
-					newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
-					newMember.setBonusAmount(rs.getInt("bonus_amount"));
-					newMember.setStatus(rs.getInt("status"));
-					newMember.setCreateTime(rs.getTimestamp("create_time"));
-					return true;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+	public boolean delete(MembersVO membersVO) {
+		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	// select 情境九：管理員使用 member_id 查詢某一筆會員資料 ---------------------------------------------------------------
+		@Override
+		public Boolean getOneByAccount(String account) {
+
+			con = JNDIConnection.getRDSConnection();
+			Boolean boo = getOneByAccount(account, con);
+
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return boo;
+		}
+
+		public Boolean getOneByAccount(String account, Connection con) {
+
+			final String SELECT_ONE_BYACCOUNT = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time "
+					+ "FROM members where account = ?;";
+			if (con != null) {
+				try {
+					PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_BYACCOUNT);
+					pstmt.setString(1, account);
+					ResultSet rs = pstmt.executeQuery();
+
+					if (rs.next()) {
+						MembersVO newMember = new MembersVO();
+						newMember.setMemberId(rs.getInt("member_id"));
+						newMember.setAccount(rs.getString("account"));
+						newMember.setName(rs.getString("name"));
+						newMember.setAddress(rs.getString("address"));
+						newMember.setPhone(rs.getString("phone"));
+						newMember.setRankId(rs.getInt("rank_id"));
+						newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
+						newMember.setBonusAmount(rs.getInt("bonus_amount"));
+						newMember.setStatus(rs.getInt("status"));
+						newMember.setCreateTime(rs.getTimestamp("create_time"));
+						return true;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return false;
+		}
 }

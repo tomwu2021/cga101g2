@@ -1,186 +1,170 @@
-/* --------皜祈岫----------- */
 
 h1 {
-  font-size: 25px;
+	font-size: 25px;
 }
-
 
 div img {
-  max-width: 50%;
-  height: auto;
-  padding: 20px;
-  opacity: 1;
-  -webkit-filter: drop-shadow(2px 2px 5px rgb(243, 162, 12));
+	max-width: 50%;
+	height: auto;
+	padding: 20px;
+	opacity: 1;
+	-webkit-filter: drop-shadow(2px 2px 5px rgb(243, 162, 12));
 }
 
-
 body {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  background: url("../img/logo/3.jpg");
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	background: url("../img/logo/3.jpg");
+	background-attachment: fixed;
+	background-size: cover;
+	background-position: center;
 }
 
 .login:hover {
-  opacity: 1;
+	opacity: 1;
 }
 
-
-
 .login {
-  height: 80%;
-  opacity: 0.7;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.5);
-  text-align: center;
-  color: rgb(255, 255, 255);
-  font-family: "微軟正黑體", sans-serif;
-  border-radius: 10px;
-  padding: 30px;
-
-  width: 25%;
+	height: 80%;
+	opacity: 0.7;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	background: rgba(0, 0, 0, 0.5);
+	text-align: center;
+	color: rgb(255, 255, 255);
+	font-family: "微軟正黑體", sans-serif;
+	border-radius: 10px;
+	padding: 30px;
+	width: 25%;
 }
 
 .login div {
-  -webkit-filter: brightness(1.5);
+	-webkit-filter: brightness(1.5);
 }
 
 .login i {
-  font-size: 100px;
-  margin: 20px auto;
+	font-size: 100px;
+	margin: 20px auto;
 }
 
 .login h3 {
-  transform: translate(60%, 200%);
-  display: inline-block;
-  font-size: 15px;
-  float: right;
-  padding-right: 20px;
+	transform: translate(60%, 200%);
+	display: inline-block;
+	font-size: 15px;
+	float: right;
+	padding-right: 20px;
 }
 
 h2 {
-  padding-left: 10px;
+	padding-left: 10px;
 }
 
 a {
-  color: white;
+	color: white;
 }
 
 a:hover {
-  color: rgb(238, 14, 245);
+	color: rgb(238, 14, 245);
 }
 
-
-input[type="text"],
-input[type="password"] {
-  font-size: 16px;
-  font-family: "微軟正黑體", sans-serif;
-  padding: 5px;
-  border-radius: 4px;
-  margin: 0 auto;
-  display: block;
-  width: 90%;
+input[type="text"], input[type="password"] {
+	font-size: 16px;
+	font-family: "微軟正黑體", sans-serif;
+	padding: 5px;
+	border-radius: 4px;
+	margin: 0 auto;
+	display: block;
+	width: 90%;
 }
 
 button {
-  border: 0;
-  padding: 4px 8px;
-  margin: 20px auto;
-  font-size: 18px;
-  font-family: "微軟正黑體", sans-serif;
-  background-color: #b7854c;
-  color: #fff;
-  border-radius: 10px;
-  cursor: pointer;
+	border: 0;
+	padding: 4px 8px;
+	margin: 20px auto;
+	font-size: 18px;
+	font-family: "微軟正黑體", sans-serif;
+	background-color: #b7854c;
+	color: #fff;
+	border-radius: 10px;
+	cursor: pointer;
 }
 
 button:hover {
-  color: #005dce;
-  background-color: rgb(255, 128, 0);
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 27px;
+	color: #005dce;
+	background-color: rgb(255, 128, 0);
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 27px;
 }
 
 .btns {
-  padding-top: 20px;
-  width: 100%;
-  height: 20px;
+	padding-top: 20px;
+	width: 100%;
+	height: 20px;
 }
 
-
-@media (max-width: 450px) {
-  .login {
-    width: 70%;
-
-  }
+@media ( max-width : 450px) {
+	.login {
+		width: 70%;
+	}
 }
-
 
 .btn1 {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: #ff3c00;
-  border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 20px;
-  width: 150px;
-  height: 45px;
-  transition: all 0.5s;
-  cursor: pointer;
-
+	display: inline-block;
+	border-radius: 4px;
+	background-color: #ff3c00;
+	border: none;
+	color: #FFFFFF;
+	text-align: center;
+	font-size: 20px;
+	width: 150px;
+	height: 45px;
+	transition: all 0.5s;
+	cursor: pointer;
 }
 
-
-
 .btn1 span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	transition: 0.5s;
 }
 
 .btn1 span:after {
-  content: '>';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
+	content: '>';
+	position: absolute;
+	opacity: 0;
+	top: 0;
+	right: -20px;
+	transition: 0.5s;
 }
 
 .btn1:hover span {
-  padding-right: 20px;
+	padding-right: 20px;
 }
 
 .btn1:hover span:after {
-  opacity: 1;
-  right: 0;
+	opacity: 1;
+	right: 0;
 }
 
 #wrapper {
-  min-height: 100px;
-  display: flex;
-  bottom: 0px;
+	min-height: 100px;
+	display: flex;
+	bottom: 0px;
 }
 
 .opoups_height_width {
-  margin: auto;
-  color: white;
-  font-weight: bold;
-
+	margin: auto;
+	color: white;
+	font-weight: bold;
 }
 
-
 .opoups_height_width:hover {
-  color: rgb(238, 14, 245);
-  text-decoration: underline;
+	color: rgb(238, 14, 245);
+	text-decoration: underline;
 }
