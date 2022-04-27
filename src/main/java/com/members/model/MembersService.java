@@ -1,5 +1,6 @@
 package com.members.model;
 
+import java.sql.Connection;
 import java.util.*;
 
 public class MembersService {
@@ -7,7 +8,7 @@ public class MembersService {
 	private MembersDAO_interface dao;
 
 	public MembersService() {
-		dao = new MembersJDBCDAO();
+		dao = new MembersDAO();
 	}
 
 	// insert 情境一：會員辦帳號時，輸入資料庫的內容
@@ -78,6 +79,15 @@ public class MembersService {
 	// update 情境十四：會員儲值時，儲值紀錄改動，需要修改目前錢包餘額
 	public boolean changeEWalletAmount(MembersVO membersVO) {
 		return dao.changeEWalletAmount(membersVO);
+	}
+	
+	// deleteOneById
+	public boolean deleteOneById(Integer memberId) {
+		return dao.deleteOneById(memberId);
+	}
+	
+	public Boolean getOneByAccount(String account) {
+		return dao.getOneByAccount(account);
 	}
 
 }

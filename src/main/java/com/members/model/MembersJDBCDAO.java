@@ -561,4 +561,31 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	public boolean delete(MembersVO t) {
 		return false;
 	}
+
+	@Override
+	public boolean deleteOneById(Integer memberId) {
+		con = JDBCConnection.getRDSConnection();
+		Boolean b = deleteOneById(memberId, con);
+
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+	public boolean deleteOneById(Integer memberId, Connection con) {
+		final String DELETE_ONE_MEMBER = "delete from members where member_id = ?;";
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(DELETE_ONE_MEMBER);
+				pstmt.setInt(1, memberId);
+				pstmt.executeUpdate();
+				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 }
