@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <div class="main_header sticky-header">
 	<div class="container-fluid">
 		<div class="header_container">
@@ -102,7 +102,7 @@
 								<li class="nav-item dropdown ml-auto"><a id="userInfo"
 									data-toggle="dropdown" aria-haspopup="true"
 									aria-expanded="false" class="nav-link dropdown-toggle"><img
-										src="../assets/shop/img/product/product3.jpg" alt="Jason Doe"
+										src="https://picsum.photos/200/300" alt="Jason Doe"
 										style="max-width: 2.5rem;"
 										class="img-fluid rounded-circle shadow"></a>
 									<div aria-labelledby="userInfo" class="dropdown-menu">

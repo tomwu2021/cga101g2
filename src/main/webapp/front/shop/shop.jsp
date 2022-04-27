@@ -1,11 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-
+<html>
 <!-- include <head></head> -->
 <%@ include file="/front/layout/head.jsp"%>
 <!-- body start -->
 <!-- 主要內容 start -->
+
+<body>
 <!--breadcrumbs area start-->
 <%@ include file="/front/layout/header.jsp"%>
 <!--breadcrumbs area start-->

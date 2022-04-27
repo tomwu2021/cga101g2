@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
@@ -54,7 +54,7 @@ pageContext.setAttribute("pdlist", list);
 		<jsp:useBean id="imgSvc" scope="page"
 			class="com.product_img.model.ProductImgService" />
 		<!--�堆蕭嚙踝蕭foreach����嚙賣�綽蕭========================-->
-		<c:forEach var="productVO" items="${pdlist}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
+		<c:forEach var="productVO" items="${pdlist}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<div class="col-lg-4 col-md-4 col-sm-6 col-12">
 				<!--嚙賣�嚙踝蕭嚙踝蕭嚙踝蕭嚙賣�迎蕭�綽蕭 -->
 				<article class="single_product">
