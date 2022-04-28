@@ -2,6 +2,8 @@ package com.post.model;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,8 +33,8 @@ public class PostService {
 	
 	MappingJDBCDAO mappingDAO = new MappingJDBCDAO();
 	
-	//新增貼文圖片	
-	public PostVO uploadPost(Integer memberId,String content, Collection<Part> parts) {
+	//一、新增貼文圖片	與內容
+	public PostVO uploadPost(Integer memberId,String content, Collection<Part> parts)  {
 		//1.插入貼文
 		PostJDBCDAO dao = new PostJDBCDAO();
 		PostVO postvo = new PostVO();
@@ -46,36 +48,66 @@ public class PostService {
 		
 		
 		//搜集你的貼文材料
-		dao.insert(postvo);
+//		dao.insert(postvo);
 		
 		//return postVO取得ID1
+		PostVO postVO2 = new PostVO();
+		postVO2= dao.insert(postvo);
 		
+		int id1 = postVO2.getPostId();
 		
 		//2.插入圖片
 		
 		//搜集你的圖片材料
 		
-		PictureVO pvo =new PictureVO();
 		PictureService pserv= new PictureService();
-	
+		
+		List<PictureVO>  pvs = new ArrayList<>();
+		
 		try {
-			pserv.uploadImage(parts,albumId);
-		} catch (IOException e) {
+			pvs = pserv.uploadImage(parts,albumId);
+			
+		}catch (Exception e) {
+			throw new RuntimeException("A database error occured." + e.getMessage());
+		}
+		
+		List<MappingTableDto>  dtos  = new ArrayList<MappingTableDto>();
+		
+		//return PictureVO取得ID2
+		for (PictureVO pictureVO : pvs) {
+			MappingTableDto dto1 = postPicMapping(id1, pictureVO.getPictureId());
+			dtos.add(dto1);
+			System.out.println("asdff");
+		}
+		
+		
+		
+		try {
+			Connection connection = JDBCConnection.getRDSConnection();
+			mappingDAO.insertMultiMapping(dtos, connection);
+			connection.close();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//return PictureVO取得ID2
-		
+	
 		
 		//3.插入mapping表
-		
-//		mappingDAO.insertOneMapping(postPicMapping(1, 1));
-				//mappingDAO.deleteOneMapping(postPicMapping(ID1,ID2));
+//		postPicMapping(ID1);
+//		mappingDAO.insertOneMapping(postPicMapping(, ));
+		//mappingDAO.deleteOneMapping(postPicMapping(ID1,ID2));
 		
         
 		return postvo;
 	}
+	
+//	public MappingTableDto postPicMapping(Integer id1) {
+//		MappingTableDto mappingTableDto = new MappingTableDto();
+//		mappingTableDto.setTableName1("post_pic");
+//		mappingTableDto.setColumn1("post_id");
+//    	mappingTableDto.setId1(id1);
+//    	return mappingTableDto;
+//	}
 	
 	public MappingTableDto postPicMapping(Integer id1, Integer id2) {
 		MappingTableDto mappingTableDto = new MappingTableDto();
@@ -89,7 +121,7 @@ public class PostService {
     
     
 	
-	//查詢全部個人貼文
+	//二、查詢全部個人貼文
 	public List<PostVO> selectPost(Integer memberid){
 		
 		return dao.selectPost(memberid);
