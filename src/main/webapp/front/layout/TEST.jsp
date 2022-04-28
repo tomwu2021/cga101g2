@@ -10,7 +10,7 @@
 
 <!-- 額外添加的CSS -->
 <!-- 	路徑舉例 -->
-<%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/back/css/????.css"> --%>
+<%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/css/你的資料夾名稱/你的檔案名稱.css"> --%>
 <!-- 額外添加的CSS -->
 </head>
 <body>
@@ -35,7 +35,7 @@
 
 	<!-- 額外添加的JS -->
 	<!-- 	路徑舉例 -->
-	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/back/js/?????.js"> --%>
+	<%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/js/你的資料夾名稱/你的檔案名稱.css"> --%>
 	<!-- 額外添加的JS -->
 
 </body>
