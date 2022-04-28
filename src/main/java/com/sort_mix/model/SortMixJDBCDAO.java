@@ -90,7 +90,7 @@ public class SortMixJDBCDAO implements SortMixDAO_interface {
 				//把主分類"集合"放入子分類 即 主分類為一個物件,這個物件裡面有多個集合
 				sort1VOList.add(sort1VO);
 			}
-			
+			System.out.println("Sort2VO findAllBySort2Id(Integer sort2Id)成功執行");
 			sort2VO.setSort1VOList(sort1VOList);
 			return sort2VO;
 		} catch (SQLException se) {
@@ -100,6 +100,7 @@ public class SortMixJDBCDAO implements SortMixDAO_interface {
 		}
 		return null; 
 	}
+
 
 	@Override
 	public SortMixVO insert(SortMixVO sortMixVO) {

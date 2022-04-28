@@ -7,6 +7,7 @@ import com.common.model.MappingTableDto;
 import com.google.gson.Gson;
 import com.sort1.model.Sort1JDBCDAO;
 import com.sort1.model.Sort1VO;
+import com.sort2.model.Sort2VO;
 
 
 public class SortMixService implements SortMixService_interface{
@@ -22,12 +23,12 @@ public class SortMixService implements SortMixService_interface{
 	}
 
 	@Override
-	public boolean save(MappingTableDto mtd) {
+	public boolean save() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override
-	public boolean update(MappingTableDto mtd) {
+	public boolean update() {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -58,4 +59,19 @@ public class SortMixService implements SortMixService_interface{
 		return SortMaxAllList;
 	}
 
+	
+	public boolean update(MappingTableDto mtd) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Sort1VO findAllBySort1Id(Integer sort1Id) {
+		return dao.findAllBySort1Id(sort1Id);
+	}
+
+	@Override
+	public Sort2VO findAllBySort2Id(Integer sort2Id) {
+		return dao.findAllBySort2Id(sort2Id);
+	}
 }

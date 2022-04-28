@@ -1,11 +1,16 @@
 @charset "UTF-8";
 
 .list {
+	width: 4%;
+}
+
+.list1 {
 	width: 7%;
 }
 
+
 .list2 {
-	width: 10%;
+	width: 12%;
 }
 
 
