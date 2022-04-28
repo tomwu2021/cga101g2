@@ -2,7 +2,7 @@ package com.group_buyer.model;
 
 import java.util.List;
 
-public class GroupBuyerDAO implements GroupBuyerDAO_Interface{
+public class GroupBuyerDAO implements GroupBuyerDAO_Interface {
 
 	@Override
 	public GroupBuyerVO insert(GroupBuyerVO t) {
@@ -47,7 +47,13 @@ public class GroupBuyerDAO implements GroupBuyerDAO_Interface{
 	}
 
 	@Override
-	public List<GroupBuyerVO> deleteByPK(Integer groupOrderId, Integer memberId) {
+	public void deleteByPK(Integer groupOrderId, Integer memberId) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public GroupBuyerVO selectByPK(Integer groupOrderId, Integer memberId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
