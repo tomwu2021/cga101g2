@@ -107,6 +107,19 @@ public Integer getTopStatus() {
 public void setTopStatus(Integer topStatus) {
 	this.topStatus = topStatus;
 }
- 
+
+//for join dname from deptno
+//public com.dept.model.DeptVO getDeptVO() {
+//com.dept.model.DeptService deptSvc = new com.dept.model.DeptService();
+//com.dept.model.DeptVO deptVO = deptSvc.getOneDept(deptno);
+//return deptVO;
+//}
+//for join dname from deptno
+//在多方的VO放入一方的SERVICE的GETBYID
+public List<ProductImgVO> getProducImgtVO() {
+ProductImgService daoSvc = new ProductImgService();
+List<ProductImgVO> producImgtVO = daoSvc.getImgsByProductId(productId);
+return producImgtVO;
+}
 
 }

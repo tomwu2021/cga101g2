@@ -1,20 +1,16 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.product_img.model.*"%>
 <%@ page import="com.product.model.*"%>
 
-<%-- 此頁練習採用 EL 的寫法取值 --%>
+<%-- 練習使用EL取值 --%>
 
 <%
 ProductService pdSvc = new ProductService();
-List<ProductVO> pdlist = pdSvc.getAll();
-pageContext.setAttribute("pdlist", pdlist);
-
-ProductImgService pdimgSvc = new ProductImgService();
-List<ProductImgVO> pdImglist = pdimgSvc.getAll();
-pageContext.setAttribute("pdImglist", pdImglist); //蠢!!!!
+List<ProductVO> list = pdSvc.getAll();
+pageContext.setAttribute("pdlist", list);
 %>
 <!DOCTYPE html>
 <html>
@@ -23,7 +19,7 @@ pageContext.setAttribute("pdImglist", pdImglist); //蠢!!!!
 <title>Insert title here</title>
 </head>
 <body>
-	<!--shop wrapper start 右邊菜單內容展示 content是切換點不可更動========================-->
+	<!--shop wrapper start 嚙賢�莎蕭嚙踝蕭嚙踝蕭獢�嚙賣�寞����嚙質�瘀蕭 content嚙質�穿蕭嚙踝蕭嚙賣�綽蕭��嚙踝蕭��嚙賣虜嚙踝蕭========================-->
 	<!--shop toolbar start-->
 
 	<div class="shop_toolbar_wrapper">
@@ -40,7 +36,7 @@ pageContext.setAttribute("pdImglist", pdImglist); //蠢!!!!
 		<div class="niceselect_option">
 			<form class="select_option" action="#">
 				<select name="orderby" id="short">
-					<option selected value="1">價格由高到低</option>
+					<option selected value="1">價格由高到低</option>
 					<option value="2">Sort by popularity</option>
 					<option value="3">Sort by newness</option>
 					<option value="4">Sort by price: low to high</option>
@@ -49,35 +45,27 @@ pageContext.setAttribute("pdImglist", pdImglist); //蠢!!!!
 				</select>
 			</form>
 		</div>
-		<div class="page_amount">
-			<p>Showing 1to9 of 21 results</p>
-		</div>
+		<%@ include file="page1.file"%> 
+	
+	
 	</div>
 	<!--shop toolbar end-->
 	<div class="row shop_wrapper">
 		<jsp:useBean id="imgSvc" scope="page"
 			class="com.product_img.model.ProductImgService" />
-
-		<!--宣告foreach起始點========================-->
-<%-- 	<%@ include file="page1.file"%>  --%>
-		<c:forEach var="productVO" items="${pdlist}" >
+		<!--�堆蕭嚙踝蕭foreach����嚙賣�綽蕭========================-->
+		<c:forEach var="productVO" items="${pdlist}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<div class="col-lg-4 col-md-4 col-sm-6 col-12">
-				<!--單一商品開始點 -->
+				<!--嚙賣�嚙踝蕭嚙踝蕭嚙踝蕭嚙賣�迎蕭�綽蕭 -->
 				<article class="single_product">
 					<figure>
 						<div class="product_thumb">
-							<c:set var="imgList" scope="page"
-								value="${imgSvc.getImgsByProductId(productVO.productId)}"></c:set>
-							<%-- 												<c:forEach var="productImgVO" items="${pdImglist}" > --%>
-							<%-- 													<c:if test="${productImgVO.productId == productVO.productId}"> --%>
-							<c:if test="${imgList.size() != 0 }">
+							<c:if test="${productVO.producImgtVO.size() != 0 }">
 								<a class="primary_img" href="product-details.html"><img
-									src="${imgList.get(0).productImgUrl}" alt=""></a>
+									src="${productVO.producImgtVO.get(0).productImgUrl}" alt=""></a>
 								<a class="secondary_img" href="product-details.html"><img
-									src="${imgList.get(1).productImgUrl}" alt=""></a>
+									src="${productVO.producImgtVO.get(1).productImgUrl}" alt=""></a>
 							</c:if>
-							<%-- 													</c:if> --%>
-							<%-- 												</c:forEach> --%>
 							<div class="action_links">
 								<ul>
 									<li class="quick_button"><a href="#" data-toggle="modal"
@@ -108,7 +96,7 @@ pageContext.setAttribute("pdImglist", pdImglist); //蠢!!!!
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
 									sed do eiusmod tempor incididunt ut labore et dolore magna
 									aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-									ullamcoâ¦</p>
+									ullamco�踝蕭蝷�</p>
 							</div>
 							<div class="price_box">
 								<span class="current_price">$145.00</span> <span
@@ -131,8 +119,8 @@ pageContext.setAttribute("pdImglist", pdImglist); //蠢!!!!
 			</div>
 		</c:forEach>
 	</div>
-<%-- 	<%@ include file="page2.file" %> --%>
-	<!--單一商品結束點 -->
+	<%@ include file="page2.file" %>
+	<!--嚙賣�嚙踝蕭嚙踝蕭嚙質�荔蕭嚙踝蕭�綽蕭 -->
 <!-- modal area start-->
 	<div class="modal fade" id="modal_box" tabindex="-1" role="dialog"
 		aria-hidden="true">
