@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <footer class="footer_widgets foote_other">
-   <div class="footer_top">
+<!-- 改變顏色與高度 class gray -->
+   <div class="footer_top gray" >
       <div class="container">
           <div class="row">
               <div class="col-lg-6 col-md-8 col-sm-8">
