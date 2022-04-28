@@ -1,21 +1,11 @@
 package com.filters;
 
-import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 import com.members.model.MembersVO;
-import com.mysql.cj.Session;
 
-public class FilterForMemberLogin extends HttpFilter implements Filter {
+public class FilterForMemberLogin implements Filter {
 
 	private FilterConfig config;
 

@@ -95,7 +95,7 @@ th {
 		<li><a href='addMember.jsp'>Add 新增一筆會員資料</a>
 	</ul>
 	<ul>
-		<li>JSP EL 取值</li>
+		<li> ---------- JSP EL 取值 ---------- </li>
 		<li>memberId：${membersVO.memberId}</li>
 		<li>account：${membersVO.account}</li>
 		<li>password：${membersVO.password}</li>
