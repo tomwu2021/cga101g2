@@ -1,15 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.product_img.model.*"%>
+<%@ page import="com.product.model.*"%>
+<%@ page import="com.sort2.model.*"%>
+<%@ page import="com.sort_mix.model.*"%>
+
+
+<%
+ProductService pdSvc = new ProductService();
+List<ProductVO> list = pdSvc.getAll();
+pageContext.setAttribute("list", list);
+%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
+<title>商品管理</title>
 <!-- 共用的CSS startr-->
 <%@include file="/back/layout/commonCSS.jsp"%>
 <!-- 共用的CSS end-->
 
 <!-- 額外添加的CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/back/css/backproduct.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/hub/css/backproduct.css">
 <!-- 額外添加的CSS -->
 </head>
 <body>
@@ -44,96 +58,123 @@
 														<div class="col-md-9"></div>
 													</div>
 													<div class="form-group row">
-														<label class="col-md-3 form-control-label">查詢日期 :</label>
+														<label class="col-sm-1 form-control-label">查詢日期 :</label>
 														<div class="col-md-9">
 															<input type="date" value="2020-04-20" min="2022-01-01"
 																max="2050-01-01" step="1"> ~ <input type="date"
 																value="2020-04-20" min="2022-01-01" max="2050-01-01"
-																step="1"> &emsp;<input type="submit" value="確定"
-																class="btn btn-primary">
+																step="1"> &emsp;
+																<input type="submit" value="確定" class="btn btn-primary">
 														</div>
 													</div>
 												</div>
 											</div>
 											<!-- !分頁符號 css在style.default.css 4237 -->
-											<div class="row justify-content-center align-items-center">
-												<ul class="pagination">
-													<li><a href="#">«</a></li>
-													<li><a href="#">1</a></li>
-													<li><a class="active" href="#">2</a></li>
-													<li><a href="#">3</a></li>
-													<li><a href="#">4</a></li>
-													<li><a href="#">5</a></li>
-													<li><a href="#">6</a></li>
-													<li><a href="#">7</a></li>
-													<li><a href="#">»</a></li>
-												</ul>
-											</div>
+<!-- 											<div class="row justify-content-center align-items-center"> -->
+<!-- 												<ul class="pagination"> -->
+<!-- 													<li><a href="#">«</a></li> -->
+<!-- 													<li><a href="#">1</a></li> -->
+<!-- 													<li><a class="active" href="#">2</a></li> -->
+<!-- 													<li><a href="#">3</a></li> -->
+<!-- 													<li><a href="#">4</a></li> -->
+<!-- 													<li><a href="#">5</a></li> -->
+<!-- 													<li><a href="#">6</a></li> -->
+<!-- 													<li><a href="#">7</a></li> -->
+<!-- 													<li><a href="#">»</a></li> -->
+<!-- 												</ul> -->
+<!-- 											</div> -->
 											<!-- !分頁符號 css在style.default.css 4237 -->
 											<div class="form-group row">
 												<div class="col-lg-12">
 													<div class="card-body">
-														<table
-															class="table table-sm table-striped table-hover card-text">
-																<thead>
-														<tr>
+														<table class="table table-sm table-striped table-hover card-text">
+													<thead>
+														<tr class="text-center">
 															<th class="list">商品編號</th>
 															<th class="list">商品照片</th>
-															<th class="list">商品名稱</th>
+															<th class="list2">商品名稱</th>
 															<th class="list">主分類</th>
 															<th class="list">子分類</th>
 															<th class="list">數量</th>
 															<th class="list">售價</th>
-															<th class="list">上架狀態</th>
-															<th class="list">推薦狀態</th>
+															<th class="list1">上架狀態</th>
+															<th class="list1">推薦狀態</th>
 															<th class="list">編輯</th>
 														</tr>
 													</thead>
-															<tr class="">
-															<td>1</td>
+														<tbody>
+<c:forEach var="productVO" items="${list}">
+															<tr class="text-center">
+															<td>${productVO.productId}</td>
 															<td style="width: 6%;"><img
 																src="https://dummyimage.com/600x400/000000/202a99&text=第1-1張"
 																alt="..." class="img-thumbnail"></td>
-															<td>好吃罐頭</td>
-															<td><p>貓
-																<p></td>
-															<td>貓砂</td>
-															<td>20</td>
-															<td>$100</td>
-															<td class="list2">一般商品上架
+															<td>${productVO.productName}</td>
+<%-- 															<td><p>${sort2VO.sort1VOList}<p></td> --%>
+<!-- 1.使用jsp:useBean創建Service實體 -->
+<jsp:useBean id="pSort1Svc" scope="page" class="com.p_sort1.model.PSort1Service" />
+<!-- 2.使用Service實體的方法計算 返回的實體自己的JDBC方法-->
+<c:set var="sort1VOList" scope="page" value="${pSort1Svc.findSort1VOByproductId(productVO.sort2Id)}" />
+															<td>
+<!-- 3.看不到實體不知道抓去哪裡? 改寫VO的Tostring方法,慢慢嘗試,了解輸出的格式(類似JSON)-->
+<c:if test="${sort1VOList.size() !=0 }">
+<c:forEach var="sort1VO" items="${sort1VOList}">
+															
+<%-- <c:if test="${sort2VO.sort1VOList.get(0).sort1Name != null}"> --%>
+															<span>${sort1VO.sort1Name}&nbsp;&nbsp;</span>
+</c:forEach>															
+<%-- </c:if>		 --%>
+<%-- <c:if test="${sort2VO.sort1VOList.get(1)  != null}"> --%>
+<%-- 															<p>${sort2VO.sort1VOList.get(1).sort1Name}<p>	 --%>
+<%-- </c:if>	 --%>
+</c:if> 															
+															</td>
+															<td>${sort2VO.sort2Name}</td>
+															<td>${productVO.amount}</td>
+															<td>${productVO.price}元</td>
+														
+															<td>
+<c:choose>
+<c:when test="${productVO.status == 0}">																
+															未上架
+</c:when>
+<c:when test="${productVO.status == 1}">																
+															一般商品上架
+</c:when>	
+<c:when test="${productVO.status == 2}">																
+															一般與團購上架
+</c:when>														
+</c:choose>															
+															<form>
+																<select class="custom-select custom-select-sm"
+																		style="width: 70%" id="inlineFormCustomSelect">
+<!-- 															<option selected> Choose...</option> -->
+																<option value="0">未上架</option>
+																<option value="1">一般商品上架</option>
+																<option value="3">一般與團購上架</option>
+																</select>
+																	<div class="col-auto my-1">
+																		<button type="submit" class="btn btn-primary btn-sm">提交</button>
+																	</div>
+															</form>
+															</td>
+															<td>未推薦
 																<form >
 																	<select class="custom-select custom-select-sm"
-																		style="width: 80%" id="inlineFormCustomSelect">
-																		<option selected>Choose...</option>
-																		<option value="1">One</option>
-																		<option value="2">Two</option>
-																		<option value="3">Three</option>
+																		style="width: 70%" id="inlineFormCustomSelect">
+<!-- 																	<option selected>Choose...</option> -->
+																		<option value="1">未推薦</option>
+																		<option value="2">上架推薦</option>
 																	</select>
 																	<div class="col-auto my-1">
-																		<button type="submit" class="btn btn-primary btn-sm">Submit</button>
+																		<button type="submit" class="btn btn-primary btn-sm">提交</button>
 																	</div>
 																</form>
 															</td>
-															<td class="list2">未推薦
-																<form >
-																	<select class="custom-select custom-select-sm"
-																		style="width: 80%" id="inlineFormCustomSelect">
-																		<option selected>Choose...</option>
-																		<option value="1">One</option>
-																		<option value="2">Two</option>
-																		<option value="3">Three</option>
-																	</select>
-																	<div class="col-auto my-1">
-																		<button type="submit" class="btn btn-primary btn-sm">Submit</button>
-																	</div>
-																</form>
-															</td>
-														</tr>
+															<td><button type="submit" class="btn btn-danger btn-sm">修改</button></td>
+											</c:forEach>	
+													
 															</tbody>
-															
-															
-															
-															
 														</table>
 													</div>
 												</div>

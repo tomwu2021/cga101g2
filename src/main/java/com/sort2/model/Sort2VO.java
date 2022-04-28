@@ -10,15 +10,14 @@ public class Sort2VO implements java.io.Serializable{
 	private  Integer sort2Id;
 	private  String sort2Name;
 	
-	private List<Sort1VO> Sort1VOList;
-
+	private List<Sort1VO> sort1VOList;
 
 	public List<Sort1VO> getSort1VOList() {
-		return Sort1VOList;
+		return sort1VOList;
 	}
 
 	public void setSort1VOList(List<Sort1VO> sort1voList) {
-		Sort1VOList = sort1voList;
+		sort1VOList = sort1voList;
 	}
 
 	public Sort2VO() {
@@ -43,6 +42,11 @@ public class Sort2VO implements java.io.Serializable{
 	}
 	public void setSort2Name(String sort2Name) {
 		this.sort2Name = sort2Name;
+	}
+
+	@Override
+	public String toString() {
+		return "Sort2VO [sort2Id=" + sort2Id + ", sort2Name=" + sort2Name + ", sort1VOList=" + sort1VOList + "]";
 	}
 
 

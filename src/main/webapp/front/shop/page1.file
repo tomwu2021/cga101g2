@@ -36,4 +36,4 @@
   <b><font color=red>第<%=whichPage%>/<%=pageNumber%>頁</font></b>
 <%}%>
 
-<b><font color=red><%=rowNumber%></font></b>
+<b><font color=red>總共<%=rowNumber%>筆</font></b>

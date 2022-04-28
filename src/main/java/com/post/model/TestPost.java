@@ -23,16 +23,11 @@ public class TestPost {
 		
 		//新增
 //		PostVO postVO1 = new PostVO();
-//		postVO1.setMemberId(5);
-//		postVO1.setContent("貼文內容測試1");
-//		postVO1.setLikeCount(100);
-//		postVO1.setStatus(0);
-//		postVO1.setAuthority(1);
-//		
+//		postVO1.setMemberId(6);
+//		postVO1.setContent("貼文內容測試0428");
 //		dao.insert(postVO1);
 //		System.out.println(postVO1);
 		
-	
 		//修改
 //		PostVO postVO2 = new PostVO();
 //		
@@ -55,23 +50,23 @@ public class TestPost {
 //		System.out.print(postVO3.getUpdateTime());	
 		
 		//查看個人頁面（個人貼文）
-//		for(PostVO p1: dao.selectPost(5)) {
-//			System.out.println(p1);
-//		}
+		for(PostVO p1: dao.selectPost(1)) {
+			System.out.println(p1);
+		}
 		
 		//查看熱門貼文
-		List<PostVO> list = dao.selectHotPost();
-		for(PostVO vo1: list) {
-			System.out.print(vo1.getPostId()+ ",");
-			System.out.print(vo1.getMemberId()+ ",");
-			System.out.print(vo1.getContent()+ ",");
-			System.out.print(vo1.getLikeCount()+ ",");
-			System.out.print(vo1.getStatus()+ ",");
-			System.out.print(vo1.getAuthority()+ ",");
-			System.out.print(vo1.getCreateTime()+ ",");
-			System.out.print(vo1.getUpdateTime());
-			System.out.println();
-		}
+//		List<PostVO> list = dao.selectHotPost();
+//		for(PostVO vo1: list) {
+//			System.out.print(vo1.getPostId()+ ",");
+//			System.out.print(vo1.getMemberId()+ ",");
+//			System.out.print(vo1.getContent()+ ",");
+//			System.out.print(vo1.getLikeCount()+ ",");
+//			System.out.print(vo1.getStatus()+ ",");
+//			System.out.print(vo1.getAuthority()+ ",");
+//			System.out.print(vo1.getCreateTime()+ ",");
+//			System.out.print(vo1.getUpdateTime());
+//			System.out.println();
+//		}
 	}
 
 }

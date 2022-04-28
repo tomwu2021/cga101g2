@@ -5,13 +5,14 @@ import java.util.List;
 public class GroupBuyerService {
 
 	private GroupBuyerDAO_Interface dao;
-	
+
 	public GroupBuyerService() {
-		dao=new GroupBuyerJDBCDAO();
+		dao = new GroupBuyerJDBCDAO();
 	}
-	
-	public GroupBuyerVO addGroupBuyer(Integer groupOrderId,Integer memberId,Integer productAmount,String phone,String address,String recipients) {
-		GroupBuyerVO groupBuyerVO=new GroupBuyerVO();
+
+	public GroupBuyerVO addGroupBuyer(Integer groupOrderId, Integer memberId, Integer productAmount, String phone,
+			String address, String recipients) {
+		GroupBuyerVO groupBuyerVO = new GroupBuyerVO();
 		groupBuyerVO.setGroupOrderId(groupOrderId);
 		groupBuyerVO.setRecipients(recipients);
 		groupBuyerVO.setPhone(phone);
@@ -21,30 +22,36 @@ public class GroupBuyerService {
 		dao.insert(groupBuyerVO);
 		return groupBuyerVO;
 	}
-	public GroupBuyerVO updateGroupBuyer(Integer groupOrderId,Integer memberId,String phone,String address,String recipients) {
-		GroupBuyerVO groupBuyerVO=new GroupBuyerVO();
+
+	public GroupBuyerVO updateGroupBuyer(Integer groupOrderId, Integer memberId, String phone, String address,
+			String recipients) {
+		GroupBuyerVO groupBuyerVO = new GroupBuyerVO();
 		groupBuyerVO.setGroupOrderId(groupOrderId);
 		groupBuyerVO.setRecipients(recipients);
 		groupBuyerVO.setPhone(phone);
 		groupBuyerVO.setAddress(address);
 		groupBuyerVO.setMemberId(memberId);
-		dao.insert(groupBuyerVO);
-		return groupBuyerVO;
+		return dao.update(groupBuyerVO);
+//		return groupBuyerVO;
 	}
-	
+
 	public List<GroupBuyerVO> getAll() {
 		return dao.getAll();
 	}
-	
+
 	public List<GroupBuyerVO> getAllByMemberId(Integer id) {
 		return dao.getAllByMemberId(id);
 	}
-	
+
 	public List<GroupBuyerVO> getAllByGroupOrderId(Integer id) {
 		return dao.getAllByGroupOrderId(id);
 	}
-	
-	public List<GroupBuyerVO> delete(Integer groupOrderId, Integer memberId) {
-		return dao.deleteByPK(groupOrderId, memberId);
+
+	public void delete(Integer groupOrderId, Integer memberId) {
+		dao.deleteByPK(groupOrderId, memberId);
+	}
+
+	public GroupBuyerVO selectOrderDetail(Integer groupOrderId, Integer memberId) {
+		return dao.selectByPK(groupOrderId, memberId);
 	}
 }

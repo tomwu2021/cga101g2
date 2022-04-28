@@ -166,18 +166,15 @@ public class GroupBuyerJDBCDAO implements GroupBuyerDAO_Interface {
 //		}
 //		return groupBuyerList;
 //	}
-	
-	
+
 	@Override
 	public List<GroupBuyerVO> getAllByMemberId(Integer id) {
 		// TODO Auto-generated method stub
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String getAllByGroupOrderIdSql = "select member_id, product_amount,p.product_id,final_price,o.status,p.product_name "
-				+ "from group_buyer b "
-				+ "join group_order o on (b.group_order_id=o.group_order_id) "
-				+ "join product p on(p.product_id=o.product_id) "
-				+ "where member_id=?";
+		String getAllByGroupOrderIdSql = "select member_id,b.group_order_id,product_amount,p.product_id,final_price,o.status,p.product_name "
+				+ "from group_buyer b " + "join group_order o on (b.group_order_id=o.group_order_id) "
+				+ "join product p on(p.product_id=o.product_id) " + "where member_id=?";
 		List<GroupBuyerVO> groupBuyerList = new ArrayList<GroupBuyerVO>();
 		GroupBuyerVO groupBuyerVO = null;
 		try (Connection con = JDBCConnection.getRDSConnection()) {
@@ -187,12 +184,14 @@ public class GroupBuyerJDBCDAO implements GroupBuyerDAO_Interface {
 			while (rs.next()) {
 				groupBuyerVO = new GroupBuyerVO();
 				groupBuyerVO.setMemberId(rs.getInt("member_id"));
+				groupBuyerVO.setGroupOrderId(rs.getInt("group_order_id"));
 				groupBuyerVO.setProductAmount(rs.getInt("product_amount"));
-				GroupOrderVO groupOrderVO=new GroupOrderVO();
+				GroupOrderVO groupOrderVO = new GroupOrderVO();
 				groupOrderVO.setProductId(rs.getInt("product_id"));
-				groupOrderVO.setFinalPrice(Integer.valueOf((int) ((int)(rs.getInt("final_price"))*0.9*groupBuyerVO.getProductAmount())));
+				groupOrderVO.setFinalPrice(Integer
+						.valueOf((int) ((int) (rs.getInt("final_price")) * 0.9 * groupBuyerVO.getProductAmount())));
 				groupOrderVO.setStatus(rs.getInt("status"));
-				ProductVO productVO=new ProductVO();
+				ProductVO productVO = new ProductVO();
 				productVO.setProductName(rs.getString("product_name"));
 				groupBuyerVO.setGroupOrderVO(groupOrderVO);
 				groupBuyerVO.setProductVO(productVO);
@@ -236,7 +235,7 @@ public class GroupBuyerJDBCDAO implements GroupBuyerDAO_Interface {
 	}
 
 	@Override
-	public List<GroupBuyerVO> deleteByPK(Integer groupOrderId, Integer memberId) {
+	public void deleteByPK(Integer groupOrderId, Integer memberId) {
 		// TODO Auto-generated method stub
 		PreparedStatement ps = null;
 		String deleteByPKSql = "DELETE FROM group_buyer WHERE group_order_id=? and member_id=?";
@@ -248,7 +247,33 @@ public class GroupBuyerJDBCDAO implements GroupBuyerDAO_Interface {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return null;
 	}
 
+	@Override
+	public GroupBuyerVO selectByPK(Integer groupOrderId, Integer memberId) {
+		// TODO Auto-generated method stub
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String getAllByGroupOrderIdSql = "select group_order_id, member_id, product_amount, recipient, phone, address from group_buyer "
+				+ "where group_order_id=? and member_id=?;";
+		GroupBuyerVO groupBuyerVO = null;
+		try (Connection con = JDBCConnection.getRDSConnection()) {
+			ps = con.prepareStatement(getAllByGroupOrderIdSql);
+			ps.setInt(1, groupOrderId);
+			ps.setInt(2, memberId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				groupBuyerVO = new GroupBuyerVO();
+				groupBuyerVO.setGroupOrderId(rs.getInt("group_order_id"));
+				groupBuyerVO.setMemberId(rs.getInt("member_id"));
+				groupBuyerVO.setAddress(rs.getString("address"));
+				groupBuyerVO.setPhone(rs.getString("phone"));
+				groupBuyerVO.setProductAmount(rs.getInt("product_amount"));
+				groupBuyerVO.setRecipients(rs.getString("recipient"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return groupBuyerVO;
+	}
 }
