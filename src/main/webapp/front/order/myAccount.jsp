@@ -1,18 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<html class="no-js" lang="zh-Hans-TW">
-
+<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <!-- include <head></head> -->
-<jsp:include page="./layout/head.jsp" />
 
-<!-- body start -->
-<body>
+<!--services img area-->
+<%@ include file="/front/layout/head.jsp"%>
+<!-- include  common JS-->
 
-	<!-- include  common JS-->
-	<jsp:include page="./layout/commonJS.jsp" />
-
-	<!-- include  header -->
-	<jsp:include page="./layout/header.jsp" />
-
+<!-- include  header -->
+<%@ include file="/front/layout/header.jsp"%>
 
 	<!-- 主要內容 start -->
 	<!--breadcrumbs area start-->
@@ -21,16 +15,16 @@
         <div class="container">
             <div class="account_dashboard">
                 <div class="row">
-                    <div class="col-sm-12 col-md-3 col-lg-3">
+                    <div class="col-sm-12 col-md-2 col-lg-2">
                         <!-- Nav tabs -->
                         <div class="dashboard_tab_button">
                             <ul role="tablist" class="nav flex-column dashboard-list">
-                                <li><a href="#orders" data-toggle="tab" class="nav-link active">Orders</a></li>
-                                <li> <a href="#groupOrder" data-toggle="tab" class="nav-link">Group Orders</a></li>
+                                <li><a href="#orders" data-toggle="tab" class="nav-link active" style="text-align: center;">Orders</a></li>
+                                <li> <a href="#groupOrder" data-toggle="tab" class="nav-link" style="text-align: center;">Group Orders</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-9 col-lg-9">
+                    <div class="col-sm-12 col-md-10 col-lg-10">
                         <!-- Tab panes -->
                         <div class="tab-content dashboard_content">
                             <div class="tab-pane fade show active" id="orders">
@@ -74,12 +68,13 @@
     </section>
 
 	<!-- 主要內容 end -->
-
+   <%@ include file="/front/layout/commonJS.jsp"%>
+<%@ include file="/front/layout/commonCSS.jsp"%>
 	<!-- include  footer -->
-	<jsp:include page="./layout/footer.jsp" />
+	<%@include file="/front/layout/footer.jsp"%>
 
 	<!-- 額外添加JS start -->
-	<script src="../assets/js/myAccount.js"></script>
+	<script src="<%=request.getContextPath()%>/assets/js/myAccount.js"></script>
 
 	<!-- 額外添加JS end -->
 
