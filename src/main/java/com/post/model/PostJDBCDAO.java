@@ -17,39 +17,39 @@ public class PostJDBCDAO implements PostDAO_interface {
 	
 	@Override
 	public PostVO insert(PostVO postVO) {
-		con = JDBCConnection.getRDSConnection();
-		PostVO postVO2 = insert(postVO, con);
+		PostVO postVO2 =null;
 		try {
+		con = JDBCConnection.getRDSConnection();
+		postVO2 = insert(postVO, con);
+		
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			throw new RuntimeException("A database error occured. "+ e.getMessage());
+		} 
 		return postVO2;
 	}
 	
-	public PostVO insert(PostVO postVO, Connection con) {
+	public PostVO insert(PostVO postVO, Connection con) throws SQLException {
 		final String INSERT ="insert into post (member_id, content, like_count, status, authority) values (?, ?, ?, ?, ? ) ";
 		
 		if (con != null) {
-			try {
 				PreparedStatement pstmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 				pstmt.setInt(1, postVO.getMemberId());
 				pstmt.setString(2, postVO.getContent());
-				pstmt.setInt(3, postVO.getLikeCount());
-				pstmt.setInt(4, postVO.getStatus());
-				pstmt.setInt(5, postVO.getAuthority());
+				pstmt.setInt(3, 0);
+				pstmt.setInt(4, 0);
+				pstmt.setInt(5, 0);
 				pstmt.executeUpdate();
 				
 				ResultSet rs = pstmt.getGeneratedKeys();
 				if (rs.next()) {
 					postVO.setPostId(rs.getInt(1));
 				}
-				return postVO;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+				rs.close();
+				pstmt.close();
 		}
-		return null;
+				return postVO;
+			
 	}
 
 	@Override
@@ -66,8 +66,8 @@ public class PostJDBCDAO implements PostDAO_interface {
 		try {
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} 
 		return postVO2;
 	}
 	
@@ -84,9 +84,9 @@ public class PostJDBCDAO implements PostDAO_interface {
 				
 				pstmt.executeUpdate();
 				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			}catch (SQLException e) {
+				throw new RuntimeException("A database error occured. " + e.getMessage());
+			} 
 		}
 		return null;
 	}
@@ -102,7 +102,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			
-			while(rs.next()) {
+			if(rs.next()) {
 				PostVO postVO = new PostVO();
 				postVO.setPostId(rs.getInt("post_id"));
 				postVO.setMemberId(rs.getInt("member_id"));
@@ -111,14 +111,13 @@ public class PostJDBCDAO implements PostDAO_interface {
 				postVO.setStatus(rs.getInt("status"));
 				postVO.setAuthority(rs.getInt("authority"));
 				postVO.setCreateTime(rs.getDate("create_time"));
-				postVO.setUpdateTime(rs.getDate("update_time"));
-				
+				postVO.setUpdateTime(rs.getDate("update_time"));	
 				return postVO;
 			}
 				
 			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+				throw new RuntimeException("A database error occured. " + e.getMessage());
+			} 
 			return null;
 	}
 
@@ -148,36 +147,42 @@ public class PostJDBCDAO implements PostDAO_interface {
 			}	
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} 
 		return list;
 	}
 
 	@Override
-	public List<PostVO> selectPost(Integer id) {
-		final String SELECT_POST = "select post_id from post where member_id =? order by create_time desc ";
+	public List<PostVO> selectPost(Integer memberid) {
+		final String SELECT_POST = "select * from post where member_id =? order by create_time desc ";
 		
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(SELECT_POST);) {
 
-			pstmt.setInt(1, id);
+			pstmt.setInt(1, memberid);
+			
+
 			ResultSet rs = pstmt.executeQuery();
 			
 			List< PostVO> list = new ArrayList<PostVO>();
-			
 			
 			while (rs.next()) {
 				PostVO postVO = new PostVO();
 				postVO.setPostId(rs.getInt("post_id"));
 				postVO.setMemberId(rs.getInt("member_id"));
-
+				postVO.setContent(rs.getString("content"));
+				postVO.setLikeCount(rs.getInt("like_count"));
+				postVO.setStatus(rs.getInt("status"));
+				postVO.setAuthority(rs.getInt("authority"));
+				postVO.setCreateTime(rs.getDate("create_time"));
+				postVO.setUpdateTime(rs.getDate("update_time"));
+			
 				list.add(postVO);
 			}
 			return list;
-		} catch (SQLException e) {
-			e.printStackTrace();
+		}catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}
-		return null;
 	}
 
 	@Override
@@ -207,11 +212,9 @@ public class PostJDBCDAO implements PostDAO_interface {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} 
 		return list;
 	
 	}
-
-	
 }
