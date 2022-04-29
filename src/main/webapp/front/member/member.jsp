@@ -80,23 +80,18 @@
                               <input type="submit" value="儲存" class="btn btn-primary">
                             </div>
                           </div>
+                    </form>
                             <!--! 提交按鈕結束 -->
                       </div>
                        <!-- !看會員提交圖片的css css/style.default.css 4195-->
                       <div class="col-lg-6 mb-5"> 
-                       <div class="head_div">
-                         <div class="head_div imgdiv">
-                           <img src="https://picsum.photos/id/237/200/300">
-                         </div>
-                         <label class="btn btn-primary">
-                          <input id="upload_img" style="display:none;" type="file">
-                          <i class="fa fa-photo"></i> 上傳圖片
-                          </label>
-                         <small class="form-text text-muted ml-3">檔案大小:最大 1 MB</small>
-                         <small class="form-text text-muted ml-3">檔案限制: .JPEG, .PNG</small>
-                       </div>
+                         <div class="form-group row">
+                            <label class="col-md-3 form-control-label">Email</label>
+                            <div class="col-md-9">
+                              <input id="inputHorizontalSuccess" type="email" placeholder="Email Address" class="form-control form-control-success"><small class="form-text text-muted ml-3">Example help text that remains unchanged.</small>
+                            </div>
+                          </div>
                       </div>
-                    </form>
                     </div>
                   </div>
                        <!--! Horizontal Form結束-->

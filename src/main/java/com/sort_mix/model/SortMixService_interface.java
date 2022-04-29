@@ -16,7 +16,7 @@ public interface SortMixService_interface {
 	List<Sort1VO> getAll();
 	
 	//新增獲得所有Sort2VO包含相對應的Sort1List
-	List<Sort2VO> getAllSort2VOandSort1List();
+	List<Sort2VO> getAllSort2VOsandSort1List();
 	
 	//查詢某個主分類(包含對應的子分類)
 	public Sort1VO findAllBySort1Id (Integer sort1Id);

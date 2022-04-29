@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sort_mix.model.SortMixService;
 
-@WebServlet("/shop/getAllSortMixBySort1VO")
-public class getAllSortMixBySort1VO extends HttpServlet {
+@WebServlet("/shop/getSort1VOsAndSort2VOList")
+public class getAllSort1VOsAndSort2VOList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

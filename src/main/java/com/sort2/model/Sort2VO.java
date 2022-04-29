@@ -60,8 +60,4 @@ public class Sort2VO implements java.io.Serializable{
 			 List<Sort1VO> sort1VO = daoSvc.getSort1VOsBySort2Id(sort2Id);
 			return sort1VO;
 		}
-	
-
-
-	
 }

@@ -69,7 +69,8 @@ public class SortMixJDBCDAO implements SortMixDAO_interface {
 				+ "FROM sort1 s1, sort2 s2, sort_mix sm "
 				+ "WHERE s1.sort1_id = sm.sort1_id "
 				+ "AND   s2.sort2_id = sm.sort2_id "
-				+ "AND   s2.sort2_id=? ";
+				+ "AND   s2.sort2_id=? "
+				+ "ORDER BY  s2.sort2_id ";
 		
 		try (Connection con = getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(FIND_STMT)) {

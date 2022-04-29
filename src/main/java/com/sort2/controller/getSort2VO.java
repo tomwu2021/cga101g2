@@ -15,8 +15,8 @@ import com.sort2.model.Sort2Service;
 /**
  * Servlet implementation class getOneSort2VOandSort1VOs
  */
-@WebServlet("/front/shop/getSort2VOListAndSort1VOs")
-public class getSort2VOListAndSort1VOs extends HttpServlet {
+@WebServlet("/front/shop/getSort2VO")
+public class getSort2VO extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

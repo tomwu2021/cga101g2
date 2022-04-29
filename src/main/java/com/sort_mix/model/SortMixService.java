@@ -7,6 +7,8 @@ import com.common.model.MappingTableDto;
 import com.google.gson.Gson;
 import com.sort1.model.Sort1JDBCDAO;
 import com.sort1.model.Sort1VO;
+import com.sort2.model.Sort2JDBCDAO;
+import com.sort2.model.Sort2Service;
 import com.sort2.model.Sort2VO;
 
 
@@ -33,6 +35,8 @@ public class SortMixService implements SortMixService_interface{
 		return false;
 	}
 
+	
+	//主分類們>子分類們
 	@Override
 	public List<Sort1VO> getAll() {
 //		呼叫Sort1service工頭計算筆數	
@@ -58,12 +62,27 @@ public class SortMixService implements SortMixService_interface{
 	     
 		return SortMaxAllList;
 	}
-
 	
+	//子分類們>主分類們
 	@Override
-	public List<Sort2VO> getAllSort2VOandSort1List() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Sort2VO> getAllSort2VOsandSort1List() {
+//		呼叫Sort2計算筆數		
+		Sort2JDBCDAO sort2DBCDAO = new Sort2JDBCDAO();
+		List<Sort2VO> list = new ArrayList<Sort2VO>();
+		list = sort2DBCDAO.getAll();
+		
+//		呼叫中間實現表SortMix工頭計算一對多(某種子類別有多少主類別)	
+		SortMixJDBCDAO sortMixDao = new SortMixJDBCDAO();
+//	     新增集合
+//			SortMaxAllList一個物件裡有多個子分類"集合",
+//			子分類"集合"下有各自的主分類"集合"		
+		ArrayList<Sort2VO> SortMaxAllList = new ArrayList<Sort2VO>();				
+		for (int i =0; i<=list.size()-1 ; i++) {
+			Sort2VO sort2VO= sortMixDao.findSort2VOSort1VOsBySort2Id((list.get(i).getSort2Id()));
+			SortMaxAllList.add(sort2VO);
+		}
+		
+		return SortMaxAllList;
 	}
 
 	public boolean update(MappingTableDto mtd) {
@@ -87,6 +106,6 @@ public class SortMixService implements SortMixService_interface{
 	}
 	
 	
-	
-	
 }
+	
+	
