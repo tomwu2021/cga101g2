@@ -1,16 +1,26 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
-<!-- include <head></head> -->
-<%@ include file="/front/layout/head.jsp"%>
-<!-- body start -->
-<!-- 主要內容 start -->
+<head>
+<title>商品總覽</title>
+<!-- 共用的CSS startr-->
+<%@include file="/front/layout/commonCSS.jsp"%>
+<!-- 共用的CSS end-->
 
+<!-- 額外添加的CSS -->
+<!-- 	路徑舉例 -->
+<%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/back/css/????.css"> --%>
+<!-- 額外添加的CSS -->
+</head>
 <body>
-<!--breadcrumbs area start-->
-<%@ include file="/front/layout/header.jsp"%>
-<!--breadcrumbs area start-->
+	<!-- 共用的header start-->
+	<%@include file="/front/layout/header.jsp"%>
+	<!-- 共用的header end-->
+
+
+	<!--! ========內容======== -->
+	<!--breadcrumbs area start-->
 <div class="breadcrumbs_area">
 	<div class="container">
 		<div class="row">
@@ -274,20 +284,23 @@
 	</div>
 </div>
 <!--product area end-->
-<!--footer area start-->
-<%@ include file="/front/layout/footer.jsp"%>
-<!--footer area end-->
-<!--! <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+	<!--! 內容 結束-->
 
-<!-- 共用js 開始-->
-<%@ include file="/front/layout/commonJS.jsp"%>
-<!--! 共用js 結束-->
 
-<!-- 額外添加js開始 -->
-<script src="../index/js/footer.js"></script>
-<!--! 菜單點集切換用的js-->
-<script src="assets/js/leftnavlink.js"></script>
-<!-- 額外添加js結束 -->
+			<!-- 共通的footer start-->
+			<%@include file="/front/layout/footer.jsp"%>
+			<!-- 共通的footer end-->
+
+
+	<!-- 共用的JS -->
+	<%@include file="/front/layout/commonJS.jsp"%>
+	<!-- 共用的JS -->
+
+	<!-- 額外添加的JS -->
+	<!-- 	路徑舉例 -->
+	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/back/js/?????.js"> --%>
+	<!-- 額外添加的JS -->
 
 </body>
+
 </html>

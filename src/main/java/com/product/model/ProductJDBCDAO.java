@@ -232,11 +232,6 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 					ProductImgVO pImgVO = new ProductImgVO();
 					pImgVO.setProductImgId(rs.getInt("product_img_id"));
 					pImgVO.setProductId(rs.getInt("product_id"));
-					pImgVO.setProductImgUrl(rs.getString("product_img_url"));
-					pImgVO.setFileKey(rs.getString("file_key"));
-					pImgVO.setFileName(rs.getString("file_name"));
-					pImgVO.setSize(rs.getString("size"));
-					pImgVO.setPreviewUrl(rs.getString("preview_url"));
 					set.add(pImgVO);
 				}
 				return set;

@@ -20,12 +20,12 @@ public class TESTSortMixDAO {
 //		}
 //		
 //		
-		Sort2VO sort2 = dao.findAllBySort2Id(12);
-		System.out.println(sort2.getSort2Name());
-		List<Sort1VO> sort1List = sort2.getSort1VOList();
-		for (Sort1VO sort1VO :sort1List) {
-			System.out.println(sort1VO.getSort1Name());
-		}
+//		Sort2VO sort2 = dao.findSort1VOsBySort2Id(12);
+//		System.out.println(sort2.getSort2Name());
+//		List<Sort1VO> sort1List = sort2.getSort1VOList();
+//		for (Sort1VO sort1VO :sort1List) {
+//			System.out.println(sort1VO.getSort1Name());
+//		}
 		
 		// 新增分類組合
 //		SortMixVO sortMixVO1 = new SortMixVO();

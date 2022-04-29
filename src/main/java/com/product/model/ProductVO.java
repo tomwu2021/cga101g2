@@ -2,13 +2,8 @@ package com.product.model;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
 
-import com.product_img.model.ProductImgService;
-import com.product_img.model.ProductImgVO;
-import com.sort1.model.Sort1VO;
-import com.sort2.model.Sort2VO;
-import com.sort_mix.model.SortMixService;
+import com.picture.model.PictureVO;
 
 public class ProductVO implements java.io.Serializable {
 	/**
@@ -30,6 +25,7 @@ public class ProductVO implements java.io.Serializable {
 	private String description;
 	private Integer status;
 	private Integer topStatus;
+	
 
 	public Integer getProductId() {
 		return productId;
@@ -143,11 +139,19 @@ public class ProductVO implements java.io.Serializable {
 //}
 //for join dname from deptno
 //在多方的VO放入一方的SERVICE的GETBYID
-	public List<ProductImgVO> getProducImgtVO() {
-		ProductImgService daoSvc = new ProductImgService();
-		List<ProductImgVO> producImgtVO = daoSvc.getImgsByProductId(productId);
-		return producImgtVO;
+	
+	
+//	改成picV	O
+	public List<PictureVO> getPictureVO() {
+		com.product_img.model.ProductImgService daoSvc = new com.product_img.model.ProductImgService();
+		List<PictureVO> pictureVO = daoSvc.getPicVOsByProductId(productId);
+		return pictureVO;
 	}
-
+	
+//	public List<ProductImgVO> getProducImgtVO() {
+//		ProductImgService daoSvc = new ProductImgService();
+//		List<ProductImgVO> producImgtVO = daoSvc.getImgsByProductId(productId);
+//		return producImgtVO;
+//	}
 
 }

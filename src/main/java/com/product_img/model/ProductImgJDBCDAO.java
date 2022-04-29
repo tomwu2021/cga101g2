@@ -12,21 +12,18 @@ import java.util.List;
 import java.util.Set;
 
 import com.emp.model.EmpVO;
+import com.picture.model.PictureVO;
 import com.product.model.ProductVO;
 
 public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 
 	public ProductImgVO insert(ProductImgVO pImgVO) {
-		String INSERT_STMT = "INSERT INTO product_img(product_id,product_img_url, file_key, file_name, size, preview_url) "
-				+ "VALUES(?,?,?,?,?,?,?)";
+		String INSERT_STMT = "INSERT INTO product_img(product_img_id,product_id) "
+				 			+ "VALUES(?,?)";
 		try (Connection con = getRDSConnection(); PreparedStatement stmt = con.prepareStatement(INSERT_STMT)) {
 
 			stmt.setInt(1, pImgVO.getProductId());
-			stmt.setString(2, pImgVO.getProductImgUrl());
-			stmt.setString(3, pImgVO.getFileKey());
-			stmt.setString(4, pImgVO.getFileName());
-			stmt.setString(5, pImgVO.getSize());
-			stmt.setString(6, pImgVO.getPreviewUrl());
+			stmt.setInt(2, pImgVO.getProductImgId());
 			stmt.execute();
 //			ResultSet rs = stmt.getGeneratedKeys();//獲得自動新增的主鍵
 			int rowCount = stmt.executeUpdate();
@@ -67,9 +64,9 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 	@Override
 	public ProductImgVO getOneById(Integer id) {
 		String GET_ONE_STMT =
-				"SELECT product_img_id,product_id,product_img_url,file_key,file_name,size,preview_url"
-				+ "FROM cga_02.product_img "
-				+ "WHERE product_img_id = ?; ";
+				"SELECT product_img_id,product_id "
+				+ "FROM cga_02.product_img  "
+				+ "WHERE product_img_id = ? ";
 		try (Connection connection = getRDSConnection();
 				PreparedStatement pstmt = connection.prepareStatement(GET_ONE_STMT)) {
 	
@@ -77,14 +74,8 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ProductImgVO pImgVO = new ProductImgVO();
-				ProductImgVO pvo= new ProductImgVO();
-				pvo.setProductImgId(rs.getInt("product_img_id"));
-				pvo.setProductId(rs.getInt("product_id"));
-				pvo.setProductImgUrl(rs.getString("product_img_url"));
-				pvo.setFileKey(rs.getString("file_key"));
-				pvo.setFileName(rs.getString("file_name"));
-				pvo.setSize(rs.getString("size"));
-				pvo.setPreviewUrl(rs.getString("preview_url"));
+				pImgVO.setProductImgId(rs.getInt("product_img_id"));
+				pImgVO.setProductId(rs.getInt("product_id"));
 				return pImgVO;
 			}
 	
@@ -99,9 +90,9 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 	@Override
 	public List<ProductImgVO> getAll() {
 	final String GET_ALL_STMT =
-			"SELECT product_img_id,product_id,product_img_url,file_key,file_name,size,preview_url "
-			+ "FROM product_img "
-			+ "order by product_img_id" ;
+			"SELECT product_img_id,product_id "
+			+ "FROM product_img  "
+			+ "order by product_img_id " ;
 			try (Connection con = getRDSConnection();
 					PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT)) {
 				ResultSet rs = pstmt.executeQuery();
@@ -111,11 +102,6 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 					ProductImgVO pvo= new ProductImgVO();
 					pvo.setProductImgId(rs.getInt("product_img_id"));
 					pvo.setProductId(rs.getInt("product_id"));
-					pvo.setProductImgUrl(rs.getString("product_img_url"));
-					pvo.setFileKey(rs.getString("file_key"));
-					pvo.setFileName(rs.getString("file_name"));
-					pvo.setSize(rs.getString("size"));
-					pvo.setPreviewUrl(rs.getString("preview_url"));
 					
 					list.add(pvo);
 				}
@@ -123,20 +109,22 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. " + se.getMessage());
 			} catch (Exception e) {
+				
 				e.printStackTrace();
 			}
 			return null;		
 	
 	}
 
+	
+	//用產品ID找到產品照片的"集合"
 	@Override
-	public List<ProductImgVO> getImgsByProductId(Integer productId) {
-		
-		final String GET_Imgs_ByPID_STMT = "SELECT product_img_id,product_id,product_img_url,"
-											+ "file_key,file_name,size,preview_url FROM product_img "
-											+ "where product_id = ? "
-											+ "order by product_img_id";
-		List<ProductImgVO> set = new ArrayList<ProductImgVO>();
+	public List<PictureVO> getPicVOsByProductId(Integer productId) {
+
+		final String GET_Imgs_ByPID_STMT = "SELECT * FROM product_img JOIN picture "
+										+ "ON product_img_id = picture_id "
+										+ "WHERE product_id = ?; ";
+		List<PictureVO> list = new ArrayList<PictureVO>();
 		try (Connection con = getRDSConnection(); 
 				PreparedStatement stmt = con.prepareStatement(GET_Imgs_ByPID_STMT)) {
 
@@ -144,24 +132,27 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 			ResultSet rs = stmt.executeQuery();
 	
 			while (rs.next()) {
-				ProductImgVO pvo= new ProductImgVO();
-				pvo.setProductImgId(rs.getInt("product_img_id"));
-				pvo.setProductId(rs.getInt("product_id"));
-				pvo.setProductImgUrl(rs.getString("product_img_url"));
-				pvo.setFileKey(rs.getString("file_key"));
-				pvo.setFileName(rs.getString("file_name"));
-				pvo.setSize(rs.getString("size"));
-				pvo.setPreviewUrl(rs.getString("preview_url"));
-				set.add(pvo); // Store the row in the vector
+				PictureVO pictureVO= new PictureVO();
+				pictureVO.setPictureId(rs.getInt("picture_id"));
+				pictureVO.setUrl(rs.getString("url"));
+				pictureVO.setCreateTime(rs.getTimestamp("upload_time"));
+				pictureVO.setFileKey(rs.getString("file_key"));
+				pictureVO.setFileName(rs.getString("file_name"));
+				pictureVO.setSize(rs.getLong("size"));
+				pictureVO.setPreviewUrl(rs.getString("preview_url"));
+				pictureVO.setPreviewKey(rs.getString("preview_key"));
+				System.out.println("picture_id = " + pictureVO.getPictureId());
+				list.add(pictureVO); // Store the row in the vector
 			}
-//			int rowCount = stmt.executeUpdate();
-//			System.out.println(rowCount + "row(s) delete!");
-			System.out.println("Size = " + set.size());
-			return set;
+			System.out.println("Size = " + list.size());
+			
+			System.out.println("List<PictureVO> getPicVOsByProductId(Integer productId) 執行成功");
+			return list;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+//			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}
 		return null;
 	}

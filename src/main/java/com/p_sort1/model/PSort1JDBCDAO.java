@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sort1.model.Sort1DAO_interface;
 import com.sort1.model.Sort1VO;
 
 public class PSort1JDBCDAO implements PSort1DAO_interface{

@@ -10,7 +10,7 @@
 <%
 ProductService pdSvc = new ProductService();
 List<ProductVO> list = pdSvc.getAll();
-pageContext.setAttribute("pdlist", list);
+pageContext.setAttribute("list", list);
 %>
 <!DOCTYPE html>
 <html>
@@ -45,8 +45,8 @@ pageContext.setAttribute("pdlist", list);
 				</select>
 			</form>
 		</div>
-		<%@ include file="page1.file"%> 
-	
+		
+<%@ include file="page1.file"%> 
 	
 	</div>
 	<!--shop toolbar end-->
@@ -54,18 +54,21 @@ pageContext.setAttribute("pdlist", list);
 		<jsp:useBean id="imgSvc" scope="page"
 			class="com.product_img.model.ProductImgService" />
 		<!--�堆蕭嚙踝蕭foreach����嚙賣�綽蕭========================-->
-		<c:forEach var="productVO" items="${pdlist}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+		<c:forEach var="productVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<div class="col-lg-4 col-md-4 col-sm-6 col-12">
 				<!--嚙賣�嚙踝蕭嚙踝蕭嚙踝蕭嚙賣�迎蕭�綽蕭 -->
 				<article class="single_product">
 					<figure>
 						<div class="product_thumb">
-							<c:if test="${productVO.producImgtVO.size() != 0 }">
-								<a class="primary_img" href="product-details.html"><img
-									src="${productVO.producImgtVO.get(0).productImgUrl}" alt=""></a>
-								<a class="secondary_img" href="product-details.html"><img
-									src="${productVO.producImgtVO.get(1).productImgUrl}" alt=""></a>
-							</c:if>
+							<c:if test="${productVO.pictureVO.size() != 0 }">
+								<a class="primary_img" href="product-details.html">
+								<img src="${productVO.pictureVO.get(0).previewUrl}" alt=""></a>
+							</c:if>	
+<%-- 							<c:if test="${productVO.pictureVO.size() >= 1  && productVO.pictureVO.size()!=0}"> --%>
+							<c:if test="${productVO.pictureVO.size() >= 2  && productVO.pictureVO.size()!=0}">
+								<a class="secondary_img" href="product-details.html">
+								<img src="${productVO.pictureVO.get(1).previewUrl}" alt=""></a>
+							</c:if>	
 							<div class="action_links">
 								<ul>
 									<li class="quick_button"><a href="#" data-toggle="modal"
@@ -81,7 +84,7 @@ pageContext.setAttribute("pdlist", list);
 								<a href="product-details.html"> ${productVO.productName}</a>
 							</h4>
 							<div class="price_box">
-								<span class="current_price">${productVO.price}</span>
+								<span class="current_price">${productVO.price}元</span>
 							</div>
 							<div class="add_to_cart">
 								<a href="cart.html" title="Add to cart">Add to Cart</a>
@@ -93,10 +96,7 @@ pageContext.setAttribute("pdlist", list);
 									quasi possimus</a>
 							</h4>
 							<div class="product_desc">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-									sed do eiusmod tempor incididunt ut labore et dolore magna
-									aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-									ullamco�踝蕭蝷�</p>
+								<p> ${productVO.description}</p>
 							</div>
 							<div class="price_box">
 								<span class="current_price">$145.00</span> <span
@@ -188,14 +188,10 @@ pageContext.setAttribute("pdlist", list);
 										<h2>}</h2>
 									</div>
 									<div class="modal_price mb-10">
-										<span class="new_price"></span> <span class="old_price">$78.99</span>
+										<span class="new_price">${productVO.price}元</span>
 									</div>
 									<div class="modal_description mb-15">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-											elit. Mollitia iste laborum ad impedit pariatur esse optio
-											tempora sint ullam autem deleniti nam in quos qui nemo ipsum
-											numquam, reiciendis maiores quidem aperiam, rerum vel
-											recusandae</p>
+										<p> >${productVO.description}</p>
 									</div>
 									<div class="variants_selects">
 										<div class="modal_add_to_cart">

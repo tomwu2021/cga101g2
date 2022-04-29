@@ -60,6 +60,12 @@ public class SortMixService implements SortMixService_interface{
 	}
 
 	
+	@Override
+	public List<Sort2VO> getAllSort2VOandSort1List() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public boolean update(MappingTableDto mtd) {
 		// TODO Auto-generated method stub
 		return false;
@@ -71,7 +77,16 @@ public class SortMixService implements SortMixService_interface{
 	}
 
 	@Override
-	public Sort2VO findAllBySort2Id(Integer sort2Id) {
-		return dao.findAllBySort2Id(sort2Id);
+	public Sort2VO findSort2VOSort1VOsBySort2Id(Integer sort2Id) {
+		return dao.findSort2VOSort1VOsBySort2Id(sort2Id);
 	}
+
+	@Override
+	public List<Sort1VO> getSort1VOsBySort2Id(Integer sort2Id) {
+		return dao.getSort1VOsBySort2Id(sort2Id);
+	}
+	
+	
+	
+	
 }

@@ -12,9 +12,9 @@ public interface SortMixDAO_interface extends JDBCDAO_Interface<SortMixVO>{
 	public Sort1VO findAllBySort1Id (Integer sort1Id);
 	
 	//查詢某個子分類(包含對應的主分類)
-	public Sort2VO findAllBySort2Id (Integer sort2Id);
+	public Sort2VO findSort2VOSort1VOsBySort2Id (Integer sort2Id);
 	
-//	//用子分類ID sort1ID 找 Sort1VO
-//	public Sort1VO findSort1VOBySort2Id (Integer sort2Id);
+	//用子分類ID sort2ID 找 Sort1VO
+	public List<Sort1VO> getSort1VOsBySort2Id (Integer sort2Id);
 	
 }

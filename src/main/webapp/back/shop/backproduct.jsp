@@ -106,18 +106,27 @@ pageContext.setAttribute("list", list);
 <c:forEach var="productVO" items="${list}">
 															<tr class="text-center">
 															<td>${productVO.productId}</td>
+<c:if test="${productVO.pictureVO.size() != 0 }">															
 															<td style="width: 6%;"><img
-																src="https://dummyimage.com/600x400/000000/202a99&text=第1-1張"
+																src="${productVO.pictureVO.get(0).previewUrl}"
 																alt="..." class="img-thumbnail"></td>
+</c:if>																
+<!-- 此段是防止沒有照片所以跑版的判斷 開始-->
+<c:if test="${productVO.pictureVO.size() == 0 }">															
+															<td style="width: 6%;"><img
+																src="https://fakeimg.pl/350x200/ff0000/000"
+																alt="..." class="img-thumbnail"></td>
+</c:if>
+<!-- 此段是防止沒有照片所以跑版的判斷	 結束-->
 															<td>${productVO.productName}</td>
 <%-- 															<td><p>${sort2VO.sort1VOList}<p></td> --%>
 <!-- 1.使用jsp:useBean創建Service實體 -->
 <jsp:useBean id="pSort1Svc" scope="page" class="com.p_sort1.model.PSort1Service" />
 <!-- 2.使用Service實體的方法計算 返回的實體自己的JDBC方法-->
-<c:set var="sort1VOList" scope="page" value="${pSort1Svc.findSort1VOByproductId(productVO.sort2Id)}" />
+<c:set var="sort1VOList" scope="page" value="${pSort1Svc.findSort1VOByproductId(productVO.productId)}" />
 															<td>
 <!-- 3.看不到實體不知道抓去哪裡? 改寫VO的Tostring方法,慢慢嘗試,了解輸出的格式(類似JSON)-->
-<c:if test="${sort1VOList.size() !=0 }">
+<c:if test="${pSort1VOList.size() !=0 }">
 <c:forEach var="sort1VO" items="${sort1VOList}">
 															
 <%-- <c:if test="${sort2VO.sort1VOList.get(0).sort1Name != null}"> --%>
@@ -127,8 +136,12 @@ pageContext.setAttribute("list", list);
 <%-- <c:if test="${sort2VO.sort1VOList.get(1)  != null}"> --%>
 <%-- 															<p>${sort2VO.sort1VOList.get(1).sort1Name}<p>	 --%>
 <%-- </c:if>	 --%>
-</c:if> 															
+</c:if> 		
 															</td>
+<!-- 1.使用jsp:useBean創建Service實體 -->
+<jsp:useBean id="sort2Svc" scope="page" class="com.sort2.model.Sort2Service" />
+<!-- 2.使用Service實體的方法計算 返回的實體自己的JDBC方法-->
+<c:set var="sort2VO" scope="page" value="${sort2Svc.getOneById(productVO.sort2Id)}" />
 															<td>${sort2VO.sort2Name}</td>
 															<td>${productVO.amount}</td>
 															<td>${productVO.price}元</td>

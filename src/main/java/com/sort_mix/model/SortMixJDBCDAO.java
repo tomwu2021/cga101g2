@@ -61,7 +61,7 @@ public class SortMixJDBCDAO implements SortMixDAO_interface {
 
 	//查詢某個子分類(包含對應的主分類) 給商品使用對應
 	@Override
-	public Sort2VO findAllBySort2Id(Integer sort2Id) {
+	public Sort2VO findSort2VOSort1VOsBySort2Id(Integer sort2Id) {
 		Sort2VO sort2VO = new Sort2VO();
 		List<Sort1VO> sort1VOList = new ArrayList<Sort1VO>();
 		
@@ -175,6 +175,35 @@ public class SortMixJDBCDAO implements SortMixDAO_interface {
 				list.add(mtd); // Store the row in the list
 			}
 			return list;
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Sort1VO> getSort1VOsBySort2Id(Integer sort2Id) {
+		List<Sort1VO> sort1VOList = new ArrayList<Sort1VO>();
+		String FIND_STMT= "SELECT * "
+				+ "FROM sort1 s1, sort2 s2, sort_mix sm "
+				+ "WHERE s1.sort1_id = sm.sort1_id "
+				+ "AND   s2.sort2_id = sm.sort2_id "
+				+ "AND   s2.sort2_id=? ";
+		
+		try (Connection con = getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(FIND_STMT)) {
+			pstmt.setInt(1, sort2Id);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Sort1VO sort1VO = new Sort1VO();
+				sort1VO.setSort1Id(rs.getInt("sort1_id"));
+				sort1VO.setSort1Name(rs.getString("sort1_name"));
+				sort1VOList.add(sort1VO);
+		}	
+			System.out.println("List<Sort1VO> findSort1VOBySort2Id(Integer sort2Id)成功執行");
+			return sort1VOList;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {

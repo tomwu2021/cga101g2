@@ -26,7 +26,7 @@ public class getAllSort1 extends HttpServlet {
 		 * 此段只要取得公開數據所以不需要流程控制
 		 */
 		Sort1Service sort1Service = new Sort1Service();
-		writePojo2Json(response, sort1Service.findAll());
+		writePojo2Json(response, sort1Service.getAll());
 //		空虛的丟包給JSON輸出就結束了講義P123
 	}
 

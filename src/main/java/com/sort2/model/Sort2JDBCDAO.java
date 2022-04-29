@@ -80,8 +80,22 @@ public class Sort2JDBCDAO implements Sort2DAO_interface {
 	}
 
 	@Override
-	public Sort2VO getOneById(Integer id) {
-		// TODO Auto-generated method stub
+	public Sort2VO getOneById(Integer sort2Id) {
+		final String sql = "select * from sort2 where sort2_id = ?";
+		try (Connection conn =  getRDSConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, sort2Id);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					Sort2VO sort2VO = new Sort2VO();
+					sort2VO.setSort2Id(rs.getInt("sort2_id"));
+					sort2VO.setSort2Name(rs.getString("sort2_Name"));
+					return sort2VO;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

@@ -9,8 +9,7 @@ public class Sort2VO implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	private  Integer sort2Id;
 	private  String sort2Name;
-	
-	private List<Sort1VO> sort1VOList;
+	public List<Sort1VO> sort1VOList;
 
 	public List<Sort1VO> getSort1VOList() {
 		return sort1VOList;
@@ -44,10 +43,24 @@ public class Sort2VO implements java.io.Serializable{
 		this.sort2Name = sort2Name;
 	}
 
-	@Override
-	public String toString() {
-		return "Sort2VO [sort2Id=" + sort2Id + ", sort2Name=" + sort2Name + ", sort1VOList=" + sort1VOList + "]";
-	}
+	
+	//for join dname from deptno
+	//public com.dept.model.DeptVO getDeptVO() {
+	//com.dept.model.DeptService deptSvc = new com.dept.model.DeptService();
+	//com.dept.model.DeptVO deptVO = deptSvc.getOneDept(deptno);
+	//return deptVO;
+	//}
+	//for join dname from deptno
+	//在多方的VO放入一方的SERVICE的GETBYID
+		
+		
+//		搜尋Sort2ID時 透過 sortmix 獲得相對應的Sort1VO
+		public List<Sort1VO> getSort1VO() {
+			com.sort_mix.model.SortMixService daoSvc = new com.sort_mix.model.SortMixService();
+			 List<Sort1VO> sort1VO = daoSvc.getSort1VOsBySort2Id(sort2Id);
+			return sort1VO;
+		}
+	
 
 
 	
