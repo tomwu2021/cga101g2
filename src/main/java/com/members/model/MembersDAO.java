@@ -497,7 +497,8 @@ public class MembersDAO implements MembersDAO_interface {
 // select 情境十三：查詢登入時帳號和密碼 ------------------------------------------------------------------------------
 	public MembersVO selectForLogin(String name, String password, Connection con) {
 
-		final String SELECT_FOR_LOGIN = "select member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time from members where account = ? and password = ?;";
+		final String SELECT_FOR_LOGIN = "SELECT member_id, account, password, name, address, phone, rank_id, ewallet_amount, ewallet_password, bonus_amount, status, create_time from members\r\n"
+				+ "where account = ? and password = ?;";
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(SELECT_FOR_LOGIN);
@@ -509,11 +510,13 @@ public class MembersDAO implements MembersDAO_interface {
 					MembersVO newMember = new MembersVO();
 					newMember.setMemberId(rs.getInt("member_id"));
 					newMember.setAccount(rs.getString("account"));
+					newMember.setPassword(rs.getString("password"));
 					newMember.setName(rs.getString("name"));
 					newMember.setAddress(rs.getString("address"));
 					newMember.setPhone(rs.getString("phone"));
 					newMember.setRankId(rs.getInt("rank_id"));
 					newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
+					newMember.seteWalletPassword(rs.getString("ewallet_password"));
 					newMember.setBonusAmount(rs.getInt("bonus_amount"));
 					newMember.setStatus(rs.getInt("status"));
 					newMember.setCreateTime(rs.getTimestamp("create_time"));

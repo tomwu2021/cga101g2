@@ -1,5 +1,6 @@
-package com.group_buyer.controller;
-import static com.util.GSONUtil.*;
+package com.allOrders.controller;
+
+import static com.util.GSONUtil.writePojo2Json;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,9 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.group_buyer.model.GroupBuyerService;
 import com.group_buyer.model.GroupBuyerVO;
+import com.orders.model.OrdersService;
+import com.orders.model.OrdersVO;
 
-@WebServlet("/member/groupOrders")
-public class GetMemberGroupOrder extends HttpServlet{
+@WebServlet("/member/orders")
+public class GetMemberOrder extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,16 +27,10 @@ public class GetMemberGroupOrder extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		
 		Integer memberId = Integer.parseInt(req.getParameter("memberId"));
-		GroupBuyerService groupBuyerService=new GroupBuyerService();
-		List<GroupBuyerVO> getOneGroupOrder=groupBuyerService.getAllByMemberId(memberId);
-		writePojo2Json(res, getOneGroupOrder);
-//		 Gson gson = new Gson();
-//	     res.setContentType(JSON_MIME_TYPE + "charset=UTF-8");
-//	     try (PrintWriter pw = res.getWriter()) {
-//				pw.print(gson.toJson(getOneGroupOrder));
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
+		OrdersService ordersService=new OrdersService();
+		List<OrdersVO> getOnesOrder=ordersService.getAllByMemberId(memberId);
+		writePojo2Json(res, getOnesOrder);
+
 	}
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res)

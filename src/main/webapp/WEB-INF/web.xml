@@ -3,6 +3,21 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	id="WebApp_ID" version="4.0">
+	<filter>
+		<filter-name>FilterForMemberLogin</filter-name>
+		<filter-class>com.filters.FilterForMemberLogin</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>FilterForMemberLogin</filter-name>
+		<url-pattern>/front/member_select.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+
+
 	<display-name>CGA101G2</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
@@ -21,7 +36,7 @@
 		<servlet-name>PictureController</servlet-name>
 		<url-pattern>/PictureController</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>PictureDeleteController</servlet-name>
 		<servlet-class>com.picture.controller.PictureDeleteController</servlet-class>
@@ -30,31 +45,31 @@
 		<servlet-name>PictureDeleteController</servlet-name>
 		<url-pattern>/PictureDeleteController</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
-    <servlet-name>StatViewServlet</servlet-name>
-    <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
-    <init-param>  
-    <!-- 允許清空統計數據 -->  
-    <param-name>resetEnable</param-name>  
-    <param-value>false</param-value>  
-    </init-param>  
-    <init-param>  
-    <!-- 用戶名 -->  
-    <param-name>loginUsername</param-name>  
-    <param-value>cga-02</param-value>  
-    </init-param>  
-    <init-param>  
-    <!-- 密碼 -->  
-    <param-name>loginPassword</param-name>  
-    <param-value>cga-02</param-value>  
-    </init-param>  
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>StatViewServlet</servlet-name>
-    <url-pattern>/druid/*</url-pattern>
-  </servlet-mapping>
-  
-  
+		<servlet-name>StatViewServlet</servlet-name>
+		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+		<init-param>
+			<!-- 允許清空統計數據 -->
+			<param-name>resetEnable</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<!-- 用戶名 -->
+			<param-name>loginUsername</param-name>
+			<param-value>cga-02</param-value>
+		</init-param>
+		<init-param>
+			<!-- 密碼 -->
+			<param-name>loginPassword</param-name>
+			<param-value>cga-02</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StatViewServlet</servlet-name>
+		<url-pattern>/druid/*</url-pattern>
+	</servlet-mapping>
+
+
 </web-app>

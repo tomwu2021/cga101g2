@@ -1,7 +1,8 @@
 /**
  * 
  */
-
+let groupOrder = null;
+let orders = null;
 let xhr2 = null;
 getMemberOder();
 let xhr = null;
@@ -58,12 +59,15 @@ function getGroupOrder() {
             str += "<td>" + order.groupOrderVO.finalPrice + "</td>";
             if (order.groupOrderVO.status === 0) {
                 str += "<td>進行中</td>";
+                str += "<td><a href=" + "/CGA101G2/member/order.do?memberId="+order.memberId+"&groupOrderId="+order.groupOrderId
+           		+">Revise</a></td>";
             } else if (order.groupOrderVO.status === 1) {
                 str += "<td>未成團</td>";
+                str += "<td>X</td>";
             } else {
                 str += "<td>已成團</td>";
+                str += "<td>X</td>";
             }
-            str += "<td><a href=" + "cart.html" + "class=" + "revise" + ">Revise</a></td>";
             str += "<td><a href=" + "cart.html" + "class=" + "view" + ">View</a></td>";
         }
         str += "</tr></tbody>";
@@ -147,4 +151,3 @@ function getMemberOder() {
     xhr2.open("Get", url, true);
     xhr2.send(null);
 }
-

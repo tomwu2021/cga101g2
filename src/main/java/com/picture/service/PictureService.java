@@ -81,7 +81,7 @@ public class PictureService {
 					pvs.add(picDAO.insert(pv, con));
 					// byte[] bytes = IOUtils.toByteArray(is);
 				}
-				if (albumDao.isAlbum(albumId, con) != null && pv.getPictureId() != null) {
+				if (albumDao.isAlbum(albumId, con) && pv.getPictureId() != null) {
 					mappingTableDto.setId1(pv.getPictureId());
 					mappingTableDto.setId2(albumId);
 					mappingDAO.insertOneMapping(mappingTableDto, con);
