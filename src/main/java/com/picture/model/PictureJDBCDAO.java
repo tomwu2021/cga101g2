@@ -62,21 +62,22 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	/**
-	 * tablename1 圖片mapping表名
-	 * column1 不是picture_id 如: article_id album_id post_id
+	 * tablename1 圖片mapping表名 column1 不是picture_id 如: article_id album_id post_id
 	 * id1 對應column1 表的值
 	 */
 	public List<PictureVO> queryPicturesByMapping(MappingTableDto mtd) {
-		String sql = "SELECT * FROM picture p JOIN " + mtd.getTableName1() + " t ON(p.picture_id=t.picture_id) WHERE " + mtd.getColumn1() + "=" + mtd.getId1();
+		String sql = "SELECT * FROM picture p JOIN '" + "?" + "' t ON(p.picture_id=t.picture_id) WHERE '"
+				+ "?" + "' = '" + "?" + "' ";
 		Connection con = JDBCConnection.getRDSConnection();
 		if (con != null) {
 			try {
 				PreparedStatement stmt = con.prepareStatement(sql);
-//				int index = 0;
-//				stmt.setString(++index, mtd.getTableName1());
-//				stmt.setString(++index, mtd.getColumn1());
-//				stmt.setInt(++index, mtd.getId1());
+				int index = 0;
+				stmt.setString(++index, mtd.getTableName1());
+				stmt.setString(++index, mtd.getColumn1());
+				stmt.setInt(++index, mtd.getId1());
 				ResultSet rs = stmt.executeQuery();
 				List<PictureVO> pvos = new ArrayList<PictureVO>();
 				while (rs.next()) {
@@ -121,20 +122,15 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 
 	public Integer deleteById(Integer pictureId) {
 		String sql = "DELETE FROM picture WHERE picture_id=?";
-		Connection con = JDBCConnection.getRDSConnection();
-		if (con != null) {
-			try {
-				PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				stmt.setInt(1, pictureId);
-				stmt.executeUpdate();
-				return pictureId;
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return null;
-			}
-		} else {
-			return -1;
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
+			stmt.setInt(1, pictureId);
+			stmt.executeUpdate();
+			return pictureId;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
 	}
 
