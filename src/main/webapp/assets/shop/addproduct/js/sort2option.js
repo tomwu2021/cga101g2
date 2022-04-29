@@ -17,12 +17,6 @@
           str +=`<option value="${sort2VO.sort2Id}">${sort2VO.sort2Name}</option> `;
         }
         optionStart.innerHTML += str;
-
-
-        
       });
-
-
-
   })
   ();

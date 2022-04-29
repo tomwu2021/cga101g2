@@ -16,12 +16,12 @@ public class ProductVO implements java.io.Serializable {
 	private String productName;
 	private Integer price;
 	private Integer amount;
+	private Integer sort2Id;
 	private Timestamp updateTime;
+	private Integer groupPrice1;
 	private Integer groupAmount1;
 	private Integer groupAmount2;
 	private Integer groupAmount3;
-	private Integer groupPrice1;
-	private Integer sort2Id;
 	private String description;
 	private Integer status;
 	private Integer topStatus;

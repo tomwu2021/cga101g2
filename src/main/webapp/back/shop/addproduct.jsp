@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.sort2.model.*"%>
+<%@ page import="com.product.model.*"%>
+
+<%
+Sort2Service sort2Svc = new Sort2Service();
+List<Sort2VO> sort2list = sort2Svc.getAll();
+pageContext.setAttribute("sort2list", sort2list);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +20,9 @@
 <!-- 共用的CSS end-->
 
 <!-- 額外添加的CSS -->
-<!-- 	路徑舉例 -->
+<!-- 圖片上傳 -->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/assets/back/css/addproduct.css">
+	href="<%=request.getContextPath()%>/assets/shop/upimg/css/upimg.css">
 <!-- 額外添加的CSS -->
 </head>
 <body>
@@ -40,6 +51,7 @@
 
 								<!--! Horizontal Form-->
 								<div class="col-lg-12 mb-5">
+<FORM METHOD="get" ACTION="productInsert" name="form1">										
 									<div class="card">
 										<div class="card-header">
 											<h3 class="h6 text-uppercase mb-0">新增商品</h3>
@@ -48,122 +60,110 @@
 											<p>商品編號??? 最後更新時間:????</p>
 											<div class="row">
 												<div class="col-lg-6 mb-5">
-													<form class="form-horizontal">
-
-														<div class="form-group row">
-															<label class="col-md-3 form-control-label">商品名稱</label>
-															<div class="col-md-6">
-																<input id="inputHorizontalSuccess" type="text"
-																	value="美國短毛貓" name="productName"
-																	placeholder="拿取資料value"
-																	class="form-control form-control-success"> <small
-																	class="form-text text-muted ml-3">限制20個字</small>
-															</div>
-														</div>
-
-
-														<div class="form-group row">
-															<label class="col-md-3 form-control-label">商品價格</label>
-															<div class="col-md-6">
-																<input id="inputHorizontalSuccess" type="number"
-																	value="" name="amount" placeholder="" step="1" min="1"
-																	max="999" class="form-control form-control-success">
-															</div>
-														</div>
-
-														<div class="form-group row">
-															<label class="col-md-3 form-control-label">商品數量</label>
-															<div class="col-md-6">
-																<input id="inputHorizontalSuccess" type="number"
-																	value="" name="amount" placeholder="" step="1" min="1"
-																	max="999" class="form-control form-control-success">
-															</div>
-														</div>
-
-
-														<div class="form-group row">
-															<label class="col-md-3 form-control-label">商品子分類</label>
-															<div class="col-md-6">
-																<select class="custom-select custom-select-sm"
-																	id="inlineFormCustomSelect"
-																	class="form-control form-control-success" onchange="getSort1()">
-<!-- 																用JS寫 -->
-																
-																</select>
-															</div>
-														</div>
-
-														<div class="form-group row">
-															<label class="col-md-3 form-control-label">對應主分類</label>
-															<div class="col-md-6 m-auto">
-																<div class="form-check form-check-inline">
-																	<input class="form-check-input" type="checkbox"
-																		id="inlineCheckbox1" value="option1"> <label
-																		class="form-check-label" for="inlineCheckbox1">貓</label>
-																</div>
-																<div class="form-check form-check-inline">
-																	<input class="form-check-input" type="checkbox"
-																		id="inlineCheckbox2" value="option2"> <label
-																		class="form-check-label" for="inlineCheckbox2">狗</label>
+														<form class="form-horizontal">
+															<div class="form-group row">
+																<label class="col-md-3 form-control-label">商品名稱</label>
+																<div class="col-md-6">
+																	<input id="inputHorizontalSuccess" type="text" value="${productVO.productName}"
+																		name="productName" placeholder="輸入商品名稱"
+																		class="form-control form-control-success"> <small
+																		class="form-text text-muted ml-3">限制20個字</small>
+																		<small class="form-text text-muted ml-3 text-danger" >${errorMsgs.productName}</small>
 																</div>
 															</div>
-														</div>
-														<!--! 提交按鈕 -->
-														<!--                           <div class="form-group row">        -->
-														<!--                             <div class="col-md-9 ml-auto"> -->
-														<!--                               <input type="submit" value="儲存" class="btn btn-primary"> -->
-														<!--                             </div> -->
-														<!--                           </div> -->
-													</form>
-													<!--! 提交按鈕結束 -->
+
+
+															<div class="form-group row">
+																<label class="col-md-3 form-control-label">商品價格</label>
+																<div class="col-md-6">
+																	<input id="inputHorizontalSuccess" type="number"
+																		value="${productVO.price}" name="price" placeholder="" step="1" min="1"
+																		max="999" class="form-control form-control-success">
+																		<small class="form-text text-muted ml-3 text-danger">${errorMsgs.price}</small>
+																</div>
+															</div>
+
+															<div class="form-group row">
+																<label class="col-md-3 form-control-label">商品數量</label>
+																<div class="col-md-6">
+																	<input id="inputHorizontalSuccess" type="number"
+																		value="${productVO.amount}" name="amount" placeholder="" step="1" min="1"
+																		max="999" class="form-control form-control-success">
+																		<small class="form-text text-muted ml-3 text-danger">${errorMsgs.amount}</small>
+																</div>
+															</div>
+
+
+															<div class="form-group row">
+																<label class="col-md-3 form-control-label">商品子分類</label>
+																<div class="col-md-6">
+																	<select class="custom-select custom-select-sm"
+																		id="inlineFormCustomSelect"
+																		class="form-control form-control-success"
+																		onchange="get_sort1index()" name="sort2Id">
+																		<c:forEach var="sort2VO" items="${sort2list}">
+																			<option value="${sort2VO.sort2Id}">${sort2VO.sort2Name}</option>
+																		</c:forEach>
+																	</select>
+																	<small class="form-text text-muted ml-3 text-danger">${errorMsgs.sort2Id}</small>
+																</div>
+															</div>
+															<div class="form-group row">
+																<label class="col-md-3 form-control-label">對應主分類</label>
+																<div class="col-md-6 m-auto" id="sort2CheckBox">
+																	<div class="form-check form-check-inline">
+																		<input class="form-check-input" type="checkbox"
+																			name="sort1Name" id="inlineCheckbox1" value="2">
+																		<label class="form-check-label" for="inlineCheckbox1">貓</label>
+																	</div>
+																	<small class="form-text text-muted ml-3 text-danger">${errorMsgs.sort1Name}</small>
+																</div>
+															</div>
+														</form>
 												</div>
 												<!-- !右側團購欄位-->
 												<div class="col-lg-6 mb-5">
 													<div class="form-group row">
 														<label class="col-md-3 form-control-label">團購起始價格</label>
 														<div class="col-md-6">
-															<input id="inputHorizontalSuccess" type="number"
+															<input id="inputHorizontalSuccess" type="number" value="${productVO.groupPrice1}"
 																name="groupPrice1" placeholder="" step="1" min="1"
 																max="999" class="form-control form-control-success">
+																<small class="form-text text-muted ml-3 text-danger">${errorMsgs.groupPrice1}</small>
 														</div>
 													</div>
 
 													<div class="form-group row">
 														<label class="col-md-3 form-control-label">團購數量級距一</label>
 														<div class="col-md-6">
-															<input id="inputHorizontalSuccess" type="number"
+															<input id="inputHorizontalSuccess" type="number" value="${productVO.groupAmount1}"
 																name="groupAmount1" placeholder="" step="1" min="1"
 																max="999" class="form-control form-control-success">
+																<small class="form-text text-muted ml-3 text-danger">${errorMsgs.groupAmount1}</small>
 														</div>
 													</div>
 
 													<div class="form-group row">
 														<label class="col-md-3 form-control-label">團購數量級距二</label>
 														<div class="col-md-6">
-															<input id="inputHorizontalSuccess" type="number"
+															<input id="inputHorizontalSuccess" type="number" value="${productVO.groupAmount2}"
 																name="groupAmount2" placeholder="" step="1" min="1"
 																max="999" class="form-control form-control-success">
+																<small class="form-text text-muted ml-3 text-danger ">${errorMsgs.groupAmount2}</small>
 														</div>
 													</div>
 
 													<div class="form-group row">
 														<label class="col-md-3 form-control-label">團購數量級距三</label>
 														<div class="col-md-6">
-															<input id="inputHorizontalSuccess" type="number"
+															<input id="inputHorizontalSuccess" type="number" value="${productVO.groupAmount3}"
 																name="groupAmount3" placeholder="" step="1" min="1"
 																max="999" class="form-control form-control-success">
+																	<small class="form-text text-muted ml-3 text-danger">${errorMsgs.groupAmount3}</small>
 														</div>
 													</div>
 
 
-													<div class="form-group row">
-														<label class="col-md-3 form-control-label">團購數量級距三</label>
-														<div class="col-md-6">
-															<input id="inputHorizontalSuccess" type="number"
-																name="groupAmount3" placeholder="" step="1" min="1"
-																max="999" class="form-control form-control-success">
-														</div>
-													</div>
 												</div>
 												<!--                     !右側團購欄位結束 -->
 												<!--! Horizontal Form結束-->
@@ -173,26 +173,32 @@
 													<div class="form-group row">
 														<label class="col-md-1 form-control-label">商品敘述</label>
 														<div class="col-md-8">
-															<textarea id="inputHorizontalSuccess" name="description"
+															<textarea id="inputHorizontalSuccess" name="description" 
 																rows="5" cols="90" placeholder="輸入商品內容"
 																class="form-control form-control-success">
-														                            </textarea>
-															<small class="form-text text-muted ml-3">限制200個字</small>
+														                 ${productVO.description}           </textarea>
+															<small class="form-text text-muted ml-3">限制至少20字以上至多200個字以下</small>
+															<small class="form-text text-muted ml-3 text-danger">${errorMsgs.description}</small>
 														</div>
 													</div>
 												</div>
 											</div>
 
-
 											<div class="row">
 												<div class="col-lg-12 mb-5">
+
+													<div class="form-group row">
+														<label class="col-md-3 form-control-label">商品照片</label>
+														<div class="col-md-6"></div>
+													</div>
 													<div class="form-group">
 														<div class="col-md-8">
 															<!--weui-uploader 照片上传功能-->
 															<div class="picDiv">
 																<div class="addImages">
 																	<!--multiple属性可选择多个图片上传-->
-																	<input type="file" class="file" id="fileInput" multiple accept="image/png, image/jpeg, image/gif, image/jpg" />
+																	<input type="file" class="file" id="fileInput" multiple
+																		accept="image/png, image/jpeg, image/gif, image/jpg" />
 																	<div class="text-detail">
 																		<span>+</span>
 																		<p>點擊上傳</p>
@@ -200,34 +206,48 @@
 																</div>
 															</div>
 															<!--weui-uploader 照片上传功能 END-->
+
+															<!--! 提交按鈕開始 -->
+															<div class="form-group row">
+																<input type="submit" value="送出新增" class="btn btn-primary">
+																<input type="hidden" name="action" value="insert">
+																<div class="col-md-6"></div>
+															</div>
+															<!--! 提交按鈕開始 -->
 														</div>
 													</div>
 												</div>
 											</div>
+										</div>
+									</div>
+<input type="hidden" name="action" value="insert"> </FORM>				
 						</section>
+						<!--! ========內容結束========-->
+
+
+						<!-- 共通的footer start-->
+						<%@include file="/back/layout/footer.jsp"%>
+						<!-- 共通的footer end-->
 					</div>
 				</div>
-			</section>
-			<!--! ========內容結束========-->
 
 
-			<!-- 共通的footer start-->
-			<%@include file="/back/layout/footer.jsp"%>
-			<!-- 共通的footer end-->
-		</div>
-	</div>
+				<!-- 共用的JS -->
+				<%@include file="/back/layout/commonJS.jsp"%>
+				<!-- 共用的JS -->
 
-
-	<!-- 共用的JS -->
-	<%@include file="/back/layout/commonJS.jsp"%>
-	<!-- 共用的JS -->
-
-	<!-- 額外添加的JS -->
-	<!-- 	路徑舉例 -->
-	<script src="<%=request.getContextPath()%>/assets/back/js/uploadimg.js">	</script>
-	<script src="<%=request.getContextPath()%>/assets/back/product/js/sortOption.js">	</script>
-	<!-- 額外添加的JS -->
-
+				<!-- 額外添加的JS -->
+				<!-- 	路徑舉例 -->
+				<!-- 	圖片上傳 -->
+				<script
+					src="<%=request.getContextPath()%>/assets/shop/upimg/js/upimg.js">
+					
+				</script>
+				<script
+					src="<%=request.getContextPath()%>/assets/shop/addproduct/js/sort1VOCheckBox.js">
+					
+				</script>
+				<!-- 額外添加的JS -->
 </body>
 
 </html>

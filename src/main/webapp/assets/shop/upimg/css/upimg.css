@@ -1,0 +1,59 @@
+.imageDiv{
+ display: inline-block;
+ width: 250px;
+ height: 235px;
+ -webkit-box-sizing: border-box;
+ -moz-box-sizing: border-box;
+ box-sizing: border-box;
+ border: 1px dashed darkgray;
+ background: #f8f8f8;
+ position: relative;
+ overflow: hidden;
+ }
+ .cover{
+ position: absolute;
+ z-index: 1;
+ top: 0;
+ left: 0;
+ width: 250px;
+ height: 235px;
+ background-color: rgba(0,0,0,.3);
+ display: none;
+ line-height: 235px;
+ text-align: center;
+ cursor: pointer;
+ }
+ .cover>.delbtn{
+ color: red;
+ font-size: 20px;
+ }
+ .imageDiv:hover .cover{
+ display: block;
+ }
+ .addImages{
+ display: inline-block;
+ width: 250px;
+ height: 235px;
+ -webkit-box-sizing: border-box;
+ -moz-box-sizing: border-box;
+ box-sizing: border-box;
+ border: 1px dashed darkgray;
+ background: #f8f8f8;
+ position: relative;
+ overflow: hidden;
+ }
+ .text-detail{
+ margin-top: 90px;
+ text-align: center;
+ }
+ .text-detail>span{
+ font-size: 80px;
+ }
+ .file{
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 250px;
+ height: 235px;
+ opacity: 0;
+ }

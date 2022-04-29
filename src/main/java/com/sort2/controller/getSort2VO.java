@@ -26,7 +26,7 @@ public class getSort2VO extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Sort2Service sort2Service = new Sort2Service();
-		writePojo2Json(response,sort2Service.findAll());
+		writePojo2Json(response,sort2Service.getAll());
 	}
 
 }

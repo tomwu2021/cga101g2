@@ -22,7 +22,7 @@ public class Sort2Service implements Sort2Service_interface{
 	}
 
 	@Override
-	public List<Sort2VO> findAll() {
+	public List<Sort2VO> getAll() {
 		return dao.getAll();
 	}
 

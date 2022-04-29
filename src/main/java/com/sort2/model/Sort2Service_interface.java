@@ -8,7 +8,7 @@ public interface Sort2Service_interface {
 		//新增成功/失敗,新增前檢查是否有重複
 		boolean save(Sort2VO sort2VO);
 		
-		List<Sort2VO> findAll();
+		List<Sort2VO> getAll();
 		
 		//更新成功/失敗,更新前檢查是否有重複
 		boolean updateB(Sort2VO sort2VO);
