@@ -37,19 +37,16 @@ function makeAlbum(album) {
 							<article class='single_product album_thumb'>
 								<figure>
 										<div class="product_thumb">
-											<a id=${album.albumId} class="primary_img" href="${getContextPath()}/album?albumId=${album.albumId}&action=list&memberId=${$("#memberId").val()}">
+											<a id=${album.albumId} class="primary_img" href="${getContextPath()}/album?albumId=${album.albumId}&action=list&memberId=${$("#memberId").val()}&coverId=${album.coverId}">
 											<img src="${album.pictureVO.previewUrl}" class="album-cover" alt="${album.pictureVO.fileName}"></a>
 											<div class="action_links">
 												<ul>
-													<li class="quick_button album-button" onclick="editStart(${album.albumId})" id="editName"><a href="#" data-toggle="modal"
-														data-target="#modal_box" title="Rename Album"> <i
-															class="bi bi-pencil"></i></a></li>
-													<li class="wishlist  album-button" onclick="deleteAlbum(${album.albumId})" id="deleteAlbum"><a href="#"
-														title="Delete"><i
-															class="bi bi-trash2"></i></a></li>
-												
-													<li class="compare album-button"  onclick="changeAuthority(${album.albumId})" id="changeAuthority${album.albumId}" title=${lockTitle}><i
-																class="${lockType}" id="authority-button${album.albumId}"></i></li>
+													<li class="quick_button album-button" onclick="editStart(${album.albumId})" id="editName" title="Rename Album">
+													<i class="bi bi-pencil"></i></li>
+													<li class="wishlist  album-button" onclick="deleteAlbum(${album.albumId})" id="deleteAlbum" title="Delete">
+													<i class="bi bi-trash2"></i></li>											
+													<li class="compare album-button"  onclick="changeAuthority(${album.albumId})" id="changeAuthority${album.albumId}" title=${lockTitle}>
+													<i class="${lockType}" id="authority-button${album.albumId}"></i></li>
 												</ul>
 											</div>
 										</div>
@@ -79,7 +76,7 @@ function edit(albumId) {
 	if (name2 !== name) {
 		console.log("update start")
 		$.get({
-			url: getContextPath() + "/album?albumId=" + albumId + "&action=updateName&name=" + name,
+			url: getContextPath() + "/album?albumId=" + albumId + "&action=updateName&name=" + name2,
 			processData: false,
 			contentType: false,
 			success: function(result, status) {

@@ -189,3 +189,9 @@ form.is-dragover {
 	box-shadow: 2px 2px 1px 0px #ff8080, -2px -2px 1px 0px #ff8080;
 	background-color: #db3344;
 }
+.cover{
+	color:white;
+}
+.cover-selected{
+	color:gold;
+}

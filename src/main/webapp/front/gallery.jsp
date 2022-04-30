@@ -9,6 +9,8 @@
 
 <input type="hidden" id="albumId" name="albumId" value="<%=request.getAttribute("albumId")%>">
 <input type="hidden" id="memberId" name="memberId" value="<%=request.getAttribute("memberId")%>">
+<input type="hidden" id="coverId" name="coverId" value="<%=request.getAttribute("coverId")%>">
+
 <div class="services_gallery mt-100">
 	<div class="container">
 		<div id="button-area" style="display: block; text-align: right">

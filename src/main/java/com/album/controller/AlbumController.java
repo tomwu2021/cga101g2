@@ -143,7 +143,7 @@ public class AlbumController extends CommonController {
 	}
 
 	boolean changeCover(HttpServletRequest req, HttpServletResponse res) {
-		Integer coverId = Integer.parseInt(req.getParameter("coverId").trim());
+		Integer coverId = Integer.parseInt(req.getParameter("pictureId").trim());
 		albumId = Integer.parseInt(req.getParameter("albumId"));
 		if (albumId != null && coverId != null) {
 			alServ.updateCover(albumId, coverId);
@@ -163,9 +163,11 @@ public class AlbumController extends CommonController {
 		req.setAttribute("albumVO", getOneAlbum(req, res));
 		String memberId = req.getParameter("memberId");
 		String albumId = req.getParameter("albumId");
+		Integer coverId = Integer.parseInt(req.getParameter("coverId"));
 		System.out.println("list memberID = " + memberId);
 		req.setAttribute("memberId", memberId);
 		req.setAttribute("albumId", albumId);
+		req.setAttribute("coverId", coverId);
 		super.routeTo(req, res, "My Photos", "gallery");
 	}
 

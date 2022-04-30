@@ -9,6 +9,7 @@ let sort = "DESC";
 let thisPage = 1;
 let total = 0;
 let pageCount = 0;
+let coverId = parseInt($("#coverId").val());
 
 function searchPicture() {
 	albumId = $("#albumId").val();
@@ -36,8 +37,19 @@ function searchPicture() {
 							<li class='bi bi-trash trash-bucket' 
 							style='height:50px;color:white;width:50px;position:absolute;left:5px;top:210px;font-size:30px;' 
 							title="delete" onclick="addToDeleteList(${item.pictureId})">
-							</li>
-							<li id="createTime${item.pictureId}" style="display:none">${item.createTime}</li>
+							</li>`
+				if (item.pictureId === coverId) {
+					html += `<li class='bi bi-journal cover-selected' 
+							style='height:50px;width:50px;position:absolute;left:320px;top:210px;font-size:30px;' 
+							title="cover" onclick="changeCover(${item.pictureId},${albumId})" id="cover${item.pictureId}">
+							</li>`
+				} else {
+					html += `<li class='bi bi-journal cover' 
+							style='height:50px;width:50px;position:absolute;left:320px;top:210px;font-size:30px;' 
+							title="cover" onclick="changeCover(${item.pictureId},${albumId})" id="cover${item.pictureId}">
+							</li>`
+				}
+				html += `<li id="createTime${item.pictureId}" style="display:none">${item.createTime}</li>
 						  </ul>`
 				html += "<a href=" + item.url + " data-toggle='lightbox' data-gallery=gallery class='col-md-4'>";
 				html += "<img id='" + item.pictureId + "' class='photos img-fluid rounded' src='" + item.previewUrl + "' alt='" + item.fileName + "' style='min-height:300px;margin:auto;overflow:hidden;'>";
@@ -68,7 +80,23 @@ function addCurrent() {
 	}
 }
 
-
+function changeCover(pictureId, albumId) {
+	if (pictureId !== coverId) {
+		$(".bi-journal").removeClass('cover-selected');
+		$("#cover" + pictureId).removeClass('cover');
+		$("#cover" + pictureId).addClass('cover-selected');
+		$.get({
+			url: getContextPath() + "/album?albumId=" + albumId + "&action=changeCover&pictureId=" + pictureId,
+			processData: false,
+			contentType: false,
+			success: function(result, status) {
+				alert("變更封面成功");
+			}
+		})
+	}else{
+		alert("此張照片已經是封面");
+	}
+}
 function getPage(page) {
 	thisPage = page;
 	searchPicture();
