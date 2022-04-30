@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -40,9 +40,10 @@
 <jsp:include page="${pagePath}" />
 
 <!-- main contain end -->
-
 <!-- footer -->
 <jsp:include page="footer.jsp" />
+<!-- include  common JS-->
+<%@ include file="/front/layout/commonJS.jsp"%>
 
 </body>
 

@@ -12,8 +12,7 @@
 
 <%@ include file="/front/layout/commonCSS.jsp"%>
 
-<!-- include  common JS-->
-<%@ include file="/front/layout/commonJS.jsp"%>
+
 
 <script>
     function getContextPath(){

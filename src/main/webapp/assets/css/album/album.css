@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+.album-button:hover {
+	cursor: pointer;
+}
+
+.album-name:hover {
+	cursor: text;
+}
+
+.addAlbum-button {
+	letter-spacing: 2px;
+	font-size: 20px;
+	font-weight: 500;
+	height: 38px;
+	line-height: 18px;
+	padding: 10px 20px;
+	color: #ffffff;
+	text-transform: uppercase;
+	border-radius: 3px;
+	border: 2px white;
+	transition: all 0.5s;
+	background-color: black;
+	margin-bottom: 10px;
+}
+
+#button-area {
+	text-align: right;
+	margin-top: 30px;
+	background-color: white;
+	border: none;
+	box-shadow: none;
+}
+
+.addAlbum-button:hover {
+	border: 1px #ff8080;
+	box-shadow: 2px 2px 1px 0px #ff8080, -2px -2px 1px 0px #ff8080;
+	background-color: #db3344;
+}
+
+.hideZone {
+	max-height: 0px;
+	border: none;
+	overflow: hidden;
+	height: 0px;
+}
+
+.showZone {
+	height: 700px;
+	background-color: white;
+	border-radius: 20px;
+	overflow: hidden;
+}
+
+.blog_thumb {
+	min-height: 0px;
+	height: 85%;
+	display: block;
+	max-height: 93%;
+	overflow: hidden;
+	display: block;
+}
+
+.product_tab_btn ul {
+	text-align: center;
+}
+
+.product_tab_btn ul li {
+	display: block;
+	margin: 10px auto;
+	text-align: center;
+	width: 100%;
+}
+#new-album-form{
+	display:none;
+}
+#new-album-name {
+	width: 100%;
+	margin: 20px auto;
+}
+.bi-lock{
+	color:red;
+}
+.bi-unlock{
+	color:green;
+}
+.album-name{
+	overflow:hidden;
+}
