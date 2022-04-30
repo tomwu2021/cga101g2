@@ -4,15 +4,15 @@
 
 let fileName = "";
 let uploadTime = 1;
-let albumId = 9;
 let pageSize = 12;
 let sort = "DESC";
 let thisPage = 1;
 let total = 0;
 let pageCount = 0;
 
-
 function searchPicture() {
+	albumId = $("#albumId").val();
+	console.log(albumId);
 	fileName = $("#fileName").val();
 	if (fileName !== '') {
 		thisPage === 1;
@@ -20,7 +20,7 @@ function searchPicture() {
 	console.log('sort=' + sort + '&uploadTime=' + uploadTime);
 	$.get({
 		url: "/CGA101G2/PictureController?fileName=" + fileName + "&albumId=" + albumId + "&thisPage=" + thisPage + "&order=upload_time&pageSize="
-			+ pageSize + "&sort=" + sort + "&uploadTime=" + uploadTime,
+			+ pageSize + "&sort=" + sort + "&uploadTime=" + uploadTime + "&action=search",
 		success: function(result, status) {
 			total = result.total;
 			pageCount = result.pageCount;
@@ -33,10 +33,9 @@ function searchPicture() {
 							<li>Title: ${item.fileName}</li>
 							<li>Size: ${item.size}</li>
 							<li>Create Time: ${item.createTime}</li>
-							<li class='bi bi-trash2' 
-							style='height:40px;color:white;position:absolute;left:5px;top:230px;font-size:10px;' 
+							<li class='bi bi-trash trash-bucket' 
+							style='height:50px;color:white;width:50px;position:absolute;left:5px;top:210px;font-size:30px;' 
 							title="delete" onclick="addToDeleteList(${item.pictureId})">
-							remove your photo from this album
 							</li>
 							<li id="createTime${item.pictureId}" style="display:none">${item.createTime}</li>
 						  </ul>`
@@ -138,7 +137,7 @@ function addToDeleteList(pictureId) {
 			$("table").show();
 			deleteListHtml += makeTr(pictureId);
 			$('tbody').html(deleteListHtml);
-			$('#button-area').show();
+			$('#button-area2').show();
 			deleteListHtml = makeTr(pictureId);
 		} else {
 			deleteListHtml += makeTr(pictureId);
@@ -170,7 +169,7 @@ function restore(pictureId) {
 	if (atd === 0) {
 		$('tbody>tr').remove();
 		$('table').hide();
-		$('#button-area').hide();
+		$('#button-area2').hide();
 		deleteListHtml = '';
 	} else {
 		$("#delete-list" + pictureId).remove();
@@ -180,7 +179,7 @@ function restore(pictureId) {
 function deleteAll() {
 	$('tbody>tr').remove();
 	$('table').hide();
-	$('#button-area').hide();
+	$('#button-area2').hide();
 	deleteList = [];
 	deleteListHtml = '';
 	atd = 0;
@@ -199,14 +198,21 @@ function commitDelete() {
 		data: data,
 		processData: false,
 		contentType: false,
-		success: function() {
-			deleteAll();
+		success: function(res, error) {
+			console.log("res");
 			thisPage = 1;
 			searchPicture();
+			deleteAll();
 		}
 	});
 }
-
-
+function toAddPicture() {
+	console.log(getContextPath());
+	location.href = getContextPath() + "/PictureController?memberId=" + $("#memberId").val() + "&albumId=" + $("#albumId").val() + "&action=addShow";
+}
+function backToAlbums() {
+	console.log($("#memberId").val());
+	location.href = getContextPath() + "/album?memberId=" + $("#memberId").val() + "&action=listToAlbum";
+}
 //
 

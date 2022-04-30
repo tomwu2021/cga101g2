@@ -122,29 +122,70 @@ form.is-dragover {
 	-webkit-filter: brightness(0.5);
 }
 
+#button-area2 {
+	text-align: center;
+	margin-bottom: 30px;
+}
 
-#button-area{
-	text-align:center;
-	margin-bottom:30px;
+#button-area2 button {
+	background: #F53737;
+	letter-spacing: 2px;
+	font-size: 20px;
+	font-weight: 500;
+	height: 38px;
+	line-height: 18px;
+	padding: 10px 20px;
+	color: #ffffff;
+	text-transform: uppercase;
+	border-radius: 3px;
+	border: 2px white;
+	transition: all 0.5s;
+	background-color: black;
 }
-#button-area button {
-    background: #F53737;
-    letter-spacing:2px;
-    font-size: 20px;
-    font-weight: 500;
-    height: 38px;
-    line-height: 18px;
-    padding: 10px 20px;
-    color: #ffffff;
-    text-transform: uppercase;
-    border-radius: 3px;
-    border:2px white;
-    transition:all 0.5s;
-    	background-color:black;
-}
-#button-area button:hover{
-	border:1px grey;
-	box-shadow:2px 2px 1px 0px grey,-2px -2px 1px 0px grey;
+
+
+#button-area2 button:hover {
+	border: 1px #ff8080;
+	box-shadow: 2px 2px 1px 0px #ff8080, -2px -2px 1px 0px #ff8080;
 	background-color: #db3344;
-	
+}
+
+.trash-bucket {
+	width: 1em;
+	height: 1em;
+	transition: all 0.3s;
+}
+
+.trash-bucket:hover {
+	width: 1.3em;
+	height: 1.3em;
+}
+
+.upload-button {
+	letter-spacing: 2px;
+	font-size: 20px;
+	font-weight: 500;
+	height: 38px;
+	line-height: 18px;
+	padding: 10px 20px;
+	color: #ffffff;
+	text-transform: uppercase;
+	border-radius: 3px;
+	border: 2px white;
+	transition: all 0.5s;
+	background-color: black;
+	margin-bottom:10px;
+}
+
+#button-area {
+	text-align: right;
+	margin-bottom: 30px;
+	background-color: white;
+	border: none;
+	box-shadow: none;
+}
+.upload-button:hover {
+	border: 1px #ff8080;
+	box-shadow: 2px 2px 1px 0px #ff8080, -2px -2px 1px 0px #ff8080;
+	background-color: #db3344;
 }

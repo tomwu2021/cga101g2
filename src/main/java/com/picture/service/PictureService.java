@@ -70,8 +70,8 @@ public class PictureService {
 				sp = con.setSavepoint();
 				PictureVO pv = new PictureVO();
 				String fileName = getFileNameFromPart(part);
+				System.out.println(fileName);
 				if (getFileNameFromPart(part) != null && part.getContentType() != null) {
-					System.out.println(fileName);
 					InputStream in = part.getInputStream();
 //                    ByteArrayOutputStream clone = new StreamUtils().CloneInputStream(in);
 //                    InputStream forS3 = new ByteArrayInputStream(clone.toByteArray());

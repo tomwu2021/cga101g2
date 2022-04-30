@@ -1,10 +1,9 @@
 
 let files;
-
 $(document).ready(() => {
 	$('#file-zone').click((event) => {
 		let id = $(event.target).attr('id');
-		if (id === 'file-zone') {
+		if (id === 'file-zone' || id === 'upload-word') {
 			$('#file-btn').click();
 		}
 		return
@@ -12,11 +11,19 @@ $(document).ready(() => {
 
 	$('#file-btn').change((event) => {
 		let el = event.target;
-		console.log(el.getAttribute('accept'));
-		if (el.getAttribute('accept') === 'image/*') {
-			files = el.files;
-			buildPreviewSection(files);
+		console.log("event.target:" + el);
+		// fileList to Array
+		files = [...el.files];
+		if (el.files.length > 10) {
+			alert('同時只能上傳10筆');
+			return
 		}
+
+		if (!isFileImage(files)) {
+			alert('格式不正確')
+			return
+		}
+		buildPreviewSection(files);
 	})
 })
 
@@ -29,7 +36,7 @@ function deletePreview(key) {
 	}
 
 	files = temp // Assign the updates list
-	console.log(temp)
+	console.log("files:" + files);
 	buildPreviewSection(files);
 }
 
@@ -68,89 +75,97 @@ function deleteAllPreview() {
 	buildPreviewSection(files);
 }
 
-function cancel() {
-	console.log("cancel!")
-	$("#reset-button").click();
-	deleteAllPreview();
+
+function getFileListItems(files) {
+	let fileList = new DataTransfer();
+	files.forEach(file => {
+		fileList.items.add(file);
+		console.log("file:" + file);
+	})
+	console.log(fileList);
+
+	return fileList.files
 }
 
 function save() {
-	console.log("save!");
+	// arraylist to FilesList
+	$('#upload-input').files = getFileListItems(files);
+	console.log(files);
 	$("#save-button").click();
-	//	location.href="/CGA101G2/front/gallery.jsp";
 }
 
-//function save() {
-//    //模擬form表單
-//    let myform = new FormData();
-//    for (let i = 0; i < files.length; i++) {
-//        myform.append(`file${i}`, files[i]);
-//        myform.append(`albumId`, 9);
-//    }
-//    $.ajax({
-//        url: "/CGA101G2/PictureController",
-//        data: myform,
-//        processData: false,
-//        contentType: false,
-//        type: 'POST',
-//        success: function (dataofconfirm) {
-//            location.href = "/CGA101G2/front/gallery.html"
-//        }
-//    });
+//function cancel() {
+//	location.href = getContextPath() + "/PictureController?action=list&albumId=" + $('#albumId').val() + "&memberId=" + $("memberId").val();
 //}
+function cancel() {
+	deleteAllPreview();
+}
 
+function isFileImage(files) {
+	let flag = true
+	files.forEach(file => {
+		if (file && file['type'].split('/')[0] !== 'image') {
+			return flag = false
+		}
+	})
+	return flag;
+}
+function toGallery() {
+	console.log(getContextPath());
 
-
-//<script>
-//    let files;
+	location.href = getContextPath() + "/PictureController?action=list&albumId=" + $('#albumId').val() + "&memberId=" + $("#memberId").val();
+}
+console.log($('#albumId').attr('value'));
+//取消新增預覽Bug 消除
+//let files;
 //
-//    $(document).ready(() => {
-//        $('#file-zone').click((event) => {
-//            let id = $(event.target).attr('id');
-//            if (id === 'file-zone') {
-//                $('#file-btn').click();
-//            }
-//            return
-//        })
-//
-//        $('#file-btn').change((event) => {
-//            let el = event.target;
-//            // fileList to Array
-//            files = [...el.files];
-//            if (el.files.length >= 10) {
-//                alert('同時只能上傳10筆');
-//                return
-//            }
-//
-//            if (!isFileImage(files)) {
-//                alert('格式不正確')
-//                return
-//            }
-//            buildPreviewSection(files);
-//        })
+//$(document).ready(() => {
+//    $('#file-zone').click((event) => {
+//        let id = $(event.target).attr('id');
+//        if (id === 'file-zone') {
+//            $('#file-btn').click();
+//        }
+//        return
 //    })
 //
-//    function isFileImage(files) {
-//        let flag = true
-//        files.forEach(file => {
-//            if (file && file['type'].split('/')[0] !== 'image') {
-//                return flag = false
-//            }
-//        })
-//        return flag;
-//    }
+//    $('#file-btn').change((event) => {
+//        let el = event.target;
+//        // fileList to Array
+//        files = [...el.files];
+//        if (el.files.length >= 10) {
+//            alert('同時只能上傳10筆');
+//            return
+//        }
 //
-//    function deletePreview(key) {
-//        files.splice(key, 1);
+//        if (!isFileImage(files)) {
+//            alert('格式不正確')
+//            return
+//        }
 //        buildPreviewSection(files);
-//    }
+//    })
+//})
 //
-//    function buildPreviewSection(files) {
-//        let previewHtml = '';
-//        files.forEach((file, key) => {
-//            const url = URL.createObjectURL(file);
-//            previewHtml +=
-//                `
+//function isFileImage(files) {
+//    let flag = true
+//    files.forEach(file => {
+//        if (file && file['type'].split('/')[0] !== 'image') {
+//            return flag = false
+//        }
+//    })
+//    return flag;
+//}
+//
+//function deletePreview(key) {
+//    files.splice(key, 1);
+//    buildPreviewSection(files);
+//}
+//
+//function buildPreviewSection(files) {
+//    let previewHtml = '';
+//    files.forEach((file, key) => {
+//        const url = URL.createObjectURL(file);
+//        previewHtml +=
+//            `
 //            <div class="col-lg-4 col-md-6" style="padding:10px;overflow:hidden;" id="${key}">
 //                <div class="services_thumb img-wraps photos" style="width:400px;height:240px;margin:0px; auto;overflow:hidden;" >
 //                    <span class="closes" title="Delete" onclick="deletePreview(${key})">×</span>
@@ -158,36 +173,32 @@ function save() {
 //                </div>
 //            </div>
 //            `
-//        })
-//        $('#picture-row').html(previewHtml);
-//        if (files.length > 0) {
-//            $('#btn-container').show();
-//        } else {
-//            $('#btn-container').hide()
-//        }
+//    })
+//    $('#picture-row').html(previewHtml);
+//    if (files.length > 0) {
+//        $('#btn-container').show();
+//    } else {
+//        $('#btn-container').hide()
 //    }
+//}
 //
-//    function save() {
-//        //模擬form表單
-//        let myform = new FormData();
-//        files.forEach((file, key) => {
-//            myform.append(`file${key}`, file);
-//        })
-//        myform.append(`albumId`, 9);
+//function save() {
+//    // arraylist to FilesList
+//    $('#upload-input')[0].files = getFileListItems(files);
+//    $('#main-form').submit();
+//}
 //
-//        $.ajax({
-//            url: "/CGA101G2/PictureController",
-//            data: myform,
-//            processData: false,
-//            contentType: false,
-//            type: 'POST',
-//            success: function (dataofconfirm) {
-//                location.href = "/CGA101G2/front/gallery.html"
-//            }
-//        });
-//    }
+//function cancel() {
+//    location.href = "/cga101g2/picture?albumId=" + $('#albumId').val();
+//}
 //
-//    function cancel() {
-//
-//    }
-//</script>
+///**
+// * array to fileList
+// */
+//function getFileListItems (files) {
+//    let fileList = new DataTransfer();
+//    files.forEach(file=>{
+//        fileList.items.add(file)
+//    })
+//    return fileList.files
+//}

@@ -1,21 +1,26 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"
+<%@ page contentType="text/html; charset=UTF-8" language="java"
 	pageEncoding="UTF-8"%>
-<!-- include <head></head> -->
+
+
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/gallery.css">
 
-<!--services img area-->
-<%@ include file="./layout/head.jsp"%>
-<!-- include  common JS-->
+<%-- <%=request.getAttribute("memberId")%> --%>
 
-<!-- include  header -->
-<%@ include file="./layout/header.jsp"%>
-<%@ include file="./layout/commonJS.jsp"%>
-
+<input type="hidden" id="albumId" name="albumId" value="<%=request.getAttribute("albumId")%>">
+<input type="hidden" id="memberId" name="memberId" value="<%=request.getAttribute("memberId")%>">
 <div class="services_gallery mt-100">
 	<div class="container">
+		<div id="button-area" style="display: block; text-align: right">
+			<button class="col-sm-4 upload-button" onclick="toAddPicture()"
+				style="position: relative; right: 0; border-radius: 30px; height: 50px;">Upload
+				Picture</button>
+			<div class="col-sm-4"></div>
+			<button class="col-sm-4 upload-button" onclick="backToAlbums()"
+				style="position: relative; right: 0; border-radius: 30px; height: 50px;">Back
+				To My Albums</button>
+		</div>
 		<div class="shop_toolbar_wrapper">
-
 			<div class="form-select" style="display: flex;">
 				<form action="#" style="display: block;">
 					<select id="pageSize">
@@ -82,7 +87,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="button-area" style="display: none">
+		<div id="button-area2" style="display: none">
 			<button class="col-sm-1.5" onclick="commitDelete()">Delete</button>
 			<span class="col-sm-3"></span>
 			<button class="col-sm-1.5" onclick="deleteAll()">Cancel</button>
@@ -90,13 +95,4 @@
 	</div>
 </div>
 
-<!--our services area-->
-
-<a class="upload-button" id="scrollUp"
-	href="<%=request.getContextPath()%>/front/addPicture-copy.jsp"
-	style="position: fixed; z-index: 2147483647; display: inline; right: 4px; bottom: 300px;">
-	<i class="fa fa-plus"></i>
-</a>
-
-<jsp:include page="./layout/footer.jsp" />
 <script src="<%=request.getContextPath()%>/assets/js/picture/gallery.js"></script>

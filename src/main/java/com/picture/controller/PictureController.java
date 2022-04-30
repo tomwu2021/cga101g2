@@ -53,15 +53,14 @@ public class PictureController extends CommonController {
 		res.setCharacterEncoding("UTF-8");
 
 		String action = req.getParameter("action");
-		albumId =Integer.parseInt(req.getParameter("albumId"));		 // 取得查詢album_id 條件值
-		req.setAttribute("albumId", albumId);
+
 		action = action == null ? "" : action;
 		switch (action) {
 		case "search":
 			search(req, res);
 			break;
 		case "addShow":
-			addShow(req,res);
+			addShow(req, res);
 			break;
 		case "upload":
 			upload(req, res);
@@ -101,12 +100,11 @@ public class PictureController extends CommonController {
 		res.setContentType("application/json; charset=UTF-8");
 //		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
-
+		albumId = Integer.parseInt(req.getParameter("albumId")); // 取得查詢album_id 條件值
 		Integer thisPage = Integer.parseInt(req.getParameter("thisPage")); // 設置當前頁數
 		Integer pageSize = Integer.parseInt(req.getParameter("pageSize")); // 設置每頁顯示筆數
 		String sort = req.getParameter("sort"); // 設置排序方式 (升降冪)
 		String order = req.getParameter("order"); // 設置排序欄位
-
 
 //		String[] pictureIds = (req.getParameter("pictureId")).split(","); //取得picture_id
 		String[] keywords = req.getParameter("fileName").split(" "); // 使用空格切割關鍵字
@@ -128,10 +126,14 @@ public class PictureController extends CommonController {
 
 		PageResult<PictureVO> rpq = pictureService.getPageResult(pq);
 		Gson gson = new Gson();
-		out.print(gson.toJson(rpq));
+		out.write(gson.toJson(rpq));
 	}
-	
+
 	public void addShow(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+		albumId = Integer.parseInt(req.getParameter("albumId")); // 取得查詢album_id 條件值
+		req.setAttribute("albumId", albumId);
+		req.setAttribute("memberId", req.getParameter("memberId"));
+		System.out.println("addShow:"+albumId);
 		super.routeTo(req, res, "My Photos", "addPicture");
 	}
 
@@ -140,9 +142,13 @@ public class PictureController extends CommonController {
 		pictureService.uploadImage(parts, albumId);
 		list(req, res);
 	}
-	
+
 	public void list(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		
+		albumId = Integer.parseInt(req.getParameter("albumId")); // 取得查詢album_id 條件值
+		Integer memberId = Integer.parseInt(req.getParameter("memberId"));
+		req.setAttribute("albumId", albumId);
+		req.setAttribute("memberId", memberId);
+		System.out.println("picList:"+albumId);
 		super.routeTo(req, res, "My Photos", "gallery");
 	}
 

@@ -35,6 +35,7 @@
 	-webkit-filter: brightness(0.5);
 }
 
+
 .img-wraps .closes {
 	position: absolute;
 	top: 0;
@@ -58,7 +59,10 @@
 	display: block;
 	margin: auto;
 }
-
+#file-zone{
+	z-index:100;
+	
+}
 #file-zone>input {
 	display: none
 }
@@ -66,4 +70,31 @@
 .defined-btn {
 	display: none;
 	margin-bottom: 30px;
+}
+.back-button {
+	letter-spacing: 2px;
+	font-size: 20px;
+	font-weight: 500;
+	height: 38px;
+	line-height: 18px;
+	padding: 10px 20px;
+	color: #ffffff;
+	text-transform: uppercase;
+	border-radius: 3px;
+	border: 2px white;
+	transition: all 0.5s;
+	background-color: black;
+}
+
+#button-area {
+	text-align: right;
+	margin-bottom: 30px;
+	background-color: white;
+	border: none;
+	box-shadow: none;
+}
+.back-button:hover {
+	border: 1px #ff8080;
+	box-shadow: 2px 2px 1px 0px #ff8080, -2px -2px 1px 0px #ff8080;
+	background-color: #db3344;
 }
