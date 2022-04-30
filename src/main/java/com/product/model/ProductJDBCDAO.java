@@ -11,6 +11,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.amazonaws.auth.policy.Statement;
 import com.emp.model.EmpVO;
 import com.product_img.model.ProductImgVO;
 
@@ -21,7 +22,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 			+ "VALUES (?, ? , ?, ? , ? , ? , ? , ? , ? , 0 , 0 );";
 	private static final String GET_ALL_STMT = "SELECT product_id, product_name, price ,amount , update_time , "
 			+ "group_amount1 ,group_amount2 ,group_amount3 ,group_price1 , "
-			+ "sort2_id , description, status ,top_status " + "FROM cga_02.product  ; ";
+			+ "sort2_id , description, status ,top_status " + "FROM cga_02.product ORDER BY  product_id DESC ; ";
 	private static final String GET_ONE_STMT = "SELECT product_id, product_name, price ,amount , update_time , "
 			+ "group_amount1 ,group_amount2 ,group_amount3 ,group_price1 , "
 			+ "sort2_id , description, status ,top_status " + "FROM cga_02.product " + "WHERE product_id = ? ; ";
@@ -41,9 +42,11 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 
 	@Override
 	public ProductVO insert(ProductVO productVO) {
+		//設定自動新增的主鍵名稱
+		String columns[] = {"product_id"};
 		try (Connection con = getRDSConnection(); 
-				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
-	
+				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT, columns)) {
+		
 			pstmt.setString(1, productVO.getProductName());
 			pstmt.setInt(2, productVO.getPrice());
 			pstmt.setInt(3, productVO.getAmount());
@@ -56,6 +59,18 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 	
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) insert!");
+			
+			//掘取對應的自增主鍵值
+			int next_product_id = 0 ;
+			ResultSet rs = pstmt.getGeneratedKeys();//取得自動編號
+			if (rs.next()) {
+				 next_product_id = rs.getInt(1);//與上述無關,單純取得自動編號
+				System.out.println("自增主鍵值= " + next_product_id +"(剛新增成功的產品編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			//把取得的主鍵放入productVO,讓servlet可以get
+			productVO.setProductId(next_product_id);
 			return productVO;
 	
 		} catch (SQLException se) {

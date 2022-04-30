@@ -38,10 +38,9 @@ function get_sort1index() {
       for (let i = 0; i < data.length; i++) {
         sort1VO = data[i];
         str += `<div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" name="sort1Id"
-              id="inlineCheckbox1" value="option1"> <label
-              class="form-check-label" for="inlineCheckbox1">${sort1VO.sort1Name}</label>
-          </div> `;
+            <input class="form-check-input" type="checkbox" name="sort1Id" id="inlineCheckbox1" value="${sort1VO.sort1Id}"> 
+            <label class="form-check-label" for="inlineCheckbox1">${sort1VO.sort1Name}</label>
+             </div>`;
       }
       sort2CheckBox.innerHTML += str;
     }

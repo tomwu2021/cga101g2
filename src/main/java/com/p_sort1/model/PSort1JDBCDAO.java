@@ -14,8 +14,23 @@ import com.sort1.model.Sort1VO;
 public class PSort1JDBCDAO implements PSort1DAO_interface{
 
 	@Override
-	public PSort1VO insert(PSort1VO t) {
-		// TODO Auto-generated method stub
+	public PSort1VO insert(PSort1VO pSort1VO) {
+		String INSERT_STMT = "INSERT INTO cga_02.p_sort1(product_id,sort1_id) VALUES (?,?) ; ";
+		try (Connection con = getRDSConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
+	
+			pstmt.setInt(1, pSort1VO.getProductId());
+			pstmt.setInt(2, pSort1VO.getSort1Id());
+	
+			int rowCount = pstmt.executeUpdate();
+			System.out.println("PSort1VO" +rowCount + "row(s) insert!");
+			return pSort1VO;
+	
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

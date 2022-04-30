@@ -15,9 +15,8 @@ public class PSort1Service implements PSort1DAO_interface {
 	}
 	
 	@Override
-	public PSort1VO insert(PSort1VO t) {
-		// TODO Auto-generated method stub
-		return null;
+	public PSort1VO insert(PSort1VO pSort1VO) {
+		return dao.insert(pSort1VO);
 	}
 
 	@Override

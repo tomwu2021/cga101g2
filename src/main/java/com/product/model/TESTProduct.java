@@ -11,17 +11,17 @@ public class TESTProduct {
 		ProductJDBCDAO dao = new ProductJDBCDAO();
 
 		// 新增
-//		ProductVO ProductVO1 = new ProductVO();
-//		ProductVO1.setProductName("9999");
-//		ProductVO1.setPrice(600);
-//		ProductVO1.setAmount(30);
-//		ProductVO1.setGroupAmount1(50);
-//		ProductVO1.setGroupAmount2(60);
-//		ProductVO1.setGroupAmount3(70);
-//		ProductVO1.setGroupPrice1(580);
-//		ProductVO1.setSort2Id(3);
-//		ProductVO1.setDescription("666");
-//		dao.insert(ProductVO1);
+		ProductVO ProductVO1 = new ProductVO();
+		ProductVO1.setProductName("2111");
+		ProductVO1.setPrice(600);
+		ProductVO1.setAmount(30);
+		ProductVO1.setGroupAmount1(50);
+		ProductVO1.setGroupAmount2(60);
+		ProductVO1.setGroupAmount3(70);
+		ProductVO1.setGroupPrice1(580);
+		ProductVO1.setSort2Id(3);
+		ProductVO1.setDescription("666");
+		dao.insert(ProductVO1);
 
 		// 更新 測試名字是空值時會阻擋
 //		ProductVO ProductVO2 = new ProductVO();
@@ -88,23 +88,23 @@ public class TESTProduct {
 //			System.out.println(m1);
 //		}
 		
-		List<ProductVO> list = dao.getAll();
-		for (ProductVO aProductVO : list) {
-			System.out.print(aProductVO.getProductId() + ",");
-			System.out.print(aProductVO.getProductName() + ",");
-			System.out.print(aProductVO.getPrice() + ",");
-			System.out.print(aProductVO.getAmount() + ",");
-			System.out.print(aProductVO.getUpdateTime() + ",");
-			System.out.print(aProductVO.getGroupAmount1() + ",");
-			System.out.print(aProductVO.getGroupAmount2() + ",");
-			System.out.print(aProductVO.getGroupAmount3() + ",");
-			System.out.print(aProductVO.getGroupPrice1() + ",");
-			System.out.print(aProductVO.getSort2Id() + ",");
-			System.out.print(aProductVO.getDescription() + ",");
-			System.out.print(aProductVO.getStatus() + ",");
-			System.out.println(aProductVO.getTopStatus());
-			System.out.println("---------------------");
-		}
-		
+//		List<ProductVO> list = dao.getAll();
+//		for (ProductVO aProductVO : list) {
+//			System.out.print(aProductVO.getProductId() + ",");
+//			System.out.print(aProductVO.getProductName() + ",");
+//			System.out.print(aProductVO.getPrice() + ",");
+//			System.out.print(aProductVO.getAmount() + ",");
+//			System.out.print(aProductVO.getUpdateTime() + ",");
+//			System.out.print(aProductVO.getGroupAmount1() + ",");
+//			System.out.print(aProductVO.getGroupAmount2() + ",");
+//			System.out.print(aProductVO.getGroupAmount3() + ",");
+//			System.out.print(aProductVO.getGroupPrice1() + ",");
+//			System.out.print(aProductVO.getSort2Id() + ",");
+//			System.out.print(aProductVO.getDescription() + ",");
+//			System.out.print(aProductVO.getStatus() + ",");
+//			System.out.println(aProductVO.getTopStatus());
+//			System.out.println("---------------------");
+//		}
+//		
 	}
 }
