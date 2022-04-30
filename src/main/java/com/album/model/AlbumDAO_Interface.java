@@ -16,4 +16,5 @@ public interface AlbumDAO_Interface extends JDBCDAO_Interface<AlbumVO> {
 	public Integer selectDefaultAlbumByMemberId(Integer mid);
 	public List<AlbumVO> getPersonalAlbum(Integer memberId);
 	public AlbumVO getOneById(Integer id);
+	boolean deleteAlbumById(Integer albumId);
 }

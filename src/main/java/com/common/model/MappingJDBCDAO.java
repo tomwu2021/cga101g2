@@ -93,7 +93,7 @@ public class MappingJDBCDAO {
 	}
 
 	public boolean deleteOnePictureMapping(MappingTableDto mtd, Connection con) {
-		String sql = "DELETE FROM `" + mtd.getTableName1() + "` WHERE picture_id = ?";
+		String sql = "DELETE FROM " + mtd.getTableName1() + " WHERE picture_id = ?";
 		if (con != null) {
 			try {
 				PreparedStatement stmt = con.prepareStatement(sql);
@@ -148,5 +148,16 @@ public class MappingJDBCDAO {
 		}
 		return false;
 	}
+	public boolean deleteMultiMapping(MappingTableDto mtd) throws SQLException {
+		Connection con = JDBCConnection.getRDSConnection();
+		if(deleteMultiMapping(mtd,con)) {
+			con.close();
+			return true;
+		}
+		con.close();
+		return false;
+		
+	}
+
 
 }
