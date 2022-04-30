@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.members.model.MembersVO;
+import com.picture.model.PictureVO;
+import com.product.model.ProductVO;
 
 import connection.JDBCConnection;
 
@@ -188,6 +190,78 @@ public class OrdersJDBCDAO implements OrdersDAO_Interface{
 			// TODO: handle exception
 		}		
 		return id;
+	}
+
+
+	@Override
+	public List<OrdersVO> getAllProductByOrderId(Integer orderId) {
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		String getOneByMemberIdSql = "select product_id,product_amount,order_price from order_product where order_id=?;";
+		List<OrdersVO> ordersList=new ArrayList<OrdersVO>();
+		OrdersVO ordersVO=null;
+		try (Connection con=JDBCConnection.getRDSConnection()){
+			ps=con.prepareStatement(getOneByMemberIdSql, Statement.RETURN_GENERATED_KEYS,ResultSet.CONCUR_READ_ONLY);
+			ps.setInt(1, orderId);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				ordersVO=new OrdersVO();
+				ordersVO.setProductAmount(rs.getInt("product_amount"));
+				ordersVO.setOrderPrice(rs.getInt("order_price"));
+				ProductVO productVO=new ProductVO();
+				productVO.setProductId(rs.getInt("product_id"));
+				ordersVO.setProductVO(productVO);
+				ordersList.add(ordersVO);			
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return ordersList;
+	}
+
+
+	@Override
+	public OrdersVO getOrderDetail(Integer orderId, Integer productId) {
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		String getOneByMemberIdSql = "select * "
+				+ "from order_product op "			
+				+ "join orders o on (o.order_id=op.order_id) "
+				+ "join product_img i on(i.product_id=op.product_id) "
+				+ "join picture p on(i.product_img_id=p.picture_id) "
+				+ "join product pd on(pd.product_id=op.product_id)"
+				+ "where op.order_id=? and op.product_id=? limit 1;";
+//		List<OrdersVO> ordersList=new ArrayList<OrdersVO>();
+		OrdersVO ordersVO=null;
+		try (Connection con=JDBCConnection.getRDSConnection()){
+			ps=con.prepareStatement(getOneByMemberIdSql, Statement.RETURN_GENERATED_KEYS,ResultSet.CONCUR_READ_ONLY);
+			ps.setInt(1, orderId);
+			ps.setInt(2, productId);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				ordersVO=new OrdersVO();
+				ordersVO.setProductAmount(rs.getInt("product_amount"));
+				ordersVO.setOrderPrice(rs.getInt("order_price"));				
+				ordersVO.setRecipient(rs.getString("recipient"));
+				ordersVO.setPhone(rs.getString("phone"));
+				ordersVO.setAddress(rs.getString("address"));				
+				ordersVO.setSumPrice(rs.getInt("sum_price"));
+				ordersVO.setBonus(rs.getInt("bonus"));
+				ordersVO.setDiscount(rs.getInt("discount"));
+				ordersVO.setPayPrice(rs.getInt("pay_price"));				
+				ProductVO productVO=new ProductVO();
+				productVO.setProductId(rs.getInt("product_id"));
+				productVO.setProductName(rs.getString("product_name"));
+				productVO.setPrice(rs.getInt("price"));
+				PictureVO pictureVO=new PictureVO();
+				pictureVO.setPreviewUrl(rs.getString("preview_url"));
+				ordersVO.setProductVO(productVO);
+				ordersVO.setPictureVO(pictureVO);			
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return ordersVO;
 	}
 
 
