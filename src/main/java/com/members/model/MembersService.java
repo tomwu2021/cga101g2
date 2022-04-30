@@ -3,6 +3,8 @@ package com.members.model;
 import java.sql.Connection;
 import java.util.*;
 
+import net.bytebuddy.asm.Advice.Return;
+
 public class MembersService {
 
 	private MembersDAO_interface dao;
@@ -90,4 +92,7 @@ public class MembersService {
 		return dao.getOneByAccount(account);
 	}
 
+	public String genAuthCode() {
+		return dao.genAuthCode();
+	}
 }

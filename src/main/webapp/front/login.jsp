@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 
@@ -7,20 +6,23 @@
 <meta charset="UTF-8" />
 <title>PCLUB</title>
 <!-- login 的 css -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/login.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/assets/css/login.css" />
 <!-- register 註冊 css -->
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets/css/register.css">
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/assets/css/register.css">
 
 </head>
 
 <body>
 
-	<!-- 	--------------------------- 登入視窗 -------------------------------- -->
+	<!----------------------------- 登入視窗 ---------------------------------->
 
 	<form method="post" action="member.do" class="login">
 		<div>
 			<h1>登 入 帳 號</h1>
-			<img src="<%=request.getContextPath()%>/assets/img/logo/logo_icon.png">
+			<img
+				src="<%=request.getContextPath()%>/assets/img/logo/logo_icon.png">
 		</div>
 		<h2>
 			帳號<font color=red> ${errorMsgs.account}</font>
@@ -44,7 +46,6 @@
 				<div id="wrapper">
 					<!-- 會員註冊視窗 -->
 					<div id="popup" class="opoups_height_width">帳號註冊</div>
-					<!-- 					<div id="popup" class="opoups_height_width" onclick="registerWindow()">帳號註冊</div> -->
 					<!-- 忘記密碼視窗 -->
 					<div id="popup2" class="opoups_height_width">忘記密碼</div>
 					<div id="popup3" class="opoups_height_width">訪客進入</div>
@@ -53,18 +54,18 @@
 		</div>
 	</form>
 
-
 	<!------------------------------ 註冊視窗 ------------------------------>
 	<div id="box">
 		<h2>
-			帳號<font color=red> ${errorMsgs.errorRegister}</font>
+			帳號
+			<div id="viewAccount" style="display: inline; color: red;"></div>
 		</h2>
-		<input type="text" name="accountRegister" id="accountRegister" /> 
-<!-- 		<input type="button" placeholder="請輸入電子郵件" value="帳號驗證" onclick="checkAccount()"  /> -->
-		<input type="button" placeholder="請輸入電子郵件" value="帳號驗證" onclick="checkAccount();his()" />
-		
-		<div id="viewAccount"></div>
-
+		<input type="text" name="accountRegister" id="accountRegister" /> <input
+			type="button" placeholder="請輸入電子郵件" value="帳號驗證"
+			onclick="checkAccount()" />
+			
+			
+			 
 		
 		
 		<span id="closeBtn">關閉</span>
@@ -83,13 +84,17 @@
 	</div>
 
 
+
 	<!-- 會員註冊 -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!-- login.js -->
-	<script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/login.js"></script>
+	<script type="text/javascript"
+		src="<%=request.getContextPath()%>/assets/js/login.js"></script>
 	<!-- register.js -->
-	<script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/register.js"></script>
+	<script type="text/javascript"
+		src="<%=request.getContextPath()%>/assets/js/register.js"></script>
+
 
 
 </body>

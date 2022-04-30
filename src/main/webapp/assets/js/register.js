@@ -1,24 +1,16 @@
-function his() {
-	history.go(0);
+
+// 開啟 register 視窗
+function registerView() {
+	$("#box").fadeIn("fast");  //淡入
+	//獲取頁面文件的高度
+	var docheight = $(document).height();
+	//追加一個層，使背景變灰(此層z-index:100，介於彈出視窗和底層之間)
+	$("body").append("<div id='greybackground'></div>");
+	$("#greybackground").css({ "opacity": "0.5", "height": docheight });
+	//return false;
 }
 
-
-//window.onload = function() {
-//
-//	$("#box").fadeIn("fast");  //淡入
-//	//獲取頁面文件的高度
-//	var docheight = $(document).height();
-//	//追加一個層，使背景變灰(此層z-index:100，介於彈出視窗和底層之間)
-//	$("body").append("<div id='greybackground'></div>");
-//	$("#greybackground").css({ "opacity": "0.5", "height": docheight });
-//	//return false;
-//
-//}
-
-
-
 // 會員註冊 --------------
-//function registerWindow() {
 $(function() {
 	var screenwidth, screenheight, mytop, getPosLeft, getPosTop
 	screenwidth = $(window).width();
@@ -70,9 +62,6 @@ $(function() {
 	});
 
 });
-//};
-
-
 
 
 // 忘記密碼
@@ -130,11 +119,16 @@ $(function() {
 
 });
 
+function showError(json) {
+	// JSON.parse 將一個 JSON 字串轉換成 JavaScript 的數值或是物件
+	let errorObject = JSON.parse(json);
+	document.getElementById("viewAccount").innerHTML = errorObject.exist;
+}
 
 
-// 傳送資料到 register.jsp
+// 傳送資料到 member.do
 function checkAccount() {
-
+	// 
 	let xhr = null;
 	function createXHR() {
 		if (window.XMLHttpRequest) {
@@ -148,7 +142,9 @@ function checkAccount() {
 
 	xhr.onload = (e) => {
 		if (xhr.status == 200) {
-			document.getElementById("viewAccount").innerHTML = xhr.responseText;
+			//	document.getElementById("viewAccount").innerHTML = xhr.responseText;
+			let errorJson = xhr.responseText;
+			showError(errorJson);
 		} else {
 			alert(xhr.status);
 		}
@@ -162,4 +158,11 @@ function checkAccount() {
 
 	let datasInfo = "accountRegister=" + document.getElementById("accountRegister").value;
 	xhr.send(datasInfo);
+
 }
+
+
+
+
+
+

@@ -3,8 +3,10 @@ package com.members.controller;
 import java.io.*;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.regex.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import com.google.gson.Gson;
 import com.members.model.*;
 import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.WebServlet;
@@ -34,38 +36,71 @@ public class MembersServlet extends HttpServlet {
 
 		// 宣告一個布林值
 		Boolean boo;
+
+		// response，設定回應的格式及編碼
+		res.setContentType("application/json");
+		res.setCharacterEncoding("UTF-8");
+		
+		
+
+		/*************************** 註冊帳號 account password **********************/
+
+		
+		
+		/*************************** 判斷帳號是否存在 **********************/
+		String accountRegister = req.getParameter("accountRegister");
+		// 判斷 accountRegister 是否有值，有值再做判斷
+		if (accountRegister == null || accountRegister.trim().length() == 0) {
+			errorMsgs.put("exist", "請輸入正確帳號");
+			String json = new Gson().toJson(errorMsgs);
+			res.getWriter().write(json);
+		} else {
+			// 呼叫 service，第 37 行有宣告 service 實體，
+			// 我的 getOneByAccount 的回傳值為 Boolean，所以用 Boolean 接，在第 40 行有宣告一個 Boolean
+			boo = memberSvc.getOneByAccount(accountRegister);
+
+			if (boo == true) {
+				errorMsgs.put("exist", "此帳號已註冊");
+				String json = new Gson().toJson(errorMsgs);
+				res.getWriter().write(json);
+			} else {
+				String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}";
+				if( accountRegister.matches(checkEmail) ) {
+					
+					// 用 session 存一組 驗證碼
+//					String verificationCode = memberSvc.genAuthCode();
+//					HttpSession sessionVC = req.getSession();
+//					String svc = (String) sessionVC.getAttribute("checkCodeSession");
+
+					
+					// 將 驗證碼 傳送至 Email
+//					javaMail(verificationCode);
+					
+					errorMsgs.put("exist", "格式正確，寄送 Email 至此帳號");
+					String json = new Gson().toJson(errorMsgs);
+			    	res.getWriter().write(json);
+			    	
+				}else {
+					errorMsgs.put("exist", "此帳號格式錯誤");
+					String json = new Gson().toJson(errorMsgs);
+			    	res.getWriter().write(json);
+				}
+			}
+		}
+		
 		
 
 
-//		/*************************** 判斷帳號是否存在 **********************/
-		String accountRegister = req.getParameter("accountRegister");
-		// 判斷 accountRegister 是否有值，有值再做判斷
-		if (!(accountRegister == null || accountRegister.trim().length() == 0)) {
-			System.out.println("代表accountRegister有值，要做判斷");
-			boo = memberSvc.getOneByAccount(accountRegister);
-			if (boo == false) {
-				// 無此帳號，寄送 javaMail
-				System.out.println("無此帳號，寄送 javaMail");
-			} else if (boo == true) {
-				System.out.println("帳號已存在");
-				errorMsgs.put("errorRegister", "帳號已存在");
-				RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
-				failureView.forward(req, res);
-				return;// 程式中斷
-			}
-		} 
-
+		
+		
 		/*************************** 登入判斷 account password **********************/
 		if ("forLogin".equals(action)) {
-
-//			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/*************************** 接收參數 **********************/
 				String strAccount = req.getParameter("account");
 				String strPassword = req.getParameter("passowrd");
-				
+
 				/*************************** 檢查輸入是否有效 **********************/
 				if (strAccount == null || (strAccount.trim()).length() == 0) {
 					errorMsgs.put("account", "請輸入會員帳號");
@@ -83,13 +118,9 @@ public class MembersServlet extends HttpServlet {
 				/*************************** 資料庫是否有此筆資料 **********************/
 				MembersVO membersVO = memberSvc.selectForLogin(strAccount, strPassword);
 
-
 				if (membersVO != null) {
-					
-					
-					HttpSession session= req.getSession();
+					HttpSession session = req.getSession();
 					session.setAttribute("membersVO", membersVO);
-					
 					req.setAttribute("membersVO", membersVO); // 資料庫取出的 membersVO 物件，存入 req
 					String url = "/front/listOneMember.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
@@ -119,50 +150,8 @@ public class MembersServlet extends HttpServlet {
 
 		}
 
-//		/*************************** 判斷此帳號是否存在 **********************/
-//		if ("checkAccount".equals(action)) {
-//			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//			
-//			try {
-//				/*************************** 接收參數 **********************/
-//				String strAccount = req.getParameter("account");
-//
-//				if (strAccount == null || (strAccount.trim()).length() == 0) {
-//					errorMsgs.put("registerAccount", "請輸入會員帳號");
-//					errorMsgs.put("errorAccount", strAccount);
-//				}
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
-//					failureView.forward(req, res);
-//					return;// 程式中斷
-//				}
-//				
-//			} catch (Exception e) {
-//				// TODO: handle exception
-//			}
-//
-//		}
-
-		/*************************** 註冊帳號 account password **********************/
-//		至少八個字符，至少一個字母和一個數字：
-//		"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-
-//		if ("memberRegister".equals(action)) {
-//			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//			
-//			try {
-//				/*************************** 接收參數 **********************/
-//				String strAccount = req.getParameter("account");
-//
-//		}
-
 		/*************************** 取得一筆會員資料 **********************/
 		if ("getOne_For_Display".equals(action)) {
-
-//			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
@@ -171,7 +160,6 @@ public class MembersServlet extends HttpServlet {
 					errorMsgs.put("memberId", "請輸入會員編號");
 				}
 
-				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/front/member_select.jsp");
 					failureView.forward(req, res);
@@ -191,13 +179,11 @@ public class MembersServlet extends HttpServlet {
 				/***************************
 				 * 2.開始查詢資料 呼叫 DAO
 				 *****************************************/
-//				MembersService memberSvc = new MembersService();
 				MembersVO membersVO = memberSvc.getOneById(memberId);// memberSvc.getOneByName(name)
 				if (membersVO == null) {
 					errorMsgs.put("memberId", "查無資料");
 				}
 
-				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/front/member_select.jsp");
 					failureView.forward(req, res);
@@ -219,7 +205,6 @@ public class MembersServlet extends HttpServlet {
 
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 
-//			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
@@ -262,15 +247,11 @@ public class MembersServlet extends HttpServlet {
 
 		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 
-//			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer memberId = Integer.valueOf(req.getParameter("memberId"));
 				Integer status = Integer.valueOf(req.getParameter("status"));
 				/*************************** 2.開始查詢資料 ****************************************/
-//				MembersService memberSvc = new MembersService();
 
 				MembersVO memberVO = memberSvc.getOneById(memberId);
 
@@ -294,9 +275,6 @@ public class MembersServlet extends HttpServlet {
 		}
 
 		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
-
-//			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/

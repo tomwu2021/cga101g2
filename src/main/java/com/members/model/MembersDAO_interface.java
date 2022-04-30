@@ -40,5 +40,8 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 	
 	// 判斷此帳號在資料庫使否有資料
 	Boolean getOneByAccount(String account);
+	
+	// 驗證碼
+	public String genAuthCode();
 
 }
