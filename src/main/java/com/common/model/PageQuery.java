@@ -300,9 +300,9 @@ public class PageQuery {
      */
     //baseSQL來自DAO 事先寫好的SQL指令基底，組裝完成後，Limit 參數由各DAO實作
     public String getQuerySQL(@NotNull String baseSQL) {
-        String querySQL = baseSQL + this.whereSQL + this.getOrderBySQL() + " LIMIT ?,? ";
-        querySQL = querySQL.replaceFirst("\\?", this.getLimitStart().toString());
-        querySQL = querySQL.replaceFirst("\\?", this.getLimitEnd().toString());
+        String querySQL = baseSQL + this.whereSQL + this.getOrderBySQL();
+        querySQL += " LIMIT " + this.getLimitStart().toString() + ",";
+        querySQL += this.getLimitEnd().toString();
         System.out.println("querySQL> " + querySQL);
         return querySQL;
     }
