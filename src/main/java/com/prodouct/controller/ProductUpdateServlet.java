@@ -1,12 +1,9 @@
 package com.prodouct.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,15 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.product.model.ProductService;
+import com.product.model.ProductVO;
 
 /**
  * Servlet implementation class InsertServlet
  */
-@WebServlet("/back/shop/productInsert")
+@WebServlet("/back/shop/productUpdateServlet")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 //當數據量大於fileSizeThreshold值時，內容將被寫入磁碟
 //上傳過程中無論是單個文件超過maxFileSize值，或者上傳的總量大於maxRequestSize 值都會拋出IllegalStateException 異常
-public class ProductInsertServlet extends HttpServlet {
+public class ProductUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -39,23 +37,62 @@ public class ProductInsertServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+//		列舉client送來的所有請求參數名稱
+//		try{
+//			String name; 
+//			Enumeration<?>  pNames=req.getParameterNames(); 
+//			 while(pNames.hasMoreElements()){ 
+//			  name=(String)pNames.nextElement();
+//			  System.out.println(name+"="+req.getParameter(name));
+//			  }
+//			}catch(Exception e){
+//			System.out.println(e.toString());
+//			}
+		
+		if ("getOne_For_Update".equals(action)) { // 來自listAllProduct.jsp的請求
 
-		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+//			try {
+				/***************************1.接收請求參數****************************************/
+				Integer productId = Integer.valueOf(req.getParameter("productId"));
+				
+				/***************************2.開始查詢資料****************************************/
+				ProductService pdSvc = new ProductService();
+				ProductVO pdVO = pdSvc.getOneProductByid(productId);
+								
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				String param = "?productId="  +pdVO.getProductId()+
+						       "&productName="  +pdVO.getProductName()+
+						       "&price="    + pdVO.getPrice()+
+						       "&amount="   + pdVO.getAmount()+
+						       "&sort2Id="  + pdVO.getSort2Id()+
+						       "&updateTime="  + pdVO.getUpdateTime()+
+						       "&groupPrice1=" + pdVO.getGroupPrice1()+
+								"&groupAmount1=" + pdVO.getGroupAmount1()+
+								"&groupAmount2=" + pdVO.getGroupAmount2()+
+								"&groupAmount3=" + pdVO.getGroupAmount3();
+				String url = "/back/shop/updateProduct.jsp"+param;
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理**********************************/
+//			} catch (Exception e) {
+//				errorMsgs.put("無法取得資料",e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("listAllPtoduct.jsp");
+//				failureView.forward(req, res);
+//			}
+		}
+		
+		
+
+		if ("update".equals(action)) { // 來自updateProduct.jsp的請求
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-//			列舉client送來的所有請求參數名稱
-//			try{
-//				String name; 
-//				Enumeration<?>  pNames=req.getParameterNames(); 
-//				 while(pNames.hasMoreElements()){ 
-//				  name=(String)pNames.nextElement();
-//				  System.out.println(name+"="+req.getParameter(name));
-//				  }
-//				}catch(Exception e){
-//				System.out.println(e.toString());
-//				}
 
 //			try {
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/

@@ -58,7 +58,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 			pstmt.setString(9, productVO.getDescription());
 	
 			int rowCount = pstmt.executeUpdate();
-			System.out.println(rowCount + "row(s) insert!");
+			System.out.println("ProductVO"+rowCount + "row(s) insert!");
 			
 			//掘取對應的自增主鍵值
 			int next_product_id = 0 ;

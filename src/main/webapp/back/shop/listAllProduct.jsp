@@ -106,55 +106,49 @@ pageContext.setAttribute("list", list);
 <c:forEach var="productVO" items="${list}">
 															<tr class="text-center">
 															<td>${productVO.productId}</td>
-<c:if test="${productVO.pictureVO.size() != 0 }">															
+<c:set var="productImgVOList" scope="page" value="${productVO.productImgVOList}" ></c:set>
+<c:if test="${productImgVOList.size() != 0 }">
+
 															<td style="width: 6%;"><img
-																src="${productVO.pictureVO.get(0).previewUrl}"
+																src="<%=request.getContextPath()%>/shop/getPdImgVObyproduct_img_id?product_img_id=${productImgVOList.get(0).productImgId}"
 																alt="..." class="img-thumbnail"></td>
-</c:if>																
+</c:if>	
 <!-- 此段是防止沒有照片所以跑版的判斷 開始-->
-<c:if test="${productVO.pictureVO.size() == 0 }">															
+<c:if test="${productImgVOList.size() == 0 }">															
 															<td style="width: 6%;"><img
 																src="https://fakeimg.pl/350x200/ff0000/000"
 																alt="..." class="img-thumbnail"></td>
 </c:if>
 <!-- 此段是防止沒有照片所以跑版的判斷	 結束-->
 															<td>${productVO.productName}</td>
-<%-- 															<td><p>${sort2VO.sort1VOList}<p></td> --%>
-<!-- 1.使用jsp:useBean創建Service實體 -->
-<jsp:useBean id="pSort1Svc" scope="page" class="com.p_sort1.model.PSort1Service" />
-<!-- 2.使用Service實體的方法計算 返回的實體自己的JDBC方法-->
-<c:set var="sort1VOList" scope="page" value="${pSort1Svc.findSort1VOByproductId(productVO.productId)}" />
+															
+															
+<c:set var="sort1VOList" scope="page" value="${productVO.sort1VOList}" />
 															<td>
 <!-- 3.看不到實體不知道抓去哪裡? 改寫VO的Tostring方法,慢慢嘗試,了解輸出的格式(類似JSON)-->
-<c:if test="${pSort1VOList.size() !=0 }">
+<c:if test="${sort1VOList.size() !=0 }">
 <c:forEach var="sort1VO" items="${sort1VOList}">
 															
-<%-- <c:if test="${sort2VO.sort1VOList.get(0).sort1Name != null}"> --%>
 															<span>${sort1VO.sort1Name}&nbsp;&nbsp;</span>
 </c:forEach>															
-<%-- </c:if>		 --%>
-<%-- <c:if test="${sort2VO.sort1VOList.get(1)  != null}"> --%>
-<%-- 															<p>${sort2VO.sort1VOList.get(1).sort1Name}<p>	 --%>
-<%-- </c:if>	 --%>
 </c:if> 		
 															</td>
-<!-- 1.使用jsp:useBean創建Service實體 -->
-<jsp:useBean id="sort2Svc" scope="page" class="com.sort2.model.Sort2Service" />
-<!-- 2.使用Service實體的方法計算 返回的實體自己的JDBC方法-->
-<c:set var="sort2VO" scope="page" value="${sort2Svc.getOneById(productVO.sort2Id)}" />
+<c:set var="sort2VO" scope="page" value="${productVO.sort2VO}" />															
 															<td>${sort2VO.sort2Name}</td>
 															<td>${productVO.amount}</td>
 															<td>${productVO.price}元</td>
-														
-															<td>
+															
 <c:choose>
-<c:when test="${productVO.status == 0}">																
+<c:when test="${productVO.status == 0}">					
+															<td>											
 															未上架
 </c:when>
-<c:when test="${productVO.status == 1}">																
+<c:when test="${productVO.status == 1}">						
+															<td class="table-primary">										
 															一般商品上架
 </c:when>	
 <c:when test="${productVO.status == 2}">																
+															<td class="table-warning">
 															一般與團購上架
 </c:when>														
 </c:choose>															
@@ -171,8 +165,17 @@ pageContext.setAttribute("list", list);
 																	</div>
 															</form>
 															</td>
-															<td>未推薦
-																<form >
+<c:choose>
+<c:when test="${productVO.topStatus == 0}">					
+															<td>
+															未推薦
+</c:when>	
+<c:when test="${productVO.topStatus == 1}">					
+															<td class="table-primary">										
+															推薦商品
+</c:when>													
+</c:choose>																
+																<form>
 																	<select class="custom-select custom-select-sm"
 																		style="width: 70%" id="inlineFormCustomSelect">
 <!-- 																	<option selected>Choose...</option> -->
@@ -184,7 +187,12 @@ pageContext.setAttribute("list", list);
 																	</div>
 																</form>
 															</td>
-															<td><button type="submit" class="btn btn-danger btn-sm">修改</button></td>
+													<td>	
+															<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/back/shop/productUpdateServlet">
+															<button type="submit" class="btn btn-danger btn-sm">修改</button>
+															<input type="hidden" name="productId"  value="${productVO.productId}">
+			    									 		<input type="hidden" name="action" value="getOne_For_Update"></FORM>		
+													</td>	
 											</c:forEach>	
 													
 															</tbody>

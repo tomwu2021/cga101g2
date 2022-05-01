@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
@@ -15,7 +14,7 @@ pageContext.setAttribute("sort2list", sort2list);
 <!DOCTYPE html>
 <html>
 <head>
-<title>新增商品</title>
+<title>單筆商品更新</title>
 <!-- 共用的CSS startr-->
 <%@include file="/back/layout/commonCSS.jsp"%>
 <!-- 共用的CSS end-->
@@ -24,6 +23,8 @@ pageContext.setAttribute("sort2list", sort2list);
 <!-- 圖片上傳 -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/shop/upimg/css/upimg.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/assets/shop/upimg2/upimg2.css">
 <!-- 額外添加的CSS -->
 </head>
 <body>
@@ -52,13 +53,16 @@ pageContext.setAttribute("sort2list", sort2list);
 
 								<!--! Horizontal Form-->
 								<div class="col-lg-12 mb-5">
-									<FORM METHOD="get" ACTION="productInsert" name="form1">
+									<FORM METHOD="post" ACTION="productInsert" name="form1" enctype="multipart/form-data">
 										<div class="card">
 											<div class="card-header">
 												<h3 class="h6 text-uppercase mb-0">新增商品</h3>
 											</div>
 											<div class="card-body">
-												<p>商品編號??? 最後更新時間:????</p>
+												<p>商品編號 : ${param.productId}  &emsp; 
+												最後更新時間 :<!-- 字串轉日期 -->
+												<fmt:parseDate var="dateObj" value="${param.updateTime}" type="DATE" pattern="yyyy-MM-dd"/>
+												<fmt:formatDate value='${dateObj}' pattern=' yyyy MMM dd EEEE KK MM  ' />
 												<div class="row">
 													<div class="col-lg-6 mb-5">
 														<form class="form-horizontal">
@@ -114,20 +118,24 @@ pageContext.setAttribute("sort2list", sort2list);
 															<div class="form-group row">
 																<label class="col-md-3 form-control-label">對應主分類</label>
 																<div class="col-md-6 m-auto" id="sort2CheckBox">
-<jsp:useBean id="smixSvc" scope="page" class="com.sort_mix.model.SortMixService" />
-<c:set var="sort1VOlist" scope="page" value="${smixSvc.getSort1VOsBySort2Id(sort2list.get(0).sort2Id)}"></c:set>
-<c:if test = "${sort1VOlist.size() !=0}">
-<c:forEach var="sort1VO" items="${sort1VOlist}">
-																	<div class="form-check form-check-inline">
-																		<input class="form-check-input" type="checkbox"
-																			name="sort1Id" id="inlineCheckbox1" value="${sort1VO.sort1Id}">
-																		<label class="form-check-label" for="inlineCheckbox1">${sort1VO.sort1Name}</label>
-																	</div>	
-</c:forEach>																	
-</c:if>															
+																	<jsp:useBean id="smixSvc" scope="page"
+																		class="com.sort_mix.model.SortMixService" />
+																	<c:set var="sort1VOlist" scope="page"
+																		value="${smixSvc.getSort1VOsBySort2Id(sort2list.get(0).sort2Id)}"></c:set>
+																	<c:if test="${sort1VOlist.size() !=0}">
+																		<c:forEach var="sort1VO" items="${sort1VOlist}">
+																			<div class="form-check form-check-inline">
+																				<input class="form-check-input" type="checkbox"
+																					name="sort1Id" id="inlineCheckbox1"
+																					value="${sort1VO.sort1Id}"> <label
+																					class="form-check-label" for="inlineCheckbox1">${sort1VO.sort1Name}</label>
+																			</div>
+																		</c:forEach>
+																	</c:if>
 																</div>
 															</div>
-															<small class="form-text text-muted ml-3 text-danger justify-content-center ">${errorMsgs.sort1Id}</small>
+															<small
+																class="form-text text-muted ml-3 text-danger justify-content-center ">${errorMsgs.sort1Id}</small>
 														</form>
 													</div>
 													<!-- !右側團購欄位-->
@@ -187,8 +195,9 @@ pageContext.setAttribute("sort2list", sort2list);
 															<label class="col-md-1 form-control-label">商品敘述</label>
 															<div class="col-md-8">
 																<div class="mb-3">
-																	<textarea class="form-control" id="exampleFormControlTextarea1" rows="5"  
-																	name="description"  placeholder="輸入商品敘述">${param.description}</textarea>
+																	<textarea class="form-control"
+																		id="exampleFormControlTextarea1" rows="5"
+																		name="description" placeholder="輸入商品敘述">${param.description}</textarea>
 																</div>
 																<small class="form-text text-muted ml-3">限制至少20字以上至多300個字以下</small>
 																<small class="form-text text-muted ml-3 text-danger">${errorMsgs.description}</small>
@@ -199,7 +208,6 @@ pageContext.setAttribute("sort2list", sort2list);
 
 												<div class="row">
 													<div class="col-lg-12 mb-5">
-
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">商品照片</label>
 															<div class="col-md-6"></div>
@@ -207,63 +215,65 @@ pageContext.setAttribute("sort2list", sort2list);
 														<div class="form-group">
 															<div class="col-md-8">
 																<!--weui-uploader 照片上传功能-->
-																<div class="picDiv">
-																	<div class="addImages">
-																		<!--multiple属性可选择多个图片上传-->
-																		<input type="file" class="file" id="fileInput"
-																			multiple
-																			accept="image/png, image/jpeg, image/gif, image/jpg" />
-																		<div class="text-detail">
-																			<span>+</span>
-																			<p>點擊上傳</p>
-																		</div>
-																	</div>
+																<!--上傳圖片的按鈕-->
+																<label class="btn btn-info"> <input type="file" name="img" accept="image/*" multiple="multiple"
+																	id="showimg" style="display: none;" multiple /> 上傳圖片
+																</label>
+																<div class='row'>
+																	<div id='previewMultiple'></div>
 																</div>
-																<!--weui-uploader 照片上传功能 END-->
-
-																<!--! 提交按鈕開始 -->
-																<div class="form-group row">
-																	<input type="submit" value="送出新增"
-																		class="btn btn-primary"> <input type="hidden"
-																		name="action" value="insert">
-																	<div class="col-md-6"></div>
-																</div>
-																<!--! 提交按鈕開始 -->
+																<small class="form-text text-muted ml-3 text-danger">${errorMsgs.img}</small>
 															</div>
 														</div>
+														<div class="form-group">
+															<div class="col-md-6"></div>
+															<input type="submit" value="送出新增" class="btn btn-primary">
+															<input type="hidden" name="action" value="insert">
+														</div>
 													</div>
+													<!-- 存放預覽圖片 -->
+														<!--weui-uploader 照片上传功能 END-->
+													</div>
+													<!--! 提交按鈕開始 -->
+													<!--! 提交按鈕開始 -->
 												</div>
 											</div>
+					</FORM>
 										</div>
-										<input type="hidden" name="action" value="insert">
-									</FORM>
-						</section>
-						<!--! ========內容結束========-->
-
-
-						<!-- 共通的footer start-->
-						<%@include file="/back/layout/footer.jsp"%>
-						<!-- 共通的footer end-->
+								</div>
+							</div>
 					</div>
-				</div>
+			</section>
+			<!--! ========內容結束========-->
 
 
-				<!-- 共用的JS -->
-				<%@include file="/back/layout/commonJS.jsp"%>
-				<!-- 共用的JS -->
+			<!-- 共通的footer start-->
+			<%@include file="/back/layout/footer.jsp"%>
+			<!-- 共通的footer end-->
+		</div>
+	</div>
 
-				<!-- 額外添加的JS -->
-				<!-- 	路徑舉例 -->
-				<!-- 	圖片上傳 -->
-				<script
-					src="<%=request.getContextPath()%>/assets/shop/upimg/js/upimg.js">
-					
-				</script>
-				<script
-					src="<%=request.getContextPath()%>/assets/shop/addproduct/js/sort1VOCheckBox.js">
-					
-				</script>
-				<!-- 額外添加的JS -->
+
+	<!-- 共用的JS -->
+	<%@include file="/back/layout/commonJS.jsp"%>
+	<!-- 共用的JS -->
+
+	<!-- 額外添加的JS -->
+	<!-- 	路徑舉例 -->
+	<!-- 	圖片上傳 -->
+	<script
+		src="<%=request.getContextPath()%>/assets/shop/upimg/js/upimg.js">
+		
+	</script>
+	<script
+		src="<%=request.getContextPath()%>/assets/shop/upimg2/upimg2.js">
+		
+	</script>
+	<script
+		src="<%=request.getContextPath()%>/assets/shop/addproduct/js/sort1VOCheckBox.js">
+		
+	</script>
+	<!-- 額外添加的JS -->
 </body>
 
 </html>

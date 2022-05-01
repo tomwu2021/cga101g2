@@ -21,22 +21,25 @@ public class ProductImgService implements ProductImgDAO_interface{
 	}
 	
 
-	//用商品id找到照片的"集合"們
+	//用商品id找到PictureVO的"集合"們
 	@Override
 	public List<PictureVO> getPicVOsByProductId(Integer productId) {
 		System.out.println("ProductImgService執行");
 		return dao.getPicVOsByProductId(productId);
 	}
-	
+	//用商品id找到ProductImgVO的"集合"們
+	@Override
+	public List<ProductImgVO> getProductImgVOsByProductId(Integer productId) {
+		return dao.getProductImgVOsByProductId(productId);
+	}
 	
 	public void deleteProductImgById(ProductImgVO productImgid) {
 		dao.delete(productImgid);
 	}
 
 	@Override
-	public ProductImgVO insert(ProductImgVO t) {
-		// TODO Auto-generated method stub
-		return null;
+	public ProductImgVO insert(ProductImgVO productImgVO) {
+		return dao.insert(productImgVO);
 	}
 
 	@Override
@@ -53,9 +56,10 @@ public class ProductImgService implements ProductImgDAO_interface{
 
 	@Override
 	public ProductImgVO getOneById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getOneById(id);
 	}
+
+
 	
 }
 		

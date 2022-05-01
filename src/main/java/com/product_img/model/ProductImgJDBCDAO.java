@@ -7,27 +7,36 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
-import com.emp.model.EmpVO;
 import com.picture.model.PictureVO;
-import com.product.model.ProductVO;
 
 public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 
 	public ProductImgVO insert(ProductImgVO pImgVO) {
-		String INSERT_STMT = "INSERT INTO product_img(product_img_id,product_id) "
+		//設定自動新增的主鍵名稱
+		String columns[] = {"product_img_id"};
+		String INSERT_STMT = "INSERT INTO product_img(product_id ,img) "
 				 			+ "VALUES(?,?)";
-		try (Connection con = getRDSConnection(); PreparedStatement stmt = con.prepareStatement(INSERT_STMT)) {
-
-			stmt.setInt(1, pImgVO.getProductId());
-			stmt.setInt(2, pImgVO.getProductImgId());
-			stmt.execute();
-//			ResultSet rs = stmt.getGeneratedKeys();//獲得自動新增的主鍵
+		try (Connection con = getRDSConnection(); 
+				PreparedStatement stmt = con.prepareStatement(INSERT_STMT, columns)) {
+			stmt.setInt(1, pImgVO.getProductId());			stmt.setBytes(2, pImgVO.getImage());
+			
+//			stmt.execute(); !!就是你重複提交資料 懷懷!!!!
+			
 			int rowCount = stmt.executeUpdate();
-			System.out.println(rowCount + "row(s) insert!");
+			System.out.println("ProductImgVO "+rowCount + "row(s) insert!");
+			
+			//掘取對應的自增主鍵值
+			int next_product_img_id = 0 ;
+			ResultSet rs = stmt.getGeneratedKeys();//取得自動編號
+			if (rs.next()) {
+				next_product_img_id = rs.getInt(1);//與上述無關,單純取得自動編號
+				System.out.println("自增主鍵值= " + next_product_img_id +"(剛新增成功的照片編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			
 			return pImgVO;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -64,7 +73,7 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 	@Override
 	public ProductImgVO getOneById(Integer id) {
 		String GET_ONE_STMT =
-				"SELECT product_img_id,product_id "
+				"SELECT product_img_id,product_id,img "
 				+ "FROM cga_02.product_img  "
 				+ "WHERE product_img_id = ? ";
 		try (Connection connection = getRDSConnection();
@@ -76,6 +85,7 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 				ProductImgVO pImgVO = new ProductImgVO();
 				pImgVO.setProductImgId(rs.getInt("product_img_id"));
 				pImgVO.setProductId(rs.getInt("product_id"));
+				pImgVO.setImage(rs.getBytes("img"));
 				return pImgVO;
 			}
 	
@@ -90,7 +100,7 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 	@Override
 	public List<ProductImgVO> getAll() {
 	final String GET_ALL_STMT =
-			"SELECT product_img_id,product_id "
+			"SELECT product_img_id,product_id,img  "
 			+ "FROM product_img  "
 			+ "order by product_img_id " ;
 			try (Connection con = getRDSConnection();
@@ -99,11 +109,12 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 				List<ProductImgVO> list = new ArrayList<ProductImgVO>();
 				
 				while (rs.next()) {
-					ProductImgVO pvo= new ProductImgVO();
-					pvo.setProductImgId(rs.getInt("product_img_id"));
-					pvo.setProductId(rs.getInt("product_id"));
+					ProductImgVO pImgVO= new ProductImgVO();
+					pImgVO.setProductImgId(rs.getInt("product_img_id"));
+					pImgVO.setProductId(rs.getInt("product_id"));
+					pImgVO.setImage(rs.getBytes("img"));
 					
-					list.add(pvo);
+					list.add(pImgVO);
 				}
 				return list;
 			} catch (SQLException se) {
@@ -121,12 +132,12 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 	@Override
 	public List<PictureVO> getPicVOsByProductId(Integer productId) {
 
-		final String GET_Imgs_ByPID_STMT = "SELECT * FROM product_img JOIN picture "
+		final String GET_PicVOs_ByPID_STMT = "SELECT * FROM product_img JOIN picture "
 										+ "ON product_img_id = picture_id "
 										+ "WHERE product_id = ?; ";
 		List<PictureVO> list = new ArrayList<PictureVO>();
 		try (Connection con = getRDSConnection(); 
-				PreparedStatement stmt = con.prepareStatement(GET_Imgs_ByPID_STMT)) {
+				PreparedStatement stmt = con.prepareStatement(GET_PicVOs_ByPID_STMT)) {
 
 			stmt.setInt(1, productId);
 			ResultSet rs = stmt.executeQuery();
@@ -156,5 +167,41 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 		}
 		return null;
 	}
+
+	@Override
+	public List<ProductImgVO> getProductImgVOsByProductId(Integer productId) {
+
+		final String GET_PImgVOs_ByPID_STMT = 
+				"SELECT product_img_id,product_id,img "
+				+ "FROM cga_02.product_img  "
+				+ "WHERE product_id = ? "
+				+ "ORDER BY product_img_id ; " ;
+		List<ProductImgVO> list = new ArrayList<ProductImgVO>();
+		try (Connection con = getRDSConnection(); 
+				PreparedStatement stmt = con.prepareStatement(GET_PImgVOs_ByPID_STMT)) {
+
+			stmt.setInt(1, productId);
+			ResultSet rs = stmt.executeQuery();
+	
+			while (rs.next()) {
+				ProductImgVO PdImgVO= new ProductImgVO();
+				PdImgVO.setProductImgId(rs.getInt("product_img_id"));
+				PdImgVO.setProductId(rs.getInt("product_id"));
+				PdImgVO.setImage(rs.getBytes("img"));
+				list.add(PdImgVO); // Store the row in the vector
+			}
+			System.out.println("Size = " + list.size());
+			
+			System.out.println("List<PictureVO> getPicVOsByProductId(Integer productId) 執行成功");
+			return list;
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+//			throw new RuntimeException("A database error occured. " + e.getMessage());
+		}
+		return null;
+	}
+	
 
 }
