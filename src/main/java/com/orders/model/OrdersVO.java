@@ -2,6 +2,10 @@ package com.orders.model;
 
 import java.sql.Timestamp;
 
+import com.picture.model.PictureVO;
+import com.product.model.ProductVO;
+import com.product_img.model.ProductImgVO;
+
 public class OrdersVO implements java.io.Serializable{
 	 private Integer orderId;
 	 private Integer memberId;
@@ -14,6 +18,12 @@ public class OrdersVO implements java.io.Serializable{
 	 private Integer payPrice;
 	 private Integer status;
 	 private Timestamp createTime;
+	 //在mapping表欄位，直接宣告在這裡做
+	 private Integer productAmount;
+	 private Integer orderPrice;
+	 private ProductVO productVO;
+	 private PictureVO pictureVO;
+	 
 	 
 	 public OrdersVO() {
 
@@ -105,6 +115,43 @@ public class OrdersVO implements java.io.Serializable{
 
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
+	}
+	
+	
+
+	public ProductVO getProductVO() {
+		return productVO;
+	}
+
+	public void setProductVO(ProductVO productVO) {
+		this.productVO = productVO;
+	}
+	
+	
+	public PictureVO getPictureVO() {
+		return pictureVO;
+	}
+
+	public void setPictureVO(PictureVO pictureVO) {
+		this.pictureVO = pictureVO;
+	}
+	
+	
+
+	public Integer getProductAmount() {
+		return productAmount;
+	}
+
+	public void setProductAmount(Integer productAmount) {
+		this.productAmount = productAmount;
+	}
+
+	public Integer getOrderPrice() {
+		return orderPrice;
+	}
+
+	public void setOrderPrice(Integer orderPrice) {
+		this.orderPrice = orderPrice;
 	}
 
 	@Override

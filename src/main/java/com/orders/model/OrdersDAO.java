@@ -50,6 +50,20 @@ public class OrdersDAO implements OrdersDAO_Interface{
 	}
 
 
+	@Override
+	public List<OrdersVO> getAllProductByOrderId(Integer orderId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public OrdersVO getOrderDetail(Integer orderId, Integer productId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 	
 

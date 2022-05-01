@@ -3,6 +3,9 @@ package com.allOrders.controller;
 
 
 import java.io.IOException;
+import java.net.MulticastSocket;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,10 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.emp.model.EmpService;
-import com.emp.model.EmpVO;
 import com.group_buyer.model.GroupBuyerService;
 import com.group_buyer.model.GroupBuyerVO;
+import com.orders.model.OrdersService;
+import com.orders.model.OrdersVO;
 @WebServlet("/member/order.do")
 public class OrderDetails extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -24,7 +27,8 @@ public class OrderDetails extends HttpServlet{
 		res.setContentType("text/html;charset=UTF-8");
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		if (true && !"update".equals(action)) {
+		//要再改
+		if (true && !"update".equals(action)&& !"groupOrderDeatil".equals(action)&& !"orderDeatil".equals(action)) {
 		Integer memberId = Integer.parseInt(req.getParameter("memberId"));
 		Integer groupOederId = Integer.parseInt(req.getParameter("groupOrderId"));
 		GroupBuyerVO groupBuyerVO=new GroupBuyerVO();
@@ -59,6 +63,45 @@ public class OrderDetails extends HttpServlet{
 			req.setAttribute("groupBuyerVO", groupBuyerVO2);
 			
 			String url = "/front/order/showChangeOrder.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); 
+			successView.forward(req, res);
+
+			}
+		
+		if ("groupOrderDeatil".equals(action)) {
+			System.out.println("有執行");
+			Integer memberId = Integer.valueOf(req.getParameter("memberId").trim());	
+			Integer groupOrderId = Integer.valueOf(req.getParameter("groupOrderId").trim());
+			GroupBuyerService groupBuyerService=new GroupBuyerService();
+			//查詢回傳資料
+			GroupBuyerVO groupBuyerVO2=groupBuyerService.selectOrderDetail(groupOrderId, memberId);	
+			req.setAttribute("groupBuyerVO", groupBuyerVO2);
+			
+			String url = "/front/order/showChangeOrder.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); 
+			successView.forward(req, res);
+
+			}
+		if ("orderDeatil".equals(action)) {
+			System.out.println("有執行");	
+			Integer orderId = Integer.valueOf(req.getParameter("orderId").trim());
+			OrdersService ordersService=new OrdersService();
+			//先查商品ID，拿到單筆訂單所有商品id
+			List<OrdersVO> productList=ordersService.getAllProductInOrder(orderId);
+			//再用商品ID找圖片
+			List<OrdersVO> productDetail=new ArrayList<OrdersVO>();
+			
+			for(OrdersVO o:productList) {
+				productDetail.add(ordersService.getAllProductPicture(orderId, o.getProductVO().getProductId()));
+			}
+			for(OrdersVO o:productDetail) {
+				System.out.println(o.getPictureVO().getPreviewUrl());
+			}
+			System.out.println(productList.get(0).getSumPrice());
+			req.setAttribute("orderDetail", productDetail.get(0));
+			req.setAttribute("productDetail", productDetail);
+			
+			String url = "/front/order/orderDetail.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); 
 			successView.forward(req, res);
 

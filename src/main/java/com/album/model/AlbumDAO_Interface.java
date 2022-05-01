@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.common.model.JDBCDAO_Interface;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
 
 public interface AlbumDAO_Interface extends JDBCDAO_Interface<AlbumVO> {
 	/**
@@ -14,7 +16,7 @@ public interface AlbumDAO_Interface extends JDBCDAO_Interface<AlbumVO> {
 	 * @return
 	 */
 	public Integer selectDefaultAlbumByMemberId(Integer mid);
-	public List<AlbumVO> getPersonalAlbum(Integer memberId);
+	PageResult<AlbumVO> getPersonalAlbum(Integer memberId, Integer loginId, PageQuery pg);
 	public AlbumVO getOneById(Integer id);
 	boolean deleteAlbumById(Integer albumId);
 }

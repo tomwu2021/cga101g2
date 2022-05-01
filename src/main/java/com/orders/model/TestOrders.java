@@ -6,17 +6,17 @@ public class TestOrders {
 	public static void main(String[] args) {
 		
 		//新增一筆訂單
-		OrdersJDBCDAO dao=new OrdersJDBCDAO();
-		OrdersVO ordersVO=new OrdersVO();
-		ordersVO.setMemberId(1);
-		ordersVO.setRecipient("皓葛格");
-		ordersVO.setPhone("0909888737");
-		ordersVO.setAddress("高雄市美麗島捷運站");
-		ordersVO.setSumPrice(1180);
-		ordersVO.setBonus(0);
-		ordersVO.setDiscount(0);
-		ordersVO.setPayPrice(1180);
-		dao.insert(ordersVO);
+//		OrdersJDBCDAO dao=new OrdersJDBCDAO();
+//		OrdersVO ordersVO=new OrdersVO();
+//		ordersVO.setMemberId(1);
+//		ordersVO.setRecipient("皓葛格");
+//		ordersVO.setPhone("0909888737");
+//		ordersVO.setAddress("高雄市美麗島捷運站");
+//		ordersVO.setSumPrice(1180);
+//		ordersVO.setBonus(0);
+//		ordersVO.setDiscount(0);
+//		ordersVO.setPayPrice(1180);
+//		dao.insert(ordersVO);
 		
 		//查所有訂單
 //		OrdersJDBCDAO dao=new OrdersJDBCDAO();
@@ -38,5 +38,7 @@ public class TestOrders {
 		//訂單編號改出貨狀態
 //		OrdersJDBCDAO dao=new OrdersJDBCDAO();
 //		dao.updateStatusByOrderId(2, 2);
+		
+
 	}
 }

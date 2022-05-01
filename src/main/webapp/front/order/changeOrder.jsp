@@ -42,7 +42,7 @@
 
 	</div>
 	
-	
+	<br>
 	<input type="hidden" name="action" value="update"> 
 	<input type="hidden" name="memberId" value="${param.memberId}"> 
 	<input type="hidden" name="groupOrderId" value="${param.groupOrderId}"> 

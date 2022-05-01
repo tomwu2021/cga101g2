@@ -8,6 +8,8 @@ getMemberOder();
 let xhr = null;
 getGroupOrder();
 
+
+
 function createXHR() {
     if (window.XMLHttpRequest) {
         xhr = new XMLHttpRequest();
@@ -68,7 +70,8 @@ function getGroupOrder() {
                 str += "<td>已成團</td>";
                 str += "<td>X</td>";
             }
-            str += "<td><a href=" + "cart.html" + "class=" + "view" + ">View</a></td>";
+            str += "<td><a href=" + "/CGA101G2/member/order.do?memberId="+order.memberId+"&groupOrderId="+order.groupOrderId 
+            +"&action=groupOrderDeatil"+ ">View</a></td>";
         }
         str += "</tr></tbody>";
         $("#memberGroupOrder").append(str);
@@ -140,7 +143,8 @@ function getMemberOder() {
                 str += "<td>已完成</td>";
             }
             str += "<td>" + order.createTime + "</td>";
-            str += "<td><a href=" + "cart.html" + "class=" + "view" + ">View</a></td>";
+            str += "<td><a href=" + "/CGA101G2/member/order.do?orderId="+order.orderId
+            +"&action=orderDeatil"+ ">View</a></td>";
         }
         str += "</tr></tbody>";
         $("#memberOrder").append(str);
@@ -151,3 +155,5 @@ function getMemberOder() {
     xhr2.open("Get", url, true);
     xhr2.send(null);
 }
+
+

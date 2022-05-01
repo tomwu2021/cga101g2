@@ -40,5 +40,11 @@ public class OrdersService {
 		dao.updateStatusByOrderId(id, status);
 	}
 	
+	public List<OrdersVO> getAllProductInOrder(Integer orderId){
+		return dao.getAllProductByOrderId(orderId);
+	}
 	
+	public OrdersVO getAllProductPicture(Integer orderId,Integer productId){
+		return dao.getOrderDetail(orderId, productId);
+	}
 }

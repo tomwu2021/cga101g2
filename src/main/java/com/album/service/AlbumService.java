@@ -11,6 +11,8 @@ import com.album.model.AlbumJDBCDAO;
 import com.album.model.AlbumVO;
 import com.common.model.MappingJDBCDAO;
 import com.common.model.MappingTableDto;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
 import com.picture.model.PictureJDBCDAO;
 import com.picture.model.PictureVO;
 import com.picture.service.PictureService;
@@ -65,8 +67,8 @@ public class AlbumService {
 		return albumDAO.updateCover(albumId, coverId);
 	}
 
-	public List<AlbumVO> getPersonalAlbum(Integer memberId) {
-		return albumDAO.getPersonalAlbum(memberId);
+	public PageResult<AlbumVO> getPersonalAlbum(Integer memberId, Integer loginId, PageQuery pq) {
+		return albumDAO.getPersonalAlbum(memberId, loginId, pq);
 	}
 
 	public AlbumVO getAlbumInfo(Integer albumId) {
