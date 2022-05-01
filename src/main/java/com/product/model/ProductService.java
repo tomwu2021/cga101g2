@@ -10,8 +10,11 @@ import javax.servlet.http.Part;
 
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 
+import com.common.model.MappingTableDto;
 import com.p_sort1.model.PSort1Service;
 import com.p_sort1.model.PSort1VO;
+import com.picture.model.PictureVO;
+import com.picture.service.PictureService;
 import com.product_img.model.ProductImgService;
 import com.product_img.model.ProductImgVO;
 
@@ -25,7 +28,7 @@ public class ProductService {
 
 	public ProductVO insertProduct(String productName, Integer price, Integer amount, Integer sort2Id,
 			Integer groupPrice1, Integer groupAmount1, Integer groupAmount2, Integer groupAmount3, String description,
-			String sort1Id[], ArrayList<byte[]> imgParts) {
+			String sort1Id[], ArrayList<Part> partsList) {
 //通過servlet驗證後製作商品DAO的材料
 //1.打包pdVO
 		ProductVO pdVO = new ProductVO();
@@ -43,17 +46,25 @@ public class ProductService {
 		productVO = dao.insert(pdVO);
 //3.拿取DAO回傳的newProductVO的PKID
 		int newProductId = productVO.getProductId();
-//新增product_img中間表呼叫ProductImgService
-		ProductImgService pdImgService = new ProductImgService();
-
-		for (byte[] imgPart : imgParts) {
+//新增圖片庫呼叫PictureService
+		PictureService pserv= new PictureService();
+		List<PictureVO>  pvs = new ArrayList<>();
+		try {
+			pvs = pserv.uploadImage(partsList);
+			
+		}catch (Exception e) {
+			throw new RuntimeException("A database error occured." + e.getMessage());
+		}
+//新增product_img中間表
+		ProductImgService pdImgSvc = new ProductImgService();
+//		return PictureVO取得ID2
+		for (PictureVO pictureVO : pvs) {
 			ProductImgVO pdImgVO = new ProductImgVO();
 			pdImgVO.setProductId(newProductId);
-			pdImgVO.setImage(imgPart);
-			System.out.println(imgPart.length);
-			pdImgService.insert(pdImgVO);
+			pdImgVO.setProductImgId(pictureVO.getPictureId());
+			pdImgSvc.insert(pdImgVO);
 		}
-
+		
 //新增p_sort1中間表呼叫Psort1Service
 		PSort1Service pSort1Svc = new PSort1Service();
 		

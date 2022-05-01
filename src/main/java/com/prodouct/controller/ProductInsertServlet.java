@@ -1,12 +1,8 @@
 package com.prodouct.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -181,29 +177,13 @@ public class ProductInsertServlet extends HttpServlet {
 				errorMsgs.put("img", "至少上傳一張照片");
 			}
 			
-			
 			Collection<Part> parts = req.getParts(); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
 			
-			ArrayList<byte[]> imgParts = new ArrayList<byte[]>();
-			
+			ArrayList<Part> partsList = new ArrayList<Part>();
 			for (Part part : parts) {
 		       if(part.getName().equals("img")) {
-					String name = part.getName();
-					String ContentType = part.getContentType();
-					long size = part.getSize();
-					System.out.println("name: " + name);
-					System.out.println("ContentType: " + ContentType);
-					System.out.println("size: " + size);
-					InputStream in = part.getInputStream();
-					byte[] buf = new byte[in.available()];
-					in.read(buf);
-					in.close();
-					System.out.println("buffer length: " + buf.length);
-					System.out.println(buf);
-					imgParts.add(buf);
-					in.close();
+					partsList.add(part);
 		       }
-				
 			}
 			 
 			// Send the use back to the form, if there were errors
@@ -216,7 +196,7 @@ public class ProductInsertServlet extends HttpServlet {
 			/*************************** 2.開始新增資料 ***************************************/
 			ProductService pdSvc = new ProductService();
 			pdSvc.insertProduct(productName, price, amount, sort2Id, groupPrice1, groupAmount1, groupAmount2,
-					groupAmount3, description, sort1Id,imgParts);
+					groupAmount3, description, sort1Id,partsList);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 			String url = "/back/shop/addProduct.jsp";

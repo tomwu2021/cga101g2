@@ -21,8 +21,8 @@ pageContext.setAttribute("sort2list", sort2list);
 
 <!-- 額外添加的CSS -->
 <!-- 圖片上傳 -->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/assets/shop/upimg/css/upimg.css">
+<!-- <link rel="stylesheet" -->
+<%-- 	href="<%=request.getContextPath()%>/assets/shop/upimg/css/upimg.css"> --%>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/shop/upimg2/upimg2.css">
 <!-- 額外添加的CSS -->
@@ -264,12 +264,10 @@ pageContext.setAttribute("sort2list", sort2list);
 	</script>
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/upimg2/upimg2.js">
-		
-	</script>
-	<script
-		src="<%=request.getContextPath()%>/assets/shop/addproduct/js/sort1VOCheckBox.js">
-		
-	</script>
+	</script> 
+<!-- 	<script -->
+<%-- 		src="<%=request.getContextPath()%>/assets/shop/addproduct/js/sort1VOCheckBox.js"> --%>
+<!-- 	</script> -->
 	<!-- 額外添加的JS -->
 </body>
 

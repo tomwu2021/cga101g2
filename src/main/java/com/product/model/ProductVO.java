@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.p_sort1.model.PSort1Service;
+import com.picture.model.PictureVO;
 import com.product_img.model.*;
 import com.sort1.model.*;
 import com.sort2.model.*;
@@ -144,12 +145,12 @@ public class ProductVO implements java.io.Serializable {
 //在多方的VO放入一方的SERVICE的GETBYID
 	
 	
-//	找到ProductImgVOList
-	public List<ProductImgVO> getProductImgVOList() {
-		com.product_img.model.ProductImgService daoSvc = new com.product_img.model.ProductImgService();
-		List<ProductImgVO> productImgVOList= daoSvc.getProductImgVOsByProductId(productId);
-		return productImgVOList;
-	}
+////	找到ProductImgVOList btye[]
+//	public List<ProductImgVO> getProductImgVOList() {
+//		com.product_img.model.ProductImgService daoSvc = new com.product_img.model.ProductImgService();
+//		List<ProductImgVO> productImgVOList= daoSvc.getProductImgVOsByProductId(productId);
+//		return productImgVOList;
+//	}
 //	找到Sort2VO
 	public Sort2VO getSort2VO() {
 		Sort2Service daoSvc = new Sort2Service();
@@ -164,12 +165,11 @@ public class ProductVO implements java.io.Serializable {
 		return sort1VOList;
 	}
 	
-	
-	
-//	public List<ProductImgVO> getProducImgtVO() {
-//		ProductImgService daoSvc = new ProductImgService();
-//		List<ProductImgVO> producImgtVO = daoSvc.getImgsByProductId(productId);
-//		return producImgtVO;
-//	}
+//	改成picV	O
+	public List<PictureVO> getPictureVOList() {
+		com.product_img.model.ProductImgService daoSvc = new com.product_img.model.ProductImgService();
+		List<PictureVO> pictureVOList = daoSvc.getPicVOsByProductId(productId);
+		return pictureVOList;
+	}
 
 }
