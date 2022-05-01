@@ -24,11 +24,11 @@ import com.product.model.ProductService;
 /**
  * Servlet implementation class InsertServlet
  */
-@WebServlet("/back/shop/productInsert")
+//@WebServlet("/back/shop/productInsert")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 //當數據量大於fileSizeThreshold值時，內容將被寫入磁碟
 //上傳過程中無論是單個文件超過maxFileSize值，或者上傳的總量大於maxRequestSize 值都會拋出IllegalStateException 異常
-public class ProductInsertServlet extends HttpServlet {
+public class ProductInsertServletBybtyes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
