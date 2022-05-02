@@ -1,12 +1,15 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java"
+	pageEncoding="UTF-8"%>
 
 <!-- CSS
 ========================= -->
+<!-- boostrap -->
+<!-- CSS only -->
 <!--bootstrap min css-->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/assets/css/bootstrap.min.css">
+	 href="<%=request.getContextPath()%>/assets/css/bootstrap.min.css"> 
 <!--owl carousel min css-->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/owl.carousel.min.css">
@@ -47,10 +50,13 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/ekko-lightbox/ekko-lightbox.css" />
 
-<link rel="shortcut icon" type="image/x-icon" href="<%=request.getContextPath()%>/assets/img/favicon.icon">
-	
+<link rel="shortcut icon" type="image/x-icon"
+	href="<%=request.getContextPath()%>/assets/img/favicon.icon">
+
 <!--只屬於header的css-->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/shophead.css"/>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/assets/css/shophead.css" />
 
 <!--只屬於footer的css-->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/shopfooter.css"/>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/assets/css/shopfooter.css" />

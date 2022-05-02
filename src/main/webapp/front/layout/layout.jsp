@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -10,10 +11,11 @@
 <body>
 
 <!-- include  common JS-->
-<jsp:include page="./commonJS.jsp" />
+<%@ include file="/front/layout/commonJS.jsp"%>
 
 <!-- include  header-->
 <jsp:include page="./header.jsp" />
+
 
 <!-- main contain start -->
 <!--breadcrumbs area start-->
@@ -42,8 +44,8 @@
 <!-- main contain end -->
 <!-- footer -->
 <jsp:include page="footer.jsp" />
-<!-- include  common JS-->
-<%@ include file="/front/layout/commonJS.jsp"%>
+
+<jsp:include page="showMessage.jsp" />
 
 </body>
 

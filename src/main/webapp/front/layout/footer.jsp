@@ -55,3 +55,4 @@
   </div>   
 </footer>
 <!--footer area end-->
+<div class="loading" id="spinner">Loading&#8230;</div>
