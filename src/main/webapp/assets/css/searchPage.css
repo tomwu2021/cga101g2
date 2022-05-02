@@ -1,0 +1,11 @@
+@charset "UTF-8";
+.pic_page:hover {
+	cursor: pointer;
+	background-color: red;
+	color: white;
+}
+
+.current_page {
+	background-color: red !important;
+	color: white;
+}
