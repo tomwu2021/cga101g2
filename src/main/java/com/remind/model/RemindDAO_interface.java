@@ -22,6 +22,9 @@ public interface RemindDAO_interface extends JDBCDAO_Interface<RemindVO>{
 /** 查詢一會員所有提醒：
  * (必)memberId */
     public List<RemindVO> getOneByMemberId(Integer id);
+/** 查詢一會員最近3則提醒：
+ * (必)memberId */
+	public List<RemindVO> getThreeByMemberId(Integer id);
 /** 查詢一會員所有未到期提醒：
  * (必)memberId */
     public List<RemindVO> getUndueByMemberId(Integer id);

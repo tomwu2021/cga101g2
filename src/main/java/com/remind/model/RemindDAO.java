@@ -11,20 +11,22 @@ import java.util.Calendar;
 import java.util.List;
 
 import connection.JDBCConnection;
+import connection.JNDIConnection;
 
-public class RemindJDBCDAO implements RemindDAO_interface {
+public class RemindDAO implements RemindDAO_interface {
 	Connection con;
 	
 //	① create 新增提醒事項(前)------------------------	
 	@Override
 	public RemindVO insert(RemindVO remindVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		RemindVO remindVO2 = insert(remindVO, con);
 		
 		try {
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		return remindVO2;
 	}
@@ -56,15 +58,15 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 //	② delete 刪除提醒事項(前)------------------------	
 	@Override
 	public boolean delete(RemindVO remindVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		boolean boo = delete(remindVO, con);
 		
 		try {
 			con.close();
 			return boo;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 	}
 	/** @see #delete*/
@@ -90,13 +92,14 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 //	③ update 修改提醒事項(前)------------------------	
 	@Override
 	public RemindVO update(RemindVO remindVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		RemindVO remindVO2 = update(remindVO, con);
 		
 		try {
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		return remindVO2;
 	}
@@ -126,12 +129,12 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 		return remindVO;		
 	}
 
-//	④ read 查詢單則提醒(前)------------------------	
+//	④ read 查詢單筆提醒(前)------------------------	
 	@Override
 	public RemindVO getOneById(Integer id) {
 		final String GET_ONE = "SELECT remind_id, member_id, content, time FROM remind "
 				         	 + "WHERE remind_id = ?";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		RemindVO remindVO =new RemindVO();
 			
 		if (con != null) {
@@ -147,7 +150,8 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 					remindVO.setTime(rs.getTimestamp(index++));
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new RuntimeException("A database error occured. "
+						+ e.getMessage());
 			}
 		} else {
 			return null;
@@ -164,7 +168,7 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 	public List<RemindVO> getOneByMemberId(Integer id){
 		final String GET_ONE_MEMBER = "SELECT remind_id, member_id, content, time "
 							 + "FROM remind WHERE member_id = ? ORDER BY time DESC";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		List<RemindVO> list = new ArrayList<RemindVO>();
 
 		if (con != null) {
@@ -183,7 +187,8 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 					index = 1;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new RuntimeException("A database error occured. "
+						+ e.getMessage());
 			}
 		} else {
 			return null;
@@ -200,7 +205,7 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 	public List<RemindVO> getThreeByMemberId(Integer id){
 		final String GET_THREE_MEMBER = "SELECT remind_id, member_id, content, time "
 							 + "FROM remind WHERE member_id = ? ORDER BY time DESC LIMIT 3";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		List<RemindVO> list = new ArrayList<RemindVO>();
 
 		if (con != null) {
@@ -236,7 +241,7 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 	public List<RemindVO> getUndueByMemberId(Integer id){
 		final String GET_UNDUE_MEMBER = "SELECT remind_id, member_id, content, time "
 				 + "FROM remind WHERE member_id = ? AND time > ? ORDER BY time";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		List<RemindVO> list = new ArrayList<RemindVO>();
 		Calendar cal = Calendar.getInstance();
 
@@ -256,7 +261,8 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 				list.add(remindVO);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		} else {
 			return null;
@@ -279,7 +285,7 @@ public class RemindJDBCDAO implements RemindDAO_interface {
     public List<RemindVO> getAllNow(){
 		final String GET_ALL_NOW = "SELECT remind_id, member_id, content, time "
 				 + "FROM remind WHERE time = ?";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		List<RemindVO> list = new ArrayList<RemindVO>();
 		Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MINUTE, 0);
@@ -301,7 +307,8 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 				list.add(remindVO);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		} else {
 			return null;

@@ -35,10 +35,7 @@ public class RemindVO {
 	}
 	@Override
 	public String toString() {
-
-		String content = this.content;
-		
-		return "["+content+"]";
+		return "RemindVO[ "+ remindId + ", " + memberId + ", " + content + ", " + time + " ]";
 	}
 	
 }
