@@ -16,5 +16,5 @@ public interface PictureDAO_Interface extends JDBCDAO_Interface<PictureVO> {
 
 	public Integer deleteById(Integer pictureId);
 
-	public PageResult<PictureVO> getPageResult(PageQuery pageQuery);
+	public PageResult<PictureResult> getPageResult(PageQuery pageQuery);
 }

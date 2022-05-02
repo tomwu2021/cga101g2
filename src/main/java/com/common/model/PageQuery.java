@@ -3,332 +3,389 @@ package com.common.model;
 import com.sun.istack.NotNull;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class PageQuery {
 
-    private Integer thisPage;
-    private Integer pageSize;
-    private Integer start;
-    private Integer end;
-    private String sort = "ASC";
-    private String order;
-    private Map<String, Object> map;
-    private String whereSQL = "";
+	private Integer thisPage;
+	private Integer pageSize;
+	private Integer start;
+	private Integer end;
+	private String sort = "ASC";
+	private String order;
+	private Map<String, Object> map = new HashMap<>();
+	private String whereSQL = "";
+	private boolean hasAlreadyCondition;
 
-    public PageQuery() {
-        super();
-    }
+	public PageQuery() {
+		super();
+	}
 
-    /**
-     * 生成PageQuery物件
-     *
-     * @param thisPage 當前頁數
-     * @param pageSize 顯示筆數
-     * @param sort     排序方式
-     * @param order    排序欄位
-     * @param map      查詢條件 Map<欄位名稱, 條件值>
-     */
-    public PageQuery(@NotNull Integer thisPage, @NotNull Integer pageSize, String sort, String order, Map<String, Object> map) {
-        super();
-        if (thisPage < 1 || pageSize < 1) {
-            this.thisPage = 1;
-            this.pageSize = 1;
-        }
-        this.thisPage = thisPage;
-        this.pageSize = pageSize;
-        this.sort = sort;
-        this.order = order;
-        this.map = map;
-        setStart(((thisPage - 1) * pageSize) + 1);
-        setEnd(thisPage * pageSize);
-        buildWhereSQL();
-    }
+	/**
+	 * 生成PageQuery物件
+	 *
+	 * @param thisPage 當前頁數
+	 * @param pageSize 顯示筆數
+	 * @param sort     排序方式
+	 * @param order    排序欄位
+	 * @param map      查詢條件 Map<欄位名稱, 條件值>
+	 */
+	public PageQuery(@NotNull Integer thisPage, @NotNull Integer pageSize, String sort, String order,
+			Map<String, Object> map) {
+		super();
+		if (thisPage < 1 || pageSize < 1) {
+			this.thisPage = 1;
+			this.pageSize = 1;
+		}
+		this.thisPage = thisPage;
+		this.pageSize = pageSize;
+		this.sort = sort;
+		this.order = order;
+		if (map != null) {
+			this.map = map;
+		}
+		setStart(((thisPage - 1) * pageSize) + 1);
+		setEnd(thisPage * pageSize);
+		buildWhereSQL();
+	}
 
-    public Integer getLimitStart() {
-        return this.start - 1;
-    }
+	/**
+	 * 是否生成帶有WHERE 條件句之PageQuery物件
+	 *
+	 * @param thisPage            當前頁數
+	 * @param pageSize            顯示筆數
+	 * @param sort                排序方式
+	 * @param order               排序欄位
+	 * @param map                 查詢條件 Map<欄位名稱, 條件值>
+	 * @param hasAlreadyCondition true=>不自動生成WHERE false=>自動生成WHERE(預設)
+	 */
+	public PageQuery(@NotNull Integer thisPage, @NotNull Integer pageSize, String sort, String order,
+			Map<String, Object> map, boolean hasAlreadyCondition) {
+		super();
+		if (thisPage < 1 || pageSize < 1) {
+			this.thisPage = 1;
+			this.pageSize = 1;
+		}
+		this.thisPage = thisPage;
+		this.pageSize = pageSize;
+		this.sort = sort;
+		this.order = order;
+		if (map != null) {
+			this.map = map;
+		}
+		this.hasAlreadyCondition = hasAlreadyCondition;
+		setStart(((thisPage - 1) * pageSize) + 1);
+		setEnd(thisPage * pageSize);
+		buildWhereSQL();
+	}
 
-    public Integer getLimitEnd() {
-        return pageSize;
-    }
+	public Integer getLimitStart() {
+		return this.start - 1;
+	}
 
-    public Integer getThisPage() {
-        return thisPage;
-    }
+	public Integer getLimitEnd() {
+		return pageSize;
+	}
 
-    public void setThisPage(Integer thisPage) {
-        this.thisPage = thisPage;
-    }
+	public Integer getThisPage() {
+		return thisPage;
+	}
 
-    public Integer getPageSize() {
-        return pageSize;
-    }
+	public void setThisPage(Integer thisPage) {
+		this.thisPage = thisPage;
+	}
 
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
+	public Integer getPageSize() {
+		return pageSize;
+	}
 
-    public Integer getStart() {
-        return start;
-    }
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
 
-    public void setStart(Integer start) {
-        this.start = start;
-    }
+	public Integer getStart() {
+		return start;
+	}
 
-    public Integer getEnd() {
-        return end;
-    }
+	public void setStart(Integer start) {
+		this.start = start;
+	}
 
-    public void setEnd(Integer end) {
-        this.end = end;
-    }
+	public Integer getEnd() {
+		return end;
+	}
 
-    public String getSort() {
-        return sort;
-    }
+	public void setEnd(Integer end) {
+		this.end = end;
+	}
 
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
+	public String getSort() {
+		return sort;
+	}
 
-    public String getOrder() {
-        return order;
-    }
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
 
-    public void setOrder(String order) {
-        this.order = order;
-    }
+	public String getOrder() {
+		return order;
+	}
 
-    public String getWhereSQL() {
-        return whereSQL;
-    }
+	public void setOrder(String order) {
+		this.order = order;
+	}
 
-    public void setWhereSQL(String whereSQL) {
-        this.whereSQL = whereSQL;
-    }
+	public String getWhereSQL() {
+		return whereSQL;
+	}
 
-    //從controller呼叫建構子，傳入參數時會被呼叫，呼叫後取得map<欄位,條件值>生成WHERE條件句(時間條件於其他方法生成)
-    public void buildWhereSQL() {
-        String sql = "";
-        for (String column : map.keySet()) {
-            Object value = map.get(column);
-            if (value == null || (value instanceof String && "".equals(value))) {
-                continue;
-            }
-            if ("".equals(sql)) {
-                sql += " WHERE " + column;
-            } else {
-                sql += " AND " + column;
-            }
-            sql += " = " + value;
-        }
-        this.whereSQL = sql;
-    }
+	public void setWhereSQL(String whereSQL) {
+		this.whereSQL = whereSQL;
+	}
 
-    /**
-     * 設置時間條件大於指定欄位,
-     * 形成WHERE 時間條件指令
-     *
-     * @param column 欄位名稱
-     * @param time   指定時間
-     */
-    //時間條件值來自controller
-    public void setFindByAfter(String column, Object obj) {
-        String sql = this.whereSQL;
-        obj = String.valueOf(obj);
-        if ("".equals(sql)) {
-            sql += " WHERE " + column + " > '" + obj + "' ";
-        } else {
-            sql += " AND " + column + " > '" + obj + "' ";
-        }
-        this.whereSQL = sql;
-    }
+	// 從controller呼叫建構子，傳入參數時會被呼叫，呼叫後取得map<欄位,條件值>生成WHERE條件句(時間條件於其他方法生成)
+	public void buildWhereSQL() {
+		String sql = "";
+		for (String column : map.keySet()) {
+			Object value = map.get(column);
+			if (value == null || (value instanceof String && "".equals(value))) {
+				continue;
+			}
+			if ("".equals(sql) && !this.hasAlreadyCondition) {
+				sql += " WHERE " + column;
+			} else {
+				sql += " AND " + column;
+			}
+			sql += " = " + value;
+		}
+		this.whereSQL = sql;
+	}
 
-    /**
-     * 設置時間條件小於指定欄位,
-     * 形成WHERE 時間條件指令
-     *
-     * @param column 欄位名稱
-     * @param time   指定時間
-     */
-    //時間條件值來自controller
-    public void setFindByBeforeTime(String column, Object obj) {
-        String sql = this.whereSQL;
-        obj = String.valueOf(obj);
-        if ("".equals(sql)) {
-            sql += " WHERE " + column + " < '" + obj + "' ";
-        } else {
-            sql += " AND " + column + " < '" + obj + "' ";
-        }
-        this.whereSQL = sql;
-    }
+	/**
+	 * 設置時間條件大於指定欄位, 形成WHERE 時間條件指令
+	 *
+	 * @param column 欄位名稱
+	 * @param time   指定時間
+	 */
+	// 時間條件值來自controller
+	public void setFindByAfter(String column, Object obj) {
+		String sql = this.whereSQL;
+		obj = String.valueOf(obj);
+		if ("".equals(sql) && !this.hasAlreadyCondition) {
+			sql += " WHERE " + column + " > '" + obj + "' ";
+		} else {
+			sql += " AND " + column + " > '" + obj + "' ";
+		}
+		this.whereSQL = sql;
+	}
 
-    /**
-     * 形成WHERE 時間條件指令
-     * 設置指定欄位之時間區間(BETWEEN)條件
-     *
-     * @param column    欄位名稱
-     * @param startTime 起始時間
-     * @param endTime   結束時間
-     */
-    //時間條件值來自controller
-    public void setFindByBetweenTime(String column, Object startobj, Object endobj) {
-        String sql = this.whereSQL;
-        startobj = String.valueOf(startobj);
-        endobj = String.valueOf(endobj);
-        if ("".equals(sql)) {
-            sql += " WHERE " + column + " BETWEEN '" + startobj + "' AND '" + endobj + "' ";
-        } else {
-            sql += " AND " + column + " BETWEEN '" + startobj + "' AND '" + endobj + "' ";
-        }
-        this.whereSQL = sql;
-    }
+	/**
+	 * 設置時間條件小於指定欄位, 形成WHERE 時間條件指令
+	 *
+	 * @param column 欄位名稱
+	 * @param time   指定時間
+	 */
+	// 時間條件值來自controller
+	public void setFindByBeforeTime(String column, Object obj) {
+		String sql = this.whereSQL;
+		obj = String.valueOf(obj);
+		if ("".equals(sql) && !this.hasAlreadyCondition) {
+			sql += " WHERE " + column + " < '" + obj + "' ";
+		} else {
+			sql += " AND " + column + " < '" + obj + "' ";
+		}
+		this.whereSQL = sql;
+	}
 
-    //取得來自前端order排序條件 與 升冪降冪 形成ORDER BY指令
-    public String getOrderBySQL() {
-        if (this.order == null || "".equals(this.order)) {
-            return "";
-        }
-        if (this.sort != null && !("".equals(this.sort)) && "DESC".equalsIgnoreCase(this.sort)) {
-            return " ORDER BY " + this.order + " DESC ";
-        } else {
-            return " ORDER BY " + this.order + " ASC ";
-        }
+	/**
+	 * 形成WHERE 時間條件指令 設置指定欄位之時間區間(BETWEEN)條件
+	 *
+	 * @param column    欄位名稱
+	 * @param startTime 起始時間
+	 * @param endTime   結束時間
+	 */
+	// 時間條件值來自controller
+	public void setFindByBetweenTime(String column, Object startobj, Object endobj) {
+		String sql = this.whereSQL;
+		startobj = String.valueOf(startobj);
+		endobj = String.valueOf(endobj);
+		if ("".equals(sql) && !this.hasAlreadyCondition) {
+			sql += " WHERE " + column + " BETWEEN '" + startobj + "' AND '" + endobj + "' ";
+		} else {
+			sql += " AND " + column + " BETWEEN '" + startobj + "' AND '" + endobj + "' ";
+		}
+		this.whereSQL = sql;
+	}
 
-    }
+	// 取得來自前端order排序條件 與 升冪降冪 形成ORDER BY指令
+	public String getOrderBySQL() {
+		if (this.order == null || "".equals(this.order)) {
+			return "";
+		}
+		if (this.sort != null && !("".equals(this.sort)) && "DESC".equalsIgnoreCase(this.sort)) {
+			return " ORDER BY " + this.order + " DESC ";
+		} else {
+			return " ORDER BY " + this.order + " ASC ";
+		}
 
-    /**
-     * 使用指定欄位進行多值模糊比對(常用於關鍵字查找)
-     * e.g: WHERE (column LIKE '%value1%' OR column LIKE '%value2%')
-     *
-     * @param column   欄位名稱
-     * @param keywords 關鍵字(多值)
-     */
-    public void setFindByLikeMultiValues(String column, String[] keywords) {
-        String sql = this.whereSQL;
-        Set<String> keywordsNoSpace = new HashSet<>();
-        StringBuilder sb = new StringBuilder();
+	}
 
-        //塞選出不重複且不為空字串的值
-        for (String keyword : keywords) {
-            String word = keyword.trim();
-            if (!"".equals(word)) {
-                keywordsNoSpace.add(word);
-            }
-        }
+	/**
+	 * 使用指定欄位進行多值模糊比對(常用於關鍵字查找) e.g: WHERE (column LIKE '%value1%' OR column LIKE
+	 * '%value2%')
+	 *
+	 * @param column   欄位名稱
+	 * @param keywords 關鍵字(多值)
+	 */
+	public void setFindByLikeMultiValues(String column, String[] keywords) {
+		String sql = this.whereSQL;
+		Set<String> keywordsNoSpace = new HashSet<>();
+		StringBuilder sb = new StringBuilder();
 
-        //重組SQL指令
-        int count = 0;
-        for (String keyword : keywordsNoSpace) {
-            sb.append(column).append(" LIKE ").append("'%").append(keyword).append("%'");
-            if (count < keywordsNoSpace.size() - 1) {
-                sb.append(" OR ");
-            }
-            count++;
-        }
+		// 塞選出不重複且不為空字串的值
+		for (String keyword : keywords) {
+			String word = keyword.trim();
+			if (!"".equals(word)) {
+				keywordsNoSpace.add(word);
+			}
+		}
 
-        if ("".equals(sql) && count > 0) {
-            sql += " WHERE (" + sb + ") ";
-        } else if (count > 0) {
-            sql += " AND (" + sb + ") ";
-        }
-        this.whereSQL = sql;
-    }
+		// 重組SQL指令
+		int count = 0;
+		for (String keyword : keywordsNoSpace) {
+			sb.append(column).append(" LIKE ").append("'%").append(keyword).append("%'");
+			if (count < keywordsNoSpace.size() - 1) {
+				sb.append(" OR ");
+			}
+			count++;
+		}
 
-    /**
-     * 使用指定欄位進行多值比對
-     * e.g: WHERE column IN(value1, value2)
-     *
-     * @param column 欄位名稱
-     * @param values 關鍵字(多值)
-     */
-    public void setFindByEqualMultiValues(String column, Object[] values) {
-        String sql = this.whereSQL;
-        Set<Object> checkedValues = new HashSet<>();
-        StringBuilder sb = new StringBuilder();
+		if ("".equals(sql) && count > 0 && !this.hasAlreadyCondition) {
+			sql += " WHERE (" + sb + ") ";
+		} else if (count > 0) {
+			sql += " AND (" + sb + ") ";
+		}
+		this.whereSQL = sql;
+	}
 
-        //篩選出不重複且不為空字串的值
-        for (Object value : values) {
-            if (value == null) {
-                //空值跳過
-                continue;
-            }
-            if (value instanceof String && "".equals(((String) value).trim())) {
-                //空字串跳過
-                continue;
-            }
-            if (value instanceof String) {
-                value = ((String) value).trim();
-            }
-            checkedValues.add(value);
-        }
+	/**
+	 * 使用指定欄位進行多值比對 e.g: WHERE column IN(value1, value2)
+	 *
+	 * @param column 欄位名稱
+	 * @param values 關鍵字(多值)
+	 */
+	public void setFindByEqualMultiValues(String column, Object[] values) {
+		String sql = this.whereSQL;
+		Set<Object> checkedValues = new HashSet<>();
+		StringBuilder sb = new StringBuilder();
 
-        //重組SQL指令
-        int count = 0;
-        for (Object value : checkedValues) {
-            if (count == 0) {
-                sb.append(column).append(" IN(");
-            }
-            sb.append("'").append(value).append("'");
-            if (count < checkedValues.size() - 1) {
-                sb.append(", ");
-            }
-            if (count == checkedValues.size() - 1) {
-                sb.append(")");
-            }
-            count++;
-        }
+		// 篩選出不重複且不為空字串的值
+		for (Object value : values) {
+			if (value == null) {
+				// 空值跳過
+				continue;
+			}
+			if (value instanceof String && "".equals(((String) value).trim())) {
+				// 空字串跳過
+				continue;
+			}
+			if (value instanceof String) {
+				value = ((String) value).trim();
+			}
+			checkedValues.add(value);
+		}
 
-        if ("".equals(sql) && count > 0) {
-            sql += " WHERE " + sb;
-        } else if (count > 0) {
-            sql += " AND " + sb;
-        }
-        this.whereSQL = sql;
-    }
+		// 重組SQL指令
+		int count = 0;
+		for (Object value : checkedValues) {
+			if (count == 0) {
+				sb.append(column).append(" IN(");
+			}
+			sb.append("'").append(value).append("'");
+			if (count < checkedValues.size() - 1) {
+				sb.append(", ");
+			}
+			if (count == checkedValues.size() - 1) {
+				sb.append(")");
+			}
+			count++;
+		}
 
+		if ("".equals(sql) && count > 0 && !this.hasAlreadyCondition) {
+			sql += " WHERE " + sb;
+		} else if (count > 0) {
+			sql += " AND " + sb;
+		}
+		this.whereSQL = sql;
+	}
 
-    /**
-     * 取得組合好之查詢SQL指令
-     *
-     * @param baseSQL 基本查詢SQL指令(包含FROM 或加上JOIN語法), 不含條件(WHERE)語句. e.g: 'SELECT * FROM demo'
-     * @return 組合好查詢條件SQL
-     */
-    //baseSQL來自DAO 事先寫好的SQL指令基底，組裝完成後，Limit 參數由各DAO實作
-    public String getQuerySQL(@NotNull String baseSQL) {
-        String querySQL = baseSQL + this.whereSQL + this.getOrderBySQL();
-        querySQL += " LIMIT " + this.getLimitStart().toString() + ",";
-        querySQL += this.getLimitEnd().toString();
-        System.out.println("querySQL> " + querySQL);
-        return querySQL;
-    }
+	/**
+	 * 取得組合好之查詢SQL指令
+	 *
+	 * @param baseSQL 基本查詢SQL指令(包含FROM 或加上JOIN語法), 不含條件(WHERE)語句. e.g: 'SELECT *
+	 *                FROM demo'
+	 * @return 組合好查詢條件SQL
+	 */
+	// baseSQL來自DAO 事先寫好的SQL指令基底，組裝完成後，Limit 參數由各DAO實作
+	public String getQuerySQL(@NotNull String baseSQL) {
+		String querySQL = baseSQL + this.whereSQL + this.getOrderBySQL();
+		querySQL += " LIMIT " + this.getLimitStart().toString() + ",";
+		querySQL += this.getLimitEnd().toString();
+		System.out.println("querySQL> " + querySQL);
+		return querySQL;
+	}
 
-    // countSQL來自DAO，取得計算總筆數的sql指令(條件須與取回資料之SQL指令相同,總筆數才會一致)
+	// countSQL來自DAO，取得計算總筆數的sql指令(條件須與取回資料之SQL指令相同,總筆數才會一致)
 
-    /**
-     * 取得相同條件下,總筆數之SQL語法
-     *
-     * @param baseSQL 基本查詢SQL指令(包含FROM 或加上JOIN語法), 不含條件(WHERE)語句. e.g: 'SELECT * FROM demo'
-     * @return 組合好查詢總筆數條件SQL
-     */
-    public String getTotalCountSQL(@NotNull String baseSQL) {
-        int getFrom = baseSQL.indexOf("FROM");
-        if (getFrom < 0) {
-            getFrom = baseSQL.indexOf("from");
-        }
-        String selectCountSQL = "SELECT COUNT(*) " + baseSQL.substring(getFrom) + this.whereSQL;
-        System.out.println("selectCountSQL> " + selectCountSQL);
-        return selectCountSQL;
-    }
+	/**
+	 * 取得相同條件下,總筆數之SQL語法
+	 *
+	 * @param baseSQL 基本查詢SQL指令(包含FROM 或加上JOIN語法), 不含條件(WHERE)語句. e.g: 'SELECT *
+	 *                FROM demo'
+	 * @return 組合好查詢總筆數條件SQL
+	 */
+	public String getTotalCountSQL(@NotNull String baseSQL) {
+		int getFrom = baseSQL.lastIndexOf("FROM");
+		if (getFrom < 0) {
+			getFrom = baseSQL.lastIndexOf("from");
+		}
+		String selectCountSQL = "SELECT COUNT(*) " + baseSQL.substring(getFrom) + this.whereSQL;
+		System.out.println("selectCountSQL> " + selectCountSQL);
+		return selectCountSQL;
+	}
 
-    @Override
-    public String toString() {
-        return "PageQuery:{thisPage:" + thisPage + ", pageSize:" + pageSize + ", start:" + start + ", end:" + end
-                + ",}";
-    }
+	// countSQL來自DAO，取得計算總筆數的sql指令(條件須與取回資料之SQL指令相同,總筆數才會一致)
+
+	/**
+	 * 取得相同條件下,總筆數之SQL語法
+	 *
+	 * @param baseSQL   基本查詢SQL指令(包含FROM 或加上JOIN語法), 不含條件(WHERE)語句. e.g: 'SELECT *
+	 *                  FROM demo'
+	 * @param isReplace 是否需要將SELECT [colums] 替換成 SELECT COUNT(*)
+	 * @return 組合好查詢總筆數條件SQL
+	 */
+	public String getTotalCountSQL(@NotNull String baseSQL, boolean isReplace) {
+		String selectCountSQL = "";
+		if (isReplace) {
+			int getFrom = baseSQL.lastIndexOf("FROM");
+			if (getFrom < 0) {
+				getFrom = baseSQL.lastIndexOf("from");
+			}
+			selectCountSQL = "SELECT COUNT(*) " + baseSQL.substring(getFrom) + this.whereSQL;
+		} else {
+			selectCountSQL = baseSQL + this.whereSQL;
+		}
+		System.out.println("selectCountSQL> " + selectCountSQL);
+		return selectCountSQL;
+	}
+
+	@Override
+	public String toString() {
+		return "PageQuery:{thisPage:" + thisPage + ", pageSize:" + pageSize + ", start:" + start + ", end:" + end
+				+ ",}";
+	}
 
 }

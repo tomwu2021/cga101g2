@@ -1,23 +1,70 @@
 
+let previousFileName = "";
+let fileName = "";
+let uploadTime = 7;
+let pageSize = 9;
+let sort = "DESC";
+let thisPage = 1;
+let total = 0;
+let pageCount = 0;
 
-
+let order = "uploadTime";
 
 //+ "&thisPage=" + thisPage + "&order=upload_time&pageSize="
 //			+ pageSize + "&sort=" + sort + "&uploadTime=" + uploadTime
+document.getElementById("fileName").onchange = getByFileName;
+document.getElementById("sort").onchange = getBySort;
+document.getElementById("uploadTime").onchange = getByUploadTime;
+document.getElementById("pageSize").onchange = getByPageSize;
+
+function getBySort() {
+	sort = $("#sort").val();
+	console.log(sort);
+	search();
+}
+function getByUploadTime() {
+	uploadTime = $("#uploadTime").val();
+	console.log(uploadTime);
+	thisPage = 1;
+	search();
+}
+function getByPageSize() {
+	pageSize = $("#pageSize").val();
+	console.log(pageSize);
+	if (thisPage > total / pageSize) {
+		thisPage = parseInt(total / pageSize) + 1;
+	}
+	search();
+}
+function getByFileName() {
+	fileName = $("#fileName").val() || "";
+	console.log(fileName);
+	thisPage = 1;
+	search();
+}
 
 let previewSrc = "https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/newAlbum.png";
-getPersonAlbum();
-function getPersonAlbum() {
+
+search();
+
+function search() {
 	let memberId = $("#memberId").val();
 	console.log(memberId);
 	let html = '';
 	$.get({
-		url: getContextPath() + "/album?memberId=" + memberId + "&action=getPersonAlbum",
+		url: getContextPath() + "/album?memberId=" + memberId + "&action=getPersonAlbum" + "&fileName=" + fileName + "&thisPage=" + thisPage + "&order=create_time&pageSize="
+			+ pageSize + "&sort=" + sort + "&uploadTime=" + uploadTime,
 		success: function(result, status) {
-			for (let album of result) {
+			total = result.total;
+			pageCount = result.pageCount;
+			let html = "";
+			for (let album of result.items) {
 				html += makeAlbum(album);
-				$("#album-container").html(html);
 			}
+			let pageResult = "Showing from " + result.start + " to " + result.end + " of " + result.total + " results";
+			$(".page_amount p").text(pageResult);
+			$("#album-container").html(html);
+			makePicturePages(result.pageCount);
 		}
 	})
 }
@@ -25,7 +72,8 @@ function getPersonAlbum() {
 function makeAlbum(album) {
 	let html = '';
 	let lockType = '';
-	let lockTitle = ''
+	let lockTitle = '';
+	let isOwner = parseInt($("#isOwner").val()||0);
 	if (album.authority === 1) {
 		lockType = 'bi bi-lock';
 		lockTitle = 'lock'
@@ -37,9 +85,10 @@ function makeAlbum(album) {
 							<article class='single_product album_thumb'>
 								<figure>
 										<div class="product_thumb">
-											<a id=${album.albumId} class="primary_img" href="${getContextPath()}/album?albumId=${album.albumId}&action=list&memberId=${$("#memberId").val()}&coverId=${album.coverId}">
-											<img src="${album.pictureVO.previewUrl}" class="album-cover" alt="${album.pictureVO.fileName}"></a>
-											<div class="action_links">
+											<a id=${album.albumId} class="primary_img" href="${getContextPath()}/photos?albumId=${album.albumId}&action=list&memberId=${$("#memberId").val()}">
+											<img src="${album.pictureVO.previewUrl}" class="album-cover" alt="${album.pictureVO.fileName}"></a>`
+									if(isOwner === 1){
+										html+=`<div class="action_links">
 												<ul>
 													<li class="quick_button album-button" onclick="editStart(${album.albumId})" id="editName" title="Rename Album">
 													<i class="bi bi-pencil"></i></li>
@@ -48,8 +97,9 @@ function makeAlbum(album) {
 													<li class="compare album-button"  onclick="changeAuthority(${album.albumId})" id="changeAuthority${album.albumId}" title=${lockTitle}>
 													<i class="${lockType}" id="authority-button${album.albumId}"></i></li>
 												</ul>
-											</div>
-										</div>
+											</div>`
+												}
+									html+=`</div>
 										<div class="product_content grid_content" onclick="openAlbum(${album.albumId})">
 											<h4 class="product_name" style="font-size: 1.5em"
 												style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
@@ -87,17 +137,34 @@ function edit(albumId) {
 }
 
 function deleteAlbum(albumId) {
-	if (confirm("Do you want to delete " + $("#a" + albumId).text().trim() + " ? ")) {
-		$.get({
-			url: getContextPath() + "/album?albumId=" + albumId + "&action=deleteAlbum&memberId=" + $("#memberId").val(),
-			processData: false,
-			contentType: false,
-			success: function(result, status) {
-				console.log("相簿刪除成功");
-				getPersonAlbum();
-			}
-		})
-	}
+
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "Do you want to delete " + $("#a" + albumId).text().trim() + " ? ",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#d33',
+		cancelButtonColor: 'darkgrey',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			loading();
+			$.get({
+				url: getContextPath() + "/album?albumId=" + albumId + "&action=deleteAlbum&memberId=" + $("#memberId").val(),
+				processData: false,
+				contentType: false,
+				success: function(result, status) {
+					Swal.fire(
+						'Deleted!',
+						'Your album has been deleted.',
+						'success'
+					)
+					search();
+					offLoading();
+				}
+			})
+		}
+	})
 }
 
 
@@ -146,6 +213,7 @@ function createCoverPreview(files) {
 function commitAlbum() {
 	let albumName = $("#new-album-name").val();
 	if (inputFiles.length === 1 && albumName !== null && albumName.trim() !== "") {
+		loading();
 		console.log("commit");
 		$("#commit-new-album").click();
 	} else {
@@ -155,6 +223,7 @@ function commitAlbum() {
 
 function changeAuthority(albumId) {
 	let authHtml;
+	loading();
 	if ($("#authority-button" + albumId).hasClass("bi bi-lock")) {
 		authority = 0;
 		console.log("unlock");
@@ -171,16 +240,7 @@ function changeAuthority(albumId) {
 		contentType: false,
 		success: function(result, status) {
 			console.log("相簿權限修改成功");
+			offLoading();
 		}
 	})
 }
-//<input type="file" accept="image/*" id="new-album-cover" style="display:none;">
-//						<input type="text" id="new-album-name">
-//						<div class="container defined-btn" id="btn-container">
-//							<div class="product_tab_btn">
-//								<ul class="nav" role="tablist">
-//									<li onclick="uploadCover()"><a data-toggle="tab">Cover</a></li>
-//									<li onclick="commitAlbum()"><a data-toggle="tab">Save</a></li>
-//								</ul>
-//							</div>
-//						</div>

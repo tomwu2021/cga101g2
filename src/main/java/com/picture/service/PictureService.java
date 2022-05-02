@@ -20,6 +20,7 @@ import com.common.model.MappingTableDto;
 import com.common.model.PageQuery;
 import com.common.model.PageResult;
 import com.picture.model.PictureJDBCDAO;
+import com.picture.model.PictureResult;
 import com.picture.model.PictureVO;
 
 import aws.S3Service;
@@ -119,6 +120,15 @@ public class PictureService {
 		return this.uploadImage(parts, albumDao.selectDefaultAlbumByMemberId(memberId));
 	}
 
+	public boolean deletePicture(Integer pictureId, Integer memberId) {
+		System.out.println(pictureId);
+		System.out.println(memberId);
+		if (!picDAO.checkCoverByPictureId(pictureId, memberId)) {
+			return deletePicture(pictureId);
+		}
+		return false;
+	}
+
 	public boolean deletePicture(Integer pictureId) {
 		System.out.println(pictureId);
 		PictureVO pic2 = picDAO.getOneById(pictureId);
@@ -130,7 +140,7 @@ public class PictureService {
 		return s3Service.deleteS3Image(pic2);
 	}
 
-	public PageResult<PictureVO> getPageResult(PageQuery pageQuery) {
+	public PageResult<PictureResult> getPageResult(PageQuery pageQuery) {
 		return picDAO.getPageResult(pageQuery);
 	}
 

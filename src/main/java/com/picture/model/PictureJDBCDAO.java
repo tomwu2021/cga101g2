@@ -134,17 +134,35 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		}
 	}
 
+	public boolean checkCoverByPictureId(Integer pictureId,Integer memberId) {
+		String sql = "SELECT EXISTS(SELECT album_id FROM album WHERE cover_id= ? "
+				+ " AND member_Id = ?) ";
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
+			stmt.setInt(1, pictureId);
+			stmt.setInt(2, memberId);
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			return rs.getBoolean(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	@Override
 	public boolean delete(PictureVO t) {
 		return false;
 	}
 
 	@Override
-	public PageResult<PictureVO> getPageResult(PageQuery pageQuery) {
+	public PageResult<PictureResult> getPageResult(PageQuery pageQuery) {
 		// sql查結果全部指令
-		String baseSQL = "SELECT * FROM picture p JOIN photos ph ON ph.picture_id = p.picture_id ";
+		String baseSQL = "SELECT p.*, ( IF((SELECT cover_id FROM album a WHERE ph.album_id=a.album_id)=p.picture_id,1,0)) as is_cover "
+				+ " FROM picture p JOIN photos ph ON ph.picture_id = p.picture_id ";
 		int total = 0;
-		List<PictureVO> pics = new ArrayList<PictureVO>();
+		List<PictureResult> pics = new ArrayList<PictureResult>();
 		try (Connection con = JDBCConnection.getRDSConnection()) {
 			if (con != null) {
 				// Step1. 取得總筆數
@@ -159,7 +177,9 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 				stmt = con.prepareStatement(pageQuery.getQuerySQL(baseSQL));
 				rs = stmt.executeQuery();
 				while (rs.next()) {
-					PictureVO pvo = buildPictureVO(rs);
+					PictureVO vo = buildPictureVO(rs);
+					PictureResult pvo = (PictureResult)vo;
+					pvo.setIsCover(rs.getInt("is_cover"));
 					pics.add(pvo);
 				}
 				rs.close();
@@ -171,11 +191,11 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return new PageResult<PictureVO>(pageQuery, pics, total);
+		return new PageResult<PictureResult>(pageQuery, pics, total);
 	}
 
 	public PictureVO buildPictureVO(ResultSet rs) throws SQLException {
-		PictureVO pvo = new PictureVO();
+		PictureVO pvo = new PictureResult();
 		pvo.setPictureId(rs.getInt("picture_id"));
 		pvo.setUrl(rs.getString("url"));
 		pvo.setCreateTime(rs.getTimestamp("upload_time"));

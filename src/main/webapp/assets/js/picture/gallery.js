@@ -1,7 +1,7 @@
 /**
  *
  */
-
+let previousFileName = "";
 let fileName = "";
 let uploadTime = 1;
 let pageSize = 12;
@@ -9,18 +9,16 @@ let sort = "DESC";
 let thisPage = 1;
 let total = 0;
 let pageCount = 0;
-let coverId = parseInt($("#coverId").val());
+let coverId;
+
+
 
 function searchPicture() {
 	albumId = $("#albumId").val();
 	console.log(albumId);
-	fileName = $("#fileName").val();
-	if (fileName !== '') {
-		thisPage === 1;
-	}
 	console.log('sort=' + sort + '&uploadTime=' + uploadTime);
 	$.get({
-		url: "/CGA101G2/PictureController?fileName=" + fileName + "&albumId=" + albumId + "&thisPage=" + thisPage + "&order=upload_time&pageSize="
+		url: getContextPath() + "/photos?fileName=" + fileName + "&albumId=" + albumId + "&thisPage=" + thisPage + "&order=upload_time&pageSize="
 			+ pageSize + "&sort=" + sort + "&uploadTime=" + uploadTime + "&action=search",
 		success: function(result, status) {
 			total = result.total;
@@ -33,18 +31,19 @@ function searchPicture() {
 				html += `<ul class="services_thumb_ul">
 							<li>Title: ${item.fileName}</li>
 							<li>Size: ${item.size}</li>
-							<li>Create Time: ${item.createTime}</li>
-							<li class='bi bi-trash trash-bucket' 
-							style='height:50px;color:white;width:50px;position:absolute;left:5px;top:210px;font-size:30px;' 
-							title="delete" onclick="addToDeleteList(${item.pictureId})">
-							</li>`
-				if (item.pictureId === coverId) {
+							<li>Create Time: ${item.createTime}</li>`
+				if (item.isCover === 1) {
+					coverId = item.pictureId;
 					html += `<li class='bi bi-journal cover-selected' 
 							style='height:50px;width:50px;position:absolute;left:320px;top:210px;font-size:30px;' 
-							title="cover" onclick="changeCover(${item.pictureId},${albumId})" id="cover${item.pictureId}">
+							title="cover" id="cover${item.pictureId}">
 							</li>`
 				} else {
-					html += `<li class='bi bi-journal cover' 
+					html += `<li class='bi bi-trash trash-bucket' 
+							style='height:50px;color:white;width:50px;position:absolute;left:5px;top:210px;font-size:30px;' 
+							title="delete" onclick="addToDeleteList(${item.pictureId})">
+							</li>
+							<li class='bi bi-journal cover' 
 							style='height:50px;width:50px;position:absolute;left:320px;top:210px;font-size:30px;' 
 							title="cover" onclick="changeCover(${item.pictureId},${albumId})" id="cover${item.pictureId}">
 							</li>`
@@ -64,7 +63,7 @@ function searchPicture() {
 	});
 }
 $(document).ready(() => searchPicture());
-document.getElementById("fileName").onchange = searchPicture;
+document.getElementById("fileName").onchange = getByFileName;
 document.getElementById("sort").onchange = getPictureBySort;
 document.getElementById("uploadTime").onchange = getPictureByUploadTime;
 document.getElementById("pageSize").onchange = getPictureByPageSize;
@@ -81,21 +80,24 @@ function addCurrent() {
 }
 
 function changeCover(pictureId, albumId) {
-	if (pictureId !== coverId) {
-		$(".bi-journal").removeClass('cover-selected');
-		$("#cover" + pictureId).removeClass('cover');
-		$("#cover" + pictureId).addClass('cover-selected');
-		$.get({
-			url: getContextPath() + "/album?albumId=" + albumId + "&action=changeCover&pictureId=" + pictureId,
-			processData: false,
-			contentType: false,
-			success: function(result, status) {
-				alert("變更封面成功");
-			}
-		})
-	}else{
-		alert("此張照片已經是封面");
-	}
+	loading();
+	$.get({
+		url: getContextPath() + "/album?albumId=" + albumId + "&action=changeCover&pictureId=" + pictureId,
+		processData: false,
+		contentType: false,
+		success: function(result, status) {
+			Swal.fire({
+				position: 'center',
+				icon: 'success',
+				title: '變更封面成功',
+				showConfirmButton: false,
+				timer: 1500
+			})
+			coverId = pictureId;
+			searchPicture();
+			offLoading();
+		}
+	})
 }
 function getPage(page) {
 	thisPage = page;
@@ -119,6 +121,13 @@ function getPictureByPageSize() {
 	if (thisPage > total / pageSize) {
 		thisPage = parseInt(total / pageSize) + 1;
 	}
+	searchPicture();
+}
+
+function getByFileName() {
+	fileName = $("#fileName").val() || "";
+	console.log(fileName);
+	thisPage = 1;
 	searchPicture();
 }
 function makePicturePages(pageCount) {
@@ -214,6 +223,7 @@ function deleteAll() {
 }
 
 function commitDelete() {
+	loading();
 	console.log("delete start")
 	let data = new FormData();
 	data.append("picList", JSON.stringify(deleteList));
@@ -222,7 +232,7 @@ function commitDelete() {
 	//console.log(pictureIdList);
 	$.ajax({
 		type: "DELETE",
-		url: "/CGA101G2/PictureController",
+		url: getContextPath() + "/photos",
 		data: data,
 		processData: false,
 		contentType: false,
@@ -231,16 +241,17 @@ function commitDelete() {
 			thisPage = 1;
 			searchPicture();
 			deleteAll();
+			offLoading();
 		}
 	});
 }
 function toAddPicture() {
 	console.log(getContextPath());
-	location.href = getContextPath() + "/PictureController?memberId=" + $("#memberId").val() + "&albumId=" + $("#albumId").val() + "&action=addShow";
+	location.href = getContextPath() + "/photos?memberId=" + $("#memberId").val() + "&albumId=" + $("#albumId").val() + "&action=addShow";
 }
 function backToAlbums() {
 	console.log($("#memberId").val());
-	location.href = getContextPath() + "/album?memberId=" + $("#memberId").val() + "&action=listToAlbum";
+	location.href = getContextPath() + "/album?memberId=" + $("#memberId").val() + "&action=list";
 }
 //
 

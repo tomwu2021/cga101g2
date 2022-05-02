@@ -166,19 +166,26 @@ public class AlbumJDBCDAO implements AlbumDAO_Interface {
 
     public PageResult<AlbumVO> getPersonalAlbum(Integer memberId, Integer loginId, PageQuery pageQuery) {
 //		String sql = " SELECT * FROM album al JOIN picture p ON(al.cover_id=p.picture_id) WHERE al.member_id = ?; ";
-        String baseSQL = "SELECT * " +
-                "FROM album a JOIN picture p ON(a.cover_id=p.picture_id) " +
-                "WHERE a.member_id =? " + // -- 擁有者ID
-                "  AND (a.authority = 0 OR ((SELECT relation_type FROM relationship r " +
-                "         WHERE r.member_id = a.member_id AND r.another_member_id =? " + //-- 查看者ID
-                "        ) = 0))";
+        String countSQL = "SELECT count(*) FROM album a JOIN picture p ON(a.cover_id=p.picture_id) " +
+                " WHERE a.member_id = ? " + // -- 擁有者ID
+                "  AND (a.authority = 0 OR ? = ? " + 
+                "	OR ((SELECT relation_type FROM relationship r " +
+                "        WHERE r.member_id = a.member_id AND r.target_id =?  ) = 0))";//-- 查看者ID 
+    	String baseSQL = "SELECT * FROM album a JOIN picture p ON(a.cover_id=p.picture_id) " +
+                " WHERE a.member_id = ? " + // -- 擁有者ID
+                "  AND (a.authority = 0 OR ? = ? " + 
+                "	OR ((SELECT relation_type FROM relationship r " +
+                "        WHERE r.member_id = a.member_id AND r.target_id =?  ) = 0))";//-- 查看者ID 
         int total = 0;
         List<AlbumVO> avoList = new ArrayList<AlbumVO>();
         try (Connection con = JDBCConnection.getRDSConnection()) {
             // Step1. 取得總筆數
-            PreparedStatement stmt = con.prepareStatement(pageQuery.getTotalCountSQL(baseSQL));
-            stmt.setInt(1, memberId);
-            stmt.setInt(2, loginId);
+            PreparedStatement stmt = con.prepareStatement(pageQuery.getTotalCountSQL(countSQL,false));
+            int index = 0 ;
+            stmt.setInt(++index, memberId);
+            stmt.setInt(++index, loginId);
+            stmt.setInt(++index, memberId);
+            stmt.setInt(++index, loginId);
             ResultSet rs = stmt.executeQuery();
             rs.next();
             total = rs.getInt(1);
@@ -187,8 +194,11 @@ public class AlbumJDBCDAO implements AlbumDAO_Interface {
 
             // Step2. 取得QueryData
             stmt = con.prepareStatement(pageQuery.getQuerySQL(baseSQL));
-            stmt.setInt(1, memberId);
-            stmt.setInt(2, loginId);
+            index = 0 ;
+            stmt.setInt(++index, memberId);
+            stmt.setInt(++index, loginId);
+            stmt.setInt(++index, memberId);
+            stmt.setInt(++index, loginId);
             rs = stmt.executeQuery();
             while (rs.next()) {
                 PictureVO pictureVO = buildPictureVOAfter(rs);

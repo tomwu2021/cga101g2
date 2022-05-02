@@ -6,11 +6,26 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.members.model.MembersService;
+import com.members.model.MembersVO;
+
 import java.io.IOException;
 
-@WebServlet("/front")
+@WebServlet("/common")
 public class CommonController extends HttpServlet {
+	// 呼叫 service
+	MembersService memberSvc = new MembersService();
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
+		MembersVO membersVO = memberSvc.selectForLogin("servlet@pet.com","!QAZ2wsx");
+		HttpSession session = req.getSession();
+		session.setAttribute("membersVO", membersVO);
+		req.setAttribute("membersVO", membersVO);
+		
+	}
     /**
      * forward到指定之動態生成JSP頁面
      *
@@ -47,13 +62,23 @@ public class CommonController extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String title = req.getParameter("title") == null ? "Default" : req.getParameter("title");
-        if ("1".equals(req.getParameter("breadcrumb"))) {
-            routeTo(req, resp, title, req.getParameter("page"));
-        } else {
-            routeToWithoutBreadcrumb(req, resp, title, req.getParameter("page"));
-        }
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+//        String title = req.getParameter("title") == null ? "Default" : req.getParameter("title");
+//        if ("1".equals(req.getParameter("breadcrumb"))) {
+//            routeTo(req, resp, title, req.getParameter("page"));
+//        } else {
+//            routeToWithoutBreadcrumb(req, resp, title, req.getParameter("page"));
+//        }
+//    }
+    
+    protected MembersVO getMemberInfo(HttpServletRequest req, HttpServletResponse resp) {
+    	HttpSession session = req.getSession();
+		MembersVO membervo = (MembersVO)session.getAttribute("membersVO");
+		return membervo;
+    }
+    
+    protected void goToHome(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    	res.sendRedirect(req.getContextPath() + "/index.html");
     }
 }

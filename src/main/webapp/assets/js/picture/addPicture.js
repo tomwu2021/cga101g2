@@ -89,6 +89,7 @@ function getFileListItems(files) {
 
 function save() {
 	// arraylist to FilesList
+	loading();
 	$('#upload-input').files = getFileListItems(files);
 	console.log(files);
 	$("#save-button").click();
@@ -113,7 +114,7 @@ function isFileImage(files) {
 function toGallery() {
 	console.log(getContextPath());
 
-	location.href = getContextPath() + "/PictureController?action=list&albumId=" + $('#albumId').val() + "&memberId=" + $("#memberId").val();
+	location.href = getContextPath() + "/photos?action=list&albumId=" + $('#albumId').val() + "&memberId=" + $("#memberId").val();
 }
 console.log($('#albumId').attr('value'));
 //取消新增預覽Bug 消除
