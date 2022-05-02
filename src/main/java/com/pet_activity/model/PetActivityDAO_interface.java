@@ -25,6 +25,9 @@ public interface PetActivityDAO_interface extends JDBCDAO_Interface<PetActivityV
 /** 查詢一寵物所有活動紀錄
  * (必)petId */
     public List<PetActivityVO> getOneByPetId(Integer id);
+/** 查詢一寵物最近4筆活動紀錄
+ * (必)petId */  
+    public List<PetActivityVO> getFourByPetId(Integer id);
 /** @return null */
     public List<PetActivityVO> getAll();
 

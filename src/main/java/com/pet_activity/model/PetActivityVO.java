@@ -35,10 +35,7 @@ public class PetActivityVO {
 	}
 	@Override
 	public String toString() {
-
-		String activity = this.activity;
-		
-		return "["+activity+"]";
+		return "PetActivityVO[ "+ recordId + ", " + petId + ", " + activity + ", " + recordTime + " ]";
 	}
 	
 }

@@ -11,21 +11,22 @@ import java.util.List;
 
 import com.remind.model.RemindVO;
 
-import connection.JDBCConnection;
+import connection.JNDIConnection;
 
-public class PetActivityJDBCDAO implements PetActivityDAO_interface{
+public class PetActivityDAO implements PetActivityDAO_interface{
 	Connection con;
 	
 //	① create 新增寵物活動紀錄(前)------------------------		
 	@Override
 	public PetActivityVO insert(PetActivityVO petActivityVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		PetActivityVO petActivityVO2 = insert(petActivityVO, con);
 		
 		try {
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		return petActivityVO2;
 	}
@@ -64,15 +65,15 @@ public class PetActivityJDBCDAO implements PetActivityDAO_interface{
 //	③ delete 刪除寵物活動紀錄(前)------------------------
 	@Override
 	public boolean delete(PetActivityVO petActivityVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		boolean boo = delete(petActivityVO, con);
 		
 		try {
 			con.close();
 			return boo;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 	}
 	/** @see #delete*/
@@ -98,13 +99,14 @@ public class PetActivityJDBCDAO implements PetActivityDAO_interface{
 //	④ update 修改寵物活動紀錄(前)------------------------	
 	@Override
 	public PetActivityVO update(PetActivityVO petActivityVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		PetActivityVO petActivityVO2 = update(petActivityVO, con);
 		
 		try {
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		return petActivityVO2;
 	}
@@ -139,7 +141,7 @@ public class PetActivityJDBCDAO implements PetActivityDAO_interface{
 	public PetActivityVO getOneById(Integer id) {
 		final String GET_ONE = "SELECT record_id, pet_id, activity, record_time FROM pet_activity "
 				         	 + "WHERE record_id = ?";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		PetActivityVO petActivityVO =new PetActivityVO();
 			
 		if (con != null) {
@@ -155,7 +157,8 @@ public class PetActivityJDBCDAO implements PetActivityDAO_interface{
 					petActivityVO.setRecordTime(rs.getDate(index++));
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new RuntimeException("A database error occured. "
+						+ e.getMessage());
 			}
 		} else {
 			return null;
@@ -173,7 +176,7 @@ public class PetActivityJDBCDAO implements PetActivityDAO_interface{
 	public List<PetActivityVO> getOneByPetId(Integer id) {
 		final String GET_ONE_PET = "SELECT record_id, pet_id, activity, record_time "
 				 + "FROM pet_activity WHERE pet_id = ? ORDER BY record_time DESC, record_id DESC";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		List<PetActivityVO> list = new ArrayList<PetActivityVO>();
 		
 		if (con != null) {
@@ -192,7 +195,8 @@ public class PetActivityJDBCDAO implements PetActivityDAO_interface{
 				index = 1;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		} else {
 			return null;
@@ -210,7 +214,7 @@ public class PetActivityJDBCDAO implements PetActivityDAO_interface{
 	public List<PetActivityVO> getFourByPetId(Integer id) {
 		final String GET_FOUR_PET = "SELECT record_id, pet_id, activity, record_time "
 				 + "FROM pet_activity WHERE pet_id = ? ORDER BY record_time DESC, record_id DESC LIMIT 4";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		List<PetActivityVO> list = new ArrayList<PetActivityVO>();
 		
 		if (con != null) {
@@ -247,7 +251,7 @@ public class PetActivityJDBCDAO implements PetActivityDAO_interface{
 	public List<PetActivityVO> getAll() {
 		return null;
 	}
-	/**文字換行顯示用*/
+	/**TODO 文字換行顯示用*/
 	public String transOuter(String str) { 
 		while (str.indexOf("<") != -1) { 
 			  str = str.substring(0, str.indexOf("<")) + "&lt;" 
