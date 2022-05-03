@@ -165,7 +165,7 @@ public class ProductVO implements java.io.Serializable {
 		return sort1VOList;
 	}
 	
-//	改成picV	O
+//	找到picV	O
 	public List<PictureVO> getPictureVOList() {
 		com.product_img.model.ProductImgService daoSvc = new com.product_img.model.ProductImgService();
 		List<PictureVO> pictureVOList = daoSvc.getPicVOsByProductId(productId);

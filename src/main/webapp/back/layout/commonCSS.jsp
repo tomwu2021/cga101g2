@@ -32,3 +32,7 @@
 <!-- !hub_index CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/hub/css/hub.css">
 
+<!--bootstrap min css-->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+

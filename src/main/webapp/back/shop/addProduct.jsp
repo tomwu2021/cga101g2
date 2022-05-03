@@ -59,7 +59,7 @@ pageContext.setAttribute("sort2list", sort2list);
 												<h3 class="h6 text-uppercase mb-0">新增商品</h3>
 											</div>
 											<div class="card-body">
-												<p>商品編號??? 最後更新時間:????</p>
+<!-- 												<p></p> -->
 												<div class="row">
 													<div class="col-lg-6 mb-5">
 														<form class="form-horizontal">
@@ -81,7 +81,7 @@ pageContext.setAttribute("sort2list", sort2list);
 																<div class="col-md-6">
 																	<input id="inputHorizontalSuccess" type="number"
 																		value="${param.price}" name="price" placeholder=""
-																		step="1" min="1" max="999"
+																		step="1" min="1" max="9999"
 																		class="form-control form-control-success"> <small
 																		class="form-text text-muted ml-3 text-danger">${errorMsgs.price}</small>
 																</div>
@@ -219,8 +219,8 @@ pageContext.setAttribute("sort2list", sort2list);
 																<div class='row'>
 																	<div id='previewMultiple'></div>
 																</div>
-																<small class="form-text text-muted ml-3 text-danger">${errorMsgs.img}</small>
 															</div>
+																<small class="form-text text-muted ml-3 text-danger">${errorMsgs.img}</small>
 														</div>
 														<div class="form-group">
 															<div class="col-md-6"></div>

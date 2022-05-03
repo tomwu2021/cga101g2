@@ -48,36 +48,37 @@ public class ProductUpdateServlet extends HttpServlet {
 //			}catch(Exception e){
 //			System.out.println(e.toString());
 //			}
-		
+
 		if ("getOne_For_Update".equals(action)) { // 來自listAllProduct.jsp的請求
 
-			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
-//			try {
-				/***************************1.接收請求參數****************************************/
-				Integer productId = Integer.valueOf(req.getParameter("productId"));
-				
-				/***************************2.開始查詢資料****************************************/
-				ProductService pdSvc = new ProductService();
-				ProductVO pdVO = pdSvc.getOneProductByid(productId);
-								
-				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-				String param = "?productId="  +pdVO.getProductId()+
-						       "&productName="  +pdVO.getProductName()+
-						       "&price="    + pdVO.getPrice()+
-						       "&amount="   + pdVO.getAmount()+
-						       "&sort2Id="  + pdVO.getSort2Id()+
-						       "&updateTime="  + pdVO.getUpdateTime()+
-						       "&groupPrice1=" + pdVO.getGroupPrice1()+
-								"&groupAmount1=" + pdVO.getGroupAmount1()+
-								"&groupAmount2=" + pdVO.getGroupAmount2()+
-								"&groupAmount3=" + pdVO.getGroupAmount3();
-				String url = "/back/shop/updateProduct.jsp"+param;
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
-				successView.forward(req, res);
 
-				/***************************其他可能的錯誤處理**********************************/
+//			try {
+			/*************************** 1.接收請求參數 ****************************************/
+			Integer productId = Integer.valueOf(req.getParameter("productId"));
+
+			/*************************** 2.開始查詢資料 ****************************************/
+			ProductService pdSvc = new ProductService();
+			ProductVO pdVO = pdSvc.getOneProductByid(productId);
+
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			String param = "?productId=" + pdVO.getProductId() 
+						+ "&productName=" + pdVO.getProductName() 
+						+ "&price="+ pdVO.getPrice() 
+						+ "&amount=" + pdVO.getAmount() 
+						+ "&sort2Id=" + pdVO.getSort2Id() 
+						+ "&updateTime=" + pdVO.getUpdateTime() 
+						+ "&groupPrice1=" + pdVO.getGroupPrice1()
+						+ "&groupAmount1=" + pdVO.getGroupAmount1() 
+						+ "&groupAmount2=" + pdVO.getGroupAmount2() 
+						+ "&groupAmount3=" + pdVO.getGroupAmount3()
+						+ "&description=" + pdVO.getDescription();
+			String url = "/back/shop/updateProduct.jsp" + param;
+			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+			successView.forward(req, res);
+
+			/*************************** 其他可能的錯誤處理 **********************************/
 //			} catch (Exception e) {
 //				errorMsgs.put("無法取得資料",e.getMessage());
 //				RequestDispatcher failureView = req
@@ -85,33 +86,30 @@ public class ProductUpdateServlet extends HttpServlet {
 //				failureView.forward(req, res);
 //			}
 		}
-		
-		
 
 		if ("update".equals(action)) { // 來自updateProduct.jsp的請求
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
 
 //			try {
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 			String productName = req.getParameter("productName");
 			if (productName == null || productName.trim().length() == 0) {
 				errorMsgs.put("productName", "商品名稱勿空白");
-			} else if ((productName.trim().length() <= 5)) { // 以下練習正則(規)表示式(regular-expression)
+			} else if ((productName.trim().length() <= 5)) { 
 				errorMsgs.put("productName", "商品名稱至少五個字以上");
 			}
 
-			Integer price = null;
-			try {
-				price = Integer.valueOf(req.getParameter("price").trim());
-				if (price < 0) {
-					errorMsgs.put("price", "價格不得低於0");
-				}
-			} catch (NumberFormatException e) {
-				errorMsgs.put("price", "價格請填數字");
-			}
+//			Integer price = null;
+//			try {
+//				
+//				if (price < 0) {
+//					errorMsgs.put("price", "價格不得低於0");
+//				}
+//			} catch (NumberFormatException e) {
+//				errorMsgs.put("price", "價格請填數字");
+//			}
 
 			Integer amount = null;
 			try {
@@ -136,74 +134,75 @@ public class ProductUpdateServlet extends HttpServlet {
 					System.out.println("sort1Id陣列"+"["+i+"]"+"數值"+sort1Id[i]);
 				}
 			} 
-				
+			
+			
+//數字大比拚,避免NumberFormatException 先針對個別數字確定可以後再比較		
+			
+			Integer price = null;
 			Integer groupPrice1 = null;
-			try {
-				groupPrice1 = Integer.valueOf(req.getParameter("groupPrice1").trim());
-				if (groupPrice1 < 0) {
-					errorMsgs.put("groupPrice1", "數量不得低於0");
-				}
-				if (groupPrice1 > price) {
-					errorMsgs.put("groupPrice1", "團購價不得高於商品價格");
-				}
-			} catch (NumberFormatException e) {
-				errorMsgs.put("groupPrice1", "數量請填數字");
-			}
-
 			Integer groupAmount1 = null;
+			Integer groupAmount2 = null;
+			Integer groupAmount3 = null;
 			try {
+				price = Integer.valueOf(req.getParameter("price").trim());
+				groupPrice1 = Integer.valueOf(req.getParameter("groupPrice1").trim());
 				groupAmount1 = Integer.valueOf(req.getParameter("groupAmount1").trim());
+				groupAmount2 = Integer.valueOf(req.getParameter("groupAmount2").trim());
+				groupAmount3 = Integer.valueOf(req.getParameter("groupAmount3").trim());
+				
+				if (price < 0) {
+					errorMsgs.put("price", "價格不得低於0");
+				}
 				if (groupAmount1 < 0) {
 					errorMsgs.put("groupAmount1", "數量不得低於0");
 				}
-			}
-			 catch (NumberFormatException e) {
-				errorMsgs.put("groupAmount1", "數量請填數字");
-			}
-
-			Integer groupAmount2 = null;
-			try {
-				groupAmount2 = Integer.valueOf(req.getParameter("groupAmount2").trim());
-				if (groupAmount2 == null || groupAmount2 < 0) {
+				if (groupAmount2 < 0) {
 					errorMsgs.put("groupAmount2", "數量不得低於0");
 				}
-			} catch (NumberFormatException e) {
-				errorMsgs.put("groupAmount2", "數量請填數字");
-			}
-			
-
-			Integer groupAmount3 = null;
-			try {
-				groupAmount3 = Integer.valueOf(req.getParameter("groupAmount3").trim());
-				if (groupAmount3 == null || groupAmount3 < 0) {
+				if (groupPrice1 < 0) {
+					errorMsgs.put("groupPrice1", "數量不得低於0");
+				}
+				if (groupAmount3 < 0) {
 					errorMsgs.put("groupAmount3", "數量不得低於0");
 				}
-				///所有數字都拿到後才能做個別驗證,並且避開NumberFormatException
-				// 針對團購級距一的驗證
-				if (groupAmount1 > groupAmount2) {
-					errorMsgs.put("groupAmount1", "團購級距一不得高於級距二");
+				
+//針對團購價格一驗證
+				if (groupPrice1 > price) {
+					errorMsgs.put("groupPrice1", "團購價不得高於商品價格");
 				}
-				if (groupAmount1 > groupAmount3) {
-					errorMsgs.put("groupAmount1", "團購級距一不得高於級距三");
+				if (groupPrice1 == price) {
+					errorMsgs.put("groupPrice1", "團購價不得等同於商品價格");
 				}
-				// 針對團購級距二的驗證
-				if (groupAmount2 < groupAmount1) {
-					errorMsgs.put("groupAmount2", "團購級距二不得低於級距一");
+// 針對團購級距一的驗證			
+				if (groupAmount1 >= groupAmount2) {
+					errorMsgs.put("groupAmount1", "團購級距一不得高於或等於級距二");
 				}
-				if (groupAmount2 > groupAmount3) {
-					errorMsgs.put("groupAmount2", "團購級距二不得高於級距三");
+				if (groupAmount1 >= groupAmount3) {
+					errorMsgs.put("groupAmount1", "團購級距一不得高於或等於級距三");
 				}
-				// 針對團購級距三的驗證
-				if (groupAmount3 < groupAmount2) {
-					errorMsgs.put("groupAmount3", "團購級距三不得低於級距二");
+// 針對團購級距二的驗證
+				if (groupAmount2 <= groupAmount1) {
+					errorMsgs.put("groupAmount2", "團購級距二不得低於或等於級距一");
 				}
-				if (groupAmount3 < groupAmount1) {
-					errorMsgs.put("groupAmount3", "團購級距三不得低於級距一");
+				if (groupAmount2 >= groupAmount3) {
+					errorMsgs.put("groupAmount2", "團購級距二不得高於或等於級距三");
 				}
+// 針對團購級距三的驗證
+				if (groupAmount3 <= groupAmount2) {
+					errorMsgs.put("groupAmount3", "團購級距三不得低於或等於級距二");
+				}
+				if (groupAmount3 <= groupAmount1) {
+					errorMsgs.put("groupAmount3", "團購級距三不得低於或等於級距一");
+				}
+				
 			} catch (NumberFormatException e) {
+				errorMsgs.put("price", "價格請填數字");
+				errorMsgs.put("groupPrice1", "數量請填數字");
+				errorMsgs.put("groupAmount1", "數量請填數字");
+				errorMsgs.put("groupAmount2", "數量請填數字");
 				errorMsgs.put("groupAmount3", "數量請填數字");
 			}
-		
+
 			String description = req.getParameter("description");
 			if (description == null || description.trim().length() == 0) {
 				errorMsgs.put("description", "商品內容勿空白");
@@ -217,46 +216,27 @@ public class ProductUpdateServlet extends HttpServlet {
 			if(part2.getSize()==0) {
 				errorMsgs.put("img", "至少上傳一張照片");
 			}
-			
-			
+
 			Collection<Part> parts = req.getParts(); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
-			
-			ArrayList<byte[]> imgParts = new ArrayList<byte[]>();
-			
+
+			ArrayList<Part> partsList = new ArrayList<Part>();
 			for (Part part : parts) {
-		       if(part.getName().equals("img")) {
-					String name = part.getName();
-					String ContentType = part.getContentType();
-					long size = part.getSize();
-					System.out.println("name: " + name);
-					System.out.println("ContentType: " + ContentType);
-					System.out.println("size: " + size);
-					InputStream in = part.getInputStream();
-					byte[] buf = new byte[in.available()];
-					in.read(buf);
-					in.close();
-					System.out.println("buffer length: " + buf.length);
-					System.out.println(buf);
-					imgParts.add(buf);
-					in.close();
-		       }
-				
+				if (part.getName().equals("img")) {
+					partsList.add(part);
+				}
 			}
-			 
+
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = 
-						req.getRequestDispatcher("/back/shop/addproduct.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back/shop/updateProduct.jsp");
 				failureView.forward(req, res);
 				return;
 			}
-			/*************************** 2.開始新增資料 ***************************************/
+			/*************************** 2.開始更新資料 ***************************************/
 			ProductService pdSvc = new ProductService();
-			pdSvc.insertProduct(productName, price, amount, sort2Id, groupPrice1, groupAmount1, groupAmount2,
-					groupAmount3, description, sort1Id,imgParts);
 
-			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			String url = "/back/shop/addproduct.jsp";
+			/*************************** 3.更新完成,準備轉交(Send the Success view) ***********/
+			String url = "/back/shop/updateProduct.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
 
