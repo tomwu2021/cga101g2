@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.p_sort1.model.PSort1Service;
 import com.picture.model.PictureVO;
-import com.product_img.model.*;
-import com.sort1.model.*;
-import com.sort2.model.*;
+import com.sort1.model.Sort1VO;
+import com.sort2.model.Sort2Service;
+import com.sort2.model.Sort2VO;
 
 public class ProductVO implements java.io.Serializable {
 	/**
@@ -165,7 +165,7 @@ public class ProductVO implements java.io.Serializable {
 		return sort1VOList;
 	}
 	
-//	改成picV	O
+//	找到picV	O
 	public List<PictureVO> getPictureVOList() {
 		com.product_img.model.ProductImgService daoSvc = new com.product_img.model.ProductImgService();
 		List<PictureVO> pictureVOList = daoSvc.getPicVOsByProductId(productId);

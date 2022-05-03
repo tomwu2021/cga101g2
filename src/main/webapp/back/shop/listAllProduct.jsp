@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.product_img.model.*"%>
@@ -23,7 +23,8 @@ pageContext.setAttribute("list", list);
 <!-- 共用的CSS end-->
 
 <!-- 額外添加的CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/hub/css/backproduct.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/assets/hub/css/backproduct.css">
 <!-- 額外添加的CSS -->
 </head>
 <body>
@@ -63,138 +64,144 @@ pageContext.setAttribute("list", list);
 															<input type="date" value="2020-04-20" min="2022-01-01"
 																max="2050-01-01" step="1"> ~ <input type="date"
 																value="2020-04-20" min="2022-01-01" max="2050-01-01"
-																step="1"> &emsp;
-																<input type="submit" value="確定" class="btn btn-primary">
+																step="1"> &emsp; <input type="submit" value="確定"
+																class="btn btn-primary">
 														</div>
+													</div>
+													<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+														<button class="btn btn-primary me-md-2" type="button"
+														 onclick="javascript:window.location='<%=request.getContextPath()%>/back/shop/addProduct.jsp'">
+														 +新增商品</button>
+														<button class="btn btn-primary" type="button">Button</button>
 													</div>
 												</div>
 											</div>
 											<!-- !分頁符號 css在style.default.css 4237 -->
-<!-- 											<div class="row justify-content-center align-items-center"> -->
-<!-- 												<ul class="pagination"> -->
-<!-- 													<li><a href="#">«</a></li> -->
-<!-- 													<li><a href="#">1</a></li> -->
-<!-- 													<li><a class="active" href="#">2</a></li> -->
-<!-- 													<li><a href="#">3</a></li> -->
-<!-- 													<li><a href="#">4</a></li> -->
-<!-- 													<li><a href="#">5</a></li> -->
-<!-- 													<li><a href="#">6</a></li> -->
-<!-- 													<li><a href="#">7</a></li> -->
-<!-- 													<li><a href="#">»</a></li> -->
-<!-- 												</ul> -->
-<!-- 											</div> -->
+											<!-- 											<div class="row justify-content-center align-items-center"> -->
+											<!-- 												<ul class="pagination"> -->
+											<!-- 													<li><a href="#">«</a></li> -->
+											<!-- 													<li><a href="#">1</a></li> -->
+											<!-- 													<li><a class="active" href="#">2</a></li> -->
+											<!-- 													<li><a href="#">3</a></li> -->
+											<!-- 													<li><a href="#">4</a></li> -->
+											<!-- 													<li><a href="#">5</a></li> -->
+											<!-- 													<li><a href="#">6</a></li> -->
+											<!-- 													<li><a href="#">7</a></li> -->
+											<!-- 													<li><a href="#">»</a></li> -->
+											<!-- 												</ul> -->
+											<!-- 											</div> -->
 											<!-- !分頁符號 css在style.default.css 4237 -->
 											<div class="form-group row">
 												<div class="col-lg-12">
 													<div class="card-body">
-														<table class="table table-sm table-striped table-hover card-text">
-													<thead>
-														<tr class="text-center">
-															<th class="list">商品編號</th>
-															<th class="list">商品照片</th>
-															<th class="list2">商品名稱</th>
-															<th class="list">主分類</th>
-															<th class="list">子分類</th>
-															<th class="list">數量</th>
-															<th class="list">售價</th>
-															<th class="list1">上架狀態</th>
-															<th class="list1">推薦狀態</th>
-															<th class="list">編輯</th>
-														</tr>
-													</thead>
-														<tbody>
-<c:forEach var="productVO" items="${list}">
-															<tr class="text-center">
-															<td>${productVO.productId}</td>
-<c:set var="productImgVOList" scope="page" value="${productVO.productImgVOList}" ></c:set>
-<c:if test="${productImgVOList.size() != 0 }">
+														<table
+															class="table table-sm table-striped table-hover card-text">
+															<thead>
+																<tr class="text-center">
+																	<th class="list">商品編號</th>
+																	<th class="list">商品照片</th>
+																	<th class="list2">商品名稱</th>
+																	<th class="list">主分類</th>
+																	<th class="list">子分類</th>
+																	<th class="list">數量</th>
+																	<th class="list">售價</th>
+																	<th class="list1">上架狀態</th>
+																	<th class="list1">推薦狀態</th>
+																	<th class="list">編輯</th>
+																</tr>
+															</thead>
+															<tbody>
+																<c:forEach var="productVO" items="${list}">
+																	<tr class="text-center">
+																		<td id ="productId">${productVO.productId}</td>
+<c:set var="pictureVOList" scope="page" value="${productVO.pictureVOList}"></c:set>
+																		<c:if test="${pictureVOList.size() != 0 }">
+																			<td style="width: 6%;"><img
+																				src="${productVO.pictureVOList.get(0).previewUrl}"
+																				alt="..." class="img-thumbnail"></td>
+																		</c:if>
+																		<!-- 此段是防止沒有照片所以跑版的判斷 開始-->
+																		<c:if test="${pictureVOList.size() == 0 }">
+																			<td style="width: 6%;"><img
+																				src="https://fakeimg.pl/350x200/ff0000/000"
+																				alt="..." class="img-thumbnail"></td>
+																		</c:if>
+																		<!-- 此段是防止沒有照片所以跑版的判斷	 結束-->
+																		<td>${productVO.productName}</td>
 
-															<td style="width: 6%;"><img
-																src="<%=request.getContextPath()%>/shop/getPdImgVObyproduct_img_id?product_img_id=${productImgVOList.get(0).productImgId}"
-																alt="..." class="img-thumbnail"></td>
-</c:if>	
-<!-- 此段是防止沒有照片所以跑版的判斷 開始-->
-<c:if test="${productImgVOList.size() == 0 }">															
-															<td style="width: 6%;"><img
-																src="https://fakeimg.pl/350x200/ff0000/000"
-																alt="..." class="img-thumbnail"></td>
-</c:if>
-<!-- 此段是防止沒有照片所以跑版的判斷	 結束-->
-															<td>${productVO.productName}</td>
-															
-															
-<c:set var="sort1VOList" scope="page" value="${productVO.sort1VOList}" />
-															<td>
-<!-- 3.看不到實體不知道抓去哪裡? 改寫VO的Tostring方法,慢慢嘗試,了解輸出的格式(類似JSON)-->
-<c:if test="${sort1VOList.size() !=0 }">
-<c:forEach var="sort1VO" items="${sort1VOList}">
-															
-															<span>${sort1VO.sort1Name}&nbsp;&nbsp;</span>
-</c:forEach>															
-</c:if> 		
-															</td>
-<c:set var="sort2VO" scope="page" value="${productVO.sort2VO}" />															
-															<td>${sort2VO.sort2Name}</td>
-															<td>${productVO.amount}</td>
-															<td>${productVO.price}元</td>
-															
-<c:choose>
-<c:when test="${productVO.status == 0}">					
-															<td>											
-															未上架
-</c:when>
-<c:when test="${productVO.status == 1}">						
-															<td class="table-primary">										
-															一般商品上架
-</c:when>	
-<c:when test="${productVO.status == 2}">																
-															<td class="table-warning">
-															一般與團購上架
-</c:when>														
-</c:choose>															
-															<form>
-																<select class="custom-select custom-select-sm"
-																		style="width: 70%" id="inlineFormCustomSelect">
-<!-- 															<option selected> Choose...</option> -->
-																<option value="0">未上架</option>
-																<option value="1">一般商品上架</option>
-																<option value="3">一般與團購上架</option>
-																</select>
-																	<div class="col-auto my-1">
-																		<button type="submit" class="btn btn-primary btn-sm">提交</button>
-																	</div>
-															</form>
-															</td>
-<c:choose>
-<c:when test="${productVO.topStatus == 0}">					
-															<td>
-															未推薦
-</c:when>	
-<c:when test="${productVO.topStatus == 1}">					
-															<td class="table-primary">										
-															推薦商品
-</c:when>													
-</c:choose>																
-																<form>
-																	<select class="custom-select custom-select-sm"
-																		style="width: 70%" id="inlineFormCustomSelect">
-<!-- 																	<option selected>Choose...</option> -->
-																		<option value="1">未推薦</option>
-																		<option value="2">上架推薦</option>
-																	</select>
-																	<div class="col-auto my-1">
-																		<button type="submit" class="btn btn-primary btn-sm">提交</button>
-																	</div>
-																</form>
-															</td>
-													<td>	
-															<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/back/shop/productUpdateServlet">
-															<button type="submit" class="btn btn-danger btn-sm">修改</button>
-															<input type="hidden" name="productId"  value="${productVO.productId}">
-			    									 		<input type="hidden" name="action" value="getOne_For_Update"></FORM>		
-													</td>	
-											</c:forEach>	
-													
+
+																		<c:set var="sort1VOList" scope="page"
+																			value="${productVO.sort1VOList}" />
+																		<td>
+																			<!-- 3.看不到實體不知道抓去哪裡? 改寫VO的Tostring方法,慢慢嘗試,了解輸出的格式(類似JSON)-->
+																			<c:if test="${sort1VOList.size() !=0 }">
+																				<c:forEach var="sort1VO" items="${sort1VOList}">
+																					<span>${sort1VO.sort1Name}&nbsp;&nbsp;</span>
+																				</c:forEach>
+																			</c:if>
+																		</td>
+																		<c:set var="sort2VO" scope="page"
+																			value="${productVO.sort2VO}" />
+																		<td>${sort2VO.sort2Name}</td>
+																		<td>${productVO.amount}</td>
+																		<td>${productVO.price}元</td>
+
+																		<c:choose>
+																			<c:when test="${productVO.status == 0}">
+																				<td>未上架
+																			</c:when>
+																			<c:when test="${productVO.status == 1}">
+																				<td class="table-primary">一般商品上架
+																			</c:when>
+																			<c:when test="${productVO.status == 2}">
+																				<td class="table-warning">一般與團購上架
+																			</c:when>
+																		</c:choose>
+																		<form>
+																			<select class="custom-select custom-select-sm"
+																				style="width: 70%" id="inlineFormCustomSelect" name ="status">
+																				<!-- 															<option selected> Choose...</option> -->
+																				<option value="0">未上架</option>
+																				<option value="1">一般商品上架</option>
+																				<option value="2">一般與團購上架</option>
+																			</select>
+																			<div class="col-auto my-1">
+																				<button type="button" class="btn btn-primary btn-sm update" >提交</button>
+																			</div>
+																		</form>
+																		</td>
+																		<c:choose>
+																			<c:when test="${productVO.topStatus == 0}">
+																				<td>未推薦
+																			</c:when>
+																			<c:when test="${productVO.topStatus == 1}">
+																				<td class="table-primary">推薦商品
+																			</c:when>
+																		</c:choose>
+																		<form>
+																			<select class="custom-select custom-select-sm"
+																				style="width: 70%" id="inlineFormCustomSelect">
+																				<!-- 																	<option selected>Choose...</option> -->
+																				<option value="1">未推薦</option>
+																				<option value="2">上架推薦</option>
+																			</select>
+																			<div class="col-auto my-1">
+																				<button type="button" class="btn btn-primary btn-sm">提交</button>
+																			</div>
+																		</form>
+																		</td>
+																		<td>
+																			<FORM METHOD="get"
+																				ACTION="<%=request.getContextPath()%>/back/shop/productUpdateServlet">
+																				<button type="submit" class="btn btn-danger btn-sm">修改</button>
+																				<input type="hidden" name="productId"
+																					value="${productVO.productId}"> <input
+																					type="hidden" name="action"
+																					value="getOne_For_Update">
+																			</FORM>
+																		</td>
+																</c:forEach>
+
 															</tbody>
 														</table>
 													</div>
@@ -248,23 +255,23 @@ pageContext.setAttribute("list", list);
 					</div>
 			</section>
 			<!--! modal area end-->
-			
-			
+
+
 			<!-- 共通的footer start-->
 			<%@include file="/back/layout/footer.jsp"%>
 			<!-- 共通的footer end-->
 		</div>
 	</div>
-	
-	
-<!-- 共用的JS -->
-<%@include file="/back/layout/commonJS.jsp"%>
-<!-- 共用的JS -->
 
-<!-- 額外添加的JS -->
-<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/back/js/?????.js"> --%>
-<!-- 額外添加的JS -->
-	
+
+	<!-- 共用的JS -->
+	<%@include file="/back/layout/commonJS.jsp"%>
+	<!-- 共用的JS -->
+
+	<!-- 額外添加的JS -->
+	<script src="<%=request.getContextPath()%>/assets/shop/backProduct/productUpdateStatus.js"> </script>
+	<!-- 額外添加的JS -->
+
 </body>
 
 </html>

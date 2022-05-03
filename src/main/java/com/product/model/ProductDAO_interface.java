@@ -10,7 +10,7 @@ public interface ProductDAO_interface extends JDBCDAO_Interface<ProductVO> {
 
 	
 	// 改變推薦狀態 回傳 1/-1代表成功或是失敗
-	public int deleteByTopStatus(ProductVO productVO);
+	public boolean deleteByTopStatus(ProductVO productVO);
 
 	 //查詢某部門的員工(一對多)(回傳 Set)
 //	public Set<EmpVO> getEmpsByDeptno(Integer deptno);

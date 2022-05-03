@@ -1,4 +1,4 @@
-package com.prodouct_img.controller;
+package com.product_img.controller;
 
 import static com.util.GSONUtil.writePojo2Json;
 
