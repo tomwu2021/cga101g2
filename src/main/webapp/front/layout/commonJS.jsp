@@ -44,8 +44,17 @@
 <!-- Main JS -->
 <script src="<%=request.getContextPath()%>/assets/js/main.js"></script>
 <!-- ekko-lightbox -->
+<<<<<<< HEAD
 <script
 	src="<%=request.getContextPath()%>/assets/js/ekko-lightbox/ekko-lightbox.js"></script>
 <!-- sweet alert -->
 <script
 	src="<%=request.getContextPath()%>/assets/js/common/sweetalert2.all.min.js"></script>
+=======
+<script src="<%=request.getContextPath()%>/assets/js/ekko-lightbox/ekko-lightbox.js"></script>
+
+<!-- sweetalert2 -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+>>>>>>> 820733243a52fa19927d34720a1c4d7e2ac5bf62
