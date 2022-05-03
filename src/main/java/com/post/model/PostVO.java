@@ -1,6 +1,9 @@
 package com.post.model;
 
 import java.sql.Date;
+import java.util.List;
+
+import com.picture.model.PictureVO;
 
 public class PostVO implements java.io.Serializable{
 	private Integer postId;
@@ -11,7 +14,7 @@ public class PostVO implements java.io.Serializable{
 	private Integer authority;
 	private Date createTime;	
 	private Date updateTime;
-	
+	private List<PictureVO> pictureList;
 	
 	public PostVO() {
 		super();
@@ -19,7 +22,7 @@ public class PostVO implements java.io.Serializable{
 	}
 
 	public PostVO(Integer postId, Integer memberId, String content, Integer likeCount, Integer status,
-			Integer authority, Date createTime, Date updateTime) {
+			Integer authority, Date createTime, Date updateTime, List<PictureVO> pictureList) {
 		super();
 		this.postId = postId;
 		this.memberId = memberId;
@@ -29,6 +32,7 @@ public class PostVO implements java.io.Serializable{
 		this.authority = authority;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
+		this.pictureList = pictureList;
 	}
 
 	public Integer getPostId() {
@@ -93,6 +97,15 @@ public class PostVO implements java.io.Serializable{
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	
+	
+	public List<PictureVO> getPictureList() {
+		return pictureList;
+	}
+
+	public void setPictureList(List<PictureVO> pictureList) {
+		this.pictureList = pictureList;
 	}
 
 	@Override

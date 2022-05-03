@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
+import com.picture.model.PictureVO;
+import com.post_pic.model.Post_PicVO;
+
 import connection.JDBCConnection;
 
 public class PostJDBCDAO implements PostDAO_interface {
@@ -152,6 +156,8 @@ public class PostJDBCDAO implements PostDAO_interface {
 		return list;
 	}
 
+	//查詢個人頁面
+	
 	@Override
 	public List<PostVO> selectPost(Integer memberid) {
 		final String SELECT_POST = "select * from post where member_id =? order by create_time desc ";
@@ -160,11 +166,9 @@ public class PostJDBCDAO implements PostDAO_interface {
 				PreparedStatement pstmt = con.prepareStatement(SELECT_POST);) {
 
 			pstmt.setInt(1, memberid);
-			
-
 			ResultSet rs = pstmt.executeQuery();
 			
-			List< PostVO> list = new ArrayList<PostVO>();
+			List< PostVO> postList = new ArrayList<PostVO>();
 			
 			while (rs.next()) {
 				PostVO postVO = new PostVO();
@@ -176,15 +180,19 @@ public class PostJDBCDAO implements PostDAO_interface {
 				postVO.setAuthority(rs.getInt("authority"));
 				postVO.setCreateTime(rs.getDate("create_time"));
 				postVO.setUpdateTime(rs.getDate("update_time"));
-			
-				list.add(postVO);
+				postList.add(postVO);
 			}
-			return list;
+			
+			return postList;
 		}catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}
 	}
-
+	//查詢個人個人全部貼文（含圖片）
+	
+	
+	//查詢熱門貼文
+	
 	@Override
 	public List<PostVO> selectHotPost() {
 		final String SELECT_HOTPOST = "select * from post "
@@ -192,7 +200,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 				+ "order by like_count desc "
 				+ "limit 0,3";
 		
-		List< PostVO> list = new ArrayList<PostVO>();
+		List< PostVO> hotpostlist = new ArrayList<PostVO>();
 		
 		try (Connection con = JDBCConnection.getRDSConnection();
 			 PreparedStatement pstmt = con.prepareStatement(SELECT_HOTPOST);
@@ -208,13 +216,23 @@ public class PostJDBCDAO implements PostDAO_interface {
 				postVO.setCreateTime(rs.getDate("create_time"));
 				postVO.setUpdateTime(rs.getDate("update_time"));
 
-				list.add(postVO);
+				hotpostlist.add(postVO);
 			}
 			
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} 
-		return list;
+		return hotpostlist;
 	
 	}
+
+	@Override
+	public PostVO selectAllPost() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	
 }

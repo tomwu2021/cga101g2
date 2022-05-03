@@ -49,10 +49,10 @@ public class TestPost {
 //		System.out.print(postVO3.getCreateTime()+ ",");
 //		System.out.print(postVO3.getUpdateTime());	
 		
-		//查看個人頁面（個人貼文）
-		for(PostVO p1: dao.selectPost(1)) {
-			System.out.println(p1);
-		}
+//		//查看個人頁面（個人貼文）
+//		for(PostVO p1: dao.selectPost(1)) {
+//			System.out.println(p1);
+//		}
 		
 		//查看熱門貼文
 //		List<PostVO> list = dao.selectHotPost();

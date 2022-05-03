@@ -15,4 +15,7 @@ public interface PostDAO_interface extends JDBCDAO_Interface<PostVO> {
 	//查看熱門貼文
 	public List<PostVO> selectHotPost();
 	
+	//查詢個人個人全部貼文（含圖片）
+	public PostVO selectAllPost();
+	
 }
