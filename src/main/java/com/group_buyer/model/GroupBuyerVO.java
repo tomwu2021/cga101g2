@@ -1,6 +1,7 @@
 package com.group_buyer.model;
 
 import com.group_order.model.GroupOrderVO;
+import com.picture.model.PictureVO;
 import com.product.model.ProductVO;
 
 public class GroupBuyerVO implements java.io.Serializable {
@@ -12,6 +13,7 @@ public class GroupBuyerVO implements java.io.Serializable {
 	private String recipients;
 	private GroupOrderVO groupOrderVO;
 	private ProductVO productVO;
+	private PictureVO pictureVO;
 
 	public GroupBuyerVO() {
 	}
@@ -78,6 +80,15 @@ public class GroupBuyerVO implements java.io.Serializable {
 
 	public void setProductVO(ProductVO productVO) {
 		this.productVO = productVO;
+	}
+	
+	
+	public PictureVO getPictureVO() {
+		return pictureVO;
+	}
+
+	public void setPictureVO(PictureVO pictureVO) {
+		this.pictureVO = pictureVO;
 	}
 
 	@Override
