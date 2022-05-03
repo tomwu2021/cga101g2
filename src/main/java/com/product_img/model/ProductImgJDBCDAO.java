@@ -16,26 +16,16 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 	public ProductImgVO insert(ProductImgVO pImgVO) {
 		//設定自動新增的主鍵名稱
 		String columns[] = {"product_img_id"};
-		String INSERT_STMT = "INSERT INTO product_img(product_id ,img) "
+		String INSERT_STMT = "INSERT INTO product_img(product_img_id,product_id) "
 				 			+ "VALUES(?,?)";
 		try (Connection con = getRDSConnection(); 
 				PreparedStatement stmt = con.prepareStatement(INSERT_STMT, columns)) {
-			stmt.setInt(1, pImgVO.getProductId());			stmt.setBytes(2, pImgVO.getImage());
-			
+			stmt.setInt(1, pImgVO.getProductImgId());
+			stmt.setInt(2, pImgVO.getProductId());			
 //			stmt.execute(); !!就是你重複提交資料 懷懷!!!!
 			
 			int rowCount = stmt.executeUpdate();
 			System.out.println("ProductImgVO "+rowCount + "row(s) insert!");
-			
-			//掘取對應的自增主鍵值
-			int next_product_img_id = 0 ;
-			ResultSet rs = stmt.getGeneratedKeys();//取得自動編號
-			if (rs.next()) {
-				next_product_img_id = rs.getInt(1);//與上述無關,單純取得自動編號
-				System.out.println("自增主鍵值= " + next_product_img_id +"(剛新增成功的照片編號)");
-			} else {
-				System.out.println("未取得自增主鍵值");
-			}
 			
 			return pImgVO;
 		} catch (SQLException se) {

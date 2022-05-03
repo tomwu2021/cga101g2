@@ -34,4 +34,7 @@
 <!-- ekko-lightbox -->
 <script src="<%=request.getContextPath()%>/assets/js/ekko-lightbox/ekko-lightbox.js"></script>
 
+<!-- sweetalert2 -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 

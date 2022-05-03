@@ -60,14 +60,14 @@ pageContext.setAttribute("list", list);
 				<article class="single_product">
 					<figure>
 						<div class="product_thumb">
-							<c:if test="${productVO.pictureVO.size() != 0 }">
+							<c:if test="${productVO.pictureVOList.size() != 0 }">
 								<a class="primary_img" href="product-details.html">
-								<img src="${productVO.pictureVO.get(0).previewUrl}" alt=""></a>
+								<img src="${productVO.pictureVOList.get(0).previewUrl}" alt=""></a>
 							</c:if>	
 <%-- 							<c:if test="${productVO.pictureVO.size() >= 1  && productVO.pictureVO.size()!=0}"> --%>
-							<c:if test="${productVO.pictureVO.size() >= 2  && productVO.pictureVO.size()!=0}">
+							<c:if test="${productVO.pictureVOList.size() >= 2  && productVO.pictureVOList.size()!=0}">
 								<a class="secondary_img" href="product-details.html">
-								<img src="${productVO.pictureVO.get(1).previewUrl}" alt=""></a>
+								<img src="${productVO.pictureVOList.get(1).previewUrl}" alt=""></a>
 							</c:if>	
 							<div class="action_links">
 								<ul>

@@ -9,3 +9,6 @@
 <script src="<%=request.getContextPath()%>/assets/hub/js/charts-home.js"></script>
 <script src="<%=request.getContextPath()%>/assets/hub/js/front.js"></script>
 <script src="<%=request.getContextPath()%>/assets/hub/js/back_index.js"></script>
+
+<!-- sweetalert2 -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

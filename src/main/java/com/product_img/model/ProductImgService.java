@@ -43,9 +43,8 @@ public class ProductImgService implements ProductImgDAO_interface{
 	}
 
 	@Override
-	public boolean delete(ProductImgVO t) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(ProductImgVO productImgVO) {
+		return dao.delete(productImgVO);
 	}
 
 	@Override
