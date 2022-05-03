@@ -3,58 +3,11 @@
 <%@ page import="com.group_buyer.model.*"%>
 
 <%
-  //接傳回的VO
-  GroupBuyerVO groupBuyerVO = (GroupBuyerVO) request.getAttribute("groupBuyerVO");
+//接傳回的VO
+GroupBuyerVO groupBuyerVO = (GroupBuyerVO) request.getAttribute("groupBuyerVO");
 %>
-<style>
-table{
-  width: 100%;
-  border-collapse: collapse;
-}
-
-table tr{
-  border-bottom: solid 2px white;
-}
-
-table tr:last-child{
-  border-bottom: none;
-}
-
-table th{
-  position: relative;
-  width: 30%;
-  background-color: #7d7d7d;
-  color: white;
-  text-align: center;
-  padding: 10px 0;
-}
-
-table th:after{
-  display: block;
-  content: "";
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  top:calc(50% - 10px);
-  right:-10px;
-  border-left: 10px solid #7d7d7d;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-}
-
-table td{
-  text-align: left;
-  width: 70%;
-  text-align: center;
-  background-color: #eee;
-  padding: 10px 0;
-}
-</style>
 <!-- include <head></head> -->
-
-<!--services img area-->
 <%@ include file="/front/layout/head.jsp"%>
-<!-- include  common JS-->
 
 <!-- include  header -->
 <%@ include file="/front/layout/header.jsp"%>
@@ -62,27 +15,97 @@ table td{
 <!-- 主要內容 start -->
 <!--breadcrumbs area start-->
 <FORM METHOD="post" ACTION="/CGA101G2/front/order/myAccount.jsp">
-	<div class="main">
-	<label>訂單寄送詳情</label><br>
-		<table>
-			<tr>
-				<th>Recipients</th>
-				<td><%=groupBuyerVO.getRecipients()%></td>
-			</tr>
-			<tr>
-				<th>Phone</th>
-				<td><%=groupBuyerVO.getPhone()%></td>
-			</tr>
-			<tr>
-				<th>Address</th>
-				<td><%=groupBuyerVO.getAddress()%></td>
-			</tr>
-		</table>
+	<div class="breadcrumbs_area">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="breadcrumb_content">
+						<h3>Cart</h3>
+						<ul>
+							<li>訂單</li>
+							<li>訂單明細</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<br>
-	<input type="submit" class="btn btn-primary" value="返回查看訂單">
-</FORM>
+	<div class="shopping_cart_area mt-100">
+		<div class="container">
+			<form action="#">
+				<div class="row">
+					<div class="col-12">
+						<div class="table_desc">
+							<div class="cart_page table-responsive">
+								<table>
+									<thead>
+										<tr>
+											<th class="product_thumb">Image</th>
+											<th class="product_name">Product</th>
+											<th class="product-price">Price</th>
+											<th class="product_quantity">Quantity</th>
+											<th class="product_total">Total</th>
+										</tr>
+									</thead>
+									<tbody>
 
+										<tr>
+											<td class="product_thumb"><a href="#"><img
+													src="${groupBuyerVO.pictureVO.previewUrl}" alt=""></a></td>
+											<td class="product_name">${groupBuyerVO.productVO.productName}</td>
+											<td class="product-price">${groupBuyerVO.groupOrderVO.finalPrice}</td>
+											<td class="product_quantity">${groupBuyerVO.productAmount}</td>
+											<td class="product_total">${groupBuyerVO.groupOrderVO.finalPrice*groupBuyerVO.productAmount}</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--coupon code area start-->
+				<div class="coupon_area">
+					<div class="row">
+						<div class="col-lg-6 col-md-6">
+							<div class="coupon_code left">
+								<h3>收件資訊</h3>
+								<div class="cart_subtotal">
+									<p>收件人姓名: ${groupBuyerVO.recipients}</p>
+									<br>
+								</div>
+								<br>
+								<div class="cart_subtotal">
+									<p>收件人電話: ${groupBuyerVO.phone}</p>
+									<br>
+								</div>
+								<br>
+								<div class="cart_subtotal">
+									<p>收件人地址: ${groupBuyerVO.address}</p>
+									<br>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6">
+							<div class="coupon_code right">
+								<h3>Cart Totals</h3>
+								<div class="coupon_inner">
+									<div class="cart_subtotal">
+										<p>總金額</p>
+										<p class="cart_amount">${groupBuyerVO.groupOrderVO.finalPrice*groupBuyerVO.productAmount}</p>
+									</div>	
+									<div class="checkout_btn" onclick="history.back()">
+										<a href="#">回上頁</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--coupon code area end-->
+			</form>
+		</div>
+	</div>
 
 <!-- 主要內容 end -->
 <%@ include file="/front/layout/commonJS.jsp"%>
