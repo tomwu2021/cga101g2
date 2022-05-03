@@ -28,16 +28,16 @@
 
 <style>
   table {
-	width: 800px;
+	width: 1200px;
 	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
+	margin-top: 6px;
+	margin-bottom: 6px;
   }
   table, th, td {
     border: 1px solid #CCCCFF;
   }
   th, td {
-    padding: 5px;
+    padding: 10px;
     text-align: center;
   }
 </style>
@@ -63,6 +63,10 @@
 		<th>authority</th>
 		<th>發文時間</th>
 		<th>更新時間</th>
+		
+		<th>圖</th>
+		
+		
 	</tr>
 	<tr>
 		<td>${postVO.memberId}</td>
@@ -73,7 +77,21 @@
 		<td>${postVO.authority}</td>
 		<td>${postVO.createTime}</td>
 		<td>${postVO.updateTime}</td>
+		
+		
+		<c:if test="${postVO.pictureList.size() != 0 }">
+                   <td style="width: 6%;"><img
+                    src="${postVO.pictureList.get(0).url}"
+                    alt="..." class="img-thumbnail"></td>
+        </c:if>
+                  <!-- 此段是防止沒有照片所以跑版的判斷 開始-->
+                  <c:if test="${postVO.pictureList.size() == 0 }">
+                   <td style="width: 6%;"><img
+                    src="https://fakeimg.pl/350x200/ff0000/000"
+                    alt="..." class="img-thumbnail"></td>
+        </c:if>
 	</tr>
 </c:forEach>
+	
 </table>
 </html>
