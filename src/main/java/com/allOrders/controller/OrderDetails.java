@@ -74,8 +74,9 @@ public class OrderDetails extends HttpServlet{
 			Integer groupOrderId = Integer.valueOf(req.getParameter("groupOrderId").trim());
 			GroupBuyerService groupBuyerService=new GroupBuyerService();
 			//查詢回傳資料
-			GroupBuyerVO groupBuyerVO2=groupBuyerService.selectOrderDetail(groupOrderId, memberId);	
-			req.setAttribute("groupBuyerVO", groupBuyerVO2);
+			GroupBuyerVO groupBuyerVO=groupBuyerService.selectOrderDetail(groupOrderId, memberId);	
+			System.out.println(groupBuyerVO.getPictureVO().getPreviewUrl());
+			req.setAttribute("groupBuyerVO", groupBuyerVO);
 			
 			String url = "/front/order/showChangeOrder.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); 
@@ -93,9 +94,6 @@ public class OrderDetails extends HttpServlet{
 			
 			for(OrdersVO o:productList) {
 				productDetail.add(ordersService.getAllProductPicture(orderId, o.getProductVO().getProductId()));
-			}
-			for(OrdersVO o:productDetail) {
-				System.out.println(o.getPictureVO().getPreviewUrl());
 			}
 			System.out.println(productList.get(0).getSumPrice());
 			req.setAttribute("orderDetail", productDetail.get(0));

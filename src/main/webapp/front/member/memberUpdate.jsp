@@ -59,21 +59,22 @@
 															</div>
 														</div>
 
-
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">地址</label>
 															<div class="col-md-9">
-																<label class="col-md-3 form-control-label"
-																	style="max-width: 550px">${membersVO.address}</label>
+																<input id="inputHorizontalSuccess"
+																	value="${membersVO.address}"
+																	placeholder="Email Address"
+																	class="form-control form-control-success">
 															</div>
 														</div>
-
 
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">手機</label>
 															<div class="col-md-9">
-																<label class="col-md-3 form-control-label"
-																	style="max-width: 550px">${membersVO.phone}</label>
+																<input id="inputHorizontalSuccess"
+																	value="${membersVO.phone}" placeholder="Email Address"
+																	class="form-control form-control-success">
 															</div>
 														</div>
 
@@ -92,8 +93,9 @@
 														<!--! 提交按鈕 -->
 														<div class="form-group row">
 															<div class="col-md-9 ml-auto">
-															<a href="<%=request.getContextPath()%>/front/member/memberUpdate.jsp"><input type="button" value="修改" class="btn btn-primary"></a>
-																
+																<a
+																	href="<%=request.getContextPath()%>/front/member/member.jsp"><input
+																	type="button" value="儲存" class="btn btn-primary"></a>
 															</div>
 														</div>
 													</form>

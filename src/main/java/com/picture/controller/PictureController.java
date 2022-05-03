@@ -151,6 +151,7 @@ public class PictureController extends CommonController {
 
 	public void upload(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		Collection<Part> parts = req.getParts();
+		albumId = Integer.parseInt(req.getParameter("albumId"));
 		if (membervo != null) {
 			pictureService.uploadImage(parts, albumId);
 			req.setAttribute("msg", "新增成功");

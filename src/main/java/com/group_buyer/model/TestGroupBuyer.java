@@ -63,6 +63,9 @@ public class TestGroupBuyer {
 		// 查單筆記鍵資訊
 //		GroupBuyerJDBCDAO dao=new GroupBuyerJDBCDAO();
 //		System.out.println(dao.selectByPK(1, 1));
+		
+		GroupBuyerJDBCDAO dao=new GroupBuyerJDBCDAO();
+		System.out.println(dao.selectByPK(1, 1));
 
 	}
 }

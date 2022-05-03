@@ -19,6 +19,23 @@ OrdersVO ordersVO = (OrdersVO) request.getAttribute("ordersVO");
 <%@ include file="/front/layout/header.jsp"%>
 
 <!-- 主要內容 start -->
+    <!--breadcrumbs area start-->
+    <div class="breadcrumbs_area">
+        <div class="container">   
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                       <h3>Cart</h3>
+                        <ul>
+                            <li onclick="history.back()">訂單</li>
+                            <li>訂單明細</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>         
+    </div>
+    <!--breadcrumbs area end-->
 <!--shopping cart area start -->
 <div class="shopping_cart_area mt-100">
 	<div class="container">

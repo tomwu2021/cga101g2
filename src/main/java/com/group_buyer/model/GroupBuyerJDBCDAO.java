@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.group_order.model.GroupOrderVO;
+import com.picture.model.PictureVO;
 import com.product.model.ProductVO;
 
 import connection.JDBCConnection;
@@ -188,8 +189,7 @@ public class GroupBuyerJDBCDAO implements GroupBuyerDAO_Interface {
 				groupBuyerVO.setProductAmount(rs.getInt("product_amount"));
 				GroupOrderVO groupOrderVO = new GroupOrderVO();
 				groupOrderVO.setProductId(rs.getInt("product_id"));
-				groupOrderVO.setFinalPrice(Integer
-						.valueOf((int) ((int) (rs.getInt("final_price")) * 0.9 * groupBuyerVO.getProductAmount())));
+				groupOrderVO.setFinalPrice(rs.getInt("final_price"));
 				groupOrderVO.setStatus(rs.getInt("status"));
 				ProductVO productVO = new ProductVO();
 				productVO.setProductName(rs.getString("product_name"));
@@ -254,8 +254,12 @@ public class GroupBuyerJDBCDAO implements GroupBuyerDAO_Interface {
 		// TODO Auto-generated method stub
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String getAllByGroupOrderIdSql = "select group_order_id, member_id, product_amount, recipient, phone, address from group_buyer "
-				+ "where group_order_id=? and member_id=?;";
+		String getAllByGroupOrderIdSql = "select * "
+				+ "from group_buyer b join group_order o on (b.group_order_id=o.group_order_id) "
+				+ "join product p on(p.product_id=o.product_id) "
+				+ "join product_img i on(i.product_id=p.product_id) "
+				+ "join picture pt on(i.product_img_id=pt.picture_id) "
+				+ "where b.group_order_id=? and member_id=?;";
 		GroupBuyerVO groupBuyerVO = null;
 		try (Connection con = JDBCConnection.getRDSConnection()) {
 			ps = con.prepareStatement(getAllByGroupOrderIdSql);
@@ -264,16 +268,55 @@ public class GroupBuyerJDBCDAO implements GroupBuyerDAO_Interface {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				groupBuyerVO = new GroupBuyerVO();
-				groupBuyerVO.setGroupOrderId(rs.getInt("group_order_id"));
 				groupBuyerVO.setMemberId(rs.getInt("member_id"));
+				groupBuyerVO.setGroupOrderId(rs.getInt("group_order_id"));				
 				groupBuyerVO.setAddress(rs.getString("address"));
 				groupBuyerVO.setPhone(rs.getString("phone"));
+				groupBuyerVO.setRecipients(rs.getString("recipient"));				
 				groupBuyerVO.setProductAmount(rs.getInt("product_amount"));
-				groupBuyerVO.setRecipients(rs.getString("recipient"));
+				GroupOrderVO groupOrderVO = new GroupOrderVO();
+				groupOrderVO.setProductId(rs.getInt("product_id"));
+				groupOrderVO.setFinalPrice(rs.getInt("final_price"));
+				groupOrderVO.setStatus(rs.getInt("status"));
+				ProductVO productVO = new ProductVO();
+				productVO.setProductName(rs.getString("product_name"));
+				PictureVO pictureVO=new PictureVO();
+				pictureVO.setPreviewUrl(rs.getString("preview_url"));
+				groupBuyerVO.setPictureVO(pictureVO);
+				groupBuyerVO.setGroupOrderVO(groupOrderVO);
+				groupBuyerVO.setProductVO(productVO);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return groupBuyerVO;
 	}
+	
+//	@Override
+//	public GroupBuyerVO selectByPK(Integer groupOrderId, Integer memberId) {
+//		// TODO Auto-generated method stub
+//		PreparedStatement ps = null;
+//		ResultSet rs = null;
+//		String getAllByGroupOrderIdSql = "select group_order_id, member_id, product_amount, recipient, phone, address from group_buyer "
+//				+ "where group_order_id=? and member_id=?;";
+//		GroupBuyerVO groupBuyerVO = null;
+//		try (Connection con = JDBCConnection.getRDSConnection()) {
+//			ps = con.prepareStatement(getAllByGroupOrderIdSql);
+//			ps.setInt(1, groupOrderId);
+//			ps.setInt(2, memberId);
+//			rs = ps.executeQuery();
+//			while (rs.next()) {
+//				groupBuyerVO = new GroupBuyerVO();
+//				groupBuyerVO.setGroupOrderId(rs.getInt("group_order_id"));
+//				groupBuyerVO.setMemberId(rs.getInt("member_id"));
+//				groupBuyerVO.setAddress(rs.getString("address"));
+//				groupBuyerVO.setPhone(rs.getString("phone"));
+//				groupBuyerVO.setProductAmount(rs.getInt("product_amount"));
+//				groupBuyerVO.setRecipients(rs.getString("recipient"));
+//			}
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//		return groupBuyerVO;
+//	}
 }
