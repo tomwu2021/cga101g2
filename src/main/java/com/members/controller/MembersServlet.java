@@ -43,6 +43,8 @@ public class MembersServlet extends HttpServlet {
 
 		/*************************** 註冊帳號 account password **********************/
 
+		
+		
 		/*************************** 判斷帳號是否存在 **********************/
 		String accountRegister = req.getParameter("accountRegister");
 		// 判斷 accountRegister 是否有值，有值再做判斷
@@ -51,8 +53,7 @@ public class MembersServlet extends HttpServlet {
 			String json = new Gson().toJson(errorMsgs);
 			res.getWriter().write(json);
 		} else {
-			// 呼叫 service，第 37 行有宣告 service 實體，
-			// 我的 getOneByAccount 的回傳值為 Boolean，所以用 Boolean 接，在第 40 行有宣告一個 Boolean
+
 			boo = memberSvc.getOneByAccount(accountRegister);
 
 			if (boo == true) {
@@ -112,16 +113,22 @@ public class MembersServlet extends HttpServlet {
 
 					boo = memberSvc.getOneByAccount(strAccount);
 					if (boo == true) {
-						System.out.println("正確");
 						MembersVO membersVO = memberSvc.selectForLogin(strAccount, strPassword);
-						HttpSession session = req.getSession();
-						session.setAttribute("membersVO", membersVO);
-						req.setAttribute("membersVO", membersVO); // 資料庫取出的 membersVO 物件，存入 req
-						String url = "/front/member/member.jsp";
-						RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-						successView.forward(req, res);
+						if(membersVO != null) {
+							HttpSession session = req.getSession();
+							session.setAttribute("membersVO", membersVO);
+							req.setAttribute("membersVO", membersVO); // 資料庫取出的 membersVO 物件，存入 req
+							String url = "/front/member/member.jsp";
+							RequestDispatcher successView = req.getRequestDispatcher(url);
+							successView.forward(req, res);
+						}else if ( membersVO == null ){
+							errorMsgs.put("errorAccount", strAccount);
+							errorMsgs.put("passowrd", "請確認會員密碼");
+							RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
+							failureView.forward(req, res);
+						}
+
 					} else {
-						System.out.println("不正確");
 						errorMsgs.put("errorAccount", strAccount);
 						errorMsgs.put("account", "請確認會員帳號");
 						errorMsgs.put("passowrd", "請確認會員密碼");
@@ -317,32 +324,6 @@ public class MembersServlet extends HttpServlet {
 //			}
 //		}
 
-//		if ("delete".equals(action)) { // 來自listAllEmp.jsp
-//
-////			List<String> errorMsgs = new LinkedList<String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//
-//			try {
-//				/*************************** 1.接收請求參數 ***************************************/
-//				Integer memberId = Integer.valueOf(req.getParameter("memberId"));
-//
-//				/*************************** 2.開始刪除資料 ***************************************/
-////				MembersService memberSvc = new MembersService();
-//				memberSvc.deleteOneById(memberId);
-//
-//				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-//				String url = "/front/listAllMember.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
-//				successView.forward(req, res);
-//
-//				/*************************** 其他可能的錯誤處理 **********************************/
-//			} catch (Exception e) {
-//				errorMsgs.put("刪除資料失敗", e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/front/listAllMember.jsp");
-//
-//				failureView.forward(req, res);
-//			}
-//		}
 
 	}
 

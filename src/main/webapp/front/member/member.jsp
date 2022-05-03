@@ -92,7 +92,8 @@
 														<!--! 提交按鈕 -->
 														<div class="form-group row">
 															<div class="col-md-9 ml-auto">
-																<input type="submit" value="修改" class="btn btn-primary">
+															<a href="<%=request.getContextPath()%>/front/member/memberUpdate.jsp"><input type="button" value="修改" class="btn btn-primary"></a>
+																
 															</div>
 														</div>
 													</form>
