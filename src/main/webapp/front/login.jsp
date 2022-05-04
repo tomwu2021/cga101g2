@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 
@@ -11,10 +12,11 @@
 <!-- register 註冊 css -->
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/assets/css/register.css">
-
+<%@ include file="/front/layout/commonCSS.jsp"%>
 </head>
 
 <body>
+<%@ include file="/front/layout/commonJS.jsp"%>
 
 	<!----------------------------- 登入視窗 ---------------------------------->
 
@@ -46,7 +48,7 @@
 	<div id="box" style="height: 500px;">
 		<h2>
 			帳號
-			<div id="viewAccount" style="display: inline; color: red;"></div>
+			<div id="viewRegisterAccount" style="display: inline; color: red;"></div>
 		</h2>
 
 		<input type="text" name="registerAccount" id="registerAccount" placeholder="請輸入電子郵件" /> 
@@ -54,7 +56,7 @@
 
 		<h2>
 			密碼
-			<div class="viewpassword" id="viewpassword" style="display: inline; color: red;"></div>
+			<div id="viewpassword" style="display: inline; color: red;" ></div>
 		</h2>
 		<input type="password" name="passwordRegister" id="passwordRegister" placeholder="至少八個字符，至少一個字母和一個數字" value="" />
 
@@ -98,8 +100,7 @@
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/assets/js/register.js"></script>
 
-
-
+<div class="loading" id="spinner">Loading&#8230;</div>
 </body>
 
 </html>

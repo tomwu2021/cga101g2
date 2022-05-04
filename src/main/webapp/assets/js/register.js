@@ -121,7 +121,7 @@ $(function() {
 
 // 傳送資料到 member.do
 function checkAccount() {
-
+loading();
 	let dataJSON = {
 		registerAccount: $("#registerAccount").val(),
 		action: "checkAccount"
@@ -131,8 +131,10 @@ function checkAccount() {
 			url: "member.do", // 請求的url地址，相對位址
 			type: "post", // 請求的方式，通常用 POST
 			data: dataJSON,
-			success: function(data) {
-				console.log(data);
+			success: function(json) {
+				let objectJSON = JSON.parse(json);
+				document.getElementById("viewRegisterAccount").innerHTML = objectJSON.exist;
+				offLoading();
 			},
 		}
 	);
@@ -140,8 +142,29 @@ function checkAccount() {
 
 
 //// 帳號註冊
-//function registerVerification() {
-//
+function registerVerification() {
+	
+//	loading();
+	let dataJSON = {
+		registerAccount: $("#registerAccount").val(),
+		passwordRegister: $("#passwordRegister").val(),
+		checkpasswordRegister: $("#checkpasswordRegister").val(),
+		verificationCode: $("#verificationCode").val(),
+		action: "registerVerification"
+	}
+	console.log($("#registerAccount").val());
+	$.ajax(
+		{
+			url: "member.do", // 請求的url地址，相對位址
+			type: "post", // 請求的方式，通常用 POST
+			data: dataJSON,
+			success: function(json) {
+//				let objectJSON = JSON.parse(json);
+//				document.getElementById("viewRegisterAccount").innerHTML = objectJSON.exist;
+//				offLoading();
+			},
+		}
+	);
 //	let re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/gi;
 //	// 密碼
 //	let passwordRegister = document.getElementById("passwordRegister");
@@ -184,40 +207,8 @@ function checkAccount() {
 //
 //}
 
-//function CreateAccount() {
-//	let xhr = null;
-//	function createXHR() {
-//		if (window.XMLHttpRequest) {
-//			xhr = new XMLHttpRequest();
-//		} else if (window.ActiveXObject) {
-//			xhr = new ActiveXObject("Microsoft.XMLHTTP");
-//		}
-//		return xhr;
-//	}
-//	createXHR();
-//
-//	xhr.onload = (e) => {
-//		if (xhr.status == 200) {
-//			//	document.getElementById("viewAccount").innerHTML = xhr.responseText;
-////			let errorJson = xhr.responseText;
-////			showError(errorJson);
-//		} else {
-//			alert(xhr.status);
-//		}
-//	};
-//
-//	xhr.open("post", "/CGA101G2/front/member.do");
-//	xhr.setRequestHeader(
-//		"content-type",
-//		"application/x-www-form-urlencoded"
-//	);
-//	
-//	
-//	
-//	let datasInfo = "passwordRegister=" + document.getElementById("passwordRegister").value&"verificationCode="+document.getElementById("verificationCode").value;
-//	console.log(datasInfo);
-//	xhr.send(datasInfo);
-//}
+
+}
 
 
 

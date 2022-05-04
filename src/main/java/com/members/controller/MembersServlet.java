@@ -8,12 +8,13 @@ import java.util.regex.*;
 import javax.mail.Session;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import com.amazonaws.services.s3.internal.eventstreaming.Message;
 import com.google.gson.Gson;
 import com.members.model.*;
 import com.util.JavaMail;
 
 import javax.servlet.http.HttpSession;
-
 
 import javax.servlet.annotation.WebServlet;
 
@@ -23,13 +24,13 @@ public class MembersServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-		req.setCharacterEncoding("UTF-8");// client	 端向 Servlet 請求的編碼
+		req.setCharacterEncoding("UTF-8");// client 端向 Servlet 請求的編碼
 		res.setCharacterEncoding("UTF-8");// response，設定回應的格式及編碼
 
 		// 判斷呼叫哪個方法
 		String action = req.getParameter("action");
 		System.out.println(action);
-		
+
 		action = action == null ? "" : action;
 
 		switch (action) {
@@ -38,6 +39,8 @@ public class MembersServlet extends HttpServlet {
 			break;
 		case "checkAccount":
 			checkAccount(req, res);
+			break;
+		case "registerVerification":
 			break;
 		}
 	}
@@ -109,60 +112,74 @@ public class MembersServlet extends HttpServlet {
 		}
 
 	}
-	
+
 	/*************************** 判斷帳號是否存在 **********************/
-	public void checkAccount(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+	public void checkAccount(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String registerAccount = req.getParameter("registerAccount");
-		System.out.println(registerAccount);
+
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+
+		if (registerAccount == null || registerAccount.trim().length() == 0) {
+
+			messages.put("exist", "請輸入電子郵件");
+			String json = new Gson().toJson(messages);
+			res.getWriter().write(json);
+			return;
+		}
+		MembersService memberSvc = new MembersService();
+		Boolean boo = memberSvc.getOneByAccount(registerAccount);
+
+		// True 此帳號已存在
+		if (boo == true) {
+			messages.put("exist", "此帳號已註冊");
+			String json = new Gson().toJson(messages);
+			res.getWriter().write(json);
+			return;
+		} else { // False，帳號不存在，寄送 JavaMail
+			String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}";
+			if (registerAccount.matches(checkEmail)) {
+
+				// 產生驗證碼存在 session
+				String verificationCode = memberSvc.genAuthCode();
+				HttpSession sessionVC = req.getSession();
+				sessionVC.setAttribute("authCode", verificationCode);
+				sessionVC.setAttribute("registerAccount", registerAccount);
+
+				// 寄送 JavaMail
+				JavaMail javaMail = new JavaMail();
+				javaMail.setRecipient(registerAccount); // 收件人信箱
+				javaMail.setTxt("歡迎您加入 Pclub 會員，請於收到此信件半小時內，完成會員驗證，感謝您的註冊！<br>驗證碼：" + verificationCode); // 內文
+				javaMail.SendMail(); // 送出
+
+				messages.put("exist", "已寄送驗證碼至此信箱");
+				String json = new Gson().toJson(messages);
+				res.getWriter().write(json);
+				return;
+			} else {
+				messages.put("exist", "此帳號格式錯誤，請重新輸入！");
+				String json = new Gson().toJson(messages);
+				res.getWriter().write(json);
+				return;
+			}
+		}
 	}
 
+	/*************************** 帳號註冊 **********************/
+	public void registerVerification(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+//		String registerAccount = req.getParameter("registerAccount");
+//		String passwordRegister = req.getParameter("passwordRegister");
+//		String checkpasswordRegister = req.getParameter("checkpasswordRegister");
+//		String verificationCode = req.getParameter("verificationCode");
+//
+//
+//		System.out.println(registerAccount);
+//		System.out.println(passwordRegister);
+//		System.out.println(checkpasswordRegister);
+//		System.out.println(verificationCode);
+	}
 }
-
-//		
-//		
-//		
-//		// 判斷 accountRegister 是否有值，有值再做判斷
-//		if (accountRegister == null || accountRegister.trim().length() == 0) {
-//			errorMsgs.put("exist", "請輸入正確帳號");
-//			String json = new Gson().toJson(errorMsgs);
-//			res.getWriter().write(json);
-//		} else {
-//
-//			boo = memberSvc.getOneByAccount(accountRegister);
-//
-//			if (boo == true) {
-//				errorMsgs.put("exist", "此帳號已註冊");
-//				String json = new Gson().toJson(errorMsgs);
-//				res.getWriter().write(json);
-//			} else {
-//				String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}";
-//				if (accountRegister.matches(checkEmail)) {
-//
-//					// 驗證碼
-//					String verificationCode = memberSvc.genAuthCode();
-//					HttpSession sessionVC = req.getSession();
-//					sessionVC.setAttribute("authCode", verificationCode);
-//					sessionVC.setAttribute("accountRegister", accountRegister);
-//					
-//					JavaMail javaMail = new JavaMail();
-//
-//					javaMail.setRecipient(accountRegister);
-//					javaMail.setTxt("歡迎您加入 Pclub 會員，請於收到此信件半小時內，完成會員驗證，感謝您的註冊！<br>驗證碼：" + verificationCode);
-//					javaMail.SendMail();
-//
-//					errorMsgs.put("exist", "格式正確，已寄送 Email 至此帳號");
-//					String json = new Gson().toJson(errorMsgs);
-//					res.getWriter().write(json);
-//
-//				} else {
-//					errorMsgs.put("exist", "此帳號格式錯誤");
-//					String json = new Gson().toJson(errorMsgs);
-//					res.getWriter().write(json);
-//				}
-//			}
-//		}
-//
-//		
 
 //
 //	}
