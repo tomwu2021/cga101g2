@@ -4,11 +4,18 @@ import java.io.*;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.regex.*;
+
+import javax.mail.Session;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import com.google.gson.Gson;
 import com.members.model.*;
+import com.util.JavaMail;
+
 import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.javassist.expr.NewArray;
+
 import javax.servlet.annotation.WebServlet;
 
 @WebServlet("/front/member.do")
@@ -43,8 +50,6 @@ public class MembersServlet extends HttpServlet {
 
 		/*************************** 註冊帳號 account password **********************/
 
-		
-		
 		/*************************** 判斷帳號是否存在 **********************/
 		String accountRegister = req.getParameter("accountRegister");
 		// 判斷 accountRegister 是否有值，有值再做判斷
@@ -64,15 +69,18 @@ public class MembersServlet extends HttpServlet {
 				String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}";
 				if (accountRegister.matches(checkEmail)) {
 
-					// 用 session 存一組 驗證碼
-//					String verificationCode = memberSvc.genAuthCode();
-//					HttpSession sessionVC = req.getSession();
-//					String svc = (String) sessionVC.getAttribute("checkCodeSession");
+					// 驗證碼
+					String verificationCode = memberSvc.genAuthCode();
+					HttpSession sessionVC = req.getSession();
+					sessionVC.setAttribute("authCode", verificationCode);
 
-					// 將 驗證碼 傳送至 Email
-//					javaMail(verificationCode);
+					JavaMail javaMail = new JavaMail();
 
-					errorMsgs.put("exist", "格式正確，寄送 Email 至此帳號");
+					javaMail.setRecipient(accountRegister);
+					javaMail.setTxt("歡迎您加入 Pclub 會員，請於收到此信件半小時內，完成會員驗證，感謝您的註冊！<br>驗證碼：" + verificationCode);
+					javaMail.SendMail();
+
+					errorMsgs.put("exist", "格式正確，已寄送 Email 至此帳號");
 					String json = new Gson().toJson(errorMsgs);
 					res.getWriter().write(json);
 
@@ -114,14 +122,14 @@ public class MembersServlet extends HttpServlet {
 					boo = memberSvc.getOneByAccount(strAccount);
 					if (boo == true) {
 						MembersVO membersVO = memberSvc.selectForLogin(strAccount, strPassword);
-						if(membersVO != null) {
+						if (membersVO != null) {
 							HttpSession session = req.getSession();
 							session.setAttribute("membersVO", membersVO);
 							req.setAttribute("membersVO", membersVO); // 資料庫取出的 membersVO 物件，存入 req
 							String url = "/front/member/member.jsp";
 							RequestDispatcher successView = req.getRequestDispatcher(url);
 							successView.forward(req, res);
-						}else if ( membersVO == null ){
+						} else if (membersVO == null) {
 							errorMsgs.put("errorAccount", strAccount);
 							errorMsgs.put("passowrd", "請確認會員密碼");
 							RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
@@ -323,7 +331,6 @@ public class MembersServlet extends HttpServlet {
 //				failureView.forward(req, res);
 //			}
 //		}
-
 
 	}
 
