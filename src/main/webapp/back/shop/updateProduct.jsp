@@ -51,7 +51,7 @@
 								<!--! Horizontal Form-->
 								<div class="col-lg-12 mb-5">
 									<FORM METHOD="post"
-										ACTION="<%=request.getContextPath()%>/back/shop/productUpdateServlet"
+										ACTION="<%=request.getContextPath()%>/shop/ProductGetOneServlet"
 										name="form1" enctype="multipart/form-data">
 										<div class="card">
 											<div class="card-header">

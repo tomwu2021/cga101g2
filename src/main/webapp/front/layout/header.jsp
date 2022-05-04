@@ -8,7 +8,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-2">
                             <div class="logo">
-                                <a href="index.html"><img src="<%=request.getContextPath()%>/assets/img/logo/logo.png" alt=""></a>
+                                <a href="index.html"><img src="" ></a>
                             </div>
                         </div>
                         <div class="col-lg-8">
@@ -54,7 +54,7 @@
                             <div class="header_account_area  justify-content-start" >
                                     <!--mini cart end-->
                                 <div class="header_account-list top_links">
-                                    <a href="javascript:void(0)"><i class="bi bi-bell-fill"></i></a>
+                                    <a href=""><i class="bi bi-bell-fill"></i></a>
                                     <div class="dropdown_links">
                                         <div class="dropdown_links_list">
                                             <h3>通知列表</h3>
@@ -65,13 +65,13 @@
                                             </ul>
                                         </div>
                                         <div class="dropdown_links_list">
-                                            <h3><img src="assets/img/icon/language.png" alt=""> 查看通知總覽</h3>
+                                            <h3><img src="" alt=""> 查看通知總覽</h3>
                                         </div>
                                     </div>
                                 </div>
                                 
                                  <div class="header_account-list top_links">
-                                    <a href="javascript:void(0)"><i class="bi bi-person-square"></i></a>
+                                    <a href=""><i class="bi bi-person-square"></i></a>
                                     <div class="dropdown_links">
                                         <div class="dropdown_links_list">
                                             <h3>會員名稱</h3>
@@ -81,7 +81,7 @@
                                             </ul>
                                         </div>
                                         <div class="dropdown_links_list">
-                                            <h3><img src="assets/img/icon/language.png" alt="">Logout</h3>
+                                            <h3><img src="" alt="">Logout</h3>
                                         </div>
                                     </div>
                                 </div>
