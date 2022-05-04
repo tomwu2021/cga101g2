@@ -93,7 +93,7 @@ pageContext.setAttribute("list", list);
 							</div>
 							<div class="widget_list shopside_banner">
 								<div class="banner_thumb">
-									<a href="#"><img src="../assets/shop/img/bg/banner12.jpg"
+									<a href="#"><img src=""
 										alt="" /></a>
 								</div>
 							</div>
@@ -225,25 +225,25 @@ pageContext.setAttribute("list", list);
 											role="tabpanel">
 											<div class="modal_tab_img">
 												<a href="#"><img
-													src="../assets/shop/img/product/productbig1.jpg" alt="" /></a>
+													src="" alt="" /></a>
 											</div>
 										</div>
 										<div class="tab-pane fade" id="tab2" role="tabpanel">
 											<div class="modal_tab_img">
 												<a href="#"><img
-													src="../assets/shop/img/product/productbig2.jpg" alt="" /></a>
+													src="" alt="" /></a>
 											</div>
 										</div>
 										<div class="tab-pane fade" id="tab3" role="tabpanel">
 											<div class="modal_tab_img">
 												<a href="#"><img
-													src="../assets/shop/img/product/productbig3.jpg" alt="" /></a>
+													src=" alt="" /></a>
 											</div>
 										</div>
 										<div class="tab-pane fade" id="tab4" role="tabpanel">
 											<div class="modal_tab_img">
 												<a href="#"><img
-													src="../assets/shop/img/product/productbig4.jpg" alt="" /></a>
+													src="" alt="" /></a>
 											</div>
 										</div>
 									</div>
@@ -252,17 +252,17 @@ pageContext.setAttribute("list", list);
 											<li><a class="nav-link active" data-toggle="tab"
 												href="#tab1" role="tab" aria-controls="tab1"
 												aria-selected="false"><img
-													src="../assets/shop/img/product/product1.jpg" alt="" /></a></li>
+													src="" alt="" /></a></li>
 											<li><a class="nav-link" data-toggle="tab" href="#tab2"
 												role="tab" aria-controls="tab2" aria-selected="false"><img
-													src="../assets/shop/img/product/product2.jpg" alt="" /></a></li>
+													src="" alt="" /></a></li>
 											<li><a class="nav-link button_three" data-toggle="tab"
 												href="#tab3" role="tab" aria-controls="tab3"
 												aria-selected="false"><img
-													src="../assets/shop/img/product/product3.jpg" alt="" /></a></li>
+													src="" alt="" /></a></li>
 											<li><a class="nav-link" data-toggle="tab" href="#tab4"
 												role="tab" aria-controls="tab4" aria-selected="false"><img
-													src="../assets/shop/img/product/product8.jpg" alt="" /></a></li>
+													src="" alt="" /></a></li>
 										</ul>
 									</div>
 								</div>
@@ -348,24 +348,24 @@ pageContext.setAttribute("list", list);
 						<article class="single_product">
 							<figure>
 								<div class="product_thumb">
-									<a class="primary_img" href="product-details.html"><img
-										src="../assets/shop/img/product/product5.jpg" alt="" /></a> <a
-										class="secondary_img" href="product-details.html"><img
-										src="../assets/shop/img/product/product6.jpg" alt="" /></a>
+									<a class="primary_img" href=""><img
+										src="" alt="" /></a> <a
+										class="secondary_img" href=""><img
+										src="" alt="" /></a>
 									<div class="action_links">
 										<ul>
 											<li class="quick_button"><a href="#" data-toggle="modal"
 												data-target="#modal_box" title="quick view"> <i
 													class="icon icon-Eye"></i>
 											</a></li>
-											<li class="wishlist"><a href="wishlist.html"
+											<li class="wishlist"><a href=""
 												title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>
 										</ul>
 									</div>
 								</div>
 								<figcaption class="product_content">
 									<h4 class="product_name">
-										<a href="product-details.html"> suscipit tempora delectus
+										<a href=""> suscipit tempora delectus
 											officia a, possimus at ipsam.</a>
 									</h4>
 									<div class="price_box">
@@ -373,7 +373,7 @@ pageContext.setAttribute("list", list);
 											class="old_price">$173.00</span>
 									</div>
 									<div class="add_to_cart">
-										<a href="cart.html" title="Add to cart">Add to Cart</a>
+										<a href="" title="Add to cart">Add to Cart</a>
 									</div>
 								</figcaption>
 							</figure>
@@ -383,24 +383,24 @@ pageContext.setAttribute("list", list);
 						<article class="single_product">
 							<figure>
 								<div class="product_thumb">
-									<a class="primary_img" href="product-details.html"><img
-										src="../assets/shop/img/product/product10.jpg" alt="" /></a> <a
-										class="secondary_img" href="product-details.html"><img
-										src="../assets/shop/img/product/product9.jpg" alt="" /></a>
+									<a class="primary_img" href="l"><img
+										src="" alt="" /></a> <a
+										class="secondary_img" href=""><img
+										src="" alt="" /></a>
 									<div class="action_links">
 										<ul>
 											<li class="quick_button"><a href="#" data-toggle="modal"
 												data-target="#modal_box" title="quick view"> <i
 													class="icon icon-Eye"></i>
 											</a></li>
-											<li class="wishlist"><a href="wishlist.html"
+											<li class="wishlist"><a href=""
 												title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>
 										</ul>
 									</div>
 								</div>
 								<figcaption class="product_content">
 									<h4 class="product_name">
-										<a href="product-details.html"> modi nisi cum officia
+										<a href=""> modi nisi cum officia
 											error possimus, unde ipsam is.!</a>
 									</h4>
 									<div class="price_box">
@@ -408,7 +408,7 @@ pageContext.setAttribute("list", list);
 											class="old_price">$173.00</span>
 									</div>
 									<div class="add_to_cart">
-										<a href="cart.html" title="Add to cart">Add to Cart</a>
+										<a href="" title="Add to cart">Add to Cart</a>
 									</div>
 								</figcaption>
 							</figure>
@@ -418,10 +418,10 @@ pageContext.setAttribute("list", list);
 						<article class="single_product">
 							<figure>
 								<div class="product_thumb">
-									<a class="primary_img" href="product-details.html"><img
-										src="../assets/shop/img/product/product1.jpg" alt="" /></a> <a
-										class="secondary_img" href="product-details.html"><img
-										src="../assets/shop/img/product/product2.jpg" alt="" /></a>
+									<a class="primary_img" href=""><img
+										src="" alt="" /></a> <a
+										class="secondary_img" href=""><img
+										src="" alt="" /></a>
 									<div class="action_links">
 										<ul>
 											<li class="quick_button"><a href="#" data-toggle="modal"
@@ -443,7 +443,7 @@ pageContext.setAttribute("list", list);
 											class="old_price">$173.00</span>
 									</div>
 									<div class="add_to_cart">
-										<a href="cart.html" title="Add to cart">Add to Cart</a>
+										<a href="l" title="Add to cart">Add to Cart</a>
 									</div>
 								</figcaption>
 							</figure>
@@ -453,10 +453,10 @@ pageContext.setAttribute("list", list);
 						<article class="single_product">
 							<figure>
 								<div class="product_thumb">
-									<a class="primary_img" href="product-details.html"><img
-										src="../assets/shop/img/product/product3.jpg" alt="" /></a> <a
-										class="secondary_img" href="product-details.html"><img
-										src="../assets/shop/img/product/product4.jpg" alt="" /></a>
+									<a class="primary_img" href=""><img
+										src="" alt="" /></a> <a
+										class="secondary_img" href=""><img
+										src="" alt="" /></a>
 									<div class="action_links">
 										<ul>
 											<li class="quick_button"><a href="#" data-toggle="modal"
@@ -470,7 +470,7 @@ pageContext.setAttribute("list", list);
 								</div>
 								<figcaption class="product_content">
 									<h4 class="product_name">
-										<a href="product-details.html"> quidem totam, voluptatem
+										<a href=""> quidem totam, voluptatem
 											quae quasi possimus iusto!</a>
 									</h4>
 									<div class="price_box">
@@ -488,10 +488,10 @@ pageContext.setAttribute("list", list);
 						<article class="single_product">
 							<figure>
 								<div class="product_thumb">
-									<a class="primary_img" href="product-details.html"><img
-										src="../assets/shop/img/product/product5.jpg" alt="" /></a> <a
-										class="secondary_img" href="product-details.html"><img
-										src="../assets/shop/img/product/product6.jpg" alt="" /></a>
+									<a class="primary_img" href=""><img
+										src="" alt="" /></a> <a
+										class="secondary_img" href=""><img
+										src="" alt="" /></a>
 									<div class="action_links">
 										<ul>
 											<li class="quick_button"><a href="#" data-toggle="modal"
@@ -505,7 +505,7 @@ pageContext.setAttribute("list", list);
 								</div>
 								<figcaption class="product_content">
 									<h4 class="product_name">
-										<a href="product-details.html">iusto dignissimos illum.
+										<a href="">iusto dignissimos illum.
 											Quis provident ratione maiores.</a>
 									</h4>
 									<div class="price_box">
@@ -513,7 +513,7 @@ pageContext.setAttribute("list", list);
 											class="old_price">$173.00</span>
 									</div>
 									<div class="add_to_cart">
-										<a href="cart.html" title="Add to cart">Add to Cart</a>
+										<a href="" title="Add to cart">Add to Cart</a>
 									</div>
 								</figcaption>
 							</figure>
@@ -540,7 +540,6 @@ pageContext.setAttribute("list", list);
 	<!--leftnavlink.js -->
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/leftnav/leftnavlink.js">
-		
 	</script>
 	<!-- leftnavlink.js -->
 

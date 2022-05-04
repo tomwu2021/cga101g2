@@ -7,11 +7,11 @@ import com.sort1.model.Sort1VO;
 public class PSort1Service implements PSort1DAO_interface {
 
 //	private:僅類別內有效
-	private PSort1JDBCDAO dao;
+	private PSort1JNDIDAO dao;
 
 //	改寫預設建構子
 	public PSort1Service() {
-		dao = new PSort1JDBCDAO(); 
+		dao = new PSort1JNDIDAO(); 
 	}
 	
 	@Override
@@ -21,25 +21,21 @@ public class PSort1Service implements PSort1DAO_interface {
 
 	@Override
 	public boolean delete(PSort1VO t) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public PSort1VO update(PSort1VO t) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public PSort1VO getOneById(Integer id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<PSort1VO> getAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

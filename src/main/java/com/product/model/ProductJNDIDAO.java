@@ -1,6 +1,6 @@
 package com.product.model;
 
-import static connection.JDBCConnection.getRDSConnection;
+import static connection.JNDIConnection.getRDSConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,9 +11,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import com.product_img.model.ProductImgVO;
 
-public class ProductJDBCDAO implements ProductDAO_interface {
+public class ProductJNDIDAO implements ProductDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO cga_02.product(product_name,price,amount, "
 			+ "group_amount1,group_amount2,group_amount3,group_price1, " + "sort2_id,description,status,top_status) "
@@ -177,7 +178,8 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 
 	@Override
 	public boolean deleteByTopStatus(ProductVO productVO) {
-		try (Connection con = getRDSConnection(); PreparedStatement pstmt = con.prepareStatement(DELETEBYTOP_STATUS)) {
+		try (Connection con = getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(DELETEBYTOP_STATUS)) {
 
 			pstmt.setInt(1, productVO.getTopStatus());
 			pstmt.setInt(2, productVO.getProductId());

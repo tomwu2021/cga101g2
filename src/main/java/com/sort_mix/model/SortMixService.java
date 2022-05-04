@@ -17,11 +17,11 @@ public class SortMixService implements SortMixService_interface{
 //	防止別隻CLASS檔經由NEW間接呼叫到DAO,必須要經過商業邏輯層Service的判斷才可以執行DAO?
 	
 //	private:僅類別內有效
-	private SortMixJDBCDAO dao;
+	private SortMixJNIDIDAO dao;
 
 //	改寫預設建構子
 	public SortMixService() {
-		dao = new SortMixJDBCDAO(); 
+		dao = new SortMixJNIDIDAO(); 
 	}
 
 	@Override

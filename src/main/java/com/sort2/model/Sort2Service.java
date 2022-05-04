@@ -8,11 +8,11 @@ public class Sort2Service implements Sort2Service_interface{
 //	防止別隻CLASS檔經由NEW間接呼叫到DAO,必須要經過商業邏輯層Service的判斷才可以執行DAO?
 	
 //	private:僅類別內有效
-	private Sort2JDBCDAO dao;
+	private Sort2JNDIDAO dao;
 
 //	改寫預設建構子
 	public Sort2Service() {
-		dao = new Sort2JDBCDAO(); 
+		dao = new Sort2JNDIDAO(); 
 	}
 	
 	@Override

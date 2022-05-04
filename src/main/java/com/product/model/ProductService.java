@@ -1,16 +1,10 @@
 package com.product.model;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.Part;
 
-import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
-
-import com.common.model.MappingTableDto;
 import com.p_sort1.model.PSort1Service;
 import com.p_sort1.model.PSort1VO;
 import com.picture.model.PictureVO;
@@ -23,7 +17,7 @@ public class ProductService {
 	private ProductDAO_interface dao;
 
 	public ProductService() {
-		dao = new ProductJDBCDAO();
+		dao = new ProductJNDIDAO();
 	}
 
 	public ProductVO updateProduct(Integer productId ,String productName, Integer price, Integer amount, Integer sort2Id,

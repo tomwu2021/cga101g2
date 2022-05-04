@@ -358,7 +358,7 @@ pageContext.setAttribute("list", list);
 												data-target="#modal_box" title="quick view"> <i
 													class="icon icon-Eye"></i>
 											</a></li>
-											<li class="wishlist"><a href="wishlist.html"
+											<li class="wishlist"><a href=""
 												title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>
 										</ul>
 									</div>

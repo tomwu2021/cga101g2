@@ -1,5 +1,7 @@
 package com.product.model;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.common.model.JDBCDAO_Interface;
@@ -16,6 +18,6 @@ public interface ProductDAO_interface extends JDBCDAO_Interface<ProductVO> {
 //	public Set<EmpVO> getEmpsByDeptno(Integer deptno);
 	public Set<ProductImgVO> getPImgVOsByPdID(Integer pImgID);
 	
-	// 萬用複合查詢(傳入參數型態Map)(回傳 List)
-//  public List<EmpVO> getAll(Map<String, String[]> map);
+//	 萬用複合查詢(傳入參數型態Map)(回傳 List)
+  public List<ProductVO> getAll(Map<String, String[]> map);
 }

@@ -9,11 +9,11 @@ import com.picture.model.PictureVO;
 public class ProductImgService implements ProductImgDAO_interface{
 	
 	
-	private ProductImgJDBCDAO dao;
+	private ProductImgJNDIDAO dao;
 
 
 	public  ProductImgService() {
-	 dao = new ProductImgJDBCDAO();
+	 dao = new ProductImgJNDIDAO();
 	}
 	
 	public List<ProductImgVO> getAll() {

@@ -7,11 +7,11 @@ public class Sort1Service implements Sort1Service_interface{
 //	防止別隻CLASS檔經由NEW間接呼叫到DAO,必須要經過商業邏輯層Service的判斷才可以執行DAO?
 	
 //	private:僅類別內有效
-	private Sort1MybatisDAO dao;
+	private Sort1JNDIDAO dao;
 
 //	改寫預設建構子
 	public Sort1Service() {
-		dao = new Sort1MybatisDAO(); 
+		dao = new Sort1JNDIDAO(); 
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class Sort1Service implements Sort1Service_interface{
 
 	@Override
 	public List<Sort1VO> getAll() {
-		return dao.selectAll();
+		return dao.getAll();
 	}
 
 	@Override

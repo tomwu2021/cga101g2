@@ -17,8 +17,8 @@ import com.product.model.ProductVO;
 /**
  * Servlet implementation class ProductServlet
  */
-@WebServlet("/shop/ProductServletAll")
-public class ProductServletAll extends HttpServlet {
+@WebServlet("/shop/ProductServletAll2JSON")
+public class ProductServletAll2JSON extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
