@@ -20,7 +20,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 			+ "VALUES (?, ? , ?, ? , ? , ? , ? , ? , ? , 0 , 0 ) ; ";
 	private static final String GET_ALL_STMT = "SELECT product_id, product_name, price ,amount , update_time , "
 			+ "group_amount1 ,group_amount2 ,group_amount3 ,group_price1 , "
-			+ "sort2_id , description, status ,top_status " + "FROM cga_02.product ORDER BY  product_id DESC LIMIT 10 ; ";
+			+ "sort2_id , description, status ,top_status " + "FROM cga_02.product ORDER BY  product_id DESC LIMIT 15 ; ";
 	private static final String GET_ONE_STMT = "SELECT product_id, product_name, price ,amount , update_time , "
 			+ "group_amount1 ,group_amount2 ,group_amount3 ,group_price1 , "
 			+ "sort2_id , description, status ,top_status " + "FROM cga_02.product " + "WHERE product_id = ? ; ";

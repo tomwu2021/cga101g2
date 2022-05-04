@@ -6,8 +6,6 @@
 <title>Insert title here</title>
 </head>
 <body>
- <div id="content">
  我是測試右邊的
-  <div >
 </body>
 </html>
