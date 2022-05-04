@@ -143,7 +143,7 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 				while (rs.next()) {
 					remindVO.setRemindId(rs.getInt(index++));
 					remindVO.setMemberId(rs.getInt(index++));
-					remindVO.setContent(transInner(rs.getString(index++)));
+					remindVO.setContent(transOuter(rs.getString(index++)));
 					remindVO.setTime(rs.getTimestamp(index++));
 				}
 			} catch (SQLException e) {

@@ -153,7 +153,7 @@ public class PetActivityDAO implements PetActivityDAO_interface{
 				while (rs.next()) {
 					petActivityVO.setRecordId(rs.getInt(index++));
 					petActivityVO.setPetId(rs.getInt(index++));
-					petActivityVO.setActivity(transInner(rs.getString(index++)));
+					petActivityVO.setActivity(transOuter(rs.getString(index++)));
 					petActivityVO.setRecordTime(rs.getDate(index++));
 				}
 			} catch (SQLException e) {

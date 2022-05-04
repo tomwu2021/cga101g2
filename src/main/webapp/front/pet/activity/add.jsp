@@ -54,9 +54,6 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 										<div class="col-lg-2 col-md-12"></div>
 											<div class="col-lg-10 col-md-12">
 	<!-- ============================= Main ============================= -->
-	<a class="text-dark mb-1" href='<%=request.getContextPath()%>/pet?memberId=<%=(Integer)session.getAttribute("memberId")%>&petId=<%=(Integer)session.getAttribute("petId")%>&action=profile' >
-		<i class="fas fa-arrow-left"></i> 返回
-	</a>
 	<section class="section dashboard">
 		<div class="row">
 
@@ -64,74 +61,43 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 				<!-- ALL Activity -->
 				<div class="card">
 					
+			
+					
+					<form method="post" action="/CGA101G2/activity" id="editForm">
 					<div class="card-body">
 						<div class="row">
-						<div class="card-title col-lg-4">活動紀錄</div>
-						<div class="card-title col-lg-7">
-							<button class="btn btn-warning form-btn-circle btn-sm text-dark" id="updateBtn" onclick="updateBtn()">
-								<i class="fas fa-edit"></i> 編輯
-							</button>
-						<!-- Basic Modal -->
-		              <button  class="btn btn-danger form-btn-circle btn-sm" data-toggle="modal" data-target="#basicModal" id="deleteBtn">
-		                <i class="fas fa-trash-alt"></i> 刪除
-		              </button>
-		                      <form method="post" action="/CGA101G2/activity">
-		              <input type="hidden" name="petId" value="<%=petId%>">
-		              <input type="hidden" name="recordId" id="getRecordId">
-		              <div class="modal fade" id="basicModal" tabindex="-1">
-		                <div class="modal-dialog">
-		                  <div class="modal-content">
-		                    <div class="modal-header">
-		                      <h5 class="modal-title">提示訊息</h5>
-		                    </div>
-		                    <div class="modal-body">
-		                      是否確定刪除此筆紀錄？
-		                    </div>
-		                    <div class="modal-footer">
-		                      <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-		                      <input type="hidden" name="action" value="delete">
-		                      
-		                      <button type="submit" class="btn btn-danger">確認</button>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
-		                      </form>
-						<!-- End Basic Modal-->
-						</div>
+						<div class="card-title col-lg-11">新增紀錄</div>
 						<div class="card-title col-lg-1">
-							<form method="post" action="/CGA101G2/activity">
-							<input type="hidden" name="action" value="goToInsert">
-							<button type="submit" class="btn btn-primary form-btn-circle btn-sm" id="insertBtn" onclick="insertBtn()">
-								<i class="fas fa-plus"></i> 新增
+							<input type="hidden" name="action" value="insert">
+							<button class="btn btn-success form-btn-circle" type="submit">
+							送出 <i class="fas fa-arrow-right"></i>
 							</button>
-							</form>
 						</div>
 						</div>
 						<div class="row">
 								
 						</div>
 						<div class="row">
-							<div class="col-lg-6 mb-5" id="editBox">
-							<div id="editBox">
-								<%-- Activity Edit --%>
-								<jsp:include page="/front/pet/activity/edit.jsp">
-									<jsp:param value="<%=petId%>" name="petId"/>
-								</jsp:include>
-								<%-- End Activity Edit --%>
-							</div>
+							<div class="col-lg-12 mb-5" id="editBox">
+
+								<div class="row">
+									<div class="mb-3 col-lg-9" style="font-size: 2em;">
+										<input name="recordTime" id="r_date1" type="text" placeholder="請輸入日期"
+												value="${paVO.recordTime}"  style="border:none;max-width:200px;background:none;"/><label class="btn btn-muted form-btn-circle btn-sm" for="r_date1"><i class="fas fa-calendar text-muted"></i></label>
+									</div>
+							
+								</div>
+								<textarea id="activity" name="activity" class="form-control" placeholder="請輸入內容"  style="border:#4680FF 1px solid;height:40vh;width:96%;background:none;resize:none;" autofocus>${paVO.activity}</textarea>
+								<input name="petId" type="hidden" value="<%=petId%>">
+
 							<div id="submitBtn">
+							<span style="color:#f33;">${errorMsgs.recordTime}${errorMsgs.activity}</span>
 							</div>
 							</div>
-							<div class="col-lg-6 mb-5 mt-3" id="listAll">
-							<%-- Activity List --%>
-							<jsp:include page="/front/pet/activity/list.jsp">
-								<jsp:param value="<%=petId%>" name="petId"/>
-							</jsp:include>
-							<%-- Activity List --%>
-							</div>
+
 						</div>
 					</div>
+					</form>
 				</div>
 				<!-- End All Activity -->
 			</div>
@@ -155,40 +121,6 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 	<%@include file="/front/layout/commonJS.jsp"%>
 	<!-- 自訂的JS -->
 <script src="/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
-<script>
-let rId = '${param.recordId}'? '${param.recordId}':$('.allItem:first').attr("id");
-		$("#editBox").load("/CGA101G2/activity",
-				{action:"one_Display", 
-				recordId:rId}, 
-				function(data,status){
-				if(status=="success"){
-					$("#getRecordId").val(rId);
-				}
-			});	
-
-function getDetail(record){
-	rId = record.id;
-	$.post("/CGA101G2/activity",
-			{action:"one_Display", 
-			recordId:rId}, 
-			function(data,status){
-				if(status=="success"){
-					$("#editBox").html(data);
-					$("#getRecordId").val(rId);
-				}
-			}
-	);
-}
-
-// 跳出刪除確認視窗
-function deleteBtn(){
-	$("#r_date1").attr("disabled");
-	$("#activity").attr("disabled");
-	$("#activity").css("border","none");
-	$('#update').remove();
-}
-
-</script>
 </body>
 <!--<div class="row justify-content-center" >
 <a style="display:block;max-width:40%" href="#">

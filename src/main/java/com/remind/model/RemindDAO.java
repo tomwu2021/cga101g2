@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import connection.JDBCConnection;
 import connection.JNDIConnection;
 
 public class RemindDAO implements RemindDAO_interface {
@@ -146,7 +145,7 @@ public class RemindDAO implements RemindDAO_interface {
 				while (rs.next()) {
 					remindVO.setRemindId(rs.getInt(index++));
 					remindVO.setMemberId(rs.getInt(index++));
-					remindVO.setContent(transInner(rs.getString(index++)));
+					remindVO.setContent(transOuter(rs.getString(index++)));
 					remindVO.setTime(rs.getTimestamp(index++));
 				}
 			} catch (SQLException e) {
