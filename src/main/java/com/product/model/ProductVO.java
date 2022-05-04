@@ -29,7 +29,16 @@ public class ProductVO implements java.io.Serializable {
 	private String description;
 	private Integer status;
 	private Integer topStatus;
+	private Integer cartAmount;
 	
+
+	public Integer getCartAmount() {
+		return cartAmount;
+	}
+
+	public void setCartAmount(Integer cartAmount) {
+		this.cartAmount = cartAmount;
+	}
 
 	public Integer getProductId() {
 		return productId;
