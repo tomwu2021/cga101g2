@@ -3,6 +3,7 @@ package com.remind.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.remind.model.*;
+import com.remind.model.RemindVO;
 import com.remind.service.RemindService;
 
 @WebServlet("/remind")
@@ -42,7 +43,7 @@ public class RemindController extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			// 檢查輸入
 			if(content == null || content.trim().isEmpty()) {
-				errorMsgs.put("content"," (請勿空白)");
+				errorMsgs.put("content"," (內容請勿空白)");
 			}
 			try {
 				java.util.Calendar cal = java.util.Calendar.getInstance();
@@ -56,14 +57,14 @@ public class RemindController extends HttpServlet {
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("content", content);
 				req.setAttribute("time", time);
-				RequestDispatcher failureView = req.getRequestDispatcher("/front/pet/rimind/list.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front/pet/rimind/add.jsp");
 				failureView.forward(req, res);
 				return;
 			}
 			// 正常送出
 			RemindService rSvc = new RemindService();
 			rSvc.addRemind(Integer.parseInt(memberId), content, _time);
-			String url = "/front/pet/remind/detail.jsp";
+			String url = "/remind?action=all_Display&memberId="+memberId;
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
@@ -71,9 +72,7 @@ public class RemindController extends HttpServlet {
 		if("delete".equals(action)){
 			RemindService rSvc = new RemindService();
 			rSvc.deleteRemind(Integer.parseInt(remindId));
-			rSvc.getByMemberId(Integer.parseInt(memberId));
-			String param ="?memberId="+ memberId;
-			String url = "/front/pet/remind/list.jsp"+ param;
+			String url = "/remind?action=all_Display&memberId="+ memberId;
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
@@ -97,17 +96,33 @@ public class RemindController extends HttpServlet {
 			// 正常送出
 			RemindService rSvc = new RemindService();
 			RemindVO rVO = rSvc.updateRemind(content, _time, Integer.parseInt(remindId));
-			rVO = rSvc.getByRemindId(Integer.parseInt(remindId));
+			rVO = rSvc.getByRemindId(rVO.getRemindId());
+			List<RemindVO> rAll = rSvc.getByMemberId(Integer.parseInt(memberId));
+			req.setAttribute("rAll", rAll);
 			req.setAttribute("rVO", rVO);
 			String url = "/front/pet/remind/detail.jsp";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
-		/*************************** 5.單筆資料查看 ****************************************/
+		/*************************** 4.單筆資料查看 ****************************************/
 		if("one_Display".equals(action)){
 			RemindService rSvc = new RemindService();
 			RemindVO rVO = rSvc.getByRemindId(Integer.parseInt(remindId));
 			req.setAttribute("rVO", rVO);
+			String url = "/front/pet/remind/edit.jsp";
+			RequestDispatcher view =req.getRequestDispatcher(url);
+			view.forward(req, res);
+		}
+		/*************************** 5.導向新增頁面 ****************************************/
+		if("goToInsert".equals(action)){
+			String url = "/CGA101G2/front/pet/remind/add.jsp";
+			res.sendRedirect(url);
+		}
+		/*************************** 6.查看所有紀錄 ****************************************/
+		if("all_Display".equals(action)){
+			RemindService rSvc = new RemindService();
+			List<RemindVO> rAll = rSvc.getByMemberId(Integer.parseInt(memberId));
+			req.setAttribute("rAll", rAll);
 			String url = "/front/pet/remind/detail.jsp";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
