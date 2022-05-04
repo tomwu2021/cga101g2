@@ -47,6 +47,7 @@ public class PictureController extends CommonController {
 	AlbumService alServ = new AlbumService();
 	Integer albumId = null;
 	MembersVO membervo;
+	int isOwner = 0;
 	/**
 	 *
 	 */
@@ -56,9 +57,12 @@ public class PictureController extends CommonController {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
-		membervo = super.getMemberInfo(req, res);
+		membervo = super.getLoginInfo(req, res);
 		String action = req.getParameter("action");
-
+		if (membervo != null) {
+			isOwner = membervo.getMemberId() == Integer.parseInt(req.getParameter("memberId")==null? "-999":req.getParameter("memberId")) ? 1 : 0;
+		}
+		req.setAttribute("isOwner", isOwner);
 		action = action == null ? "" : action;
 		switch (action) {
 		case "search":

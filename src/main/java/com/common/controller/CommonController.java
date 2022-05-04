@@ -72,7 +72,7 @@ public class CommonController extends HttpServlet {
 //        }
 //    }
     
-    protected MembersVO getMemberInfo(HttpServletRequest req, HttpServletResponse resp) {
+    protected MembersVO getLoginInfo(HttpServletRequest req, HttpServletResponse resp) {
     	HttpSession session = req.getSession();
 		MembersVO membervo = (MembersVO)session.getAttribute("membersVO");
 		return membervo;
@@ -80,5 +80,14 @@ public class CommonController extends HttpServlet {
     
     protected void goToHome(HttpServletRequest req, HttpServletResponse res) throws IOException {
     	res.sendRedirect(req.getContextPath() + "/index.html");
+    }
+
+    protected  Integer getIsOwner(HttpServletRequest req, HttpServletResponse res){
+        MembersVO membervo = getLoginInfo(req,res);
+        if (membervo != null) {
+            Integer isOwner = membervo.getMemberId() == Integer.parseInt(req.getParameter("memberId")==null? "-999":req.getParameter("memberId")) ? 1 : 0;
+            return isOwner;
+        }
+        return 0;
     }
 }

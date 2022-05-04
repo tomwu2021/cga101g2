@@ -58,15 +58,17 @@ public class AlbumJDBCDAO implements AlbumDAO_Interface {
         return albumvo;
     }
 
-    public AlbumVO makeDefaultAlbum(AlbumVO albumvo, Connection con) {
+    public AlbumVO makeDefaultAlbum(Integer memberId, Connection con) {
         String sql = "INSERT INTO album(member_id,name,authority,cover_id) VALUES(?,?,0,999);";
+        AlbumVO albumvo = new AlbumVO();
         try {
             PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             int index = 0;
-            stmt.setInt(++index, albumvo.getMemberId());
+            stmt.setInt(++index, memberId);
             stmt.setString(++index, "未分類");
             stmt.execute();
             ResultSet rs = stmt.getGeneratedKeys();
+            albumvo.setMemberId(memberId);
             while (rs.next()) {
                 albumvo.setAlbumId(rs.getInt(1));
             }

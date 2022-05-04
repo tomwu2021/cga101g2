@@ -41,9 +41,9 @@ public class AlbumController extends CommonController {
 	Integer albumId = null;
 	MembersVO membervo;
 	int isOwner = 0;
-	int isFriend = 0;
-	int isBlock = 0;
-	int hasRight = 1;
+//	int isFriend = 0;
+//	int isBlock = 0;
+//	int hasRight = 1;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		try {
@@ -58,14 +58,15 @@ public class AlbumController extends CommonController {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
-		membervo = super.getMemberInfo(req, res);
+		membervo = super.getLoginInfo(req, res);
 //		res.setContentType("text/html; charset=UTF-8");
+		System.out.println(req.getAttribute("memberId"));
 		if (membervo != null) {
 //			if(isBlock ==1) {
 //				res.sendRedirect(getServletInfo()+"/index.html");
 //			}
-			isOwner = membervo.getMemberId() == Integer.parseInt(req.getParameter("memberId")==null? "-999":req.getParameter("memberId")) ? 1 : 0;
-			
+			isOwner = membervo.getMemberId() == Integer.parseInt(req.getParameter("memberId") == null ? "-999" : req.getParameter("memberId")) ? 1 : 0;
+
 		}
 //		if(isOwner!=1) {
 //			isFriend = 1;
@@ -138,7 +139,7 @@ public class AlbumController extends CommonController {
 		res.setContentType("application/json; charset=UTF-8");
 		Integer memberId = Integer.parseInt(req.getParameter("memberId").trim());
 		albumId = Integer.parseInt(req.getParameter("albumId"));
-		if (memberId != null && albumId != null) {
+		if (memberId != null && albumId != null && isOwner == 1) {
 			alServ.deleteAlbum(memberId, albumId);
 			String alert = "{\"status\":\"刪除成功\"}";
 			out.write(gson.toJson(alert));
@@ -152,7 +153,7 @@ public class AlbumController extends CommonController {
 		res.setContentType("application/json; charset=UTF-8");
 		String name = req.getParameter("name").trim();
 		albumId = Integer.parseInt(req.getParameter("albumId"));
-		if (albumId != null && name != null) {
+		if (albumId != null && name != null && isOwner == 1) {
 			alServ.updateName(albumId, name);
 			String alert = "{status:改名成功}";
 			out.write(gson.toJson(alert));
@@ -164,7 +165,7 @@ public class AlbumController extends CommonController {
 	boolean updateAuthority(HttpServletRequest req, HttpServletResponse res) {
 		Integer authority = Integer.parseInt(req.getParameter("authority").trim());
 		albumId = Integer.parseInt(req.getParameter("albumId"));
-		if (albumId != null && authority != null) {
+		if (albumId != null && authority != null && isOwner == 1) {
 			alServ.updateAuthority(albumId, authority);
 			return true;
 		}
@@ -174,7 +175,8 @@ public class AlbumController extends CommonController {
 	boolean changeCover(HttpServletRequest req, HttpServletResponse res) {
 		Integer coverId = Integer.parseInt(req.getParameter("pictureId").trim());
 		albumId = Integer.parseInt(req.getParameter("albumId"));
-		if (albumId != null && coverId != null) {
+		System.out.println(isOwner);
+		if (albumId != null && coverId != null && isOwner == 1) {
 			alServ.updateCover(albumId, coverId);
 			return true;
 		}
@@ -191,14 +193,14 @@ public class AlbumController extends CommonController {
 		long days = Long.parseLong(req.getParameter("uploadTime")); // 取得天數
 		Timestamp uploadTime = new Timestamp(System.currentTimeMillis() - days * 24 * 3600 * 1000); // 天數轉換
 		Integer loginId;
-		if(membervo!=null) {
+		if (membervo != null) {
 			loginId = membervo.getMemberId();
-		}else {
-			loginId = -999;//訪客登入用memberId
+		} else {
+			loginId = -999;// 訪客登入用memberId
 		}
 //		Map<String, Object> map = new HashMap<>();
 //		map.put("1", new Integer(1)); // 添加比對 album_id欄位值比較條件
-		PageQuery pq = new PageQuery(thisPage, pageSize, sort, order, null,true);
+		PageQuery pq = new PageQuery(thisPage, pageSize, sort, order, null, true);
 		pq.setFindByLikeMultiValues("name", keywords); // 設置關鍵字條件
 		pq.setFindByAfter("create_time", uploadTime);
 		PageResult<AlbumVO> albumPgList = alServ.getPersonalAlbum(memberId, loginId, pq);
