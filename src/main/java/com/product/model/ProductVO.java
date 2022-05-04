@@ -30,7 +30,18 @@ public class ProductVO implements java.io.Serializable {
 	private Integer status;
 	private Integer topStatus;
 	private Integer cartAmount;
+	private PictureVO pictureVO;
 	
+
+	
+	
+	public PictureVO getPictureVO() {
+		return pictureVO;
+	}
+
+	public void setPictureVO(PictureVO pictureVO) {
+		this.pictureVO = pictureVO;
+	}
 
 	public Integer getCartAmount() {
 		return cartAmount;
