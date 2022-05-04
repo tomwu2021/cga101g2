@@ -113,7 +113,7 @@ pageContext.setAttribute("list", list);
 															<tbody>
 																<c:forEach var="productVO" items="${list}">
 																	<tr class="text-center">
-																		<td id ="productId">${productVO.productId}</td>
+																		<td >${productVO.productId}</td>
 <c:set var="pictureVOList" scope="page" value="${productVO.pictureVOList}"></c:set>
 																		<c:if test="${pictureVOList.size() != 0 }">
 																			<td style="width: 6%;"><img
@@ -166,7 +166,7 @@ pageContext.setAttribute("list", list);
 																				<option value="2">一般與團購上架</option>
 																			</select>
 																			<div class="col-auto my-1">
-																				<button type="button" class="btn btn-primary btn-sm update" >提交</button>
+																				<button id="update${productVO.productId}" value="${productVO.productId}" name="status" type="button" class="btn btn-primary btn-sm" >提交</button>
 																			</div>
 																		</form>
 																		</td>
@@ -192,7 +192,7 @@ pageContext.setAttribute("list", list);
 																		</td>
 																		<td>
 																			<FORM METHOD="get"
-																				ACTION="<%=request.getContextPath()%>/back/shop/productUpdateServlet">
+																				ACTION="<%=request.getContextPath()%>/shop/ProductGetOneServlet">
 																				<button type="submit" class="btn btn-danger btn-sm">修改</button>
 																				<input type="hidden" name="productId"
 																					value="${productVO.productId}"> <input
@@ -270,6 +270,8 @@ pageContext.setAttribute("list", list);
 
 	<!-- 額外添加的JS -->
 	<script src="<%=request.getContextPath()%>/assets/shop/backProduct/productUpdateStatus.js"> </script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
 	<!-- 額外添加的JS -->
 
 </body>

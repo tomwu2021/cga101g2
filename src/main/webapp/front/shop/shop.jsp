@@ -18,6 +18,9 @@
 	<%@include file="/front/layout/header.jsp"%>
 	<!-- 共用的header end-->
 
+	<!-- 共用的CartAndWishlist-->
+	<%@include file="/front/layout/commonCartAndWishlist.jsp"%>
+	<!-- 共用的CartAndWishlist-->
 
 	<!--! ========內容======== -->
 	<!--breadcrumbs area start-->
@@ -287,9 +290,9 @@
 	<!--! 內容 結束-->
 
 
-			<!-- 共通的footer start-->
-			<%@include file="/front/layout/footer.jsp"%>
-			<!-- 共通的footer end-->
+	<!-- 共通的footer start-->
+	<%@include file="/front/layout/footer.jsp"%>
+	<!-- 共通的footer end-->
 
 
 	<!-- 共用的JS -->

@@ -47,7 +47,6 @@ pageContext.setAttribute("list", list);
 		</div>
 		
 <%@ include file="page1.file"%> 
-	
 	</div>
 	<!--shop toolbar end-->
 	<div class="row shop_wrapper">
@@ -61,12 +60,12 @@ pageContext.setAttribute("list", list);
 					<figure>
 						<div class="product_thumb">
 							<c:if test="${productVO.pictureVOList.size() != 0 }">
-								<a class="primary_img" href="product-details.html">
+								<a class="primary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop">
 								<img src="${productVO.pictureVOList.get(0).previewUrl}" alt=""></a>
 							</c:if>	
 <%-- 							<c:if test="${productVO.pictureVO.size() >= 1  && productVO.pictureVO.size()!=0}"> --%>
 							<c:if test="${productVO.pictureVOList.size() >= 2  && productVO.pictureVOList.size()!=0}">
-								<a class="secondary_img" href="product-details.html">
+								<a class="secondary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop">
 								<img src="${productVO.pictureVOList.get(1).previewUrl}" alt=""></a>
 							</c:if>	
 							<div class="action_links">
@@ -81,7 +80,7 @@ pageContext.setAttribute("list", list);
 						</div>
 						<div class="product_content grid_content">
 							<h4 class="product_name">
-								<a href="product-details.html"> ${productVO.productName}</a>
+								<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop"> ${productVO.productName}</a>
 							</h4>
 							<div class="price_box">
 								<span class="current_price">${productVO.price}元</span>

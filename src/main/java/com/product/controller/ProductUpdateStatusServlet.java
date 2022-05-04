@@ -1,4 +1,4 @@
-package com.prodouct.controller;
+package com.product.controller;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.picture.service.PictureService;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 

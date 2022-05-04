@@ -1,4 +1,4 @@
-package com.prodouct.controller;
+package com.product.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;

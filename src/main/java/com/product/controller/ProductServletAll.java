@@ -1,4 +1,4 @@
-package com.prodouct.controller;
+package com.product.controller;
 
 import static com.util.GSONUtil.writePojo2Json;
 

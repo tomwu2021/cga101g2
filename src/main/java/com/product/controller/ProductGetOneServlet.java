@@ -1,10 +1,10 @@
-package com.prodouct.controller;
+package com.product.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -16,17 +16,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.picture.model.PictureVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
+import com.product_img.model.ProductImgService;
+import com.product_img.model.ProductImgVO;
+import com.sort2.model.Sort2Service;
+import com.sort2.model.Sort2VO;
 
 /**
  * Servlet implementation class InsertServlet
  */
-@WebServlet("/back/shop/productUpdateServlet")
+@WebServlet("/shop/ProductGetOneServlet")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 //當數據量大於fileSizeThreshold值時，內容將被寫入磁碟
 //上傳過程中無論是單個文件超過maxFileSize值，或者上傳的總量大於maxRequestSize 值都會拋出IllegalStateException 異常
-public class ProductUpdateServlet extends HttpServlet {
+public class ProductGetOneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -248,17 +253,57 @@ public class ProductUpdateServlet extends HttpServlet {
 //				failureView.forward(req, res);
 //			}
 		}
-	}
+		
+		
+		if ("getOne_For_Shop".equals(action)) { // 來自front allProduct.jsp的請求
 
-//	// 取出上傳的檔案名稱 (因為API未提供method,所以必須自行撰寫)
-//	public String getFileNameFromPart(Part part) {
-//		String header = part.getHeader("content-disposition");
-//		System.out.println("header=" + header); // 測試用
-//		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
-//		System.out.println("filename=" + filename); // 測試用
-//		if (filename.length() == 0) {
-//			return null;
-//		}
-//		return filename;
-//	}
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+//			try {
+			/*************************** 1.接收請求參數 ****************************************/
+			Integer productId = Integer.valueOf(req.getParameter("productId"));
+
+			/*************************** 2.開始查詢資料 ****************************************/
+			ProductService pdSvc = new ProductService();
+			ProductVO pdVO = pdSvc.getOneProductByid(productId);
+			
+			Sort2Service sort2Svc = new Sort2Service();
+			Sort2VO sort2VO = sort2Svc.getOneById(pdVO.getSort2Id());
+			
+//			ProductImgService pdImgService = new ProductImgService();
+//			List<PictureVO> pictureVOList = pdImgService.getPicVOsByProductId(productId);
+			
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			String param = "?productId=" + pdVO.getProductId() 
+						+ "&productName=" + pdVO.getProductName() 
+						+ "&price="+ pdVO.getPrice() 
+						+ "&amount=" + pdVO.getAmount() 
+						+ "&sort2Id=" + pdVO.getSort2Id() 
+						+ "&updateTime=" + pdVO.getUpdateTime() 
+						+ "&groupPrice1=" + pdVO.getGroupPrice1()
+						+ "&groupAmount1=" + pdVO.getGroupAmount1() 
+						+ "&groupAmount2=" + pdVO.getGroupAmount2() 
+						+ "&groupAmount3=" + pdVO.getGroupAmount3()
+						+ "&description=" + pdVO.getDescription()
+			//子分類的名字
+						+ "&sort2Name=" + sort2VO.getSort2Name();
+			//商品照片的集合
+//						+ "&pictureVOList=" + pdVO.getPictureVOList();
+//			req.setAttribute("pictureVOList", pictureVOList);
+
+						
+			String url = "/front/shop/productDetails.jsp" + param;
+			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 /front/shop/productDetails.jsp"
+			successView.forward(req, res);
+
+			/*************************** 其他可能的錯誤處理 **********************************/
+//			} catch (Exception e) {
+//				errorMsgs.put("無法取得資料",e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("listAllPtoduct.jsp");
+//				failureView.forward(req, res);
+//			}
+		}
+	}
 }
