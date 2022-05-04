@@ -20,7 +20,7 @@ $(function() {
 	//計算彈出層的left
 	getPosLeft = screenwidth / 2 - 260;
 	//計算彈出層的top
-	getPosTop = screenheight / 2 - 150;
+	getPosTop = screenheight / 2 - 300;
 	//css定位彈出層
 	$("#box").css({ "left": getPosLeft, "top": getPosTop });
 	//當瀏覽器視窗大小改變時...
@@ -99,7 +99,6 @@ $(function() {
 
 	//點選連結彈出視窗 會員註冊
 	$("#popup2").click(function() {
-		//console.log("123");
 		$("#box2").fadeIn("fast");  //淡入
 		//獲取頁面文件的高度
 		var docheight = $(document).height();
@@ -128,7 +127,7 @@ function showError(json) {
 
 // 傳送資料到 member.do
 function checkAccount() {
-	// 
+
 	let xhr = null;
 	function createXHR() {
 		if (window.XMLHttpRequest) {
@@ -162,7 +161,53 @@ function checkAccount() {
 }
 
 
-
+// 帳號註冊
+function registerVerification() {
+	
+	let passwordRegister = document.getElementById("passwordRegister");
+	const pas1 = passwordRegister.value;
+	
+	let checkpasswordRegister = document.getElementById("checkpasswordRegister");
+	console.log(checkpasswordRegister.value);
+	let regex ="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$";
+	
+	
+	if( regex.test(pas1) ){
+		console.log("密碼正確");
+	}
+	
+	
+//	let xhr = null;
+//	function createXHR() {
+//		if (window.XMLHttpRequest) {
+//			xhr = new XMLHttpRequest();
+//		} else if (window.ActiveXObject) {
+//			xhr = new ActiveXObject("Microsoft.XMLHTTP");
+//		}
+//		return xhr;
+//	}
+//	createXHR();
+//
+//	xhr.onload = (e) => {
+//		if (xhr.status == 200) {
+//			//	document.getElementById("viewAccount").innerHTML = xhr.responseText;
+//			let errorJson = xhr.responseText;
+//			showError(errorJson);
+//		} else {
+//			alert(xhr.status);
+//		}
+//	};
+//
+//	xhr.open("post", "/CGA101G2/front/member.do");
+//	xhr.setRequestHeader(
+//		"content-type",
+//		"application/x-www-form-urlencoded"
+//	);
+//
+//	let datasInfo = "accountRegister=" + document.getElementById("accountRegister").value;
+//	xhr.send(datasInfo);
+//
+}
 
 
 

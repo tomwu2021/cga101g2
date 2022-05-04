@@ -55,20 +55,35 @@
 	</form>
 
 	<!------------------------------ 註冊視窗 ------------------------------>
-	<div id="box">
+	<div id="box" style="height: 500px;">
 		<h2>
 			帳號
 			<div id="viewAccount" style="display: inline; color: red;"></div>
 		</h2>
-		<input type="text" name="accountRegister" id="accountRegister" /> <input
-			type="button" placeholder="請輸入電子郵件" value="帳號驗證"
-			onclick="checkAccount()" />
-			
-			
-			 
-		
-		
-		<span id="closeBtn">關閉</span>
+
+		<input type="text" name="accountRegister" id="accountRegister" placeholder="請輸入電子郵件" /> <input
+			type="button" value="帳號驗證" onclick="checkAccount()" />
+
+		<h2>
+			密碼
+			<div id="viewpassword" style="display: inline; color: red;"></div>
+		</h2>
+
+		<input type="password" name="passwordRegister" id="passwordRegister" placeholder="至少八個字符，至少一個字母和一個數字" value="" />
+
+		<h2>
+			再次確認密碼
+			<div id="viewcheckpassword" style="display: inline; color: red;"></div>
+		</h2>
+		<input type="password" name="checkpasswordRegister"
+			id="checkpasswordRegister" placeholder="至少八個字符，至少一個字母和一個數字" />
+
+		<h2>
+			輸入驗證碼
+			<div id="verificationCode" style="display: inline; color: red;"></div>
+		</h2>
+		<input type="text" name="verificationCode" id="verificationCode" /> <input
+			type="button" value="帳號註冊" onclick="registerVerification()" /> <span id="closeBtn">關閉</span>
 
 
 	</div>
