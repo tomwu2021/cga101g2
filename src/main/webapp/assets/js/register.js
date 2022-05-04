@@ -118,65 +118,73 @@ $(function() {
 
 });
 
-function showError(json) {
-	// JSON.parse 將一個 JSON 字串轉換成 JavaScript 的數值或是物件
-	let errorObject = JSON.parse(json);
-	document.getElementById("viewAccount").innerHTML = errorObject.exist;
-}
-
 
 // 傳送資料到 member.do
 function checkAccount() {
 
-	let xhr = null;
-	function createXHR() {
-		if (window.XMLHttpRequest) {
-			xhr = new XMLHttpRequest();
-		} else if (window.ActiveXObject) {
-			xhr = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		return xhr;
+	let dataJSON = {
+		registerAccount: $("#registerAccount").val(),
+		action: "checkAccount"
 	}
-	createXHR();
-
-	xhr.onload = (e) => {
-		if (xhr.status == 200) {
-			//	document.getElementById("viewAccount").innerHTML = xhr.responseText;
-			let errorJson = xhr.responseText;
-			showError(errorJson);
-		} else {
-			alert(xhr.status);
+	$.ajax(
+		{
+			url: "member.do", // 請求的url地址，相對位址
+			type: "post", // 請求的方式，通常用 POST
+			data: dataJSON,
+			success: function(data) {
+				console.log(data);
+			},
 		}
-	};
-
-	xhr.open("post", "/CGA101G2/front/member.do");
-	xhr.setRequestHeader(
-		"content-type",
-		"application/x-www-form-urlencoded"
 	);
-
-	let datasInfo = "accountRegister=" + document.getElementById("accountRegister").value;
-	xhr.send(datasInfo);
-
 }
 
 
-// 帳號註冊
-function registerVerification() {
-	
-	let passwordRegister = document.getElementById("passwordRegister");
-	const pas1 = passwordRegister.value;
-	
-	let checkpasswordRegister = document.getElementById("checkpasswordRegister");
-	console.log(checkpasswordRegister.value);
-	let regex ="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$";
-	
-	
-	if( regex.test(pas1) ){
-		console.log("密碼正確");
-	}
-	
-	
+//// 帳號註冊
+//function registerVerification() {
+//
+//	let re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/gi;
+//	// 密碼
+//	let passwordRegister = document.getElementById("passwordRegister");
+//	let ps1 = passwordRegister.value;
+//	// 確認密碼
+//	let checkpasswordRegister = document.getElementById("checkpasswordRegister");
+//	let ps2 = checkpasswordRegister.value;
+//
+//	// 驗證碼
+//	let verification = document.getElementById("verificationCode").innerHTML;
+//
+//	if (ps1 !== null && ps1.length !== 0) {
+//		if (re.test(ps1)) {
+//			document.getElementById("viewpassword").innerHTML = "✔";
+//			if (ps1 === ps2) {
+//				document.getElementById("viewcheckpassword").innerHTML = "✔";
+//				console.log(verification);
+//				if (verification !== null && verification.length !== 0) {
+//					document.getElementById("verificationCode").innerHTML = "判斷驗證碼中，請稍後";
+//					// 呼叫 servlet
+//					CreateAccount();
+//
+//				} else {
+//					document.getElementById("verificationCode").innerHTML = "請確認驗證碼";
+//					return;
+//				}
+//			} else {
+//				document.getElementById("viewcheckpassword").innerHTML = "兩次輸入的密碼不一致";
+//				return;
+//			}
+//		} else {
+//			document.getElementById("viewpassword").innerHTML = "密碼格式不正確";
+//			document.getElementById("viewcheckpassword").innerHTML = "";
+//			return;
+//		}
+//	} else {
+//		document.getElementById("viewpassword").innerHTML = "請輸入密碼";
+//		return;
+//	}
+//
+//}
+
+//function CreateAccount() {
 //	let xhr = null;
 //	function createXHR() {
 //		if (window.XMLHttpRequest) {
@@ -191,8 +199,8 @@ function registerVerification() {
 //	xhr.onload = (e) => {
 //		if (xhr.status == 200) {
 //			//	document.getElementById("viewAccount").innerHTML = xhr.responseText;
-//			let errorJson = xhr.responseText;
-//			showError(errorJson);
+////			let errorJson = xhr.responseText;
+////			showError(errorJson);
 //		} else {
 //			alert(xhr.status);
 //		}
@@ -203,11 +211,14 @@ function registerVerification() {
 //		"content-type",
 //		"application/x-www-form-urlencoded"
 //	);
-//
-//	let datasInfo = "accountRegister=" + document.getElementById("accountRegister").value;
+//	
+//	
+//	
+//	let datasInfo = "passwordRegister=" + document.getElementById("passwordRegister").value&"verificationCode="+document.getElementById("verificationCode").value;
+//	console.log(datasInfo);
 //	xhr.send(datasInfo);
-//
-}
+//}
+
 
 
 

@@ -3,7 +3,6 @@ package com.members.model;
 import java.sql.*;
 import java.util.*;
 import connection.JDBCConnection;
-import connection.JNDIConnection;
 
 public class MembersJDBCDAO implements MembersDAO_interface {
 
