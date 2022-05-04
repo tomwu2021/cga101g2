@@ -2,9 +2,9 @@ package com.pet_activity.controller;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -44,7 +44,7 @@ public class PetActivityController extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			// 檢查輸入
 			if(activity == null || activity.trim().isEmpty()) {
-				errorMsgs.put("activity"," (請勿空白)");
+				errorMsgs.put("activity"," (內容請勿空白)");
 			}
 			try {
 				java.util.Calendar cal = java.util.Calendar.getInstance();
@@ -62,27 +62,22 @@ public class PetActivityController extends HttpServlet {
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("activity", activity);
 				req.setAttribute("recordTime", recordTime);
-				RequestDispatcher failView = req.getRequestDispatcher("/front/pet/activity/list.jsp");
+				RequestDispatcher failView = req.getRequestDispatcher("/front/pet/activity/add.jsp");
 				failView.forward(req, res);
 				return;
 			}
 			// 正常送出
 			PetActivityService paSvc = new PetActivityService();
-			PetActivityVO paVO = paSvc.addActivityRecord(Integer.parseInt(petId), activity,_recordTime);
-			paVO = paSvc.getOneActivity(Integer.parseInt(recordId));
-			req.setAttribute("paVO", paVO);
-			String url = "/front/pet/activity/detail.jsp";
-			RequestDispatcher successView =req.getRequestDispatcher(url);
-			successView.forward(req, res);
+			paSvc.addActivityRecord(Integer.parseInt(petId), activity,_recordTime);
+			String url = "/CGA101G2/activity?action=all_Display&petId="+petId;
+			res.sendRedirect(url);
 		}
 		
 		/*************************** 2.刪除一筆資料 ****************************************/
 		if("delete".equals(action)){
 			PetActivityService paSvc = new PetActivityService();
 			paSvc.deleteActivityRecord(Integer.parseInt(recordId));
-			paSvc.getOneActivity(Integer.parseInt(recordId));
-			String param ="?petId="+ petId;
-			String url = "/front/pet/activity/list.jsp"+ param;
+			String url = "/activity?action=all_Display&petId="+petId;
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
@@ -110,7 +105,9 @@ public class PetActivityController extends HttpServlet {
 			// 正常送出
 			PetActivityService paSvc = new PetActivityService();
 			PetActivityVO paVO = paSvc.updateActivityRecord(activity, _recordTime, Integer.parseInt(recordId));
-			paVO = paSvc.getOneActivity(Integer.parseInt(recordId));
+			paVO = paSvc.getOneActivity(paVO.getRecordId());
+			List<PetActivityVO> paAll = paSvc.getAllByPetId(Integer.parseInt(petId));
+			req.setAttribute("paAll", paAll);
 			req.setAttribute("paVO", paVO);
 			String url = "/front/pet/activity/detail.jsp";
 			RequestDispatcher view =req.getRequestDispatcher(url);
@@ -121,6 +118,20 @@ public class PetActivityController extends HttpServlet {
 			PetActivityService paSvc = new PetActivityService();
 			PetActivityVO paVO = paSvc.getOneActivity(Integer.parseInt(recordId));
 			req.setAttribute("paVO", paVO);
+			String url = "/front/pet/activity/edit.jsp";
+			RequestDispatcher view =req.getRequestDispatcher(url);
+			view.forward(req, res);
+		}
+		/*************************** 5.導向新增頁面 ****************************************/
+		if("goToInsert".equals(action)){
+			String url = "/CGA101G2/front/pet/activity/add.jsp";
+			res.sendRedirect(url);
+		}
+		/*************************** 6.查看所有紀錄 ****************************************/
+		if("all_Display".equals(action)){
+			PetActivityService paSvc = new PetActivityService();
+			List<PetActivityVO> paAll = paSvc.getAllByPetId(Integer.parseInt(petId));
+			req.setAttribute("paAll", paAll);
 			String url = "/front/pet/activity/detail.jsp";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
