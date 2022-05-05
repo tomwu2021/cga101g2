@@ -57,7 +57,12 @@ public class AlbumJDBCDAO implements AlbumDAO_Interface {
         }
         return albumvo;
     }
-
+    public AlbumVO makeDefaultAlbum(Integer memberId) throws SQLException {
+        Connection con = JDBCConnection.getRDSConnection();
+        AlbumVO albumvo = makeDefaultAlbum(memberId,con);
+        con.close();
+        return albumvo;
+    }
     public AlbumVO makeDefaultAlbum(Integer memberId, Connection con) {
         String sql = "INSERT INTO album(member_id,name,authority,cover_id) VALUES(?,?,0,999);";
         AlbumVO albumvo = new AlbumVO();
