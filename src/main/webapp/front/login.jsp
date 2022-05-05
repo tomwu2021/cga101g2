@@ -81,10 +81,14 @@
 
 	<!------------------------------ 忘記密碼視窗視窗 ------------------------------>
 	<div id="box2">
-		<form action="">
-			<h2>帳號</h2>
-			<input type="text" placeholder="請輸入電子郵件" />
-		</form>
+		<h2>
+			帳號
+			<div id="viewForgotPassword" style="display: inline; color: red;"></div>
+		</h2>
+
+		<input type="text" name="forgotPassword" id="forgotPassword" placeholder="請輸入電子郵件" /> 
+		<input type="button" value="寄送驗證碼" onclick="sendforgotMail()" />
+		
 		<span id="closeBtn2">關閉</span>
 	</div>
 
