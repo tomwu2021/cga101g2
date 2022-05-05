@@ -37,7 +37,7 @@
 			<div>
 				<div id="wrapper">
 					<div id="popup" class="opoups_height_width">帳號註冊</div>
-					<div id="popup2" class="opoups_height_width">忘記密碼</div>
+					<div id="popup22" class="opoups_height_width">忘記密碼</div>
 					<div id="popup3" class="opoups_height_width">訪客進入</div>
 				</div>
 			</div>
@@ -58,19 +58,19 @@
 			密碼
 			<div id="viewpassword" style="display: inline; color: red;" ></div>
 		</h2>
-		<input type="password" name="passwordRegister" id="passwordRegister" placeholder="至少八個字符，至少一個字母和一個數字" value="" />
+		<input type="password" name="registerpassword" id="registerpassword" placeholder="至少八個字符，至少一個字母和一個數字" value="" />
 
 		<h2>
 			再次確認密碼
 			<div id="viewcheckpassword" style="display: inline; color: red;"></div>
 		</h2>
-		<input type="password" name="checkpasswordRegister" id="checkpasswordRegister" placeholder="至少八個字符，至少一個字母和一個數字" />
+		<input type="password" name="registercheckpasswordr" id="registercheckpasswordr" placeholder="至少八個字符，至少一個字母和一個數字" />
 
 		<h2>
 			輸入驗證碼
-			<div id="verificationCode" style="display: inline; color: red;"></div>
+			<div id="viewVerificationCode" style="display: inline; color: red;"></div>
 		</h2>
-		<input type="text" name="verificationCode" id="verificationCode" /> 
+		<input type="text" name="verificationCode" id="verificationCode" placeholder="輸入驗證碼" /> 
 		<input type="button" value="帳號註冊" onclick="registerVerification()" /> 
 		
 		<span id="closeBtn">關閉</span>
@@ -81,10 +81,14 @@
 
 	<!------------------------------ 忘記密碼視窗視窗 ------------------------------>
 	<div id="box2">
-		<form action="">
-			<h2>帳號</h2>
-			<input type="text" placeholder="請輸入電子郵件" />
-		</form>
+		<h2>
+			帳號
+			<div id="viewForgotPassword" style="display: inline; color: red;"></div>
+		</h2>
+
+		<input type="text" name="forgotPassword" id="forgotPassword" placeholder="請輸入電子郵件" /> 
+		<input type="button" value="寄送驗證碼" onclick="sendforgotMail()" />
+		
 		<span id="closeBtn2">關閉</span>
 	</div>
 
