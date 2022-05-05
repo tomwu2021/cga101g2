@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.post.model.*"%>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.post.model.*"%>   
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,15 +15,15 @@
 <!-- 共用的CSS end-->
 
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>社群主頁</title>
 
 	<!-- -- add -->
     <!-- Bootstrap CSS -->
     <!-- <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> --> -->
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
 
     <!-- Main Style CSS -->
-    <link rel="stylesheet" href="other/style copy.css">
+    <link rel="stylesheet" href="other/style copy.css"> 
 
 </head>
 <body>
@@ -240,6 +242,8 @@
 
     	<!--offcanvas menu area end-->
     	
+    	
+    	
     	<!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
         <div class="container">
@@ -264,23 +268,52 @@
             <div class="row">
                 <div class="col-lg-9 col-md-12">
                     <div class="blog_wrapper">
+                    	
+                    	<c:forEach var="postVO" items="${postlist}" >
+                    	<!-- 範圍 -->
                         <article class="single_blog">
+                        
+                        <!-- 從這改 -->
+                         <!-- <figure>每則整個貼文 -->
+                         	
+                         	
                             <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/blog-big1.jpg" alt=""></a>
-                                </div>
+                               	<!-- 圖 -->
+
+								<!--  <div class="blog_thumb">
+								
+								<a href="blog-details.html"><img src="assets/img/blog/blog-big1.jpg" alt=""></a>
+								
+								</div>  -->
+								                    
+						                    <div class="blog_thumb">
+                                    		<a href="blog-details.html"><img src="${postVO.pictureVO.url}" alt=""></a>
+                                			</div>					        
+						                  
+                                <!-- 整個文 -->
                                 <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html"><i class="fa fa-paper-plane"></i> Blog image post</a></h4>
+                                   
+                                   
+                                   <!-- 貼文發布時間 -->
                                     <div class="blog_meta">
-                                        <p>By <a href="#">admin</a> / Date <a href="#">July 16, 2022</a> / Category: <a href="#">eCommerce</a></p>
+                                        <p> <a href="#">${postVO.likeCount}</a> 個讚 &ensp; <a href="#">${postVO.createTime}</a> 
                                     </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent ornare.</p>
+                                    
+                                    <!-- 貼文內容 -->
+                                    <p class="post_desc">${postVO.content}</p>
+                                    
+                                    
+                                    <!-- 按鈕 -->
                                     <footer class="btn_more">
                                         <a href="blog-details.html"> Read more</a>
                                     </footer>
+                                    
+                                    
                                 </figcaption>
                             </figure>
                         </article>
+                        </c:forEach>
+<!--                         下一則貼文
                         <article class="single_blog">
                             <figure>
                                 <div class="blog_thumb">
@@ -381,11 +414,17 @@
                                     </footer>
                                 </figcaption>
                             </figure>
-                        </article>
+                        </article> -->
                     </div>
                 </div>  
+
+                
+                <!-- 側邊欄範圍 -->
+                
                 <div class="col-lg-3 col-md-12">
                     <div class="blog_sidebar_widget">
+                    
+               <!-- 搜尋區 -->   
                         <div class="widget_list widget_search">
                             <div class="widget_title">
                                 <h3>Search</h3>
@@ -395,6 +434,9 @@
                                 <button type="submit">search</button>
                             </form>
                         </div>
+                        
+               <!-- recent comments區 -->
+                        
                         <div class="widget_list comments">
                            <div class="widget_title">
                                 <h3>Recent Comments</h3>
@@ -436,6 +478,9 @@
                                 </div>
                             </div>
                         </div>
+                        
+                    <!-- recent posts區 -->   
+                        
                         <div class="widget_list widget_post">
                             <div class="widget_title">
                                 <h3>Recent Posts</h3>
