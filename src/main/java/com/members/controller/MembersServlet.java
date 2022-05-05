@@ -41,6 +41,7 @@ public class MembersServlet extends HttpServlet {
 			checkAccount(req, res);
 			break;
 		case "registerVerification":
+			registerVerification(req, res);
 			break;
 		}
 	}
@@ -157,7 +158,7 @@ public class MembersServlet extends HttpServlet {
 				res.getWriter().write(json);
 				return;
 			} else {
-				messages.put("exist", "此帳號格式錯誤，請重新輸入！");
+				messages.put("exist", "此帳號格式錯誤！");
 				String json = new Gson().toJson(messages);
 				res.getWriter().write(json);
 				return;
@@ -168,23 +169,54 @@ public class MembersServlet extends HttpServlet {
 	/*************************** 帳號註冊 **********************/
 	public void registerVerification(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
-//		String registerAccount = req.getParameter("registerAccount");
-//		String passwordRegister = req.getParameter("passwordRegister");
-//		String checkpasswordRegister = req.getParameter("checkpasswordRegister");
-//		String verificationCode = req.getParameter("verificationCode");
-//
-//
-//		System.out.println(registerAccount);
-//		System.out.println(passwordRegister);
-//		System.out.println(checkpasswordRegister);
-//		System.out.println(verificationCode);
+		
+		HttpSession sessionVC = req.getSession();
+		String sessionAccount = (String)sessionVC.getAttribute("registerAccount"); // 取得寄送的信箱
+		String sessionAuthCode = (String)sessionVC.getAttribute("authCode"); // 取得寄送的驗證碼
+		
+		String userAccount = req.getParameter("registerAccount");
+		String userPassword = req.getParameter("registerpassword");
+		String userCheckPassword = req.getParameter("registercheckpasswordr");
+		String userVerificationCode = req.getParameter("verificationCode");
+
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+		
+		System.out.println(sessionAccount);
+		System.out.println(sessionAuthCode);
+		
+		System.out.println(userAccount);
+		System.out.println(userVerificationCode);
+	
+		if(!userAccount.equals(sessionAccount)) {
+			messages.put("msgError", "與前次輸入不相符！");
+			String json = new Gson().toJson(messages);
+			res.getWriter().write(json);
+			return;
+		}
+		if(!userVerificationCode.equals(sessionAuthCode)) {
+			messages.put("msgError", "");
+			messages.put("msgErrorVerificationCode", "驗證碼輸入錯誤！");
+			String json = new Gson().toJson(messages);
+			res.getWriter().write(json);
+			return;
+		}
+		
+		MembersService memberSvc = new MembersService();
+		MembersVO membersVO = new MembersVO();
+		membersVO.setAccount(userAccount);
+		membersVO.setPassword(userCheckPassword);
+		memberSvc.insert(membersVO);
+		messages.put("msgError", "");
+		messages.put("msgErrorVerificationCode", "");
+		messages.put("registerSuccessful", "註冊成功");
+		String json = new Gson().toJson(messages);
+		res.getWriter().write(json);
+		return;
 	}
 }
 
-//
-//	}
 
-//}
 
 ///*************************** 取得一筆會員資料 **********************/
 //if ("getOne_For_Display".equals(action)) {

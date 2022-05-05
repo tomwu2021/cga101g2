@@ -98,7 +98,7 @@ $(function() {
 	});
 
 	//點選連結彈出視窗 會員註冊
-	$("#popup2").click(function() {
+	$("#popup22").click(function() {
 		$("#box2").fadeIn("fast");  //淡入
 		//獲取頁面文件的高度
 		var docheight = $(document).height();
@@ -121,7 +121,7 @@ $(function() {
 
 // 傳送資料到 member.do
 function checkAccount() {
-loading();
+	loading();
 	let dataJSON = {
 		registerAccount: $("#registerAccount").val(),
 		action: "checkAccount"
@@ -143,70 +143,85 @@ loading();
 
 //// 帳號註冊
 function registerVerification() {
-	
-//	loading();
+
+	let rAccount = $("#registerAccount").val();
+	let rPassword = $("#registerpassword").val();
+	let rCheckPassword = $("#registercheckpasswordr").val();
+	let rVerificationCode = $("#verificationCode").val();
+
+	if (rAccount !== null && rAccount.length !== 0) {
+		document.getElementById("viewRegisterAccount").innerHTML = "";
+	} else {
+		document.getElementById("viewRegisterAccount").innerHTML = "請輸入帳號";
+		return;
+	}
+
+	let re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/gi;
+
+	if (rPassword !== null && rPassword.length !== 0) {
+
+		if (re.test(rPassword)) {
+			document.getElementById("viewpassword").innerHTML = "✔";
+		} else {
+			document.getElementById("viewpassword").innerHTML = "密碼格式不正確";
+			return;
+		}
+	} else {
+		document.getElementById("viewpassword").innerHTML = "請輸入密碼";
+		return;
+	}
+
+
+	if (rCheckPassword !== null && rCheckPassword.length !== 0) {
+		if (rPassword === rCheckPassword) {
+			document.getElementById("viewcheckpassword").innerHTML = "✔";
+		} else {
+			document.getElementById("viewcheckpassword").innerHTML = "兩次輸入的密碼不一致";
+			return;
+		}
+	} else {
+		document.getElementById("viewcheckpassword").innerHTML = "請輸入密碼";
+		return;
+	}
+
+
+	if (rVerificationCode !== null && rVerificationCode.length !== 0) {
+		document.getElementById("viewVerificationCode").innerHTML = "";
+	} else {
+		document.getElementById("viewVerificationCode").innerHTML = "請輸入驗證碼";
+		return;
+	}
+
+
+
+
+	loading();
 	let dataJSON = {
-		registerAccount: $("#registerAccount").val(),
-		passwordRegister: $("#passwordRegister").val(),
-		checkpasswordRegister: $("#checkpasswordRegister").val(),
-		verificationCode: $("#verificationCode").val(),
+		registerAccount: rAccount,
+		registerpassword: rPassword,
+		registercheckpasswordr: rCheckPassword,
+		verificationCode: rVerificationCode,
 		action: "registerVerification"
 	}
-	console.log($("#registerAccount").val());
 	$.ajax(
 		{
 			url: "member.do", // 請求的url地址，相對位址
 			type: "post", // 請求的方式，通常用 POST
 			data: dataJSON,
 			success: function(json) {
-//				let objectJSON = JSON.parse(json);
-//				document.getElementById("viewRegisterAccount").innerHTML = objectJSON.exist;
-//				offLoading();
+				let objectJSON = JSON.parse(json);
+				document.getElementById("viewRegisterAccount").innerHTML = objectJSON.msgError;
+				if (objectJSON.msgError === "") {
+					document.getElementById("viewVerificationCode").innerHTML = objectJSON.msgErrorVerificationCode;
+				}
+
+				offLoading();
+				if (objectJSON.msgErrorVerificationCode === "" && objectJSON.msgError === "") {
+					alert(objectJSON.registerSuccessful);
+				}
 			},
 		}
 	);
-//	let re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/gi;
-//	// 密碼
-//	let passwordRegister = document.getElementById("passwordRegister");
-//	let ps1 = passwordRegister.value;
-//	// 確認密碼
-//	let checkpasswordRegister = document.getElementById("checkpasswordRegister");
-//	let ps2 = checkpasswordRegister.value;
-//
-//	// 驗證碼
-//	let verification = document.getElementById("verificationCode").innerHTML;
-//
-//	if (ps1 !== null && ps1.length !== 0) {
-//		if (re.test(ps1)) {
-//			document.getElementById("viewpassword").innerHTML = "✔";
-//			if (ps1 === ps2) {
-//				document.getElementById("viewcheckpassword").innerHTML = "✔";
-//				console.log(verification);
-//				if (verification !== null && verification.length !== 0) {
-//					document.getElementById("verificationCode").innerHTML = "判斷驗證碼中，請稍後";
-//					// 呼叫 servlet
-//					CreateAccount();
-//
-//				} else {
-//					document.getElementById("verificationCode").innerHTML = "請確認驗證碼";
-//					return;
-//				}
-//			} else {
-//				document.getElementById("viewcheckpassword").innerHTML = "兩次輸入的密碼不一致";
-//				return;
-//			}
-//		} else {
-//			document.getElementById("viewpassword").innerHTML = "密碼格式不正確";
-//			document.getElementById("viewcheckpassword").innerHTML = "";
-//			return;
-//		}
-//	} else {
-//		document.getElementById("viewpassword").innerHTML = "請輸入密碼";
-//		return;
-//	}
-//
-//}
-
 
 }
 
