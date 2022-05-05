@@ -1,5 +1,5 @@
 package com.post.model;
-
+import com.picture.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,6 +62,8 @@ public class PostJDBCDAO implements PostDAO_interface {
 		return false;
 	}
 
+	
+	//修改貼文內容
 	@Override
 	public PostVO update(PostVO postVO) {
 		con = JDBCConnection.getRDSConnection();
@@ -94,7 +96,8 @@ public class PostJDBCDAO implements PostDAO_interface {
 		}
 		return null;
 	}
-
+	
+	
 	@Override
 	public PostVO getOneById(Integer id) {
 		
@@ -155,9 +158,9 @@ public class PostJDBCDAO implements PostDAO_interface {
 		} 
 		return list;
 	}
-
-	//查詢個人頁面
 	
+	
+	//查詢個人頁面
 	@Override
 	public List<PostVO> selectPost(Integer memberid) {
 		final String SELECT_POST = "select * from post where member_id =? order by create_time desc ";
@@ -188,11 +191,54 @@ public class PostJDBCDAO implements PostDAO_interface {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}
 	}
-	//查詢個人個人全部貼文（含圖片）
 	
+	
+	//查詢貼文，顯示 status狀態0:正常1:審核中2:刪除
+	@Override
+	public List<PostVO> selectChangePost() {
+		final String SELECT_CHANGEPOST = "select p.post_id, member_id, content, like_count, create_time, url "
+				+ "from post p join post_pic pc on p.post_id = pc.post_id "
+				+ "			   join picture pi on pc.picture_id = pi.picture_id "
+				+ "			   where status = 0 "
+				+ "order by create_time desc";
+				
+		
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(SELECT_CHANGEPOST);) {
+
+			ResultSet rs = pstmt.executeQuery();
+			
+			List< PostVO> poList = new ArrayList<PostVO>();
+			
+			while (rs.next()) {
+				PostVO postVO = new PostVO();
+				PictureVO pictureVO = new PictureVO();
+				postVO.setPostId(rs.getInt("post_id"));
+				postVO.setMemberId(rs.getInt("member_id"));
+				postVO.setContent(rs.getString("content"));
+				postVO.setLikeCount(rs.getInt("like_count"));
+				postVO.setCreateTime(rs.getDate("create_time"));
+				
+				pictureVO.setUrl(rs.getString("url"));  //這個pictureVO放url
+				
+				postVO.setPictureVO(pictureVO);
+				
+				poList.add(postVO);
+				
+			}
+			return poList;      //顯示status狀態正常(0)含圖的貼文
+			
+			
+			
+			
+		}catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		}
+		
+		
+	}
 	
 	//查詢熱門貼文
-	
 	@Override
 	public List<PostVO> selectHotPost() {
 		final String SELECT_HOTPOST = "select * from post "
@@ -225,14 +271,6 @@ public class PostJDBCDAO implements PostDAO_interface {
 		return hotpostlist;
 	
 	}
-
-	@Override
-	public PostVO selectAllPost() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
-
 	
 }

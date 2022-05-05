@@ -28,11 +28,13 @@ public class PostService {
 	}
 	
 	
+	/**
+	 * 新增貼文圖片與內容
+	 * 
+	 */
 	
-
 	MappingJDBCDAO mappingDAO = new MappingJDBCDAO();
 
-	// 一、新增貼文圖片與內容
 	public PostVO uploadPost(Integer memberId, String content, Collection<Part> parts) {
 		// 1.插入貼文
 		PostJDBCDAO dao = new PostJDBCDAO();
@@ -95,6 +97,8 @@ public class PostService {
 		// mappingDAO.deleteOneMapping(postPicMapping(ID1,ID2));
 
 		return postAll;
+		
+		
 	}
 
 	public MappingTableDto postPicMapping(Integer id1) {
@@ -114,8 +118,12 @@ public class PostService {
 		mappingTableDto.setId2(id2);
 		return mappingTableDto;
 	}
-
-	// 二、查詢全部個人貼文
+	
+	/**
+	 *查詢全部個人貼文
+	 * 
+	 */
+	
 	public List<PostVO> selectPost(Integer memberid){
 		List<PostVO> postList= dao.selectPost(memberid);
 		
@@ -158,8 +166,21 @@ public class PostService {
 		
 		return hotPostList;
 	};
-
-	// 四、修改貼文內容
+	
+	/**
+	 * 查詢status狀態為0的貼文
+	 * 
+	 */
+	public List<PostVO> selectChangePost() {
+		return dao.selectChangePost();
+	}
+	
+	
+	/**
+	 * 修改貼文內容
+	 * 
+	 */
+	
 	public PostVO update(PostVO postVO, Connection con) {
 		
 		return dao.update(postVO);
@@ -167,6 +188,8 @@ public class PostService {
 	
 	// 五、修改
 	
+	
+	// 六、搜尋貼文 
 	
 
 }

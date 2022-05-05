@@ -15,6 +15,7 @@ public class PostVO implements java.io.Serializable{
 	private Date createTime;	
 	private Date updateTime;
 	private List<PictureVO> pictureList;
+	private PictureVO pictureVO;
 	
 	public PostVO() {
 		super();
@@ -33,6 +34,7 @@ public class PostVO implements java.io.Serializable{
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.pictureList = pictureList;
+		
 	}
 
 	public Integer getPostId() {
@@ -113,6 +115,14 @@ public class PostVO implements java.io.Serializable{
 		return "PostVO [postId=" + postId + ", memberId=" + memberId + ", content=" + content + ", likeCount="
 				+ likeCount + ", status=" + status + ", authority=" + authority + ", createTime=" + createTime
 				+ ", updateTime=" + updateTime + "]";
+	}
+
+	public PictureVO getPictureVO() {
+		return pictureVO;
+	}
+
+	public void setPictureVO(PictureVO pictureVO) {
+		this.pictureVO = pictureVO;
 	}
 	
 	

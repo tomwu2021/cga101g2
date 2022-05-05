@@ -2,8 +2,10 @@ package com.post.controller;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +37,7 @@ public class PostController extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+		action = "selectChangePost";
 		
 		/**
 		 * 查詢個人頁面
@@ -73,7 +75,7 @@ public class PostController extends HttpServlet {
 					return;//程式中斷
 				}
 				
-				/***************************2.開始查詢資料*****************************************/
+				/***************************2.接收請求參數 - 輸入格式的錯誤處理*****************************************/
 				PostService ps = new PostService();
 				List<PostVO> list = ps.selectPost(memberId);
 				
@@ -90,12 +92,39 @@ public class PostController extends HttpServlet {
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("list", list); 
-				String url = "front/post/listPost.jsp";
+				String url = "/front/post/postNew.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
 		}
+		
+		/**
+		 * 查詢status狀態為0
+		 * 
+		 */
 
+		if ("selectChangePost".equals(action)) {
+			
+			
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+				
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************************/ 
+//				Integer memberId = Integer.valueOf(req.getParameter("memberId").trim());
+				Integer memberId =9;
+				
+				/***************************2.開始查詢***************************************/
+				PostService ps = new PostService();
+				List<PostVO> postlist = ps.selectChangePost();
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("postlist", postlist);
+					       
+			String url = "/front/post/blog.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 blog.jsp
+			successView.forward(req, res);
+		}	
 		
 		/**
 		 * 新增貼文圖片跟內容
