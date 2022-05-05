@@ -305,5 +305,60 @@ public class ProductGetOneServlet extends HttpServlet {
 //				failureView.forward(req, res);
 //			}
 		}
+		
+		if ("getOne_For_GroupShop".equals(action)) { // 來自front groupsShop.jsp的請求
+
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+//			try {
+			/*************************** 1.接收請求參數 ****************************************/
+			Integer productId = Integer.valueOf(req.getParameter("productId"));
+
+			/*************************** 2.開始查詢資料 ****************************************/
+			ProductService pdSvc = new ProductService();
+			ProductVO pdVO = pdSvc.getOneProductByid(productId);
+			
+			Sort2Service sort2Svc = new Sort2Service();
+			Sort2VO sort2VO = sort2Svc.getOneById(pdVO.getSort2Id());
+			
+//			ProductImgService pdImgService = new ProductImgService();
+//			List<PictureVO> pictureVOList = pdImgService.getPicVOsByProductId(productId);
+			
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			String param = "?productId=" + pdVO.getProductId() 
+						+ "&productName=" + pdVO.getProductName() 
+						+ "&price="+ pdVO.getPrice() 
+						+ "&amount=" + pdVO.getAmount() 
+						+ "&sort2Id=" + pdVO.getSort2Id() 
+						+ "&updateTime=" + pdVO.getUpdateTime() 
+						+ "&groupPrice1=" + pdVO.getGroupPrice1()
+						+ "&groupAmount1=" + pdVO.getGroupAmount1() 
+						+ "&groupAmount2=" + pdVO.getGroupAmount2() 
+						+ "&groupAmount3=" + pdVO.getGroupAmount3()
+						+ "&description=" + pdVO.getDescription()
+			//子分類的名字
+						+ "&sort2Name=" + sort2VO.getSort2Name();
+			//商品照片的集合
+//						+ "&pictureVOList=" + pdVO.getPictureVOList();
+//			req.setAttribute("pictureVOList", pictureVOList);
+
+						
+			String url = "/front/shop/groupProductDetails.jsp" + param;
+			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 /front/shop/groupProductDetails.jsp"
+			successView.forward(req, res);
+
+			/*************************** 其他可能的錯誤處理 **********************************/
+//			} catch (Exception e) {
+//				errorMsgs.put("無法取得資料",e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("listAllPtoduct.jsp");
+//				failureView.forward(req, res);
+//			}
+		}
+		
+		
+		
+		
 	}
 }

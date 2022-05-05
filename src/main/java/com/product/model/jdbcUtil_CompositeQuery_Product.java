@@ -47,7 +47,7 @@ public class jdbcUtil_CompositeQuery_Product {
 				System.out.println("有送出查詢資料的欄位數count = " + count);
 			}
 		}
-		
+		System.out.println(whereCondition.toString());
 		return whereCondition.toString();
 	}
 	
@@ -66,7 +66,7 @@ public class jdbcUtil_CompositeQuery_Product {
 //		map.put("group_amount2", new String[] { "10" });
 //		map.put("group_amount3", new String[] { "10" });
 //		map.put("description", new String[] { "好吃" });
-		map.put("status", new String[] { "0" });
+		map.put("status", new String[] { "2" });
 //		map.put("topStatus", new String[] { "0" });
 		map.put("action", new String[] { "getXXX" }); // 注意Map裡面會含有action的key
 

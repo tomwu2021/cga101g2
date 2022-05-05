@@ -5,10 +5,10 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.product.model.*"%>
 
-<jsp:useBean id="listProducts_Byfind" scope="request" type="java.util.List<ProductVO>" /> <!-- 於EL此行可省略 -->
+<jsp:useBean id="listGroupProducts_Byfind" scope="request" type="java.util.List<ProductVO>" /> <!-- 於EL此行可省略 -->
 <html>
 <head>
-<title>商品總覽</title>
+<title>團購商品總覽</title>
 <!-- 共用的CSS startr-->
 <%@include file="/front/layout/commonCSS.jsp"%>
 <!-- 共用的CSS end-->
@@ -34,10 +34,10 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="breadcrumb_content">
-						<h3>商品專區</h3>
+						<h3>團購專區</h3>
 						<ul>
 							<li><a href="index.html">寵物商城</a></li>
-							<li>商品專區</li>
+							<li>團購專區</li>
 						</ul>
 					</div>
 				</div>
@@ -62,27 +62,17 @@
 
 							<!--                                 </form>  -->
 							<!--                             </div> -->
-							<div id="NewFile.jsp" class="widget_list widget_color">
+							<div class="widget_list widget_color">
 								<h3>
-									<a href="#" onclick="showAtRight('NewFile.jsp')">全部商品</a>
+									<a href="#">我要開團</a>
 								</h3>
 							</div>
-							<div id="allproduct.jsp" class="widget_list widget_color">
+							<div  class="widget_list widget_color">
 								<h3>
-								<a href="#" onclick="showAtRight('allproduct.jsp')">全部商品</a>
-							</h3>
+									<a href="#">我要跟團</a>
+								</h3>
 							</div>
-							<div id="allproduct.jsp" class="widget_list widget_color"></div>
-							<ul>
-								<li><a href="#" onclick="showAtRight('allproduct.jsp')">貓咪主食</a>
-								</li>
-								<li><a href="#"> Blue <span>(8)</span></a></li>
-								<li><a href="#">Brown <span>(10)</span></a></li>
-								<li><a href="#"> Green <span>(6)</span></a></li>
-								<li><a href="#">Pink <span>(4)</span></a></li>
-							</ul>
 							<div class="widget_list widget_color"></div>
-
 							<div class="widget_list widget_color"></div>
 							<div class="widget_list widget_color">
 								<!-- 結束 -->
@@ -128,24 +118,24 @@
 				</select>
 			</form>
 		</div>
-<%@ include file="pages/shop/page1_ByCompositeQuery.file" %> 
+<%@ include file="pages/groupShop/page1_ByCompositeQuery.file"%> 
 	</div>
 	<!--shop toolbar end-->
 	<div class="row shop_wrapper">
 		<!--s內容開始========================-->
-		<c:forEach var="productVO" items="${listProducts_Byfind}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+		<c:forEach var="productVO" items="${listGroupProducts_Byfind}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<div class="col-lg-4 col-md-4 col-sm-6 col-12">
 				<!--單一商品開始 -->
 				<article class="single_product">
 					<figure>
 						<div class="product_thumb">
 							<c:if test="${productVO.pictureVOList.size() != 0 }">
-								<a class="primary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop">
+								<a class="primary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_GroupShop">
 								<img src="${productVO.pictureVOList.get(0).previewUrl}" alt=""></a>
 							</c:if>	
 <%-- 							<c:if test="${productVO.pictureVO.size() >= 1  && productVO.pictureVO.size()!=0}"> --%>
 							<c:if test="${productVO.pictureVOList.size() >= 2  && productVO.pictureVOList.size()!=0}">
-								<a class="secondary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop">
+								<a class="secondary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_GroupShop">
 								<img src="${productVO.pictureVOList.get(1).previewUrl}" alt=""></a>
 							</c:if>	
 							<div class="action_links">
@@ -160,13 +150,17 @@
 						</div>
 						<div class="product_content grid_content">
 							<h4 class="product_name">
-								<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop"> ${productVO.productName}</a>
+								<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_GroupShop"> ${productVO.productName}</a>
 							</h4>
 							<div class="price_box">
-								<span class="current_price">${productVO.price}元</span>
+								<span class="old_price">原價${productVO.price}元</span>
+							</div>
+							<div class="price_box">
+								<span class="current_price">基本成團價${productVO.groupPrice1}元</span>
 							</div>
 							<div class="add_to_cart">
-								<a href="cart.html" title="Add to cart">Add to Cart</a>
+								<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_GroupShop" 
+								title="Add to cart"> 我要開團 </a>
 							</div>
 						</div>
 						<div class="product_content list_content">
@@ -183,13 +177,11 @@
 							</div>
 							<div class="action_links list_action_right">
 								<ul>
-									<li class="add_to_cart"><a href="cart.html"
-										title="Add to cart">Add to Cart</a></li>
 									<li class="quick_button"><a href="#" data-toggle="modal"
 										data-target="#modal_box" title="quick view"> <i
 											class="icon icon-Eye"></i></a></li>
-									<li class="wishlist"><a href="wishlist.html"
-										title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>
+<!-- 									<li class="wishlist"><a href="wishlist.html" -->
+<!-- 										title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li> -->
 								</ul>
 							</div>
 						</div>
@@ -201,7 +193,7 @@
  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front/shop/ProductAll"></FORM>	
 <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
-<%@ include file="pages/shop/page2_ByCompositeQuery.file" %>
+<%@ include file="pages/groupShop/page2_ByCompositeQuery.file" %>
 	<!--單一商品結束 -->
 <!-- modal area start-->
 	<div class="modal fade" id="modal_box" tabindex="-1" role="dialog"

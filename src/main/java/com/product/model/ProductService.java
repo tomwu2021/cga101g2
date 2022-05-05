@@ -2,9 +2,11 @@ package com.product.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Part;
 
+import com.emp.model.EmpVO;
 import com.p_sort1.model.PSort1Service;
 import com.p_sort1.model.PSort1VO;
 import com.picture.model.PictureVO;
@@ -143,7 +145,9 @@ public class ProductService {
 		return dao.delete(productVO);
 	}
 	
-	
+	public List<ProductVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
+	}
 //	// 取出上傳的檔案名稱 (因為API未提供method,所以必須自行撰寫)
 //	public String getFileNameFromPart(Part part) {
 //		String header = part.getHeader("content-disposition");
