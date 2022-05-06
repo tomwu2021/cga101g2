@@ -1,6 +1,7 @@
 package com.article.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class ArticleVO {
 
@@ -47,13 +48,20 @@ public class ArticleVO {
 	public void setEmpNo(Integer empNo) {
 		this.empNo = empNo;
 	}
+	public com.emp.model.EmpVO getEmpVO(){
+		com.emp.model.EmpService empSvc =new com.emp.model.EmpService();
+		com.emp.model.EmpVO empVO = empSvc.getOneById(empNo);
+		return empVO;
+	}
+	public com.picture.model.PictureVO getPicVO(){
+		com.article.service.ArticleService artiSvc =new com.article.service.ArticleService();
+		List<com.picture.model.PictureVO> picsVO = artiSvc.getOneArticlePic(articleId);
+		com.picture.model.PictureVO picVO = picsVO.get(0);
+		return picVO;
+	}
 	@Override
 	public String toString() {
-
-		String title = this.title;
-		String content = this.content;
-
-		return "["+title+":"+content+"]";
+		return "ArticleVO[ "+ articleId + ", " + type + ", " + title + ", " + content + ", " + createTime + ", "  + empNo + " ]";
 	}
 	
 }

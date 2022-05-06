@@ -55,10 +55,13 @@ public class MappingJDBCDAO {
 		if (con != null) {
 			try {
 				PreparedStatement stmt = null;
+				String table1 = mtds.get(0).getTableName1();
+				String column1 = mtds.get(0).getColumn1();
+				String column2 = mtds.get(0).getColumn2();
+				String sql = "insert into " + table1 + "(" + column1 + ", " + column2
+				+ ") values(?,?);";
+				stmt = con.prepareStatement(sql);
 				for (MappingTableDto mtd : mtds) {
-					String sql = "insert into " + mtd.getTableName1() + "(" + mtd.getColumn1() + ", " + mtd.getColumn2()
-							+ ") values(?,?);";
-					stmt = con.prepareStatement(sql);
 					stmt.setInt(1, mtd.getId1());
 					stmt.setInt(2, mtd.getId2());
 					stmt.addBatch();
@@ -134,7 +137,7 @@ public class MappingJDBCDAO {
 	}
 
 	public boolean deleteMultiMapping(MappingTableDto mtd, Connection con) {
-		String sql = "DELETE FROM " + mtd.getTableName1() + "WHERE " + mtd.getColumn1() + "=?";
+		String sql = "DELETE FROM " + mtd.getTableName1() + " WHERE " + mtd.getColumn1() + "=?";
 		if (con != null) {
 			try {
 				PreparedStatement stmt = con.prepareStatement(sql);
