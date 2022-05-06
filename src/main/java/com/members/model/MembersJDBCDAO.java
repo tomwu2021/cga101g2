@@ -3,6 +3,7 @@ package com.members.model;
 import java.sql.*;
 import java.util.*;
 import connection.JDBCConnection;
+import connection.JNDIConnection;
 
 public class MembersJDBCDAO implements MembersDAO_interface {
 
@@ -181,33 +182,36 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 
 // update 情境五：會員忘記密碼，將一組密碼亂數取代原本資料庫的密碼( password ) ----------------------------------------------
 	@Override
-	public boolean forgotPassword(MembersVO membersVO) {
+	public String forgotPassword(MembersVO membersVO) {
 
 		con = JDBCConnection.getRDSConnection();
-		Boolean b = forgotPassword(membersVO, con);
+		String genAuthCode = forgotPassword(membersVO, con);
 
 		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return b;
+		return genAuthCode;
 	}
 
-	public boolean forgotPassword(MembersVO membersVO, Connection con) {
+	public String forgotPassword(MembersVO membersVO, Connection con) {
 
 		final String FORGET_PASSWORD = "UPDATE members set password=? where member_id = ?;";
+		
+		String genAuthCode = genAuthCode();
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(FORGET_PASSWORD);
-				pstmt.setString(1, genAuthCode());
+				pstmt.setString(1, genAuthCode);
 				pstmt.setInt(2, membersVO.getMemberId());
 				pstmt.execute();
+				return genAuthCode;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return false;
+		return null;
 	}
 
 	public String genAuthCode() {
@@ -632,5 +636,48 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public MembersVO selectMemberIdByAccount(String account) {
+		con = JNDIConnection.getRDSConnection();
+		MembersVO membersVO = selectMemberIdByAccount(account, con);
+
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return membersVO;
+	}
+	
+	public MembersVO selectMemberIdByAccount(String account,  Connection con) {
+		final String SELECT_ONE_INFO_BYACCOUNT = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time "
+				+ "FROM members where account = ?;";
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_INFO_BYACCOUNT);
+				pstmt.setString(1, account);
+				ResultSet rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					MembersVO newMember = new MembersVO();
+					newMember.setMemberId(rs.getInt("member_id"));
+					newMember.setAccount(rs.getString("account"));
+					newMember.setName(rs.getString("name"));
+					newMember.setAddress(rs.getString("address"));
+					newMember.setPhone(rs.getString("phone"));
+					newMember.setRankId(rs.getInt("rank_id"));
+					newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
+					newMember.setBonusAmount(rs.getInt("bonus_amount"));
+					newMember.setStatus(rs.getInt("status"));
+					newMember.setCreateTime(rs.getTimestamp("create_time"));
+					return newMember;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 }

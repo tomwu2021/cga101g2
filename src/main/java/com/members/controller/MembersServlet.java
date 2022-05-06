@@ -1,9 +1,12 @@
 package com.members.controller;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import com.album.model.AlbumJDBCDAO;
 import com.google.gson.Gson;
 import com.members.model.*;
 import com.util.JavaMail;
@@ -194,10 +197,19 @@ public class MembersServlet extends HttpServlet {
 		MembersVO membersVO = new MembersVO();
 		membersVO.setAccount(userAccount);
 		membersVO.setPassword(userCheckPassword);
-		memberSvc.insert(membersVO);
+		MembersVO newMember = memberSvc.insert(membersVO);
 		messages.put("msgError", "");
 		messages.put("msgErrorVerificationCode", "");
 		messages.put("registerSuccessful", "註冊成功");
+
+		// 相簿建立
+		AlbumJDBCDAO aldao = new AlbumJDBCDAO();
+		try {
+			aldao.makeDefaultAlbum(newMember.getMemberId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		String json = new Gson().toJson(messages);
 		res.getWriter().write(json);
 		return;
@@ -205,33 +217,34 @@ public class MembersServlet extends HttpServlet {
 
 	/*************************** 忘記密碼 **********************/
 	public void sendforgotMail(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
+
 		String forgotPassword = req.getParameter("forgotPassword");
 
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
-		
+
 		System.out.println(forgotPassword);
 		MembersService memberSvc = new MembersService();
 		Boolean boo = memberSvc.getOneByAccount(forgotPassword);
-		
-		if( boo == true ) {
-			
-			// 驗證碼
-			String verificationCode = memberSvc.genAuthCode();
-			
+
+		if (boo == true) {
+
+			// 用 account 取得 會員 Info
+			MembersVO newMemberVO = memberSvc.selectMemberIdByAccount(forgotPassword);
 			// 呼叫 DAO 修改資料庫密碼
-			
+			String verificationCode = memberSvc.forgotPassword(newMemberVO);
+
 			// 寄送 JavaMail
 			JavaMail javaMail = new JavaMail();
 			javaMail.setRecipient(forgotPassword); // 收件人信箱
-			javaMail.setTxt("親愛的會員您好，您的新密碼為：" + verificationCode+"<br>請以此密碼重新登入 Pclub，登入後請至會員中心修改密碼。<br>本郵件由 Pclub 系統自動發出，請勿回覆！"); // 內文
+			javaMail.setTxt("親愛的會員您好，您的新密碼為：" + verificationCode
+					+ "<br>請以此密碼重新登入 Pclub，登入後請至會員中心修改密碼。<br>本郵件由 Pclub 系統自動發出，請勿回覆！"); // 內文
 			javaMail.SendMail(); // 送出
 
-			messages.put("msgError", "已寄送驗證碼至此信箱");
+			messages.put("msgError", "已寄送新密碼至此信箱");
 			String json = new Gson().toJson(messages);
 			res.getWriter().write(json);
-		}else {
+		} else {
 			messages.put("msgError", "查無此會員");
 			String json = new Gson().toJson(messages);
 			res.getWriter().write(json);

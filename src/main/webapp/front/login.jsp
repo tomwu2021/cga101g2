@@ -87,7 +87,7 @@
 		</h2>
 
 		<input type="text" name="forgotPassword" id="forgotPassword" placeholder="請輸入電子郵件" /> 
-		<input type="button" value="寄送驗證碼" onclick="sendforgotMail()" />
+		<input type="button" value="寄送新密碼" onclick="sendforgotMail()" />
 		
 		<span id="closeBtn2">關閉</span>
 	</div>

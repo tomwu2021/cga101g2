@@ -34,7 +34,7 @@ public class MembersService {
 	}
 
 	// update 情境五：會員忘記密碼 ( password )
-	public boolean forgotPassword(MembersVO membersVO) {
+	public String forgotPassword(MembersVO membersVO) {
 		return dao.forgotPassword(membersVO);
 	}
 
@@ -82,17 +82,24 @@ public class MembersService {
 	public boolean changeEWalletAmount(MembersVO membersVO) {
 		return dao.changeEWalletAmount(membersVO);
 	}
-	
+
 	// deleteOneById
 	public boolean deleteOneById(Integer memberId) {
 		return dao.deleteOneById(memberId);
 	}
-	
+
+	// 查詢此帳號是否存在
 	public Boolean getOneByAccount(String account) {
 		return dao.getOneByAccount(account);
 	}
 
+	// 驗證碼
 	public String genAuthCode() {
 		return dao.genAuthCode();
+	}
+
+	// 查詢此帳號的資料
+	public MembersVO selectMemberIdByAccount(String account) {
+		return dao.selectMemberIdByAccount(account);
 	}
 }

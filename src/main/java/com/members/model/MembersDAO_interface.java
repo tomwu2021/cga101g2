@@ -1,6 +1,8 @@
 package com.members.model;
 
 import java.util.List;
+
+import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
 import com.common.model.JDBCDAO_Interface;
 
 public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
@@ -12,7 +14,7 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 	public boolean changeBonus(MembersVO membersVO);
 
 	// update 情境五：會員忘記密碼 ( password )
-	public boolean forgotPassword(MembersVO membersVO);
+	public String forgotPassword(MembersVO membersVO);
 
 	// select 情境六：會員查詢會員等級 ( RANK_ID )
 	public int selectRankId(MembersVO membersVO);
@@ -43,5 +45,8 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 	
 	// 驗證碼
 	public String genAuthCode();
+	
+	// 用 account 查詢 id
+    public MembersVO selectMemberIdByAccount(String account);
 
 }
