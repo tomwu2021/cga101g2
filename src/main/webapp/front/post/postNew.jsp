@@ -17,8 +17,8 @@
 
 	<!-- -- add -->
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->  
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="other/style copy.css">
@@ -259,23 +259,84 @@
     	<!--breadcrumbs area end-->
     	
     	
+    	<!--blog area start-->
+    <div class="blog_page_section mt-100"></div>
+    <div class="container">
+										          <%-- <div class="row">
+										        
+										        	<%-- <c:forEach var="postVO" items="${list}" > --%>	
+										            <div class="col-12 col-md-4">
+										                <div class="item h-100">
+										                  
+															<c:if test="${postVO.pictureList.size() != 0 }">
+																<c:forEach var="postVO" items="${list}" >
+																<img src="${postVO.pictureList.get(0).previewUrl}" class="w-100">
+																</c:forEach>
+										        			</c:if>
+										        		
+										        		</div>
+										        	</div>
+										      		<%-- </c:forEach> --%>
+										          
+										        </div> --%> 
+										        
+		
+		 <%-- <div class="row">
+		
+			<c:forEach var="postVO" items="${list}" >
+            <div class="col-12 col-md-4">
+                <div class="item h-100">
+                	<c:if test="${postVO.pictureList.size() != 0 }">
+                    <a href="blog-details.html"><img src="${postVO.pictureList.get(0).previewUrl}" class="w-100"></a>
+                    </c:if>
+                </div>
+                
+                <div class="item h-100">
+                	<c:if test="${postVO.pictureList.size() != 0 }">
+                    <a href="blog-details.html"><img src="${postVO.pictureList.get(0).previewUrl}" class="w-100"></a>
+                    </c:if>
+                </div>
+                
+                <div class="item h-100">
+                	<c:if test="${postVO.pictureList.size() != 0 }">
+                    <a href="blog-details.html"><img src="${postVO.pictureList.get(0).previewUrl}" class="w-100"></a>
+                    </c:if>
+                </div>
+                
+            </div>
+            </c:forEach> --%>
+            
+			
+             <%-- <div class="col-12 col-md-4">
+                <div class="item h-100">
+               		 <c:if test="${postVO.pictureList.size() != 0 }">
+                    <a href="blog-details.html"><img src="${postVO.pictureList.get(0).previewUrl}" class="w-100"></a>
+                    </c:if>
+                </div>
+            </div>
 
-    	
-    	
-    	
-    	
-    	
-    
-    
-    
-    
-    
+            <div class="col-12 col-md-4">
+                <div class="item h-100">
+                	<c:if test="${postVO.pictureList.size() != 0 }">
+                    <a href="blog-details.html"><img src="${postVO.pictureList.get(0).previewUrl}" class="w-100"></a>
+                    </c:if>
+                </div>
+            </div>  --%>
+			<%-- </c:forEach> --%>
+		
+        </div> 
+       
+        
+
+        <br>						        
+    </div>
+            
 	<!--! 內容 結束-->
 
 
-			<!-- 共通的footer start-->
-			<%@include file="/front/layout/footer.jsp"%>
-			<!-- 共通的footer end-->
+		<!-- 共通的footer start-->
+		<%@include file="/front/layout/footer.jsp"%>
+		<!-- 共通的footer end-->
 
 
 	<!-- 共用的JS -->
