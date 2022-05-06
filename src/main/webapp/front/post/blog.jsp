@@ -243,25 +243,6 @@
     	<!--offcanvas menu area end-->
     	
     	
-    	
-    	<!--breadcrumbs area start-->
-    <div class="breadcrumbs_area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumb_content">
-                        <h3>Blog</h3>
-                        <ul>
-                            <li><a href="index.html">home</a></li>
-                            <li>blog</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    	<!--breadcrumbs area end-->
-    	
     <!--blog area start-->
     <div class="blog_page_section blog_fullwidth mt-100">
         <div class="container">
@@ -285,10 +266,19 @@
 								<a href="blog-details.html"><img src="assets/img/blog/blog-big1.jpg" alt=""></a>
 								
 								</div>  -->
+								
+								
+								 	<figure style="width: 60px;height: 60px;"> 
+									<!-- <figcaption>responsive(100*100)</figcaption>  -->
+									<img class="img-responsive " src="${postVO.urlList.get(0) }" alt="頭像"/> 
+									</figure>
+								                   
 								                    
 						                    <div class="blog_thumb">
                                     		<a href="blog-details.html"><img src="${postVO.pictureVO.url}" alt=""></a>
-                                			</div>					        
+                                			</div>	
+                                			
+                                							        
 						                  
                                 <!-- 整個文 -->
                                 <figcaption class="blog_content">
@@ -302,7 +292,11 @@
                                     <!-- 貼文內容 -->
                                     <p class="post_desc">${postVO.content}</p>
                                     
+                                    xxxx ${postVO.membersVO.name}
+                                    ${postVO.urlList.get(0) }
                                     
+                                    
+									
                                     <!-- 按鈕 -->
                                     <footer class="btn_more">
                                         <a href="blog-details.html"> Read more</a>
@@ -311,6 +305,7 @@
                                     
                                 </figcaption>
                             </figure>
+                            
                         </article>
                         </c:forEach>
 <!--                         下一則貼文

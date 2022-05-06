@@ -260,11 +260,11 @@
     	
     	
     	<!--blog area start-->
-    <div class="blog_page_section mt-100"></div>
-    <div class="container">
-										          <%-- <div class="row">
+   <!--  <div class="blog_page_section mt-100"></div>
+    <div class="container"> -->
+										         <%-- <div class="row">
 										        
-										        	<%-- <c:forEach var="postVO" items="${list}" > --%>	
+										        	 <c:forEach var="postVO" items="${list}" > 	
 										            <div class="col-12 col-md-4">
 										                <div class="item h-100">
 										                  
@@ -275,62 +275,206 @@
 										        			</c:if>
 										        		
 										        		</div>
-										        	</div>
-										      		<%-- </c:forEach> --%>
+									        	</div>
+										      		 </c:forEach> 
 										          
-										        </div> --%> 
+										        </div>  --%>
 										        
-		
-		 <%-- <div class="row">
-		
-			<c:forEach var="postVO" items="${list}" >
-            <div class="col-12 col-md-4">
-                <div class="item h-100">
-                	<c:if test="${postVO.pictureList.size() != 0 }">
-                    <a href="blog-details.html"><img src="${postVO.pictureList.get(0).previewUrl}" class="w-100"></a>
-                    </c:if>
-                </div>
-                
-                <div class="item h-100">
-                	<c:if test="${postVO.pictureList.size() != 0 }">
-                    <a href="blog-details.html"><img src="${postVO.pictureList.get(0).previewUrl}" class="w-100"></a>
-                    </c:if>
-                </div>
-                
-                <div class="item h-100">
-                	<c:if test="${postVO.pictureList.size() != 0 }">
-                    <a href="blog-details.html"><img src="${postVO.pictureList.get(0).previewUrl}" class="w-100"></a>
-                    </c:if>
-                </div>
-                
-            </div>
-            </c:forEach> --%>
-            
-			
-             <%-- <div class="col-12 col-md-4">
-                <div class="item h-100">
-               		 <c:if test="${postVO.pictureList.size() != 0 }">
-                    <a href="blog-details.html"><img src="${postVO.pictureList.get(0).previewUrl}" class="w-100"></a>
-                    </c:if>
-                </div>
-            </div>
+    <!--shop  area start-->
+    <div class="shop_area shop_reverse mt-100 mb-100">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-3 col-md-12">
+                    
+                </div> -->
+                <div class="col-lg-12 col-md-12">
+                    <!--shop wrapper start-->
+                    <!--shop toolbar start-->
+                    <div class="shop_toolbar_wrapper">
+                        <div class="shop_toolbar_btn">
 
-            <div class="col-12 col-md-4">
-                <div class="item h-100">
-                	<c:if test="${postVO.pictureList.size() != 0 }">
-                    <a href="blog-details.html"><img src="${postVO.pictureList.get(0).previewUrl}" class="w-100"></a>
-                    </c:if>
-                </div>
-            </div>  --%>
-			<%-- </c:forEach> --%>
-		
-        </div> 
-       
-        
+                            <button data-role="grid_3" type="button" class="active btn-grid-3" data-toggle="tooltip"
+                                title="3"></button>
 
-        <br>						        
+                            <button data-role="grid_4" type="button" class=" btn-grid-4" data-toggle="tooltip"
+                                title="4"></button>
+
+                            <button data-role="grid_list" type="button" class="btn-list" data-toggle="tooltip"
+                                title="List"></button>
+                        </div>
+                        <div class=" niceselect_option">
+                            <form class="select_option" action="#">
+                                <select name="orderby" id="short">
+
+                                    <option selected value="1">Sort by average rating</option>
+                                    <option value="2">Sort by popularity</option>
+                                    <option value="3">Sort by newness</option>
+                                    <option value="4">Sort by price: low to high</option>
+                                    <option value="5">Sort by price: high to low</option>
+                                    <option value="6">Product Name: Z</option>
+                                </select>
+                            </form>
+                        </div>
+                        <div class="page_amount">
+                            <p>Showing 1–9 of 21 results</p>
+                        </div>
+                    </div>
+                    <!--shop toolbar end-->
+                    <div class="row shop_wrapper">
+                     	<!-- 範圍開始 -->
+                     	<c:forEach var="postVO" items="${list}" > 
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 ">
+                        	
+                            <article class="single_product">
+                                <figure>
+                                	<!-- 起始 -->
+                                    <div class="product_thumb">
+                                    
+                                   		<!--  new \ 10%  -->
+                                        <div class="label_product"> 
+                                            <span class="label_new">new</span>
+                                            <span class="label_sale">10%</span>
+                                        </div> 
+                                        
+                                        <!-- 圖 -->
+                                       <%--  <c:forEach var="postVO" items="${list}" >  --%>
+                                        <c:if test="${postVO.pictureList.size() != 0 }">
+                                        <a class="primary_img" href="product-details.html"><img
+                                                src="${postVO.pictureList.get(0).previewUrl}" alt=""></a>
+                                        </c:if>
+                                          <%-- </c:forEach> --%>   
+                                               
+                                                <%-- <c:forEach var="postVO" items="${list}" > 
+                                                
+                                               	 <c:if test="${postVO.pictureList.size() != 0 }">
+													<img src="${postVO.pictureList.get(0).previewUrl}" class="w-100">																
+										         </c:if>
+										        
+										        </c:forEach>  --%>
+										        
+                                        <!-- 效果圖  -->      
+                                        <a class="secondary_img" href="product-details.html"><img
+                                                src="assets/img/product/product4.jpg" alt=""></a>
+                                        <div class="action_links">
+                                            <ul>
+                                                <li class="quick_button"><a href="#" data-toggle="modal"
+                                                        data-target="#modal_box" title="quick view"> <i
+                                                            class="icon icon-Eye"></i></a></li>
+                                                <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i
+                                                            class="icon icon-Heart"></i></a></li>
+                                                <li class="compare"><a href="#" title="Add to Compare"><i
+                                                            class="icon icon-MusicMixer"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                   	<!--  整個文字框 -->
+                                    <div class="product_content grid_content">
+                                        <div class="product_rating">
+                                            <ul>
+                                                <li><a href="#"><i class="icon icon-Star"></i></a></li>
+                                                <li><a href="#"><i class="icon icon-Star"></i></a></li>
+                                                <li><a href="#"><i class="icon icon-Star"></i></a></li>
+                                                <li><a href="#"><i class="icon icon-Star"></i></a></li>
+                                                <li><a href="#"><i class="icon icon-Star"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h4 class="product_name"><a href="product-details.html"> quidem totam,
+                                                voluptatem quae quasi possimus iusto!</a></h4>
+                                        <div class="price_box">
+                                            <span class="current_price">$145.00</span>
+                                            <span class="old_price">$178.00</span>
+                                        </div>
+                                        <div class="add_to_cart">
+                                            <a href="cart.html" title="Add to cart">Add to Cart</a>
+                                        </div>
+                                        <div class="swatches-colors">
+                                            <ul>
+                                                <li><a class="color1" href="javascript:void(0)"></a></li>
+                                                <li><a class="color2" href="javascript:void(0)"></a></li>
+                                                <li><a class="color3" href="javascript:void(0)"></a></li>
+                                                <li><a class="color4" href="javascript:void(0)"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product_content list_content">
+                                        <div class="swatches-colors">
+                                            <ul>
+                                                <li><a class="color1" href="javascript:void(0)"></a></li>
+                                                <li><a class="color2" href="javascript:void(0)"></a></li>
+                                                <li><a class="color4" href="javascript:void(0)"></a></li>
+                                                <li><a class="color3" href="javascript:void(0)"></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="product_rating">
+                                            <ul>
+                                                <li><a href="#"><i class="icon icon-Star"></i></a></li>
+                                                <li><a href="#"><i class="icon icon-Star"></i></a></li>
+                                                <li><a href="#"><i class="icon icon-Star"></i></a></li>
+                                                <li><a href="#"><i class="icon icon-Star"></i></a></li>
+                                                <li><a href="#"><i class="icon icon-Star"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h4 class="product_name"><a href="product-details.html">quidem totam, voluptatem
+                                                quae quasi possimus</a></h4>
+                                        <div class="product_desc">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                                                veniam, quis nostrud exercitation ullamco…</p>
+                                        </div>
+                                        <div class="price_box">
+                                            <span class="current_price">$145.00</span>
+                                            <span class="old_price">$178.00</span>
+                                        </div>
+
+                                        <div class="action_links list_action_right">
+                                            <ul>
+                                                <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to
+                                                        Cart</a></li>
+                                                <li class="quick_button"><a href="#" data-toggle="modal"
+                                                        data-target="#modal_box" title="quick view"> <i
+                                                            class="icon icon-Eye"></i></a></li>
+                                                <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i
+                                                            class="icon icon-Heart"></i></a></li>
+                                                <li class="compare"><a href="#" title="Add to Compare"><i
+                                                            class="icon icon-MusicMixer"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </figure>
+                            </article>
+                        </div>
+                        
+                        <!-- 範圍結束 -->
+                        </c:forEach>
+                        
+                        
+                            
+                        </div>
+                    </div>
+					  
+					  
+                    <div class="shop_toolbar t_bottom">
+                        <div class="pagination">
+                            <ul>
+                                <li class="current">1</li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li class="next"><a href="#">next</a></li>
+                                <li><a href="#">>></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    
+                    <!--shop toolbar end-->
+                    <!--shop wrapper end-->
+                </div>
+            </div>
+        </div>
     </div>
-            
+    <!--shop  area end-->
+    
+		 
 	<!--! 內容 結束-->
 
 
