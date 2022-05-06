@@ -171,8 +171,8 @@ public class PostService {
 	 * 查詢status狀態為0的貼文
 	 * 
 	 */
-	public List<PostVO> selectChangePost() {
-		return dao.selectChangePost();
+	public List<PostVO> selectChangePost(Integer memberid) {
+		return dao.selectChangePost(memberid);
 	}
 	
 	

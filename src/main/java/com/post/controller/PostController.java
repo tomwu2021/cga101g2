@@ -3,6 +3,7 @@ package com.post.controller;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -18,8 +19,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import org.apache.naming.java.javaURLContextFactory;
+
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
+import com.members.model.MembersService;
+import com.members.model.MembersVO;
+import com.pet.model.PetJDBCDAO;
+import com.pet.model.PetVO;
+import com.pet_activity.model.PetActivityJDBCDAO;
+import com.picture.model.PictureVO;
+import com.picture.service.PictureService;
 import com.post.model.PostService;
 import com.post.model.PostVO;
 
@@ -37,7 +47,7 @@ public class PostController extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		action = "selectChangePost";
+//		action = "selectChangePost";
 		
 		/**
 		 * 查詢個人頁面
@@ -93,7 +103,7 @@ public class PostController extends HttpServlet {
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("list", list); 
 				String url = "/front/post/postNew.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 postNew.jsp
 				successView.forward(req, res);
 
 		}
@@ -116,11 +126,33 @@ public class PostController extends HttpServlet {
 				
 				/***************************2.開始查詢***************************************/
 				PostService ps = new PostService();
-				List<PostVO> postlist = ps.selectChangePost();
+				java.util.Date date1 = new java.util.Date();
 				
+				List<PostVO> postlist = ps.selectChangePost(memberId);
+				
+				MembersService mSvcMembersService = new MembersService();
+			    MembersVO membersVO = mSvcMembersService.getOneById(memberId);
+			    
+			    PictureService pictureService = new PictureService();
+			    PetJDBCDAO dao = new PetJDBCDAO(); // remember to change!!!!
+			    List<PetVO> petVOlist = dao.getOneByMemberId(memberId);
+			    List<String> urlList = new ArrayList<>(); // new empty list
+			    for (PetVO petVO: petVOlist) {
+			    	Integer pid = petVO.getPictureId();
+			    	PictureVO pictureVO = pictureService.getOne(pid);
+			    	urlList.add(pictureVO.getPreviewUrl()); // add one url
+			    	
+			    }
+			    for (PostVO postVO: postlist) {
+			    	postVO.setMembersVO(membersVO);
+			    	postVO.setUrlList(urlList);
+			    }
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("postlist", postlist);
 					       
+				java.util.Date date2 = new java.util.Date();
+				System.out.println("elapsed time: " + (date2.getTime() - date1.getTime()));
+				
 			String url = "/front/post/blog.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 blog.jsp
 			successView.forward(req, res);
@@ -129,6 +161,7 @@ public class PostController extends HttpServlet {
 		/**
 		 * 新增貼文圖片跟內容
 		 */
+
 		
         if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
 			

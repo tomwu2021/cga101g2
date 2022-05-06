@@ -195,17 +195,17 @@ public class PostJDBCDAO implements PostDAO_interface {
 	
 	//查詢貼文，顯示 status狀態0:正常1:審核中2:刪除
 	@Override
-	public List<PostVO> selectChangePost() {
+	public List<PostVO> selectChangePost(Integer memberid) {
 		final String SELECT_CHANGEPOST = "select p.post_id, member_id, content, like_count, create_time, url "
 				+ "from post p join post_pic pc on p.post_id = pc.post_id "
 				+ "			   join picture pi on pc.picture_id = pi.picture_id "
-				+ "			   where status = 0 "
+				+ "			   where status = 0 AND member_id = ? "
 				+ "order by create_time desc";
 				
 		
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(SELECT_CHANGEPOST);) {
-
+			pstmt.setInt(1, memberid);
 			ResultSet rs = pstmt.executeQuery();
 			
 			List< PostVO> poList = new ArrayList<PostVO>();

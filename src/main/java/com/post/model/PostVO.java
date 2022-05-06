@@ -3,11 +3,15 @@ package com.post.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.members.model.MembersVO;
+import com.pet.model.PetVO;
 import com.picture.model.PictureVO;
 
 public class PostVO implements java.io.Serializable{
 	private Integer postId;
-	private Integer memberId;	
+	private Integer memberId;
+	private MembersVO membersVO;
+	private List<String> urlList;
 	private String content;	
 	private Integer likeCount;
 	private Integer status;	
@@ -108,6 +112,22 @@ public class PostVO implements java.io.Serializable{
 
 	public void setPictureList(List<PictureVO> pictureList) {
 		this.pictureList = pictureList;
+	}
+	
+	public MembersVO getMembersVO() {
+		return membersVO;
+	}
+
+	public void setMembersVO(MembersVO membersVO) {
+		this.membersVO = membersVO;
+	}
+
+	public List<String> getUrlList() {
+		return urlList;
+	}
+
+	public void setUrlList(List<String> urlList) {
+		this.urlList = urlList;
 	}
 
 	@Override
