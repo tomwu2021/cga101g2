@@ -91,7 +91,7 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 		                      <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
 		                      <input type="hidden" name="action" value="delete">
 		                      
-		                      <button type="submit" class="btn btn-danger">確認</button>
+		                      <button type="submit" class="btn btn-danger" id="confirmDelete">確認</button>
 		                    </div>
 		                  </div>
 		                </div>
@@ -163,6 +163,9 @@ let rId = '${param.recordId}'? '${param.recordId}':$('.allItem:first').attr("id"
 				function(data,status){
 				if(status=="success"){
 					$("#getRecordId").val(rId);
+					if($('#activity').val()==""){
+						$("#updateBtn").attr("disabled","disabled");
+					}
 				}
 			});	
 
@@ -175,17 +178,10 @@ function getDetail(record){
 				if(status=="success"){
 					$("#editBox").html(data);
 					$("#getRecordId").val(rId);
+					$("#updateBtn").removeAttr("disabled");
 				}
 			}
 	);
-}
-
-// 跳出刪除確認視窗
-function deleteBtn(){
-	$("#r_date1").attr("disabled");
-	$("#activity").attr("disabled");
-	$("#activity").css("border","none");
-	$('#update').remove();
 }
 
 </script>

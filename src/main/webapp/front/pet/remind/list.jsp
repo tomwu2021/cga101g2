@@ -14,7 +14,7 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 	<!-- Activity Item-->
 	<div class="activity-item d-flex">
 		<div class="remind-label">
-					<div class=" bg-danger-light"><fmt:formatDate value="${rVO.time}" pattern="yyyy-MM-dd " /></div>
+					<div class=" text-danger"><fmt:formatDate value="${rVO.time}" pattern="yyyy-MM-dd " /></div>
 					
 		<div class="text-muted small"><i class="far fa-clock"></i>&nbsp;&nbsp;<fmt:formatDate value="${rVO.time}" pattern="HH:mm" /></div></div>
 		

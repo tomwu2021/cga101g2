@@ -57,7 +57,7 @@ public class RemindController extends HttpServlet {
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("content", content);
 				req.setAttribute("time", time);
-				RequestDispatcher failureView = req.getRequestDispatcher("/front/pet/rimind/add.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front/pet/remind/add.jsp");
 				failureView.forward(req, res);
 				return;
 			}

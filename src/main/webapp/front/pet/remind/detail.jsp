@@ -155,6 +155,9 @@ let rId = '${param.remindId}'? '${param.remindId}':$('.allItem:first').attr("id"
 				function(data,status){
 				if(status=="success"){
 					$("#getRemindId").val(rId);
+					if($('#content').val()==""){
+						$("#updateBtn").attr("disabled","disabled");
+					}
 				}
 			});	
 
@@ -167,17 +170,10 @@ function getDetail(remind){
 				if(status=="success"){
 					$("#editBox").html(data);
 					$("#getRemindId").val(rId);
+					$("#updateBtn").removeAttr("disabled");
 				}
 			}
 	);
-}
-
-// 跳出刪除確認視窗
-function deleteBtn(){
-	$("#r_date1").attr("disabled");
-	$("#content").attr("disabled");
-	$("#content").css("border","none");
-	$('#update').remove();
 }
 
 </script>
