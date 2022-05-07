@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.common.model.JDBCDAO_Interface;
-import com.emp.model.EmpVO;
 import com.product_img.model.ProductImgVO;
 
 public interface ProductDAO_interface extends JDBCDAO_Interface<ProductVO> {
@@ -19,5 +18,12 @@ public interface ProductDAO_interface extends JDBCDAO_Interface<ProductVO> {
 	public Set<ProductImgVO> getPImgVOsByPdID(Integer pImgID);
 	
 //	 萬用複合查詢(傳入參數型態Map)(回傳 List)
-  public List<ProductVO> getAll(Map<String, String[]> map);
+	public List<ProductVO> getAll(Map<String, String[]> map);
+
+//	Shop用的公開頁面
+	public List<ProductVO> getForShopFront(Map<String, String[]> map);
+	
+//	GroupSho用的公開頁面
+	public List<ProductVO> getForGroupShopFront(Map<String, String[]> map);	
+	
 }

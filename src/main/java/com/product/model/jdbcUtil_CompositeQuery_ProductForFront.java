@@ -9,9 +9,9 @@ import java.util.TreeMap;
  *  2. 為了避免影響效能:
  *     所以動態產生萬用SQL的部份,本範例無意採用MetaData的方式,也只針對個別的Table自行視需要而個別製作之
  * */
-public class jdbcUtil_CompositeQuery_Product {
+public class jdbcUtil_CompositeQuery_ProductForFront {
 
-	public static String get_aCondition_For_myDB(String columnName, String value) {
+	public static String get_aConditionProductForFront_For_myDB(String columnName, String value) {
 
 		String aCondition = null;
 //**挑選個別欄位加各自的表格名稱 ,比如A的欄位表加A的表格 B的欄位加B的表格**//
@@ -19,11 +19,11 @@ public class jdbcUtil_CompositeQuery_Product {
 				|| "sort2_id".equals(columnName) 
 				|| "group_price1".equals(columnName)
 				|| "group_amount1".equals(columnName) || "group_amount2".equals(columnName)
-				|| "group_amount3".equals(columnName) || "status".equals(columnName) || "topStatus".equals(columnName)) // 用於其他
+				|| "group_amount3".equals(columnName) || "topStatus".equals(columnName)) // 用於其他
 			aCondition = "product." + columnName + "=" + value;
 		else if ("sort1_id".equals(columnName))
 				aCondition = "p_sort1." + columnName + "=" + value;	
-		else if ("product_name".equals(columnName) || "description".equals(columnName)) // 用於varchar
+		else if ("product_name".equals(columnName)) // 用於varchar
 			aCondition = "product." + columnName + " like '%" + value + "%'";
 		else if ("update_time".equals(columnName)) // 用於date
 			aCondition = "product." + columnName + "=" + "'" + value + "'"; // for 其它DB 的 date
@@ -32,7 +32,7 @@ public class jdbcUtil_CompositeQuery_Product {
 		return aCondition + " ";
 	}
 
-	public static String get_WhereCondition(Map<String, String[]> map) {
+	public static String get_WhereConditionProductForFront(Map<String, String[]> map) {
 		Set<String> keys = map.keySet();
 		StringBuffer whereCondition = new StringBuffer();
 		int count = 0;
@@ -40,7 +40,7 @@ public class jdbcUtil_CompositeQuery_Product {
 			String value = map.get(key)[0];
 			if (value != null && value.trim().length() != 0 && !"action".equals(key)) {
 				count++;
-				String aCondition = get_aCondition_For_myDB(key, value.trim());
+				String aCondition = get_aConditionProductForFront_For_myDB(key, value.trim());
 
 				if (count == 1)
 					whereCondition.append(" where " + aCondition);
@@ -64,7 +64,7 @@ public class jdbcUtil_CompositeQuery_Product {
 //		map.put("product_name", new String[] { "貓" });
 //		map.put("price", new String[] { "700" });
 //		map.put("amount", new String[] { "13" });
-		map.put("sort2_id", new String[] { "11" });
+		map.put("sort2_id", new String[] { "12" });
 		map.put("sort1_id", new String[] { "1" });
 //		map.put("update_time", new String[] { "1981-11-17" });
 //		map.put("group_price1", new String[] { "10" });
@@ -79,7 +79,8 @@ public class jdbcUtil_CompositeQuery_Product {
 		String finalSQL = "select * from product "
 						+ "JOIN p_sort1 "
 						+" ON product.product_id = p_sort1.product_id "		
-				        + jdbcUtil_CompositeQuery_Product.get_WhereCondition(map)
+				        + jdbcUtil_CompositeQuery_ProductForFront.get_WhereConditionProductForFront(map)
+				        + "AND  product.status NOT IN (0) "
 				        + "group by product.product_id "
 				        + "order by product.product_id DESC";
 		System.out.println("●●finalSQL = " + finalSQL);

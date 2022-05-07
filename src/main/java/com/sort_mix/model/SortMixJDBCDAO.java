@@ -213,6 +213,35 @@ public class SortMixJDBCDAO implements SortMixDAO_interface {
 		return null;
 	}
 
+	@Override
+	public List<Sort2VO> getSort2VOListBySort1Id(Integer sort1Id) {
+		List<Sort2VO> sort2VOList = new ArrayList<Sort2VO>();
+		String FIND_STMT= "SELECT * "
+				+ "FROM sort1 s1, sort2 s2, sort_mix sm "
+				+ "WHERE s1.sort1_id = sm.sort1_id "
+				+ "AND   s2.sort2_id = sm.sort2_id "
+				+ "AND   s1.sort1_id=? ";
+		
+		try (Connection con = getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(FIND_STMT)) {
+			pstmt.setInt(1, sort1Id);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Sort2VO sort2VO = new Sort2VO();
+				sort2VO.setSort2Id(rs.getInt("sort2_id"));
+				sort2VO.setSort2Name(rs.getString("sort2_name"));
+				sort2VOList.add(sort2VO);
+		}	
+			System.out.println("List<Sort1VO> findSort1VOBySort2Id(Integer sort2Id)成功執行");
+			return sort2VOList;
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
 
 

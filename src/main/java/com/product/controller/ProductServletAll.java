@@ -32,8 +32,9 @@ public class ProductServletAll extends HttpServlet {
 		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		//給一般購物 轉交給shop.jsp
-		if ("listProducts_Byfind".equals(action)) { // 來自select_page.jsp的複合查詢請求
+		
+		//一般購物公開頁面 轉交給shop.jsp 只接受參數 statu=2 or status =3
+		if ("listProducts_Byfind".equals(action)) { 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -60,6 +61,9 @@ public class ProductServletAll extends HttpServlet {
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("listProducts_Byfind", list); // 資料庫取出的list物件,存入request
+				
+				//**********************0506要轉交給shop2改成轉交給shop***********************//
+				
 				RequestDispatcher successView = req.getRequestDispatcher("/front/shop/shop2.jsp"); // 成功轉交shop.jsp
 				successView.forward(req, res);
 		}

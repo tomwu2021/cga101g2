@@ -80,7 +80,21 @@ public class Sort1JNDIDAO implements Sort1DAO_interface{
 
 	@Override
 	public Sort1VO getOneById(Integer id) {
-		// TODO Auto-generated method stub
+		final String sql = "select * from sort1 where sort1_id = ? ";
+		try (Connection conn =  getRDSConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, id);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					Sort1VO sort1VO = new Sort1VO();
+					sort1VO.setSort1Id(rs.getInt("sort1_id"));
+					sort1VO.setSort1Name(rs.getString("sort1_Name"));
+					return sort1VO;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

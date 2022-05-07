@@ -1,5 +1,10 @@
 package com.sort_mix.model;
 
+import java.util.List;
+
+import com.sort1.model.Sort1VO;
+import com.sort2.model.Sort2VO;
+
 public class SortMixVO implements java.io.Serializable{
 
 	/**

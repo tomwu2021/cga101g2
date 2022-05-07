@@ -1,9 +1,5 @@
 package com.product.model;
 
-import java.util.List;
-
-import com.product_img.model.ProductImgVO;
-
 public class TESTProduct {
 
 	public static void main(String[] args) {
@@ -105,6 +101,6 @@ public class TESTProduct {
 //			System.out.println(aProductVO.getTopStatus());
 //			System.out.println("---------------------");
 //		}
-//		
+		
 	}
 }

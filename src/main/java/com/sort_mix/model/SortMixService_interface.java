@@ -24,7 +24,11 @@ public interface SortMixService_interface {
 	//查詢某個子分類(包含對應的主分類)
 	public Sort2VO findSort2VOSort1VOsBySort2Id (Integer sort2Id);
 	
-	//用子分類ID sort2ID 找 Sort1VO
+	//用子分類ID sort2ID 找 Sort1VOList
 	public List<Sort1VO> getSort1VOsBySort2Id (Integer sort2Id);
+	
+	//用主分類ID sort1ID 找 Sort2VOList
+	public List<Sort2VO> getSort2VOsBySort1Id (Integer sort1Id);
+	
 
 }

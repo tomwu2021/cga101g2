@@ -5,10 +5,10 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.product.model.*"%>
 
-<jsp:useBean id="listProducts_Byfind" scope="request" type="java.util.List<ProductVO>" /> <!-- 於EL此行可省略 -->
+<jsp:useBean id="listGroupProducts_Byfind" scope="request" type="java.util.List<ProductVO>" /> <!-- 於EL此行可省略 -->
 <html>
 <head>
-<title>商品總覽</title>
+<title>團購商品總覽</title>
 <!-- 共用的CSS startr-->
 <%@include file="/front/layout/commonCSS.jsp"%>
 <!-- 共用的CSS end-->
@@ -34,19 +34,11 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="breadcrumb_content">
-						<h3>商品專區</h3>
+						<h3>團購專區</h3>
 						<ul>
-							<li><a href="<%=request.getContextPath()%>/shop?action=listProducts_Byfind">寵物商城</a></li>
-							<li>商品專區</li>
+							<li><a href="index.html">寵物商城</a></li>
+							<li>團購專區</li>
 						</ul>
-<!-- 						放分類的地方 -->
-						<c:if test="${not empty thisSort1VO.sort1Name || not empty thisSort1VO.sort1Name }">
-						<ul>
-							<li>${thisSort1VO.sort1Name}${thisSort1VO.sort1Name}專區</li>
-							<li>${thisSort2VO.sort2Name}</li>
-						</ul>
-						</c:if>
-<!-- 						放分類的地方 -->						
 					</div>
 				</div>
 			</div>
@@ -70,32 +62,21 @@
 
 							<!--                                 </form>  -->
 							<!--                             </div> -->
-							<c:set var="sort1VOList"  scope="page" value="${sort1VOListIncludesort2VOList}" />
-							
 							<div class="widget_list widget_color">
 								<h3>
-									<a href="<%=request.getContextPath()%>/shop?action=listProducts_Byfind">全部商品</a>
+									<a href="#">我要開團</a>
 								</h3>
 							</div>
-							
-							<c:forEach var="sort1VO" items="${sort1VOList}" >
-							<div class="widget_list widget_color ">
-							
-										<h3>
-											<a href="<%=request.getContextPath()%>/shop?action=listProducts_Byfind&sort1_id=${sort1VO.sort1Id}">
-											${sort1VO.sort1Name}${sort1VO.sort1Name}專區</a>
-										</h3>
-									
-								<ul>
-							<c:forEach var="sort2VO" items="${sort1VO.sort2VOList}" >
-								<li>
-									<a href="<%=request.getContextPath()%>/shop?action=listProducts_Byfind&sort1_id=${sort1VO.sort1Id}&sort2_id=${sort2VO.sort2Id}" >${sort2VO.sort2Name} </a>
-								</li>
-							</c:forEach>
-							    </ul>
+							<div  class="widget_list widget_color">
+								<h3>
+									<a href="#">我要跟團</a>
+								</h3>
 							</div>
-							</c:forEach>
-							<!-- 結束 -->
+							<div class="widget_list widget_color"></div>
+							<div class="widget_list widget_color"></div>
+							<div class="widget_list widget_color">
+								<!-- 結束 -->
+							</div>
 							<div class="widget_list shopside_banner">
 								<div class="banner_thumb">
 									<a href="#"><img src=""
@@ -137,24 +118,24 @@
 				</select>
 			</form>
 		</div>
-<%@ include file="pages/shop2/page1_ByCompositeQuery.file" %> 
+<%@ include file="pages/groupShop2/page1_ByCompositeQuery.file"%> 
 	</div>
 	<!--shop toolbar end-->
 	<div class="row shop_wrapper">
 		<!--s內容開始========================-->
-		<c:forEach var="productVO" items="${listProducts_Byfind}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+		<c:forEach var="productVO" items="${listGroupProducts_Byfind}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<div class="col-lg-4 col-md-4 col-sm-6 col-12">
 				<!--單一商品開始 -->
 				<article class="single_product">
 					<figure>
 						<div class="product_thumb">
 							<c:if test="${productVO.pictureVOList.size() != 0 }">
-								<a class="primary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop">
+								<a class="primary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_GroupShop">
 								<img src="${productVO.pictureVOList.get(0).previewUrl}" alt=""></a>
 							</c:if>	
 <%-- 							<c:if test="${productVO.pictureVO.size() >= 1  && productVO.pictureVO.size()!=0}"> --%>
 							<c:if test="${productVO.pictureVOList.size() >= 2  && productVO.pictureVOList.size()!=0}">
-								<a class="secondary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop">
+								<a class="secondary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_GroupShop">
 								<img src="${productVO.pictureVOList.get(1).previewUrl}" alt=""></a>
 							</c:if>	
 							<div class="action_links">
@@ -169,13 +150,17 @@
 						</div>
 						<div class="product_content grid_content">
 							<h4 class="product_name">
-								<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop"> ${productVO.productName}</a>
+								<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_GroupShop"> ${productVO.productName}</a>
 							</h4>
 							<div class="price_box">
-								<span class="current_price">${productVO.price}元</span>
+								<span class="old_price">原價${productVO.price}元</span>
+							</div>
+							<div class="price_box">
+								<span class="current_price">基本成團價${productVO.groupPrice1}元</span>
 							</div>
 							<div class="add_to_cart">
-								<a href="cart.html" title="Add to cart">Add to Cart</a>
+								<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_GroupShop" 
+								title="Add to cart"> 我要開團 </a>
 							</div>
 						</div>
 						<div class="product_content list_content">
@@ -192,13 +177,11 @@
 							</div>
 							<div class="action_links list_action_right">
 								<ul>
-									<li class="add_to_cart"><a href="cart.html"
-										title="Add to cart">Add to Cart</a></li>
 									<li class="quick_button"><a href="#" data-toggle="modal"
 										data-target="#modal_box" title="quick view"> <i
 											class="icon icon-Eye"></i></a></li>
-									<li class="wishlist"><a href="wishlist.html"
-										title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>
+<!-- 									<li class="wishlist"><a href="wishlist.html" -->
+<!-- 										title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li> -->
 								</ul>
 							</div>
 						</div>
@@ -207,10 +190,10 @@
 			</div>
 		</c:forEach>
 	</div>
- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/shop"></FORM>	
+ <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front/shop/ProductAll"></FORM>	
 <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
-<%@ include file="pages/shop2/page2_ByCompositeQuery.file" %>
+<%@ include file="pages/groupShop2/page2_ByCompositeQuery.file" %>
 	<!--單一商品結束 -->
 <!-- modal area start-->
 	<div class="modal fade" id="modal_box" tabindex="-1" role="dialog"

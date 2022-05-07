@@ -11,6 +11,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import com.product_img.model.ProductImgVO;
 
 public class ProductJDBCDAO implements ProductDAO_interface {
@@ -292,10 +293,13 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 		try {
 			con = getRDSConnection();
 			String finalSQL = "select * from product "
+					+ "JOIN p_sort1 "
+					+" ON product.product_id = p_sort1.product_id "	
 					+ jdbcUtil_CompositeQuery_Product.get_WhereCondition(map)
-					+ "order by product_id DESC";
+					+ "group by product.product_id "
+					+ "order by product.product_id DESC";
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
+			System.out.println("List<ProductVO> getAll(Map<String, String[]> map) ●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -323,6 +327,106 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 		}
 		return null;
 	}
+
+//	ShopPublic公開頁面 只接受參數status=1 or Status =2
+	@Override
+	public List<ProductVO> getForShopFront(Map<String, String[]> map) {
+		List<ProductVO> list = new ArrayList<ProductVO>();
+		ProductVO productVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = getRDSConnection();
+			String finalSQL = "select * from product "
+					+ "where status =1 "
+					+ "or status = 2 "
+					+ "group by product.product_id "
+					+ "order by product_id ";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println(" List<ProductVO> getForShopFront() ●●finalSQL(by DAO) = " + finalSQL);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				productVO = new ProductVO();
+				productVO.setProductId(rs.getInt("product_id"));
+				productVO.setProductName(rs.getString("product_name"));
+				productVO.setPrice(rs.getInt("price"));
+				productVO.setAmount(rs.getInt("amount"));
+				productVO.setUpdateTime(rs.getTimestamp("update_time"));
+				productVO.setGroupAmount1(rs.getInt("group_amount1"));
+				productVO.setGroupAmount2(rs.getInt("group_amount2"));
+				productVO.setGroupAmount3(rs.getInt("group_amount3"));
+				productVO.setGroupPrice1(rs.getInt("group_price1"));
+				productVO.setSort2Id(rs.getInt("sort2_id"));
+				productVO.setDescription(rs.getString("description"));
+				productVO.setStatus(rs.getInt("status"));
+				productVO.setTopStatus(rs.getInt("top_status"));
+				list.add(productVO); // Store the row in the List
+			}
+			return list;
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	//	ShopPublic公開頁面 只接受參數status=2
+	@Override
+	public List<ProductVO> getForGroupShopFront(Map<String, String[]> map) {
+		List<ProductVO> list = new ArrayList<ProductVO>();
+		ProductVO productVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = getRDSConnection();
+			String finalSQL = "select * from product "
+					+ "where status = 2 "
+					+ "group by product.product_id "
+					+ "order by product_id ";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("List<ProductVO> getForGroupShopFront() ●●finalSQL(by DAO) = " + finalSQL);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				productVO = new ProductVO();
+				productVO.setProductId(rs.getInt("product_id"));
+				productVO.setProductName(rs.getString("product_name"));
+				productVO.setPrice(rs.getInt("price"));
+				productVO.setAmount(rs.getInt("amount"));
+				productVO.setUpdateTime(rs.getTimestamp("update_time"));
+				productVO.setGroupAmount1(rs.getInt("group_amount1"));
+				productVO.setGroupAmount2(rs.getInt("group_amount2"));
+				productVO.setGroupAmount3(rs.getInt("group_amount3"));
+				productVO.setGroupPrice1(rs.getInt("group_price1"));
+				productVO.setSort2Id(rs.getInt("sort2_id"));
+				productVO.setDescription(rs.getString("description"));
+				productVO.setStatus(rs.getInt("status"));
+				productVO.setTopStatus(rs.getInt("top_status"));
+				list.add(productVO); // Store the row in the List
+			}
+			return list;
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
+	
+	
+	
+	
+	
 //	@Override
 	// public ProductVO getProductVOByID(int id) {
 

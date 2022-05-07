@@ -104,6 +104,11 @@ public class SortMixService implements SortMixService_interface{
 	public List<Sort1VO> getSort1VOsBySort2Id(Integer sort2Id) {
 		return dao.getSort1VOsBySort2Id(sort2Id);
 	}
+
+	@Override
+	public List<Sort2VO> getSort2VOsBySort1Id(Integer sort1Id) {
+		return dao.getSort2VOListBySort1Id(sort1Id);
+	}
 	
 	
 }

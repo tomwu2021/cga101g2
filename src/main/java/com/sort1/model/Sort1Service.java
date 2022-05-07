@@ -16,7 +16,6 @@ public class Sort1Service implements Sort1Service_interface{
 
 	@Override
 	public boolean save(Sort1VO sort1vo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -27,8 +26,13 @@ public class Sort1Service implements Sort1Service_interface{
 
 	@Override
 	public boolean updateB(Sort1VO sort1vo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public Sort1VO getOneById(Integer sort1Id) {
+		return dao.getOneById(sort1Id);
+	}
+	
 
 }
