@@ -64,15 +64,16 @@ public class ArticleController extends HttpServlet {
 			}
 			ArticleService artiSvc = new ArticleService();
 			Collection<Part> parts = req.getParts();
-			artiSvc.addArticle(Integer.parseInt(type), title, content, Integer.parseInt(empNo), parts);// 
-			String url = "/back/article/add.jsp";
+			ArticleVO aVO = artiSvc.addArticle(Integer.parseInt(type), title, content, Integer.parseInt(empNo), parts);
+			String url = "/article?action=all_Article";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
 		/*************************** 2.單筆資料查看 ****************************************/
 		if("one_Display".equals(action)){
 			ArticleService artiSvc = new ArticleService();
-			ArticleVO artiVO = artiSvc.getOneArticleInfo( Integer.parseInt(articleId));
+			System.out.println("one::::+"+articleId);
+			ArticleVO artiVO = artiSvc.getOneArticleInfo(Integer.parseInt(articleId));
 			List<PictureVO> picList = artiSvc.getOneArticlePic(Integer.parseInt(articleId));
 			req.setAttribute("artiVO", artiVO);
 			req.setAttribute("picList", picList);
@@ -84,7 +85,7 @@ public class ArticleController extends HttpServlet {
 		if ("delete".equals(action)) {
 			ArticleService artiSvc = new ArticleService();
 			artiSvc.deleteArticle( Integer.parseInt(articleId)); 
-			String url = "/back/article/add.jsp";
+			String url = "/article?action=all_Article";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
@@ -92,17 +93,18 @@ public class ArticleController extends HttpServlet {
 		if ("update".equals(action)) {
 			List<Integer> picIds = null;
 			ArticleService artiSvc = new ArticleService();
-			if(picIdArray != null) {
+			if(picIdArray.length()>0) {
 				String[] arr = picIdArray.split(",");
 				picIds = new ArrayList<Integer>();
 				for(String id:arr) {
 					picIds.add(Integer.parseInt(id));
 				}
 			};
+			System.out.println(picIdArray);
 			Collection<Part> parts = req.getParts();
-			artiSvc.updateArticle( Integer.parseInt(type), title, content,  Integer.parseInt(empNo),  Integer.parseInt(articleId), picIds, parts);
+			artiSvc.updateArticle(Integer.parseInt(type), title, content, Integer.parseInt(empNo), Integer.parseInt(articleId), picIds, parts);
 			req.setAttribute("articleId", articleId);
-			String url = "/CGA101G2/article?action=one_Display";// 去找查看
+			String url = "/article?action=one_Display";// 去找查看
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
@@ -111,21 +113,15 @@ public class ArticleController extends HttpServlet {
 			ArticleService artiSvc = new ArticleService();
 			List<ArticleVO> aList = artiSvc.getAllArticle();
 			req.setAttribute("aList", aList);
-			String url = "/back/article/add.jsp";
+			String url = "/back/article/list.jsp";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
-//		/*************************** 6.全部文章+圖片 **************************************/
+//		/*************************** 6.全部公告文章+圖片 **************************************/
 		if ("all_Display".equals(action)) {
 			ArticleService artiSvc = new ArticleService();
-			List<ArticleVO> aList = artiSvc.getAllArticle();
-			List<List<PictureVO>> picsList = new ArrayList<List<PictureVO>>();
-			for(ArticleVO artiVO:aList) {
-				List<PictureVO> picList = artiSvc.getOneArticlePic(artiVO.getArticleId());
-				picsList.add(picList);
-			}
+			List<ArticleVO> aList = artiSvc.getByArtiType(0);
 			req.setAttribute("aList", aList);
-			req.setAttribute("picsList", picsList);
 			String url = "/front/article.jsp";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
@@ -134,5 +130,5 @@ public class ArticleController extends HttpServlet {
 		
 
 	}
-
+	
 }

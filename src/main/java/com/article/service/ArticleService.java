@@ -96,12 +96,16 @@ public class ArticleService {
 	public ArticleVO updateArticle(Integer type, String title, String content, Integer empNo, Integer artiId, List<Integer> picIds, Collection<Part> parts) {
 		// 步驟一 刪除圖片與mapping
 		try {
-		deletePicMapping(picIds);
-		// 步驟二 新增圖片與mapping
-		insertPicMapping(artiId, parts);
+		deletePicMapping(artiId,picIds);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		// 步驟二 新增圖片與mapping
+		try {
+			insertPicMapping(artiId, parts);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		// 步驟三 修改article資料
 		ArticleVO artiVO = new ArticleVO();
 		artiVO.setType(type);
@@ -146,7 +150,7 @@ public class ArticleService {
 	
 	
 	
-	// 拿到多筆mapping，以提供新增
+	// 拿到多筆mapping，以提供新增刪除
 	public List<MappingTableDto> artiPicMappingBatch(Integer artiId, List<Integer> picIds){
 		List<MappingTableDto> mappingList = new ArrayList<MappingTableDto>();
 		for(Integer picId:picIds) {
@@ -176,20 +180,11 @@ public class ArticleService {
     	return mappingDto;
 	}
 	
-	
-	// 拿到一張圖片mapping，以提供刪除
-	public MappingTableDto picArtiMapping(Integer picId) {
-		MappingTableDto mappingDto = new MappingTableDto();
-		mappingDto.setTableName1("article_picture");
-		mappingDto.setColumn1("picture_id");
-    	mappingDto.setId1(picId);
-    	return mappingDto;
-	}
-	
+		
 	// 刪除mapping與圖片
-	public void deletePicMapping(List<Integer> pictureIds) {
+	public void deletePicMapping(Integer artiId,List<Integer> pictureIds) {
 		for(Integer pictureId:pictureIds) {
-			MappingTableDto mappingDto = picArtiMapping(pictureId);
+			MappingTableDto mappingDto = artiPicMapping(artiId,pictureId);
 			mappingDAO.deleteOneMapping(mappingDto);
 			picSvc.deletePicture(pictureId);
 		}

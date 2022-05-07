@@ -45,6 +45,16 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 			<div class="row">
 				<!-- A Card -->
 				<div class="col-md-12" style="width:1000px;">
+<div class="row">
+<div class="col-md-12">
+	<a class="text-dark mb-1" href='<%=request.getContextPath()%>/article?action=all_Article' >
+		<i class="fas fa-arrow-left"></i> 返回
+	</a>
+</div>
+<div class="col-md-12">
+<br/>
+</div>
+</div>
 					<div class="mb-3" style="font-size:2em">上傳最新消息</div>
 					<!-- Form Elements -->
 					<form class="ml-5" method="post" enctype="multipart/form-data" action="/CGA101G2/article">
@@ -70,7 +80,7 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 									<input class="form-check-input" type="radio"
 										name="type" id="gridRadios2" value="0">
 									<label class="form-check-label" for="gridRadios2">
-										最新公告 </label>
+										最新公告 <span style="color:#f33;">(請注意！第一張為首圖)</span></label>
 								</div>
 							</div>
 						</div>
@@ -94,7 +104,7 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 						</div>
 						
 						<div class="row mb-3">
-							<label class="col-lg-1 col-form-label">員工</label>
+							<label class="col-lg-1 col-form-label">管理員</label>
 							<div class="col-lg-3">
 								<select class="form-select" name="empNo"
 									aria-label="Default select example">
@@ -110,7 +120,7 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 							<div class="col-lg-10"></div>
 							<div class="col-lg-2">
 								<input type="hidden" name="action" value="insert" id="qq">
-								<button type="submit" class="btn btn-primary">發佈</button>
+								<button type="submit" class="btn btn-success">發佈</button>
 							</div>
 						</div>
 
@@ -148,7 +158,7 @@ function add(){
 		let Element = document.querySelector('#formFile'+count);
 		Element.addEventListener('change', function() { 
 		let url = URL.createObjectURL(Element.files[0]); 
-		$(this).after('<img src="'+url+'" id="img'+ (count-1) +'" class="mb-3 ml-3" style="height:225px;max-width:100%;object-fit: cover;"><i class="far fa-window-close text-muted" id="btn'+ (count-1) +'" style="position:absolute;top:0;right:0;font-size:2em;" onclick="letItGo(this.id)"></i>');
+		$(this).after('<img src="'+url+'" id="img'+ (count-1) +'" class="mb-3 ml-3" style="height:266px;width:400px;object-fit: cover;"><i class="far fa-window-close text-muted" id="btn'+ (count-1) +'" style="position:absolute;top:0;right:0;font-size:2em;" onclick="letItGo(this.id)"></i>');
 	
 		});
 	document.querySelector('#formFile'+count).click();

@@ -25,8 +25,9 @@
     <!--slider area start-->
     <section class="slider_section slider_s_two color_two  mb-95">
         <div class="slider_area owl-carousel">
+    <%int count = 0;%>
     <c:forEach var="artiVO" items="${aList0}">
-            <div class="single_slider d-flex align-items-center" data-bgimg='${(artiVO.picVO.url==null)?"":(artiVO.picVO.url)}'>
+            <div class="single_slider d-flex align-items-center" data-bgimg='${artiVO.picVO.url}'>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
@@ -34,7 +35,8 @@
                                 <div>
                                 <h1 style="font-size:72px;">${artiVO.title}</h1>
                                 </div>
-                                <a class="button" href="shop.html">了解更多</a>
+                                <%count++;%>
+                                <a class="button" href="/CGA101G2/article?action=all_Display#<%=count%>">了解更多</a>
                             </div>
                         </div>
                     </div>
@@ -69,7 +71,7 @@
 					<div class="col-lg-12 col-md-12 col-sm-12">
 					    <figure class="single_banner">
 					        <div class="banner_thumb">
-					            <a href="shop.html"><img src='${(artiVO.picVO.url==null)?"":(artiVO.picVO.url)}' alt="" style="max-height:100%;width:100%"></a>
+					            <a href="shop.html"><img src='${artiVO.picVO.url}' alt="" style="max-height:100%;width:100%"></a>
 					        </div>
 					    </figure>
 					</div>

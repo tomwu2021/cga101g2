@@ -56,17 +56,24 @@ border:#f8f9fb;
 								<div class="col-md-12">
 				<!-- Advanced Tables -->
 				<div class="panel panel-default">
-					<div class="panel-heading">資料列表</div>
+					<div class="panel-heading">最新消息列表</div>
 					<div class="panel-body">
 						<div class="row">
 <!-- 							<form action="/CGA101G2/contact" method="post"> -->
 						</div>
 						<div class="row">
-							<div class="col-sm-12">
-								<br />
+							<div class="col-sm-10">
+							<br/>
+							</div>
+							<div class="col-sm-2">
+							<a href="/CGA101G2/back/article/add.jsp">
+								<button class="btn btn-primary form-btn-circle btn-sm" id="insertBtn">
+									<i class="fas fa-plus"></i> 新增
+								</button>
+							</a>
 							</div>
 						</div>
-						<div class="table-responsive" style="max-height:30vh;">
+						<div class="table-responsive" style="max-height:70vh;">
 							<table class="table table-striped table-bordered table-hover" style="table-layout:fixed;width:100%"	id="dataTables-customer">
 								<thead>
 									<tr>
@@ -75,20 +82,21 @@ border:#f8f9fb;
 										<th>類型</th>
 										<th>內容</th>
 										<th>建立時間</th>
-										<th>發佈人員</th>
+										<th>管理人員</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach var="artiVO" items="${aList}">
+									
 										<tr>
 											<td>${artiVO.articleId}</td>
-											<td>${artiVO.title}</td>
-											<td>${artiVO.type}</td>
+											<td><a class="text-primary" href="<%=request.getContextPath()%>/article?action=one_Display&articleId=${artiVO.articleId}">${artiVO.title}</a></td>
+											<td>${(artiVO.type==1)?"商城優惠":"公告訊息"}</td>
 											<td>${artiVO.content}</td>
-											<td>${artiVO.createTime}</td>
-											<td>${artiVO.empNo}</td>
-
+											<td><fmt:formatDate value="${artiVO.createTime}" pattern="yyyy-MM-dd HH:mm"/></td>
+											<td>${artiVO.empVO.empName}</td>
 										</tr>
+									
 									</c:forEach>
 								</tbody>
 							</table>

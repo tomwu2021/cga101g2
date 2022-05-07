@@ -59,6 +59,11 @@ public class ArticleVO {
 		com.picture.model.PictureVO picVO = picsVO.get(0);
 		return picVO;
 	}
+	public List<com.picture.model.PictureVO> getPicList(){
+		com.article.service.ArticleService artiSvc =new com.article.service.ArticleService();
+		List<com.picture.model.PictureVO> picList = artiSvc.getOneArticlePic(articleId);
+		return picList;
+	}
 	@Override
 	public String toString() {
 		return "ArticleVO[ "+ articleId + ", " + type + ", " + title + ", " + content + ", " + createTime + ", "  + empNo + " ]";

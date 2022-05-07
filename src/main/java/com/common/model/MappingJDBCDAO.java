@@ -77,7 +77,7 @@ public class MappingJDBCDAO {
 	}
 
 	public boolean deleteOneMapping(MappingTableDto mtd, Connection con) {
-		String sql = "DELETE FROM " + mtd.getTableName1() + "WHERE " + mtd.getColumn1() + "=? AND" + mtd.getColumn2()
+		String sql = "DELETE FROM " + mtd.getTableName1() + " WHERE " + mtd.getColumn1() + "=? AND " + mtd.getColumn2()
 				+ "=?";
 		if (con != null) {
 			try {
