@@ -56,9 +56,9 @@
 					<div class="form-select" style="display: flex;">
 						<form action="#" style="display: block;">
 							<select id="pageSize">
-								<option value=9>每頁9筆</option>
-								<option value=16>每頁16筆</option>
-								<option value=25>每頁25筆</option>
+								<option value=12>每頁12筆</option>
+								<option value=24>每頁24筆</option>
+								<option value=36>每頁36筆</option>
 							</select>
 						</form>
 					</div>
@@ -74,9 +74,11 @@
 					<div class="form-select" style="display: flex;">
 						<form action="#" style="display: block;">
 							<select id="uploadTime">
+								<option value="30">請選擇區間</option>
 								<option value="1">一天內</option>
 								<option value="7">一週內</option>
 								<option value="30">一個月內</option>
+								<option value="90">三個月內</option>
 							</select>
 						</form>
 					</div>

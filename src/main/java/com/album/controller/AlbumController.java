@@ -66,7 +66,6 @@ public class AlbumController extends CommonController {
 //				res.sendRedirect(getServletInfo()+"/index.html");
 //			}
 			isOwner = membervo.getMemberId() == Integer.parseInt(req.getParameter("memberId") == null ? "-999" : req.getParameter("memberId")) ? 1 : 0;
-
 		}
 //		if(isOwner!=1) {
 //			isFriend = 1;

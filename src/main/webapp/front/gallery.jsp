@@ -1,21 +1,26 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/gallery.css">
-
 <%-- <%=request.getAttribute("memberId")%> --%>
 
-<input type="hidden" id="albumId" name="albumId" value="<%=request.getAttribute("albumId")%>">
-<input type="hidden" id="memberId" name="memberId" value="<%=request.getAttribute("memberId")%>">
+<input type="hidden" id="isOwner"
+	value="<%=request.getAttribute("isOwner")%>">
+<input type="hidden" id="albumId" name="albumId"
+	value="<%=request.getAttribute("albumId")%>">
+<input type="hidden" id="memberId" name="memberId"
+	value="<%=request.getAttribute("memberId")%>">
 
 <div class="services_gallery mt-100">
 	<div class="container">
 		<div id="button-area" style="display: block; text-align: right">
-			<button class="col-sm-4 upload-button" onclick="toAddPicture()"
-				style="position: relative; right: 0; border-radius: 30px; height: 50px;">Upload
-				Picture</button>
+			<c:if test="${isOwner==1}">
+				<button class="col-sm-4 upload-button" onclick="toAddPicture()"
+					style="position: relative; right: 0; border-radius: 30px; height: 50px;">Upload
+					Picture</button>
+			</c:if>
 			<div class="col-sm-4"></div>
 			<button class="col-sm-4 upload-button" onclick="backToAlbums()"
 				style="position: relative; right: 0; border-radius: 30px; height: 50px;">Back
@@ -43,9 +48,11 @@
 			<div class="form-select" style="display: flex;">
 				<form action="#" style="display: block;">
 					<select id="uploadTime">
+						<option value="30">請選擇區間</option>
 						<option value="1">一天內</option>
 						<option value="7">一週內</option>
 						<option value="30">一個月內</option>
+						<option value="90">三個月內</option>
 					</select>
 				</form>
 			</div>

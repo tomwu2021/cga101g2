@@ -1,13 +1,13 @@
 
 let previousFileName = "";
 let fileName = "";
-let uploadTime = 7;
-let pageSize = 9;
+let uploadTime = $("#uploadTime").val() || 30;
+let pageSize = $("#pageSize").val() || 12;
 let sort = "DESC";
 let thisPage = 1;
 let total = 0;
 let pageCount = 0;
-
+let memberId = $("#memberId").val();
 let order = "uploadTime";
 
 //+ "&thisPage=" + thisPage + "&order=upload_time&pageSize="
@@ -48,7 +48,7 @@ let previewSrc = "https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/newAl
 search();
 
 function search() {
-	let memberId = $("#memberId").val();
+
 	console.log(memberId);
 	let html = '';
 	$.get({
@@ -65,6 +65,7 @@ function search() {
 			$(".page_amount p").text(pageResult);
 			$("#album-container").html(html);
 			makePicturePages(result.pageCount);
+			offLoading();
 		}
 	})
 }
@@ -73,7 +74,7 @@ function makeAlbum(album) {
 	let html = '';
 	let lockType = '';
 	let lockTitle = '';
-	let isOwner = parseInt($("#isOwner").val()||0);
+	let isOwner = parseInt($("#isOwner").val() || 0);
 	if (album.authority === 1) {
 		lockType = 'bi bi-lock';
 		lockTitle = 'lock'
@@ -87,8 +88,8 @@ function makeAlbum(album) {
 										<div class="product_thumb">
 											<a id=${album.albumId} class="primary_img" href="${getContextPath()}/photos?albumId=${album.albumId}&action=list&memberId=${$("#memberId").val()}">
 											<img src="${album.pictureVO.previewUrl}" class="album-cover" alt="${album.pictureVO.fileName}"></a>`
-									if(isOwner === 1){
-										html+=`<div class="action_links">
+	if (isOwner === 1) {
+		html += `<div class="action_links">
 												<ul>
 													<li class="quick_button album-button" onclick="editStart(${album.albumId})" id="editName" title="Rename Album">
 													<i class="bi bi-pencil"></i></li>
@@ -98,8 +99,8 @@ function makeAlbum(album) {
 													<i class="${lockType}" id="authority-button${album.albumId}"></i></li>
 												</ul>
 											</div>`
-												}
-									html+=`</div>
+	}
+	html += `</div>
 										<div class="product_content grid_content" onclick="openAlbum(${album.albumId})">
 											<h4 class="product_name" style="font-size: 1.5em"
 												style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
@@ -126,11 +127,17 @@ function edit(albumId) {
 	if (name2 !== name) {
 		console.log("update start")
 		$.get({
-			url: getContextPath() + "/album?albumId=" + albumId + "&action=updateName&name=" + name2,
+			url: getContextPath() + "/album?albumId=" + albumId + "&action=updateName&name=" + name2 + "&memberId=" + memberId,
 			processData: false,
 			contentType: false,
 			success: function(result, status) {
-				console.log("相簿名稱修改成功");
+				Swal.fire({
+					position: 'center',
+					icon: 'success',
+					title: '變更名稱成功',
+					showConfirmButton: false,
+					timer: 1500
+				})
 			}
 		})
 	}
@@ -217,7 +224,11 @@ function commitAlbum() {
 		console.log("commit");
 		$("#commit-new-album").click();
 	} else {
-		alert("請輸入相簿名稱並上傳封面");
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: '請輸入相簿名稱並上傳封面!'
+			});
 	}
 }
 
@@ -235,12 +246,18 @@ function changeAuthority(albumId) {
 	}
 	$("#changeAuthority" + albumId).html(authHtml);
 	$.get({
-		url: getContextPath() + "/album?albumId=" + albumId + "&action=updateAuthority&authority=" + authority,
+		url: getContextPath() + "/album?albumId=" + albumId + "&action=updateAuthority&authority=" + authority + "&memberId=" + memberId,
 		processData: false,
 		contentType: false,
 		success: function(result, status) {
-			console.log("相簿權限修改成功");
 			offLoading();
+			Swal.fire({
+				position: 'center',
+				icon: 'success',
+				title: '變更權限成功',
+				showConfirmButton: false,
+				timer: 1500
+			})
 		}
 	})
 }

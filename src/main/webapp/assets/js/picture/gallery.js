@@ -3,8 +3,8 @@
  */
 let previousFileName = "";
 let fileName = "";
-let uploadTime = 1;
-let pageSize = 12;
+let uploadTime = $("#uploadTime").val()||30;
+let pageSize = $("#pageSize").val()||12;
 let sort = "DESC";
 let thisPage = 1;
 let total = 0;
@@ -14,7 +14,9 @@ let coverId;
 
 
 function searchPicture() {
+
 	albumId = $("#albumId").val();
+	let isOwner = parseInt($("#isOwner").val() || 0);
 	console.log(albumId);
 	console.log('sort=' + sort + '&uploadTime=' + uploadTime);
 	$.get({
@@ -38,7 +40,7 @@ function searchPicture() {
 							style='height:50px;width:50px;position:absolute;left:320px;top:210px;font-size:30px;' 
 							title="cover" id="cover${item.pictureId}">
 							</li>`
-				} else {
+				} else if (isOwner === 1) {
 					html += `<li class='bi bi-trash trash-bucket' 
 							style='height:50px;color:white;width:50px;position:absolute;left:5px;top:210px;font-size:30px;' 
 							title="delete" onclick="addToDeleteList(${item.pictureId})">
@@ -81,8 +83,9 @@ function addCurrent() {
 
 function changeCover(pictureId, albumId) {
 	loading();
+	let memberId = $("#memberId").val() || 0;
 	$.get({
-		url: getContextPath() + "/album?albumId=" + albumId + "&action=changeCover&pictureId=" + pictureId,
+		url: getContextPath() + "/album?albumId=" + albumId + "&action=changeCover&pictureId=" + pictureId + "&memberId=" + memberId,
 		processData: false,
 		contentType: false,
 		success: function(result, status) {
@@ -182,7 +185,12 @@ function addToDeleteList(pictureId) {
 		}
 		atd += 1;
 	} else {
-		alert('此相片已在刪除列表中');
+		Swal.fire({
+			icon: 'error',
+			title: 'Oops...',
+			text: '此相片已在刪除列表中!'
+		});
+
 	}
 }
 
