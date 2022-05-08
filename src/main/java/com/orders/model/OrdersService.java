@@ -47,4 +47,8 @@ public class OrdersService {
 	public OrdersVO getAllProductPicture(Integer orderId,Integer productId){
 		return dao.getOrderDetail(orderId, productId);
 	}
+	
+	public void addProduct2Order(Integer orderId, Integer productId, Integer quantity, Integer price) {
+		dao.addProduct2Order(orderId, productId, quantity, price);
+	}
 }

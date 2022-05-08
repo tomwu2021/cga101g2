@@ -61,7 +61,8 @@ public class OrderDetails extends HttpServlet{
 			//查詢回傳資料
 			GroupBuyerVO groupBuyerVO2=groupBuyerService.selectOrderDetail(groupOrderId, memberId);	
 			req.setAttribute("groupBuyerVO", groupBuyerVO2);
-			
+			String msg="修改成功";
+			req.setAttribute("msg", msg);
 			String url = "/front/order/showChangeOrder.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); 
 			successView.forward(req, res);

@@ -265,6 +265,32 @@ public class OrdersJDBCDAO implements OrdersDAO_Interface{
 	}
 
 
+	@Override
+	public void addProduct2Order(Integer orderId, Integer productId, Integer quantity, Integer price) {
+		// TODO Auto-generated method stub
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		//建立時訂單狀態為進行中
+		String insertSql="insert into order_product(order_id, product_id, product_amount, order_price) "
+				+ "values(?,?,?,?);";
+		try (Connection con=JDBCConnection.getRDSConnection()){
+			ps=con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, orderId);
+			ps.setInt(2, productId);
+			ps.setInt(3, quantity);
+			ps.setInt(4, price);
+			ps.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+
+
+
+
 
 
 }

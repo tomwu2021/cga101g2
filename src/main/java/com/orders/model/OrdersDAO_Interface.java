@@ -17,4 +17,7 @@ public interface OrdersDAO_Interface extends JDBCDAO_Interface<OrdersVO> {
 
 	// 查單個商品詳情
 	public OrdersVO getOrderDetail(Integer orderId,Integer productId);
+	
+	//
+	public void addProduct2Order(Integer orderId, Integer productId,Integer quantity,Integer price);
 }

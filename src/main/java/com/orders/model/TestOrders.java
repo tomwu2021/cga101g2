@@ -9,14 +9,15 @@ public class TestOrders {
 //		OrdersJDBCDAO dao=new OrdersJDBCDAO();
 //		OrdersVO ordersVO=new OrdersVO();
 //		ordersVO.setMemberId(1);
-//		ordersVO.setRecipient("皓葛格");
+//		ordersVO.setRecipient("小蛇丸");
 //		ordersVO.setPhone("0909888737");
 //		ordersVO.setAddress("高雄市美麗島捷運站");
 //		ordersVO.setSumPrice(1180);
 //		ordersVO.setBonus(0);
 //		ordersVO.setDiscount(0);
 //		ordersVO.setPayPrice(1180);
-//		dao.insert(ordersVO);
+//		System.out.println(dao.insert(ordersVO));
+		
 		
 		//查所有訂單
 //		OrdersJDBCDAO dao=new OrdersJDBCDAO();

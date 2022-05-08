@@ -98,7 +98,7 @@
 				</div>
 				<div class="col-lg-6 col-md-6">
 					<div class="product_d_right">
-						<form action="#">
+						<Form id="addForm" action="/CGA101G2/member/cart.do" Method="Post">
 							<h1>
 								<a href="#">${param.productName}</a>
 							</h1>
@@ -109,12 +109,18 @@
 								<p>PCLUB品質保證</p>
 							</div>
 							<div class="product_variant quantity">
-								<label>數量</label> <input min="1" max="100" step="1" value="1"
+								<label>數量</label> <input name="productAmout" min="1" max="100" step="1" value="1"
 									type="number" />
 							</div>
 							<div class="product_variant quantity">
-								<button class="button" type="submit" style="position: relative; right:20px; ">加入購物車</button>
+								<button class="button" type="submit" style="position: relative; right:20px;" onclick="document.getElementById('addForm').submit()">加入購物車</button>
 							</div>
+							<input type="hidden" name="productId" value="${param.productId}">
+							<input type="hidden" name="productName" value="${param.productName}">
+							<input type="hidden" name="productPrice" value="${param.price}">
+							<input type="hidden" name="productPictureUrl" value="${pictureVOList.get(0).previewUrl}">
+							<input type="hidden" name="action" value="ADDONE">
+							</form>
 							<div class="product_d_action">
 								<ul>
 									<li><button type="button" class="btn btn-outline-danger"><i class="bi bi-heart">加入收藏</i></button></li>
@@ -123,7 +129,7 @@
 							<div class="product_meta">
 								<span>子分類:${param.sort2Name}</span>
 							</div>
-						</form>
+						
 						<div class="priduct_social">
 							<ul>
 								<li><a class="facebook" href="#" title="facebook">

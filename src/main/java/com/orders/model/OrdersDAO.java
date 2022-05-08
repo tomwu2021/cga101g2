@@ -64,6 +64,13 @@ public class OrdersDAO implements OrdersDAO_Interface{
 	}
 
 
+	@Override
+	public void addProduct2Order(Integer orderId, Integer productId, Integer quantity, Integer price) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 	
 

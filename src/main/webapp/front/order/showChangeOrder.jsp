@@ -115,7 +115,7 @@ GroupBuyerVO groupBuyerVO = (GroupBuyerVO) request.getAttribute("groupBuyerVO");
 <!-- 額外添加JS start -->
 
 <!-- 額外添加JS end -->
-
+<jsp:include page="/front/layout/showMessage.jsp" />
 </body>
 <!-- body end -->
 
