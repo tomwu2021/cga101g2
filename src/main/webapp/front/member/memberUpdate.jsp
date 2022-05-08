@@ -42,29 +42,13 @@
 											<div class="row">
 												<div class="col-lg-6 mb-5">
 													<form class="form-horizontal">
-														<div class="form-group row">
-															<label class="col-md-3 form-control-label">使用者帳戶</label>
-															<div class="col-md-9">
-																<label class="col-md-3 form-control-label"
-																	style="max-width: 550px">${membersVO.account}</label>
-															</div>
-														</div>
 
 
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">姓名</label>
 															<div class="col-md-9">
-																<label class="col-md-3 form-control-label"
-																	style="max-width: 550px">${membersVO.name}</label>
-															</div>
-														</div>
-
-														<div class="form-group row">
-															<label class="col-md-3 form-control-label">地址</label>
-															<div class="col-md-9">
 																<input id="inputHorizontalSuccess"
-																	value="${membersVO.address}"
-																	placeholder="Email Address"
+																	value="${membersVO.name}" placeholder="User Name"
 																	class="form-control form-control-success">
 															</div>
 														</div>
@@ -73,22 +57,29 @@
 															<label class="col-md-3 form-control-label">手機</label>
 															<div class="col-md-9">
 																<input id="inputHorizontalSuccess"
-																	value="${membersVO.phone}" placeholder="Email Address"
+																	value="${membersVO.phone}" placeholder="User Phone"
 																	class="form-control form-control-success">
 															</div>
 														</div>
 
+														<div class="form-group row">
+														<label
+																class="col-md-3 form-control-label">地址</label>
+															<input class="js-demeter-tw-zipcode-selector"
+																data-city="#city4" data-dist="#dist4"
+																placeholder="請輸入郵遞區號" value="22048"> <select
+																id="city4" placeholder="請選擇縣市"></select> <select
+																id="dist4" placeholder="請選擇鄉鎮區"></select> 
+															<div class="col-md-9">
+															<label
+																class="col-md-3 form-control-label">	</label>
+																<input id="inputHorizontalSuccess"
+																	value="${membersVO.address}" placeholder="User Address"
+																	class="form-control form-control-success">
 
 
-
-														<!--                           <div class="form-group row"> -->
-														<!--                             <label class="col-sm-3 form-control-label">密碼</label> -->
-														<!--                             <div class="col-md-9"> -->
-														<!--                               <label class="col-sm-9 form-control-label">*****777 <a href="#">變更</a></label> -->
-														<!--                               !看會員提交圖片的css css/style.default.css 4195 -->
-														<!--                             </div> -->
-														<!--                           </div> -->
-
+															</div>
+														</div>
 
 														<!--! 提交按鈕 -->
 														<div class="form-group row">
@@ -102,31 +93,7 @@
 													<!--! 提交按鈕結束 -->
 												</div>
 												<!-- !看會員提交圖片的css css/style.default.css 4195-->
-												<div class="col-lg-6 mb-5">
-													<div class="form-group row">
-														<label class="col-md-3 form-control-label">會員等級</label>
-														<div class="col-md-9">
-															<label class="col-md-3 form-control-label"
-																style="max-width: 550px">${membersVO.rankId}</label>
-														</div>
-													</div>
-
-													<div class="form-group row">
-														<label class="col-md-3 form-control-label">錢包帳戶金額</label>
-														<div class="col-md-9">
-															<label class="col-md-3 form-control-label"
-																style="max-width: 550px">${membersVO.eWalletAmount}</label>
-														</div>
-													</div>
-
-													<div class="form-group row">
-														<label class="col-md-3 form-control-label">紅利金額</label>
-														<div class="col-md-9">
-															<label class="col-md-3 form-control-label"
-																style="max-width: 550px">${membersVO.bonusAmount}</label>
-														</div>
-													</div>
-												</div>
+												<div class="col-lg-6 mb-5"></div>
 											</div>
 										</div>
 										<!--! Horizontal Form結束-->
@@ -154,7 +121,11 @@
 	<!-- 	路徑舉例 -->
 	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/????待討論.js"> --%>
 	<!-- 額外添加的JS -->
-
+	<!-- 	地址 -->
+	<script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
+	<!-- memberUpdate.js -->
+	<script type="text/javascript"
+		src="<%=request.getContextPath()%>/assets/js/memberUpdate.js"></script>
 </body>
 
 </html>

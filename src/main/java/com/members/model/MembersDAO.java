@@ -2,6 +2,9 @@ package com.members.model;
 
 import java.sql.*;
 import java.util.*;
+
+import com.ranks.model.RanksVO;
+
 import connection.JNDIConnection;
 
 public class MembersDAO implements MembersDAO_interface {
@@ -678,6 +681,42 @@ public class MembersDAO implements MembersDAO_interface {
 						newMember.setStatus(rs.getInt("status"));
 						newMember.setCreateTime(rs.getTimestamp("create_time"));
 						return newMember;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public RanksVO selectRankInfo(Integer memberId) {
+			con = JNDIConnection.getRDSConnection();
+			RanksVO ranksVO = selectRankInfo(memberId, con);
+
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return ranksVO;
+		}
+		public RanksVO selectRankInfo(Integer memberId,  Connection con) {
+			final String SELECT_ONE_RANK_INFO_BY_MEMBERID = "SELECT r.rank_id, r.rank_name, r.charge_amount, r.discount,r.bonus FROM members m join ranks r on m.rank_id = r.rank_id where member_id = ?;";
+			if (con != null) {
+				try {
+					PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_RANK_INFO_BY_MEMBERID);
+					pstmt.setInt(1, memberId);
+					ResultSet rs = pstmt.executeQuery();
+
+					if (rs.next()) {
+						RanksVO newRankVO = new RanksVO();
+						newRankVO.setRankId(rs.getInt("r.rank_id"));
+						newRankVO.setRankName(rs.getString("r.rank_name"));
+						newRankVO.setChargeAmount(rs.getInt("r.charge_amount"));
+						newRankVO.setDiscount(rs.getBigDecimal("r.discount"));
+						newRankVO.setBonus(rs.getInt("r.bonus"));
+						return newRankVO;
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

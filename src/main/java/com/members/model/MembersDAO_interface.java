@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
 import com.common.model.JDBCDAO_Interface;
+import com.ranks.model.RanksVO;
 
 public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 
@@ -48,5 +49,8 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 	
 	// 用 account 查詢 id
     public MembersVO selectMemberIdByAccount(String account);
+    
+    // 用 memberId 查詢 rank 資訊
+    public RanksVO selectRankInfo(Integer memberId);
 
 }

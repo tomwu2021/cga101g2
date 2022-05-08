@@ -61,6 +61,14 @@
 
 
 														<div class="form-group row">
+															<label class="col-md-3 form-control-label">手機</label>
+															<div class="col-md-9">
+																<label class="col-md-3 form-control-label"
+																	style="max-width: 550px">${membersVO.phone}</label>
+															</div>
+														</div>
+														
+														<div class="form-group row">
 															<label class="col-md-3 form-control-label">地址</label>
 															<div class="col-md-9">
 																<label class="col-md-3 form-control-label"
@@ -69,13 +77,7 @@
 														</div>
 
 
-														<div class="form-group row">
-															<label class="col-md-3 form-control-label">手機</label>
-															<div class="col-md-9">
-																<label class="col-md-3 form-control-label"
-																	style="max-width: 550px">${membersVO.phone}</label>
-															</div>
-														</div>
+
 
 
 

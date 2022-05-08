@@ -3,6 +3,9 @@ package com.members.model;
 import java.sql.Connection;
 import java.util.*;
 
+import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
+import com.ranks.model.RanksVO;
+
 import net.bytebuddy.asm.Advice.Return;
 
 public class MembersService {
@@ -101,5 +104,10 @@ public class MembersService {
 	// 查詢此帳號的資料
 	public MembersVO selectMemberIdByAccount(String account) {
 		return dao.selectMemberIdByAccount(account);
+	}
+	
+	// 用 memberId 查 Rank 資訊
+	public RanksVO selectRankInfo(Integer memberId) {
+		return dao.selectRankInfo(memberId);
 	}
 }

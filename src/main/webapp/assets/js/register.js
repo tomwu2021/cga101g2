@@ -227,9 +227,10 @@ function registerVerification() {
 
 // 忘記密碼
 function sendforgotMail() {
-	loading();
+	
 	let forgotPassword = $("#forgotPassword").val();
 	if (forgotPassword !== null && forgotPassword.length !== 0) {
+		loading();
 		let dataJSON = {
 			forgotPassword: $("#forgotPassword").val(),
 			action: "sendforgotMail"
@@ -243,15 +244,16 @@ function sendforgotMail() {
 				success: function(json) {
 					let objectJSON = JSON.parse(json);
 					document.getElementById("viewForgotPassword").innerHTML = objectJSON.msgError;
-					offLoading();
+
 				},
 			}
 		);
-
+		offLoading();
 	} else {
 		document.getElementById("viewForgotPassword").innerHTML = "請輸入電子郵件";
 		return;
 	}
+
 
 }
 

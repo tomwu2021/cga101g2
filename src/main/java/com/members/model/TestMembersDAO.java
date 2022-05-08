@@ -1,5 +1,7 @@
 package com.members.model;
 
+import com.ranks.model.RanksVO;
+
 public class TestMembersDAO {
 
 	public static void main(String[] args) {
@@ -82,5 +84,9 @@ public class TestMembersDAO {
 //		membersVO11.seteWalletAmount(1111);
 //		System.out.println(dao.changeEWalletAmount(membersVO11));
 
+		// 用 memberId 查詢 Rank 資訊
+//		RanksVO ranksVO1 = new RanksVO(); 
+//		ranksVO1 = dao.selectRankInfo(3);
+//		System.out.println(ranksVO1);
 	}
 }
