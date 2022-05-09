@@ -55,18 +55,35 @@ public class TestPost {
 //		}
 		
 		//查看熱門貼文
-//		List<PostVO> list = dao.selectHotPost();
-//		for(PostVO vo1: list) {
-//			System.out.print(vo1.getPostId()+ ",");
-//			System.out.print(vo1.getMemberId()+ ",");
-//			System.out.print(vo1.getContent()+ ",");
-//			System.out.print(vo1.getLikeCount()+ ",");
-//			System.out.print(vo1.getStatus()+ ",");
-//			System.out.print(vo1.getAuthority()+ ",");
-//			System.out.print(vo1.getCreateTime()+ ",");
-//			System.out.print(vo1.getUpdateTime());
+		List<PostVO> postVOs = dao.selectHotPost();
+		for(PostVO pv: postVOs) {
+			System.out.println(pv.getPostId()+ ",");
+			System.out.println((pv.getMemberId())+ ",");
+			System.out.println(pv.getContent()+ ",");
+			System.out.println(pv.getLikeCount()+ ",");
+			System.out.println(pv.getCreateTime()+ ",");
+			System.out.println();
+			System.out.println(pv.getPictureVO()+ ",");
+			System.out.println();
+			
+		}
+		
+		//查看status狀態正常(0)含圖的貼文
+//		List<PostVO> postVOs = dao.selectChangePost(9);
+//		for(PostVO pv: postVOs) {
+//			System.out.println(pv.getPostId()+ ",");
+//			System.out.println((pv.getMemberId())+ ",");
+//			System.out.println(pv.getContent()+ ",");
+//			System.out.println(pv.getLikeCount()+ ",");
+//			System.out.println(pv.getCreateTime()+ ",");
 //			System.out.println();
+//			System.out.println(pv.getPictureVO()+ ",");
+//			System.out.println();
+//			
 //		}
+				
+		
+		
 	}
 
 }

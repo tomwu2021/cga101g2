@@ -238,13 +238,15 @@ public class PostJDBCDAO implements PostDAO_interface {
 		
 	}
 	
-	//查詢熱門貼文
+	//查詢熱門貼文  
 	@Override
 	public List<PostVO> selectHotPost() {
-		final String SELECT_HOTPOST = "select * from post "
-				+ "where DateDiff(curdate(), create_time) <= 7 "
-				+ "order by like_count desc "
-				+ "limit 0,3";
+		final String SELECT_HOTPOST = "select p.post_id, member_id, content, like_count, create_time, url  "
+				+ "                	   	from post p join post_pic pc on p.post_id = pc.post_id  "
+				+ "					    join picture pi on pc.picture_id = pi.picture_id  "
+				+ "						where DateDiff(curdate(), create_time) <= 7 AND status = 0 "
+				+ "						order by like_count desc  "
+				+ "						limit 0,5 ";
 		
 		List< PostVO> hotpostlist = new ArrayList<PostVO>();
 		
@@ -254,22 +256,22 @@ public class PostJDBCDAO implements PostDAO_interface {
 
 			while (rs.next()) {
 				PostVO postVO = new PostVO();
+				PictureVO pictureVO = new PictureVO();
 				postVO.setPostId(rs.getInt("post_id"));
+				postVO.setMemberId(rs.getInt("member_id"));
 				postVO.setContent(rs.getString("content"));
 				postVO.setLikeCount(rs.getInt("like_count"));
-				postVO.setStatus(rs.getInt("status"));
-				postVO.setAuthority(rs.getInt("authority"));
 				postVO.setCreateTime(rs.getDate("create_time"));
-				postVO.setUpdateTime(rs.getDate("update_time"));
+				pictureVO.setUrl(rs.getString("url"));
+				postVO.setPictureVO(pictureVO);
 
 				hotpostlist.add(postVO);
 			}
+			return hotpostlist;
 			
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} 
-		return hotpostlist;
-	
 	}
 	
 	

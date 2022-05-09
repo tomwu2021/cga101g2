@@ -149,22 +149,29 @@ public class PostService {
 		return postList;         //貼文內容包含圖片集合
 		}
 
-	// 三、查看熱門貼文
+	/**
+	 *
+	 *  三、查看熱門貼文
+	 */
 	public List<PostVO> selectHotPost() {
-		List< PostVO> hotPostList = dao.selectHotPost();
 		
-		PictureJDBCDAO picdao = new PictureJDBCDAO();
+		return dao.selectHotPost();
 		
-		for(PostVO postVO: hotPostList) {
-			MappingTableDto dto = postPicMapping(postVO.getPostId());
-			
-			List<PictureVO> piclist = picdao.queryPicturesByMapping(dto);
-			
-			postVO.setPictureList(piclist);
-			
-		}
 		
-		return hotPostList;
+//		List< PostVO> hotPostList = dao.selectHotPost();
+//		
+//		PictureJDBCDAO picdao = new PictureJDBCDAO();
+//		
+//		for(PostVO postVO: hotPostList) {
+//			MappingTableDto dto = postPicMapping(postVO.getPostId());
+//			
+//			List<PictureVO> piclist = picdao.queryPicturesByMapping(dto);
+//			
+//			postVO.setPictureList(piclist);
+//			
+//		}
+//		
+//		return hotPostList;
 	};
 	
 	/**

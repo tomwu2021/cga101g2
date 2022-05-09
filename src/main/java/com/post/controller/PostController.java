@@ -27,6 +27,7 @@ import com.members.model.MembersService;
 import com.members.model.MembersVO;
 import com.pet.model.PetJDBCDAO;
 import com.pet.model.PetVO;
+import com.pet.service.PetService;
 import com.pet_activity.model.PetActivityJDBCDAO;
 import com.picture.model.PictureVO;
 import com.picture.service.PictureService;
@@ -47,19 +48,20 @@ public class PostController extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-//		action = "selectChangePost";
+		action = "selectChangePost";
 		
 		/**
-		 * 查詢個人頁面
+		 * 查詢全部個人貼文
 		 * 
 		 */
-		if ("getOne_For_Display".equals(action)) { // 來自post.jsp的請求
+		if ("getOne_For_Display".equals(action)) { 
 
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+			/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String str = req.getParameter("memberId");
+				
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.put("memberId","請輸入會員編號");
 				}
@@ -68,7 +70,7 @@ public class PostController extends HttpServlet {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/front/post/post.jsp");
 					failureView.forward(req, res);
-					return;//程式中斷
+					return;
 				}
 				
 				Integer memberId = null;
@@ -82,34 +84,55 @@ public class PostController extends HttpServlet {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("front/post/post.jsp");
 					failureView.forward(req, res);
-					return;//程式中斷
+					return;
 				}
 				
-				/***************************2.接收請求參數 - 輸入格式的錯誤處理*****************************************/
+				/***************************2.開始查詢資料*****************************************/
 				PostService ps = new PostService();
-				List<PostVO> list = ps.selectPost(memberId);
+				List<PostVO> personList = ps.selectPost(memberId);
 				
-				if (list == null) {
-					errorMsgs.put("memberId","查無資料");
+				MembersService mService = new MembersService();
+				MembersVO membersVO = mService.getOneById(memberId);  
+				
+				PictureService pictureService = new PictureService();
+				PetService petService = new PetService();
+				
+				List<PetVO> petVOlist = petService.getByMemberId(memberId); 
+				List<String> urList = new ArrayList<String>();     // new empty list
+				
+				for (PetVO petVO : petVOlist) {
+					Integer petid = petVO.getPictureId(); 
+					PictureVO pictureVO = pictureService.getOne(petid);
+					urList.add(pictureVO.getPreviewUrl());
 				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("front/post/post.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
+				for (PostVO postVO : personList) {
+					postVO.setMembersVO(membersVO);
+					postVO.setUrlList(urList);
 				}
+				
+			
+				
+//				if (personList == null) {
+//					errorMsgs.put("memberId","查無資料");
+//				}
+//				// Send the use back to the form, if there were errors
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher("front/post/post.jsp");
+//					failureView.forward(req, res);
+//					return;
+//				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("list", list); 
+				req.setAttribute("personList", personList); 
 				String url = "/front/post/postNew.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 postNew.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
 		}
 		
 		/**
-		 * 查詢status狀態為0
+		 * 查詢status狀態為0的貼文
 		 * 
 		 */
 
@@ -124,7 +147,7 @@ public class PostController extends HttpServlet {
 //				Integer memberId = Integer.valueOf(req.getParameter("memberId").trim());
 				Integer memberId =9;
 				
-				/***************************2.開始查詢***************************************/
+				/***************************2.開始查詢資料***************************************/
 				PostService ps = new PostService();
 				java.util.Date date1 = new java.util.Date();
 				
@@ -134,9 +157,14 @@ public class PostController extends HttpServlet {
 			    MembersVO membersVO = mSvcMembersService.getOneById(memberId);
 			    
 			    PictureService pictureService = new PictureService();
-			    PetJDBCDAO dao = new PetJDBCDAO(); // remember to change!!!!
-			    List<PetVO> petVOlist = dao.getOneByMemberId(memberId);
+			    PetService petService = new PetService();
+			    
+//			    PetJDBCDAO dao = new PetJDBCDAO(); // remember to change!!!!
+			    
+			    List<PetVO> petVOlist = petService.getByMemberId(memberId);
+			    
 			    List<String> urlList = new ArrayList<>(); // new empty list
+			    
 			    for (PetVO petVO: petVOlist) {
 			    	Integer pid = petVO.getPictureId();
 			    	PictureVO pictureVO = pictureService.getOne(pid);
@@ -154,22 +182,22 @@ public class PostController extends HttpServlet {
 				System.out.println("elapsed time: " + (date2.getTime() - date1.getTime()));
 				
 			String url = "/front/post/blog.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 blog.jsp
+			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}	
 		
 		/**
-		 * 新增貼文圖片跟內容
+		 * 新增貼文圖片與內容
 		 */
 
 		
-        if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
+        if ("insert".equals(action)) { 
 			
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 
-				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+			/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 //				Integer memberId = Integer.valueOf(req.getParameter("memberId").trim());
 				Integer memberId =9;
 				String content = req.getParameter("content");
@@ -177,13 +205,13 @@ public class PostController extends HttpServlet {
 				Collection<Part> parts=req.getParts();
 				System.out.println(parts);
 				if(parts ==null) {
-					errorMsgs.put("part","照片: 至少選一張圖");	
+					errorMsgs.put("part","����: �撠銝�撘萄��");	
 				}
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front/post/addPost.jsp");
+							.getRequestDispatcher("/front/post/postNew.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -193,40 +221,12 @@ public class PostController extends HttpServlet {
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/front/post/listPost.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);					
 		}
 		
-        //更改貼文內容
-        
-//		if ("updatecontent".equals(action)) { // 來自listPostEmp.jsp的請求
-//
-//			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//			
-//				/***************************1.接收請求參數****************************************/
-//				String content = req.getParameter("content").trim();
-//				if (content == null || content.trim().length() == 0) {
-//					errorMsgs.put("content","修改內容請勿空白");
-//				}
-//				
-//				/***************************2.開始查詢資料****************************************/
-//				PostService postSvc = new PostService();
-//				PostVO postVO = postSvc.update(postVO, con);
-//								
-//				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-//				String param = "?empno="  +empVO.getEmpno()+
-//						       "&ename="  +empVO.getEname()+
-//						       "&job="    +empVO.getJob()+
-//						       "&hiredate="+empVO.getHiredate()+
-//						       "&sal="    +empVO.getSal()+
-//						       "&comm="   +empVO.getComm()+
-//						       "&deptno=" +empVO.getDeptno();
-//				String url = "/emp/update_emp_input.jsp"+param;
-//				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
-//				successView.forward(req, res);
-//				
-//		}	
+
+
 	}
 
 }
