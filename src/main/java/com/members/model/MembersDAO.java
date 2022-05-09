@@ -61,23 +61,24 @@ public class MembersDAO implements MembersDAO_interface {
 
 	public MembersVO update(MembersVO membersVO, Connection con) {
 		final StringBuilder UPDATE = new StringBuilder().append("UPDATE members SET ");
-		final String password = membersVO.getPassword();
+		
+		String password = membersVO.getPassword();
 		if (password != null && !password.isEmpty()) {
 			UPDATE.append("password = ?,");
 		}
-		final String name = membersVO.getName();
+		String name = membersVO.getName();
 		if (name != null && !name.isEmpty()) {
 			UPDATE.append("name = ?,");
 		}
-		final String address = membersVO.getAddress();
+		 String address = membersVO.getAddress();
 		if (address != null && !address.isEmpty()) {
 			UPDATE.append("address = ?,");
 		}
-		final String phone = membersVO.getPhone();
+		 String phone = membersVO.getPhone();
 		if (phone != null && !phone.isEmpty()) {
 			UPDATE.append("phone = ?,");
 		}
-		final String eWalletPassword = membersVO.geteWalletPassword();
+		String eWalletPassword = membersVO.geteWalletPassword();
 		if (eWalletPassword != null && !eWalletPassword.isEmpty()) {
 			UPDATE.append("ewallet_password = ?,");
 		}

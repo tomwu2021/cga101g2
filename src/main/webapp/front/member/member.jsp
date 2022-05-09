@@ -12,7 +12,7 @@
 <!-- 	路徑舉例 -->
 <%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/????待討論> --%>
 <!-- 額外添加的CSS -->
-<body>
+<body onload="executeAfterloadedBody()">
 	<!-- 共用的header start-->
 	<%@ include file="/front/layout/header.jsp"%>
 	<!-- 共用的header end-->
@@ -38,7 +38,6 @@
 											<h3 class="h6 text-uppercase mb-0">我的檔案</h3>
 										</div>
 										<div class="card-body">
-											<!--                         <p>Lorem ipsum dolor sit amet consectetur.</p> -->
 											<div class="row">
 												<div class="col-lg-6 mb-5">
 													<form class="form-horizontal">
@@ -76,12 +75,6 @@
 															</div>
 														</div>
 
-
-
-
-
-
-
 														<!--                           <div class="form-group row"> -->
 														<!--                             <label class="col-sm-3 form-control-label">密碼</label> -->
 														<!--                             <div class="col-md-9"> -->
@@ -107,12 +100,12 @@
 														<label class="col-md-3 form-control-label">會員等級</label>
 														<div class="col-md-9">
 															<label class="col-md-3 form-control-label"
-																style="max-width: 550px">${membersVO.rankId}</label>
+																style="max-width: 550px" id="rankId">${membersVO.rankId}</label>
 														</div>
 													</div>
 
 													<div class="form-group row">
-														<label class="col-md-3 form-control-label">錢包帳戶金額</label>
+														<label class="col-md-3 form-control-label">錢包餘額</label>
 														<div class="col-md-9">
 															<label class="col-md-3 form-control-label"
 																style="max-width: 550px">${membersVO.eWalletAmount}</label>
@@ -151,10 +144,8 @@
 	<!-- 共用的JS -->
 
 	<!-- 額外添加的JS -->
-	<!-- 	路徑舉例 -->
-	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/????待討論.js"> --%>
-	<!-- 額外添加的JS -->
-
+<script type="text/javascript"
+		src="<%=request.getContextPath()%>/assets/js/member.js"></script>
 </body>
 
 </html>

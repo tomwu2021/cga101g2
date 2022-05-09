@@ -1,12 +1,9 @@
 package com.members.model;
 
-import java.sql.Connection;
 import java.util.*;
 
-import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
 import com.ranks.model.RanksVO;
 
-import net.bytebuddy.asm.Advice.Return;
 
 public class MembersService {
 
@@ -23,7 +20,7 @@ public class MembersService {
 
 	// update 情境二：會員可修改的資料 PASSWORD NAME ADDRESS PHONE E_WALLET_PASSWORD
 	public MembersVO update(MembersVO membersVO) {
-		return dao.insert(membersVO);
+		return dao.update(membersVO);
 	}
 
 	// update 情境三：管理員可以修改此會員的狀態(停權/正常)

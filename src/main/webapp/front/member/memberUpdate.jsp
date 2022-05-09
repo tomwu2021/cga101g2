@@ -38,55 +38,55 @@
 											<h3 class="h6 text-uppercase mb-0">我的檔案</h3>
 										</div>
 										<div class="card-body">
-											<!--                         <p>Lorem ipsum dolor sit amet consectetur.</p> -->
 											<div class="row">
 												<div class="col-lg-6 mb-5">
-													<form class="form-horizontal">
-
+													<form class="form-horizontal" method="post"
+														action="http://localhost:8081/CGA101G2/front/member.do">
 
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">姓名</label>
 															<div class="col-md-9">
-																<input id="inputHorizontalSuccess"
-																	value="${membersVO.name}" placeholder="User Name"
-																	class="form-control form-control-success">
+																<input name="name" value="${membersVO.name}"
+																	placeholder="User Name"
+																	class="form-control form-control-success"><font color=red>${messages.errorName}</font>
 															</div>
 														</div>
 
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">手機</label>
 															<div class="col-md-9">
-																<input id="inputHorizontalSuccess"
-																	value="${membersVO.phone}" placeholder="User Phone"
-																	class="form-control form-control-success">
+																<input name="phone" value="${membersVO.phone}"
+																	placeholder="User Phone"
+																	class="form-control form-control-success"><font color=red>${messages.errorPhone}</font>
 															</div>
 														</div>
 
 														<div class="form-group row">
-														<label
-																class="col-md-3 form-control-label">地址</label>
-															<input class="js-demeter-tw-zipcode-selector"
-																data-city="#city4" data-dist="#dist4"
-																placeholder="請輸入郵遞區號" value="22048"> <select
-																id="city4" placeholder="請選擇縣市"></select> <select
-																id="dist4" placeholder="請選擇鄉鎮區"></select> 
+															<label class="col-md-3 form-control-label">地址</label>
 															<div class="col-md-9">
-															<label
-																class="col-md-3 form-control-label">	</label>
-																<input id="inputHorizontalSuccess"
-																	value="${membersVO.address}" placeholder="User Address"
+																<input name="address" value="${membersVO.address}"
+																	placeholder="請輸入地址"
 																	class="form-control form-control-success">
-
-
 															</div>
 														</div>
+
+														<!-- 	<div class="form-group row"> -->
+														<!-- 	<label class="col-md-3 form-control-label">地址</label> -->
+														<!-- 	<input class="js-demeter-tw-zipcode-selector" data-city="#city4" data-dist="#dist4" -->
+														<!-- 	placeholder="郵遞區號" value="22048" style="width:90px" id="postalCode">  -->
+														<!-- 	<select id="city4" placeholder="請選擇縣市"></select>  -->
+														<!-- 	<select id="dist4" placeholder="請選擇鄉鎮區"></select>  -->
+														<!-- 	</div> -->
+
+
 
 														<!--! 提交按鈕 -->
 														<div class="form-group row">
 															<div class="col-md-9 ml-auto">
-																<a
-																	href="<%=request.getContextPath()%>/front/member/member.jsp"><input
-																	type="button" value="儲存" class="btn btn-primary"></a>
+																<%-- 																<a href="<%=request.getContextPath()%>/front/member/member.jsp"></a> --%>
+																<input type="hidden" name="action"
+																	value="updateMemberInfo"> <input type="submit"
+																	value="儲存" class="btn btn-primary">
 															</div>
 														</div>
 													</form>
@@ -99,6 +99,7 @@
 										<!--! Horizontal Form結束-->
 
 									</div>
+								</div>
 						</section>
 					</div>
 				</div>
@@ -123,9 +124,7 @@
 	<!-- 額外添加的JS -->
 	<!-- 	地址 -->
 	<script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
-	<!-- memberUpdate.js -->
-	<script type="text/javascript"
-		src="<%=request.getContextPath()%>/assets/js/memberUpdate.js"></script>
+	
 </body>
 
 </html>

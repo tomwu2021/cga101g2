@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-
 import com.album.model.AlbumJDBCDAO;
 import com.google.gson.Gson;
 import com.members.model.*;
@@ -40,6 +39,12 @@ public class MembersServlet extends HttpServlet {
 			break;
 		case "sendforgotMail":
 			sendforgotMail(req, res);
+			break;
+		case "getRankName":
+			getRankName(req, res);
+			break;
+		case "updateMemberInfo":
+			updateMemberInfo(req, res);
 		}
 	}
 
@@ -135,7 +140,8 @@ public class MembersServlet extends HttpServlet {
 			res.getWriter().write(json);
 			return;
 		} else { // False，帳號不存在，寄送 JavaMail
-			String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}";
+//			String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}";
+			String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@gmail.com";
 			if (registerAccount.matches(checkEmail)) {
 
 				// 產生驗證碼存在 session
@@ -251,6 +257,91 @@ public class MembersServlet extends HttpServlet {
 			return;
 		}
 	}
+
+	public void getRankName(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		String rankId = req.getParameter("rankId");
+		System.out.println(rankId);
+
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+
+		if ("1".equals(rankId)) {
+			messages.put("msgRankName", "一般會員");
+			messages.put("msgDiscount", "");
+			String json = new Gson().toJson(messages);
+			res.getWriter().write(json);
+			return;
+		}
+		if ("2".equals(rankId)) {
+			messages.put("msgRankName", "黃金會員");
+			messages.put("msgDiscount", " ( 購物折扣 95 折 )");
+			String json = new Gson().toJson(messages);
+			res.getWriter().write(json);
+			return;
+		}
+		if ("3".equals(rankId)) {
+			messages.put("msgRankName", "白金會員");
+			messages.put("msgDiscount", " ( 購物折扣 9 折 )");
+			String json = new Gson().toJson(messages);
+			res.getWriter().write(json);
+			return;
+		}
+		if ("4".equals(rankId)) {
+			messages.put("msgRankName", "鑽石會員");
+			messages.put("msgDiscount", " ( 購物折扣 85 折 )");
+			String json = new Gson().toJson(messages);
+			res.getWriter().write(json);
+			return;
+		}
+	}
+
+	public void updateMemberInfo(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+
+		messages.clear();
+
+		String name = req.getParameter("name");
+		if (name == null || name.trim().length() == 0) {
+			messages.put("errorName", "*名字不可為空");
+		}
+
+		// 手機驗證
+		String phone = req.getParameter("phone");
+		String regex = "^09[0-9]{8}$";
+
+		if (phone == null || phone.trim().length() == 0) {
+		} else {
+			if (!phone.trim().matches(regex)) {
+				messages.put("errorPhone", "*手機格式錯誤");
+			}
+		}
+
+		String address = req.getParameter("address");
+
+		System.out.println(messages);
+
+		if (!messages.isEmpty()) {
+			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberUpdate.jsp");
+			failureView.forward(req, res);
+			return;// 程式中斷
+		}
+
+		HttpSession currentSession = req.getSession();
+		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
+		MembersService memberSvc = new MembersService();
+		sessionMembersVO.setName(name); // Name
+		sessionMembersVO.setPhone(phone); // Phone
+		sessionMembersVO.setAddress(address); // Address
+		memberSvc.update(sessionMembersVO);
+
+		String url = "/front/member/member.jsp";
+		RequestDispatcher successView = req.getRequestDispatcher(url);
+		successView.forward(req, res);
+
+	}
+
 }
 
 ///*************************** 取得一筆會員資料 **********************/
@@ -314,6 +405,9 @@ public class MembersServlet extends HttpServlet {
 //		/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 //		String account = req.getParameter("account");
 ////		String password = "^[(a-zA-Z0-9_)]{2,10}$";
+
+////		
+
 //		String password = req.getParameter("password");
 //		if (account == null || account.trim().length() == 0) {
 //			errorMsgs.put("account", "會員信箱: 請勿空白");
