@@ -84,7 +84,6 @@
 					</div>
 					<input placeholder="Search..." type="text" id="fileName">
 					<div class="page_amount" style="align-self: center">
-						<p></p>
 					</div>
 				</div>
 			</div>

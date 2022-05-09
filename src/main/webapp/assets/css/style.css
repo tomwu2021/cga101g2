@@ -11700,9 +11700,74 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
     transform: rotate(360deg);
   }
 }
-<!--  -->
+/*<!-- loading -->*/
 #spinner{
 	display:none;
 	z-index:9999;
   position: fixed;
+}
+
+
+/*<!-- chatroom -->*/
+
+.bi-x-lg,.bi-plus-lg {
+  font-weight: 600;
+  font-size: 20px;
+  margin-left:10px;
+}
+
+
+
+ .chatroom_list {
+   visibility: visible;
+   width: 360px;
+   min-height: 90vh;
+   max-height: 90vh;
+   padding: 20px;
+   right: 20px;
+   top: 7vh;
+   display: none;
+   overflow: auto;
+ }
+
+ .chatroom_window {
+   background: #fff;
+   box-shadow: 0 3px 11px 0 rgb(0 0 0 / 10%);
+   text-align: left;
+   transition: all .5s ease-out;
+   overflow: hidden;
+   z-index: 1;
+   border-radius: 3px;
+   visibility: visible;
+   width: 360px;
+   min-height: 450px;
+   padding: 20px;
+   right: 75px;
+   position: fixed;
+   bottom: 0;
+   display: none;
+ }
+
+.chat_container {
+  height: 310px;
+  overflow: auto;
+  margin-bottom: 10px;
+}
+
+.chat_container .sender {
+  text-align: right;
+  padding-right: 20px;
+}
+#message-list-ul>li{
+  height:50px;
+  border-radius: 10px;
+}
+.chat-button{
+  font-weight: 500;
+}
+.chat-button:hover{
+  font-weight: 800;
+  font-size: 22px;
+  cursor: pointer;
+  margin-left:2.5px;
 }

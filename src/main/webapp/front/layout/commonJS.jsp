@@ -41,6 +41,11 @@
 <script src="<%=request.getContextPath()%>/assets/js/slinky.menu.js"></script>
 <!-- Plugins JS -->
 <script src="<%=request.getContextPath()%>/assets/js/plugins.js"></script>
+
+<!-- websocket -->
+<script src = "<%=request.getContextPath()%>/assets/js/socket_io/socket.io.js"></script>
+<!-- chatroom JS -->
+<script src="<%=request.getContextPath()%>/assets/js/chatroom/chatroom.js"></script>
 <!-- Main JS -->
 <script src="<%=request.getContextPath()%>/assets/js/main.js"></script>
 <!-- ekko-lightbox -->
@@ -49,3 +54,4 @@
 <!-- sweet alert -->
 <script
 	src="<%=request.getContextPath()%>/assets/js/common/sweetalert2.all.min.js"></script>
+

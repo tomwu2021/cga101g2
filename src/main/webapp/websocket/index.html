@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const roomId = params.get('room');
+		console.log(roomId);
+        const socket_private = io('ws://localhost:3000/private');
+		//建立連線
+        socket_private.on('connection', function(){});
+		//加入特定chat room
+		socket_private.emit('join-room', roomId);
+
+        socket_private.on('broadcast', (message) => {
+           console.log(message);
+		   // function(){....}
+        });
+
+        const socket_public = io('ws://localhost:3000/public');
+        socket_public.emit('add-member', memberId);
+        socket_public.on('broadcast', (message) => {
+            console.log(message);
+            // function(){....}
+        });
+		
+		function sendMsg(roomId, message){
+		//{
+		//	message:message,
+		//	roomId:roomId,
+		//	currentTime: Date.now()
+		//	members(exclude sender)
+		//	sender
+		//}
+			// 推送訊息
+		//	socket.emit('send-message', {message:message, //roomId:roomId});
+		}
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

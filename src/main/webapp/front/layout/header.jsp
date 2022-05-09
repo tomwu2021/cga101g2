@@ -1,6 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!--offcanvas menu area end-->
+<%@ page import="com.members.model.*" %>
 <header>
+
+    <input id="loginId" value="<%=session.getAttribute("membersVO")==null?"":((MembersVO)session.getAttribute("membersVO")).getMemberId() %>">
+
     <!--     筆記 fa-2x控制i的大小 -->
     <div class="main_header sticky-header">
         <div class="container-fluid">
@@ -59,17 +63,6 @@
                             <div class="header_account-list top_links" onclick="openChatList()">
                                 <a><i class="bi bi-chat-fill"></i></a>
                             </div>
-                            <script>
-                                function openChatList() {
-                                    let el = $('.chatroom_list')
-                                    let visibility = el.css('display');
-                                    if (visibility === 'none') {
-                                        el.show()
-                                    } else {
-                                        el.hide();
-                                    }
-                                }
-                            </script>
 
                             <div class="header_account-list top_links">
                                 <a href=""><i class="bi bi-bell-fill"></i></a>
@@ -109,131 +102,31 @@
                 </div>
             </div>
         </div>
-        <%--聊天室列表--%>
-        <div class="dropdown_links chatroom_list">
+<%--        聊天室列表--%>
+        <div class="dropdown_links chatroom_list" id="private-chatroom-list">
             <div class="dropdown_links_list">
-                <h3>聊天室</h3>
+                <h2>聊天室</h2>
             </div>
-            <style>
-                .chatroom_list {
-                    visibility: visible;
-                    width: 360px;
-                    min-height: 90vh;
-                    max-height: 90vh;
-                    padding: 20px;
-                    right: 20px;
-                    top: 7vh;
-                    display: none;
-                    overflow: auto;
-                }
-
-            </style>
             <div class="dropdown_links_list">
-                <ul>
-                    <li>
-                        <span onclick="openChat('9')">假朋友</span>
-                    </li>
+                <ul id="private-chatroom-list-ul">
                 </ul>
-                <script>
-                    //自動scroll 到底部
-                    function keepBottom(className) {
-                        document.getElementsByClassName(className)[0].scrollTop = document.getElementsByClassName(className)[0].scrollHeight;
-                    }
-
-                    function openChat() {
-                        // 關閉列表
-                        $('.chatroom_list').hide();
-                        //開啟對話視窗
-                        $('.chatroom_window').show();
-                        //自動滾自最底部
-                        keepBottom('chat_container');
-                    }
-                </script>
             </div>
         </div>
     </div>
 </header>
 
+<div class="chatroom_window" id="private-chat">
+    <div class="dropdown_links_list" id="chat-buttons">
 
-<%--對話視窗--%>
-<div class="chatroom_window">
-    <div class="dropdown_links_list">
-        <h3 style="display: inline-block;">聊天室</h3>
-        <span class="bi bi-x-lg" style="display: inline-block;float: right;" onclick="closeChatWindow()"></span>
     </div>
-
-    <script>
-        function closeChatWindow() {
-            $('.chatroom_window').hide();
-        }
-    </script>
     <div class="dropdown_links_list chat_container">
-        <ul>
-            <li>對方: 安安</li>
-            <li class="sender">我方: 好好好</li>
-            <li class="sender">我方: 好好好</li>
-            <li>對方: 安安</li>
-            <li class="sender">我方: 好好好</li>
-            <li class="sender">我方: 好好好</li>
-            <li>對方: 安安</li>
-            <li>對方: 安安</li>
-            <li>對方: 安安</li>
-            <li>對方: 安安</li>
-            <li class="sender">我方: 好好好</li>
-            <li>對方: 安安</li>
-            <li class="sender">我方: 好好好</li>
-            <li class="sender">我方: 好好好</li>
-            <li>對方: 安安</li>
-            <li>對方: 安安</li>
-            <li class="sender">我方: 好好好</li>
-            <li>對方: 安安</li>
-            <li class="sender">我方: 好好好</li>
-            <li class="sender">我方: 好好好</li>
-            <li>對方: 安安</li>
-            <li>對方: 安安</li>
-            <li class="sender">我方: 好好好</li>
-            <li>對方: 安安</li>
-            <li class="sender">我方: 好好好</li>
-            <li class="sender">我方: 好好好</li>
-            <li>對方: 安安</li>
-            <li>對方: 安安</li>
+        <ul id="private-message-list-ul">
         </ul>
     </div>
     <div class="dropdown_links_list">
         <div>
-            <input type="text">
-            <input type="button" value="傳送">
+            <input type="text" id="private-new-message" >
+            <input type="button" value="傳送" onclick="putMessage()">
         </div>
     </div>
 </div>
-<style>
-    .chatroom_window {
-        background: #fff;
-        box-shadow: 0 3px 11px 0 rgb(0 0 0 / 10%);
-        text-align: left;
-        transition: all .5s ease-out;
-        overflow: hidden;
-        z-index: 1;
-        border-radius: 3px;
-        max-height: 0;
-        visibility: visible;
-        width: 360px;
-        min-height: 50vh;
-        padding: 20px;
-        right: 75px;
-        position: fixed;
-        bottom: 0;
-        display: none;
-    }
-
-    .chat_container {
-        height: 310px;
-        overflow: auto;
-        margin-bottom: 10px;
-    }
-
-    .chat_container .sender {
-        text-align: right;
-        padding-right: 20px;
-    }
-</style>
