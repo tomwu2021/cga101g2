@@ -19,7 +19,7 @@ import com.messages.model.MessagesVO;
 public interface ChatroomMapper {
 	
 	@Select(value= " SELECT * FROM chatroom c "
-				+ " JOIN chatroom_member cm on(c.chatroom_id=cm.chatroom_id) WHERE member_id = #{memberId}")
+				+ " JOIN chatroom_member cm on(c.chatroom_id=cm.chatroom_id) WHERE member_id = #{memberId} AND chatroom_type = 1")
 	@Options(useGeneratedKeys = true, keyProperty = "chatroomId", keyColumn = "chatroom_id")
 	List<ChatroomVO> getPersonalChatroom(Integer memberId);
 	

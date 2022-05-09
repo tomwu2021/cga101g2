@@ -24,7 +24,7 @@ public class CommonController extends HttpServlet {
 		HttpSession session = req.getSession();
 		session.setAttribute("membersVO", membersVO);
 		req.setAttribute("membersVO", membersVO);
-		
+
 	}
     /**
      * forward到指定之動態生成JSP頁面
