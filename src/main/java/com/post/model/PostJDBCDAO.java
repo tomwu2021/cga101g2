@@ -1,6 +1,4 @@
 package com.post.model;
-import com.picture.*;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,9 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
 import com.picture.model.PictureVO;
-import com.post_pic.model.Post_PicVO;
 
 import connection.JDBCConnection;
 
