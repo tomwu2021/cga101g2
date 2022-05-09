@@ -2,6 +2,7 @@ package com.pet.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pet.model.PetVO;
 import com.pet.service.PetService;
 import com.pet_activity.model.PetActivityVO;
@@ -48,10 +51,12 @@ public class PetController extends HttpServlet {
 			List<PetWeightVO> pwList = pwSvc.getByPetId(petId);
 			PetWeightVO recentWgt = pwSvc.getRecentWeight(petId);
 			BigDecimal averageWgt = pwSvc.getAverageWeight(petId);
+			final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 			req.setAttribute("rList", rList);
 			req.setAttribute("pList", pList);
 			req.setAttribute("paList", paList);
-			req.setAttribute("pwList", pwList);
+			req.setAttribute("pwList", GSON.toJson(pwList));//
+			System.out.println(GSON.toJson(pwList));
 			req.setAttribute("recentWgt", recentWgt);
 			req.setAttribute("averageWgt", averageWgt);
 			RequestDispatcher view =req.getRequestDispatcher("/front/pet/profile.jsp");

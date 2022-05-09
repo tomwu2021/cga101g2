@@ -11,21 +11,22 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import connection.JDBCConnection;
+import connection.JNDIConnection;
 
-public class PetWeightJDBCDAO implements PetWeightDAO_interface{
+public class PetWeightDAO implements PetWeightDAO_interface{
 	Connection con;
 	
 //	① create 新增寵物體重紀錄(前)------------------------		
 	@Override
 	public PetWeightVO insert(PetWeightVO petWeightVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		PetWeightVO petWeightVO2 = insert(petWeightVO, con);
 		
 		try {
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		return petWeightVO2;
 	}
@@ -57,15 +58,15 @@ public class PetWeightJDBCDAO implements PetWeightDAO_interface{
 //	② delete 刪除寵物體重紀錄(前)------------------------
 	@Override
 	public boolean delete(PetWeightVO petWeightVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		boolean boo = delete(petWeightVO, con);
 		
 		try {
 			con.close();
 			return boo;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 	}
 	/** @see #delete*/
@@ -91,13 +92,14 @@ public class PetWeightJDBCDAO implements PetWeightDAO_interface{
 //	③ update 修改寵物體重紀錄(前)------------------------	
 	@Override
 	public PetWeightVO update(PetWeightVO petWeightVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		PetWeightVO petWeightVO2 = update(petWeightVO, con);
 		
 		try {
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		return petWeightVO2;
 	}
@@ -132,7 +134,7 @@ public class PetWeightJDBCDAO implements PetWeightDAO_interface{
 	public PetWeightVO getOneById(Integer id) {
 		final String GET_ONE = "SELECT record_id, pet_id, weight_record, record_time FROM pet_weight "
 				         	 + "WHERE record_id = ?";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		PetWeightVO petWeightVO =new PetWeightVO();
 			
 		if (con != null) {
@@ -148,7 +150,8 @@ public class PetWeightJDBCDAO implements PetWeightDAO_interface{
 					petWeightVO.setRecordTime(rs.getDate(index++));
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new RuntimeException("A database error occured. "
+						+ e.getMessage());
 			}
 		} else {
 			return null;
@@ -166,7 +169,7 @@ public class PetWeightJDBCDAO implements PetWeightDAO_interface{
 	public List<PetWeightVO> getOneByPetId(Integer id) {
 		final String GET_ONE_PET = "SELECT record_id, pet_id, weight_record, record_time "
 				 + "FROM pet_weight WHERE pet_id = ? ORDER BY record_time DESC, record_id DESC";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		List<PetWeightVO> list = new ArrayList<PetWeightVO>();
 		
 		if (con != null) {
@@ -185,7 +188,8 @@ public class PetWeightJDBCDAO implements PetWeightDAO_interface{
 				index = 1;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		} else {
 			return null;
@@ -202,7 +206,7 @@ public class PetWeightJDBCDAO implements PetWeightDAO_interface{
     public PetWeightVO getRecentWeight(Integer id) {
     	final String GET_ONE_RECENT = "SELECT record_id, pet_id, weight_record, record_time "
 				 + "FROM pet_weight WHERE pet_id = ? ORDER BY record_time DESC, record_id DESC LIMIT 1";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		PetWeightVO petWeightVO =new PetWeightVO();
 		
 		if (con != null) {
@@ -218,7 +222,8 @@ public class PetWeightJDBCDAO implements PetWeightDAO_interface{
 				petWeightVO.setRecordTime(rs.getDate(index++));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		} else {
 			return null;
@@ -239,12 +244,12 @@ public class PetWeightJDBCDAO implements PetWeightDAO_interface{
     	Date endDate = petWeightVO.getRecordTime();
     	Calendar cal = Calendar.getInstance();
     	if(endDate!=null) {
-    	cal.setTime(endDate);
-    	}
+        	cal.setTime(endDate);
+        }
     	cal.add(Calendar.MONTH,-3);
     	cal.add(Calendar.DAY_OF_MONTH,1);
     	Date startDate = new Date(cal.getTime().getTime());
-    	con = JDBCConnection.getRDSConnection();// 第二次開連線
+    	con = JNDIConnection.getRDSConnection();// 第二次開連線
     	BigDecimal weightSum = new BigDecimal(0);
     	BigDecimal count = new BigDecimal(0);
     	BigDecimal weightAverage = new BigDecimal(0);
@@ -264,9 +269,9 @@ public class PetWeightJDBCDAO implements PetWeightDAO_interface{
 			if(count.intValue()!=0) {
 				weightAverage = weightSum.divide(count);
 			}
-			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		} else {
 			return null;
