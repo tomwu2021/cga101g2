@@ -11,7 +11,8 @@ public interface PetDAO_interface extends JDBCDAO_Interface<PetVO>{
  * (必)memberId, petName, sort1Id[1-貓,2-狗]
  * (選)gender[0-公,1-母], introduction, pictureId, birthday */
 	public PetVO insert(PetVO petVO);
-/** @return false */
+/**	刪除寵物資料(會員新建用)：
+ * (必)memberId */
 	public boolean delete(PetVO petVO);
 /** 更新寵物資料：
  * (必)petId, introduction, birthday
@@ -31,5 +32,8 @@ public interface PetDAO_interface extends JDBCDAO_Interface<PetVO>{
 /** 查詢所有指定月份生日且狀態為公開的寵物資料
  * (必)[1~12] */
     public List<PetVO> getAllByBirth(Integer birthMonth);
+/**	預設寵物資料：
+ * (必)memberId, sort1Id[1-貓,2-狗] */
+	public PetVO defaultInsert(PetVO petVO);
 
 }

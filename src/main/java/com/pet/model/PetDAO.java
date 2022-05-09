@@ -8,21 +8,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import connection.JDBCConnection;
+import connection.JNDIConnection;
 
-public class PetJDBCDAO implements PetDAO_interface{
+public class PetDAO implements PetDAO_interface{
 	Connection con;
 
 //	① create 新增寵物資料(前)------------------------	
 	@Override
 	public PetVO insert(PetVO petVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		PetVO petVO2 = insert(petVO, con);
 		
 		try {
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		return petVO2;
 	}
@@ -65,7 +66,7 @@ public class PetJDBCDAO implements PetDAO_interface{
 //	② delete 刪除預設寵物用---------------------------
 	@Override
 	public boolean delete(PetVO petVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		boolean boo = delete(petVO, con);
 		
 		try {
@@ -99,13 +100,14 @@ public class PetJDBCDAO implements PetDAO_interface{
 //	③ update 更新寵物資料(前)------------------------	
 	@Override
 	public PetVO update(PetVO petVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		PetVO petVO2 = update(petVO, con);
 		
 		try {
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		return petVO2;
 	}
@@ -148,13 +150,14 @@ public class PetJDBCDAO implements PetDAO_interface{
 //  ④ update 公開/隱藏寵物資料(前)------------------------
 	@Override
 	public boolean changeStatus(Integer id, Integer status) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		boolean bool = changeStatus(id, status, con);
 		
 		try {
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		return bool;
 	}
@@ -183,7 +186,7 @@ public class PetJDBCDAO implements PetDAO_interface{
 	public PetVO getOneById(Integer id) {
 		final String GET_ONE_PET = "SELECT pet_id, member_id, pet_name, sort1_id, gender, introduction, picture_id, birthday, status "
 								 + "FROM pet WHERE pet_id = ?";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		PetVO petVO =new PetVO();
 			
 		if (con != null) {
@@ -204,7 +207,8 @@ public class PetJDBCDAO implements PetDAO_interface{
 					petVO.setStatus(rs.getInt(index++));
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new RuntimeException("A database error occured. "
+						+ e.getMessage());
 			}
 		} else {
 			return null;
@@ -222,7 +226,7 @@ public class PetJDBCDAO implements PetDAO_interface{
 	public List<PetVO> getOneByMemberId(Integer id) {
 		final String GET_ONE_MEMBER = "SELECT pet_id, member_id, pet_name, sort1_id, gender, introduction, picture_id, birthday, status "
 									+ "FROM pet WHERE member_id = ?";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		List<PetVO> list = new ArrayList<PetVO>();
 			
 		if (con != null) {
@@ -246,7 +250,8 @@ public class PetJDBCDAO implements PetDAO_interface{
 					index = 1;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new RuntimeException("A database error occured. "
+						+ e.getMessage());
 			}
 		} else {
 			return null;
@@ -263,7 +268,7 @@ public class PetJDBCDAO implements PetDAO_interface{
 	@Override
 	public List<PetVO> getAll() {
 		final String GET_ALL = "SELECT pet_id, member_id, pet_name, sort1_id, gender, introduction, picture_id, birthday, status FROM pet ORDER BY member_id, pet_id";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 				List<PetVO> list = new ArrayList<PetVO>();
 
 		if (con != null) {
@@ -286,7 +291,8 @@ public class PetJDBCDAO implements PetDAO_interface{
 					index = 1;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new RuntimeException("A database error occured. "
+						+ e.getMessage());
 			}
 		} else {
 			return null;
@@ -304,7 +310,7 @@ public class PetJDBCDAO implements PetDAO_interface{
 	public List<PetVO> getAllByBirth(Integer birthMonth){
 		final String GET_BIRTHMONTH_PET = "SELECT pet_id, member_id, pet_name, sort1_id, gender, introduction, picture_id, birthday, status "
 										+ "FROM pet WHERE DATE_FORMAT(birthday,'%m') = ? and status = 0 ORDER BY member_id, pet_id";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 				List<PetVO> list = new ArrayList<PetVO>();
 
 		if (con != null) {
@@ -328,7 +334,8 @@ public class PetJDBCDAO implements PetDAO_interface{
 					index = 1;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new RuntimeException("A database error occured. "
+						+ e.getMessage());
 			}
 		} else {
 			return null;
@@ -340,16 +347,16 @@ public class PetJDBCDAO implements PetDAO_interface{
 		}
 		return list;
 	}
-
 //  ⑨ create 預設寵物資料(前)------------------------
 	public PetVO defaultInsert(PetVO petVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		PetVO petVO2 = insert(petVO, con);
 		
 		try {
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		return petVO2;
 	}

@@ -70,9 +70,6 @@ public class PetVO {
 	}
 	
 	public String toString() {
-
-		String petName = this.petName;
-
-		return petName;
+		return "PetVO[ "+ petId + ", " + memberId + ", " + petName + ", " + sort1Id+ ", " + gender+ ", " + introduction+ ", " + pictureId+ ", " + birthday+ ", " + status + " ]";
 	}
 }
