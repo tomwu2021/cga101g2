@@ -3,19 +3,27 @@ package com.pet_weight.model;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.pet_weight.service.PetWeightService;
+
 
 public class TestPetWeight {
 
 	public static void main(String[] args) {
 
 		PetWeightJDBCDAO dao = new PetWeightJDBCDAO();
+		PetWeightService svc = new PetWeightService();
+		
+		Gson GSON = new GsonBuilder().create();
+		System.out.println(GSON.toJson(dao.getOneByPetId(1)));
 		
 		// 新增
-		PetWeightVO pwVO1 = new PetWeightVO();
-		pwVO1.setPetId(1);
-		pwVO1.setWeightRecord(new BigDecimal(2));
-		pwVO1.setRecordTime(Date.valueOf("2022-01-03"));
-		System.out.println(dao.insert(pwVO1));
+//		PetWeightVO pwVO1 = new PetWeightVO();
+//		pwVO1.setPetId(1);
+//		pwVO1.setWeightRecord(new BigDecimal(2));
+//		pwVO1.setRecordTime(Date.valueOf("2022-01-03"));
+//		System.out.println(dao.insert(pwVO1));
 		
 		// 刪除
 //		PetWeightVO paVO2 = new PetWeightVO();
@@ -39,7 +47,7 @@ public class TestPetWeight {
 //		System.out.println(dao.getRecentWeight(2));	
 		
 		// 查一寵物體重紀錄(季平均)
-		System.out.println(dao.getAverageWeight(1));
+//		System.out.println(svc.getAverageWeight(1));
 		
 		// 查全部
 //		System.out.println(dao.getAll());

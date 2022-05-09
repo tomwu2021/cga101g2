@@ -18,6 +18,8 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 <%@ include file="/front/layout/head.jsp"%>
 <!-- 共用的CSS -->
 <%@ include file="/back/layout/commonCSS.jsp"%>
+<!-- Morris Chart Styles-->
+<link href="assets/css/morris-0.4.3.min.css" rel="stylesheet" />
 <!-- 自訂的CSS -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front/pet/style.css">
@@ -112,8 +114,83 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 	<%@include file="/front/pet/footer.jsp"%>
 	<!-- 共用的JS -->
 	<%@include file="/front/layout/commonJS.jsp"%>
-	<!-- 自訂的JS -->
-	
+
+<!-- Metis Menu Js -->
+<script src="assets/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script src="assets/js/raphael-2.1.0.min.js"></script>
+<script src="assets/js/morris.js"></script>
+<!-- 自訂的JS -->
+<script>
+(function ($) {
+    "use strict";
+    var mainApp = {
+
+        initFunction: function () {
+            /*MENU 
+            ------------------------------------*/
+            $('#main-menu').metisMenu();
+
+            $(window).bind("load resize", function () {
+                if ($(this).width() < 768) {
+                    $('div.sidebar-collapse').addClass('collapse')
+                } else {
+                    $('div.sidebar-collapse').removeClass('collapse')
+                }
+            });
+            /* MORRIS LINE CHART
+            ----------------------------------------*/
+            Morris.Line({
+                element: 'morris-line-chart',
+                data: ${pwList},
+
+
+                xkey: 'recordTime',
+                ykeys: ['weightRecord'],
+                labels: ['體重(公斤)', '紀錄日期'],
+                fillOpacity: 0.6,
+                hideHover: 'auto',
+                behaveLikeLine: true,
+                resize: true,
+                pointFillColors: ['#ffffff'],
+                pointStrokeColors: ['black'],
+                lineColors: ['#F09B22'],
+//                 dateFormat:function (x) { return new Date(x).toString(); }
+
+            });
+
+
+            $('.line-chart').cssCharts({ type: "line" });
+
+        },
+
+        initialization: function () {
+            mainApp.initFunction();
+
+        }
+
+    }
+    // Initializing ///
+
+    $(document).ready(function () {
+        mainApp.initFunction();
+        $("#sideNav").click(function () {
+            if ($(this).hasClass('closed')) {
+                $('.navbar-side').animate({ left: '0px' });
+                $(this).removeClass('closed');
+                $('#page-wrapper').animate({ 'margin-left': '260px' });
+
+            }
+            else {
+                $(this).addClass('closed');
+                $('.navbar-side').animate({ left: '-260px' });
+                $('#page-wrapper').animate({ 'margin-left': '0px' });
+            }
+        });
+    });
+
+}(jQuery));
+</script>	
 </body>
 
 </html>
