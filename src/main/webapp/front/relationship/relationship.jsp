@@ -43,5 +43,22 @@
 <%--        </div>--%>
 <%--    </div>--%>
 </div>
+<style>
+    .comment_thumb .bi.bi-circle-fill {
+        position: absolute;
+        z-index: 9;
+        left: 99px;
+        bottom: 11px;
+    }
+
+    .comment_thumb .online {
+        color: green;
+    }
+
+    .comment_thumb .offline {
+        color: darkorange;
+    }
+
+</style>
 <script
         src="<%=request.getContextPath()%>/assets/js/relationship/relationship.js"></script>

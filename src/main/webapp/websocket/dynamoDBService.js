@@ -1,9 +1,6 @@
 const AWS = require("aws-sdk");
-AWS.config.update({
-    region: "ap-northeast-1",
-    accessKeyId:"AKIATRU576IJDQJ4TVWP",
-    secretAccessKey:"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"
-});
+const Config = require("./config") ;
+AWS.config.update(Config.AWS);
 const docClient = new AWS.DynamoDB.DocumentClient();
 const tableName = 'Messages';
 

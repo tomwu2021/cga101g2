@@ -62,6 +62,7 @@ function makeChatroomList(chatroom) {
     let html = '';
     if (chatroom.chatroomType == 0) {
         html += `<li class="indivi-chatroom" value="${chatroom.memberId}" id="${chatroom.chatroomId}" style="border:3px solid white;height:60px;margin:15px 0 " onclick="openChat(${chatroom.chatroomId},${chatroom.chatroomType})">
+                <i class="bi bi-circle-fill ${isOnline(chatroom.memberId)?'online':'offline'} ${'chatroom-list-i' + chatroom.memberId}"></i>
                 <img id="img-${chatroom.chatroomId}"src="${chatroom.previewUrl}" style="width:40px;height:40px;border:5px rgba(0,0,0,0.5);border-radius:50%">
                 <span style="font-size:20px;" id="crname${chatroom.chatroomId}">${chatroom.name}</span>
               </li>`;

@@ -46,6 +46,8 @@
 <script src = "<%=request.getContextPath()%>/assets/js/socket_io/socket.io.js"></script>
 <!-- chatroom JS -->
 <script src="<%=request.getContextPath()%>/assets/js/chatroom/chatroom.js"></script>
+<!-- chatroom-Public JS -->
+<script src="<%=request.getContextPath()%>/assets/js/chatroom/public.js"></script>
 <!-- Main JS -->
 <script src="<%=request.getContextPath()%>/assets/js/main.js"></script>
 <!-- ekko-lightbox -->

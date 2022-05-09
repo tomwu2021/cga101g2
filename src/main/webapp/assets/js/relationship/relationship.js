@@ -75,6 +75,7 @@ function makeList(e,relation){
     html+=`<div class="comments_box col-lg-6" style="margin: 0 auto;text-align:left;">
         <div class="comment_list" style="margin: 20px auto;">
             <div class="comment_thumb" style="width: 100px;height: 100px;">
+                <i class="bi bi-circle-fill ${isOnline(relation.memberId)?'online':'offline'}"></i>
                 <img src="${relation.previewUrl}" alt="" style="height:64%;width: 96%;margin-top: 16px;">
             </div>
             <div class="comment_content" style="width: calc(100% - 100px) !important;margin-left: 100px;height:100px">

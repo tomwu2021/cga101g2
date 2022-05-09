@@ -12,7 +12,7 @@ const ioOption = {
 const io = new Server(server, ioOption);
 const port = 3000;
 const DyDBService = require('./dynamoDBService.js');
-
+const MemberService = require('./memberMySQLService');
 app.get('/', (req, res) => {
     res.send(`<h1>Websocket is listening on *:${port}</h1>`);
 });
@@ -27,12 +27,67 @@ app.get('/getMessageByRoomId/:cid/:memeberId', async (req, res) => {
 });
 
 // socket.io
-io.of('/public').on('connection', (socket) => {
-    socket.on('add-member', (memberId) => {
-        socket.join(roomId);
-        broadcast(memberId, '已經加入Public :' + memberId);
+let onLineMap = new Map();
+const publicIO = io.of('/public');
+publicIO.on('connection', async (socket) => {
+    let memberId = parseInt(socket.handshake.query.memberId);
+    socket.memberId = memberId;
+    if (memberId && !publicIO.adapter.rooms.has(memberId)) {
+        //第一次登入
+        //告訴好友已上線
+        let onlineFriends = [];
+        MemberService.getFriendsIdByMemberId(memberId).then(res => {
+                res.forEach(item => {
+                    publicIO.to(item.target_id).emit('on-on-line', memberId);
+                    if (publicIO.adapter.rooms.has(item.target_id)) {
+                        //預備取得上線好友列表
+                        onlineFriends.push(item.target_id);
+                    }
+                })
+                onLineMap.set(memberId, onlineFriends);
+                broadcastUpdateOnlineFriends(memberId);
+            }
+        );
+    } else if (memberId) {
+        // 更新線上好友列表自前台
+        broadcastUpdateOnlineFriends(memberId);
+    }
+    socket.join(memberId);
+
+    socket.on('disconnect', (data) => {
+        let memberId = socket.memberId;
+        socket.leave(memberId);
+        if (memberId && !publicIO.adapter.rooms.has(memberId)) {
+            //該會員最後一條 session離開
+            MemberService.getFriendsIdByMemberId(memberId).then(res => {
+                    res.forEach(item => {
+                        publicIO.to(item.target_id).emit('on-off-line', memberId);
+                        // 取得好友的 onlineMap
+                        if (onLineMap.get(item.target_id)){
+                            // 取出好友的在線好友list
+                            let onlineFriends = onLineMap.get(item.target_id) || [];
+
+                            //將自己移除
+                            onlineFriends.forEach((item, index) => {
+                                if(item == memberId)
+                                onlineFriends.splice(index, 1);
+                            })
+                            onLineMap.set(item.target_id, onlineFriends);
+                        }
+                    });
+
+                }
+            );
+        }
     });
 });
+
+function broadcastUpdateOnlineFriends(memberId) {
+    broadcast(publicIO, memberId, {
+        type: 'update-online-friends',
+        data: onLineMap.get(memberId) || []
+    });
+}
 
 io.of('/post').on('connection', (socket) => {
     socket.on('add-member', (postId) => {
@@ -44,31 +99,29 @@ io.of('/post').on('connection', (socket) => {
 let chatRoomMap = new Map();
 const privateIO = io.of('/private');
 privateIO.on('connection', (socket) => {
-    console.log('a user connected private');
     socket.joindRooms = [];
     socket.memberId = parseInt(socket.handshake.query.memberId);
     socket.on('join-room', async (roomId) => {
         console.log(`${socket.memberId} has join this room :` + roomId);
         console.log(socket.joindRooms);
-        socket.joindRooms.push(''+roomId);
+        socket.joindRooms.push('' + roomId);
         socket.join(parseInt(roomId));
         await DyDBService.onReadHandler(parseInt(roomId), parseInt(socket.memberId));
-        let room = chatRoomMap.get(''+roomId);
+        let room = chatRoomMap.get('' + roomId);
         console.log(room);
         if (!room) {
             //建立新的
             room = new Map();
         }
-        if(!room.get(''+socket.memberId)){
+        if (!room.get('' + socket.memberId)) {
             console.log('new array')
-            room.set(''+socket.memberId, []);
-            privateIO.emit('on-line', socket.memberId);
+            room.set('' + socket.memberId, []);
         }
-        let connections = room.get(''+socket.memberId);
+        let connections = room.get('' + socket.memberId);
         console.log(connections);
         connections.push(socket.id);
-        room.set(''+socket.memberId, connections);
-        chatRoomMap.set(''+roomId,room);
+        room.set('' + socket.memberId, connections);
+        chatRoomMap.set('' + roomId, room);
     });
 
     socket.on('leave-room', (roomId) => {
@@ -87,34 +140,30 @@ privateIO.on('connection', (socket) => {
     });
 
     socket.on('disconnect', (data) => {
-        socket.joindRooms.forEach(id=>{
+        socket.joindRooms.forEach(id => {
             removeConnectionFromRoom(id, socket);
         })
     });
 });
 
-function removeConnectionFromRoom(roomId, socket){
-    let room = chatRoomMap.get(''+roomId);
-    if(room){
-        let connections = room.get(''+socket.memberId);
-        if(connections){
+function removeConnectionFromRoom(roomId, socket) {
+    let room = chatRoomMap.get('' + roomId);
+    if (room) {
+        let connections = room.get('' + socket.memberId);
+        if (connections) {
             let key;
-            connections.forEach((item,index)=>{
-                if(item === socket.id){
+            connections.forEach((item, index) => {
+                if (item === socket.id) {
                     key = index;
                 }
             });
-            connections.splice(key,1);
+            connections.splice(key, 1);
         }
-        if(!connections || connections.length == 0){
-            room.delete(''+socket.memberId);
-            privateIO.emit('off-line', socket.memberId);
-
-        }else{
-            room.set(''+socket.memberId, connections);
+        if (!connections || connections.length == 0) {
+            room.delete('' + socket.memberId);
+        } else {
+            room.set('' + socket.memberId, connections);
         }
-        console.log('removeConnectionFromRoom=======================')
-        console.log(room.get(''+socket.memberId));
     }
 
 }
@@ -148,15 +197,15 @@ function putRecord(data) {
 }
 
 function isOnline(roomId, id) {
-    let room = chatRoomMap.get(''+roomId);
+    let room = chatRoomMap.get('' + roomId);
     console.log(room);
     console.log('===========================keys');
-    return room.has(''+id);
+    return room.has('' + id);
 }
 
 function aliveCount(roomId) {
-    if(chatRoomMap.get(''+roomId)){
-        return chatRoomMap.get(''+roomId).size - 1;
+    if (chatRoomMap.get('' + roomId)) {
+        return chatRoomMap.get('' + roomId).size - 1;
     }
     return 0;
 }

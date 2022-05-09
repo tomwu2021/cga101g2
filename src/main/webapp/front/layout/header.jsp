@@ -114,6 +114,23 @@
         </div>
     </div>
 </header>
+<style>
+
+    #private-chatroom-list-ul .bi.bi-circle-fill {
+        position: relative;
+        z-index: 9;
+        left: 17px;
+        bottom: 13px;
+    }
+
+    #private-chatroom-list-ul .online {
+        color: green;
+    }
+
+    #private-chatroom-list-ul .offline {
+        color: darkorange;
+    }
+</style>
 
 <div class="chatroom_window" id="private-chat">
     <div class="dropdown_links_list" id="chat-buttons">
