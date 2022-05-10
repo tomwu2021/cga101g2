@@ -64,7 +64,7 @@ public class ArticleController extends HttpServlet {
 			}
 			ArticleService artiSvc = new ArticleService();
 			Collection<Part> parts = req.getParts();
-			ArticleVO aVO = artiSvc.addArticle(Integer.parseInt(type), title, content, Integer.parseInt(empNo), parts);
+			artiSvc.addArticle(Integer.parseInt(type), title, content, Integer.parseInt(empNo), parts);
 			String url = "/article?action=all_Article";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
