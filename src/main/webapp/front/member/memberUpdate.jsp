@@ -41,7 +41,7 @@
 											<div class="row">
 												<div class="col-lg-6 mb-5">
 													<form class="form-horizontal" method="post"
-														action="http://localhost:8081/CGA101G2/front/member.do">
+														action="<%=request.getContextPath()%>/front/member.do">
 
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">姓名</label>
