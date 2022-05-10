@@ -3,6 +3,8 @@ package com.members.model;
 import java.sql.*;
 import java.util.*;
 
+import com.chargeRecord.model.ChargeRecordDAO;
+import com.chargeRecord.model.ChargeRecordVO;
 import com.ranks.model.RanksVO;
 
 import connection.JNDIConnection;
@@ -61,7 +63,7 @@ public class MembersDAO implements MembersDAO_interface {
 
 	public MembersVO update(MembersVO membersVO, Connection con) {
 		final StringBuilder UPDATE = new StringBuilder().append("UPDATE members SET ");
-		
+
 		String password = membersVO.getPassword();
 		if (password != null && !password.isEmpty()) {
 			UPDATE.append("password = ?,");
@@ -70,11 +72,11 @@ public class MembersDAO implements MembersDAO_interface {
 		if (name != null && !name.isEmpty()) {
 			UPDATE.append("name = ?,");
 		}
-		 String address = membersVO.getAddress();
+		String address = membersVO.getAddress();
 		if (address != null && !address.isEmpty()) {
 			UPDATE.append("address = ?,");
 		}
-		 String phone = membersVO.getPhone();
+		String phone = membersVO.getPhone();
 		if (phone != null && !phone.isEmpty()) {
 			UPDATE.append("phone = ?,");
 		}
@@ -201,9 +203,9 @@ public class MembersDAO implements MembersDAO_interface {
 	public String forgotPassword(MembersVO membersVO, Connection con) {
 
 		final String FORGET_PASSWORD = "UPDATE members set password=? where member_id = ?;";
-		
+
 		String genAuthCode = genAuthCode();
-		
+
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(FORGET_PASSWORD);
@@ -580,6 +582,7 @@ public class MembersDAO implements MembersDAO_interface {
 		}
 		return b;
 	}
+
 	public boolean deleteOneById(Integer memberId, Connection con) {
 		final String DELETE_ONE_MEMBER = "delete from members where member_id = ?;";
 		if (con != null) {
@@ -600,129 +603,176 @@ public class MembersDAO implements MembersDAO_interface {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	// select 情境九：用 account 查詢某一筆會員資料是否存在 ---------------------------------------------------------------
-		@Override
-		public Boolean getOneByAccount(String account) {
 
-			con = JNDIConnection.getRDSConnection();
-			Boolean boo = getOneByAccount(account, con);
+	// select 情境九：用 account 查詢某一筆會員資料是否存在
+	// ---------------------------------------------------------------
+	@Override
+	public boolean getOneByAccount(String account) {
 
-			try {
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return boo;
+		con = JNDIConnection.getRDSConnection();
+		Boolean boo = getOneByAccount(account, con);
+
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		return boo;
+	}
 
-		public Boolean getOneByAccount(String account, Connection con) {
+	public Boolean getOneByAccount(String account, Connection con) {
 
-			final String SELECT_ONE_BYACCOUNT = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time "
-					+ "FROM members where account = ?;";
-			if (con != null) {
-				try {
-					PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_BYACCOUNT);
-					pstmt.setString(1, account);
-					ResultSet rs = pstmt.executeQuery();
+		final String SELECT_ONE_BYACCOUNT = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time "
+				+ "FROM members where account = ?;";
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_BYACCOUNT);
+				pstmt.setString(1, account);
+				ResultSet rs = pstmt.executeQuery();
 
-					if (rs.next()) {
-						MembersVO newMember = new MembersVO();
-						newMember.setMemberId(rs.getInt("member_id"));
-						newMember.setAccount(rs.getString("account"));
-						newMember.setName(rs.getString("name"));
-						newMember.setAddress(rs.getString("address"));
-						newMember.setPhone(rs.getString("phone"));
-						newMember.setRankId(rs.getInt("rank_id"));
-						newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
-						newMember.setBonusAmount(rs.getInt("bonus_amount"));
-						newMember.setStatus(rs.getInt("status"));
-						newMember.setCreateTime(rs.getTimestamp("create_time"));
-						return true;
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
+				if (rs.next()) {
+					MembersVO newMember = new MembersVO();
+					newMember.setMemberId(rs.getInt("member_id"));
+					newMember.setAccount(rs.getString("account"));
+					newMember.setName(rs.getString("name"));
+					newMember.setAddress(rs.getString("address"));
+					newMember.setPhone(rs.getString("phone"));
+					newMember.setRankId(rs.getInt("rank_id"));
+					newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
+					newMember.setBonusAmount(rs.getInt("bonus_amount"));
+					newMember.setStatus(rs.getInt("status"));
+					newMember.setCreateTime(rs.getTimestamp("create_time"));
+					return true;
 				}
-			}
-			return false;
-		}
-
-		@Override
-		public MembersVO selectMemberIdByAccount(String account) {
-			con = JNDIConnection.getRDSConnection();
-			MembersVO membersVO = selectMemberIdByAccount(account, con);
-
-			try {
-				con.close();
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return membersVO;
 		}
+		return false;
+	}
+
+	@Override
+	public MembersVO selectMemberIdByAccount(String account) {
+		con = JNDIConnection.getRDSConnection();
+		MembersVO membersVO = selectMemberIdByAccount(account, con);
+
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return membersVO;
+	}
+
+	public MembersVO selectMemberIdByAccount(String account, Connection con) {
+		final String SELECT_ONE_INFO_BYACCOUNT = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time "
+				+ "FROM members where account = ?;";
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_INFO_BYACCOUNT);
+				pstmt.setString(1, account);
+				ResultSet rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					MembersVO newMember = new MembersVO();
+					newMember.setMemberId(rs.getInt("member_id"));
+					newMember.setAccount(rs.getString("account"));
+					newMember.setName(rs.getString("name"));
+					newMember.setAddress(rs.getString("address"));
+					newMember.setPhone(rs.getString("phone"));
+					newMember.setRankId(rs.getInt("rank_id"));
+					newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
+					newMember.setBonusAmount(rs.getInt("bonus_amount"));
+					newMember.setStatus(rs.getInt("status"));
+					newMember.setCreateTime(rs.getTimestamp("create_time"));
+					return newMember;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public RanksVO selectRankInfo(Integer memberId) {
+		con = JNDIConnection.getRDSConnection();
+		RanksVO ranksVO = selectRankInfo(memberId, con);
+
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ranksVO;
+	}
+
+	public RanksVO selectRankInfo(Integer memberId, Connection con) {
+		final String SELECT_ONE_RANK_INFO_BY_MEMBERID = "SELECT r.rank_id, r.rank_name, r.charge_amount, r.discount,r.bonus FROM members m join ranks r on m.rank_id = r.rank_id where member_id = ?;";
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_RANK_INFO_BY_MEMBERID);
+				pstmt.setInt(1, memberId);
+				ResultSet rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					RanksVO newRankVO = new RanksVO();
+					newRankVO.setRankId(rs.getInt("r.rank_id"));
+					newRankVO.setRankName(rs.getString("r.rank_name"));
+					newRankVO.setChargeAmount(rs.getInt("r.charge_amount"));
+					newRankVO.setDiscount(rs.getBigDecimal("r.discount"));
+					newRankVO.setBonus(rs.getInt("r.bonus"));
+					return newRankVO;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public boolean walletPaymentAddMoney(Integer memberId, Integer money) {
 		
-		public MembersVO selectMemberIdByAccount(String account,  Connection con) {
-			final String SELECT_ONE_INFO_BYACCOUNT = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time "
-					+ "FROM members where account = ?;";
-			if (con != null) {
-				try {
-					PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_INFO_BYACCOUNT);
-					pstmt.setString(1, account);
-					ResultSet rs = pstmt.executeQuery();
-
-					if (rs.next()) {
-						MembersVO newMember = new MembersVO();
-						newMember.setMemberId(rs.getInt("member_id"));
-						newMember.setAccount(rs.getString("account"));
-						newMember.setName(rs.getString("name"));
-						newMember.setAddress(rs.getString("address"));
-						newMember.setPhone(rs.getString("phone"));
-						newMember.setRankId(rs.getInt("rank_id"));
-						newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
-						newMember.setBonusAmount(rs.getInt("bonus_amount"));
-						newMember.setStatus(rs.getInt("status"));
-						newMember.setCreateTime(rs.getTimestamp("create_time"));
-						return newMember;
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			return null;
+		con = JNDIConnection.getRDSConnection();
+		Boolean boo = walletPaymentAddMoney(memberId, money, con);
+		
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
-		@Override
-		public RanksVO selectRankInfo(Integer memberId) {
-			con = JNDIConnection.getRDSConnection();
-			RanksVO ranksVO = selectRankInfo(memberId, con);
-
-			try {
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return ranksVO;
-		}
-		public RanksVO selectRankInfo(Integer memberId,  Connection con) {
-			final String SELECT_ONE_RANK_INFO_BY_MEMBERID = "SELECT r.rank_id, r.rank_name, r.charge_amount, r.discount,r.bonus FROM members m join ranks r on m.rank_id = r.rank_id where member_id = ?;";
-			if (con != null) {
-				try {
-					PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_RANK_INFO_BY_MEMBERID);
-					pstmt.setInt(1, memberId);
-					ResultSet rs = pstmt.executeQuery();
-
-					if (rs.next()) {
-						RanksVO newRankVO = new RanksVO();
-						newRankVO.setRankId(rs.getInt("r.rank_id"));
-						newRankVO.setRankName(rs.getString("r.rank_name"));
-						newRankVO.setChargeAmount(rs.getInt("r.charge_amount"));
-						newRankVO.setDiscount(rs.getBigDecimal("r.discount"));
-						newRankVO.setBonus(rs.getInt("r.bonus"));
-						return newRankVO;
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			return null;
-		}
+		return boo;
+		
+	}
+	// ewallet_amount  會員錢包 消費/儲值
+	public boolean walletPaymentAddMoney(Integer memberId, Integer money, Connection con) {
+		
+		MembersVO originalMembersVO = new MembersVO();
+		MembersVO currentMembersVO = new MembersVO();
+		
+		ChargeRecordVO chargeRecordVO = new ChargeRecordVO();
+		
+		MembersDAO membersDAO = new MembersDAO();
+		ChargeRecordDAO chargeRecordDAO = new ChargeRecordDAO();
+		
+		// 用 memberId 取得 會員的錢包的餘額
+		originalMembersVO = membersDAO.getOneById(memberId);
+		Integer originalMoney = originalMembersVO.geteWalletAmount();
+		
+		// 取得會員本身的餘額後，增加 或 減少 金額
+		Integer currentMoney = originalMoney + money;
+		
+		// 更新會員錢包的值
+		currentMembersVO.seteWalletAmount(currentMoney);
+		currentMembersVO.setMemberId(memberId);
+		membersDAO.changeEWalletAmount(currentMembersVO, con);
+		System.out.println(currentMembersVO);
+		
+		// 呼叫 ChargeRecordDAO 新增一筆交易紀錄
+		chargeRecordVO.setMemberId(memberId);
+		chargeRecordVO.setChargeAmount(money);
+		chargeRecordDAO.insert(chargeRecordVO, con);
+		return false;
+	}
 }

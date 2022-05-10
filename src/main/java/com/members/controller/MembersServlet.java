@@ -229,16 +229,16 @@ public class MembersServlet extends HttpServlet {
 
 	/*************************** 忘記密碼 **********************/
 	public void sendforgotMail(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
+		
 		String forgotPassword = req.getParameter("forgotPassword");
-
+		
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
 
 //		System.out.println(forgotPassword);
 		MembersService memberSvc = new MembersService();
 		Boolean boo = memberSvc.getOneByAccount(forgotPassword);
-
+		
 		if (boo == true) {
 
 			// 用 account 取得 會員 Info
