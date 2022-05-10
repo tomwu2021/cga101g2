@@ -17,7 +17,10 @@ public class PetWeightService {
 		dao = new PetWeightJDBCDAO();// TODO換連線池版本
 	}
 	
-	// 新增
+	/**
+	 * 新增一筆寵物體重紀錄
+	 * @return PetWeightVO(recordId, petId, weightRecord, recordTime)
+	 */
 	public PetWeightVO addWeightRecord(Integer petId, BigDecimal weight, Date recordTime) {
 		PetWeightVO pwVO = new PetWeightVO();
 		pwVO.setPetId(petId);
@@ -27,7 +30,9 @@ public class PetWeightService {
 		return pwVO;
 	}
 	
-	// 刪除
+	/**
+	 * 刪除一筆寵物體重紀錄
+	 */
 	public Boolean deleteWeightRecord(Integer recordId) {
 		PetWeightVO pwVO = new PetWeightVO();
 		pwVO.setRecordId(recordId);
@@ -35,7 +40,10 @@ public class PetWeightService {
 	    return bool;
 	}
 	
-	// 修改
+	/**
+	 * 修改一筆寵物體重紀錄
+	 * @return PetWeightVO(recordId, [weightRecord], [recordTime])
+	 */
 	public PetWeightVO updateWeightRecord(BigDecimal weight, Date recordTime, Integer id) {
 		PetWeightVO pwVO = new PetWeightVO();
 		pwVO.setWeightRecord(weight);
@@ -45,25 +53,36 @@ public class PetWeightService {
 		return pwVO;
 	}
 
-	// 查一筆
+	/**
+	 * 查詢一筆寵物體重紀錄
+	 * @return PetWeightVO(recordId, petId, weightRecord, recordTime)
+	 */
 	public PetWeightVO getOneWeight(Integer id) {
 		PetWeightVO pwVO = dao.getOneById(id);
 		return pwVO;
 	}
 	
-	// 查一寵物
+	/**
+	 * 查詢一隻寵物所有體重紀錄
+	 * @return PetWeightVO的list集合
+	 */
 	public List<PetWeightVO> getByPetId(Integer petId){
 		List<PetWeightVO> weightList = dao.getOneByPetId(petId);
 		return weightList;
 	}
 	
-	// 查一寵物最近一筆
+	/**
+	 * 查詢一寵物最近一筆體重紀錄
+	 * @return PetWeightVO(recordId, petId, weightRecord, recordTime)
+	 */
 	public PetWeightVO getRecentWeight(Integer petId){
 		PetWeightVO pwVO = dao.getRecentWeight(petId);
 		return pwVO;
 	}
 	
-	// 查一寵物體重紀錄(季平均)
+	/**
+	 * 查詢一寵物體重紀錄(季平均)
+	 */
 	public BigDecimal getAverageWeight(Integer petId){
 		BigDecimal averge = dao.getAverageWeight(petId);
 		return averge;
