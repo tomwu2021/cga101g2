@@ -20,6 +20,7 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 <%@ include file="/back/layout/commonCSS.jsp"%>
 <!-- Morris Chart Styles-->
 <link href="assets/css/morris-0.4.3.min.css" rel="stylesheet" />
+<link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
 <!-- 自訂的CSS -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front/pet/style.css">
@@ -122,6 +123,12 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 <script src="assets/js/morris.js"></script>
 <!-- 自訂的JS -->
 <script>
+if('${recentWgt.recordTime}'===''){
+	$('.weight-card').hide();
+}
+</script>
+
+<script>
 (function ($) {
     "use strict";
     var mainApp = {
@@ -147,15 +154,14 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 
                 xkey: 'recordTime',
                 ykeys: ['weightRecord'],
-                labels: ['體重(公斤)', '紀錄日期'],
+                labels: ['體重(kg)', '紀錄日期'],
                 fillOpacity: 0.6,
                 hideHover: 'auto',
                 behaveLikeLine: true,
                 resize: true,
                 pointFillColors: ['#ffffff'],
                 pointStrokeColors: ['black'],
-                lineColors: ['#F09B22'],
-//                 dateFormat:function (x) { return new Date(x).toString(); }
+                lineColors: ['#2249BA'],
 
             });
 
