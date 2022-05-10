@@ -23,7 +23,7 @@ public class MembersServlet extends HttpServlet {
 
 		// 判斷呼叫哪個方法
 		String action = req.getParameter("action");
-		System.out.println(action);
+//		System.out.println(action);
 
 		action = action == null ? "" : action;
 
@@ -45,6 +45,10 @@ public class MembersServlet extends HttpServlet {
 			break;
 		case "updateMemberInfo":
 			updateMemberInfo(req, res);
+			break;
+		case "updateMemberPassword":
+			updateMemberPassword(req, res);
+			break;
 		}
 	}
 
@@ -99,11 +103,13 @@ public class MembersServlet extends HttpServlet {
 				String url = "/front/member/member.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				return;
 			} else if (membersVO == null) {
 				messages.put("messagesPassword", "請確認會員密碼");
 				messages.put("originalAccount", loginAccount);
 				RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
 				failureView.forward(req, res);
+				return;
 			}
 
 		} else {
@@ -112,6 +118,7 @@ public class MembersServlet extends HttpServlet {
 			messages.put("messagesPassword", "請確認會員密碼");
 			RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
 			failureView.forward(req, res);
+			return;
 		}
 
 	}
@@ -178,7 +185,6 @@ public class MembersServlet extends HttpServlet {
 		String sessionAuthCode = (String) sessionVC.getAttribute("authCode"); // 取得寄送的驗證碼
 
 		String userAccount = req.getParameter("registerAccount");
-		String userPassword = req.getParameter("registerpassword");
 		String userCheckPassword = req.getParameter("registercheckpasswordr");
 		String userVerificationCode = req.getParameter("verificationCode");
 
@@ -229,7 +235,7 @@ public class MembersServlet extends HttpServlet {
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
 
-		System.out.println(forgotPassword);
+//		System.out.println(forgotPassword);
 		MembersService memberSvc = new MembersService();
 		Boolean boo = memberSvc.getOneByAccount(forgotPassword);
 
@@ -250,6 +256,7 @@ public class MembersServlet extends HttpServlet {
 			messages.put("msgError", "已寄送新密碼至此信箱");
 			String json = new Gson().toJson(messages);
 			res.getWriter().write(json);
+			return;
 		} else {
 			messages.put("msgError", "查無此會員");
 			String json = new Gson().toJson(messages);
@@ -258,9 +265,10 @@ public class MembersServlet extends HttpServlet {
 		}
 	}
 
+	/*************************** 顯示會員等級 **********************/
 	public void getRankName(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String rankId = req.getParameter("rankId");
-		System.out.println(rankId);
+//		System.out.println(rankId);
 
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
@@ -295,12 +303,11 @@ public class MembersServlet extends HttpServlet {
 		}
 	}
 
+	/*************************** 會員修改基本資料 **********************/
 	public void updateMemberInfo(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
-
-		messages.clear();
 
 		String name = req.getParameter("name");
 		if (name == null || name.trim().length() == 0) {
@@ -320,25 +327,89 @@ public class MembersServlet extends HttpServlet {
 
 		String address = req.getParameter("address");
 
-		System.out.println(messages);
+//		System.out.println(messages);
 
 		if (!messages.isEmpty()) {
 			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberUpdate.jsp");
 			failureView.forward(req, res);
 			return;// 程式中斷
+		} else {
+			HttpSession currentSession = req.getSession();
+			MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
+			MembersService memberSvc = new MembersService();
+			sessionMembersVO.setName(name); // Name
+			sessionMembersVO.setPhone(phone); // Phone
+			sessionMembersVO.setAddress(address); // Address
+			memberSvc.update(sessionMembersVO);
+
+			RequestDispatcher successView = req.getRequestDispatcher("/front/member/member.jsp");
+			successView.forward(req, res);
+			return;// 程式中斷
 		}
+
+	}
+
+	/*************************** 會員修改密碼 **********************/
+	public void updateMemberPassword(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
 
 		HttpSession currentSession = req.getSession();
 		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
-		MembersService memberSvc = new MembersService();
-		sessionMembersVO.setName(name); // Name
-		sessionMembersVO.setPhone(phone); // Phone
-		sessionMembersVO.setAddress(address); // Address
-		memberSvc.update(sessionMembersVO);
+		String currentPassword = sessionMembersVO.getPassword();
 
-		String url = "/front/member/member.jsp";
-		RequestDispatcher successView = req.getRequestDispatcher(url);
-		successView.forward(req, res);
+		String oldPhone = req.getParameter("oldPhone");
+		if (oldPhone == null || oldPhone.trim().length() == 0) {
+			messages.put("errorOldPhone", "*密碼不可為空");
+		} else {
+			if (!currentPassword.equals(oldPhone)) {
+				messages.put("errorOldPhone", "*密碼不符合");
+			}
+		}
+
+		String regex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+		String nwePhone = req.getParameter("newPhone");
+
+		if (nwePhone == null || nwePhone.trim().length() == 0) {
+			messages.put("errorNewPhone", "*密碼不可為空");
+		} else {
+			if (!nwePhone.trim().matches(regex)) {
+				messages.put("errorNewPhone", "*手機格式錯誤");
+			}
+		}
+
+		String checkNewPhone = req.getParameter("checkNewPhone");
+		if (checkNewPhone == null || checkNewPhone.trim().length() == 0) {
+			messages.put("errorCheckNewPhone", "*密碼不可為空");
+		} else {
+			if (!checkNewPhone.equals(nwePhone)) {
+				messages.put("errorCheckNewPhone", "*密碼與前次輸入不相符");
+			}
+		}
+		if (!messages.isEmpty()) {
+			messages.put("userInput1", oldPhone);
+			messages.put("userInput2", nwePhone);
+
+			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberPassword.jsp");
+			failureView.forward(req, res);
+			return;// 程式中斷
+		} else {
+
+			// 輸入正確後，呼叫 DAO 修改資料庫密碼 nwePhone
+			MembersService memberSvc = new MembersService();
+			MembersVO newMemberVO = new MembersVO();
+			newMemberVO.setMemberId(sessionMembersVO.getMemberId());
+			newMemberVO.setPassword(nwePhone);
+			memberSvc.update(newMemberVO);
+
+			messages.put("updatePasswordSuccess", "修改密碼成功！");
+			// successful 的頁面
+			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberPassword.jsp");
+			successView.forward(req, res);
+			return;// 程式中斷
+		}
 
 	}
 
