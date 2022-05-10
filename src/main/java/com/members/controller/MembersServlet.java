@@ -3,6 +3,9 @@ package com.members.controller;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import com.album.model.AlbumJDBCDAO;
@@ -48,6 +51,9 @@ public class MembersServlet extends HttpServlet {
 			break;
 		case "updateMemberPassword":
 			updateMemberPassword(req, res);
+			break;
+		case "walletAddMoney":
+			walletAddMoney(req, res);
 			break;
 		}
 	}
@@ -229,16 +235,16 @@ public class MembersServlet extends HttpServlet {
 
 	/*************************** 忘記密碼 **********************/
 	public void sendforgotMail(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
+
 		String forgotPassword = req.getParameter("forgotPassword");
-		
+
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
 
 //		System.out.println(forgotPassword);
 		MembersService memberSvc = new MembersService();
 		Boolean boo = memberSvc.getOneByAccount(forgotPassword);
-		
+
 		if (boo == true) {
 
 			// 用 account 取得 會員 Info
@@ -410,6 +416,35 @@ public class MembersServlet extends HttpServlet {
 			successView.forward(req, res);
 			return;// 程式中斷
 		}
+
+	}
+
+	/*************************** 會員錢包儲值 **********************/
+	public void walletAddMoney(HttpServletRequest req, HttpServletResponse res) {
+		res.setContentType("application/json; charset=UTF-8");
+		// 訊息存在 Map
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+
+		// 接收參數
+		String storedValueAmount = req.getParameter("storedValueAmount");
+		String cardNumber = req.getParameter("cardNumber");
+
+		String regex = "^-?[0-9]+";
+		if (!storedValueAmount.trim().matches(regex)) {
+			messages.put("inputError", "請輸入正整數");
+			messages.put("cardNumber", cardNumber);
+			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberWallet.jsp");
+			try {
+				failureView.forward(req, res);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+			return;// 程式中斷
+		}
+		
+		// 儲值成功 DAO
+
 
 	}
 

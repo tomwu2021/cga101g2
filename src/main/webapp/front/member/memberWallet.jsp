@@ -44,11 +44,12 @@
 											</div>
 										</div>
 										<div class="panel-body" style="margin: auto">
-											<form role="form" id="payment-form">
+<!-- 											<form role="form" id="payment-form"> -->
+											<form method="post" action="<%=request.getContextPath()%>/front/member.do" id="payment-form">
 												<div class="row">
 													<div class="col-xs-12">
 														<div class="form-group">
-															<label for="cardNumber" style="padding-left: 15px">儲值金額</label>
+															<label for="cardNumber" style="padding-left: 15px">儲值金額<font color=red> ${messages.inputError}</font></label>
 															<div class="input-group"
 																style="width: 300px; padding-left: 15px">
 																<input type="text" class="form-control"
@@ -62,14 +63,15 @@
 												<div class="row">
 													<div class="col-xs-12">
 														<div class="form-group" style="display: inline-block">
-<!-- 															<label for="cardNumber" style="padding-left: 15px"></label> -->
-															<span class="input-group-addon"  style="padding-left: 15px">卡號<i
+															<!-- 															<label for="cardNumber" style="padding-left: 15px"></label> -->
+															<span class="input-group-addon"
+																style="padding-left: 15px">卡號<i
 																class="fa fa-credit-card" style="padding-left: 15px"></i></span>
 															<div class="input-group"
 																style="width: 300px; padding-left: 15px">
 																<input type="tel" class="form-control" name="cardNumber"
 																	placeholder="Valid Card Number"
-																	autocomplete="cc-number" required autofocus />
+																	autocomplete="cc-number" required autofocus value="${messages.cardNumber}"/>
 															</div>
 
 														</div>
@@ -101,8 +103,10 @@
 													<div class="col-xs-12">
 														<!-- 															<button class="btn btn-success btn-lg btn-block" -->
 														<!-- 																type="submit" >送出</button> -->
+														
 														<button class="btn btn-success btn-lg btn-block"
 															type="submit">送出</button>
+															<input type="hidden" name="action" value="walletAddMoney">
 													</div>
 												</div>
 												<div class="row" style="display: none;">
