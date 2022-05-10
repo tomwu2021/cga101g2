@@ -31,6 +31,7 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 <!-- 共用的CSS -->
 <%@ include file="/back/layout/commonCSS.jsp"%>
 <!-- 自訂的CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/sb-admin-2.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front/pet/style.css">
 <body>
@@ -59,11 +60,11 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 
 			<div class="col-lg-12">
 				<!-- ALL Activity -->
-				<div class="card">
+				<div class="card border-bottom-danger">
 					
 			
 					
-					<form method="post" action="/CGA101G2/remind" id="editForm">
+					<form method="post" action="<%=request.getContextPath()%>/remind" id="editForm">
 					<div class="card-body">
 						<div class="row">
 						<div class="card-title col-lg-11">新增提醒</div>
@@ -120,7 +121,6 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 	<!-- 共用的JS -->
 	<%@include file="/front/layout/commonJS.jsp"%>
 	<!-- 自訂的JS -->
-<script src="/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 <!--<div class="row justify-content-center" >
 <a style="display:block;max-width:40%" href="#">
@@ -128,10 +128,10 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 <div>有新活動嗎？快來記錄吧！</div>-->
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 <link rel="stylesheet" type="text/css"
-	href="/CGA101G2/front/pet/datetimepicker/jquery.datetimepicker.css" />
-<script src="/CGA101G2/front/pet/datetimepicker/jquery.js"></script>
+	href="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.js"></script>
 <script
-	src="/CGA101G2/front/pet/datetimepicker/jquery.datetimepicker.full.js"></script>
+	src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
 .xdsoft_datetimepicker .xdsoft_datepicker {

@@ -9,12 +9,13 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 %>
 <!-- Activity List -->
 <div class="activity" style="height:45vh;overflow-y:auto;">
-			<%int count = 0; %>
+			<%int count = 60; %>
 	<c:forEach var="rVO" items="${rAll}">
 	<!-- Activity Item-->
+	<%count -= 60; %>
 	<div class="activity-item d-flex">
 		<div class="remind-label">
-					<div class=" text-danger"><fmt:formatDate value="${rVO.time}" pattern="yyyy-MM-dd " /></div>
+			<div class=" text-danger" style="filter:hue-rotate(<%=count%>deg)"><fmt:formatDate value="${rVO.time}" pattern="yyyy-MM-dd " /></div>
 					
 		<div class="text-muted small"><i class="far fa-clock"></i>&nbsp;&nbsp;<fmt:formatDate value="${rVO.time}" pattern="HH:mm" /></div></div>
 		

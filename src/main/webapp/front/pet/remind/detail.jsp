@@ -24,6 +24,7 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 <!-- 共用的CSS -->
 <%@ include file="/back/layout/commonCSS.jsp"%>
 <!-- 自訂的CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/sb-admin-2.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front/pet/style.css">
 <body>
@@ -55,7 +56,7 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 
 			<div class="col-lg-12">
 				<!-- ALL Activity -->
-				<div class="card">
+				<div class="card border-bottom-danger">
 					
 					<div class="card-body">
 						<div class="row">
@@ -68,7 +69,7 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 		              <button  class="btn btn-danger form-btn-circle btn-sm" data-toggle="modal" data-target="#basicModal" id="deleteBtn">
 		                <i class="fas fa-trash-alt"></i> 刪除
 		              </button>
-		                      <form method="post" action="/CGA101G2/remind">
+		                      <form method="post" action="<%=request.getContextPath()%>/remind">
 		              <input type="hidden" name="remindId" id="getRemindId">
 		              <div class="modal fade" id="basicModal" tabindex="-1">
 		                <div class="modal-dialog">
@@ -92,7 +93,7 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 						<!-- End Basic Modal-->
 						</div>
 						<div class="card-title col-lg-1">
-							<form method="post" action="/CGA101G2/remind">
+							<form method="post" action="<%=request.getContextPath()%>/remind">
 							<input type="hidden" name="action" value="goToInsert">
 							<button type="submit" class="btn btn-primary form-btn-circle btn-sm" id="insertBtn" onclick="insertBtn()">
 								<i class="fas fa-plus"></i> 新增
@@ -146,10 +147,10 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 	<!-- 共用的JS -->
 	<%@include file="/front/layout/commonJS.jsp"%>
 	<!-- 自訂的JS -->
-<script src="/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
 <script>
 let rId = '${param.remindId}'? '${param.remindId}':$('.allItem:first').attr("id");
-		$("#editBox").load("/CGA101G2/remind",
+		$("#editBox").load("<%=request.getContextPath()%>/remind",
 				{action:"one_Display",
 				remindId:rId}, 
 				function(data,status){
@@ -163,7 +164,7 @@ let rId = '${param.remindId}'? '${param.remindId}':$('.allItem:first').attr("id"
 
 function getDetail(remind){
 	rId = remind.id;
-	$.post("/CGA101G2/remind",
+	$.post("<%=request.getContextPath()%>/remind",
 			{action:"one_Display",
 			remindId:rId}, 
 			function(data,status){
@@ -184,10 +185,10 @@ function getDetail(remind){
 <div>有新活動嗎？快來記錄吧！</div>-->
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 <link rel="stylesheet" type="text/css"
-	href="/CGA101G2/front/pet/datetimepicker/jquery.datetimepicker.css" />
-<script src="/CGA101G2/front/pet/datetimepicker/jquery.js"></script>
+	href="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.js"></script>
 <script
-	src="/CGA101G2/front/pet/datetimepicker/jquery.datetimepicker.full.js"></script>
+	src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
 .xdsoft_datetimepicker .xdsoft_datepicker {
