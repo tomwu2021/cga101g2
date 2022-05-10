@@ -152,14 +152,14 @@ public class MembersDAO implements MembersDAO_interface {
 		return false;
 	}
 
-// update 情境四：管理員可以發送紅利 ---------------------------------------------------------------------------------
+// update 情境四：更新紅利 ---------------------------------------------------------------------------------
 	@Override
 	public boolean changeBonus(MembersVO membersVO) {
 
 		con = JNDIConnection.getRDSConnection();
 		int currentBonusAmount = selectBonusAmount(membersVO, con) + membersVO.getBonusAmount(); // 現在的紅利 = 取得資料庫原本的紅利 +
 																									// 管理員給的紅利
-		Boolean b = changeBonus(membersVO, con, currentBonusAmount); // 變更紅利的金額
+		Boolean b = changeBonus(membersVO, currentBonusAmount, con); // 變更紅利的金額
 		try {
 			con.close();
 		} catch (SQLException e) {
@@ -168,7 +168,7 @@ public class MembersDAO implements MembersDAO_interface {
 		return b;
 	}
 
-	public boolean changeBonus(MembersVO membersVO, Connection con, int bouns) {
+	public boolean changeBonus(MembersVO membersVO, Integer bouns, Connection con) {
 
 		final String CHANGE_BONUS = "UPDATE members set bonus_amount=? where member_id = ?;";
 		if (con != null) {
@@ -177,7 +177,6 @@ public class MembersDAO implements MembersDAO_interface {
 				pstmt.setInt(1, bouns);
 				pstmt.setInt(2, membersVO.getMemberId());
 				pstmt.execute();
-//				System.out.println("3：" + con);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -733,46 +732,92 @@ public class MembersDAO implements MembersDAO_interface {
 
 	@Override
 	public boolean walletPaymentAddMoney(Integer memberId, Integer money) {
-		
+
 		con = JNDIConnection.getRDSConnection();
 		Boolean boo = walletPaymentAddMoney(memberId, money, con);
-		
+
 		try {
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return boo;
-		
+
 	}
-	// ewallet_amount  會員錢包 消費/儲值
+
+	// ewallet_amount 會員錢包 消費/儲值
 	public boolean walletPaymentAddMoney(Integer memberId, Integer money, Connection con) {
-		
-		MembersVO originalMembersVO = new MembersVO();
-		MembersVO currentMembersVO = new MembersVO();
-		
-		ChargeRecordVO chargeRecordVO = new ChargeRecordVO();
-		
-		MembersDAO membersDAO = new MembersDAO();
-		ChargeRecordDAO chargeRecordDAO = new ChargeRecordDAO();
-		
-		// 用 memberId 取得 會員的錢包的餘額
-		originalMembersVO = membersDAO.getOneById(memberId);
-		Integer originalMoney = originalMembersVO.geteWalletAmount();
-		
-		// 取得會員本身的餘額後，增加 或 減少 金額
-		Integer currentMoney = originalMoney + money;
-		
-		// 更新會員錢包的值
-		currentMembersVO.seteWalletAmount(currentMoney);
-		currentMembersVO.setMemberId(memberId);
-		membersDAO.changeEWalletAmount(currentMembersVO, con);
-		System.out.println(currentMembersVO);
-		
-		// 呼叫 ChargeRecordDAO 新增一筆交易紀錄
-		chargeRecordVO.setMemberId(memberId);
-		chargeRecordVO.setChargeAmount(money);
-		chargeRecordDAO.insert(chargeRecordVO, con);
+
+		if (con != null) {
+			MembersVO originalMembersVO = new MembersVO();
+			MembersVO currentMembersVO = new MembersVO();
+
+			ChargeRecordVO chargeRecordVO = new ChargeRecordVO();
+
+			MembersDAO membersDAO = new MembersDAO();
+			ChargeRecordDAO chargeRecordDAO = new ChargeRecordDAO();
+
+			// 用 memberId 取得 會員的錢包的餘額
+			originalMembersVO = membersDAO.getOneById(memberId);
+			Integer originalMoney = originalMembersVO.geteWalletAmount();
+
+			// 取得會員本身的餘額後，增加 或 減少 金額
+			Integer currentMoney = originalMoney + money;
+
+			// 更新會員錢包的值
+			currentMembersVO.seteWalletAmount(currentMoney);
+			currentMembersVO.setMemberId(memberId);
+			membersDAO.changeEWalletAmount(currentMembersVO, con);
+			System.out.println(currentMembersVO);
+
+			// 呼叫 ChargeRecordDAO 新增一筆交易紀錄
+			chargeRecordVO.setMemberId(memberId);
+			chargeRecordVO.setChargeAmount(money);
+			chargeRecordDAO.insert(chargeRecordVO, con);
+			return true;
+		}
+
+		return false;
+	}
+
+	// 紅利 消費/發送
+	@Override
+	public boolean bonusPaymentAddValue(Integer memberId, Integer bonus) {
+
+		con = JNDIConnection.getRDSConnection();
+		Boolean boo = bonusPaymentAddValue(memberId, bonus, con);
+
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return boo;
+	}
+
+	public boolean bonusPaymentAddValue(Integer memberId, Integer bonus, Connection con) {
+		if (con != null) {
+			MembersDAO membersDAO = new MembersDAO();
+
+			MembersVO originalMembersVO = new MembersVO();
+			MembersVO currentMembersVO = new MembersVO();
+
+			// 用 memberId 取得 會員的紅利的餘額
+			originalMembersVO = membersDAO.getOneById(memberId);
+			Integer originalBonus = originalMembersVO.getBonusAmount();
+
+			// 增加 或 減少
+			Integer currentMoney = originalBonus + bonus;
+
+			// 更新會員錢包的值
+			currentMembersVO.setBonusAmount(originalBonus);
+			currentMembersVO.setMemberId(memberId);
+			membersDAO.changeBonus(currentMembersVO,currentMoney, con);
+			System.out.println(currentMembersVO);
+
+			return true;
+		}
+
 		return false;
 	}
 }

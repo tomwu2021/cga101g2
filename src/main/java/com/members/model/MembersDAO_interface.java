@@ -58,4 +58,7 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 
 	// member_id 查詢某一筆會員資料
 	public MembersVO getOneById(Integer id);
+	
+	// 紅利 消費/發送
+	public boolean bonusPaymentAddValue(Integer memberId,Integer bonus);
 }
