@@ -32,8 +32,8 @@ public class S3Service {
 		String uuName = getUUIDName(fileName);
 		String key = getGenerateFileKey(uuName);
 		String previewKey = getPreviewKey(uuName);
-		String url = (CDN + key).replace(" ", "%20");
-		String previewUrl = (url + "?d=600x400").replace("%20", "%2520");
+		String url = (CDN + key).replace(" ", "%20").replace("+","%2B");
+		String previewUrl = (url + "?d=600x400").replace("%20", "%2520").replace("+","%252B");
 		AmazonS3 s3client = new AwsService().getS3Client();
 
 		try {
