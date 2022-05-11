@@ -9631,7 +9631,7 @@ textarea:-ms-input-placeholder {
   float: left;
   padding-left: 30px;
   padding-top: 0;
-  background-color: green;
+  
 }
 
 @media only screen and (max-width: 767px) {
