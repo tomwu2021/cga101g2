@@ -122,11 +122,12 @@
                     </div>
                 </div>
             </div>
-            <div class='row mt-5'>
-            <div class='col-lg-5'></div>
-            <div class='col-lg-2'>
+            <div class='row mt-5' style='height:470px;background-position:center;background-size:cover;' data-bgimg='<%=request.getContextPath()%>/assets/img/sign-up-image2.jpg'>
+            <div class='col-lg-3'></div>
+            <div class='col-lg-4 col-sm-4'>
+            <div class='row' style='height:6vh;'></div>
             <a href='#'>
-            <img src='<%=request.getContextPath()%>/assets/img/login-image.png'>
+            <img style='filter:hue-rotate(150deg) saturate(5) drop-shadow(0 0 16px #fff);' src='<%=request.getContextPath()%>/assets/img/sign-up-image.png'>
             </a>
             </div>
             <div class='col-lg-5'></div>
