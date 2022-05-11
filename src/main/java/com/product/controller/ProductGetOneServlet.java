@@ -70,7 +70,12 @@ public class ProductGetOneServlet extends HttpServlet {
 			ProductService pdSvc = new ProductService();
 			ProductVO pdVO = pdSvc.getOneProductByid(productId);
 			String param = "?productId=" + pdVO.getProductId() 
-							+ "&productName=" + pdVO.getProductName() 
+							//****自助式轉碼  從資料庫取出****//
+							+ "&productName=" + pdVO.getProductName()
+							.replace("%","%25").replace("/","%2F").replace("?","%3F")
+							.replace(":","%3A").replace("@","%40").replace("=","%3D")
+							.replace("$","%24").replace("#","%23").replace(" ","%20")
+							//****自助式轉碼****//
 							+ "&price="+ pdVO.getPrice() 
 							+ "&amount=" + pdVO.getAmount()
 							+ "&sort2Id=" + pdVO.getSort2Id() 
@@ -79,7 +84,13 @@ public class ProductGetOneServlet extends HttpServlet {
 							+ "&groupAmount1="+ pdVO.getGroupAmount1()
 							+ "&groupAmount2=" + pdVO.getGroupAmount2() 
 							+ "&groupAmount3="+ pdVO.getGroupAmount3()
-							+ "&description=" + pdVO.getDescription();
+							//****自助式轉碼  從資料庫取出****//
+							+ "&description=" + pdVO.getDescription()
+							.replace("%","%25").replace("/","%2F").replace("?","%3F")
+							.replace(":","%3A").replace("@","%40").replace("=","%3D")
+							.replace("$","%24").replace("#","%23").replace(" ","%20");
+							//****自助式轉碼****//
+							
 			String url = "/back/shop/updateProduct.jsp" + param;
 
 			ProductImgService pImgSvc = new ProductImgService();
@@ -115,6 +126,14 @@ public class ProductGetOneServlet extends HttpServlet {
 				errorMsgs.put("productName", "商品名稱至少五個字以上");
 			}
 
+			
+			//****自助式轉碼  存入資料庫****//
+			productName.replace("%25","%").replace("%2F","/").replace("%3F","?")
+						.replace("%3A",":").replace("%40","@").replace("%3D","=")
+						.replace("%24","$").replace("%23","#").replace("%20"," ");
+			//****自助式轉碼****//
+			
+			
 			Integer amount = null;
 			try {
 				amount = Integer.valueOf(req.getParameter("amount").trim());
@@ -215,6 +234,12 @@ public class ProductGetOneServlet extends HttpServlet {
 				errorMsgs.put("description", "商品敘述至多300字以內");
 			}
 
+			//****自助式轉碼  存入資料庫****//
+			description.replace("%25","%").replace("%2F","/").replace("%3F","?")
+						.replace("%3A",":").replace("%40","@").replace("%3D","=")
+						.replace("%24","$").replace("%23","#").replace("%20"," ");
+			//****自助式轉碼****//
+			
 //要被刪除的照片
 			String deleteImg[] = req.getParameterValues("deleteImg");
 			if (deleteImg != null) {
@@ -313,6 +338,11 @@ public class ProductGetOneServlet extends HttpServlet {
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			String param = "?productId=" + pdVO.getProductId() 
 						+ "&productName=" + pdVO.getProductName() 
+						//****自助式轉碼  從資料庫取出****//
+						.replace("%","%25").replace("/","%2F").replace("?","%3F")
+						.replace(":","%3A").replace("@","%40").replace("=","%3D")
+						.replace("$","%24").replace("#","%23").replace(" ","%20")
+						//****自助式轉碼****//
 						+ "&price=" + pdVO.getPrice() 
 						+ "&amount=" + pdVO.getAmount() 
 						+ "&sort2Id=" + pdVO.getSort2Id() 
@@ -322,7 +352,12 @@ public class ProductGetOneServlet extends HttpServlet {
 						+ "&groupAmount2=" + pdVO.getGroupAmount2()
 						+ "&groupAmount3=" + pdVO.getGroupAmount3()
 						+ "&description=" + pdVO.getDescription()
-					// 子分類的名字
+						//****自助式轉碼  從資料庫取出****//
+						.replace("%","%25").replace("/","%2F").replace("?","%3F")
+						.replace(":","%3A").replace("@","%40").replace("=","%3D")
+						.replace("$","%24").replace("#","%23").replace(" ","%20")
+						//****自助式轉碼****//
+						// 子分類的名字
 						+ "&sort2Name=" + sort2VO.getSort2Name();
 			// 商品照片的集合
 //						+ "&pictureVOList=" + pdVO.getPictureVOList();
@@ -363,6 +398,11 @@ public class ProductGetOneServlet extends HttpServlet {
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			String param = "?productId=" + pdVO.getProductId()
 			   			+ "&productName=" + pdVO.getProductName() 
+			   			//****自助式轉碼  從資料庫取出****//
+						.replace("%","%25").replace("/","%2F").replace("?","%3F")
+						.replace(":","%3A").replace("@","%40").replace("=","%3D")
+						.replace("$","%24").replace("#","%23").replace(" ","%20")
+						//****自助式轉碼****//
 			   			+ "&price="+ pdVO.getPrice() 
 			   			+ "&amount=" + pdVO.getAmount() 
 			   			+ "&sort2Id=" + pdVO.getSort2Id() 
@@ -372,6 +412,11 @@ public class ProductGetOneServlet extends HttpServlet {
 			   			+ "&groupAmount2=" + pdVO.getGroupAmount2() 
 			   			+ "&groupAmount3="+ pdVO.getGroupAmount3() 
 			   			+ "&description=" + pdVO.getDescription()
+			   			//****自助式轉碼  從資料庫取出****//
+						.replace("%","%25").replace("/","%2F").replace("?","%3F")
+						.replace(":","%3A").replace("@","%40").replace("=","%3D")
+						.replace("$","%24").replace("#","%23").replace(" ","%20")
+						//****自助式轉碼****//
 					// 子分類的名字
 			   			+ "&sort2Name=" + sort2VO.getSort2Name();
 			// 商品照片的集合
@@ -392,4 +437,5 @@ public class ProductGetOneServlet extends HttpServlet {
 		}
 
 	}
+
 }

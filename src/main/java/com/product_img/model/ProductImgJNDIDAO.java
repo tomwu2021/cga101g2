@@ -133,12 +133,12 @@ public class ProductImgJNDIDAO implements ProductImgDAO_interface {
 				pictureVO.setSize(rs.getLong("size"));
 				pictureVO.setPreviewUrl(rs.getString("preview_url"));
 				pictureVO.setPreviewKey(rs.getString("preview_key"));
-				System.out.println("picture_id = " + pictureVO.getPictureId());
+//				System.out.println("picture_id = " + pictureVO.getPictureId());
 				list.add(pictureVO); // Store the row in the vector
 			}
-			System.out.println("Size = " + list.size());
+//			System.out.println("Size = " + list.size());
 
-			System.out.println("List<PictureVO> getPicVOsByProductId(Integer productId) 執行成功");
+//			System.out.println("List<PictureVO> getPicVOsByProductId(Integer productId) 執行成功");
 			return list;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());

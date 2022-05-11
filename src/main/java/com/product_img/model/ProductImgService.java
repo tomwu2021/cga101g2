@@ -24,7 +24,6 @@ public class ProductImgService implements ProductImgDAO_interface{
 	//用商品id找到PictureVO的"集合"們
 	@Override
 	public List<PictureVO> getPicVOsByProductId(Integer productId) {
-		System.out.println("ProductImgService執行");
 		return dao.getPicVOsByProductId(productId);
 	}
 	//用商品id找到ProductImgVO的"集合"們

@@ -74,6 +74,13 @@ public class ShopFrontServlet extends HttpServlet {
 
 			/*************************** 2.開始複合查詢 ***************************************/
 			ProductService pdSvc = new ProductService();
+			  ///********推薦商品資料 開始*********///
+		    Map<String, String[]> topMap = new TreeMap<String, String[]>();
+		    topMap.put("top_status", new String[] { "1" });
+		    List<ProductVO> topProdcutList = pdSvc.getForShopFront(topMap);
+		    ///********推薦商品資料 結束*********///
+			
+			
 			List<ProductVO> list = pdSvc.getForShopFront(map);
 			
 			//搜尋所有主分類"們" 放入對應的子分類"們"
@@ -106,23 +113,17 @@ public class ShopFrontServlet extends HttpServlet {
 			}
 			 ///********分類的分界點 結束*********///
 			
-		    ///********推薦商品資料 開始*********///
-		    Map<String, String[]> topMap = new TreeMap<String, String[]>();
-		    topMap.put("top_status", new String[] { "1" });
-		    List<ProductVO> topProdcutList = pdSvc.getForShopFront(topMap);
-		    ///********推薦商品資料 結束*********///
 		    
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			 ///********推薦商品資料 開始*********///
+			req.setAttribute("topProdcutList", topProdcutList);
+		    ///********推薦商品資料 結束*********///
 			req.setAttribute("listProducts_Byfind", list); // 資料庫取出的list物件,存入request
 			req.setAttribute("sort1VOListIncludesort2VOList", sort1VOList);
 			///********跳轉到該分類頁面的分類資料分界點 開始*********///
 			req.setAttribute("thisSort1VO", sort1VO);
 			req.setAttribute("thisSort2VO", sort2VO);
 			///********分類的分界點 結束*********///
-			
-			 ///********推薦商品資料 開始*********///
-			req.setAttribute("topProdcutList", topProdcutList);
-		    ///********推薦商品資料 結束*********///
 			
 			// **********************0506要轉交給shop2改成轉交給shop***********************//
 

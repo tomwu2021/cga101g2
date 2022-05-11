@@ -3,6 +3,7 @@ package com.product.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -43,16 +44,16 @@ public class ProductInsertServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 //			列舉client送來的所有請求參數名稱
-//			try{
-//				String name; 
-//				Enumeration<?>  pNames=req.getParameterNames(); 
-//				 while(pNames.hasMoreElements()){ 
-//				  name=(String)pNames.nextElement();
-//				  System.out.println(name+"="+req.getParameter(name));
-//				  }
-//				}catch(Exception e){
-//				System.out.println(e.toString());
-//				}
+			try{
+				String name; 
+				Enumeration<?>  pNames=req.getParameterNames(); 
+				 while(pNames.hasMoreElements()){ 
+				  name=(String)pNames.nextElement();
+				  System.out.println(name+"="+req.getParameter(name));
+				  }
+				}catch(Exception e){
+				System.out.println(e.toString());
+				}
 
 //			try {
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
@@ -62,6 +63,13 @@ public class ProductInsertServlet extends HttpServlet {
 			} else if ((productName.trim().length() <= 5)) { 
 				errorMsgs.put("productName", "商品名稱至少五個字以上");
 			}
+		
+			//****自助式轉碼  存入資料庫****//
+			productName.replace("%25","%").replace("%2F","/").replace("%3F","?")
+						.replace("%3A",":").replace("%40","@").replace("%3D","=")
+						.replace("%24","$").replace("%23","#").replace("%20"," ");
+			//****自助式轉碼****//
+			
 //			Integer price = null;
 //			try {
 //				
@@ -172,11 +180,12 @@ public class ProductInsertServlet extends HttpServlet {
 			} else if ((description.trim().length() >= 300)) {
 				errorMsgs.put("description", "商品敘述至多300字以內");
 			}
-	
-//			Part part2 = req.getPart("img");
-//			if(part2.getSize()==0) {
-//				errorMsgs.put("img", "至少上傳一張照片");
-//			}
+		
+			//****自助式轉碼  存入資料庫****//
+			description.replace("%25","%").replace("%2F","/").replace("%3F","?")
+						.replace("%3A",":").replace("%40","@").replace("%3D","=")
+						.replace("%24","$").replace("%23","#").replace("%20"," ");
+			//****自助式轉碼****//
 			
 			if (req.getPart("img") == null) {
 				errorMsgs.put("img", "至少上傳一張照片");
