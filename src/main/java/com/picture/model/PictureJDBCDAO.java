@@ -68,11 +68,22 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 	 * id1 對應column1 表的值
 	 */
 	public List<PictureVO> queryPicturesByMapping(MappingTableDto mtd) {
+		try {
+		Connection con = JDBCConnection.getRDSConnection();
+		List<PictureVO> pvos = queryPicturesByMapping(mtd,con);
+		con.close();
+		return pvos;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<PictureVO> queryPicturesByMapping(MappingTableDto mtd,Connection con) throws SQLException {
 		String sql = "SELECT p.* FROM picture p JOIN " + mtd.getTableName1() + " t ON(p.picture_id=t.picture_id) WHERE "
 				+ " t."+ mtd.getColumn1() +" = " + mtd.getId1() ;
-		Connection con = JDBCConnection.getRDSConnection();
 		if (con != null) {
-			try {
 				PreparedStatement stmt = con.prepareStatement(sql);
 //				int index = 0;
 //				stmt.setString(++index, mtd.getTableName1());
@@ -86,13 +97,7 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 				}
 				rs.close();
 				stmt.close();
-				con.close();
 				return pvos;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return null;
-			}
 		}
 		return null;
 	}
