@@ -48,6 +48,10 @@
 										</div>
 										<div class="card-body">
 											<p>查詢條件</p>
+											
+											<c:set var="product_id" scope="page"  value="${map.product_id}"/>
+  											<p>${product_id}</p>
+											
 											<div class="row">
 												<div class="col-lg-6 mb-5">
 													<!-- <form class="form-horizontal"> -->
@@ -69,15 +73,17 @@
 													<div class="form-group row">
 																<label class="col-md-3 form-control-label">商品名稱 :</label>
 																<div class="col-md-6">
-																	<input id="inputHorizontalSuccess" type="text"
-																		value="${param.product_name}" name="product_name" 
-																		placeholder="輸入商品名稱"
-																		class="form-control form-control-success"> 
+																<input class="form-control" list="datalistOptions2"  id="exampleDataList2" name="product_name"  placeholder="輸入商品名稱">
+																<datalist id="datalistOptions2">
+																	<c:forEach var="productVO" items="${forSelectList}">
+  																		<option value="${productVO.productName}">
+ 																	</c:forEach>
+																</datalist> 
 															</div>
 													</div>	
 													
 													<div class="form-group row ">
-															<label class="col-md-3 form-control-label">產品主分類 :</label>
+															<label class="col-md-3 form-control-label">商品主分類 :</label>
 																<div class="col-md-6 m-auto" id="sort2CheckBox">
 																		<div class="form-check form-check-inline">
 																		
@@ -151,12 +157,12 @@
 												</div>
 											<div class="col-lg-12 mb-5">		
 													<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-														<button class="btn btn-primary me-md-2" type="button" style="margin-right: 100px"
+														<button class="btn btn-success me-md-2" type="button" style="margin-right: 100px"
 														 onclick="javascript:window.location='<%=request.getContextPath()%>/back/shop/addProduct.jsp'">
 														 +新增商品</button>
 														 
 														 
-														<input type="submit" value="送出查詢" class="btn btn btn-success"  style="margin-right: 30px;">
+														<input type="submit" value="送出查詢" class="btn btn btn-primary"  style="margin-right: 40px;">
 														<input type="hidden" name="action" value="listProducts_Byfind">
 
 

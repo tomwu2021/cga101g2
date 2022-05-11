@@ -41,7 +41,9 @@ public class ProductGetOneServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-		req.setCharacterEncoding("UTF-8");
+		req.setCharacterEncoding("UTF-8");// client 端向 Servlet 請求的編碼
+		res.setCharacterEncoding("UTF-8");// response，設定回應的格式及編碼
+		
 		String action = req.getParameter("action");
 //		列舉client送來的所有請求參數名稱
 		try {
@@ -271,11 +273,12 @@ public class ProductGetOneServlet extends HttpServlet {
 			/*************************** 3.更新完成,準備轉交(Send the Success view) ***********/
 			Map<String, String> msg = new LinkedHashMap<String, String>();
 			msg.put("msg", "商品更新成功");
+			req.setAttribute("msg", msg);
+			
 			
 			String url = "/back/shop/updateProduct.jsp" + param ;
 			pictureVOList = pImgSvc.getPicVOsByProductId(productId); //照片會消失,所以要查詢新的丟回去
 			req.setAttribute("pictureVOList", pictureVOList);
-			req.setAttribute("msg", msg);
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
 

@@ -24,7 +24,7 @@ public class ProductUpdateStatusServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		// client 端向 Servlet 請求的編碼
+
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("application/json");
 		res.setCharacterEncoding("UTF-8");

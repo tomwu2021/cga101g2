@@ -80,14 +80,15 @@ public class ProductBackServlet extends HttpServlet {
 			Sort2Service sort2Svc = new Sort2Service();
 			List<Sort2VO> sort2VOList = sort2Svc.getAll();
 			
-//			List<ProductVO> forSelectList = pdSvc.getAll();
+			List<ProductVO> forSelectList = pdSvc.getAll();
 			//*********分界點*********//
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("listProducts_Byfind", list); // 資料庫取出的list物件,存入request
 			//*********分界點*********//
 			req.setAttribute("sort1VOList", sort1VOList); 
 			req.setAttribute("sort2VOList", sort2VOList); 
-//			req.setAttribute("forSelectList", forSelectList); 
+			req.setAttribute("forSelectList", forSelectList); 
+			req.setAttribute("map", map); 
 			//*********分界點*********//
 			// **********************0506要轉交給shop2改成轉交給shop***********************//
 

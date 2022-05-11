@@ -33,7 +33,8 @@ public class ProductInsertServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-		req.setCharacterEncoding("UTF-8");
+		req.setCharacterEncoding("UTF-8");// client 端向 Servlet 請求的編碼
+		res.setCharacterEncoding("UTF-8");// response，設定回應的格式及編碼
 		String action = req.getParameter("action");
 		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求

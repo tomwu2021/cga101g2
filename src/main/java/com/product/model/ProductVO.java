@@ -197,6 +197,15 @@ public class ProductVO implements java.io.Serializable {
 		List<Sort1VO> pSort1VO = pSort1Svc.findSort1VOByproductId(productId);
 		return pSort1VO;
 	}
+
+	@Override
+	public String toString() {
+		return "ProductVO [productId=" + productId + ", productName=" + productName + ", price=" + price + ", amount="
+				+ amount + ", sort2Id=" + sort2Id + ", updateTime=" + updateTime + ", groupPrice1=" + groupPrice1
+				+ ", groupAmount1=" + groupAmount1 + ", groupAmount2=" + groupAmount2 + ", groupAmount3=" + groupAmount3
+				+ ", description=" + description + ", status=" + status + ", topStatus=" + topStatus + ", cartAmount="
+				+ cartAmount + ", pictureVO=" + pictureVO + "]";
+	}
 	
 	
 }

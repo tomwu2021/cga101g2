@@ -30,7 +30,8 @@ public class ProductServletAll extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
-		req.setCharacterEncoding("UTF-8");
+		req.setCharacterEncoding("UTF-8");// client 端向 Servlet 請求的編碼
+		res.setCharacterEncoding("UTF-8");// response，設定回應的格式及編碼
 		String action = req.getParameter("action");
 		
 		//一般購物公開頁面 轉交給shop.jsp 只接受參數 statu=1 or status =2

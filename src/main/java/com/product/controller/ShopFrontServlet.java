@@ -34,6 +34,9 @@ public class ShopFrontServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("ShopFrontServlet 執行成功");
+		req.setCharacterEncoding("UTF-8");// client 端向 Servlet 請求的編碼
+		res.setCharacterEncoding("UTF-8");// response，設定回應的格式及編碼
+		
 //		列舉client送來的所有請求參數名稱
 		try{
 			String name; 
@@ -46,7 +49,6 @@ public class ShopFrontServlet extends HttpServlet {
 			System.out.println(e.toString());
 			}
 		
-		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		if ("listProducts_Byfind".equals(action)) {
 			

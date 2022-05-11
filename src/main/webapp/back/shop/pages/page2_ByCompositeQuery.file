@@ -21,7 +21,7 @@
             <option value="<%=i%>">跳至第<%=i%>頁
          <%}%> 
        </select>
-       <input type="submit" value="確定" >
+       <input type="submit" class="btn btn-primary"  value="確定" >
        <input type="hidden" name="action" value="listProducts_Byfind">  
     </FORM>
   <%}%>

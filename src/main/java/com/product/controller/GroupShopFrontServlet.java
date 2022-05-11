@@ -27,7 +27,10 @@ public class GroupShopFrontServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
+		req.setCharacterEncoding("UTF-8");// client 端向 Servlet 請求的編碼
+		res.setCharacterEncoding("UTF-8");// response，設定回應的格式及編碼
+		
+		
 //		列舉client送來的所有請求參數名稱
 		try{
 			String name; 
@@ -42,7 +45,6 @@ public class GroupShopFrontServlet extends HttpServlet {
 		
 		// 一般購物公開頁面 轉交給shop.jsp 只接受參數 statu=2 or status =3
 				//給團購商品groupsShop.jsp
-		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		if ("listGroupProducts_Byfind".equals(action)) { 
 
