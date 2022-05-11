@@ -7,7 +7,7 @@ public class EmpService {
 	private EmpDAO_interface dao;
 
 	public EmpService() {
-		dao = new EmpJDBCDAO();
+		dao = new EmpDAO();
 	}
 
 	// 情境一 insert：新增一筆員工資料

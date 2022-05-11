@@ -1,18 +1,11 @@
 package com.emp.controller;
 
 import java.io.*;
-import java.sql.SQLException;
 import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import com.album.model.AlbumJDBCDAO;
-import com.chargeRecord.model.ChargeRecordService;
-import com.chargeRecord.model.ChargeRecordVO;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
-import com.google.gson.Gson;
-import com.members.model.*;
-import com.util.JavaMail;
 import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.WebServlet;
 
@@ -66,50 +59,34 @@ public class empServlet extends HttpServlet {
 		EmpService empSvc = new EmpService();
 		// 資料庫是否有此筆資料
 		EmpVO empVO = empSvc.getOneByAccount(username);
-		System.out.println(empVO);
+		
 		if(empVO == null) {
 			System.out.println("帳號錯誤");
 			messages.put("errorAccount", "請確認帳號");
 			messages.put("originalAccount", username);
-			RequestDispatcher failureView = req.getRequestDispatcher("/back/empLogin.jsp");
+			RequestDispatcher failureView = req.getRequestDispatcher("/back/emp/empLogin.jsp");
 			failureView.forward(req, res);
 			return;
 		}else {
 			System.out.println("判斷密碼是否正確");
-//			if() {//"密碼錯誤"
-//				System.out.println("密碼錯誤");
-//			}else {
-//				System.out.println("跳轉到後台畫面");
-//			}
+			if(!password.equals(empVO.getPassword())) {//"密碼錯誤"
+				System.out.println(empVO.getPassword());
+				System.out.println("密碼錯誤");
+				messages.put("errorPassword", "請確認密碼");
+				messages.put("originalAccount", username);
+				RequestDispatcher failureView = req.getRequestDispatcher("/back/emp/empLogin.jsp");
+				failureView.forward(req, res);
+				return;
+			}else {
+				HttpSession session = req.getSession();
+				session.setAttribute("empVO", empVO);
+				req.setAttribute("empVO", empVO); // 資料庫取出的 empVO 物件，存入 req
+				System.out.println("跳轉到後台畫面");
+				RequestDispatcher successView = req.getRequestDispatcher("/article?action=all_Article");
+				successView.forward(req, res);
+				return;
+			}
 		}
-		
-		
-//		if (boo == true) {
-//			MembersVO membersVO = memberSvc.selectForLogin(loginAccount, loginPassword);
-//			if (membersVO != null) {
-//				HttpSession session = req.getSession();
-//				session.setAttribute("membersVO", membersVO);
-//				req.setAttribute("membersVO", membersVO); // 資料庫取出的 membersVO 物件，存入 req
-//				String url = "/front/member/member.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);
-//				successView.forward(req, res);
-//				return;
-//			} else if (membersVO == null) {
-//				messages.put("messagesPassword", "請確認會員密碼");
-//				messages.put("originalAccount", loginAccount);
-//				RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
-//				failureView.forward(req, res);
-//				return;
-//			}
-//
-//		} else {
-//			messages.put("originalAccount", loginAccount);
-//			messages.put("messagesAccount", "請確認會員帳號");
-//			messages.put("messagesPassword", "請確認會員密碼");
-//			RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
-//			failureView.forward(req, res);
-//			return;
-//		}
 
 	}
 
