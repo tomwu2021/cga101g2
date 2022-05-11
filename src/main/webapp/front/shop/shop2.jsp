@@ -430,11 +430,16 @@
 
 	<!-- 額外添加的JS -->
 	<!--leftnavlink.js -->
+	
+	<%@include file="/front/layout/templateJS.jsp"%>
+	
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/leftnav/leftnavlink.js">
 	</script>
 	
-	<%@include file="/front/layout/templateJS.jsp"%>
+	<script 
+		src="<%=request.getContextPath()%>/assets/shop/wishlist.js"> 
+	</script>
 	<!-- leftnavlink.js -->
 
 </body>
