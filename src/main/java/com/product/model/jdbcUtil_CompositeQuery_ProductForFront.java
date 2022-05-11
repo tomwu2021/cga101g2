@@ -19,7 +19,7 @@ public class jdbcUtil_CompositeQuery_ProductForFront {
 				|| "sort2_id".equals(columnName) 
 				|| "group_price1".equals(columnName)
 				|| "group_amount1".equals(columnName) || "group_amount2".equals(columnName)
-				|| "group_amount3".equals(columnName) || "topStatus".equals(columnName)) // 用於其他
+				|| "group_amount3".equals(columnName) || "top_status".equals(columnName)) // 用於其他
 			aCondition = "product." + columnName + "=" + value;
 		else if ("sort1_id".equals(columnName))
 				aCondition = "p_sort1." + columnName + "=" + value;	

@@ -19,14 +19,12 @@ public class jdbcUtil_CompositeQuery_Product {
 				|| "sort2_id".equals(columnName) 
 				|| "group_price1".equals(columnName)
 				|| "group_amount1".equals(columnName) || "group_amount2".equals(columnName)
-				|| "group_amount3".equals(columnName) || "status".equals(columnName) || "topStatus".equals(columnName)) // 用於其他
+				|| "group_amount3".equals(columnName) || "status".equals(columnName) || "top_status".equals(columnName)) // 用於其他
 			aCondition = "product." + columnName + "=" + value;
-		else if ("sort1_id".equals(columnName))
-				aCondition = "p_sort1." + columnName + "=" + value;	
 		else if ("product_name".equals(columnName) || "description".equals(columnName)) // 用於varchar
 			aCondition = "product." + columnName + " like '%" + value + "%'";
-		else if ("update_time".equals(columnName)) // 用於date
-			aCondition = "product." + columnName + "=" + "'" + value + "'"; // for 其它DB 的 date
+//		else if ("update_time".equals(columnName)) // 用於date
+//			aCondition = "product." + columnName + "=" + "'" + value + "'"; // for 其它DB 的 date
 //		    aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";  //for Oracle 的 date
 
 		return aCondition + " ";
@@ -61,11 +59,11 @@ public class jdbcUtil_CompositeQuery_Product {
 //		 java.util.Map<java.lang.String,java.lang.String[]> 之測試
 		Map<String, String[]> map = new TreeMap<String, String[]>();
 //		map.put("product_id", new String[] { "1" });
-//		map.put("product_name", new String[] { "貓" });
+		map.put("product_name", new String[] { "貓" });
 //		map.put("price", new String[] { "700" });
 //		map.put("amount", new String[] { "13" });
-		map.put("sort2_id", new String[] { "11" });
-		map.put("sort1_id", new String[] { "1" });
+//		map.put("sort2_id", new String[] { "11" });
+//		map.put("sort1_id", new String[] { "1" });
 //		map.put("update_time", new String[] { "1981-11-17" });
 //		map.put("group_price1", new String[] { "10" });
 //		map.put("group_amount1", new String[] { "10" });
@@ -73,7 +71,8 @@ public class jdbcUtil_CompositeQuery_Product {
 //		map.put("group_amount3", new String[] { "10" });
 //		map.put("description", new String[] { "好吃" });
 //		map.put("status", new String[] { "2" });
-//		map.put("topStatus", new String[] { "0" });
+//		測試錯誤的
+		map.put("top_status", new String[] { "0" });
 //		map.put("action", new String[] { "getXXX" }); // 注意Map裡面會含有action的key
 
 		String finalSQL = "select * from product "

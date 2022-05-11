@@ -202,40 +202,47 @@ pageContext.setAttribute("sort2list", sort2list);
 														</div>
 													</div>
 												</div>
-
+												<!--! 商品照片上傳start -->
 												<div class="row">
 													<div class="col-lg-12 mb-5">
 														<div class="form-group row">
-															<label class="col-md-3 form-control-label">商品照片</label>
+															<label class="col-md-3 form-control-label">商品照片 &emsp; (第一張為首圖)</label>
 															<div class="col-md-6"></div>
 														</div>
 														<div class="form-group">
-															<div class="col-md-8">
+															<div class="col-md-12">
 																<!--weui-uploader 照片上传功能-->
 																<!--上傳圖片的按鈕-->
-																<label class="btn btn-info"> <input type="file" name="img" accept="image/*" multiple="multiple"
-																	id="showimg" style="display: none;" multiple /> 上傳圖片
-																</label>
-																<div class='row'>
-																	<div id='previewMultiple'></div>
-																</div>
+																<img src="<%=request.getContextPath()%>/assets/shop/backProduct/img/addimg.png"
+																 class="ml-3" style="height:200px;width:200px;" onclick="add();" id="addimage">
+<!-- 																<label class="btn btn-info"> -->
+<!-- 																 <input type="file" name="img" accept="image/*" multiple="multiple" -->
+<!-- 																		id="showimg" style="display: none;" multiple /> 上傳圖片 -->
+<!-- 																</label> -->
+<!-- 																<div class='row'> -->
+<!-- 																	<div id='previewMultiple'></div> -->
+<!-- 																</div> -->
 															</div>
 																<small class="form-text text-muted ml-3 text-danger">${errorMsgs.img}</small>
 														</div>
+													</div>
+												</div>	
+												<!--! 商品照片上傳end -->
+												<!--! 提交按鈕start -->
+												<div class="row">
+													<div class="col-md-12">
 														<div class="form-group">
-															<div class="col-md-6"></div>
 															<input type="submit" value="送出新增" class="btn btn-primary">
 															<input type="hidden" name="action" value="insert">
 														</div>
 													</div>
-													<!-- 存放預覽圖片 -->
-														<!--weui-uploader 照片上传功能 END-->
-													</div>
-													<!--! 提交按鈕開始 -->
-													<!--! 提交按鈕開始 -->
 												</div>
-											</div>
+												<!--! 提交按鈕end -->
+													</div>
+													
+												</div>
 					</FORM>
+											</div>
 										</div>
 								</div>
 							</div>
@@ -268,6 +275,11 @@ pageContext.setAttribute("sort2list", sort2list);
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/addproduct/js/sort1VOCheckBox.js">
 	</script>
+	
+	<script
+		src="<%=request.getContextPath()%>/assets/shop/backProduct/img/addimg.js">
+	</script>  
+
 	<!-- 額外添加的JS -->
 </body>
 

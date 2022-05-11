@@ -73,19 +73,16 @@
 							<c:set var="sort1VOList"  scope="page" value="${sort1VOListIncludesort2VOList}" />
 							
 							<div class="widget_list widget_color">
-								<h3>
-									<a href="<%=request.getContextPath()%>/shop?action=listProducts_Byfind">全部商品</a>
-								</h3>
-							</div>
-							
+									<h3>
+										<a href="<%=request.getContextPath()%>/shop?action=listProducts_Byfind">全部商品</a>
+									</h3>
+								</div>
 							<c:forEach var="sort1VO" items="${sort1VOList}" >
 							<div class="widget_list widget_color ">
-							
 										<h3>
 											<a href="<%=request.getContextPath()%>/shop?action=listProducts_Byfind&sort1_id=${sort1VO.sort1Id}">
 											${sort1VO.sort1Name}${sort1VO.sort1Name}專區</a>
 										</h3>
-									
 								<ul>
 							<c:forEach var="sort2VO" items="${sort1VO.sort2VOList}" >
 								<li>
@@ -335,201 +332,74 @@
 		</div>
 	</div>
 	<!--shop  area end-->
-	<!--product area start-->
-	<div class="product_area mb-100">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="section_title">
-						<h2>
-							<span>推薦商品</span>
-						</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur elit.</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="product_carousel product_column4 owl-carousel">
-					<div class="col-lg-3">
-						<article class="single_product">
-							<figure>
-								<div class="product_thumb">
-									<a class="primary_img" href=""><img
-										src="" alt="" /></a> <a
-										class="secondary_img" href=""><img
-										src="" alt="" /></a>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-toggle="modal"
-												data-target="#modal_box" title="quick view"> <i
-													class="icon icon-Eye"></i>
-											</a></li>
-											<li class="wishlist"><a href=""
-												title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>
-										</ul>
-									</div>
-								</div>
-								<figcaption class="product_content">
-									<h4 class="product_name">
-										<a href=""> suscipit tempora delectus
-											officia a, possimus at ipsam.</a>
-									</h4>
-									<div class="price_box">
-										<span class="current_price">$142.00</span> <span
-											class="old_price">$173.00</span>
-									</div>
-									<div class="add_to_cart">
-										<a href="" title="Add to cart">Add to Cart</a>
-									</div>
-								</figcaption>
-							</figure>
-						</article>
-					</div>
-					<div class="col-lg-3">
-						<article class="single_product">
-							<figure>
-								<div class="product_thumb">
-									<a class="primary_img" href="l"><img
-										src="" alt="" /></a> <a
-										class="secondary_img" href=""><img
-										src="" alt="" /></a>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-toggle="modal"
-												data-target="#modal_box" title="quick view"> <i
-													class="icon icon-Eye"></i>
-											</a></li>
-											<li class="wishlist"><a href=""
-												title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>
-										</ul>
-									</div>
-								</div>
-								<figcaption class="product_content">
-									<h4 class="product_name">
-										<a href=""> modi nisi cum officia
-											error possimus, unde ipsam is.!</a>
-									</h4>
-									<div class="price_box">
-										<span class="current_price">$142.00</span> <span
-											class="old_price">$173.00</span>
-									</div>
-									<div class="add_to_cart">
-										<a href="" title="Add to cart">Add to Cart</a>
-									</div>
-								</figcaption>
-							</figure>
-						</article>
-					</div>
-					<div class="col-lg-3">
-						<article class="single_product">
-							<figure>
-								<div class="product_thumb">
-									<a class="primary_img" href=""><img
-										src="" alt="" /></a> <a
-										class="secondary_img" href=""><img
-										src="" alt="" /></a>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-toggle="modal"
-												data-target="#modal_box" title="quick view"> <i
-													class="icon icon-Eye"></i>
-											</a></li>
-											<li class="wishlist"><a href="wishlist.html"
-												title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>
-										</ul>
-									</div>
-								</div>
-								<figcaption class="product_content">
-									<h4 class="product_name">
-										<a href="product-details.html">Lorem ipsum dolor sit amet,
-											elit, the display aliquid!</a>
-									</h4>
-									<div class="price_box">
-										<span class="current_price">$142.00</span> <span
-											class="old_price">$173.00</span>
-									</div>
-									<div class="add_to_cart">
-										<a href="l" title="Add to cart">Add to Cart</a>
-									</div>
-								</figcaption>
-							</figure>
-						</article>
-					</div>
-					<div class="col-lg-3">
-						<article class="single_product">
-							<figure>
-								<div class="product_thumb">
-									<a class="primary_img" href=""><img
-										src="" alt="" /></a> <a
-										class="secondary_img" href=""><img
-										src="" alt="" /></a>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-toggle="modal"
-												data-target="#modal_box" title="quick view"> <i
-													class="icon icon-Eye"></i>
-											</a></li>
-											<li class="wishlist"><a href="wishlist.html"
-												title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>
-										</ul>
-									</div>
-								</div>
-								<figcaption class="product_content">
-									<h4 class="product_name">
-										<a href=""> quidem totam, voluptatem
-											quae quasi possimus iusto!</a>
-									</h4>
-									<div class="price_box">
-										<span class="current_price">$142.00</span> <span
-											class="old_price">$173.00</span>
-									</div>
-									<div class="add_to_cart">
-										<a href="cart.html" title="Add to cart">Add to Cart</a>
-									</div>
-								</figcaption>
-							</figure>
-						</article>
-					</div>
-					<div class="col-lg-3">
-						<article class="single_product">
-							<figure>
-								<div class="product_thumb">
-									<a class="primary_img" href=""><img
-										src="" alt="" /></a> <a
-										class="secondary_img" href=""><img
-										src="" alt="" /></a>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-toggle="modal"
-												data-target="#modal_box" title="quick view"> <i
-													class="icon icon-Eye"></i>
-											</a></li>
-											<li class="wishlist"><a href="wishlist.html"
-												title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>
-										</ul>
-									</div>
-								</div>
-								<figcaption class="product_content">
-									<h4 class="product_name">
-										<a href="">iusto dignissimos illum.
-											Quis provident ratione maiores.</a>
-									</h4>
-									<div class="price_box">
-										<span class="current_price">$142.00</span> <span
-											class="old_price">$173.00</span>
-									</div>
-									<div class="add_to_cart">
-										<a href="" title="Add to cart">Add to Cart</a>
-									</div>
-								</figcaption>
-							</figure>
-						</article>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--product area end-->
+    <!--product area start-->
+    <div class="product_area  mb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section_title">
+                       <h2><span>推薦</span>商城主打</h2>
+                       <p>寵物熱門推薦</p>
+                    </div>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="product_carousel product_column4 owl-carousel">
+                  <!--單一商品循環 start-->
+                  <c:forEach var="productVO" items="${topProdcutList}">
+                    <div class="col-lg-3">
+                        <article class="single_product">
+                            <figure>
+                                <div class="product_thumb">
+                                <!--商品照片裡的span標籤 start-->
+                                 <div class="label_product">
+                                       <span class="label_new">TOP</span>
+                                 </div>
+                                <!--商品照片裡的span標籤 end--> 
+                                 <!--商品照片點 start-->
+                                <c:if test="${productVO.pictureVOList.size() != 0 }">
+                                    <a class="primary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop">
+									<img src="${productVO.pictureVOList.get(0).previewUrl}" alt=""></a>
+                                </c:if>	    
+                                 <c:if test="${productVO.pictureVOList.size() >= 2  && productVO.pictureVOList.size()!=0}">
+									<a class="secondary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop">
+									<img src="${productVO.pictureVOList.get(1).previewUrl}" alt=""></a>
+								</c:if>	
+                                 <!--商品照片點 end-->   
+                                    <div class="action_links">
+                                        <ul>
+                                            <li class="quick_button">
+                                            <a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> 
+                                            <i class="icon icon-Eye"></i></a></li>
+                                            <li class="wishlist">
+                                            <a href="wishlist.html" title="Add to Wishlist">
+                                            <i class="icon icon-Heart"></i></a></li>  
+                                        </ul>
+                                    </div>
+                                </div>
+                                <figcaption class="product_content">
+                                    <h4 class="product_name">
+                                    	<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop"> 
+                                    	${productVO.productName}</a>
+                                    </h4>
+                                    <div class="price_box"> 
+                                        <span class="current_price">${productVO.price}元</span>
+                                    </div>
+                                    <div class="add_to_cart">
+                                        <a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop" 
+                                        title="Look More">Look More</a>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </article>
+                    </div> 
+                    </c:forEach>
+                    <!--單一商品循環 end-->
+                </div> 
+            </div>
+        </div> 
+    </div>
+    <!--product area end-->
 	<!--! 內容 結束-->
 
 

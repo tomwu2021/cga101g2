@@ -7,7 +7,7 @@
 <!-- // // EmpVO empVO = (EmpVO) request.getAttribute("empVO"); -->
 <!-- // //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件) -->
 <%-- %> --%>
-<html>
+<html xmlns = "http://www.w3.org/1999/xhtml" xml:lang="en" lang= "en" >
 <head>
 <title>商品細節</title>
 <!-- 共用的CSS startr-->
