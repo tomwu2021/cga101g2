@@ -17,6 +17,7 @@ import com.picture.model.PictureVO;
 import com.picture.service.PictureService;
 
 import connection.JDBCConnection;
+import connection.JNDIConnection;
 
 public class PostService {
 
@@ -69,9 +70,7 @@ public class PostService {
 		} catch (Exception e) {
 			throw new RuntimeException("A database error occured." + e.getMessage());
 		}
-		
-		
-		
+				
 
 		List<MappingTableDto> dtolist = new ArrayList<MappingTableDto>();
 
@@ -97,8 +96,7 @@ public class PostService {
 		// mappingDAO.deleteOneMapping(postPicMapping(ID1,ID2));
 
 		return postAll;
-		
-		
+				
 	}
 
 	public MappingTableDto postPicMapping(Integer id1) {
@@ -124,30 +122,30 @@ public class PostService {
 	 * 
 	 */
 	
-	public List<PostVO> selectPost(Integer memberid){
-		List<PostVO> postList= dao.selectPost(memberid);
-		
-		PictureJDBCDAO picdao = new PictureJDBCDAO();
-		
-		
-		//postList包含貼文全部貼文欄位(無圖)
-		//透過Post表格、postPicMapping的postId找對應的picture_id
-		//queryPicturesByMapping用來 join 「picture跟mapping表（post_pic)」，共同皆有picture_id欄位
-		//所以postList有原本全部貼文欄位再加上picture表格內圖的URL等欄位
-		for(PostVO postVO: postList) {
-		
-		
-		MappingTableDto dto = postPicMapping(postVO.getPostId()); 
-		
-		
-		List<PictureVO> piclist = picdao.queryPicturesByMapping(dto);
-		
-		postVO.setPictureList(piclist);  //piclist 某貼文圖片集合
-		
-		}
-		
-		return postList;         //貼文內容包含圖片集合
-		}
+//	public List<PostVO> selectPost(Integer memberid){
+//		
+//		Connection con = JDBCConnection.getRDSConnection();
+//		List<PostVO> postList= dao.
+//		
+//		PictureJDBCDAO picdao = new PictureJDBCDAO();
+//		
+//		//postList包含貼文全部貼文欄位(無圖)
+//		//透過Post表格、postPicMapping的postId找對應的picture_id
+//		//queryPicturesByMapping用來 join 「picture跟mapping表（post_pic)」，共同皆有picture_id欄位
+//		//所以postList有原本全部貼文欄位再加上picture表格內圖的URL等欄位
+//		for(PostVO postVO: postList) {
+//		
+//		MappingTableDto dto = postPicMapping(postVO.getPostId()); 
+//				
+//		List<PictureVO> piclist = picdao.queryPicturesByMapping(dto,con);
+//		
+//		postVO.setPictureList(piclist);  //piclist 某貼文圖片集合
+//		
+//		}
+//		con.close();
+//		
+//		return postList;         //貼文內容包含圖片集合
+//		}
 
 	/**
 	 *查看熱門貼文
@@ -189,9 +187,7 @@ public class PostService {
 	 */
 	
 	public PostVO getOneById(Integer postId) {
-		
-		
-		
+				
 		PictureJDBCDAO picdao = new PictureJDBCDAO();
 		PostVO postVO = dao.getOneById(postId);
 		MappingTableDto dto = postPicMapping(postId);
