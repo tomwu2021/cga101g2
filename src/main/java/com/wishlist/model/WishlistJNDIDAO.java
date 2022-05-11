@@ -1,20 +1,24 @@
 package com.wishlist.model;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.emp_authority.model.EmpAuthorityVO;
+import connection.JNDIConnection;
 
-import connection.JDBCConnection;
 
-public class WishlistJDBCDAO implements WishlistDAO_interface{
+public class WishlistJNDIDAO implements WishlistDAO_interface{
 
 	Connection con;
 	
 	// 情境一 insert：新增一筆資料
 	@Override
 	public WishlistVO insert(WishlistVO wishlistVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		WishlistVO wishlistVO2 = insert(wishlistVO, con);
 		try {
 			con.close();
@@ -44,7 +48,7 @@ public class WishlistJDBCDAO implements WishlistDAO_interface{
 	// 情境二 delete：刪除一筆資料
 	@Override
 	public boolean delete(WishlistVO wishlistVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		boolean boo = delete(wishlistVO, con);
 		
 		try {
@@ -92,7 +96,7 @@ public class WishlistJDBCDAO implements WishlistDAO_interface{
 	public List<WishlistVO> getAllByMemberId(Integer memberId) {
 		final String GETALL = "SELECT * FROM wishlist where member_id = ? ORDER BY create_time ;";
 
-		try (Connection con = JDBCConnection.getRDSConnection();
+		try (Connection con = JNDIConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
 			
 			pstmt.setInt(1, memberId);
