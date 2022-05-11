@@ -7,7 +7,7 @@
 <!-- // // EmpVO empVO = (EmpVO) request.getAttribute("empVO"); -->
 <!-- // //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件) -->
 <%-- %> --%>
-<html xmlns = "http://www.w3.org/1999/xhtml" xml:lang="en" lang= "en" >
+<html>
 <head>
 <title>商品細節</title>
 <!-- 共用的CSS startr-->
@@ -199,6 +199,7 @@
 	<!-- 共用的JS -->
 
 	<!-- 額外添加的JS -->
+	<jsp:include page="/front/layout/showMessage.jsp" />
 	<!-- 	路徑舉例 -->
 	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/back/js/?????.js"> --%>
 	<!-- 額外添加的JS -->
