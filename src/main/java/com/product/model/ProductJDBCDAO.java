@@ -114,7 +114,8 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 		UPDATE.append("update_time = NOW() ");
 		UPDATE.append("WHERE product_id = ? ; ");
 
-		try (Connection con = getRDSConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE.toString())) {
+		try (Connection con = getRDSConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(UPDATE.toString())) {
 
 			if (productName != null && !productName.isEmpty()) {
 				pstmt.setString(1, productVO.getProductName());
@@ -143,6 +144,8 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 			}
 			pstmt.setInt(10, productVO.getProductId());
 
+			System.out.println("ProductVO update送出的字串"+UPDATE);
+			
 			pstmt.executeUpdate();
 
 			int rowCount = pstmt.executeUpdate();
@@ -177,11 +180,12 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 	}
 
 	@Override
-	public boolean deleteByTopStatus(ProductVO productVO) {
-		try (Connection con = getRDSConnection(); PreparedStatement pstmt = con.prepareStatement(DELETEBYTOP_STATUS)) {
+	public boolean deleteByTopStatus(Integer productId, Integer topStatus) {
+		try (Connection con = getRDSConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(DELETEBYTOP_STATUS)) {
 
-			pstmt.setInt(1, productVO.getTopStatus());
-			pstmt.setInt(2, productVO.getProductId());
+			pstmt.setInt(1, topStatus);
+			pstmt.setInt(2, productId);
 
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) insert!");

@@ -15,51 +15,51 @@ import com.sort2.model.Sort2VO;
 public class SortMixJNIDIDAO implements SortMixDAO_interface {
 
 	
-	//查詢某個主分類(包含對應的子分類)
+	// 查詢某個主分類(包含對應的子分類)
 	@Override
 	public Sort1VO findAllBySort1Id(Integer sort1Id) {
 		// 創建主分類實體跟子分類"集合"實體
-		Sort1VO sort1VO = new Sort1VO();
-		List<Sort2VO> sort2VOList = new ArrayList<Sort2VO>();
-		
-		String FIND_STMT= "SELECT * "
-				+ "FROM sort1 s1, sort2 s2, sort_mix sm "
-				+ "WHERE s1.sort1_id = sm.sort1_id "
-				+ "AND   s2.sort2_id = sm.sort2_id "
-				+ "AND   s1.sort1_id=? ";
-		
-		try (Connection con = getRDSConnection();
-				PreparedStatement pstmt = con.prepareStatement(FIND_STMT)) {
+				Sort1VO sort1VO = new Sort1VO();
+				List<Sort2VO> sort2VOList = new ArrayList<Sort2VO>();
+				
+				String FIND_STMT= "SELECT * "
+						+ "FROM sort1 s1, sort2 s2, sort_mix sm "
+						+ "WHERE s1.sort1_id = sm.sort1_id "
+						+ "AND   s2.sort2_id = sm.sort2_id "
+						+ "AND   s1.sort1_id=? ";
+				
+				try (Connection con = getRDSConnection();
+						PreparedStatement pstmt = con.prepareStatement(FIND_STMT)) {
 
-			pstmt.setInt(1, sort1Id);
-			
-			ResultSet rsSet = pstmt.executeQuery();
-			//此時結果集合包含兩張表格的數據,先分別獲取各自表中的數據
-			while (rsSet.next()) {
-				//Sort1主分類訊息
-				sort1VO.setSort1Id(rsSet.getInt("sort1_id"));
-				sort1VO.setSort1Name(rsSet.getString("sort1_name"));
-				//Sort2子分類訊息
-				Sort2VO sort2VO = new Sort2VO();
-				sort2VO.setSort2Id(rsSet.getInt("sort2_id"));
-				sort2VO.setSort2Name(rsSet.getString("sort2_name"));
-				//建立兩張表格的關係
-				//把子分類"集合"放入主分類 即 主分類為一個物件,這個物件裡面有多個集合
-				sort2VOList.add(sort2VO);
-			}
-			
-			sort1VO.setSort2VOList(sort2VOList);
-			return sort1VO;
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		
-		return null;
+					pstmt.setInt(1, sort1Id);
+					
+					ResultSet rsSet = pstmt.executeQuery();
+					//此時結果集合包含兩張表格的數據,先分別獲取各自表中的數據
+					while (rsSet.next()) {
+						//Sort1主分類訊息
+						sort1VO.setSort1Id(rsSet.getInt("sort1_id"));
+						sort1VO.setSort1Name(rsSet.getString("sort1_name"));
+						//Sort2子分類訊息
+						Sort2VO sort2VO = new Sort2VO();
+						sort2VO.setSort2Id(rsSet.getInt("sort2_id"));
+						sort2VO.setSort2Name(rsSet.getString("sort2_name"));
+						//建立兩張表格的關係
+						//把子分類"集合"放入主分類 即 主分類為一個物件,這個物件裡面有多個集合
+						sort2VOList.add(sort2VO);
+					}
+					
+					sort1VO.setSort2VOList(sort2VOList);
+					return sort1VO;
+				} catch (SQLException se) {
+					throw new RuntimeException("A database error occured. " + se.getMessage());
+				} catch (Exception e) {
+					e.printStackTrace();
+				} 
+				
+				return null;
 	}
 
-	//查詢某個子分類(包含對應的主分類) 給商品使用對應
+	// 查詢某個子分類(包含對應的主分類) 給商品使用對應
 	@Override
 	public Sort2VO findSort2VOSort1VOsBySort2Id(Integer sort2Id) {
 		Sort2VO sort2VO = new Sort2VO();
@@ -101,7 +101,6 @@ public class SortMixJNIDIDAO implements SortMixDAO_interface {
 		}
 		return null; 
 	}
-
 
 	@Override
 	public SortMixVO insert(SortMixVO sortMixVO) {
@@ -242,8 +241,4 @@ public class SortMixJNIDIDAO implements SortMixDAO_interface {
 		return null;
 	}
 
-	}
-
-
-
-
+}
