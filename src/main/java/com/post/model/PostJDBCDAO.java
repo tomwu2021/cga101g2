@@ -270,7 +270,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 	//查詢熱門貼文  
 	@Override
 	public List<PostVO> selectHotPost() {
-		final String SELECT_HOTPOST = "select p.post_id, member_id, content, like_count, create_time, previewUrl"
+		final String SELECT_HOTPOST = "select p.post_id, member_id, content, like_count, create_time, preview_url"
 				+ "                	   	from post p join post_pic pc on p.post_id = pc.post_id  "
 				+ "					    join picture pi on pc.picture_id = pi.picture_id  "
 				+ "						where DateDiff(curdate(), create_time) <= 7 AND status = 0 "
@@ -291,7 +291,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 				postVO.setContent(rs.getString("content"));
 				postVO.setLikeCount(rs.getInt("like_count"));
 				postVO.setCreateTime(rs.getDate("create_time"));
-				pictureVO.setUrl(rs.getString("previewUrl"));
+				pictureVO.setUrl(rs.getString("preview_url"));
 				postVO.setPictureVO(pictureVO);
 
 				hotpostlist.add(postVO);
