@@ -11,6 +11,7 @@ import com.members.model.MembersVO;
 import com.picture.model.PictureVO;
 
 import connection.JDBCConnection;
+import net.bytebuddy.asm.Advice.Return;
 
 public class PostJDBCDAO implements PostDAO_interface {
 	
@@ -174,10 +175,24 @@ public class PostJDBCDAO implements PostDAO_interface {
 	//查詢個人頁面
 	@Override
 	public List<PostVO> selectPost(Integer memberid) {
+		List<PostVO> poList = null;				
+		try {
+			con = JDBCConnection.getRDSConnection();
+			poList = selectPost(memberid, con); 
+			
+			con.close();
+						
+		}catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		}
+		return poList;
+	}
+	
+	public List<PostVO> selectPost(Integer memberid, Connection con)  {
 		final String SELECT_POST = "select * from post where member_id =? order by create_time desc ";
 		
-		try (Connection con = JDBCConnection.getRDSConnection();
-				PreparedStatement pstmt = con.prepareStatement(SELECT_POST);) {
+		try (
+			PreparedStatement pstmt = con.prepareStatement(SELECT_POST);) {
 
 			pstmt.setInt(1, memberid);
 			ResultSet rs = pstmt.executeQuery();
@@ -202,6 +217,9 @@ public class PostJDBCDAO implements PostDAO_interface {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}
 	}
+	
+	
+	
 	
 	
 	//查詢貼文，顯示 status狀態0:正常1:審核中2:刪除
@@ -252,7 +270,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 	//查詢熱門貼文  
 	@Override
 	public List<PostVO> selectHotPost() {
-		final String SELECT_HOTPOST = "select p.post_id, member_id, content, like_count, create_time, url  "
+		final String SELECT_HOTPOST = "select p.post_id, member_id, content, like_count, create_time, previewUrl"
 				+ "                	   	from post p join post_pic pc on p.post_id = pc.post_id  "
 				+ "					    join picture pi on pc.picture_id = pi.picture_id  "
 				+ "						where DateDiff(curdate(), create_time) <= 7 AND status = 0 "
@@ -273,7 +291,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 				postVO.setContent(rs.getString("content"));
 				postVO.setLikeCount(rs.getInt("like_count"));
 				postVO.setCreateTime(rs.getDate("create_time"));
-				pictureVO.setUrl(rs.getString("url"));
+				pictureVO.setUrl(rs.getString("previewUrl"));
 				postVO.setPictureVO(pictureVO);
 
 				hotpostlist.add(postVO);
