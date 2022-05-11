@@ -37,7 +37,6 @@ public class PostVO implements java.io.Serializable{
 		this.authority = authority;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
-		this.pictureList = pictureList;
 		
 	}
 

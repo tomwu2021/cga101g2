@@ -150,8 +150,8 @@ public class PostService {
 		}
 
 	/**
+	 *查看熱門貼文
 	 *
-	 *  三、查看熱門貼文
 	 */
 	public List<PostVO> selectHotPost() {
 		
@@ -184,14 +184,33 @@ public class PostService {
 	
 	
 	/**
+	 *查看單篇詳細貼文
+	 * 
+	 */
+	
+	public PostVO getOneById(Integer postId) {
+		
+		
+		
+		PictureJDBCDAO picdao = new PictureJDBCDAO();
+		PostVO postVO = dao.getOneById(postId);
+		MappingTableDto dto = postPicMapping(postId);
+		List<PictureVO> piclist = picdao.queryPicturesByMapping(dto);
+		
+		postVO.setPictureList(piclist);
+		
+		return postVO;		
+	}
+	
+	/**
 	 * 修改貼文內容
 	 * 
 	 */
 	
-	public PostVO update(PostVO postVO, Connection con) {
-		
+	public PostVO update(PostVO postVO) {
 		return dao.update(postVO);
-	};
+	}
+	
 	
 	// 五、修改
 	

@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.members.model.MembersVO;
 import com.picture.model.PictureVO;
 
 import connection.JDBCConnection;
@@ -93,28 +94,40 @@ public class PostJDBCDAO implements PostDAO_interface {
 		return null;
 	}
 	
-	
+
+
+	//查看單篇詳細貼文
 	@Override
-	public PostVO getOneById(Integer id) {
+	public PostVO getOneById(Integer postId) {
 		
-		final String GETONE ="select post_id, member_id, content, like_count, status, authority, create_time, update_time from post where post_id = ? ";
+		final String GETONE =" SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url FROM post po "
+			    + " JOIN members m ON(po.member_id = m.member_id) "
+			    + " JOIN pet p ON(m.member_id = p.member_id) "
+			    + " JOIN picture pic ON(p.picture_id = pic.picture_id) "
+			    + " WHERE po.post_id = ? ";
 		
 		try(Connection con =JDBCConnection.getRDSConnection();
 			PreparedStatement pstmt = con.prepareStatement(GETONE);){
 			
-			pstmt.setInt(1, id);
+			pstmt.setInt(1, postId);
 			ResultSet rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
 				PostVO postVO = new PostVO();
+				PictureVO pictureVO = new PictureVO(); 
+				MembersVO membersVO = new MembersVO();
+				membersVO.setName(rs.getNString("name"));
 				postVO.setPostId(rs.getInt("post_id"));
 				postVO.setMemberId(rs.getInt("member_id"));
 				postVO.setContent(rs.getString("content"));
 				postVO.setLikeCount(rs.getInt("like_count"));
-				postVO.setStatus(rs.getInt("status"));
-				postVO.setAuthority(rs.getInt("authority"));
 				postVO.setCreateTime(rs.getDate("create_time"));
-				postVO.setUpdateTime(rs.getDate("update_time"));	
+				postVO.setMembersVO(membersVO);
+				pictureVO.setPictureId(rs.getInt("picture_id"));
+				pictureVO.setUrl(rs.getString("url"));
+				pictureVO.setPreviewUrl(rs.getString("preview_url"));
+				postVO.setPictureVO(pictureVO);
+				
 				return postVO;
 			}
 				
@@ -123,6 +136,8 @@ public class PostJDBCDAO implements PostDAO_interface {
 			} 
 			return null;
 	}
+	
+
 
 	@Override
 	public List<PostVO> getAll() {
@@ -145,7 +160,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 				postVO.setAuthority(rs.getInt("authority"));
 				postVO.setCreateTime(rs.getDate("create_time"));
 				postVO.setUpdateTime(rs.getDate("update_time"));
-				
+								
 				list.add(postVO);	
 			}	
 			
@@ -269,6 +284,8 @@ public class PostJDBCDAO implements PostDAO_interface {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} 
 	}
+
+
 	
 	
 }
