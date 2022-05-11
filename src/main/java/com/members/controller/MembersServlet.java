@@ -117,7 +117,8 @@ public class MembersServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				session.setAttribute("membersVO", membersVO);
 				req.setAttribute("membersVO", membersVO); // 資料庫取出的 membersVO 物件，存入 req
-				String url = "/front/member/member.jsp";
+//				String url = "/front/member/member.jsp";
+				String url = "/article?action=all_Display";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				return;
@@ -218,7 +219,7 @@ public class MembersServlet extends HttpServlet {
 		}
 		if (!userVerificationCode.equals(sessionAuthCode)) {
 			messages.put("msgError", "");
-			messages.put("msgErrorVerificationCode", "驗證碼輸入錯誤！");
+			messages.put("msgErrorVerificationCode", "驗證碼錯誤！");
 			String json = new Gson().toJson(messages);
 			res.getWriter().write(json);
 			return;
