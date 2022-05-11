@@ -4,7 +4,6 @@ import java.util.*;
 
 import com.ranks.model.RanksVO;
 
-
 public class MembersService {
 
 	private MembersDAO_interface dao;
@@ -102,9 +101,20 @@ public class MembersService {
 	public MembersVO selectMemberIdByAccount(String account) {
 		return dao.selectMemberIdByAccount(account);
 	}
-	
+
 	// 用 memberId 查 Rank 資訊
 	public RanksVO selectRankInfo(Integer memberId) {
 		return dao.selectRankInfo(memberId);
 	}
+
+	// 會員錢包 消費/儲值
+	public boolean walletPaymentAddMoney(Integer memberId, Integer money) {
+		return dao.walletPaymentAddMoney(memberId, money);
+	}
+	
+	// 紅利 消費/發送
+	public boolean bonusPaymentAddValue(Integer memberId,Integer bonus) {
+		return dao.bonusPaymentAddValue(memberId, bonus);
+	}
+
 }

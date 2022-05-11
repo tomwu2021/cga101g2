@@ -56,7 +56,6 @@ public class PetController extends HttpServlet {
 			req.setAttribute("pList", pList);
 			req.setAttribute("paList", paList);
 			req.setAttribute("pwList", GSON.toJson(pwList));//
-			System.out.println(GSON.toJson(pwList));
 			req.setAttribute("recentWgt", recentWgt);
 			req.setAttribute("averageWgt", averageWgt);
 			RequestDispatcher view =req.getRequestDispatcher("/front/pet/profile.jsp");

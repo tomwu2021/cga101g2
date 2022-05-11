@@ -3,6 +3,9 @@ package com.members.controller;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import com.album.model.AlbumJDBCDAO;
@@ -48,6 +51,9 @@ public class MembersServlet extends HttpServlet {
 			break;
 		case "updateMemberPassword":
 			updateMemberPassword(req, res);
+			break;
+		case "walletAddMoney":
+			walletAddMoney(req, res);
 			break;
 		}
 	}
@@ -333,19 +339,20 @@ public class MembersServlet extends HttpServlet {
 			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberUpdate.jsp");
 			failureView.forward(req, res);
 			return;// 程式中斷
-		} else {
-			HttpSession currentSession = req.getSession();
-			MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
-			MembersService memberSvc = new MembersService();
-			sessionMembersVO.setName(name); // Name
-			sessionMembersVO.setPhone(phone); // Phone
-			sessionMembersVO.setAddress(address); // Address
-			memberSvc.update(sessionMembersVO);
-
-			RequestDispatcher successView = req.getRequestDispatcher("/front/member/member.jsp");
-			successView.forward(req, res);
-			return;// 程式中斷
 		}
+		HttpSession currentSession = req.getSession();
+		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
+		MembersService memberSvc = new MembersService();
+		sessionMembersVO.setName(name); // Name
+		sessionMembersVO.setPhone(phone); // Phone
+		sessionMembersVO.setAddress(address); // Address
+		
+		System.out.println(sessionMembersVO);
+		memberSvc.update(sessionMembersVO);
+
+		RequestDispatcher successView = req.getRequestDispatcher("/front/member/member.jsp");
+		successView.forward(req, res);
+		return;// 程式中斷
 
 	}
 
@@ -410,6 +417,52 @@ public class MembersServlet extends HttpServlet {
 			successView.forward(req, res);
 			return;// 程式中斷
 		}
+
+	}
+
+	/*************************** 會員錢包儲值 **********************/
+	public void walletAddMoney(HttpServletRequest req, HttpServletResponse res) {
+		res.setContentType("application/json; charset=UTF-8");
+		// 訊息存在 Map
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+
+		// 接收參數
+		String storedValueAmount = req.getParameter("storedValueAmount");
+		String cardNumber = req.getParameter("cardNumber");
+		System.out.println(storedValueAmount);
+
+		String regex = "^[0-9]*$";
+		if (!storedValueAmount.trim().matches(regex)) {
+			messages.put("inputError", "請輸入正整數");
+			System.out.println("請輸入正整數");
+			messages.put("cardNumber", cardNumber);
+			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberWallet.jsp");
+			try {
+				failureView.forward(req, res);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+			return;// 程式中斷
+		}
+		System.out.println("成功");
+		HttpSession currentSession = req.getSession();
+		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
+		Integer currentMemberId = sessionMembersVO.getMemberId();
+
+		// 儲值成功 DAO
+		MembersService memberSvc = new MembersService();
+		memberSvc.walletPaymentAddMoney(currentMemberId, Integer.valueOf(storedValueAmount));
+		System.out.println(memberSvc.getOneById(currentMemberId).geteWalletAmount());
+		sessionMembersVO.seteWalletAmount(memberSvc.getOneById(currentMemberId).geteWalletAmount());
+
+		RequestDispatcher successView = req.getRequestDispatcher("/front/member/member.jsp");
+		try {
+			successView.forward(req, res);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+		return;// 程式中斷
 
 	}
 

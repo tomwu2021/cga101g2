@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.pet_activity.model.*"%>
+<%@ page import="com.pet_weight.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -62,12 +62,23 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 		<div class="row">
 
 			<div class="col-lg-12">
-				<!-- ALL Activity -->
-				<div class="card border-bottom-info">
+				<!-- ALL Weight -->
+				<div class="card border-bottom-primary">
 					
 					<div class="card-body">
 						<div class="row">
-						<div class="card-title col-lg-4">活動紀錄</div>
+						<div class="card-title col-lg-12">體重紀錄</div>
+						</div>
+					<div class='row'>
+					<%-- Weight Chart --%>
+					<jsp:include page="/front/pet/weight/chart.jsp">
+						<jsp:param value="<%=petId%>" name="petId"/>
+					</jsp:include>
+					<%-- End Weight Chart --%>
+					</div>	
+					<div class='row'>
+						<div class="card-title col-lg-4">
+						</div>
 						<div class="card-title col-lg-7">
 							<button class="btn btn-warning form-btn-circle btn-sm text-dark" id="updateBtn" onclick="updateBtn()">
 								<i class="fas fa-edit"></i> 編輯
@@ -76,7 +87,7 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 		              <button  class="btn btn-danger form-btn-circle btn-sm" data-toggle="modal" data-target="#basicModal" id="deleteBtn">
 		                <i class="fas fa-trash-alt"></i> 刪除
 		              </button>
-		                      <form method="post" action="<%=request.getContextPath()%>/activity">
+		                      <form method="post" action="<%=request.getContextPath()%>/weight">
 		              <input type="hidden" name="petId" value="<%=petId%>">
 		              <input type="hidden" name="recordId" id="getRecordId">
 		              <div class="modal fade" id="basicModal" tabindex="-1">
@@ -101,9 +112,10 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 						<!-- End Basic Modal-->
 						</div>
 						<div class="card-title col-lg-1">
-							<form method="post" action="<%=request.getContextPath()%>/activity">
+							<form method="post" action="<%=request.getContextPath()%>/weight">
 							<input type="hidden" name="action" value="goToInsert">
-							<button type="submit" class="btn btn-primary form-btn-circle btn-sm" id="insertBtn" onclick="insertBtn()">
+							<input type="hidden" name="petId" value="<%=petId%>">
+							<button type="submit" class="btn btn-primary form-btn-circle btn-sm" id="insertBtn">
 								<i class="fas fa-plus"></i> 新增
 							</button>
 							</form>
@@ -113,28 +125,28 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 								
 						</div>
 						<div class="row">
-							<div class="col-lg-6 mb-5" id="editBox">
+							<div class="col-lg-6" id="editBox">
 							<div id="editBox">
-								<%-- Activity Edit --%>
-								<jsp:include page="/front/pet/activity/edit.jsp">
+								<%-- Weight Edit --%>
+								<jsp:include page="/front/pet/weight/edit.jsp">
 									<jsp:param value="<%=petId%>" name="petId"/>
 								</jsp:include>
-								<%-- End Activity Edit --%>
+								<%-- End Weight Edit --%>
 							</div>
 							<div id="submitBtn">
 							</div>
 							</div>
-							<div class="col-lg-6 mb-5 mt-3" id="listAll">
-							<%-- Activity List --%>
-							<jsp:include page="/front/pet/activity/list.jsp">
+							<div class="col-lg-6" id="listAll">
+							<%-- Weight List --%>
+							<jsp:include page="/front/pet/weight/list.jsp">
 								<jsp:param value="<%=petId%>" name="petId"/>
 							</jsp:include>
-							<%-- Activity List --%>
+							<%-- Weight List --%>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- End All Activity -->
+				<!-- End All Weight -->
 			</div>
 
 		</div>
@@ -154,11 +166,85 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 	<%@include file="/front/pet/footer.jsp"%>
 	<!-- 共用的JS -->
 	<%@include file="/front/layout/commonJS.jsp"%>
-	<!-- 自訂的JS -->
+<!-- Metis Menu Js -->
+<script src="assets/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script src="assets/js/raphael-2.1.0.min.js"></script>
+<script src="assets/js/morris.js"></script>
+<!-- 自訂的JS -->
+<script>
+(function ($) {
+    "use strict";
+    var mainApp = {
+
+        initFunction: function () {
+            /*MENU 
+            ------------------------------------*/
+            $('#main-menu').metisMenu();
+
+            $(window).bind("load resize", function () {
+                if ($(this).width() < 768) {
+                    $('div.sidebar-collapse').addClass('collapse')
+                } else {
+                    $('div.sidebar-collapse').removeClass('collapse')
+                }
+            });
+            /* MORRIS LINE CHART
+            ----------------------------------------*/
+            Morris.Line({
+                element: 'morris-line-chart',
+                data: ${pwChart},
+
+
+                xkey: 'recordTime',
+                ykeys: ['weightRecord'],
+                labels: ['體重(kg)', '紀錄日期'],
+                fillOpacity: 0.6,
+                hideHover: 'auto',
+                behaveLikeLine: true,
+                resize: true,
+                pointFillColors: ['#ffffff'],
+                pointStrokeColors: ['black'],
+                lineColors: ['#2249BA'],
+
+            });
+
+
+            $('.line-chart').cssCharts({ type: "line" });
+
+        },
+
+        initialization: function () {
+            mainApp.initFunction();
+
+        }
+
+    }
+    // Initializing ///
+
+    $(document).ready(function () {
+        mainApp.initFunction();
+        $("#sideNav").click(function () {
+            if ($(this).hasClass('closed')) {
+                $('.navbar-side').animate({ left: '0px' });
+                $(this).removeClass('closed');
+                $('#page-wrapper').animate({ 'margin-left': '260px' });
+
+            }
+            else {
+                $(this).addClass('closed');
+                $('.navbar-side').animate({ left: '-260px' });
+                $('#page-wrapper').animate({ 'margin-left': '0px' });
+            }
+        });
+    });
+
+}(jQuery));
+</script>	
 <script src="<%=request.getContextPath()%>/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
 <script>
 let rId = '${param.recordId}'? '${param.recordId}':$('.allItem:first').attr("id");
-		$("#editBox").load("<%=request.getContextPath()%>/activity",
+		$("#editBox").load("<%=request.getContextPath()%>/weight",
 				{action:"one_Display", 
 				recordId:rId}, 
 				function(data,status){
@@ -166,13 +252,14 @@ let rId = '${param.recordId}'? '${param.recordId}':$('.allItem:first').attr("id"
 					$("#getRecordId").val(rId);
 					if($('#activity').val()==""){
 						$("#updateBtn").attr("disabled","disabled");
+						$("#kilogram").hide();
 					}
 				}
 			});	
 
 function getDetail(record){
 	rId = record.id;
-	$.post("<%=request.getContextPath()%>/activity",
+	$.post("<%=request.getContextPath()%>/weight",
 			{action:"one_Display", 
 			recordId:rId}, 
 			function(data,status){
@@ -180,6 +267,7 @@ function getDetail(record){
 					$("#editBox").html(data);
 					$("#getRecordId").val(rId);
 					$("#updateBtn").removeAttr("disabled");
+					$("#kilogram").show();
 				}
 			}
 	);

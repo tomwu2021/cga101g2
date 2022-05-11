@@ -10,14 +10,6 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 Integer petId = (Integer)(session.getAttribute("petId"));
 %>
 <%--舊的petId --%>
-<% 
-	java.util.Calendar cal = Calendar.getInstance();
-	cal.set(Calendar.MINUTE, 0);
-	cal.set(Calendar.SECOND, 0);
-	cal.set(Calendar.MILLISECOND,0);
-	cal.set(Calendar.HOUR, 0);
-	java.sql.Date defaultDate = new java.sql.Date(cal.getTime().getTime());
-%>
 <!DOCTYPE html>
 <html>
 <!-- include <head></head> -->
@@ -25,8 +17,11 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 <!-- 共用的CSS -->
 <%@ include file="/back/layout/commonCSS.jsp"%>
 <!-- 自訂的CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front/pet/style.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/assets/css/sb-admin-2.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/back/article/style.css">
 <body>
@@ -55,7 +50,7 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 
 			<div class="col-lg-12">
 				<!-- ALL introduction -->
-				<div class="card">
+				<div class="card border-bottom-warning">
 					<form method="post" action="<%=request.getContextPath()%>/pet" id="editForm">
 						<div class="card-body">
 							<div class="row">
@@ -101,37 +96,32 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 												<label for="inputNumber"
 												class="col-lg-2 col-form-label">頭貼</label>
 												<div class="col-lg-8">
-												              <!-- Large Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-                Large Modal
-              </button>
-
-              <div class="modal fade" id="largeModal" tabindex="-1">
-                <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Large Modal</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit.
-                      Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur
-                      nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- End Large Modal-->
-													<label class="btn btn-info"><input id="upload_img" style="display:none;" type="file" accept="image/*"><i
-												            class="fa fa-photo"></i> 上傳圖片</label>
-												    <div id="oldImg" style="display:none;"></div>
-												    <button id="crop_img" class="btn btn-info"><i class="fa fa-scissors"></i> 裁剪圖片</button>
-												    <div id="newImgInfo"></div>
-												    <div id="newImg"></div>
-												    
+												<!-- Large Modal -->
+													<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#largeModal">
+													  <i class="fa fa-photo"></i> 上傳相片
+													</button>
+													
+													<div class="modal fade" id="largeModal" tabindex="-1">
+													  <div class="modal-dialog modal-lg">
+													    <div class="modal-content">
+													      <div class="modal-header">
+													        <h5 class="modal-title">上傳相片</h5>
+													        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+													      </div>
+													      <div class="modal-body">
+													        <label class="btn btn-info"><input id="upload_img" style="display:none;" type="file" accept="image/*"> 選擇相片</label>
+														    <div id="oldImg" style="display:none;"></div>
+														    <button type='button' id="crop_img" class="btn btn-info"><i class="fa fa-scissors"></i> 裁剪圖片</button>
+														    <div id="newImgInfo"></div>
+														    <div id="newImg"></div>
+													      </div>
+													      <div class="modal-footer">
+													        <button type="button" class="btn btn-primary">Save changes</button>
+													      </div>
+													    </div>
+													  </div>
+													</div>
+													<!-- End Large Modal-->
 												</div>
 											</div>
 										</div>
@@ -179,9 +169,7 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 	<!-- 共用的JS -->
 	<%@include file="/front/layout/commonJS.jsp"%>
 	<!-- 自訂的JS -->
-<script src="/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css">
+<script src="<%=request.getContextPath()%>/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
 <script	src="croppieImage.js"></script>
 </body>
@@ -213,7 +201,7 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 		step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
 		format : 'Y-m-d', //format:'Y-m-d H:i:s',
 		value: new Date(),
-		maxDate: '<%=defaultDate%>',
+		maxDate: new Date(),
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前

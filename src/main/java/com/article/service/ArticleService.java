@@ -27,7 +27,7 @@ public class ArticleService {
 	private MappingJDBCDAO mappingDAO;
 	
 	public ArticleService() {
-		artiDAO = new ArticleJDBCDAO();
+		artiDAO = new ArticleJDBCDAO();// TODO換連線池版本
 		picSvc= new PictureService();
 		mappingDAO = new MappingJDBCDAO();
 	}
