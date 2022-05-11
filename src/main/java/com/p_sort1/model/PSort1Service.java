@@ -25,7 +25,7 @@ public class PSort1Service implements PSort1DAO_interface {
 	}
 
 	@Override
-	public PSort1VO update(PSort1VO t) {
+	public PSort1VO update(PSort1VO pSort1VO) {
 		return null;
 	}
 
@@ -42,6 +42,11 @@ public class PSort1Service implements PSort1DAO_interface {
 	@Override
 	public List<Sort1VO> findSort1VOByproductId(Integer productId) {
 		return dao.findSort1VOByproductId(productId);
+	}
+
+	@Override
+	public boolean deletePSort1sByProductId(Integer productId) {
+		return dao.deletePSort1sByProductId(productId);
 	}
 
 }

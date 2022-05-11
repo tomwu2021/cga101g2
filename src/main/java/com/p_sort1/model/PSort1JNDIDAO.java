@@ -13,6 +13,7 @@ import com.sort1.model.Sort1VO;
 
 public class PSort1JNDIDAO implements PSort1DAO_interface{
 
+	
 	@Override
 	public PSort1VO insert(PSort1VO pSort1VO) {
 		String INSERT_STMT = "INSERT INTO cga_02.p_sort1(product_id,sort1_id) VALUES (?,?) ; ";
@@ -88,6 +89,27 @@ public class PSort1JNDIDAO implements PSort1DAO_interface{
 			e.printStackTrace();
 		}
 		return null; 
+	}
+
+	@Override
+	public boolean deletePSort1sByProductId(Integer productId) {
+		final String DELETE = "DELETE FROM cga_02.p_sort1 "
+							+ "WHERE product_id = ? ; ";
+		try (Connection connection = getRDSConnection();
+				PreparedStatement pstmt = connection.prepareStatement(DELETE)) {
+
+			pstmt.setInt(1, productId);
+
+			int rowCount = pstmt.executeUpdate();
+			System.out.println( "boolean deletePSort1sByProductId(Integer productId)"+rowCount + "row(s) delete!");
+
+			return true;
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 
