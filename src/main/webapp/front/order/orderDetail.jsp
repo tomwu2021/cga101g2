@@ -130,7 +130,7 @@ OrdersVO ordersVO = (OrdersVO) request.getAttribute("ordersVO");
 <!-- include  footer -->
 <%@include file="/front/layout/footer.jsp"%>
 <!-- 額外添加JS start -->
-
+<jsp:include page="/front/layout/showMessage.jsp" />
 <!-- 額外添加JS end -->
 
 </body>
