@@ -33,7 +33,7 @@ public class ProductServletAll extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-		//一般購物公開頁面 轉交給shop.jsp 只接受參數 statu=2 or status =3
+		//一般購物公開頁面 轉交給shop.jsp 只接受參數 statu=1 or status =2
 		if ("listProducts_Byfind".equals(action)) { 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
