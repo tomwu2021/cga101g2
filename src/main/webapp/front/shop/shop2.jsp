@@ -27,10 +27,12 @@
 </head>
 <body>
 	<!-- 共用的JS -->
-	<%@include file="/front/layout/commonJS.jsp"%>
-	<script
-		src="<%=request.getContextPath()%>/assets/js/addToCart.js">
-	</script>
+	<%@include file="/front/layout/commonShopJS.jsp"%>
+	<!-- 共用的JS -->
+	
+<!-- 	<script -->
+<%-- 		src="<%=request.getContextPath()%>/assets/js/addToCart.js"> --%>
+<!-- 	</script> -->
 	<!-- 共用的header start-->
 	<%@include file="/front/layout/header.jsp"%>
 	<!-- 共用的header end-->
@@ -121,7 +123,7 @@
 					<div id="content">
 						<!--shop toolbar start-->
 						
-							<!--shop wrapper start 嚙賢�莎蕭嚙踝蕭嚙踝蕭獢�嚙賣�寞����嚙質�瘀蕭 content嚙質�穿蕭嚙踝蕭嚙賣�綽蕭��嚙踝蕭��嚙賣虜嚙踝蕭========================-->
+							<!--shop wrapper start ========================-->
 	<!--shop toolbar start-->
 	<div class="shop_toolbar_wrapper">
 		<div class="shop_toolbar_btn">
@@ -431,6 +433,8 @@
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/leftnav/leftnavlink.js">
 	</script>
+	
+	<%@include file="/front/layout/templateJS.jsp"%>
 	<!-- leftnavlink.js -->
 
 </body>
