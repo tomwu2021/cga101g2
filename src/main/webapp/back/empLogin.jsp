@@ -1,24 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-	pageEncoding="BIG5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="BIG5">
-<link rel="stylesheet"href="<%=request.getContextPath()%>/assets/css/empLogin.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/assets/css/empLogin.css">
 </head>
 <body class="align">
 
 	<div class="grid">
 
-		<form action="https://httpbin.org/post" method="POST"
-			class="form login">
-
+		<form method="post" action="/CGA101G2/front/emp.do" class="form login">
+			<font color=red> ${messages.errorAccount}</font>
 			<div class="form__field">
 				<label for="login__username"><svg class="icon">
             <use xlink:href="#icon-user"></use>
           </svg><span class="hidden">Username</span></label> <input
-					autocomplete="username" id="login__username" type="text"
-					name="username" class="form__input" placeholder="Username" required>
+					autocomplete="username" value="${messages.originalAccount}" id="login__username" type="text"
+					name="username" class="form__input" placeholder="Username" required >
 			</div>
 
 			<div class="form__field">
@@ -30,13 +30,14 @@
 			</div>
 
 			<div class="form__field">
-				<input type="submit" value="Sign In">
+				<input type="hidden" name="action" value="empForLogin"> <input
+					type="submit" value="ç™»å…¥">
 			</div>
 
 		</form>
 
 		<p class="text--center">
-			<font color=red>­YµLªkµn¤J¡A½Ğ¬¢³¡ªù¥DºŞ¡I</font>
+			<font color=red>è‹¥ç„¡æ³•ç™»å…¥ï¼Œè«‹æ´½éƒ¨é–€ä¸»ç®¡ï¼</font>
 			<svg class="icon">
         <use xlink:href="#icon-arrow-right"></use>
       </svg>

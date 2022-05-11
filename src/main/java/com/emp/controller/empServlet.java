@@ -8,6 +8,8 @@ import javax.servlet.http.*;
 import com.album.model.AlbumJDBCDAO;
 import com.chargeRecord.model.ChargeRecordService;
 import com.chargeRecord.model.ChargeRecordVO;
+import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
 import com.google.gson.Gson;
 import com.members.model.*;
 import com.util.JavaMail;
@@ -30,8 +32,8 @@ public class empServlet extends HttpServlet {
 		action = action == null ? "" : action;
 
 		switch (action) {
-		case "forLogin":
-			forLogin(req, res);
+		case "empForLogin":
+			empForLogin(req, res);
 			break;
 		}
 	}
@@ -51,33 +53,37 @@ public class empServlet extends HttpServlet {
 	}
 
 	/*************************** 登入判斷 account password **********************/
-	public void forLogin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	public void empForLogin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("application/json; charset=UTF-8");
 		// 訊息存在 Map
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
 
-//		// 接收參數
-//		String loginAccount = req.getParameter("loginAccount");
-//		String loginPassword = req.getParameter("loginPassword");
-//		// 檢查輸入是否有效
-//		if (loginAccount == null || (loginAccount.trim()).length() == 0) {
-//			messages.put("messagesAccount", "請輸入會員帳號");
-//		}
-//		if (loginPassword == null || (loginPassword.trim()).length() == 0) {
-//			messages.put("messagesPassword", "請輸入會員密碼");
-//		}
-//
-//		if (!messages.isEmpty()) {
-//			messages.put("originalAccount", loginAccount);
-//			RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
-//			failureView.forward(req, res);
-//			return;// 程式中斷
-//		}
-//		MembersService memberSvc = new MembersService();
-//		// 資料庫是否有此筆資料
-//		Boolean boo = memberSvc.getOneByAccount(loginAccount);
-//
+		// 接收參數
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+
+		EmpService empSvc = new EmpService();
+		// 資料庫是否有此筆資料
+		EmpVO empVO = empSvc.getOneByAccount(username);
+		System.out.println(empVO);
+		if(empVO == null) {
+			System.out.println("帳號錯誤");
+			messages.put("errorAccount", "請確認帳號");
+			messages.put("originalAccount", username);
+			RequestDispatcher failureView = req.getRequestDispatcher("/back/empLogin.jsp");
+			failureView.forward(req, res);
+			return;
+		}else {
+			System.out.println("判斷密碼是否正確");
+//			if() {//"密碼錯誤"
+//				System.out.println("密碼錯誤");
+//			}else {
+//				System.out.println("跳轉到後台畫面");
+//			}
+		}
+		
+		
 //		if (boo == true) {
 //			MembersVO membersVO = memberSvc.selectForLogin(loginAccount, loginPassword);
 //			if (membersVO != null) {
