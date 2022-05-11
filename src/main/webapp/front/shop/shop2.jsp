@@ -16,9 +16,21 @@
 <!-- 額外添加的CSS -->
 <!-- 	路徑舉例 -->
 <%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/back/css/????.css"> --%>
-<!-- 額外添加的CSS -->
+
+<script>
+    function getContextPath(){
+     return "<%=request.getContextPath()%>";
+	}
+</script>
+
+
 </head>
 <body>
+	<!-- 共用的JS -->
+	<%@include file="/front/layout/commonJS.jsp"%>
+	<script
+		src="<%=request.getContextPath()%>/assets/js/addToCart.js">
+	</script>
 	<!-- 共用的header start-->
 	<%@include file="/front/layout/header.jsp"%>
 	<!-- 共用的header end-->
@@ -138,10 +150,11 @@
 	</div>
 	<!--shop toolbar end-->
 	<div class="row shop_wrapper">
-		<!--s內容開始========================-->
+		<!--內容開始========================-->
 		<c:forEach var="productVO" items="${listProducts_Byfind}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<div class="col-lg-4 col-md-4 col-sm-6 col-12">
 				<!--單一商品開始 -->
+				<Form id="${productVO.productId}" action="/CGA101G2/member/cart.do" Method="Post">
 				<article class="single_product">
 					<figure>
 						<div class="product_thumb">
@@ -171,8 +184,8 @@
 							<div class="price_box">
 								<span class="current_price">${productVO.price}元</span>
 							</div>
-							<div class="add_to_cart">
-								<a href="cart.html" title="Add to cart">Add to Cart</a>
+							<div class="add_to_cart">								
+								<a title="Add to cart" onclick="addToCart(${productVO.productId})">Add to Cart</a>
 							</div>
 						</div>
 						<div class="product_content list_content">
@@ -201,6 +214,12 @@
 						</div>
 					</figure>
 				</article>
+				 <input id="pid-${productVO.productId}" type="hidden" name="productId" value="${productVO.productId}">
+				 <input id="pname-${productVO.productId}" type="hidden" name="productName" value="${productVO.productName}">
+				 <input id="pprice-${productVO.productId}" type="hidden" name="productPrice" value="${productVO.price}">
+				 <input id="purl-${productVO.productId}" type="hidden" name="productPictureUrl" value="${productVO.pictureVOList.get(0).previewUrl}">
+				 <input id="pamout-${productVO.productId}" type="hidden" name="productAmout" value="1">
+				</Form>
 			</div>
 		</c:forEach>
 	</div>
@@ -406,11 +425,6 @@
 	<!-- 共通的footer start-->
 	<%@include file="/front/layout/footer.jsp"%>
 	<!-- 共通的footer end-->
-
-
-	<!-- 共用的JS -->
-	<%@include file="/front/layout/commonJS.jsp"%>
-	<!-- 共用的JS -->
 
 	<!-- 額外添加的JS -->
 	<!--leftnavlink.js -->
