@@ -122,30 +122,30 @@ public class PostService {
 	 * 
 	 */
 	
-//	public List<PostVO> selectPost(Integer memberid){
-//		
-//		Connection con = JDBCConnection.getRDSConnection();
-//		List<PostVO> postList= dao.
-//		
-//		PictureJDBCDAO picdao = new PictureJDBCDAO();
-//		
-//		//postList包含貼文全部貼文欄位(無圖)
-//		//透過Post表格、postPicMapping的postId找對應的picture_id
-//		//queryPicturesByMapping用來 join 「picture跟mapping表（post_pic)」，共同皆有picture_id欄位
-//		//所以postList有原本全部貼文欄位再加上picture表格內圖的URL等欄位
-//		for(PostVO postVO: postList) {
-//		
-//		MappingTableDto dto = postPicMapping(postVO.getPostId()); 
-//				
-//		List<PictureVO> piclist = picdao.queryPicturesByMapping(dto,con);
-//		
-//		postVO.setPictureList(piclist);  //piclist 某貼文圖片集合
-//		
-//		}
-//		con.close();
-//		
-//		return postList;         //貼文內容包含圖片集合
-//		}
+	public List<PostVO> selectPost(Integer memberid){
+		
+		Connection con = JDBCConnection.getRDSConnection();
+		List<PostVO> postList= dao.selectPost(memberid);
+		
+		PictureJDBCDAO picdao = new PictureJDBCDAO();
+		
+		//postList包含貼文全部貼文欄位(無圖)
+		//透過Post表格、postPicMapping的postId找對應的picture_id
+		//queryPicturesByMapping用來 join 「picture跟mapping表（post_pic)」，共同皆有picture_id欄位
+		//所以postList有原本全部貼文欄位再加上picture表格內圖的URL等欄位
+		for(PostVO postVO: postList) {
+		
+		MappingTableDto dto = postPicMapping(postVO.getPostId()); 
+				
+		List<PictureVO> piclist = picdao.queryPicturesByMapping(dto);
+		
+		postVO.setPictureList(piclist);  //piclist 某貼文圖片集合
+		
+		}
+		
+		
+		return postList;         //貼文內容包含圖片集合
+		}
 
 	/**
 	 *查看熱門貼文

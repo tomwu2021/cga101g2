@@ -26,7 +26,12 @@
     <link rel="stylesheet" href="other/style copy.css">
 
 </head>
+
 <body>
+<input type="hidden" id="memberId"
+ value="<%=request.getAttribute("memberId")%>">
+
+<input type="hidden" id="isOwner" value="<%=request.getAttribute("isOwner")%>">
 
 	<!-- 共用的header start-->
 	<%@include file="/front/layout/header.jsp"%>
@@ -137,6 +142,11 @@
                         </div>
                     </div>
                     </div>
+                    <c:if test="${isOwner==1}">
+                    <div>
+                    <img src="front/post/addpost.png" class="ml-3" style="height:40px;width:40px; position: fixed; top: 80px; right: 14px;" onclick="window.location='http://localhost:8081/CGA101G2/front/post/addPost.jsp'" id="addpost">
+                    </div>
+                    </c:if>
                     
             </div>
         </div>

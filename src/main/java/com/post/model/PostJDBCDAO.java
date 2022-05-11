@@ -101,11 +101,11 @@ public class PostJDBCDAO implements PostDAO_interface {
 	@Override
 	public PostVO getOneById(Integer postId) {
 		
-		final String GETONE =" SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url FROM post po "
-			    + " JOIN members m ON(po.member_id = m.member_id) "
-			    + " JOIN pet p ON(m.member_id = p.member_id) "
-			    + " JOIN picture pic ON(p.picture_id = pic.picture_id) "
-			    + " WHERE po.post_id = ? ";
+		final String GETONE ="SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url FROM post po  "
+				+ "			     JOIN members m ON(po.member_id = m.member_id)  "
+				+ "			     JOIN pet p ON(m.member_id = p.member_id)  "
+				+ "			     JOIN picture pic ON(p.picture_id = pic.picture_id)  "
+				+ "			     WHERE po.status = 0 and po.post_id = ?";
 		
 		try(Connection con =JDBCConnection.getRDSConnection();
 			PreparedStatement pstmt = con.prepareStatement(GETONE);){
@@ -189,7 +189,12 @@ public class PostJDBCDAO implements PostDAO_interface {
 	}
 	
 	public List<PostVO> selectPost(Integer memberid, Connection con)  {
-		final String SELECT_POST = "select * from post where member_id =? order by create_time desc ";
+		final String SELECT_POST = "SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url FROM post po  "
+				+ "			     JOIN members m ON(po.member_id = m.member_id)  "
+				+ "			     JOIN pet p ON(m.member_id = p.member_id)  "
+				+ "			     JOIN picture pic ON(p.picture_id = pic.picture_id)  "
+				+ "			     WHERE po.status = 0 and po.member_id = ?"
+				+ "				 order by create_time desc";
 		
 		try (
 			PreparedStatement pstmt = con.prepareStatement(SELECT_POST);) {
@@ -201,6 +206,9 @@ public class PostJDBCDAO implements PostDAO_interface {
 			
 			while (rs.next()) {
 				PostVO postVO = new PostVO();
+				PictureVO pictureVO = new PictureVO(); 
+				MembersVO membersVO = new MembersVO();
+				
 				postVO.setPostId(rs.getInt("post_id"));
 				postVO.setMemberId(rs.getInt("member_id"));
 				postVO.setContent(rs.getString("content"));
@@ -209,16 +217,68 @@ public class PostJDBCDAO implements PostDAO_interface {
 				postVO.setAuthority(rs.getInt("authority"));
 				postVO.setCreateTime(rs.getDate("create_time"));
 				postVO.setUpdateTime(rs.getDate("update_time"));
+				
+				membersVO.setName(rs.getNString("name"));
+				postVO.setMembersVO(membersVO);
+				pictureVO.setPictureId(rs.getInt("picture_id"));
+				pictureVO.setUrl(rs.getString("url"));
+				pictureVO.setPreviewUrl(rs.getString("preview_url"));
+				postVO.setPictureVO(pictureVO);
 				postList.add(postVO);
 			}
 			
 			return postList;
+			
 		}catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}
 	}
 	
-	
+//	//查詢個人頁面
+//	@Override
+//	public List<PostVO> selectPost(Integer memberid) {
+//		List<PostVO> poList = null;				
+//		try {
+//			con = JDBCConnection.getRDSConnection();
+//			poList = selectPost(memberid, con); 
+//			
+//			con.close();
+//						
+//		}catch (SQLException e) {
+//			throw new RuntimeException("A database error occured. " + e.getMessage());
+//		}
+//		return poList;
+//	}
+//	
+//	public List<PostVO> selectPost(Integer memberid, Connection con)  {
+//		final String SELECT_POST = "select * from post where member_id =? order by create_time desc ";
+//		
+//		try (
+//			PreparedStatement pstmt = con.prepareStatement(SELECT_POST);) {
+//
+//			pstmt.setInt(1, memberid);
+//			ResultSet rs = pstmt.executeQuery();
+//			
+//			List< PostVO> postList = new ArrayList<PostVO>();
+//			
+//			while (rs.next()) {
+//				PostVO postVO = new PostVO();
+//				postVO.setPostId(rs.getInt("post_id"));
+//				postVO.setMemberId(rs.getInt("member_id"));
+//				postVO.setContent(rs.getString("content"));
+//				postVO.setLikeCount(rs.getInt("like_count"));
+//				postVO.setStatus(rs.getInt("status"));
+//				postVO.setAuthority(rs.getInt("authority"));
+//				postVO.setCreateTime(rs.getDate("create_time"));
+//				postVO.setUpdateTime(rs.getDate("update_time"));
+//				postList.add(postVO);
+//			}
+//			
+//			return postList;
+//		}catch (SQLException e) {
+//			throw new RuntimeException("A database error occured. " + e.getMessage());
+//		}
+//	}	
 	
 	
 	
@@ -229,7 +289,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 				+ "from post p join post_pic pc on p.post_id = pc.post_id "
 				+ "			   join picture pi on pc.picture_id = pi.picture_id "
 				+ "			   where status = 0 AND member_id = ? "
-				+ "order by create_time desc";
+				+ "            order by create_time desc";
 				
 		
 		try (Connection con = JDBCConnection.getRDSConnection();
