@@ -33,7 +33,7 @@ pageContext.setAttribute("list", list);
 	<!-- 共用的JS -->
 	<%@include file="/front/layout/commonJS.jsp"%>
 	<script
-		src="<%=request.getContextPath()%>/assets/js/addToCart.js">
+		src="<%=request.getContextPath()%>/assets/js/order&cart/addToCart.js">
 	</script>
 	<!-- 共用的header start-->
 	<%@include file="/front/layout/header.jsp"%>
