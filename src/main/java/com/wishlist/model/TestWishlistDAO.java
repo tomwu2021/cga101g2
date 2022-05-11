@@ -19,9 +19,9 @@ public class TestWishlistDAO {
 //		System.out.println(dao.delete(wishlistVO2));
 
 		// 情境三 select：查詢某會員所有清單資料
-//		for (WishlistVO wishlistVO3 : dao.getAllByMemberId(3)) {
-//			System.out.println(wishlistVO3);
-//		}
+		for (WishlistVO wishlistVO3 : dao.getAllByMemberId(3)) {
+			System.out.println(wishlistVO3);
+		}
 	}
 
 }

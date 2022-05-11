@@ -90,5 +90,11 @@ public class PSort1JDBCDAO implements PSort1DAO_interface{
 		return null; 
 	}
 
+	@Override
+	public boolean deletePSort1sByProductId(Integer productId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }

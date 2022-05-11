@@ -96,133 +96,40 @@
             <div class="testimonial_container2">
                 <div class="row">
                     <div class="testimonial_carousel testimonial_column5 owl-carousel">
+                        <c:forEach var="postVO" items="${postList}">
                         <div class="col-lg-4">
                             <div class="single-testimonial">
+                                <div class="testimonial_author">
+                                    <a href="#">${postVO.memberId}</a>
+                                </div>
                                 <div class="testimonial_thumb">
-                                    <a href="#"><img src="https://d148yrb2gzai3l.cloudfront.net/thumbs/ae5d9ee0-c596-11ec-97d1-7f3f707921e3-pexels-ellie-burgin-3362697.jpg" alt=""></a>
+                                    <a href="#"><img src="${postVO.pictureVO.url}" alt=""></a>
                                 </div>
                                 <div class="testimonial_content">
                                     <div class="testimonial-rating">
                                         <ul>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
+                                            <li><a href="#">${postVO.createTime} 發文</a></li>
+                                            <li><a href="#"> ${postVO.likeCount} 個讚</a></li>
                                         </ul>
                                     </div>
-                                    <p>“ Perfect Themes and the best of all that you have many options to choose! Best
-                                        Support team ever!Very fast responding and experts on their fields! Thank you
-                                        very much! ”</p>
-
-                                    <div class="testimonial_author">
-                                        <a href="#">- Lindsy Neloms</a>
-                                    </div>
+                                    <p style='height:7vh;overflow:hidden;display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;text-overflow: ellipsis;'>${postVO.content}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="single-testimonial">
-                                <div class="testimonial_thumb">
-                                    <a href="#"><img src="https://d148yrb2gzai3l.cloudfront.net/thumbs/06f22a33-c597-11ec-97d1-b515734c5589-pexels-frank-cone-2439784.jpg" alt=""></a>
-                                </div>
-                                <div class="testimonial_content">
-                                    <div class="testimonial-rating">
-                                        <ul>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <p>“ Perfect Themes and the best of all that you have many options to choose! Best
-                                        Support team ever!Very fast responding and experts on their fields! Thank you
-                                        very much! ”</p>
+						</c:forEach>
 
-                                    <div class="testimonial_author">
-                                        <a href="#">- Rebecka Filson</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="single-testimonial">
-                                <div class="testimonial_thumb">
-                                    <a href="#"><img src="assets/img/about/testimonial3.png" alt=""></a>
-                                </div>
-                                <div class="testimonial_content">
-                                    <div class="testimonial-rating">
-                                        <ul>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <p>“ Perfect Themes and the best of all that you have many options to choose! Best
-                                        Support team ever!Very fast responding and experts on their fields! Thank you
-                                        very much! ”</p>
 
-                                    <div class="testimonial_author">
-                                        <a href="#">- Amber Laha</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="single-testimonial">
-                                <div class="testimonial_thumb">
-                                    <a href="#"><img src="assets/img/about/testimonial1.png" alt=""></a>
-                                </div>
-                                <div class="testimonial_content">
-                                    <div class="testimonial-rating">
-                                        <ul>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <p>“ Perfect Themes and the best of all that you have many options to choose! Best
-                                        Support team ever!Very fast responding and experts on their fields! Thank you
-                                        very much! ”</p>
-
-                                    <div class="testimonial_author">
-                                        <a href="#">- Lindsy Neloms</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="single-testimonial">
-                                <div class="testimonial_thumb">
-                                    <a href="#"><img src="assets/img/about/testimonial1.png" alt=""></a>
-                                </div>
-                                <div class="testimonial_content">
-                                    <div class="testimonial-rating">
-                                        <ul>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                            <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <p>“ Perfect Themes and the best of all that you have many options to choose! Best
-                                        Support team ever!Very fast responding and experts on their fields! Thank you
-                                        very much! ”</p>
-
-                                    <div class="testimonial_author">
-                                        <a href="#">- Lindsy Neloms</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
+            </div>
+            <div class='row mt-5'>
+            <div class='col-lg-5'></div>
+            <div class='col-lg-2'>
+            <a href='#'>
+            <img src='<%=request.getContextPath()%>/assets/img/login-image.png'>
+            </a>
+            </div>
+            <div class='col-lg-5'></div>
             </div>
         </div>
     </div>

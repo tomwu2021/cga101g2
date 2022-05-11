@@ -9,7 +9,7 @@
 <html>
 <head>
 
-<title>社群個人頁面</title>
+<title>社群主頁</title>
 <!-- 共用的CSS startr-->
 <%@include file="/front/layout/commonCSS.jsp"%>
 <!-- 共用的CSS end-->
@@ -269,7 +269,6 @@
 								
 								
 								 	<figure style="width: 60px;height: 60px;"> 
-									<!-- <figcaption>responsive(100*100)</figcaption>  -->
 									<img class="img-responsive " src="${postVO.urlList.get(0) }" alt="頭像"/> 
 									</figure>
 								                   
@@ -280,8 +279,8 @@
                                 			
                                 							        
 						                  
-                                <!-- 整個文 -->
-                                <figcaption class="blog_content">
+                                   <!-- 整個文 -->
+                                   <figcaption class="blog_content">
                                    
                                    
                                    <!-- 貼文發布時間 -->

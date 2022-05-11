@@ -8,7 +8,7 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 Integer petId = (Integer)(session.getAttribute("petId"));
 %>
 <!-- Recent Activity -->
-<div class="card">
+<div class="card border-bottom-info">
 
 	<div class="top_links filter">
         <a class="icon" href="javascript:void(0)"><i class="bi bi-three-dots"></i></a>

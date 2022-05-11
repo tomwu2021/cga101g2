@@ -33,9 +33,10 @@ public class ProductInsertServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-		req.setCharacterEncoding("UTF-8");
+		req.setCharacterEncoding("UTF-8");// client 端向 Servlet 請求的編碼
+		res.setCharacterEncoding("UTF-8");// response，設定回應的格式及編碼
 		String action = req.getParameter("action");
-
+		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
@@ -61,7 +62,6 @@ public class ProductInsertServlet extends HttpServlet {
 			} else if ((productName.trim().length() <= 5)) { 
 				errorMsgs.put("productName", "商品名稱至少五個字以上");
 			}
-
 //			Integer price = null;
 //			try {
 //				
@@ -172,9 +172,13 @@ public class ProductInsertServlet extends HttpServlet {
 			} else if ((description.trim().length() >= 300)) {
 				errorMsgs.put("description", "商品敘述至多300字以內");
 			}
+	
+//			Part part2 = req.getPart("img");
+//			if(part2.getSize()==0) {
+//				errorMsgs.put("img", "至少上傳一張照片");
+//			}
 			
-			Part part2 = req.getPart("img");
-			if(part2.getSize()==0) {
+			if (req.getPart("img") == null) {
 				errorMsgs.put("img", "至少上傳一張照片");
 			}
 			

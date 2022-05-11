@@ -5,15 +5,14 @@
 <%@ page import="com.remind.model.*"%>
 <!-- Pet Introduction -->
 <div class="col-xxl-4 col-xl-12">
-	<div class="card info-card customers-card">
+	<div class="card info-card customers-card border-bottom-warning">
 		<div class="top_links filter">
 			<a class="icon" href="javascript:void(0)"><i
 				class="bi bi-three-dots"></i></a>
 			<div class="dropdown_links filtermenu">
 				<div class="dropdown_links_list">
 					<ul>
-						<li><a href="#" class="dropdown-item">新增紀錄</a></li>
-						<li><a href="#" class="dropdown-item">查看更多</a></li>
+						<li><a href="#" class="dropdown-item">編輯</a></li>
 					</ul>
 				</div>
 			</div>

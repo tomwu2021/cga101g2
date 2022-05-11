@@ -1,6 +1,7 @@
 package com.pet_weight.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -262,7 +263,7 @@ public class PetWeightJDBCDAO implements PetWeightDAO_interface{
 				count = count.add(new BigDecimal(1));
 			}
 			if(count.intValue()!=0) {
-				weightAverage = weightSum.divide(count);
+				weightAverage = weightSum.divide(count, 2, RoundingMode.HALF_UP);
 			}
 			
 		} catch (SQLException e) {

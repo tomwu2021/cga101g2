@@ -6,6 +6,8 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import com.album.model.AlbumJDBCDAO;
+import com.chargeRecord.model.ChargeRecordService;
+import com.chargeRecord.model.ChargeRecordVO;
 import com.google.gson.Gson;
 import com.members.model.*;
 import com.util.JavaMail;
@@ -23,7 +25,7 @@ public class MembersServlet extends HttpServlet {
 
 		// 判斷呼叫哪個方法
 		String action = req.getParameter("action");
-//		System.out.println(action);
+		System.out.println(action);
 
 		action = action == null ? "" : action;
 
@@ -48,6 +50,21 @@ public class MembersServlet extends HttpServlet {
 			break;
 		case "updateMemberPassword":
 			updateMemberPassword(req, res);
+			break;
+		case "walletAddMoney":
+			walletAddMoney(req, res);
+			break;
+		case "updateMemberWalletPassword":
+			updateMemberWalletPassword(req, res);
+			break;
+		case "checkWalletPassword":
+			checkWalletPassword(req, res);
+			break;
+		case "updateSetWalletPassword":
+			updateSetWalletPassword(req, res);
+			break;
+		case "memberWalletUsedRecord":
+			memberWalletUsedRecord(req, res);
 			break;
 		}
 	}
@@ -156,6 +173,8 @@ public class MembersServlet extends HttpServlet {
 				HttpSession sessionVC = req.getSession();
 				sessionVC.setAttribute("authCode", verificationCode);
 				sessionVC.setAttribute("registerAccount", registerAccount);
+
+				System.out.println(verificationCode);
 
 				// 寄送 JavaMail
 				JavaMail javaMail = new JavaMail();
@@ -333,19 +352,20 @@ public class MembersServlet extends HttpServlet {
 			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberUpdate.jsp");
 			failureView.forward(req, res);
 			return;// 程式中斷
-		} else {
-			HttpSession currentSession = req.getSession();
-			MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
-			MembersService memberSvc = new MembersService();
-			sessionMembersVO.setName(name); // Name
-			sessionMembersVO.setPhone(phone); // Phone
-			sessionMembersVO.setAddress(address); // Address
-			memberSvc.update(sessionMembersVO);
-
-			RequestDispatcher successView = req.getRequestDispatcher("/front/member/member.jsp");
-			successView.forward(req, res);
-			return;// 程式中斷
 		}
+		HttpSession currentSession = req.getSession();
+		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
+		MembersService memberSvc = new MembersService();
+		sessionMembersVO.setName(name); // Name
+		sessionMembersVO.setPhone(phone); // Phone
+		sessionMembersVO.setAddress(address); // Address
+
+		System.out.println(sessionMembersVO);
+		memberSvc.update(sessionMembersVO);
+
+		RequestDispatcher successView = req.getRequestDispatcher("/front/member/member.jsp");
+		successView.forward(req, res);
+		return;// 程式中斷
 
 	}
 
@@ -413,6 +433,230 @@ public class MembersServlet extends HttpServlet {
 
 	}
 
+	/*************************** 會員錢包儲值 **********************/
+	public void walletAddMoney(HttpServletRequest req, HttpServletResponse res) {
+		res.setContentType("application/json; charset=UTF-8");
+		// 訊息存在 Map
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+
+		// 接收參數
+		String storedValueAmount = req.getParameter("storedValueAmount");
+		String cardNumber = req.getParameter("cardNumber");
+		System.out.println(storedValueAmount);
+
+		String regex = "^[0-9]*$";
+		if (!storedValueAmount.trim().matches(regex)) {
+			messages.put("inputError", "請輸入正整數");
+			System.out.println("請輸入正整數");
+			messages.put("cardNumber", cardNumber);
+			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberWallet.jsp");
+			try {
+				failureView.forward(req, res);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+			return;// 程式中斷
+		}
+		System.out.println("成功");
+		HttpSession currentSession = req.getSession();
+		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
+		Integer currentMemberId = sessionMembersVO.getMemberId();
+
+		// 儲值成功 DAO
+		MembersService memberSvc = new MembersService();
+		memberSvc.walletPaymentAddMoney(currentMemberId, Integer.valueOf(storedValueAmount));
+		System.out.println(memberSvc.getOneById(currentMemberId).geteWalletAmount());
+		sessionMembersVO.seteWalletAmount(memberSvc.getOneById(currentMemberId).geteWalletAmount());
+
+		RequestDispatcher successView = req.getRequestDispatcher("/front/member/member.jsp");
+		try {
+			successView.forward(req, res);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+		return;// 程式中斷
+
+	}
+
+	public void updateMemberWalletPassword(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+
+		HttpSession currentSession = req.getSession();
+		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
+		String currentWalletPassword = sessionMembersVO.geteWalletPassword();
+
+		String oldWalletPassword = req.getParameter("oldWalletPassword");
+
+		System.out.println(currentWalletPassword);
+		System.out.println(oldWalletPassword);
+
+		if (oldWalletPassword == null || oldWalletPassword.trim().length() == 0) {
+			messages.put("errorOldoldWalletPassword", "*密碼不可為空");
+		} else {
+			if (!oldWalletPassword.equals(currentWalletPassword)) {
+				messages.put("errorOldoldWalletPassword", "*請確認舊密碼是否輸入正確");
+			}
+		}
+
+		String regex = "^[0-9]{6}$";
+		String newWalletPassword = req.getParameter("newWalletPassword");
+		System.out.println(newWalletPassword);
+		if (newWalletPassword == null || newWalletPassword.trim().length() == 0) {
+			messages.put("errornewWalletPassword", "*密碼不可為空");
+		} else {
+			if (!newWalletPassword.trim().matches(regex)) {
+				messages.put("errornewWalletPassword", "*密碼格式不正確");
+			}
+		}
+
+		String checkNewWalletPassword = req.getParameter("checkNewWalletPassword");
+		if (checkNewWalletPassword == null || checkNewWalletPassword.trim().length() == 0) {
+			messages.put("checkNewWalletPassword", "*密碼不可為空");
+		} else {
+			if (!checkNewWalletPassword.equals(newWalletPassword)) {
+				messages.put("checkNewWalletPassword", "*密碼與前次輸入不相符");
+			}
+		}
+		if (!messages.isEmpty()) {
+			messages.put("userInput1", oldWalletPassword);
+			messages.put("userInput2", newWalletPassword);
+
+			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberWalletPassword.jsp");
+			failureView.forward(req, res);
+			return;// 程式中斷
+		} else {
+			// 輸入正確後，呼叫 DAO 修改資料庫錢包密碼
+			MembersService memberSvc = new MembersService();
+			MembersVO newMemberVO = new MembersVO();
+			newMemberVO.setMemberId(sessionMembersVO.getMemberId());
+			newMemberVO.seteWalletPassword(newWalletPassword);
+			memberSvc.update(newMemberVO);
+			sessionMembersVO
+					.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
+			messages.put("updatePasswordSuccess", "修改密碼成功！");
+			// successful 的頁面
+			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletPassword.jsp");
+			successView.forward(req, res);
+			return;// 程式中斷
+		}
+	}
+
+	public void checkWalletPassword(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+
+		HttpSession currentSession = req.getSession();
+		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
+		String currentWalletPassword = sessionMembersVO.geteWalletPassword();
+//		System.out.println(currentWalletPassword);
+
+		MembersService memberSvc = new MembersService();
+		String walletPassword = memberSvc.selectForLogin(sessionMembersVO.getAccount(), sessionMembersVO.getPassword())
+				.geteWalletPassword();
+		System.out.println(walletPassword);
+
+		sessionMembersVO.seteWalletPassword(walletPassword);
+
+		System.out.println("執行111");
+
+		if (currentWalletPassword == null || currentWalletPassword.trim().length() == 0) {
+			// 跳轉到新建密碼畫面
+			messages.put("exist", "false");
+			String json = new Gson().toJson(messages);
+			res.getWriter().write(json);
+			return;
+		} else {
+			// 跳轉到原本畫面
+			messages.put("exist", "true");
+			String json = new Gson().toJson(messages);
+			res.getWriter().write(json);
+			return;
+		}
+	}
+
+	public void updateSetWalletPassword(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+
+		System.out.println("執行");
+
+		HttpSession currentSession = req.getSession();
+		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
+
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+
+		String regex = "^[0-9]{6}$";
+		String setWalletPassword = req.getParameter("setWalletPassword");
+		System.out.println(setWalletPassword);
+		if (setWalletPassword == null || setWalletPassword.trim().length() == 0) {
+			messages.put("errorSetWalletPassword", "*密碼不可為空");
+		} else {
+			if (!setWalletPassword.trim().matches(regex)) {
+				messages.put("errorSetWalletPassword", "*密碼格式不正確");
+			}
+		}
+
+		String checkWalletPassword = req.getParameter("checkWalletPassword");
+		if (checkWalletPassword == null || checkWalletPassword.trim().length() == 0) {
+			messages.put("errorCheckWalletPassword", "*密碼不可為空");
+		} else {
+			if (!checkWalletPassword.equals(setWalletPassword)) {
+				messages.put("errorCheckWalletPassword", "*密碼與前次輸入不相符");
+			}
+		}
+		if (!messages.isEmpty()) {
+			messages.put("userInput1", setWalletPassword);
+			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberSetWalletPassword.jsp");
+			failureView.forward(req, res);
+			return;// 程式中斷
+		} else {
+			// 輸入正確後，呼叫 DAO 修改資料庫錢包密碼
+			MembersService memberSvc = new MembersService();
+			MembersVO newMemberVO = new MembersVO();
+			newMemberVO.setMemberId(sessionMembersVO.getMemberId());
+			newMemberVO.seteWalletPassword(setWalletPassword);
+			memberSvc.update(newMemberVO);
+			System.out.println("執行");
+			System.out.println(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
+			sessionMembersVO
+					.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
+			messages.put("updatePasswordSuccess", "成功設定錢包密碼！");
+			// successful 的頁面
+			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberSetWalletPassword.jsp");
+			successView.forward(req, res);
+			return;// 程式中斷
+		}
+	}
+
+	public void memberWalletUsedRecord(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+
+		HttpSession currentSession = req.getSession();
+		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
+
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+		
+		ChargeRecordService chargeRecordSvc = new ChargeRecordService();
+
+		List<ChargeRecordVO> listAll = chargeRecordSvc.getAll(sessionMembersVO.getMemberId());
+
+		System.out.println(listAll);
+
+//		for (ChargeRecordVO list : listAll) {
+//			
+//			
+//		}
+
+		String json = new Gson().toJson(listAll);
+		res.getWriter().write(json);
+		return;
+	}
 }
 
 ///*************************** 取得一筆會員資料 **********************/

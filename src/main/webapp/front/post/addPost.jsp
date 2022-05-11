@@ -9,50 +9,117 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>	貼文新增 - addPost.jsp</title>
+<title>	發文頁面測試</title>
 
-<style>
-  table {
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-  }
-  table, th, td {
-    border: 0px solid #CCCCFF;
-  }
-  th, td {
-    padding: 1px;
-  }
-</style>
+<!-- 共用的CSS start-->
+<%@include file="/front/layout/commonCSS.jsp"%>
+<!-- 共用的CSS end-->
+	 <!-- Main Style CSS -->
+    <link rel="stylesheet" href="other/style copy.css">
 
 </head>
 
 <body>
-<table id="table-1">
-			 
-<h4><a href="post.jsp">回首頁</a></h4>
+	<!-- 共用的header start-->
+	<%@include file="/front/layout/header.jsp"%>
+	<!-- 共用的header end-->
 	
-</table>
+	    <!--offcanvas menu area start-->
+    <div class="off_canvars_overlay">
+
+    </div>
+    
+ 	
+
+										   									        
+    <!--shop  area start-->
+	<div class="shop_area shop_reverse mt-100 mb-100">
+        <div class="container">
+            <div class="row">
+                
+                <!-- Form Elements -->                    
+                    <!-- <div class="col-12" style="margin: auto">  -->
+                    
+                	<!-- <div class="col-md-3">
+                	放入一個buttom
+					<br/>
+					</div> -->
+					
+	               
+	               
+	                <div class="col-md-6">
+	                	 <form method="post" action="<%=request.getContextPath()%>/addPost" enctype="multipart/form-data">
+	                	 
+	                	 <input type="hidden" id="memberId" value="<%=request.getAttribute("memberId")%>">
+	                	 
+	                	<!-- <input type="file" id="file-btn" accept="image/*" multiple="multiple" name="upfile"> -->
+						<label for="inputNumber"
+							class="col-md-6 col-form-label">圖片</label>
+							<div class="col-lg-12">
+							<img src="add-image.png" class="ml-3" style="height:300px;width:300px;" onclick="add()" id="addimage">
+							<span style="color:#f33;">${errorMsgs.parts}</span>
+							</div>
+						
+						
+					</div>		
+					
+					<div class="col-md-6">
+					 
+						<label for="inputPassword"
+					 		class="col-lg-6 col-form-label">內容</label>
+							<div class="col-lg-12">
+							<textarea name="content" class="form-control" style="height:30vh;width:100%;resize:none;">${param.content}</textarea>
+							<span style="color:#f33;">${errorMsgs.content}</span>
+							<%-- <input type="TEXT" name="content" size="90" value="${param.content}"/>${errorMsgs.content} --%>
+					   	</div>
+					   	
+					   	<div class="col-lg-6 ">
+									<input type="hidden" name="action" value="insert">
+									
+									
+									<input type="submit" value ="發文" class="btn btn-success" style="position: fixed; bottom: 120px; right: 150px;">
+									
+						</div>
+						</form>
+						
+					</div>	
+				</div>
+			</div>
+		</div>
+		
+	<!-- 共通的footer start-->
+	<%@include file="/front/layout/footer.jsp"%>
+	<!-- 共通的footer end-->
 
 
-
+	<!-- 共用的JS -->
+	<%@include file="/front/layout/commonJS.jsp"%>
+	<!-- 共用的JS -->
 	
-<form method="post" action="<%=request.getContextPath()%>/uploadPost" enctype="multipart/form-data">
+<script type="text/javascript">
+let count = 1;
+
+function add(){
+	$('#addimage').before('<div id="div'+count+'" style="float:left;position:relative;"><input name="file" accept="image/*" type="file" id="formFile'+count+'"></div>');
+	$('#formFile'+count).hide();
+		let Element = document.querySelector('#formFile'+count);
+		Element.addEventListener('change', function() { 
+		let url = URL.createObjectURL(Element.files[0]); 
+		$(this).after('<img src="'+url+'" id="img'+ (count-1) +'" class="mb-3 ml-3" style="height:266px;width:400px;object-fit: cover;"><i class="far fa-window-close text-muted" id="btn'+ (count-1) +'" style="position:absolute;top:0;right:0;font-size:2em;" onclick="letItGo(this.id)"></i>');
 	
-<!--            <input type="hidden" name="memberId" value="1"> -->
-            <div class="shop_toolbar_wrapper" id="file-zone">
-                <span>點擊上傳</span>
-                <input type="file" id="file-btn" accept="image/*" multiple="multiple" name="upfile">
-                <input type="TEXT" name="content" size="45" value="${param.content}"/>${errorMsgs.content}
-            </div>
-	
-	<%-- <jsp:useBean id="deptSvc" scope="page" class="com.post.model.PostService" /> --%>
+		});
+	document.querySelector('#formFile'+count).click();
+		count++;
+	}
+
+function letItGo(btn){
+	let select = btn.replace('btn','#div');
+	$(select).remove();
+
+}
+
+</script>
 
 
-<br>
-<input type="hidden" name="action" value="insert">
-<input type="submit" value="送出新增">
-
-</form>
 </body>
 </html>

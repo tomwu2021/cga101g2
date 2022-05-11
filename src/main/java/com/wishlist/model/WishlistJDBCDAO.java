@@ -90,7 +90,7 @@ public class WishlistJDBCDAO implements WishlistDAO_interface{
 	}
 	@Override
 	public List<WishlistVO> getAllByMemberId(Integer memberId) {
-		final String GETALL = "SELECT member_id, product_id FROM wishlist where member_id = ?;";
+		final String GETALL = "SELECT * FROM wishlist where member_id = ? ORDER BY create_time ;";
 
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
@@ -103,6 +103,7 @@ public class WishlistJDBCDAO implements WishlistDAO_interface{
 				WishlistVO newWishlist = new WishlistVO();
 				newWishlist.setMemberId(rs.getInt("member_id"));
 				newWishlist.setProductId(rs.getInt("product_id"));
+				newWishlist.setCreate_time(rs.getTimestamp("create_time"));
 				list.add(newWishlist);
 			}
 			return list;

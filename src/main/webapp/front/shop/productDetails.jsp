@@ -199,6 +199,7 @@
 	<!-- 共用的JS -->
 
 	<!-- 額外添加的JS -->
+	<jsp:include page="/front/layout/showMessage.jsp" />
 	<!-- 	路徑舉例 -->
 	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/back/js/?????.js"> --%>
 	<!-- 額外添加的JS -->

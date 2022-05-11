@@ -17,7 +17,7 @@
 <!--! wishlis設定  -->
 <div style="position: fixed; bottom: 120px; right: 120px; z-index: 10;">
 	<span class="glyphicon glyphicon-usd text-danger"> 
-	<a href="<%=request.getContextPath()%>/front/shop/cartAndWishlist.jsp" title="前往收藏清單" style="color:#CE0000;" >
+	<a href="<%=request.getContextPath()%>/shop/wishlist?action=getWishlist" title="前往收藏清單" style="color:#CE0000;" >
 	 <i class="bi bi-calendar2-heart-fill fa-3x"></i>
 	</a>
 	</span>

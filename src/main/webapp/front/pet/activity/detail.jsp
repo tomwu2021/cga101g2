@@ -31,6 +31,7 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 <!-- 共用的CSS -->
 <%@ include file="/back/layout/commonCSS.jsp"%>
 <!-- 自訂的CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/sb-admin-2.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front/pet/style.css">
 <body>
@@ -62,7 +63,7 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 
 			<div class="col-lg-12">
 				<!-- ALL Activity -->
-				<div class="card">
+				<div class="card border-bottom-info">
 					
 					<div class="card-body">
 						<div class="row">
@@ -75,7 +76,7 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 		              <button  class="btn btn-danger form-btn-circle btn-sm" data-toggle="modal" data-target="#basicModal" id="deleteBtn">
 		                <i class="fas fa-trash-alt"></i> 刪除
 		              </button>
-		                      <form method="post" action="/CGA101G2/activity">
+		                      <form method="post" action="<%=request.getContextPath()%>/activity">
 		              <input type="hidden" name="petId" value="<%=petId%>">
 		              <input type="hidden" name="recordId" id="getRecordId">
 		              <div class="modal fade" id="basicModal" tabindex="-1">
@@ -100,7 +101,7 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 						<!-- End Basic Modal-->
 						</div>
 						<div class="card-title col-lg-1">
-							<form method="post" action="/CGA101G2/activity">
+							<form method="post" action="<%=request.getContextPath()%>/activity">
 							<input type="hidden" name="action" value="goToInsert">
 							<button type="submit" class="btn btn-primary form-btn-circle btn-sm" id="insertBtn" onclick="insertBtn()">
 								<i class="fas fa-plus"></i> 新增
@@ -154,10 +155,10 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 	<!-- 共用的JS -->
 	<%@include file="/front/layout/commonJS.jsp"%>
 	<!-- 自訂的JS -->
-<script src="/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
 <script>
 let rId = '${param.recordId}'? '${param.recordId}':$('.allItem:first').attr("id");
-		$("#editBox").load("/CGA101G2/activity",
+		$("#editBox").load("<%=request.getContextPath()%>/activity",
 				{action:"one_Display", 
 				recordId:rId}, 
 				function(data,status){
@@ -171,7 +172,7 @@ let rId = '${param.recordId}'? '${param.recordId}':$('.allItem:first').attr("id"
 
 function getDetail(record){
 	rId = record.id;
-	$.post("/CGA101G2/activity",
+	$.post("<%=request.getContextPath()%>/activity",
 			{action:"one_Display", 
 			recordId:rId}, 
 			function(data,status){
@@ -192,10 +193,10 @@ function getDetail(record){
 <div>有新活動嗎？快來記錄吧！</div>-->
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 <link rel="stylesheet" type="text/css"
-	href="/CGA101G2/front/pet/datetimepicker/jquery.datetimepicker.css" />
-<script src="/CGA101G2/front/pet/datetimepicker/jquery.js"></script>
+	href="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.js"></script>
 <script
-	src="/CGA101G2/front/pet/datetimepicker/jquery.datetimepicker.full.js"></script>
+	src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
 .xdsoft_datetimepicker .xdsoft_datepicker {
@@ -216,7 +217,7 @@ function getDetail(record){
 		format : 'Y-m-d', //format:'Y-m-d H:i:s',
 		value: '<%=tempTime%>',    // value:   new Date(),
 		maxDate: '<%=defaultDate%>',
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+	//disabledDates:        ['2022/06/08','20/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前
 	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後

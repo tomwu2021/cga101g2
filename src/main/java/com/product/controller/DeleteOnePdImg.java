@@ -14,7 +14,7 @@ import com.product_img.model.ProductImgService;
 import com.product_img.model.ProductImgVO;
 
 @WebServlet("/shop/DeletePdImg")
-public class DeletePdImg extends HttpServlet {
+public class DeleteOnePdImg extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -23,7 +23,8 @@ public class DeletePdImg extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-		req.setCharacterEncoding("UTF-8");
+		req.setCharacterEncoding("UTF-8");// client 端向 Servlet 請求的編碼
+		res.setCharacterEncoding("UTF-8");// response，設定回應的格式及編碼
 
 //		列舉client送來的所有請求參數名稱
 		try {

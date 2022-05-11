@@ -13,13 +13,11 @@ import java.util.List;
 import com.sort1.model.Sort1VO;
 
 public class Sort2JNDIDAO implements Sort2DAO_interface {
-
-//		private static final String DELETE = 
-//			"DELETE FROM emp2 where empno = ?";
-//	private static final String UPDATE = "UPDATE cga_02.sort2 " + "SET sort2_name= ? " + "where sort2_id = ?;";
-
+	
+	
 	@Override
 	public Sort2VO insert(Sort2VO sort2VO) {
+		
 		final String INSERT_STMT = "INSERT INTO cga_02.sort2(sort2_name) VALUES ( ? );";
 		try (Connection connection = getRDSConnection();
 				PreparedStatement pstmt = connection.prepareStatement(INSERT_STMT, Statement.RETURN_GENERATED_KEYS)) {
@@ -81,6 +79,7 @@ public class Sort2JNDIDAO implements Sort2DAO_interface {
 
 	@Override
 	public Sort2VO getOneById(Integer sort2Id) {
+		
 		final String sql = "select * from sort2 where sort2_id = ?";
 		try (Connection conn =  getRDSConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -101,6 +100,7 @@ public class Sort2JNDIDAO implements Sort2DAO_interface {
 
 	@Override
 	public Sort2VO selectBySort2Name(String sort2Name) {
+		
 		final String sql = "select * from sort2 where sort2_name = ?";
 		try (Connection conn =  getRDSConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {

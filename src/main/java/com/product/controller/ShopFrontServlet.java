@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,6 +34,9 @@ public class ShopFrontServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("ShopFrontServlet 執行成功");
+		req.setCharacterEncoding("UTF-8");// client 端向 Servlet 請求的編碼
+		res.setCharacterEncoding("UTF-8");// response，設定回應的格式及編碼
+		
 //		列舉client送來的所有請求參數名稱
 		try{
 			String name; 
@@ -45,7 +49,6 @@ public class ShopFrontServlet extends HttpServlet {
 			System.out.println(e.toString());
 			}
 		
-		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		if ("listProducts_Byfind".equals(action)) {
 			
@@ -84,15 +87,14 @@ public class ShopFrontServlet extends HttpServlet {
 		    	List<Sort2VO> sort2VOList = sortMixService.getSort2VOsBySort1Id(sort1Id);
 		    	sort1VO.setSort2VOList(sort2VOList);
 		    }
-		    
-		    ///********分界點*********///
+		
+		    ///********跳轉到該分類頁面的分類資料分界點 開始*********///
 		    Sort1VO sort1VO = new Sort1VO();
 			// 哪一個主分類做的判斷
 			if (req.getParameter("sort1_id") != null) {
 				Integer sort1Id = null;
 				sort1Id = Integer.valueOf(req.getParameter("sort1_id").trim());
 				sort1VO = sort1Service.getOneById(sort1Id);
-//				System.out.println("輸出thisSort1VO");
 			}
 			Sort2Service sort2Service = new Sort2Service();
 			Sort2VO sort2VO = new Sort2VO();
@@ -101,17 +103,26 @@ public class ShopFrontServlet extends HttpServlet {
 				Integer sort2Id = null;
 				sort2Id = Integer.valueOf(req.getParameter("sort2_id").trim());
 				sort2VO = sort2Service.getOneById(sort2Id);
-//				System.out.println("輸出thisSort2VO");
 			}
-			///********分界點*********///
+			 ///********分類的分界點 結束*********///
+			
+		    ///********推薦商品資料 開始*********///
+		    Map<String, String[]> topMap = new TreeMap<String, String[]>();
+		    topMap.put("top_status", new String[] { "1" });
+		    List<ProductVO> topProdcutList = pdSvc.getForShopFront(topMap);
+		    ///********推薦商品資料 結束*********///
 		    
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("listProducts_Byfind", list); // 資料庫取出的list物件,存入request
 			req.setAttribute("sort1VOListIncludesort2VOList", sort1VOList);
-			///********分界點*********///
+			///********跳轉到該分類頁面的分類資料分界點 開始*********///
 			req.setAttribute("thisSort1VO", sort1VO);
 			req.setAttribute("thisSort2VO", sort2VO);
-			///********分界點*********///
+			///********分類的分界點 結束*********///
+			
+			 ///********推薦商品資料 開始*********///
+			req.setAttribute("topProdcutList", topProdcutList);
+		    ///********推薦商品資料 結束*********///
 			
 			// **********************0506要轉交給shop2改成轉交給shop***********************//
 

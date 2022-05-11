@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.p_sort1.model.PSort1Service;
+import com.p_sort1.model.PSort1VO;
 import com.picture.model.PictureVO;
 import com.sort1.model.Sort1VO;
 import com.sort2.model.Sort2Service;
@@ -31,9 +32,6 @@ public class ProductVO implements java.io.Serializable {
 	private Integer topStatus;
 	private Integer cartAmount;
 	private PictureVO pictureVO;
-	
-
-	
 	
 	public PictureVO getPictureVO() {
 		return pictureVO;
@@ -185,11 +183,29 @@ public class ProductVO implements java.io.Serializable {
 		return sort1VOList;
 	}
 	
-//	找到picV	O
+//	找到picV	
 	public List<PictureVO> getPictureVOList() {
 		com.product_img.model.ProductImgService daoSvc = new com.product_img.model.ProductImgService();
 		List<PictureVO> pictureVOList = daoSvc.getPicVOsByProductId(productId);
 		return pictureVOList;
 	}
 
+	
+//	找到PSortVO
+	public List<Sort1VO> getPSort1VO() {
+		PSort1Service pSort1Svc = new PSort1Service();
+		List<Sort1VO> pSort1VO = pSort1Svc.findSort1VOByproductId(productId);
+		return pSort1VO;
+	}
+
+	@Override
+	public String toString() {
+		return "ProductVO [productId=" + productId + ", productName=" + productName + ", price=" + price + ", amount="
+				+ amount + ", sort2Id=" + sort2Id + ", updateTime=" + updateTime + ", groupPrice1=" + groupPrice1
+				+ ", groupAmount1=" + groupAmount1 + ", groupAmount2=" + groupAmount2 + ", groupAmount3=" + groupAmount3
+				+ ", description=" + description + ", status=" + status + ", topStatus=" + topStatus + ", cartAmount="
+				+ cartAmount + ", pictureVO=" + pictureVO + "]";
+	}
+	
+	
 }

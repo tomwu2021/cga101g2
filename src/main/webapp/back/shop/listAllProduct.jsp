@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
@@ -8,12 +7,8 @@
 <%@ page import="com.sort2.model.*"%>
 <%@ page import="com.sort_mix.model.*"%>
 
+<jsp:useBean id="listProducts_Byfind" scope="request" type="java.util.List<ProductVO>" /> <!-- 於EL此行可省略 -->
 
-<%
-ProductService pdSvc = new ProductService();
-List<ProductVO> list = pdSvc.getAll();
-pageContext.setAttribute("list", list);
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +20,7 @@ pageContext.setAttribute("list", list);
 <!-- 額外添加的CSS -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/hub/css/backproduct.css">
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <!-- 額外添加的CSS -->
 </head>
 <body>
@@ -51,31 +47,128 @@ pageContext.setAttribute("list", list);
 											<h3 class="h6 text-uppercase mb-0">商品管理</h3>
 										</div>
 										<div class="card-body">
-											<p>商品管理</p>
+											<p>查詢條件</p>
+											
+											<c:set var="product_id" scope="page"  value="${map.product_id}"/>
+  											<p>${product_id}</p>
+											
 											<div class="row">
-												<div class="col-lg-12 mb-5">
+												<div class="col-lg-6 mb-5">
 													<!-- <form class="form-horizontal"> -->
+													
+<FORM METHOD="POST" ACTION="<%=request.getContextPath()%>/back/shop" name="form1">		
+									
 													<div class="form-group row">
-														<div class="col-md-9"></div>
+															<label class="col-md-3 form-control-label">商品編號 :</label>
+															<div class="col-md-6">
+															<input class="form-control" list="datalistOptions" id="exampleDataList" name="product_id"  placeholder="輸入商品編號">
+																<datalist id="datalistOptions">
+																	<c:forEach var="productVO" items="${forSelectList}">
+  																		<option value="${productVO.productId}">
+ 																	</c:forEach>
+																</datalist> 
+															</div>
+													</div>	
+									
+													<div class="form-group row">
+																<label class="col-md-3 form-control-label">商品名稱 :</label>
+																<div class="col-md-6">
+																<input class="form-control" list="datalistOptions2"  id="exampleDataList2" name="product_name"  placeholder="輸入商品名稱">
+																<datalist id="datalistOptions2">
+																	<c:forEach var="productVO" items="${forSelectList}">
+  																		<option value="${productVO.productName}">
+ 																	</c:forEach>
+																</datalist> 
+															</div>
+													</div>	
+													
+													<div class="form-group row ">
+															<label class="col-md-3 form-control-label">商品主分類 :</label>
+																<div class="col-md-6 m-auto" id="sort2CheckBox">
+																		<div class="form-check form-check-inline">
+																		
+																			<c:forEach var="sort1VO" items="${sort1VOList}" >
+																				<input class="form-check-input" type="checkbox" 
+																					name="sort1_id" id="inlineCheckbox1"
+																					value="${sort1VO.sort1Id}"> 
+																					<label class="form-check-label" for="inlineCheckbox1"style="padding-right: 20px;">${sort1VO.sort1Name}</label>
+																			</c:forEach>	
+																				
+																		</div>
+																</div>
 													</div>
-													<div class="form-group row">
-														<label class="col-sm-1 form-control-label">查詢日期 :</label>
+													
+												<div class="form-group row">
+														<label class="col-md-3 form-control-label">商品子分類 :</label>
+														<div class="col-md-6">
+																<select class="custom-select custom-select-sm"
+																	id="inlineFormCustomSelect" name="sort2_id"
+																	class="form-control form-control-success">
+																	
+																		<option value=" ">請選擇...</option>
+																	<c:forEach var="sort2VO" items="${sort2VOList}" >
+																		<option value="${sort2VO.sort2Id}">${sort2VO.sort2Name}</option>
+																	</c:forEach>
+															</select>
+														</div>
+												</div>
+													
+												
+												
+												</div>
+										<div class="col-lg-6 mb-5">
+												
+												<div class="form-group row">
+														<label class="col-md-3 form-control-label">推薦狀態 :</label>
+														<div class="col-md-6">
+																<select class="custom-select custom-select-sm"
+																	id="inlineFormCustomSelect" name="top_status"
+																	class="form-control form-control-success">
+																	<option value=" ">請選擇...</option>
+																	<option value="0">未推薦</option>
+																	<option value="1">已推薦</option>
+															</select> 
+														</div>
+												</div>
+												
+												<div class="form-group row">
+														<label class="col-md-3 form-control-label">上架狀態 :</label>
+														<div class="col-md-6">
+																<select class="custom-select custom-select-sm"
+																	id="inlineFormCustomSelect" name="status"
+																	class="form-control form-control-success">
+																	<option value=" ">請選擇...</option>
+																	<option value="0">未上架</option>
+																	<option value="1">一般商品上架</option>
+																	<option value="2">一般與團購上架</option>
+															</select> 
+														</div>
+												</div>
+												
+												
+													<div class="from-group row">
+														<label class="col-md-3 form-control-label">更新日期 :</label>
 														<div class="col-md-9">
-															<input type="date" value="2020-04-20" min="2022-01-01"
-																max="2050-01-01" step="1"> ~ <input type="date"
-																value="2020-04-20" min="2022-01-01" max="2050-01-01"
-																step="1"> &emsp; <input type="submit" value="確定"
-																class="btn btn-primary">
+															<input name="startTime" id="f_date1" type="text" >
+															～　<input name="endTime" id="f_date2" type="text" >
+<!-- 															<input type="submit" value="確定" class="btn btn-primary"> -->
 														</div>
 													</div>
+												</div>
+											<div class="col-lg-12 mb-5">		
 													<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-														<button class="btn btn-primary me-md-2" type="button"
+														<button class="btn btn-success me-md-2" type="button" style="margin-right: 100px"
 														 onclick="javascript:window.location='<%=request.getContextPath()%>/back/shop/addProduct.jsp'">
 														 +新增商品</button>
-														<button class="btn btn-primary" type="button">Button</button>
+														 
+														 
+														<input type="submit" value="送出查詢" class="btn btn btn-primary"  style="margin-right: 40px;">
+														<input type="hidden" name="action" value="listProducts_Byfind">
+
+
 													</div>
-												</div>
 											</div>
+</FORM>											
 											<!-- !分頁符號 css在style.default.css 4237 -->
 											<!-- 											<div class="row justify-content-center align-items-center"> -->
 											<!-- 												<ul class="pagination"> -->
@@ -105,13 +198,14 @@ pageContext.setAttribute("list", list);
 																	<th class="list">子分類</th>
 																	<th class="list">數量</th>
 																	<th class="list">售價</th>
-																	<th class="list1">上架狀態</th>
 																	<th class="list1">推薦狀態</th>
+																	<th class="list1">上架狀態</th>
 																	<th class="list">編輯</th>
 																</tr>
 															</thead>
 															<tbody>
-																<c:forEach var="productVO" items="${list}">
+<%@ include file="pages/page1_ByCompositeQuery.file" %> 
+																<c:forEach var="productVO" items="${listProducts_Byfind}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 																	<tr class="text-center">
 																		<td >${productVO.productId}</td>
 <c:set var="pictureVOList" scope="page" value="${productVO.pictureVOList}"></c:set>
@@ -140,71 +234,85 @@ pageContext.setAttribute("list", list);
 																				</c:forEach>
 																			</c:if>
 																		</td>
-																		<c:set var="sort2VO" scope="page"
-																			value="${productVO.sort2VO}" />
+																		<c:set var="sort2VO" scope="page" value="${productVO.sort2VO}" />
 																		<td>${sort2VO.sort2Name}</td>
 																		<td>${productVO.amount}</td>
 																		<td>${productVO.price}元</td>
 
-																		<c:choose>
-																			<c:when test="${productVO.status == 0}">
-																				<td>未上架
-																			</c:when>
-																			<c:when test="${productVO.status == 1}">
-																				<td class="table-primary">一般商品上架
-																			</c:when>
-																			<c:when test="${productVO.status == 2}">
-																				<td class="table-warning">一般與團購上架
-																			</c:when>
-																		</c:choose>
-																		<form>
-																			<select class="custom-select custom-select-sm"
-																				style="width: 70%" id="inlineFormCustomSelect" name ="status">
-																				<!-- 															<option selected> Choose...</option> -->
-																				<option value="0">未上架</option>
-																				<option value="1">一般商品上架</option>
-																				<option value="2">一般與團購上架</option>
-																			</select>
-																			<div class="col-auto my-1">
-																				<button id="update${productVO.productId}" value="${productVO.productId}" name="status" type="button" class="btn btn-primary btn-sm" >提交</button>
-																			</div>
-																		</form>
-																		</td>
+
+												
 																		<c:choose>
 																			<c:when test="${productVO.topStatus == 0}">
-																				<td>未推薦
+																				<td >
+																					<input id="updateTopStatus${productVO.productId}" value="${productVO.topStatus}"
+																					type="checkbox"  data-toggle="toggle"  data-width="80" data-height="30"  data-onstyle="primary" data-offstyle="secondary" >
+																				</td>
 																			</c:when>
 																			<c:when test="${productVO.topStatus == 1}">
-																				<td class="table-primary">推薦商品
+																				<td class="table-primary">
+																					<input id="updateTopStatus${productVO.productId}"  value="${productVO.topStatus}"
+																					type="checkbox" data-toggle="toggle"  data-width="80" data-height="30"  data-onstyle="primary" data-offstyle="secondary" checked>
+<%-- 																				<input id="update${productVO.productId}" value="${productVO.productId}" type="checkbox" data-size="small">  --%>
+																				</td>
 																			</c:when>
 																		</c:choose>
-																		<form>
-																			<select class="custom-select custom-select-sm"
-																				style="width: 70%" id="inlineFormCustomSelect">
-																				<!-- 																	<option selected>Choose...</option> -->
-																				<option value="1">未推薦</option>
-																				<option value="2">上架推薦</option>
-																			</select>
-																			<div class="col-auto my-1">
-																				<button type="button" class="btn btn-primary btn-sm">提交</button>
-																			</div>
-																		</form>
-																		</td>
+
+
+																		<c:choose>
+																			<c:when test="${productVO.status == 0}">
+																				<td class=""> 
+																					<span>未上架&nbsp;&nbsp;&nbsp;&nbsp;</span>
+																					<select class="custom-select custom-select-sm" style="width: 70%" id="inlineFormCustomSelect" name ="status">
+																						<option value="1">一般商品上架</option>
+																						<option value="2">一般與團購上架</option>
+																					</select>
+																					<div class="col-auto my-1">
+																						<button id="updateStatus${productVO.productId}" value="${productVO.productId}" name="status" type="button" class="btn btn-primary btn-sm" >提交</button>
+																					</div>
+																				</td>
+																			</c:when>
+																			
+																			<c:when test="${productVO.status == 1}">
+																				<td class="table-primary">
+																						<span>一般商品上架</span>
+																						<select class="custom-select custom-select-sm" style="width: 70%" id="inlineFormCustomSelect" name ="status">
+																						<option value="0">未上架</option>
+																						<option value="2">一般與團購上架</option>
+																					</select>
+																					<div class="col-auto my-1">
+																						<button id="updateStatus${productVO.productId}" value="${productVO.productId}" name="status" type="button" class="btn btn-primary btn-sm" >提交</button>
+																					</div>
+																				</td>
+																			</c:when>
+																			<c:when test="${productVO.status == 2}">
+																				<td class="table-warning">
+																						<span>一般與團購上架</span>
+																						<select class="custom-select custom-select-sm" style="width: 70%" id="inlineFormCustomSelect" name ="status">
+																						<option value="0">未上架</option>
+																						<option value="1">一般商品上架</option>
+																					</select>
+																					<div class="col-auto my-1">
+																						<button id="updateStatus${productVO.productId}" value="${productVO.productId}" name="status" type="button" class="btn btn-primary btn-sm" >提交</button>
+																					</div>
+																				</td>
+																			</c:when>
+																		</c:choose>
+																		
+																		
 																		<td>
-																			<FORM METHOD="get"
-																				ACTION="<%=request.getContextPath()%>/shop/ProductGetOneServlet">
+																			<FORM METHOD="POST" ACTION="<%=request.getContextPath()%>/shop/ProductGetOneServlet">
 																				<button type="submit" class="btn btn-danger btn-sm">修改</button>
-																				<input type="hidden" name="productId"
-																					value="${productVO.productId}"> <input
-																					type="hidden" name="action"
-																					value="getOne_For_Update">
+																				<input type="hidden" name="productId" value="${productVO.productId}"> 
+																				<input type="hidden" name="action" value="getOne_For_Update">
 																			</FORM>
 																		</td>
 																</c:forEach>
-
 															</tbody>
 														</table>
 													</div>
+<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+<input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
+<%@ include file="pages/page2_ByCompositeQuery.file" %>
 												</div>
 											</div>
 										</div>
@@ -270,10 +378,19 @@ pageContext.setAttribute("list", list);
 
 	<!-- 額外添加的JS -->
 	<script src="<%=request.getContextPath()%>/assets/shop/backProduct/productUpdateStatus.js"> </script>
+	<script src="<%=request.getContextPath()%>/assets/shop/backProduct/productUpdateTopStatus.js"> </script>
 	
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets/shop/datetimepicker/jquery.datetimepicker.css" />
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/assets/shop/datetimepicker/time.css" />
+	
+	<script src="<%=request.getContextPath()%>/assets/shop/datetimepicker/jquery.datetimepicker.full.js"></script>
+	<script src="<%=request.getContextPath()%>/assets/shop/datetimepicker/time.js"></script>
 	<!-- 額外添加的JS -->
 
 </body>
+
 
 </html>

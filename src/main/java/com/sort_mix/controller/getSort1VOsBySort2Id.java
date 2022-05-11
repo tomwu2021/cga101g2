@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sort2.model.Sort2VO;
 import com.sort_mix.model.SortMixService;
-@WebServlet("/back/shop/getSort1VOsBySort2Id")
+@WebServlet("/shop/getSort1VOsBySort2Id")
 public class getSort1VOsBySort2Id extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

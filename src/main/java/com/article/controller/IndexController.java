@@ -1,25 +1,19 @@
 package com.article.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 import com.article.model.ArticleVO;
 import com.article.service.ArticleService;
-import com.picture.model.PictureVO;
 import com.picture.service.PictureService;
+import com.post.model.*;
 
 @WebServlet("/index")
 public class IndexController extends HttpServlet {
@@ -37,10 +31,13 @@ public class IndexController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 //		/*************************** 公告list，商城list，每篇第一張圖片 **************************************/
 			ArticleService artiSvc = new ArticleService();
+			PostService postSvc = new PostService();
 			List<ArticleVO> aList0 = artiSvc.getByArtiType(0);
 			List<ArticleVO> aList1 = artiSvc.getByArtiType(1);
+			List<PostVO> postList = postSvc.selectHotPost();
 			req.setAttribute("aList0", aList0);
 			req.setAttribute("aList1", aList1);
+			req.setAttribute("postList", postList);
 			String url = "/front/index.jsp";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);		

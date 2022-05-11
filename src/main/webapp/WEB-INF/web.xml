@@ -11,6 +11,9 @@
 		<filter-name>FilterForMemberLogin</filter-name>
 		<url-pattern>/front/member_select.jsp</url-pattern>
 		<url-pattern>/front/member/member.jsp</url-pattern>
+		<url-pattern>/front/member/memberUpdate.jsp</url-pattern>
+		<url-pattern>/front/member/memberPassword.jsp</url-pattern>
+		<url-pattern>/front/member/memberWallet.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>

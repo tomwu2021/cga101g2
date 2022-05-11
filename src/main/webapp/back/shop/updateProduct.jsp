@@ -55,16 +55,21 @@
 										name="form1" enctype="multipart/form-data">
 										<div class="card">
 											<div class="card-header">
-												<h3 class="h6 text-uppercase mb-0">新增商品</h3>
+												<h3 class="h6 text-uppercase mb-0">更新商品</h3> 
 											</div>
 											<div class="card-body">
 												<p>
 													商品編號 : ${param.productId} &emsp; 最後更新時間 :
 													<!-- 字串轉日期 -->
 													<fmt:parseDate var="dateObj" value="${param.updateTime}"
-														type="DATE" pattern="yyyy-MM-dd" />
+														type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
 													<fmt:formatDate value='${dateObj}'
-														pattern=' yyyy MMM dd EEEE KK MM  ' />
+													type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
+													<!-- 字串轉日期 -->
+													<!-- 返回商品列表 START -->
+													<input type=button value="返回商品列表" class="btn btn-success" style="position: relative; left: 3%"
+													onclick="javascript:window.location='<%=request.getContextPath()%>/back/shop?action=listProducts_Byfind'">
+													<!-- 返回商品列表 END -->
 												<div class="row">
 													<div class="col-lg-6 mb-5">
 														<form class="form-horizontal">
@@ -86,7 +91,7 @@
 																<div class="col-md-6">
 																	<input id="inputHorizontalSuccess" type="number"
 																		value="${param.price}" name="price" placeholder=""
-																		step="1" min="1" max="999"
+																		step="1" min="1" max="9999"
 																		class="form-control form-control-success"> <small
 																		class="form-text text-muted ml-3 text-danger">${errorMsgs.price}</small>
 																</div>
@@ -128,10 +133,10 @@
 															<div class="form-group row">
 																<label class="col-md-3 form-control-label">對應主分類</label>
 																<div class="col-md-6 m-auto" id="sort2CheckBox">
-																	<jsp:useBean id="smixSvc" scope="page"
-																		class="com.sort_mix.model.SortMixService" />
+																	<jsp:useBean id="pSort1Svc" scope="page"
+																		class="com.p_sort1.model.PSort1Service" />
 																	<c:set var="sort1VOlist" scope="page"
-																		value="${smixSvc.getSort1VOsBySort2Id(param.sort2Id)}"></c:set>
+																		value="${pSort1Svc.findSort1VOByproductId(param.productId)}"></c:set>
 																	<c:if test="${sort1VOlist.size() !=0}">
 																		<c:forEach var="sort1VO" items="${sort1VOlist}">
 																			<div class="form-check form-check-inline">
@@ -155,7 +160,7 @@
 															<div class="col-md-6">
 																<input id="inputHorizontalSuccess" type="number"
 																	value="${param.groupPrice1}" name="groupPrice1"
-																	placeholder="" step="1" min="1" max="999"
+																	placeholder="" step="1" min="1" max="9999"
 																	class="form-control form-control-success"> <small
 																	class="form-text text-muted ml-3 text-danger">${errorMsgs.groupPrice1}</small>
 															</div>
@@ -218,23 +223,28 @@
 												<div class="row">
 													<div class="col-lg-12 mb-5">
 														<div class="form-group row">
-															<label class="col-md-3 form-control-label">商品照片</label>
-															<div class="col-md-6"></div>
+															<label class="col-md-3 form-control-label">商品照片 &emsp; (第一張為首圖)</label>
 														</div>
+														<small class="form-text text-muted ml-3 text-danger">${errorMsgs.img}</small>
 													</div>
 														<div class="col-lg-12 mb-5">
 														<div class="form-group row">
 														<!-- 3個並排 -->
 																<div class="bob-container "> 
  																		<div class="bob-row ">
-<jsp:useBean id="imgSvc" scope="page" class="com.product_img.model.ProductImgService" />														
-<c:set var="pictureVOList" scope="page" value="${imgSvc.getPicVOsByProductId(param.productId)}"></c:set>
+<%-- <jsp:useBean id="imgSvc" scope="page" class="com.product_img.model.ProductImgService" />														 --%>
+<%-- <c:set var="pictureVOList" scope="page" value="${imgSvc.getPicVOsByProductId(param.productId)}"></c:set> --%>
 <c:if test="${pictureVOList.size() != 0 }">
 <c:forEach var="pictureVO" items="${pictureVOList}">
 																		<div class="bob-3item">
-    																	  <img src="${pictureVO.previewUrl}" value="${pictureVO.pictureId}">
-      																			<button type="button" class="btn btn-secondary btn-sm">
+    																	  <img src="${pictureVO.previewUrl}"> 
+      																			<input type="hidden"  value="${pictureVO.pictureId}">
+      																			<button id ="deleteImg${pictureVO.pictureId}" 
+      																			type="button" class="btn btn-primary btn-sm" >
       																			<i class="bi bi-x-lg"></i>刪除</button>
+      																			<button id ="cancelDeleteImg${pictureVO.pictureId}" value="${pictureVO.pictureId}"
+      																			type="button" class="btn btn-secondary btn-sm" >
+      																			<i class="bi bi-x-lg"></i>取消</button>
     																	</div>
 </c:forEach>
 </c:if>
@@ -242,32 +252,44 @@
 																</div>
 														</div>
 													</div>
+												</div>
+														<!--! 商品照片上傳start -->
+												<div class="row">
+													<div class="col-lg-12 mb-5">
+														<div class="form-group row">
+															<label class="col-md-3 form-control-label">新增商品照片</label>
+															<div class="col-md-6"></div>
+														</div>
 														<div class="form-group">
-															<div class="col-md-6">
+															<div class="col-md-12">
 																<!--weui-uploader 照片上传功能-->
 																<!--上傳圖片的按鈕-->
-																<label class="btn btn-info"> <input type="file"
-																	name="img" accept="image/*" multiple="multiple"
-																	id="showimg" style="display: none;" multiple /> 上傳圖片
-																</label>
-																<div class='row'>
-																	<div id='previewMultiple'></div>
-																</div>
+																<img src="<%=request.getContextPath()%>/assets/shop/backProduct/img/addimg.png"
+																 class="ml-3" style="height:200px;width:200px;" onclick="add()" id="addimage">
+<!-- 																<label class="btn btn-info"> -->
+<!-- 																 <input type="file" name="img" accept="image/*" multiple="multiple" -->
+<!-- 																		id="showimg" style="display: none;" multiple /> 上傳圖片 -->
+<!-- 																</label> -->
+<!-- 																<div class='row'> -->
+<!-- 																	<div id='previewMultiple'></div> -->
+<!-- 																</div> -->
 															</div>
-															<small class="form-text text-muted ml-3 text-danger">${errorMsgs.img}</small>
-														</div>
-														<div class="form-group ">
-															<div class="col-md-6"></div>
-															<input type="hidden" name="productId" value="${param.productId}"> 
-															<input type="submit" value="送出修改" class="btn btn-primary"> 
-															<input type="hidden" name="action" value="update">
+																<small class="form-text text-muted ml-3 text-danger">${errorMsgs.img}</small>
 														</div>
 													</div>
-													<!-- 存放預覽圖片 -->
-													<!--weui-uploader 照片上传功能 END-->
+												</div>	
+												<!--! 商品照片上傳end -->
+												<!--! 提交按鈕start -->
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group">
+															<input type="submit" value="送出修改" class="btn btn-primary">
+															<input type="hidden" name="action" value="update">
+															<input type="hidden" name="productId" value="${param.productId}">
+														</div>
+													</div>
 												</div>
-												<!--! 提交按鈕開始 -->
-												<!--! 提交按鈕開始 -->
+												<!--! 提交按鈕end -->
 											</div>
 										</div>
 									</FORM>
@@ -291,15 +313,33 @@
 	<!-- 共用的JS -->
 
 	<!-- 額外添加的JS -->
-	<!-- 	路徑舉例 -->
 	<!-- 	圖片上傳 -->
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/upimg2/upimg2.js">
 	</script>
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/addproduct/js/sort1VOCheckBox.js">
-		
 	</script>
+	<script
+		src="<%=request.getContextPath()%>/assets/shop/backProduct/img/addimg.js">
+	</script>
+	
+	<script
+		src="<%=request.getContextPath()%>/assets/shop/backProduct/img/deleteImg.js">
+	</script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+	
+<script>
+	
+<%if (request.getAttribute("msg") != null) {
+	String alert = "Swal.fire({" + " icon:'success'," + " title: '" + "商品更新成功" + "'" + " })";
+	out.write(alert);
+	request.setAttribute("msg", null);
+}%>
+	
+</script>
+	
 	<!-- 額外添加的JS -->
 </body>
 

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -14,7 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pet_weight.model.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.pet_weight.model.PetWeightVO;
 import com.pet_weight.service.PetWeightService;
 
 
@@ -40,11 +43,11 @@ public class PetWeightController extends HttpServlet {
 		
 				
 		/*************************** 1.新增一筆資料 ****************************************/
-		if("create".equals(action)){
+		if("insert".equals(action)){
 			
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+			// 檢查輸入
 			BigDecimal weightDecimal =null;
 			try {
 				weightDecimal = new BigDecimal(weightRecord.trim());
@@ -64,17 +67,18 @@ public class PetWeightController extends HttpServlet {
 			} catch (IllegalArgumentException e) {
 				errorMsgs.put("recordTime"," (請輸入正確日期)");
 			}
+			// 錯誤處理
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("weightRecord", weightRecord);
 				req.setAttribute("recordTime", recordTime);
-				RequestDispatcher failureView = req.getRequestDispatcher("/front/PetTest/addPetWgt.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front/pet/weight/add.jsp");
 				failureView.forward(req, res);
 				return;
 			}
+			// 正常送出
 			PetWeightService pwSvc = new PetWeightService();
 			pwSvc.addWeightRecord(Integer.parseInt(petId),  weightDecimal, recordDate);
-			String param ="?petId="+ petId;
-			String url = "/front/PetTest/listAllPetWgt.jsp"+ param;
+			String url = "/weight?action=all_Display&petId="+petId;
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
@@ -83,26 +87,16 @@ public class PetWeightController extends HttpServlet {
 			PetWeightService pwSvc = new PetWeightService();
 			pwSvc.deleteWeightRecord(Integer.parseInt(recordId));
 			pwSvc.getOneWeight(Integer.parseInt(recordId));
-			String param ="?petId="+ petId;
-			String url = "/front/PetTest/listAllPetWgt.jsp"+ param;
+			String url = "/weight?action=all_Display&petId="+petId;
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
-		/*************************** 5.單筆資料查看 ****************************************/
-		if("one_Display".equals(action)){
-			PetWeightService pwSvc = new PetWeightService();
-			PetWeightVO pwVO = pwSvc.getOneWeight(Integer.parseInt(recordId));
-			req.setAttribute("pwVO", pwVO);
-			String url = "/front/PetTest/listOnePetWgt.jsp";
-			RequestDispatcher view =req.getRequestDispatcher(url);
-			view.forward(req, res);
-		}
-		/*************************** 6.更改活動紀錄 **************************************/
+		/*************************** 3.更改體重紀錄 **************************************/
 		if ("update".equals(action)) {
 			
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+			// 檢查輸入
 			BigDecimal weightDecimal =null;
 			try {
 				weightDecimal = new BigDecimal(weightRecord.trim());
@@ -114,8 +108,8 @@ public class PetWeightController extends HttpServlet {
 				java.util.Calendar cal = java.util.Calendar.getInstance();
 				cal.set(Calendar.HOUR, 0);
 				cal.set(Calendar.MINUTE, 0);
-		        cal.set(Calendar.SECOND, 0);
-		        cal.set(Calendar.MILLISECOND,0);
+				cal.set(Calendar.SECOND, 0);
+				cal.set(Calendar.MILLISECOND,0);
 				Long currentTime = cal.getTime().getTime();
 				recordDate = Date.valueOf(recordTime.trim());
 				if(recordDate.getTime() > currentTime) throw new IllegalArgumentException();
@@ -123,16 +117,49 @@ public class PetWeightController extends HttpServlet {
 				errorMsgs.put("recordTime"," (輸入錯誤未更新)");
 				recordDate = null;
 			}
-						
+			// 正常送出
 			PetWeightService pwSvc = new PetWeightService();
 			PetWeightVO pwVO = pwSvc.updateWeightRecord(weightDecimal, recordDate, Integer.parseInt(recordId));
-					   pwVO = pwSvc.getOneWeight(Integer.parseInt(recordId));
+			pwVO = pwSvc.getOneWeight(Integer.parseInt(recordId));
+			List<PetWeightVO> pwAll = pwSvc.getByPetId(Integer.parseInt(petId));
+			final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 			req.setAttribute("pwVO", pwVO);
-			String url = "/front/PetTest/listOnePetWgt.jsp";
+			req.setAttribute("pwAll", pwAll);
+			req.setAttribute("pwChart", GSON.toJson(pwAll));//
+			String url = "/front/pet/weight/detail.jsp";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
-		
+		/*************************** 4.單筆資料查看 ****************************************/
+		if("one_Display".equals(action)){
+			PetWeightService pwSvc = new PetWeightService();
+			PetWeightVO pwVO = pwSvc.getOneWeight(Integer.parseInt(recordId));
+			req.setAttribute("pwVO", pwVO);
+			String url = "/front/pet/weight/edit.jsp";
+			RequestDispatcher view =req.getRequestDispatcher(url);
+			view.forward(req, res);
+		}
+		/*************************** 5.導向新增頁面 ****************************************/
+		if("goToInsert".equals(action)){
+			PetWeightService pwSvc = new PetWeightService();
+			List<PetWeightVO> pwAll = pwSvc.getByPetId(Integer.parseInt(petId));
+			final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			req.setAttribute("pwChart", GSON.toJson(pwAll));//
+			String url = "front/pet/weight/add.jsp";
+			RequestDispatcher view =req.getRequestDispatcher(url);
+			view.forward(req, res);
+		}
+		/*************************** 6.查看所有紀錄 ****************************************/
+		if("all_Display".equals(action)){
+			PetWeightService pwSvc = new PetWeightService();
+			List<PetWeightVO> pwAll = pwSvc.getByPetId(Integer.parseInt(petId));
+			final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			req.setAttribute("pwAll", pwAll);
+			req.setAttribute("pwChart", GSON.toJson(pwAll));//
+			String url = "/front/pet/weight/detail.jsp";
+			RequestDispatcher view =req.getRequestDispatcher(url);
+			view.forward(req, res);
+		}
 
 	}
 
