@@ -3,12 +3,11 @@ package com.members.controller;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import com.album.model.AlbumJDBCDAO;
+import com.chargeRecord.model.ChargeRecordService;
+import com.chargeRecord.model.ChargeRecordVO;
 import com.google.gson.Gson;
 import com.members.model.*;
 import com.util.JavaMail;
@@ -26,7 +25,7 @@ public class MembersServlet extends HttpServlet {
 
 		// 判斷呼叫哪個方法
 		String action = req.getParameter("action");
-//		System.out.println(action);
+		System.out.println(action);
 
 		action = action == null ? "" : action;
 
@@ -63,6 +62,10 @@ public class MembersServlet extends HttpServlet {
 			break;
 		case "updateSetWalletPassword":
 			updateSetWalletPassword(req, res);
+			break;
+		case "memberWalletUsedRecord":
+			memberWalletUsedRecord(req, res);
+			break;
 		}
 	}
 
@@ -170,9 +173,9 @@ public class MembersServlet extends HttpServlet {
 				HttpSession sessionVC = req.getSession();
 				sessionVC.setAttribute("authCode", verificationCode);
 				sessionVC.setAttribute("registerAccount", registerAccount);
-				
+
 				System.out.println(verificationCode);
-				
+
 				// 寄送 JavaMail
 				JavaMail javaMail = new JavaMail();
 				javaMail.setRecipient(registerAccount); // 收件人信箱
@@ -531,7 +534,8 @@ public class MembersServlet extends HttpServlet {
 			newMemberVO.setMemberId(sessionMembersVO.getMemberId());
 			newMemberVO.seteWalletPassword(newWalletPassword);
 			memberSvc.update(newMemberVO);
-			sessionMembersVO.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
+			sessionMembersVO
+					.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
 			messages.put("updatePasswordSuccess", "修改密碼成功！");
 			// successful 的頁面
 			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletPassword.jsp");
@@ -543,8 +547,6 @@ public class MembersServlet extends HttpServlet {
 	public void checkWalletPassword(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
-		
-		
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
 
@@ -554,13 +556,14 @@ public class MembersServlet extends HttpServlet {
 //		System.out.println(currentWalletPassword);
 
 		MembersService memberSvc = new MembersService();
-		String walletPassword = memberSvc.selectForLogin(sessionMembersVO.getAccount(), sessionMembersVO.getPassword()).geteWalletPassword();
+		String walletPassword = memberSvc.selectForLogin(sessionMembersVO.getAccount(), sessionMembersVO.getPassword())
+				.geteWalletPassword();
 		System.out.println(walletPassword);
-		
+
 		sessionMembersVO.seteWalletPassword(walletPassword);
-		
+
 		System.out.println("執行111");
-		
+
 		if (currentWalletPassword == null || currentWalletPassword.trim().length() == 0) {
 			// 跳轉到新建密碼畫面
 			messages.put("exist", "false");
@@ -578,12 +581,12 @@ public class MembersServlet extends HttpServlet {
 
 	public void updateSetWalletPassword(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
-		
+
 		System.out.println("執行");
-		
+
 		HttpSession currentSession = req.getSession();
 		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
-		
+
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
 
@@ -620,13 +623,39 @@ public class MembersServlet extends HttpServlet {
 			memberSvc.update(newMemberVO);
 			System.out.println("執行");
 			System.out.println(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
-			sessionMembersVO.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
+			sessionMembersVO
+					.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
 			messages.put("updatePasswordSuccess", "成功設定錢包密碼！");
 			// successful 的頁面
 			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberSetWalletPassword.jsp");
 			successView.forward(req, res);
 			return;// 程式中斷
 		}
+	}
+
+	public void memberWalletUsedRecord(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+
+		HttpSession currentSession = req.getSession();
+		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
+
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+		
+		ChargeRecordService chargeRecordSvc = new ChargeRecordService();
+
+		List<ChargeRecordVO> listAll = chargeRecordSvc.getAll(sessionMembersVO.getMemberId());
+
+		System.out.println(listAll);
+
+//		for (ChargeRecordVO list : listAll) {
+//			
+//			
+//		}
+
+		String json = new Gson().toJson(listAll);
+		res.getWriter().write(json);
+		return;
 	}
 }
 
