@@ -124,6 +124,12 @@ public class MembersVO implements java.io.Serializable {
 		this.createTimeString = createTimeString;
 	}
 
+	public com.pet.model.PetVO getPetVO() {
+		com.pet.service.PetService petSvc = new com.pet.service.PetService();
+		com.pet.model.PetVO petVO = petSvc.getByMemberId(memberId).get(0);
+		return petVO;
+	}
+
 	@Override
 	public String toString() {
 		return "MembersVO [memberId=" + memberId + ", account=" + account + ", password=" + password + ", name=" + name
