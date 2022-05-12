@@ -11,20 +11,20 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.article.model.ArticleVO;
 import com.article.service.ArticleService;
+import com.common.controller.CommonController;
 import com.picture.model.PictureVO;
 import com.picture.service.PictureService;
 
 @WebServlet("/article")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 10 * 10 * 1024 * 1024, maxRequestSize = 10 * 10 * 1024
 * 1024)
-public class ArticleController extends HttpServlet {
+public class ArticleController extends CommonController {
 	private static final long serialVersionUID = 1L;
 	PictureService picSvc = new PictureService();
        
@@ -32,8 +32,14 @@ public class ArticleController extends HttpServlet {
         super();
     }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
+    public void doGet(HttpServletRequest req, HttpServletResponse res) {
+    	try {
+			doPost(req, res);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -50,15 +56,28 @@ public class ArticleController extends HttpServlet {
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			content = req.getParameter("content");
+			Part file = req.getPart("file");
+			if (file == null) {
+				errorMsgs.put("file","(請上傳圖片)");
+			}
+			if (title == null || title.trim().isEmpty()) {
+				errorMsgs.put("title","(請勿空白)");
+				errorMsgs.put("file","(請重新上傳圖片)");
+			}
 			if (content == null || content.trim().isEmpty()) {
 				errorMsgs.put("content","(請勿空白)");
+				errorMsgs.put("file","(請重新上傳圖片)");
+			}
+			if (type == null) {
+				errorMsgs.put("type","(請選擇類型)");
+				errorMsgs.put("file","(請重新上傳圖片)");
 			}
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("type", type);
 				req.setAttribute("title", title);
 				req.setAttribute("content", content);
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front/PetTest/addArticle.jsp");
+						.getRequestDispatcher("/back/article/add.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -93,15 +112,32 @@ public class ArticleController extends HttpServlet {
 		if ("update".equals(action)) {
 			List<Integer> picIds = null;
 			ArticleService artiSvc = new ArticleService();
+			int delCount = 0;
 			if(picIdArray.length()>0) {
 				String[] arr = picIdArray.split(",");
 				picIds = new ArrayList<Integer>();
 				for(String id:arr) {
 					picIds.add(Integer.parseInt(id));
+					delCount++;
 				}
 			};
-			System.out.println(picIdArray);
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			content = req.getParameter("content");
+			Part file = req.getPart("file");
+			String picCount = req.getParameter("picCount");
+			if (title == null || title.trim().isEmpty()) {
+				errorMsgs.put("title","(標題請勿空白)");
+			}
+			if (content == null || content.trim().isEmpty()) {
+				errorMsgs.put("content","(內容請勿空白)");
+			}
 			Collection<Part> parts = req.getParts();
+			if (file == null && Integer.parseInt(picCount)==delCount) {
+				errorMsgs.put("file","(圖片不得為空)");
+				picIds = null;
+				parts = null;
+			}
 			artiSvc.updateArticle(Integer.parseInt(type), title, content, Integer.parseInt(empNo), Integer.parseInt(articleId), picIds, parts);
 			req.setAttribute("articleId", articleId);
 			String url = "/article?action=one_Display";// 去找查看

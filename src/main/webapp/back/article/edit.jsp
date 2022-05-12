@@ -68,7 +68,7 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 					              <button  class="btn btn-danger form-btn-circle btn-sm" data-toggle="modal" data-target="#basicModal" id="deleteBtn">
 					                <i class="fas fa-trash-alt"></i> 刪除
 					              </button>
-					                      <form method="post" action="/CGA101G2/article">
+					                      <form method="post" action="<%=request.getContextPath()%>/article">
 					              <input type="hidden" name="articleId" value="${artiVO.articleId}">
 					              <div class="modal fade" id="basicModal" tabindex="-1">
 					                <div class="modal-dialog">
@@ -94,7 +94,7 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 			              </div>
 		              </div>
 					<!-- Form Elements -->
-					<form class="ml-5" method="post" enctype="multipart/form-data" action="/CGA101G2/article">
+					<form class="ml-5" method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/article">
 
 						<div class="row mb-3">
 							<label for="inputText" class="col-lg-1 col-form-label">標題</label>
@@ -142,7 +142,9 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 							<label for="inputNumber"
 								class="col-lg-1 col-form-label">圖片</label>
 								<div class="col-lg-11">
+								<%int count=0; %>
 								<c:forEach var="picVO" items="${picList}">
+								<%count++; %>
 								<div id="preDiv${picVO.pictureId}" style="float:left;position:relative;">
 									<input name="file" accept="image/*" type="file" style="display: none;">
 									<img src="${picVO.url}" onerror="this.src='${picVO.url}'"
@@ -152,22 +154,15 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 								</div>
 								</c:forEach> 
 								<img src="back/article/add-image.png" class="ml-3" style="height:200px;width:200px;" onclick="add()" id="addimage">
-								<span style="color:#f33;">${errorMsgs.parts}</span>
+								<span style="color:#f33;">${errorMsgs.file}</span>
 								</div>
 						</div>
 						
 						<div class="row mb-3">
-							<label class="col-lg-1 col-form-label">管理員</label>
-							<jsp:useBean id="empSvc" scope="page"
-											class="com.emp.model.EmpService" />
+							<label class="col-lg-1 col-form-label">編輯者</label>
 							<div class="col-lg-3">
-								<select class="form-select" name="empNo" id='empInput' style="background:none;border:none;"
-									aria-label="Default select example" disabled>
-								<c:forEach var="empVO" items="${empSvc.all}">
-									<option value="${empVO.empNo}" ${(artiVO.empVO.empNo==empVO.empNo)? 'selected':''}>${empVO.empName}
-								</c:forEach>
-								</select>
-								<span style="color:#f33;">${errorMsgs.empNo}</span>
+								<input type="text" class="form-control" style="width:100%;background:none;border:none;" value="${artiVO.empVO.empName}" disabled>
+								<input type="hidden" name='empNo' value="<%=((com.emp.model.EmpVO)session.getAttribute("empVO")).getEmpNo()%>">
 							</div>
 						</div>
 						<div class="row mb-3">
@@ -177,6 +172,7 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 								<button type="submit" class="btn btn-success">修改</button>
 							</div>
 						</div>
+						<input type="hidden" name='picCount' value='<%=count%>'>
 						<input type="hidden" name='articleId' value="${artiVO.articleId}">
 						<input type="hidden" name='picIdArray' id="deletePics">
 					</form>
@@ -206,10 +202,14 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 	<!-- 自訂的JS -->
 <script src="/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
+
 $('#addimage').hide();
 $('.btn-success').hide();
 $('.preBtns').hide();
 
+if('${errorMsgs.title}${errorMsgs.content}${errorMsgs.file}' != ''){
+	$('#updateBtn').click();
+}
 let removeIds = [];
 let count = 1;
 
@@ -237,7 +237,6 @@ function updateBtn(){
 	$('#gridRadios1').removeAttr('disabled');
 	$('#gridRadios2').removeAttr('disabled');
 	$('#contentArea').removeAttr('disabled').attr('style','background:white;height:30vh;border:1px #CED4DA solid;');
-	$('#empInput').removeAttr('disabled').css('background','white').css('border','1px #CED4DA solid');
 	$('.preBtns').show();
 	$('#addimage').show();
 	$('.btn-success').show();

@@ -6,17 +6,18 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.article.model.ArticleVO;
 import com.article.service.ArticleService;
+import com.common.controller.CommonController;
 import com.picture.service.PictureService;
-import com.post.model.*;
+import com.post.model.PostService;
+import com.post.model.PostVO;
 
-@WebServlet("/index")
-public class IndexController extends HttpServlet {
+@WebServlet("/index.html")
+public class IndexController extends CommonController {
 	private static final long serialVersionUID = 1L;
 	PictureService picSvc = new PictureService();
        
@@ -24,8 +25,14 @@ public class IndexController extends HttpServlet {
         super();
     }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
+    public void doGet(HttpServletRequest req, HttpServletResponse res) {
+    	try {
+			doPost(req, res);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

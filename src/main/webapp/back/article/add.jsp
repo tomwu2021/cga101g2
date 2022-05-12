@@ -57,12 +57,12 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 </div>
 					<div class="mb-3" style="font-size:2em">上傳最新消息</div>
 					<!-- Form Elements -->
-					<form class="ml-5" method="post" enctype="multipart/form-data" action="/CGA101G2/article">
+					<form class="ml-5" method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/article">
 
 						<div class="row mb-3">
 							<label for="inputText" class="col-lg-1 col-form-label">標題</label>
 							<div class="col-lg-11">
-								<input name="title" type="text" class="form-control" style="width:100%">
+								<input name="title" type="text" class="form-control" style="width:100%" value='${param.title}'>
 							<span style="color:#f33;">${errorMsgs.title}</span></div>
 						</div>
 
@@ -72,15 +72,15 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 							<div class="col-lg-11">
 								<div class="form-check" style="display:inline-block">
 									<input class="form-check-input" type="radio"
-										name="type" id="gridRadios1" value="1"
-										checked> <label class="form-check-label"
+										name="type" id="gridRadios1" value="1" ${(param.type==1)? 'checked':''}
+										> <label class="form-check-label"
 										for="gridRadios1"> 商城優惠 </label>
 								</div>
 								<div class="form-check" style="display:inline-block">
 									<input class="form-check-input" type="radio"
-										name="type" id="gridRadios2" value="0">
+										name="type" id="gridRadios2" value="0" ${(param.type==0)? 'checked':''}>
 									<label class="form-check-label" for="gridRadios2">
-										最新公告 <span style="color:#f33;">(請注意！第一張為首圖)</span></label>
+										最新公告 <span style="color:#f33;">(請注意！第一張為首圖)${errorMsgs.type}</span></label>
 								</div>
 							</div>
 						</div>
@@ -89,7 +89,7 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 							<label for="inputPassword"
 								class="col-lg-1 col-form-label">內容</label>
 							<div class="col-lg-11">
-								<textarea name="content" class="form-control" style="height:30vh;width:100%;resize:none;"></textarea>
+								<textarea name="content" class="form-control" style="height:30vh;width:100%;resize:none;">${param.content}</textarea>
 								<span style="color:#f33;">${errorMsgs.content}</span>
 							</div>
 						</div>
@@ -98,23 +98,13 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 							<label for="inputNumber"
 								class="col-lg-1 col-form-label">圖片</label>
 								<div class="col-lg-11">
-								<img src="add-image.png" class="ml-3" style="height:200px;width:200px;" onclick="add()" id="addimage">
-								<span style="color:#f33;">${errorMsgs.parts}</span>
+								<img src="<%=request.getContextPath()%>/back/article/add-image.png" class="ml-3" style="height:200px;width:200px;" onclick="add()" id="addimage">
+								<span style="color:#f33;">${errorMsgs.file}</span>
 								</div>
 						</div>
 						
 						<div class="row mb-3">
-							<label class="col-lg-1 col-form-label">管理員</label>
-							<div class="col-lg-3">
-								<select class="form-select" name="empNo"
-									aria-label="Default select example">
-									<option selected></option>
-									<option value="1">One</option>
-									<option value="2">Two</option>
-									<option value="3">Three</option>
-								</select>
-								<span style="color:#f33;">${errorMsgs.empNo}</span>
-							</div>
+							<input type="hidden" name="empNo" value="<%=((com.emp.model.EmpVO)session.getAttribute("empVO")).getEmpNo()%>">
 						</div>
 						<div class="row mb-3">
 							<div class="col-lg-10"></div>
