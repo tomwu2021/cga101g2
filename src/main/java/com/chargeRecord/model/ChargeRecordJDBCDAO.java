@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.*;
 import com.members.model.*;
 import connection.JDBCConnection;
-import connection.JNDIConnection;
 
 public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 

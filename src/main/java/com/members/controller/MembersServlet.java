@@ -117,7 +117,6 @@ public class MembersServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				session.setAttribute("membersVO", membersVO);
 				req.setAttribute("membersVO", membersVO); // 資料庫取出的 membersVO 物件，存入 req
-//				String url = "/front/member/member.jsp";
 				String url = "/article?action=all_Display";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -165,7 +164,6 @@ public class MembersServlet extends HttpServlet {
 			res.getWriter().write(json);
 			return;
 		} else { // False，帳號不存在，寄送 JavaMail
-//			String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}";
 			String checkEmail = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@gmail.com";
 			if (registerAccount.matches(checkEmail)) {
 

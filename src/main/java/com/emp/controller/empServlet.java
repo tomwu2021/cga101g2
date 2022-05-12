@@ -6,6 +6,10 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
+import com.google.gson.Gson;
+import com.members.model.MembersService;
+import com.members.model.MembersVO;
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.WebServlet;
 
@@ -27,6 +31,9 @@ public class empServlet extends HttpServlet {
 		switch (action) {
 		case "empForLogin":
 			empForLogin(req, res);
+			break;
+		case "empSelect":
+			empSelect(req, res);
 			break;
 		}
 	}
@@ -59,17 +66,17 @@ public class empServlet extends HttpServlet {
 		EmpService empSvc = new EmpService();
 		// 資料庫是否有此筆資料
 		EmpVO empVO = empSvc.getOneByAccount(username);
-		
-		if(empVO == null) {
+
+		if (empVO == null) {
 			System.out.println("帳號錯誤");
 			messages.put("errorAccount", "請確認帳號");
 			messages.put("originalAccount", username);
 			RequestDispatcher failureView = req.getRequestDispatcher("/back/emp/empLogin.jsp");
 			failureView.forward(req, res);
 			return;
-		}else {
+		} else {
 			System.out.println("判斷密碼是否正確");
-			if(!password.equals(empVO.getPassword())) {//"密碼錯誤"
+			if (!password.equals(empVO.getPassword())) {// "密碼錯誤"
 				System.out.println(empVO.getPassword());
 				System.out.println("密碼錯誤");
 				messages.put("errorPassword", "請確認密碼");
@@ -77,7 +84,7 @@ public class empServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back/emp/empLogin.jsp");
 				failureView.forward(req, res);
 				return;
-			}else {
+			} else {
 				HttpSession session = req.getSession();
 				session.setAttribute("empVO", empVO);
 				req.setAttribute("empVO", empVO); // 資料庫取出的 empVO 物件，存入 req
@@ -90,6 +97,14 @@ public class empServlet extends HttpServlet {
 
 	}
 
+	public void empSelect(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+		System.out.println("執行");
+		// 查詢 會員 資料
+		MembersService memberSVC = new MembersService();
+		List<MembersVO> listMemberVO = memberSVC.getAll();
+		String json = new Gson().toJson(listMemberVO);
+		res.getWriter().write(json);
+		return;
+	}
 }
-
-

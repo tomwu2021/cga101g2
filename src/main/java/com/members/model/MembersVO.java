@@ -15,6 +15,7 @@ public class MembersVO implements java.io.Serializable {
 	private Integer bonusAmount;
 	private Integer status;
 	private Timestamp createTime;
+	private String createTimeString; // yyyy-MM-dd
 
 	public MembersVO() {
 	}
@@ -113,6 +114,14 @@ public class MembersVO implements java.io.Serializable {
 
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getCreateTimeString() {
+		return createTimeString;
+	}
+
+	public void setCreateTimeString(String createTimeString) {
+		this.createTimeString = createTimeString;
 	}
 
 	@Override
