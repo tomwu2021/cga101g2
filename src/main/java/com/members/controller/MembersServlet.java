@@ -649,10 +649,6 @@ public class MembersServlet extends HttpServlet {
 
 		System.out.println(listAll);
 
-//		for (ChargeRecordVO list : listAll) {
-//			
-//			
-//		}
 
 		String json = new Gson().toJson(listAll);
 		res.getWriter().write(json);

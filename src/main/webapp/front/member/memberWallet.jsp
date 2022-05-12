@@ -37,21 +37,25 @@
 									<!-- CREDIT CARD FORM STARTS HERE -->
 									<div class="panel panel-default credit-card-box"
 										style="width: 500px;">
-										<div class="panel-heading display-table">
-											<div class="row display-tr">
-												<h3 class="panel-title display-td">付款資訊</h3>
+										<div class="panel-heading display-table"
+											style="margin-bottom: 20px;">
+											<div class="row display-tr" >
+												<h3 class="panel-title display-td" style="padding-left: 26px" >付款資訊</h3>
 												<div class="display-td"></div>
 											</div>
 										</div>
 										<div class="panel-body" style="margin: auto">
-<!-- 											<form role="form" id="payment-form"> -->
-											<form method="post" action="<%=request.getContextPath()%>/front/member.do" id="payment-form">
+											<!-- 											<form role="form" id="payment-form"> -->
+											<form method="post"
+												action="<%=request.getContextPath()%>/front/member.do"
+												id="payment-form">
 												<div class="row">
 													<div class="col-xs-12">
 														<div class="form-group">
-															<label for="cardNumber" style="padding-left: 15px">儲值金額<font color=red> ${messages.inputError}</font></label>
+															<label for="cardNumber" style="padding-left: 15px;margin-top: 20px;font-weight: bold;font-size: 20px">儲值金額<font
+																color=red> ${messages.inputError}</font></label>
 															<div class="input-group"
-																style="width: 300px; padding-left: 15px">
+																style="width: 350px; padding-left: 15px">
 																<input type="text" class="form-control"
 																	name="storedValueAmount"
 																	placeholder="Stored value amount"
@@ -61,26 +65,27 @@
 													</div>
 												</div>
 												<div class="row">
-													<div class="col-xs-12">
+													<div class="col-xs-12" style="margin-top: 15px;">
 														<div class="form-group" style="display: inline-block">
 															<!-- 															<label for="cardNumber" style="padding-left: 15px"></label> -->
 															<span class="input-group-addon"
-																style="padding-left: 15px">卡號<i
+																style="padding-left: 15px;margin-top: 15px;font-weight: bold;font-size: 20px"">卡號<i
 																class="fa fa-credit-card" style="padding-left: 15px"></i></span>
 															<div class="input-group"
 																style="width: 300px; padding-left: 15px">
 																<input type="tel" class="form-control" name="cardNumber"
 																	placeholder="Valid Card Number"
-																	autocomplete="cc-number" required autofocus value="${messages.cardNumber}"/>
+																	autocomplete="cc-number" required autofocus
+																	value="${messages.cardNumber}" />
 															</div>
 
 														</div>
 													</div>
 												</div>
 												<div class="row">
-													<div class="col-xs-7 col-md-7">
+													<div class="col-xs-7 col-md-7" style="margin-top: 15px;">
 														<div class="form-group">
-															<label for="cardExpiry"><span class="hidden-xs">有效日期</span><span
+															<label for="cardExpiry"><span class="hidden-xs" style="padding-left: 5px;margin-top: 15px;font-weight: bold;font-size: 20px">有效日期</span><span
 																class="visible-xs-inline"></span> </label> <input type="tel"
 																class="form-control" name="cardExpiry"
 																placeholder="MM / YY" autocomplete="cc-exp" required />
@@ -88,7 +93,7 @@
 													</div>
 													<div class="col-xs-5 col-md-5 pull-right">
 														<div class="form-group">
-															<label for="cardCVC">安全碼</label> <input type="tel"
+															<label for="cardCVC" style="padding-left: 5px;margin-top: 15px;font-weight: bold;font-size: 20px">安全碼</label> <input type="tel"
 																class="form-control" name="cardCVC" placeholder="CVC"
 																autocomplete="cc-csc" required />
 														</div>
@@ -103,10 +108,12 @@
 													<div class="col-xs-12">
 														<!-- 															<button class="btn btn-success btn-lg btn-block" -->
 														<!-- 																type="submit" >送出</button> -->
-														
-														<button class="btn btn-success btn-lg btn-block"
-															type="submit">送出</button>
-															<input type="hidden" name="action" value="walletAddMoney">
+
+														<button
+															class="btn btn-success btn-lg btn-block floating-button0"
+															type="submit"
+															style="font-size: 16px; background-color: orange; line-height: 35px">送出</button>
+														<input type="hidden" name="action" value="walletAddMoney">
 													</div>
 												</div>
 												<div class="row" style="display: none;">

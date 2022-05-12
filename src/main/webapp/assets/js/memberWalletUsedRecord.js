@@ -1,3 +1,16 @@
+
+
+function firstChar(str) {
+	let number = parseInt(str);
+	console.log(number);
+	if (number < 0) {
+		return "<td style='color:red;'>" + str + "</td>"
+	}else{
+		return "<td>" + str + "</td>"
+	}
+}
+
+
 $(function() {
 
 	let dataJSON = {
@@ -31,7 +44,8 @@ $(function() {
 
 					html += "<tr class='text-center'>";
 					html += "<td>" + objectJSON[i].recordTime + "</td>"
-					html += "<td>" + objectJSON[i].chargeAmount + "</td>"
+//					html += "<td>" + objectJSON[i].chargeAmount + "</td>"
+					html += firstChar(objectJSON[i].chargeAmount);
 					html += "</tr>"
 
 				}
