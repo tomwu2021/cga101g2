@@ -2,7 +2,6 @@
 
 function firstChar(str) {
 	let number = parseInt(str);
-	//	console.log(number);
 	if (number < 0) {
 		return "<td style='color:red;'>" + str + "</td>"
 	} else {
@@ -35,17 +34,11 @@ $(function() {
 				html += "</thead>";
 
 				html += "<tbody>";
-				//				html += "<tr class='text-center'>";
-				//				html += "<td>2022-04-09</td>";
-				//				html += "<td>1 點</td>";
-				//				html += "</tr>";
 
 				for (let i = 0; i < objectJSON.length; i++) {
 
 					html += "<tr class='text-center'>";
-					html += "<td>" + objectJSON[i].recordTime + "</td>";
-					//					console.log(objectJSON[i].recordTime);
-					//					html += "<td>" + objectJSON[i].chargeAmount + "</td>"
+					html += "<td>" + objectJSON[i].recordTimeString + "</td>";
 					html += firstChar(objectJSON[i].chargeAmount);
 					html += "</tr>"
 
@@ -100,18 +93,12 @@ function changeDate() {
 	let inputDateTwo = $("#inputDateTwo").val();
 
 	let firstDate = inputDateOne.slice(0, 4) + inputDateOne.slice(5, 7) + inputDateOne.slice(8, 10);
-	//	console.log(firstDate);
 	let secondDate = inputDateTwo.slice(0, 4) + inputDateTwo.slice(5, 7) + inputDateTwo.slice(8, 10);
-	//	console.log(secondDate);
 
 	if (secondDate < firstDate) {
 		// 讓 first Date 在 second Date 前一天
 		let yearMonthDay = String(secondDate - 1);
 		let newInputDateOne = yearMonthDay.slice(0, 4) + '-' + yearMonthDay.slice(4, 6) + '-' + yearMonthDay.slice(6, 9);
-		//console.log(yearMonthDay.slice(0, 4));
-		//console.log(yearMonthDay.slice(4, 6));
-		//console.log(yearMonthDay.slice(6, 9));
-		//		console.log(newInputDateOne);
 
 		$("#inputDateOne").val(newInputDateOne);
 	}
@@ -129,15 +116,12 @@ function selectByDate() {
 	let inputDateTwo = $("#inputDateTwo").val();
 
 	let firstDate = inputDateOne.slice(0, 4) + inputDateOne.slice(5, 7) + inputDateOne.slice(8, 10);
-	//	console.log(firstDate);
 	let secondDate = inputDateTwo.slice(0, 4) + inputDateTwo.slice(5, 7) + inputDateTwo.slice(8, 10);
-	//	console.log(secondDate);
 
 	// 判斷
 	function select(str) {
 
 		let newStr = str.slice(0, 4) + str.slice(5, 7) + str.slice(8, 10);
-		//		console.log(newStr);
 		if (newStr >= firstDate && newStr <= secondDate) {
 			let newString = String(newStr);
 			let newView = newString.slice(0, 4) + '-' + newString.slice(4, 6) + '-' + newString.slice(6, 9) + ' ' + str.slice(11, 13) + ':' + str.slice(14, 16);
@@ -170,13 +154,13 @@ function selectByDate() {
 				html += "</thead>";
 				html += "<tbody>";
 				for (let i = 0; i < objectJSON.length; i++) {
-					let str = select(objectJSON[i].recordTime);
+					let str = select(objectJSON[i].recordTimeString);
 					if (typeof str === "undefined") {
 						continue;
 					}
 					count++;
 					html += "<tr class='text-center'>";
-					html += select(objectJSON[i].recordTime);
+					html += select(objectJSON[i].recordTimeString);
 					html += firstChar(objectJSON[i].chargeAmount);
 					html += "</tr>";
 
