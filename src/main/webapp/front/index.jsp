@@ -103,13 +103,13 @@
                                     <a href="#">${postVO.memberId}</a>
                                 </div>
                                 <div class="testimonial_thumb">
-                                    <a href="#"><img src="${postVO.pictureVO.url}" alt=""></a>
+                                    <a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"><img src="${postVO.pictureVO.url}" alt=""></a>
                                 </div>
                                 <div class="testimonial_content">
                                     <div class="testimonial-rating">
                                         <ul>
-                                            <li><a href="#">${postVO.createTime} 發文</a></li>
-                                            <li><a href="#"> ${postVO.likeCount} 個讚</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail">${postVO.createTime} 發文</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"> ${postVO.likeCount} 個讚</a></li>
                                         </ul>
                                     </div>
                                     <p style='height:7vh;overflow:hidden;display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;text-overflow: ellipsis;'>${postVO.content}</p>
@@ -126,7 +126,7 @@
             <div class='col-lg-3'></div>
             <div class='col-lg-4 col-sm-4'>
             <div class='row' style='height:6vh;'></div>
-            <a href='#'>
+            <a href='<%=request.getContextPath()%>/front/login.jsp'>
             <img style='filter:hue-rotate(150deg) saturate(5) drop-shadow(0 0 16px #fff);' src='<%=request.getContextPath()%>/assets/img/sign-up-image.png'>
             </a>
             </div>
