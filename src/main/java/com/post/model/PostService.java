@@ -208,7 +208,15 @@ public class PostService {
 	}
 	
 	
-	// 五、修改
+	
+	/**
+	 * 刪除貼文
+	 * 把貼文狀態從status=0(正常)變成status=2（刪除）
+	 */
+	
+	public PostVO updatedelete(Integer postId) {
+		return dao.updatedelete(postId);
+	}
 	
 	
 	// 六、搜尋貼文 

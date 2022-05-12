@@ -109,7 +109,8 @@
 								<a href="#">${postVO.likeCount}</a>個讚
 							</p>
 							<blockquote>
-								<p>${postVO.content}</p>
+								<p style="overflow: hidden; word-break: break-all ">${postVO.content}</p>
+								
 							</blockquote>
 
 						</div>
@@ -141,7 +142,7 @@
 					</figure>
 					</article>
 
-					<!-- 已刪除最近貼聞區塊 -->
+					<!-- 已刪除最近貼文區塊 -->
 					<!-- 留言區開始 -->
 					<div class="comments_box">
 						<h3>3 Comments</h3>

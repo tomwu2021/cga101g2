@@ -24,7 +24,46 @@
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="other/style copy.css"> 
-
+    
+    <style >
+    
+ 	#demo_border {
+	position: relative;
+	width:80px;
+	height:85px;
+	}
+    
+    #image_photo {
+　　position: absolute;
+    background-image: url("");
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+	}
+	
+	#img_text {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	font-size: 8px;
+	color: #fff;
+	border-radius: 50%;
+	background-color: #F00;
+	width: 30px;
+	height: 25px;
+	text-align: center;
+	line-height: 30px;
+	}
+	
+	img {
+  	max-width: 100%;
+  	height: 100%;
+	}
+	
+	</style>
+	
 </head>
 <body>
 
@@ -268,15 +307,33 @@
 								</div>  -->
 								
 								
-								 	<figure style="width: 60px;height: 60px;"> 
-									<img class="img-responsive " src="${postVO.urlList.get(0) }" alt="頭像"/> 
-									</figure>
+<%-- 								 	<div id="demo_border">
+									<div><img style="border-radius: 50%; width: 100px; height: 100px" id="img-demo" src="${postVO.urlList.get(0) }" alt="頭像"/>
+									<div id="img_text">${postVO.membersVO.name}</div></div>
+									<div> --%>
+									
+									<div id="demo_border" style="position: relative;">
+										<div id="image_photo"><img src="${postVO.urlList.get(0)}"></div>
+										
+										<div id="img_text">${postVO.membersVO.name}</div>
+									</div>
+									
+									 <div class="blog_meta">
+										
+											<%-- <span><a href="#">${postVO.membersVO.name}</a></span> --%>
+										
+									</div>
+									
+									
+								           
 								                   
-								                    
+								            <%-- <c:if test="${postVO.pictureVO.url}">    --%>    
 						                    <div class="blog_thumb">
-                                    		<a href="blog-details.html"><img src="${postVO.pictureVO.url}" alt=""></a>
+						                    
+                                    		<a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"><img src="${postVO.pictureVO.url}" alt=""></a>
+                                    		
                                 			</div>	
-                                			
+                                			<%-- </c:if> --%>
                                 							        
 						                  
                                    <!-- 整個文 -->
@@ -289,16 +346,12 @@
                                     </div>
                                     
                                     <!-- 貼文內容 -->
-                                    <p class="post_desc">${postVO.content}</p>
-                                    
-                                    xxxx ${postVO.membersVO.name}
-                                    ${postVO.urlList.get(0) }
-                                    
-                                    
-									
+                                    <p style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; " class="post_desc">${postVO.content} </p>
+                                                                    
+                                    									
                                     <!-- 按鈕 -->
                                     <footer class="btn_more">
-                                        <a href="blog-details.html"> Read more</a>
+                                        <a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"> Read more</a>
                                     </footer>
                                     
                                     
@@ -307,108 +360,7 @@
                             
                         </article>
                         </c:forEach>
-<!--                         下一則貼文
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/blog-big2.jpg" alt=""></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html"><i class="fa fa-paper-plane"></i>Libero lorem</a></h4>
-                                    <div class="blog_meta">
-                                        <p>By <a href="#">admin</a> / Date <a href="#">July 16, 2022</a> / Category: <a href="#">eCommerce</a></p>
-                                    </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent ornare.</p>
-                                    <footer class="btn_more">
-                                        <a href="blog-details.html"> Read more</a>
-                                    </footer>
-                                </figcaption>
-                            </figure>
-                        </article>
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb blog_thumb_active owl-carousel">
-                                    <div class="single_blog_thumb">
-                                        <a href="#"><img src="assets/img/blog/blog-big3.jpg" alt=""></a>
-                                    </div>
-                                    <div class="single_blog_thumb">
-                                        <a href="#"><img src="assets/img/blog/blog-big1.jpg" alt=""></a>
-                                    </div>
-                                    <div class="single_blog_thumb">
-                                        <a href="#"><img src="assets/img/blog/blog-big2.jpg" alt=""></a>
-                                    </div>
-                                    <div class="single_blog_thumb">
-                                        <a href="#"><img src="assets/img/blog/blog-big4.jpg" alt=""></a>
-                                    </div>
-                                </div>
-                                <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html"><i class="fa fa-paper-plane"></i> Post with Gallery</a></h4>
-                                    <div class="blog_meta">
-                                        <p>By <a href="#">admin</a> / Date <a href="#">July 16, 2022</a> / Category: <a href="#">eCommerce</a></p>
-                                    </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent ornare.</p>
-                                    <footer class="btn_more">
-                                        <a href="blog-details.html"> Read more</a>
-                                    </footer>
-                                </figcaption>
-                            </figure>
-                        </article>
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/blog-big4.jpg" alt=""></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html"><i class="fa fa-paper-plane"></i> Post with Audio</a></h4>
-                                    <div class="blog_meta">
-                                        <p>By <a href="#">admin</a> / Date <a href="#">July 16, 2022</a> / Category: <a href="#">eCommerce</a></p>
-                                    </div>
-                                    <div class="blog_aduio_icone">
-                                        <audio controls>
-                                          <source src="http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3?1" type="audio/mp3">
-                                        </audio>
-                                    </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent ornare.</p>
-                                    <footer class="btn_more">
-                                        <a href="blog-details.html"> Read more</a>
-                                    </footer>
-                                </figcaption>
-                            </figure>
-                        </article>
-                        <article class="single_blog">
-                            <figure>
-                                 <div class="blog_thumb">
-                                    <iframe src="https://www.youtube.com/embed/2Zt8va_6HRk"  allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                                </div>
-                                <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html"><i class="fa fa-paper-plane"></i>Post with Video</a></h4>
-                                    <div class="blog_meta">
-                                        <p>By <a href="#">admin</a> / Date <a href="#">July 16, 2022</a> / Category: <a href="#">eCommerce</a></p>
-                                    </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent ornare.</p>
-                                    <footer class="btn_more">
-                                        <a href="blog-details.html"> Read more</a>
-                                    </footer>
-                                </figcaption>
-                            </figure>
-                        </article>
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/blog-big5.jpg" alt=""></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html"><i class="fa fa-paper-plane"></i> Maecenas ultricies</a></h4>
-                                    <div class="blog_meta">
-                                        <p>By <a href="#">admin</a> / Date <a href="#">July 16, 2022</a> / Category: <a href="#">eCommerce</a></p>
-                                    </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent ornare.</p>
-                                    <footer class="btn_more">
-                                        <a href="blog-details.html"> Read more</a>
-                                    </footer>
-                                </figcaption>
-                            </figure>
-                        </article> -->
+
                     </div>
                 </div>  
 

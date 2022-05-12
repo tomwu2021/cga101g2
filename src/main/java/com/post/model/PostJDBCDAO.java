@@ -95,6 +95,8 @@ public class PostJDBCDAO implements PostDAO_interface {
 		return null;
 	}
 	
+	
+	
 
 
 	//查看單篇詳細貼文
@@ -234,54 +236,8 @@ public class PostJDBCDAO implements PostDAO_interface {
 		}
 	}
 	
-//	//查詢個人頁面
-//	@Override
-//	public List<PostVO> selectPost(Integer memberid) {
-//		List<PostVO> poList = null;				
-//		try {
-//			con = JDBCConnection.getRDSConnection();
-//			poList = selectPost(memberid, con); 
-//			
-//			con.close();
-//						
-//		}catch (SQLException e) {
-//			throw new RuntimeException("A database error occured. " + e.getMessage());
-//		}
-//		return poList;
-//	}
-//	
-//	public List<PostVO> selectPost(Integer memberid, Connection con)  {
-//		final String SELECT_POST = "select * from post where member_id =? order by create_time desc ";
-//		
-//		try (
-//			PreparedStatement pstmt = con.prepareStatement(SELECT_POST);) {
-//
-//			pstmt.setInt(1, memberid);
-//			ResultSet rs = pstmt.executeQuery();
-//			
-//			List< PostVO> postList = new ArrayList<PostVO>();
-//			
-//			while (rs.next()) {
-//				PostVO postVO = new PostVO();
-//				postVO.setPostId(rs.getInt("post_id"));
-//				postVO.setMemberId(rs.getInt("member_id"));
-//				postVO.setContent(rs.getString("content"));
-//				postVO.setLikeCount(rs.getInt("like_count"));
-//				postVO.setStatus(rs.getInt("status"));
-//				postVO.setAuthority(rs.getInt("authority"));
-//				postVO.setCreateTime(rs.getDate("create_time"));
-//				postVO.setUpdateTime(rs.getDate("update_time"));
-//				postList.add(postVO);
-//			}
-//			
-//			return postList;
-//		}catch (SQLException e) {
-//			throw new RuntimeException("A database error occured. " + e.getMessage());
-//		}
-//	}	
-	
-	
-	
+
+		
 	//查詢貼文，顯示 status狀態0:正常1:審核中2:刪除
 	@Override
 	public List<PostVO> selectChangePost(Integer memberid) {
@@ -362,8 +318,27 @@ public class PostJDBCDAO implements PostDAO_interface {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} 
 	}
-
-
 	
 	
+	/**
+	 * 刪除貼文
+	 * 把貼文狀態從status=0(正常)變成status=2（刪除）
+	 */
+	@Override
+	public PostVO updatedelete(Integer postId) {
+		final String UPDATEDELETE = "update post set status = 2 where (post_id = ?)";
+		
+		try(Connection con =JDBCConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(UPDATEDELETE);){
+								
+				pstmt.setInt(1, postId);
+				
+				pstmt.executeUpdate();
+				
+		}catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		}
+		
+		return null;
+	}	
 }
