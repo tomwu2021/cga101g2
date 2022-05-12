@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.*;
 import com.members.model.*;
 import connection.JDBCConnection;
+import connection.JNDIConnection;
 
 public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 
@@ -16,7 +17,7 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 
 		// 新增一筆儲值或消費紀錄
 		ChargeRecordVO chargeRecordVO2 = insert(chargeRecordVO, con);
-
+		
 		// 儲值或消費成功後，將金額加入 member 表格中的 E_WALLET_AMOUNT
 		MembersJDBCDAO memberDao = new MembersJDBCDAO();
 		MembersVO membersVO1 = new MembersVO();
@@ -52,7 +53,6 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 				ResultSet rs = pstmt.getGeneratedKeys();
 				if (rs.next()) {
 					chargeRecordVO.setRecordId(rs.getInt(1));
-					;
 				}
 				return chargeRecordVO;
 			} catch (Exception e) {
@@ -92,7 +92,7 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 	@Override
 	public List<ChargeRecordVO> getAll(Integer id) {
 
-		final String GETALL = "SELECT record_id, member_id, charge_amount, record_time FROM charge_record WHERE member_id =?;";
+		final String GETALL = "SELECT record_id, member_id, charge_amount, record_time,DATE_FORMAT(record_time,'%Y-%m-%d %H:%i') recordTimeString FROM charge_record WHERE member_id =?;";
 
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
@@ -105,6 +105,7 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 				newchargeRecord.setMemberId(rs.getInt("member_id"));
 				newchargeRecord.setChargeAmount(rs.getInt("charge_amount"));
 				newchargeRecord.setRecordTime(rs.getTimestamp("record_time"));
+				newchargeRecord.setRecordTimeString(rs.getString("recordTimeString"));
 				list.add(newchargeRecord);
 			}
 			return list;
@@ -113,7 +114,6 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 		}
 		return null;
 	}
-
 	@Override
 	public ChargeRecordVO getOneById(Integer id) {
 		return null;

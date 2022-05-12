@@ -7,7 +7,8 @@ public class ChargeRecordVO implements java.io.Serializable {
 	private Integer recordId;
 	private Integer memberId;
 	private Integer chargeAmount;
-	private String recordTime;
+	private Timestamp recordTime;
+	private String recordTimeString;// yyyy-MM-dd
 
 	public ChargeRecordVO() {
 	}
@@ -36,12 +37,20 @@ public class ChargeRecordVO implements java.io.Serializable {
 		this.chargeAmount = chargeAmount;
 	}
 
-	public String getRecordTime() {
+	public Timestamp getRecordTime() {
 		return recordTime;
 	}
 
-	public void setRecordTime(String recordTime) {
+	public void setRecordTime(Timestamp recordTime) {
 		this.recordTime = recordTime;
+	}
+
+	public String getRecordTimeString() {
+		return recordTimeString;
+	}
+
+	public void setRecordTimeString(String recordTimeString) {
+		this.recordTimeString = recordTimeString;
 	}
 
 	@Override
