@@ -68,17 +68,17 @@ public class empServlet extends HttpServlet {
 		EmpVO empVO = empSvc.getOneByAccount(username);
 
 		if (empVO == null) {
-			System.out.println("帳號錯誤");
+//			System.out.println("帳號錯誤");
 			messages.put("errorAccount", "請確認帳號");
 			messages.put("originalAccount", username);
 			RequestDispatcher failureView = req.getRequestDispatcher("/back/emp/empLogin.jsp");
 			failureView.forward(req, res);
 			return;
 		} else {
-			System.out.println("判斷密碼是否正確");
+//			System.out.println("判斷密碼是否正確");
 			if (!password.equals(empVO.getPassword())) {// "密碼錯誤"
-				System.out.println(empVO.getPassword());
-				System.out.println("密碼錯誤");
+//				System.out.println(empVO.getPassword());
+//				System.out.println("密碼錯誤");
 				messages.put("errorPassword", "請確認密碼");
 				messages.put("originalAccount", username);
 				RequestDispatcher failureView = req.getRequestDispatcher("/back/emp/empLogin.jsp");
@@ -88,8 +88,7 @@ public class empServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				session.setAttribute("empVO", empVO);
 				req.setAttribute("empVO", empVO); // 資料庫取出的 empVO 物件，存入 req
-				System.out.println("跳轉到後台畫面");
-				RequestDispatcher successView = req.getRequestDispatcher("/article?action=all_Article");
+				RequestDispatcher successView = req.getRequestDispatcher("/back/emp/empSelect.jsp");
 				successView.forward(req, res);
 				return;
 			}
@@ -99,7 +98,6 @@ public class empServlet extends HttpServlet {
 
 	public void empSelect(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-		System.out.println("執行");
 		// 查詢 會員 資料
 		MembersService memberSVC = new MembersService();
 		List<MembersVO> listMemberVO = memberSVC.getAll();
