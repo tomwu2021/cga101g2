@@ -46,7 +46,7 @@
                                         <ul class="sub_menu pages">
                                             <li><a href="<%=request.getContextPath()%>/PersonPost?action=getOne_For_Display&memberId=<%=loginId%>">個人主頁</a></li>
                                             <li><a href="<%=request.getContextPath()%>/relationship?memberId=<%=loginId%>">好友管理</a></li>
-                                            <li><a href="<%=request.getContextPath()%>/pet?memberId=<%=loginId%>&petId=1&action=profile">寵物主頁</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/pet?memberId=<%=loginId%>&action=profile">寵物主頁</a></li>
                                             <li><a href="<%=request.getContextPath()%>/album?memberId=<%=loginId%>">相簿管理</a></li>
                                         </ul>
                                     </li>
