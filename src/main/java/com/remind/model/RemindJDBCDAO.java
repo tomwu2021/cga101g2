@@ -199,7 +199,7 @@ public class RemindJDBCDAO implements RemindDAO_interface {
 //	⑥ read 查詢一會員最近3則提醒(前)------------------------
 	public List<RemindVO> getThreeByMemberId(Integer id){
 		final String GET_THREE_MEMBER = "SELECT remind_id, member_id, content, time "
-							 + "FROM remind WHERE member_id = ? ORDER BY time DESC LIMIT 3";
+							 + "FROM remind WHERE member_id = ? AND time >= CURDATE() ORDER BY time ASC LIMIT 3";
 		con = JDBCConnection.getRDSConnection();
 		List<RemindVO> list = new ArrayList<RemindVO>();
 

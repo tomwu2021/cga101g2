@@ -42,9 +42,9 @@ public class jdbcUtil_CompositeQuery_ProductForFront {
 				count++;
 				String aCondition = get_aConditionProductForFront_For_myDB(key, value.trim());
 
-				if (count == 1)
-					whereCondition.append(" where " + aCondition);
-				else
+//				if (count == 1)
+//					whereCondition.append(" where " + aCondition);
+//				else
 					whereCondition.append(" and " + aCondition);
 
 				System.out.println("有送出查詢資料的欄位數count = " + count);

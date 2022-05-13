@@ -49,14 +49,12 @@ public class SortMixJNIDIDAO implements SortMixDAO_interface {
 					}
 					
 					sort1VO.setSort2VOList(sort2VOList);
-					return sort1VO;
 				} catch (SQLException se) {
 					throw new RuntimeException("A database error occured. " + se.getMessage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				} 
-				
-				return null;
+				return sort1VO;
 	}
 
 	// 查詢某個子分類(包含對應的主分類) 給商品使用對應
@@ -91,15 +89,14 @@ public class SortMixJNIDIDAO implements SortMixDAO_interface {
 				//把主分類"集合"放入子分類 即 主分類為一個物件,這個物件裡面有多個集合
 				sort1VOList.add(sort1VO);
 			}
-			System.out.println("Sort2VO findAllBySort2Id(Integer sort2Id)成功執行");
+			System.out.println("public Sort2VO findSort2VOSort1VOsBySort2Id(Integer sort2Id)成功執行");
 			sort2VO.setSort1VOList(sort1VOList);
-			return sort2VO;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null; 
+		return sort2VO;
 	}
 
 	@Override
@@ -112,14 +109,13 @@ public class SortMixJNIDIDAO implements SortMixDAO_interface {
 
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) insert!");
-			return sortMixVO;
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return sortMixVO;
 	}
 
 	@Override
@@ -132,13 +128,13 @@ public class SortMixJNIDIDAO implements SortMixDAO_interface {
 
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) insert!");
-			return true;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -155,13 +151,13 @@ public class SortMixJNIDIDAO implements SortMixDAO_interface {
 
 	@Override
 	public List<SortMixVO> getAll() {
+		List<SortMixVO> list = new ArrayList<SortMixVO>();
 		final String GET_ALL_STMT = 
 				" SELECT  sort1.sort1_id, sort1.sort1_name, sort2.sort2_id, sort2.sort2_name "
 				+ "FROM  sort_mix "
 				+ "Inner join sort1 on sort1.sort1_id = sort_mix.sort1_id "
 				+ "Inner join sort2 on sort2.sort2_id = sort_mix.sort2_id "
 				+ "order by sort_mix.sort1_id , sort_mix.sort2_id ; ";
-		List<SortMixVO> list = new ArrayList<SortMixVO>();
 		try (Connection connection = getRDSConnection();
 				PreparedStatement pstmt = connection.prepareStatement(GET_ALL_STMT)) {
 			ResultSet rs = pstmt.executeQuery();
@@ -174,13 +170,12 @@ public class SortMixJNIDIDAO implements SortMixDAO_interface {
 				mtd.setSort2Name(rs.getString("sort2_name"));
 				list.add(mtd); // Store the row in the list
 			}
-			return list;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 
 	@Override
@@ -203,13 +198,12 @@ public class SortMixJNIDIDAO implements SortMixDAO_interface {
 				sort1VOList.add(sort1VO);
 		}	
 			System.out.println("List<Sort1VO> findSort1VOBySort2Id(Integer sort2Id)成功執行");
-			return sort1VOList;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return sort1VOList;
 	}
 
 	@Override
@@ -232,13 +226,12 @@ public class SortMixJNIDIDAO implements SortMixDAO_interface {
 				sort2VOList.add(sort2VO);
 		}	
 			System.out.println("List<Sort1VO> findSort1VOBySort2Id(Integer sort2Id)成功執行");
-			return sort2VOList;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return sort2VOList;
 	}
 
 }

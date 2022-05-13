@@ -401,7 +401,7 @@ public class MembersDAO implements MembersDAO_interface {
 	@Override
 	public List<MembersVO> getAll() {
 
-		final String GETALL = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time FROM members;";
+		final String GETALL = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time,DATE_FORMAT(create_time,'%Y-%m-%d %H:%i') createTimeString FROM members;";
 
 		try (Connection con = JNDIConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
@@ -419,6 +419,7 @@ public class MembersDAO implements MembersDAO_interface {
 				newMember.setBonusAmount(rs.getInt("bonus_amount"));
 				newMember.setStatus(rs.getInt("status"));
 				newMember.setCreateTime(rs.getTimestamp("create_time"));
+				newMember.setCreateTimeString(rs.getString("createTimeString"));
 				list.add(newMember);
 			}
 			return list;
@@ -506,8 +507,8 @@ public class MembersDAO implements MembersDAO_interface {
 // select 情境十三：查詢登入時帳號和密碼 ------------------------------------------------------------------------------
 	public MembersVO selectForLogin(String name, String password, Connection con) {
 
-		final String SELECT_FOR_LOGIN = "SELECT member_id, account, password, name, address, phone, rank_id, ewallet_amount, ewallet_password, bonus_amount, status, create_time from members\r\n"
-				+ "where account = ? and password = ?;";
+		final String SELECT_FOR_LOGIN = "SELECT member_id, account, password, name, address, phone, rank_id, ewallet_amount, ewallet_password, bonus_amount, status, create_time, DATE_FORMAT(create_time,'%Y-%m-%d %H:%i') createTimeString from members\r\n"
+				+ "				where account = ? and password = ?;";
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(SELECT_FOR_LOGIN);
@@ -529,6 +530,7 @@ public class MembersDAO implements MembersDAO_interface {
 					newMember.setBonusAmount(rs.getInt("bonus_amount"));
 					newMember.setStatus(rs.getInt("status"));
 					newMember.setCreateTime(rs.getTimestamp("create_time"));
+					newMember.setCreateTimeString(rs.getString("createTimeString"));
 					return newMember;
 				}
 			} catch (Exception e) {

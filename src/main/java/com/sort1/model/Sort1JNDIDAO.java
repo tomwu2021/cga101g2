@@ -22,14 +22,13 @@ public class Sort1JNDIDAO implements Sort1DAO_interface {
 
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) insert!");
-			return sort1VO;
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return sort1VO;
 	}
 
 	@Override
@@ -43,13 +42,13 @@ public class Sort1JNDIDAO implements Sort1DAO_interface {
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) updated!");
 
-			return true;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -65,37 +64,37 @@ public class Sort1JNDIDAO implements Sort1DAO_interface {
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) updated!");
 
-			return sort1VO;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return sort1VO;
 	}
 
 	@Override
 	public Sort1VO getOneById(Integer id) {
+		Sort1VO sort1VO = new Sort1VO();
+
 		final String sql = "select * from sort1 where sort1_id = ? ";
 		try (Connection conn = getRDSConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setInt(1, id);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
-					Sort1VO sort1VO = new Sort1VO();
 					sort1VO.setSort1Id(rs.getInt("sort1_id"));
 					sort1VO.setSort1Name(rs.getString("sort1_Name"));
-					return sort1VO;
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return sort1VO;
 	}
 
 	@Override
 	public Sort1VO selectBySort1Name(String sort1Name) {
+		Sort1VO sort1VO = new Sort1VO();
 		final String sql = "select * from sort1 where sort1_name = ?";
 
 		try (Connection conn = getRDSConnection(); 
@@ -103,22 +102,20 @@ public class Sort1JNDIDAO implements Sort1DAO_interface {
 			pstmt.setString(1, sort1Name);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
-					Sort1VO sort1VO = new Sort1VO();
 					sort1VO.setSort1Id(rs.getInt("sort1_id"));
 					sort1VO.setSort1Name(rs.getString("sort1_Name"));
-					return sort1VO;
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return sort1VO;
 	}
 
 	@Override
 	public List<Sort1VO> getAll() {
-		final String GET_ALL_STMT = "SELECT sort1_id,sort1_name " + "FROM cga_02.sort1 " + "order by sort1_id;";
 		List<Sort1VO> list = new ArrayList<Sort1VO>();
+		final String GET_ALL_STMT = "SELECT sort1_id,sort1_name " + "FROM cga_02.sort1 " + "order by sort1_id;";
 		Sort1VO sort1VO = null;
 
 		try (Connection connection = getRDSConnection();
@@ -153,10 +150,9 @@ public class Sort1JNDIDAO implements Sort1DAO_interface {
 					++count;
 				}
 			}
-			return count;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return count;
 	}
 }

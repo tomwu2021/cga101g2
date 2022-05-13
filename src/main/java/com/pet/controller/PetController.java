@@ -2,8 +2,12 @@ package com.pet.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,8 +16,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.customer.service.CustomerService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.members.model.MembersVO;
 import com.pet.model.PetVO;
 import com.pet.service.PetService;
 import com.pet_activity.model.PetActivityVO;
@@ -41,8 +47,10 @@ public class PetController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     	req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+//		Integer memberId = Integer.parseInt(req.getParameter("memberId"));
+//		Integer petId = Integer.parseInt(req.getParameter("petId"));
 		Integer memberId = Integer.parseInt(req.getParameter("memberId"));
-		Integer petId = Integer.parseInt(req.getParameter("petId"));
+		Integer petId = pSvc.getByMemberId(memberId).get(0).getPetId();
 		/*************************** 列出寵物所有相關資訊 ****************************************/
 		if ("profile".equals(action)) {
 			List<RemindVO> rList = rSvc.getThreeByMemberId(memberId);
@@ -64,7 +72,35 @@ public class PetController extends HttpServlet {
 		/*************************** 新增寵物基本資訊 ****************************************/
 		//新增畫面
 		if ("insert".equals(action)) {
-			RequestDispatcher view =req.getRequestDispatcher("/index");
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			String petName = req.getParameter("petName");
+			if (petName == null || petName.trim().isEmpty()) {
+				errorMsgs.put("petName"," (請勿空白)");
+            }
+			
+			String sort1Id = req.getParameter("sort1Id");
+			if (sort1Id == null) {
+				errorMsgs.put("sort1Id","(請勿空白)");
+			}
+			
+			if (!errorMsgs.isEmpty()) {
+				req.setAttribute("petName", petName);
+				req.setAttribute("sort1Id", sort1Id);
+				RequestDispatcher failView = req
+						.getRequestDispatcher("/front/pet/intro/add.jsp");
+				failView.forward(req, res);
+				return;
+			}
+			Integer breed = Integer.parseInt(sort1Id);
+			String gender = req.getParameter("gender");
+			String headshot = req.getParameter("headshot");
+			String introduction = req.getParameter("introduction");
+			String birthday = req.getParameter("birthday");
+			PetService petSvc = new PetService();
+			petSvc.addPet(memberId, petName, breed, Integer.parseInt(gender), introduction, headshot, Date.valueOf(birthday));
+			String url = "/front/contact.jsp";
+			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 			
 		}

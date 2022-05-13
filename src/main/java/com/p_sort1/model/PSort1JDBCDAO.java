@@ -24,14 +24,13 @@ public class PSort1JDBCDAO implements PSort1DAO_interface{
 	
 			int rowCount = pstmt.executeUpdate();
 			System.out.println("PSort1VO" +rowCount + "row(s) insert!");
-			return pSort1VO;
 	
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return pSort1VO;
 	}
 
 	@Override
@@ -62,6 +61,7 @@ public class PSort1JDBCDAO implements PSort1DAO_interface{
 	public List<Sort1VO> findSort1VOByproductId(Integer productId) {
 		List<Sort1VO> sort1VOList = new ArrayList<Sort1VO>();
 		
+		//Sort1子分類訊息
 		String FIND_STMT= "SELECT * "
 				+ "FROM sort1 s1, p_sort1 ps1 "
 				+ "WHERE s1.sort1_id = ps1.sort1_id "
@@ -74,20 +74,18 @@ public class PSort1JDBCDAO implements PSort1DAO_interface{
 			
 			ResultSet rsSet = pstmt.executeQuery();
 			while (rsSet.next()) {
-				//Sort1子分類訊息
 				Sort1VO sort1VO = new Sort1VO();
 				sort1VO.setSort1Id(rsSet.getInt("sort1_id"));
 				sort1VO.setSort1Name(rsSet.getString("sort1_name"));
 				sort1VOList.add(sort1VO);
 			}
 			System.out.println("Sort2VO findAllBySort2Id(Integer sort2Id)成功執行");
-			return sort1VOList;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null; 
+		return sort1VOList; 
 	}
 
 	@Override

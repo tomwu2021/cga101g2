@@ -1,6 +1,7 @@
 package com.allOrders.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -13,16 +14,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.common.model.ResponseMessageDto;
+import com.google.gson.Gson;
+import com.members.model.MembersService;
 import com.members.model.MembersVO;
 import com.orders.model.OrdersService;
 import com.orders.model.OrdersVO;
 import com.picture.model.PictureVO;
 import com.product.model.ProductVO;
+import com.ranks.model.RanksVO;
 
 @WebServlet("/member/cart.do")
 public class Cart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	Gson gson=new Gson();
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		res.setContentType("text/html;charset=UTF-8");
@@ -60,11 +65,10 @@ public class Cart extends HttpServlet {
 				}
 			}
 			session.setAttribute("shopingCart", buylist);
-
-			System.out.println(session.getAttribute("shopingCart"));
-			String url = "/front/shop/shop.jsp";
-			RequestDispatcher rd = req.getRequestDispatcher(url);
-			rd.forward(req, res);
+			String msg="成功加入購物車";
+			PrintWriter out=res.getWriter();
+			out.print(gson.toJson(new ResponseMessageDto(200, msg)));
+			
 		}
 		
 		if ("ADDONE".equals(action)) {
@@ -93,7 +97,8 @@ public class Cart extends HttpServlet {
 				}
 			}
 			session.setAttribute("shopingCart", buylist);
-
+			String msg="成功加入購物車";
+			req.setAttribute("msg", msg);
 			System.out.println(session.getAttribute("shopingCart"));
 			String url = "/front/shop/productDetails.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
@@ -102,30 +107,94 @@ public class Cart extends HttpServlet {
 
 		// 刪除購物車中的商品
 		if ("DELETE".equals(action)) {
+//			String del = req.getParameter("del");
+//			int d = Integer.parseInt(del);
+//			buylist.removeElementAt(d);
+//
+//			session.setAttribute("shopingCart", buylist);
+//			System.out.println("刪除第"+del+"筆");
+			
 			String del = req.getParameter("del");
 			int d = Integer.parseInt(del);
-			buylist.removeElementAt(d);
+			
+			for (int i = 0; i < buylist.size(); i++) {
+				ProductVO productVO = buylist.get(i);
+
+				// 找相同id的刪除
+				if (productVO.getProductId().equals(d)){
+					buylist.removeElementAt(i);					
+				}
+			} // for迴圈結束
+			
 
 			session.setAttribute("shopingCart", buylist);
-			System.out.println(session.getAttribute("shopingCart"));
-			String url = "/front/shop/shoppingCart.jsp";
-			RequestDispatcher rd = req.getRequestDispatcher(url);
-			rd.forward(req, res);
+			System.out.println("刪除第"+del+"筆");
+
+		}
+		
+		//在購物車中更改數量
+		if ("ADDINCART".equals(action)) {
+//			String sum = req.getParameter("sum");
+//			int s = Integer.parseInt(sum);
+//			Integer count = Integer.valueOf(req.getParameter("count").trim());
+//			ProductVO productVO = buylist.get(s);			
+//			productVO.setCartAmount(count);
+//			buylist.setElementAt(productVO, s);			
+//			session.setAttribute("shopingCart", buylist);
+//			System.out.println("第"+s+"筆更改為"+count+"份");
+//			
+//			Integer price=count*(buylist.get(s).getPrice());
+//			PrintWriter out=res.getWriter();
+//			out.print(price);
+			
+			String sum = req.getParameter("sum");
+			int s = Integer.parseInt(sum);
+			Integer count = Integer.valueOf(req.getParameter("count").trim());
+			
+			for (int i = 0; i < buylist.size(); i++) {
+				ProductVO productVO = buylist.get(i);
+
+				// 新增書籍和購物車內商品相同時
+				if (productVO.getProductId().equals(s)) {
+					productVO.setCartAmount(count);
+					buylist.setElementAt(productVO, i);
+					Integer price=count*(buylist.get(i).getPrice());
+					PrintWriter out=res.getWriter();
+					out.print(price);
+				}
+			} // for迴圈結束
+		
+			session.setAttribute("shopingCart", buylist);
+			System.out.println("商品編號"+s+"更改為"+count+"份");
+			
+			
+
 		}
 		
 		
 		if ("TOCHECKOUT".equals(action)) {
+			int total=0;
+			for(int i=0;i<buylist.size();i++) {
+				ProductVO productVO=buylist.get(i);
+				int price=productVO.getPrice();
+				int quantity=productVO.getCartAmount();
+				total+=(price*quantity);
+			}
+			//取得會員等級折扣
+			MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
+			MembersService membersService=new MembersService();
+			RanksVO ranksVO=membersService.selectRankInfo(membersVO.getMemberId());
+			//回傳折扣金額
+			req.setAttribute("discount",total-(int)(Math.round(ranksVO.getDiscount().doubleValue()*total)));			
 			String url = "/front/order/checkout.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); 
 			successView.forward(req, res);
 		}
-		
-		if ("MEMBERDATA".equals(action)) {
-			MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
-		}
-		
 			
 		if ("CHECKOUT".equals(action)) {
+			//驗證錢包密碼用
+			String password = req.getParameter("password");
+			//結帳
 			//先算總金額
 			int total=0;
 			for(int i=0;i<buylist.size();i++) {
@@ -135,16 +204,32 @@ public class Cart extends HttpServlet {
 				total+=(price*quantity);
 			}
 			MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
+			//取得會員等級折扣
+			MembersService membersService=new MembersService();
+			RanksVO ranksVO=membersService.selectRankInfo(membersVO.getMemberId());
+			Integer discount = (int) (total-Math.round(ranksVO.getDiscount().doubleValue()*total));
+			//取得其餘資訊
+			Integer memberId=membersVO.getMemberId();			
+			Integer bonus = Integer.valueOf(req.getParameter("bonus").trim());
+			String memberName,memberPhone,address;			
+			Integer payPrice=total-discount-bonus;
 			
-			Integer memberId=membersVO.getMemberId();
-//			Integer memberId=Integer.valueOf(req.getParameter("memberName"));	
-			String memberName = req.getParameter("memberName");	
-			String memberPhone = req.getParameter("memberPhone");
-			String password = req.getParameter("password");
-			String address = req.getParameter("county")+req.getParameter("district")+" "+req.getParameter("address");
-			
+			if(req.getParameter("same")==null) {
+				memberName = req.getParameter("memberName");	
+				memberPhone = req.getParameter("memberPhone");				
+				address = req.getParameter("county")+req.getParameter("district")+" "+req.getParameter("address");
+			}else {				
+				memberName = membersVO.getName();	
+				memberPhone = membersVO.getPhone();				
+				address = membersVO.getAddress();
+			}			
+			//錢包&紅利扣款
+			membersService.walletPaymentAddMoney(memberId, -payPrice);
+			membersService.bonusPaymentAddValue(memberId, -bonus);
+				
+			//產生訂單
 			OrdersService ordersService=new OrdersService();
-			OrdersVO ordersVO=ordersService.addOneOrder(memberId, memberName, memberPhone, address, total, memberId, memberId, memberId);
+			OrdersVO ordersVO=ordersService.addOneOrder(memberId, memberName, memberPhone, address, total, bonus, discount, payPrice);
 			int orderId=ordersVO.getOrderId();
 			
 			//插商品進商品詳情
@@ -155,6 +240,8 @@ public class Cart extends HttpServlet {
 				int price=productVO.getCartAmount()*productVO.getPrice();
 				ordersService.addProduct2Order(orderId, productId, quantity,price);
 			}
+			//清空購物車
+			session.removeAttribute("shopingCart");		
 			//導到商品詳情
 			//先查商品ID，拿到單筆訂單所有商品id
 			List<OrdersVO> productList=ordersService.getAllProductInOrder(orderId);
@@ -167,7 +254,8 @@ public class Cart extends HttpServlet {
 			System.out.println(productList.get(0).getSumPrice());
 			req.setAttribute("orderDetail", productDetail.get(0));
 			req.setAttribute("productDetail", productDetail);
-			
+			String msg="已成功結帳";
+			req.setAttribute("msg", msg);
 			String url = "/front/order/orderDetail.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); 
 			successView.forward(req, res);
@@ -182,6 +270,7 @@ public class Cart extends HttpServlet {
 		String productPrice = req.getParameter("productPrice");
 		String productPictureUrl = req.getParameter("productPictureUrl");
 		String productAmout = req.getParameter("productAmout");
+		System.out.println("pid"+productId+"pname"+productName+"pprice"+productPrice);
 		ProductVO productVO = new ProductVO();
 		PictureVO pictureVO = new PictureVO();
 		pictureVO.setPreviewUrl(productPictureUrl);

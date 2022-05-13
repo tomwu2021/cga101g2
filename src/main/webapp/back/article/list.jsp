@@ -59,14 +59,13 @@ border:#f8f9fb;
 					<div class="panel-heading">最新消息列表</div>
 					<div class="panel-body">
 						<div class="row">
-<!-- 							<form action="/CGA101G2/contact" method="post"> -->
 						</div>
 						<div class="row">
 							<div class="col-sm-10">
 							<br/>
 							</div>
 							<div class="col-sm-2">
-							<a href="/CGA101G2/back/article/add.jsp">
+							<a href="<%=request.getContextPath()%>/back/article/add.jsp">
 								<button class="btn btn-primary form-btn-circle btn-sm" id="insertBtn">
 									<i class="fas fa-plus"></i> 新增
 								</button>
@@ -82,7 +81,7 @@ border:#f8f9fb;
 										<th>類型</th>
 										<th>內容</th>
 										<th>建立時間</th>
-										<th>管理人員</th>
+										<th>最後編輯者</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -129,17 +128,6 @@ border:#f8f9fb;
 	<%@include file="/back/layout/commonJS.jsp"%>
 	<!-- 自訂的JS -->
 	<script type="text/javascript">
-        const type = document.getElementById('type');
-        const select = document.getElementById('select');
-
-        select.addEventListener('change', () => {
-            const selectValue = select.value;
-            if (selectValue === "status_Display") {
-                type.innerHTML = "<input type='radio' name='radio' value='0' checked style='width:32px;'>未回覆<input type='radio' name='radio' value='1' style='width:32px;'>已回覆";
-            } else {
-                type.innerHTML = "<input type='search' class='form-control input-sm' aria-controls='dataTables-example' name='searchBox'>";
-            }
-        })
  </script>
 </body>
 

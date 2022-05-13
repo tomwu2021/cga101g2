@@ -36,24 +36,24 @@
 											<div class="row">
 												<div class="col-lg-12 mb-5">
 													<!-- <form class="form-horizontal"> -->
-													<div class="form-group row">
-														<label class="col-md-3 form-control-label">錢包餘額 :</label>
-														<div class="col-md-9">
-															<span class="highlight">${membersVO.eWalletAmount}</span>元
+													<div class="form-group row" style="padding-left:40px; width:500px">
+														<label class="col-md-3 form-control-label" >錢包餘額 :</label>
+														<div class="col-md-9 ">
+															<span class="highlight"  >${membersVO.eWalletAmount}</span>元
 														</div>
 													</div>
 
 
-													<!-- 													<div class="form-group row"> -->
-													<!-- 														<label class="col-md-3 form-control-label">查詢日期 :</label> -->
-													<!-- 														<div class="col-md-9"> -->
-													<!-- 															<input type="date" value="2020-04-20" min="2022-01-01" -->
-													<!-- 																max="2050-01-01" step="1"> ~ <input type="date" -->
-													<!-- 																value="2020-04-20" min="2022-01-01" max="2050-01-01" -->
-													<!-- 																step="1"> &emsp;<input type="submit" value="確定" -->
-													<!-- 																class="btn btn-primary"> -->
-													<!-- 														</div> -->
-													<!-- 													</div> -->
+													<div class="form-group row" style="padding-left:40px; width:550px">
+														<label class="col-md-3 form-control-label" >查詢日期 :</label>
+														<div class="col-md-9">
+															<input type="date" value="2022-01-01" min="2022-01-01"
+																max="2050-01-01" step="1" id="inputDateOne" onclick="choseDate()"> ~ <input type="date"
+																value="2020-04-20" min="2022-01-01" max="2050-01-01"
+																step="1" id="inputDateTwo" onchange="changeDate()"> &emsp;<input type="submit" value="確定"
+																class="btn btn-primary" onclick="selectByDate()">
+														</div>
+													</div>
 
 
 												</div>

@@ -30,14 +30,18 @@ function search() {
 }
  * 
  */
-function search(){
+// function search(){
 	//發出查詢請求的方法 jquery ajax參考上面實作
 	
-}
+// }
 //預設進頁面時的查詢條件
 
 
-
+let pageSize = $("#pageSize").val()||12;
+let sort = "DESC";
+let thisPage = 1;
+let total = 0;
+let pageCount = 0;
 
 function addCurrent() {
 	let picPages = document.getElementsByClassName(".pic_page");

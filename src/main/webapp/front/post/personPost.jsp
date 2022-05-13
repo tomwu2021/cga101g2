@@ -17,16 +17,79 @@
 
 <meta charset="UTF-8">
 
-	<!-- -- add -->
-    <!-- Bootstrap CSS -->
-     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->  
+    
+     <style >
+    
+ 	#demo_border {
+	position: relative;
+	width:280px;
+	height:0px;
+	}
+    
+    #image_photo {
+　　position: absolute;
+    background-image: url("");
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    overflow: hidden;
 
-    <!-- Main Style CSS -->
-    <link rel="stylesheet" href="other/style copy.css">
+    width: 150px;
+    height: 150px;
+    transform: translateY(-50px);
+	}
+	
+	#img_text {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	font-size: 20px;
+	color: #926161;
+	border-radius: 50%;
+	/* background-color: #F00; */
+	width: 50px;
+	height:50px;
+	text-align: center;
+	line-height: 30px;
+	}
+	
+	img {
+  	max-width: 100%;
+  	height: 100%;
+	}
+	
+	.shop_toolbar_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 85px 250px;
+  margin: 0 0 30px;
+ }
+ 
+ .select_option {
+  display: flex;
+  align-items: center;
+  transform: translateX(90px);
+  transform: translateY(20px);
+  }
+  
+  .shop_toolbar_btn>button.btn-grid-4 {
+  /* background: url(../img/icon/bkg_grid4.png) no-repeat scroll center center; */
+  width: 26px;
+  height: 22px;
+  transform: translateX(235px) translateY(60px);
+  }
+
+	
+	</style>
 
 </head>
+
 <body>
+<input type="hidden" id="memberId"
+ value="<%=request.getAttribute("memberId")%>">
+
+<input type="hidden" id="isOwner" value="<%=request.getAttribute("isOwner")%>">
 
 	<!-- 共用的header start-->
 	<%@include file="/front/layout/header.jsp"%>
@@ -58,11 +121,19 @@
                 <div class="col-lg-12 col-md-12">
                     <!--shop wrapper start-->
                     <!--shop toolbar start-->
+                    
+                 
+                    
                     <div class="shop_toolbar_wrapper">
                         <div class="shop_toolbar_btn">
 
-                            <button data-role="grid_3" type="button" class="active btn-grid-3" data-toggle="tooltip"
-                                title="3"></button>
+
+                            <div id="demo_border" style="position: relative;">
+								<div id="image_photo"><img src="${personList[0].pictureVO.previewUrl}"></div>										
+								<div id="img_text">${personList[0].membersVO.name}</div>
+							</div>
+							
+							
 
                             <button data-role="grid_4" type="button" class=" btn-grid-4" data-toggle="tooltip"
                                 title="4"></button>
@@ -102,7 +173,7 @@
                                         <!-- 圖 -->
                                        <%--  <c:forEach var="postVO" items="${list}" >  --%>
                                         <c:if test="${postVO.pictureList.size() != 0 }">
-                                        <a class="primary_img" href="http://localhost:8081/CGA101G2/detailPost?postId=${postVO.postId}&action=selectdetail"><img
+                                        <a class="primary_img" href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"><img
                                                 src="${postVO.pictureList.get(0).previewUrl}" alt=""></a>
                                         </c:if>
 
@@ -137,6 +208,11 @@
                         </div>
                     </div>
                     </div>
+                    <c:if test="${isOwner==1}">
+                    <div>
+                    <img src="front/post/addpost.png" class="ml-3" style="height:40px;width:40px; position: fixed; top: 80px; right: 14px;" onclick="window.location='http://localhost:8081/CGA101G2/front/post/addPost.jsp'" id="addpost">
+                    </div>
+                    </c:if>
                     
             </div>
         </div>

@@ -65,14 +65,13 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 			}
 			// 把取得的主鍵放入productVO,讓servlet可以get
 			productVO.setProductId(next_product_id);
-			return productVO;
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return productVO;
 	}
 
 	@Override
@@ -169,14 +168,14 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) insert!");
-			return true;
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -189,24 +188,24 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) insert!");
-			return true;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
 	public ProductVO getOneById(Integer id) {
+		ProductVO productVO = new ProductVO();
 		try (Connection connection = getRDSConnection();
 				PreparedStatement pstmt = connection.prepareStatement(GET_ONE_STMT)) {
 
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				ProductVO productVO = new ProductVO();
 				productVO.setProductId(rs.getInt("product_id"));
 				productVO.setProductName(rs.getString("product_name"));
 				productVO.setPrice(rs.getInt("price"));
@@ -220,7 +219,6 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 				productVO.setDescription(rs.getString("description"));
 				productVO.setStatus(rs.getInt("status"));
 				productVO.setTopStatus(rs.getInt("top_status"));
-				return productVO;
 			}
 
 		} catch (SQLException se) {
@@ -228,37 +226,38 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return productVO;
 	}
 
 	@Override
 	public Set<ProductImgVO> getPImgVOsByPdID(Integer pdID) {
+		Set<ProductImgVO> set = new LinkedHashSet<ProductImgVO>();
+		ProductImgVO pImgVO = new ProductImgVO();
+		
 		try (Connection connection = getRDSConnection();
 				PreparedStatement pstmt = connection.prepareStatement(GET_PIMGs_ByPId_STMT)) {
-			Set<ProductImgVO> set = new LinkedHashSet<ProductImgVO>();
 			pstmt.setInt(1, pdID);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				ProductImgVO pImgVO = new ProductImgVO();
 				pImgVO.setProductImgId(rs.getInt("product_img_id"));
 				pImgVO.setProductId(rs.getInt("product_id"));
 				set.add(pImgVO);
 			}
-			return set;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return set;
 
 	}
 
 	@Override
 	public List<ProductVO> getAll() {
-		try (Connection con = getRDSConnection(); PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT)) {
+		List<ProductVO> list = new ArrayList<ProductVO>();
+		try (Connection con = getRDSConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT)) {
 			ResultSet rs = pstmt.executeQuery();
-			List<ProductVO> list = new ArrayList<ProductVO>();
 			while (rs.next()) {
 				ProductVO productVO = new ProductVO();
 				productVO.setProductId(rs.getInt("product_id"));
@@ -276,17 +275,16 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 				productVO.setTopStatus(rs.getInt("top_status"));
 				list.add(productVO);
 			}
-			return list;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 
 	@Override
-	public List<ProductVO> getAll(Map<String, String[]> map) {
+	public List<ProductVO> getAll(Map<String, String[]> map, int pageSize, int pageNo) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		ProductVO productVO = null;
 
@@ -323,18 +321,25 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 				productVO.setTopStatus(rs.getInt("top_status"));
 				list.add(productVO); // Store the row in the List
 			}
-			return list;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
-		return null;
+		return list;
 	}
 
 //	ShopPublic公開頁面 只接受參數status=1 or Status =2
 	@Override
-	public List<ProductVO> getForShopFront(Map<String, String[]> map) {
+	public List<ProductVO> getForShopFront(Map<String, String[]> map, int pageSize, int pageNo) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		ProductVO productVO = null;
 
@@ -370,13 +375,20 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 				productVO.setTopStatus(rs.getInt("top_status"));
 				list.add(productVO); // Store the row in the List
 			}
-			return list;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
-		return null;
+		return list;
 	}
 
 	//	ShopPublic公開頁面 只接受參數status=2
@@ -416,13 +428,32 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 				productVO.setTopStatus(rs.getInt("top_status"));
 				list.add(productVO); // Store the row in the List
 			}
-			return list;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
-		return null;
+		return list;
+	}
+
+	@Override
+	public int getForShopFrontTotalCount(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getAllTotalCount(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

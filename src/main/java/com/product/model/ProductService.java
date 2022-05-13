@@ -162,6 +162,14 @@ public class ProductService {
 		return dao.getAll();
 	}
 
+	public List<ProductVO> getAll(Map<String, String[]> map, int pageSize, int pageNo) {
+		return dao.getAll(map, pageSize, pageNo);
+	}
+	
+	public int getAllTotalCount(Map<String, String[]> map) {
+		return dao.getAllTotalCount(map);
+	}
+	
 	public boolean productUpdateStatus(ProductVO productVO) {
 		return dao.delete(productVO);
 	}
@@ -170,12 +178,12 @@ public class ProductService {
 		return dao.deleteByTopStatus(topStatus,productId);
 	}
 	
-	public List<ProductVO> getAll(Map<String, String[]> map) {
-		return dao.getAll(map);
+	public List<ProductVO> getForShopFront(Map<String, String[]> map, int pageSize, int pageNo) {
+		return dao.getForShopFront(map, pageSize, pageNo);
 	}
 	
-	public List<ProductVO> getForShopFront(Map<String, String[]> map) {
-		return dao.getForShopFront(map);
+	public int getForShopFrontTotalCount(Map<String, String[]> map) {
+		return dao.getForShopFrontTotalCount(map);
 	}
 	
 	public List<ProductVO> getForGroupShopFront(Map<String, String[]> map) {

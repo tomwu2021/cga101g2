@@ -91,7 +91,7 @@ public class ChargeRecordDAO implements ChargeRecordDAO_interface {
 	@Override
 	public List<ChargeRecordVO> getAll(Integer id) {
 
-		final String GETALL = "SELECT record_id, member_id, charge_amount, record_time FROM charge_record WHERE member_id =?;";
+		final String GETALL = "SELECT record_id, member_id, charge_amount, record_time,DATE_FORMAT(record_time,'%Y-%m-%d %H:%i') recordTimeString FROM charge_record WHERE member_id =?;";
 
 		try (Connection con = JNDIConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
@@ -104,6 +104,7 @@ public class ChargeRecordDAO implements ChargeRecordDAO_interface {
 				newchargeRecord.setMemberId(rs.getInt("member_id"));
 				newchargeRecord.setChargeAmount(rs.getInt("charge_amount"));
 				newchargeRecord.setRecordTime(rs.getTimestamp("record_time"));
+				newchargeRecord.setRecordTimeString(rs.getString("recordTimeString"));
 				list.add(newchargeRecord);
 			}
 			return list;

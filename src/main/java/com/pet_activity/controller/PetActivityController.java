@@ -10,24 +10,30 @@ import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.common.controller.CommonController;
 import com.pet_activity.model.PetActivityVO;
 import com.pet_activity.service.PetActivityService;
 
 
 @WebServlet("/activity")
-public class PetActivityController extends HttpServlet {
+public class PetActivityController extends CommonController {
 	private static final long serialVersionUID = 1L;
        
     public PetActivityController() {
         super();
     }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
+    public void doGet(HttpServletRequest req, HttpServletResponse res) {
+    	try {
+			doPost(req, res);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -87,7 +93,7 @@ public class PetActivityController extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			// 檢查輸入
 			if(activity == null || activity.trim().isEmpty()) {
-				errorMsgs.put("activity"," (未更新！請輸入內容)");
+				errorMsgs.put("activity"," (請輸入內容)");
 			}
 			try {
 				java.util.Calendar cal = java.util.Calendar.getInstance();
@@ -99,7 +105,7 @@ public class PetActivityController extends HttpServlet {
 				_recordTime = Date.valueOf(recordTime.trim());
 				if(_recordTime.getTime() > currentTime) throw new IllegalArgumentException();
 			} catch (IllegalArgumentException e) {
-				errorMsgs.put("recordTime"," (未更新！請輸入正確日期)");
+				errorMsgs.put("recordTime"," (請輸入正確日期)");
 				_recordTime = null;
 			}
 			// 正常送出

@@ -121,7 +121,7 @@ $(function() {
 
 // 傳送資料到 member.do
 function checkAccount() {
-	loading();
+//	loading();
 	let dataJSON = {
 		registerAccount: $("#registerAccount").val(),
 		action: "checkAccount"
@@ -134,7 +134,7 @@ function checkAccount() {
 			success: function(json) {
 				let objectJSON = JSON.parse(json);
 				document.getElementById("viewRegisterAccount").innerHTML = objectJSON.exist;
-				offLoading();
+//				offLoading();
 			},
 		}
 	);
@@ -152,7 +152,7 @@ function registerVerification() {
 	if (rAccount !== null && rAccount.length !== 0) {
 		document.getElementById("viewRegisterAccount").innerHTML = "";
 	} else {
-		document.getElementById("viewRegisterAccount").innerHTML = "請輸入帳號";
+		document.getElementById("viewRegisterAccount").innerHTML = "請輸入電子郵件";
 		return;
 	}
 
@@ -176,7 +176,7 @@ function registerVerification() {
 		if (rPassword === rCheckPassword) {
 			document.getElementById("viewcheckpassword").innerHTML = "✔";
 		} else {
-			document.getElementById("viewcheckpassword").innerHTML = "兩次輸入的密碼不一致";
+			document.getElementById("viewcheckpassword").innerHTML = "與前次輸入不相符";
 			return;
 		}
 	} else {
@@ -195,7 +195,7 @@ function registerVerification() {
 
 
 
-	loading();
+//	loading();
 	let dataJSON = {
 		registerAccount: rAccount,
 		registerpassword: rPassword,
@@ -215,7 +215,7 @@ function registerVerification() {
 					document.getElementById("viewVerificationCode").innerHTML = objectJSON.msgErrorVerificationCode;
 				}
 
-				offLoading();
+//				offLoading();
 				if (objectJSON.msgErrorVerificationCode === "" && objectJSON.msgError === "") {
 					alert(objectJSON.registerSuccessful);
 				}
@@ -230,7 +230,7 @@ function sendforgotMail() {
 	
 	let forgotPassword = $("#forgotPassword").val();
 	if (forgotPassword !== null && forgotPassword.length !== 0) {
-		loading();
+//		loading();
 		let dataJSON = {
 			forgotPassword: $("#forgotPassword").val(),
 			action: "sendforgotMail"
@@ -248,7 +248,7 @@ function sendforgotMail() {
 				},
 			}
 		);
-		offLoading();
+//		offLoading();
 	} else {
 		document.getElementById("viewForgotPassword").innerHTML = "請輸入電子郵件";
 		return;

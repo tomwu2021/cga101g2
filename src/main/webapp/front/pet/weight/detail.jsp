@@ -7,7 +7,7 @@
 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 %>
 <%
-Integer petId = (Integer)(session.getAttribute("petId"));
+Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)session.getAttribute("membersVO")).getPetVO().getPetId();
 %>
 <% 
 	java.util.Calendar cal = Calendar.getInstance();
@@ -55,7 +55,7 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 										<div class="col-lg-2 col-md-12"></div>
 											<div class="col-lg-10 col-md-12">
 	<!-- ============================= Main ============================= -->
-	<a class="text-dark mb-1" href='<%=request.getContextPath()%>/pet?memberId=<%=(Integer)session.getAttribute("memberId")%>&petId=<%=(Integer)session.getAttribute("petId")%>&action=profile' >
+	<a class="text-dark mb-1" href='<%=request.getContextPath()%>/pet?memberId=<%=loginId%>&action=profile' >
 		<i class="fas fa-arrow-left"></i> 返回
 	</a>
 	<section class="section dashboard">
@@ -250,6 +250,10 @@ let rId = '${param.recordId}'? '${param.recordId}':$('.allItem:first').attr("id"
 				function(data,status){
 				if(status=="success"){
 					$("#getRecordId").val(rId);
+					if('${errorMsgs.recordTime}${errorMsgs.weightRecord}' !== ''){
+						alert('${errorMsgs.recordTime}${errorMsgs.weightRecord}');
+						$('#updateBtn').click();
+						}
 					if($('#activity').val()==""){
 						$("#updateBtn").attr("disabled","disabled");
 						$("#kilogram").hide();

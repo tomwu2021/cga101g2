@@ -1,13 +1,16 @@
-let rankId = document.getElementById("rankId").innerHTML;
 
-function executeAfterloadedBody() {
+
+
+$(function() {
+
+let rankId = document.getElementById("rankId").innerHTML;
 	let dataJSON = {
 		rankId: rankId,
 		action: "getRankName"
 	}
 	$.ajax(
 		{
-			url: "member.do", // 請求的url地址，相對位址
+			url: "/CGA101G2/front/member.do", // 請求的url地址，相對位址
 			type: "post", // 請求的方式，通常用 POST
 			data: dataJSON,
 			success: function(json) {
@@ -17,5 +20,5 @@ function executeAfterloadedBody() {
 		}
 	);
 
-}
 
+});

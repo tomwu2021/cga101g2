@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="com.product.model.*"%>
 <%@ page import="com.members.model.*" %>
+<%@ page import="com.ranks.model.*" %>
 <!-- include <head></head> -->
 <%@ include file="/front/layout/head.jsp"%>
 
@@ -68,6 +69,7 @@ if (buylist != null && (buylist.size() > 0)) {
                         <Form action="/CGA101G2/member/cart.do" Method="Post" id="CHECKOUT">
                             <h3>Billing Details</h3>
                             <div class="row">
+                            
                                 <div class="col-lg-6 mb-20">
                                     <label>姓名 <span>*</span></label>
                                     <input type="text" name="memberName">
@@ -86,9 +88,51 @@ if (buylist != null && (buylist.size() > 0)) {
 									id="exampleFormControlInput1">
 						 		</div>
 						 		
+						 		
+						 		<div class="col-12 mb-20">
+                                    <input id="address" type="checkbox" data-target="createp_account" name="same"/>
+                                    <label class="righ_0" for="address" data-toggle="collapse"
+                                        data-target="#collapsetwo" aria-controls="collapseOne">等同會員資料</label>
+
+                                    <div id="collapsetwo" class="collapse one" data-parent="#accordion">
+                                        <div class="row">
+                                                                                                                                                                        
+                                           <div class="col-lg-6 mb-20">
+			                                    <label>姓名 <span>*</span></label>
+			                                    <input type="text" value="<%=membersVO.getName()%>">
+			                                </div>
+			                                <div class="col-12 mb-20">
+			                                    <label>電話<span>*</span></label>
+			                                    <input type="text" value="<%=membersVO.getPhone() %>">
+			                                </div>
+			                                 <div class="col-12 mb-20">
+			                                    <label>地址<span>*</span></label>
+			                                    <input type="text" value="<%=membersVO.getAddress() %>">
+			                                </div>
+			                                
+                                        </div>
+                                    </div>
+                                </div>
+						 		
+						 		
+						 		 <%
+						 		 //防止紅利折扣比訂單金額高
+									for (int index = 0; index < buylist.size(); index++) {
+										ProductVO productVO = buylist.get(index);
+										count+=productVO.getCartAmount()*productVO.getPrice();
+									}
+						 		 int maxBonus;
+						 		 int discount=(Integer)request.getAttribute("discount");
+						 		 if(membersVO.getBonusAmount()>count-discount){
+						 		 	maxBonus=count-discount;
+						 		 }else{
+						 			 maxBonus=membersVO.getBonusAmount();
+						 		 }
+								%>
+										
 						 		<div class="col-12 mb-20">
                                     <label>使用紅利<span>*</span></label>
-                                    	<input min="1" max="<%=membersVO.getBonusAmount() %>" type="number"></td>
+                                    	<input min="0" max="<%=maxBonus %>" value="<%=maxBonus %>" type="number" name="bonus" id="bonusCount" onchange="bonusChange()">
                                 </div>
 						 		
 						 		
@@ -100,13 +144,7 @@ if (buylist != null && (buylist.size() > 0)) {
                             </div>
                             <input type="hidden" name="action" value="CHECKOUT">
                         </form>
-                        
-                          <Form action="/CGA101G2/member/cart.do" Method="Post">
-                         <div class="col-lg-6 mb-20">
-                                    <button type="submit">同會員資料</button>
-                          </div>    
-                          <input type="hidden" name="action" value="MEMBERDATA">
-                          </Form>
+                                    
                             
                     </div>
                     <div class="col-lg-6 col-md-6">
@@ -125,7 +163,6 @@ if (buylist != null && (buylist.size() > 0)) {
                                     <%
 									for (int index = 0; index < buylist.size(); index++) {
 										ProductVO productVO = buylist.get(index);
-										count+=productVO.getCartAmount()*productVO.getPrice();
 									%>
 										 <tr>
                                             <td> <%= productVO.getProductName()%> <strong> × <%= productVO.getCartAmount()%></strong></td>
@@ -137,20 +174,20 @@ if (buylist != null && (buylist.size() > 0)) {
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Cart Subtotal</th>
-                                            <td>$<%= count %></td>
+                                            <th>商品金額</th>
+                                            <td id="total"><%= count %></td>
                                         </tr>
                                         <tr>
-                                            <th>Shipping</th>
-                                            <td><strong>$5.00</strong></td>
+                                            <th>會員折扣</th>
+                                            <td id="discount"><strong>-${discount}</strong></td>
                                         </tr>
                                          <tr>
-                                            <th>Shipping</th>
-                                            <td><strong>$5.00</strong></td>
+                                            <th>紅利折扣</th>
+                                            <td id="bonus"><strong>-<%=maxBonus %></strong></td>
                                         </tr>
                                         <tr class="order_total">
                                             <th>Order Total</th>
-                                            <td><strong>$220.00</strong></td>
+                                            <td id="payPrice"><strong>$220.00</strong></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -179,17 +216,12 @@ if (buylist != null && (buylist.size() > 0)) {
 <!-- include  footer -->
 <%@include file="/front/layout/footer.jsp"%>
 <!-- 額外添加JS start -->
-<script
-	src="<%=request.getContextPath()%>/assets/js/jquery.twzipcode.min.js"></script>
-<script>
-	$("#zipcode3").twzipcode({
-		"zipcodeIntoDistrict" : true,
-		"css" : [ "city form-control", "town form-control" ],
-		countySel : "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
-		districtSel : "大安區", // 地區預設值
-	});
-</script>
+<script src="<%=request.getContextPath()%>/assets/js/jquery.twzipcode.min.js"></script>
+
 <!-- 額外添加JS end -->
+<script
+		src="<%=request.getContextPath()%>/assets/js/order&cart/checkout.js">
+</script>
 <jsp:include page="/front/layout/showMessage.jsp" />
 </body>
 <!-- body end -->

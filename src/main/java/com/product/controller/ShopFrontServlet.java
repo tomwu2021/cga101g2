@@ -1,6 +1,8 @@
 package com.product.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,8 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.picture.model.PictureVO;
+import com.picture.service.PictureService;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
+import com.product_img.model.ProductImgService;
 import com.sort1.model.Sort1Service;
 import com.sort1.model.Sort1VO;
 import com.sort2.model.Sort2Service;
@@ -52,6 +57,12 @@ public class ShopFrontServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		if ("listProducts_Byfind".equals(action)) {
 			
+			String whichPage = req.getParameter("whichPage"); // 1
+			int pageSize = 9;
+			int pageNo = 0 ;
+			if(whichPage != null) {
+				pageNo = (Integer.parseInt(whichPage) - 1) * 9; 
+			}
 			// 一般購物公開頁面 轉交給shop.jsp 只接受參數 statu=1 or status =2
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -73,28 +84,39 @@ public class ShopFrontServlet extends HttpServlet {
 			}
 
 			/*************************** 2.開始複合查詢 ***************************************/
+			long totalSeconds1 = (System.currentTimeMillis());
+			
 			ProductService pdSvc = new ProductService();
+			ProductImgService piSvc = new ProductImgService();
+			
 			  ///********推薦商品資料 開始*********///
 		    Map<String, String[]> topMap = new TreeMap<String, String[]>();
 		    topMap.put("top_status", new String[] { "1" });
-		    List<ProductVO> topProdcutList = pdSvc.getForShopFront(topMap);
+		    List<ProductVO> topProdcutList = pdSvc.getForShopFront(topMap, 99999, 0);
+		    for(ProductVO vo: topProdcutList) {
+				List<PictureVO> pictureVOList = piSvc.getPicVOsByProductId(vo.getProductId());
+				vo.setPictureVOList(pictureVOList);
+			}
 		    ///********推薦商品資料 結束*********///
-			
-			
-			List<ProductVO> list = pdSvc.getForShopFront(map);
-			
+
+			List<ProductVO> list = pdSvc.getForShopFront(map, pageSize, pageNo);
+			int total = pdSvc.getForShopFrontTotalCount(map); // total count
+			for(ProductVO vo: list) {
+				List<PictureVO> pictureVOList = piSvc.getPicVOsByProductId(vo.getProductId());
+				vo.setPictureVOList(pictureVOList);
+			}
 			//搜尋所有主分類"們" 放入對應的子分類"們"
 			Sort1Service sort1Service = new Sort1Service();
 			List<Sort1VO> sort1VOList= sort1Service.getAll();
 			
 			SortMixService sortMixService = new SortMixService();
-			
+						
 		    for (Sort1VO sort1VO: sort1VOList) {
 		    	Integer sort1Id = sort1VO.getSort1Id();
 		    	List<Sort2VO> sort2VOList = sortMixService.getSort2VOsBySort1Id(sort1Id);
 		    	sort1VO.setSort2VOList(sort2VOList);
 		    }
-		
+
 		    ///********跳轉到該分類頁面的分類資料分界點 開始*********///
 		    Sort1VO sort1VO = new Sort1VO();
 			// 哪一個主分類做的判斷
@@ -112,13 +134,17 @@ public class ShopFrontServlet extends HttpServlet {
 				sort2VO = sort2Service.getOneById(sort2Id);
 			}
 			 ///********分類的分界點 結束*********///
-			
-		    
+			long totalSeconds2 = (System.currentTimeMillis()) ;
+			System.out.println(totalSeconds2 - totalSeconds1);
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			 ///********推薦商品資料 開始*********///
 			req.setAttribute("topProdcutList", topProdcutList);
 		    ///********推薦商品資料 結束*********///
 			req.setAttribute("listProducts_Byfind", list); // 資料庫取出的list物件,存入request
+			System.out.println(total);
+			System.out.println(whichPage);
+			req.setAttribute("total", total);
+			req.setAttribute("currPage", whichPage);
 			req.setAttribute("sort1VOListIncludesort2VOList", sort1VOList);
 			///********跳轉到該分類頁面的分類資料分界點 開始*********///
 			req.setAttribute("thisSort1VO", sort1VO);
@@ -126,9 +152,10 @@ public class ShopFrontServlet extends HttpServlet {
 			///********分類的分界點 結束*********///
 			
 			// **********************0506要轉交給shop2改成轉交給shop***********************//
-
 			RequestDispatcher successView = req.getRequestDispatcher("/front/shop/shop2.jsp"); // 成功轉交shop.jsp
 			successView.forward(req, res);
+			
+			
 		}
 	}
 }

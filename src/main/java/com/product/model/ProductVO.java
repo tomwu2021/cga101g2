@@ -22,6 +22,8 @@ public class ProductVO implements java.io.Serializable {
 	private Integer price;
 	private Integer amount;
 	private Integer sort2Id;
+	//為了後台多拉一張一對一的sort2Name
+	private String sort2Name;
 	private Timestamp updateTime;
 	private Integer groupPrice1;
 	private Integer groupAmount1;
@@ -32,13 +34,40 @@ public class ProductVO implements java.io.Serializable {
 	private Integer topStatus;
 	private Integer cartAmount;
 	private PictureVO pictureVO;
+	private List<PictureVO> pictureVOList;
+	private List<Sort1VO> PSort1VOList;
 	
+	
+	public List<Sort1VO> getPSort1VOList() {
+		return PSort1VOList;
+	}
+
+	public void setPSort1VOList(List<Sort1VO> pSort1VOList) {
+		PSort1VOList = pSort1VOList;
+	}
+
+	public String getSort2Name() {
+		return sort2Name;
+	}
+
+	public void setSort2Name(String sort2Name) {
+		this.sort2Name = sort2Name;
+	}
+
 	public PictureVO getPictureVO() {
 		return pictureVO;
 	}
 
 	public void setPictureVO(PictureVO pictureVO) {
 		this.pictureVO = pictureVO;
+	}
+
+	public List<PictureVO> getPictureVOList() {
+		return pictureVOList;
+	}
+
+	public void setPictureVOList(List<PictureVO> pictureVOList) {
+		this.pictureVOList = pictureVOList;
 	}
 
 	public Integer getCartAmount() {
@@ -162,41 +191,41 @@ public class ProductVO implements java.io.Serializable {
 //for join dname from deptno
 //在多方的VO放入一方的SERVICE的GETBYID
 	
-	
-////	找到ProductImgVOList btye[]
+
+	////	找到ProductImgVOList btye[]
 //	public List<ProductImgVO> getProductImgVOList() {
 //		com.product_img.model.ProductImgService daoSvc = new com.product_img.model.ProductImgService();
 //		List<ProductImgVO> productImgVOList= daoSvc.getProductImgVOsByProductId(productId);
 //		return productImgVOList;
 //	}
 //	找到Sort2VO
-	public Sort2VO getSort2VO() {
-		Sort2Service daoSvc = new Sort2Service();
-		Sort2VO sort2VO = daoSvc.getOneById(sort2Id);
-		return sort2VO;
-	}
+//	public Sort2VO getSort2VO() {
+//		Sort2Service daoSvc = new Sort2Service();
+//		Sort2VO sort2VO = daoSvc.getOneById(sort2Id);
+//		return sort2VO;
+//	}
 	
 //	找到Sort1VOList
-	public List<Sort1VO> getSort1VOList() {
-		PSort1Service daoSvc = new PSort1Service();
-		List<Sort1VO> sort1VOList = daoSvc.findSort1VOByproductId(productId);
-		return sort1VOList;
-	}
+//	public List<Sort1VO> getSort1VOList() {
+//		PSort1Service daoSvc = new PSort1Service();
+//		List<Sort1VO> sort1VOList = daoSvc.findSort1VOByproductId(productId);
+//		return sort1VOList;
+//	}
 	
 //	找到picV	
-	public List<PictureVO> getPictureVOList() {
-		com.product_img.model.ProductImgService daoSvc = new com.product_img.model.ProductImgService();
-		List<PictureVO> pictureVOList = daoSvc.getPicVOsByProductId(productId);
-		return pictureVOList;
-	}
+//	public List<PictureVO> getPictureVOList() {
+//		com.product_img.model.ProductImgService daoSvc = new com.product_img.model.ProductImgService();
+//		List<PictureVO> pictureVOList = daoSvc.getPicVOsByProductId(productId);
+//		return pictureVOList;
+//	}
 
 	
 //	找到PSortVO
-	public List<Sort1VO> getPSort1VO() {
-		PSort1Service pSort1Svc = new PSort1Service();
-		List<Sort1VO> pSort1VO = pSort1Svc.findSort1VOByproductId(productId);
-		return pSort1VO;
-	}
+//	public List<Sort1VO> getPSort1VO() {
+//		PSort1Service pSort1Svc = new PSort1Service();
+//		List<Sort1VO> pSort1VO = pSort1Svc.findSort1VOByproductId(productId);
+//		return pSort1VO;
+//	}
 
 	@Override
 	public String toString() {
@@ -204,7 +233,7 @@ public class ProductVO implements java.io.Serializable {
 				+ amount + ", sort2Id=" + sort2Id + ", updateTime=" + updateTime + ", groupPrice1=" + groupPrice1
 				+ ", groupAmount1=" + groupAmount1 + ", groupAmount2=" + groupAmount2 + ", groupAmount3=" + groupAmount3
 				+ ", description=" + description + ", status=" + status + ", topStatus=" + topStatus + ", cartAmount="
-				+ cartAmount + ", pictureVO=" + pictureVO + "]";
+				+ cartAmount + "]";
 	}
 	
 	

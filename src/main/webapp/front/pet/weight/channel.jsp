@@ -4,10 +4,10 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.math.BigDecimal"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.members.model.*"%>
 <%@ page import="com.pet_weight.model.*"%>
 <%
-Integer memberId = (Integer)(session.getAttribute("memberId"));
-Integer petId = (Integer)(session.getAttribute("petId"));
+Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)session.getAttribute("membersVO")).getPetVO().getPetId();
 %>
 <%
 PetWeightVO recentWgt = (PetWeightVO) request.getAttribute("recentWgt");
@@ -46,7 +46,7 @@ startTime = sdf.format(cal.getTime())+" ~ ";
 
 		<div class="card-body">
 			<h5 class="card-title">
-				體重資訊 
+				體重紀錄 
 			</h5>
 			<div class="row weight-card">
                 <div class="col-lg-6">

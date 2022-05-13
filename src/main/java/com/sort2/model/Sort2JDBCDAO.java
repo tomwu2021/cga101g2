@@ -70,59 +70,56 @@ public class Sort2JDBCDAO implements Sort2DAO_interface {
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) updated!");
 
-			return sort2VO;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return sort2VO;
 	}
 
 	@Override
 	public Sort2VO getOneById(Integer sort2Id) {
+		Sort2VO sort2VO = new Sort2VO();
 		final String sql = "select * from sort2 where sort2_id = ?";
 		try (Connection conn =  getRDSConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setInt(1, sort2Id);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
-					Sort2VO sort2VO = new Sort2VO();
 					sort2VO.setSort2Id(rs.getInt("sort2_id"));
 					sort2VO.setSort2Name(rs.getString("sort2_Name"));
-					return sort2VO;
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return sort2VO;
 	}
 
 	@Override
 	public Sort2VO selectBySort2Name(String sort2Name) {
+		Sort2VO sort2VO = new Sort2VO();
 		final String sql = "select * from sort2 where sort2_name = ?";
 		try (Connection conn =  getRDSConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, sort2Name);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
-					Sort2VO sort2VO = new Sort2VO();
 					sort2VO.setSort2Id(rs.getInt("sort2_id"));
 					sort2VO.setSort2Name(rs.getString("sort2_Name"));
-					return sort2VO;
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return sort2VO;
 	}
 
 	@Override
 	public List<Sort2VO> getAll() {
-		final String GET_ALL_STMT = "SELECT sort2_id,sort2_name " + "FROM cga_02.sort2 " + "order by sort2_id;";
 		List<Sort2VO> list = new ArrayList<Sort2VO>();
+		final String GET_ALL_STMT = "SELECT sort2_id,sort2_name " + "FROM cga_02.sort2 " + "order by sort2_id;";
 	
 		try (Connection connection = getRDSConnection();
 				PreparedStatement pstmt = connection.prepareStatement(GET_ALL_STMT)) {
@@ -141,7 +138,6 @@ public class Sort2JDBCDAO implements Sort2DAO_interface {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
 		return list;
 	}
 

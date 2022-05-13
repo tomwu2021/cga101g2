@@ -3,7 +3,10 @@
 <%@ page import="com.members.model.*" %>
 <header>
 
-    <input id="loginId" value="<%=session.getAttribute("membersVO")==null?"":((MembersVO)session.getAttribute("membersVO")).getMemberId() %>">
+    <%
+    Integer loginId = session.getAttribute("membersVO")==null ? -999:((MembersVO)session.getAttribute("membersVO")).getMemberId();
+    %>
+    <input id="loginId" value="<%=loginId%>">
 
     <!--     筆記 fa-2x控制i的大小 -->
     <div class="main_header sticky-header">
@@ -22,15 +25,8 @@
                                 <ul>
                                     <!-- <li><a class="active"  href="index.html">寵物商城</a>
                                     </li> -->
-                                    <li><a href="<%=request.getContextPath()%>blog.html">最新消息<i
-                                            class="fa fa-angle-down"></i></a>
-                                        <ul class="sub_menu pages">
-                                            <li><a href="<%=request.getContextPath()%>blog-details.html">分類?</a></li>
-                                            <li><a href="<%=request.getContextPath()%>blog-fullwidth.html">狗狗專區</a></li>
-                                            <li><a href="<%=request.getContextPath()%>blog-sidebar.html">貓狗通用</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="<%=request.getContextPath()%>blog.html">商品專區<i
+                                    <li><a href="<%=request.getContextPath()%>/article?action=all_Display">最新消息</a></li>
+                                    <li><a href="<%=request.getContextPath()%>/front/shop/shop.jsp">商品專區<i
                                             class="fa fa-angle-down"></i></a>
                                         <ul class="sub_menu pages">
                                             <li><a href="<%=request.getContextPath()%>blog-details.html">貓貓專區</a></li>
@@ -45,12 +41,16 @@
                                             <li><a href="<%=request.getContextPath()%>groupshop.html">我要跟團</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="<%=request.getContextPath()%>">寵物社群</a>
+                                    <li><a href="<%=request.getContextPath()%>/MainPost?action=selectChangePost">寵物社群<i
+                                            class="fa fa-angle-down"></i></a>
                                         <ul class="sub_menu pages">
-                                            <li><a href="404.html">Error 404</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/PersonPost?action=getOne_For_Display&memberId=<%=loginId%>">個人主頁</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/relationship?memberId=<%=loginId%>">好友管理</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/pet?memberId=<%=loginId%>&action=profile">寵物主頁</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/album?memberId=<%=loginId%>">相簿管理</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="<%=request.getContextPath()%>contact.html"> 找客服</a></li>
+                                    <li><a href="<%=request.getContextPath()%>/front/contact.jsp"> 找客服</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -88,7 +88,7 @@
                                     <div class="dropdown_links_list">
                                         <h3>會員名稱</h3>
                                         <ul>
-                                            <li><a href="<%=request.getContextPath()%>">前往會員中心</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/front/member/member.jsp">前往會員中心</a></li>
                                             <li><a href="#">歡迎來到P.club</a></li>
                                         </ul>
                                     </div>

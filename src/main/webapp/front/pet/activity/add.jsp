@@ -7,7 +7,7 @@
 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 %>
 <%
-Integer petId = (Integer)(session.getAttribute("petId"));
+Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)session.getAttribute("membersVO")).getPetVO().getPetId();
 %>
 <% 
 	java.util.Calendar cal = Calendar.getInstance();
@@ -55,6 +55,9 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 										<div class="col-lg-2 col-md-12"></div>
 											<div class="col-lg-10 col-md-12">
 	<!-- ============================= Main ============================= -->
+	<a class="text-dark mb-1" href='<%=request.getContextPath()%>/activity?action=all_Display&petId=<%=petId%>'>
+		<i class="fas fa-arrow-left"></i> 返回
+	</a>
 	<section class="section dashboard">
 		<div class="row">
 
@@ -84,11 +87,11 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 								<div class="row">
 									<div class="mb-3 col-lg-9" style="font-size: 2em;">
 										<input name="recordTime" id="r_date1" type="text" placeholder="請輸入日期"
-												value="${paVO.recordTime}"  style="border:none;max-width:200px;background:none;"/><label class="btn btn-muted form-btn-circle btn-sm" for="r_date1"><i class="fas fa-calendar text-muted"></i></label>
+												value="${param.recordTime}"  style="border:none;max-width:200px;background:none;"/><label class="btn btn-muted form-btn-circle btn-sm" for="r_date1"><i class="fas fa-calendar text-muted"></i></label>
 									</div>
 							
 								</div>
-								<textarea id="activity" name="activity" class="form-control" placeholder="請輸入內容"  style="border:#4680FF 1px solid;height:40vh;width:96%;background:none;resize:none;" autofocus>${paVO.activity}</textarea>
+								<textarea id="activity" name="activity" class="form-control" placeholder="請輸入內容"  style="border:#4680FF 1px solid;height:40vh;width:96%;background:none;resize:none;" autofocus>${param.activity}</textarea>
 								<input name="petId" type="hidden" value="<%=petId%>">
 
 							<div id="submitBtn">

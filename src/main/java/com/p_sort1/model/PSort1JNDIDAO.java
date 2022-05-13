@@ -25,14 +25,13 @@ public class PSort1JNDIDAO implements PSort1DAO_interface{
 	
 			int rowCount = pstmt.executeUpdate();
 			System.out.println("PSort1VO" +rowCount + "row(s) insert!");
-			return pSort1VO;
 	
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return pSort1VO;
 	}
 
 	@Override
@@ -81,14 +80,13 @@ public class PSort1JNDIDAO implements PSort1DAO_interface{
 				sort1VO.setSort1Name(rsSet.getString("sort1_name"));
 				sort1VOList.add(sort1VO);
 			}
-			System.out.println("Sort2VO findAllBySort2Id(Integer sort2Id)成功執行");
-			return sort1VOList;
+//			System.out.println("public List<Sort1VO> findSort1VOByproductId(Integer productId)成功執行");
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null; 
+		return sort1VOList; 
 	}
 
 	@Override
@@ -101,15 +99,15 @@ public class PSort1JNDIDAO implements PSort1DAO_interface{
 			pstmt.setInt(1, productId);
 
 			int rowCount = pstmt.executeUpdate();
-			System.out.println( "boolean deletePSort1sByProductId(Integer productId)"+rowCount + "row(s) delete!");
-
-			return true;
+			System.out.println( "boolean deletePSort1sByProductId(Integer productId)"+ rowCount + "row(s) delete!");
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 

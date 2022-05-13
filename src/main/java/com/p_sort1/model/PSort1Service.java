@@ -10,7 +10,7 @@ public class PSort1Service implements PSort1DAO_interface {
 	private PSort1JNDIDAO dao;
 
 //	改寫預設建構子
-	public PSort1Service() {
+	public PSort1Service() { 
 		dao = new PSort1JNDIDAO(); 
 	}
 	

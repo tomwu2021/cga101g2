@@ -30,9 +30,9 @@
 	<%@include file="/front/layout/commonShopJS.jsp"%>
 	<!-- 共用的JS -->
 	
-<!-- 	<script -->
-<%-- 		src="<%=request.getContextPath()%>/assets/js/addToCart.js"> --%>
-<!-- 	</script> -->
+	<script
+		src="<%=request.getContextPath()%>/assets/js/addToCart.js">
+	</script> 
 	<!-- 共用的header start-->
 	<%@include file="/front/layout/header.jsp"%>
 	<!-- 共用的header end-->
@@ -136,44 +136,83 @@
 			<button data-role="grid_list" type="button" class="btn-list"
 				data-toggle="tooltip" title="List"></button>
 		</div>
+<!-- 		<div class="niceselect_option"> -->
+<!-- 			<form class="select_option" action="#"> -->
+<!-- 				<select name="orderby" id="short"> -->
+<!-- 					<option selected value="1">價格由高到低</option> -->
+<!-- 					<option value="2">Sort by popularity</option> -->
+<!-- 					<option value="3">Sort by newness</option> -->
+<!-- 					<option value="4">Sort by price: low to high</option> -->
+<!-- 					<option value="5">Sort by price: high to low</option> -->
+<!-- 					<option value="6">Product Name: Z</option> -->
+<!-- 				</select> -->
+<!-- 			</form> -->
+<!-- 		</div> -->
+<%-- <%@ include file="pages/shop2/page1_ByCompositeQuery.file" %>  --%>
+		
 		<div class="niceselect_option">
-			<form class="select_option" action="#">
-				<select name="orderby" id="short">
-					<option selected value="1">價格由高到低</option>
-					<option value="2">Sort by popularity</option>
-					<option value="3">Sort by newness</option>
-					<option value="4">Sort by price: low to high</option>
-					<option value="5">Sort by price: high to low</option>
-					<option value="6">Product Name: Z</option>
-				</select>
-			</form>
-		</div>
-<%@ include file="pages/shop2/page1_ByCompositeQuery.file" %> 
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/shop" id="myPageForm">   
+		       <select size="1" name="whichPage" id="myPage">
+		      	  <option value="-1">請選擇
+		         <%
+		          // get attributes
+		          int whichPage = 1;
+		          String currPage = (String) request.getAttribute("currPage");
+		          if(currPage != null) {
+		        	  whichPage = Integer.parseInt(currPage);
+		          }
+		          int total = (Integer) request.getAttribute("total");
+		          int pageTotal; 
+		          if(total % 9 == 0) {
+					  pageTotal = total / 9;
+		          } else {
+					  pageTotal = total / 9 + 1;
+		          }
+		          for (int i=1; i<=pageTotal; i++){
+		         %>
+		         	<c:if test="<%= whichPage == i%>">
+		         		<option value="<%=i%>" selected>跳至第<%=i%>頁
+		         	</c:if>
+		         	<c:if test="<%= whichPage != i%>">
+		         		<option value="<%=i%>">跳至第<%=i%>頁
+		         	</c:if>
+		         <%}%> 
+		       </select>
+<!-- 		       <input type="submit" value="確定" > -->
+		       <input type="hidden" name="action" value="listProducts_Byfind">  
+		    </FORM>
+		    
+	    </div>
+	    
+	    <span class="text-danger" >一頁9筆</span>
+	    <span class="text-danger" >總共<%=pageTotal%>頁</span>
+	    <span class="text-danger" >總共<%=total %>筆</span>
+	    
 	</div>
+	
 	<!--shop toolbar end-->
 	<div class="row shop_wrapper">
 		<!--內容開始========================-->
-		<c:forEach var="productVO" items="${listProducts_Byfind}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+		<c:forEach var="productVO" items="${listProducts_Byfind}" >
 			<div class="col-lg-4 col-md-4 col-sm-6 col-12">
 				<!--單一商品開始 -->
 				<Form id="${productVO.productId}" action="/CGA101G2/member/cart.do" Method="Post">
 				<article class="single_product">
 					<figure>
 						<div class="product_thumb">
-							<c:if test="${productVO.pictureVOList.size() != 0 }">
+							<c:if test="${productVO.pictureVOList.size() >= 1}">
 								<a class="primary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop">
 								<img src="${productVO.pictureVOList.get(0).previewUrl}" alt=""></a>
 							</c:if>	
-<%-- 							<c:if test="${productVO.pictureVO.size() >= 1  && productVO.pictureVO.size()!=0}"> --%>
-							<c:if test="${productVO.pictureVOList.size() >= 2  && productVO.pictureVOList.size()!=0}">
+							<c:if test="${productVO.pictureVOList.size() >= 2}">
 								<a class="secondary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop">
 								<img src="${productVO.pictureVOList.get(1).previewUrl}" alt=""></a>
 							</c:if>	
 							<div class="action_links">
 								<ul>
-									<li class="quick_button"><a href="#" data-toggle="modal"
-										data-target="#modal_box" title="quick view"> <i
-											class="icon icon-Eye"></i></a></li>
+<!-- 									<li class="quick_button"><a href="#" data-toggle="modal" -->
+<!-- 										data-target="#modal_box" title="quick view"> <i -->
+<!-- 											class="icon icon-Eye"></i></a></li> -->
 									<li class="wishlist"><a href="wishlist.html"
 										title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>
 								</ul>
@@ -226,9 +265,6 @@
 		</c:forEach>
 	</div>
  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/shop"></FORM>	
-<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
-<input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
-<%@ include file="pages/shop2/page2_ByCompositeQuery.file" %>
 	<!--單一商品結束 -->
 <!-- modal area start-->
 	<div class="modal fade" id="modal_box" tabindex="-1" role="dialog"
@@ -372,21 +408,21 @@
                         <article class="single_product">
                             <figure>
                                 <div class="product_thumb">
-                                <!--商品照片裡的span標籤 start-->
+<!--                                 商品照片裡的span標籤 start -->
                                  <div class="label_product">
                                        <span class="label_new">TOP</span>
                                  </div>
-                                <!--商品照片裡的span標籤 end--> 
-                                 <!--商品照片點 start-->
-                                <c:if test="${productVO.pictureVOList.size() != 0 }">
+<!--                                 商品照片裡的span標籤 end  -->
+<!--                                  商品照片點 start -->
+                                <c:if test="${productVO.pictureVOList.size() >= 1  }">
                                     <a class="primary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop">
 									<img src="${productVO.pictureVOList.get(0).previewUrl}" alt=""></a>
                                 </c:if>	    
-                                 <c:if test="${productVO.pictureVOList.size() >= 2  && productVO.pictureVOList.size()!=0}">
+                                <c:if test="${productVO.pictureVOList.size() >= 2 }">
 									<a class="secondary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop">
 									<img src="${productVO.pictureVOList.get(1).previewUrl}" alt=""></a>
 								</c:if>	
-                                 <!--商品照片點 end-->   
+<!--                                  商品照片點 end    -->
                                     <div class="action_links">
                                         <ul>
                                             <li class="quick_button">
@@ -423,7 +459,6 @@
     <!--product area end-->
 	<!--! 內容 結束-->
 
-
 	<!-- 共通的footer start-->
 	<%@include file="/front/layout/footer.jsp"%>
 	<!-- 共通的footer end-->
@@ -440,8 +475,11 @@
 	<script 
 		src="<%=request.getContextPath()%>/assets/shop/wishlist.js"> 
 	</script>
-	<!-- leftnavlink.js -->
-
+	
+	<script 
+		src="<%=request.getContextPath()%>/assets/shop/newPage.js"> 
+	</script>
+	
 </body>
 
 </html>

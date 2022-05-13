@@ -175,7 +175,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	@Override
 	public EmpVO getOneByAccount(String account) {
 
-		final String SELECT_ONE_BY_EMPNAME = "SELECT emp_no, emp_name, account, create_time, status FROM emp where account = ?;";
+		final String SELECT_ONE_BY_EMPNAME = "SELECT emp_no, emp_name, account, password, create_time, status FROM emp where account = ?;";
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(SELECT_ONE_BY_EMPNAME);) {
 
@@ -187,6 +187,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 				newEmp.setEmpNo(rs.getInt("emp_no"));
 				newEmp.setEmpName(rs.getString("emp_name"));
 				newEmp.setAccount(rs.getString("account"));
+				newEmp.setPassword(rs.getString("password"));
 				newEmp.setCreateTime(rs.getTimestamp("create_time"));
 				newEmp.setStatus(rs.getInt("status"));
 				return newEmp;
@@ -210,7 +211,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 		}
 
 		Boolean b = changeStatus(empVO2, empVO.getStatus(), con);
-		
+
 		try {
 			con.close();
 		} catch (SQLException e) {

@@ -90,13 +90,13 @@ public class ProductUpdateTopStatusServlet extends HttpServlet {
 			Map<String, String[]> map = new TreeMap<String, String[]>();
 //			map.put("top_status", new String[] { String.valueOf(top_status) }); //錯誤參數
 			map.put("product_id", new String[] { String.valueOf(product_id) });
-			List<ProductVO> thisPdlist = pdSvc.getForShopFront(map);
+			List<ProductVO> thisPdlist = pdSvc.getForShopFront(map,9999,0);
 
 			// 2-2.計算現在已上架且已推薦的商品數量
 			Integer productHaveTopStatus = null;
 			Map<String, String[]> map1 = new TreeMap<String, String[]>();
 			map1.put("top_status", new String[] { "1" });
-			List<ProductVO> list2 = pdSvc.getForShopFront(map1);
+			List<ProductVO> list2 = pdSvc.getForShopFront(map1,9999,0);
 			productHaveTopStatus = list2.size();
 
 			if (productHaveTopStatus >= 6) {

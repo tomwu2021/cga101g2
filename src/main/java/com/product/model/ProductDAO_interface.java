@@ -18,10 +18,14 @@ public interface ProductDAO_interface extends JDBCDAO_Interface<ProductVO> {
 	public Set<ProductImgVO> getPImgVOsByPdID(Integer pImgID);
 	
 //	 萬用複合查詢(傳入參數型態Map)(回傳 List)
-	public List<ProductVO> getAll(Map<String, String[]> map);
+	public List<ProductVO> getAll(Map<String, String[]> map, int pageSize, int pageNo);
 
+	public int getAllTotalCount(Map<String, String[]> map);
+	
 //	Shop用的公開頁面
-	public List<ProductVO> getForShopFront(Map<String, String[]> map);
+	public List<ProductVO> getForShopFront(Map<String, String[]> map, int pageSize, int pageNo);
+	
+	public int getForShopFrontTotalCount(Map<String, String[]> map);
 	
 //	GroupSho用的公開頁面
 	public List<ProductVO> getForGroupShopFront(Map<String, String[]> map);	

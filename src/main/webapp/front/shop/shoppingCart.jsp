@@ -55,26 +55,38 @@ if (buylist != null && (buylist.size() > 0)) {
 										<th class="product_total">Total</th>
 									</tr>
 								</thead>
-								<tbody>
+								
+								
+																<tbody>
 									<%
 									for (int index = 0; index < buylist.size(); index++) {
 										ProductVO productVO = buylist.get(index);
 									%>
 									
-									<tr>
-										<form id="delForm" action="/CGA101G2/member/cart.do" Method="Post">
-										<td class="product_remove"><a href="#" onclick="document.getElementById('delForm').submit()"><i
-												class="fa fa-trash-o"></i></a></td>
+									<tr id="<%= productVO.getProductId() %>">
+										<td class="product_remove">
+											<a onclick="deleteOne(<%= productVO.getProductId() %>)">
+											<i class="fa fa-trash-o"></i>
+										</a>
+										<!--刪除商品 -->
 										<input type="hidden" name="action" value="DELETE">
-										<input type="hidden" name="del" value="<%=index %>"> 
-										</form>
+										<input type="hidden" name="del" value="<%= productVO.getProductId() %>"> 
+
+										</td>
+										
 										<td class="product_thumb"><a href="#"><img
 												src="<%= productVO.getPictureVO().getPreviewUrl()%>" alt=""></a></td>
 										<td class="product_name"><a href="#"><%= productVO.getProductName()%></a></td>
 										<td class="product-price"><%= productVO.getPrice()%></td>
+									
 										<td class="product_quantity"><label></label>
-											<input min="1" max="100" value="<%= productVO.getCartAmount()%>" type="number"></td>
-										<td class="product_total"><%= productVO.getCartAmount()*productVO.getPrice()%></td>
+										<!--更改購物車數量 -->										
+											<input id="pamout-<%= productVO.getProductId() %>" name="count" min="1" max="100" 
+											value="<%= productVO.getCartAmount()%>" type="number" onchange="cartChangeCount(<%= productVO.getProductId() %>)">										
+										</td>										
+										<td class="product_total" id="ptotal-<%= productVO.getProductId() %>"><%= productVO.getCartAmount()*productVO.getPrice()%></td>
+										
+										
 									</tr>
 									
 									<%
@@ -105,7 +117,7 @@ if (buylist != null && (buylist.size() > 0)) {
 	                        <h2>您的購物車還沒有商品</h2>
 	                        <p>趕快去商城幫毛小孩買些東西吧</p>
 	                        <form action="#">
-<!-- 	                             <a href="#" onclick="document.getElementById('backToShop').submit()">回商城</a> -->
+<!-- 	                         <a href="#" onclick="document.getElementById('backToShop').submit()">回商城</a> -->
  								 <a href="#"  onclick="history.back()">回商城</a>
 	                        </form>
 	                       
@@ -127,7 +139,9 @@ if (buylist != null && (buylist.size() > 0)) {
 <!-- include  footer -->
 <%@include file="/front/layout/footer.jsp"%>
 <!-- 額外添加JS start -->
-
+<script
+		src="<%=request.getContextPath()%>/assets/js/order&cart/cartChangeCount.js">
+	</script>
 <!-- 額外添加JS end -->
 <jsp:include page="/front/layout/showMessage.jsp" />
 </body>

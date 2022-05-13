@@ -6,9 +6,6 @@
 <%
 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 %>
-<%
-Integer memberId = (Integer)(session.getAttribute("memberId"));
-%>
 <% 
 	java.util.Calendar cal = Calendar.getInstance();
 	cal.set(Calendar.MINUTE, 0);
@@ -55,6 +52,9 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 										<div class="col-lg-2 col-md-12"></div>
 											<div class="col-lg-10 col-md-12">
 	<!-- ============================= Main ============================= -->
+	<a class="text-dark mb-1" href='<%=request.getContextPath()%>/remind?action=all_Display&memberId=<%=loginId%>'>
+		<i class="fas fa-arrow-left"></i> 返回
+	</a>
 	<section class="section dashboard">
 		<div class="row">
 
@@ -89,7 +89,7 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 							
 								</div>
 								<textarea id="content" name="content" class="form-control" placeholder="請輸入內容"  style="border:#4680FF 1px solid;height:40vh;width:96%;background:none;resize:none;" autofocus>${rVO.content}</textarea>
-								<input name="memberId" type="hidden" value="<%=memberId%>">
+								<input name="memberId" type="hidden" value="<%=loginId%>">
 
 							<div id="submitBtn">
 							<span style="color:#f33;">${errorMsgs.time}${errorMsgs.content}</span>

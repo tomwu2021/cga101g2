@@ -8,10 +8,6 @@
 <%
 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 %>
-<%
-Integer memberId = (Integer)(session.getAttribute("memberId"));
-Integer petId = (Integer)(session.getAttribute("petId"));
-%>
 <!DOCTYPE html>
 <html>
 <!-- include <head></head> -->

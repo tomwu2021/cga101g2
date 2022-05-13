@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.product_img.model.ProductImgVO;
+import com.sort2.model.Sort2VO;
 
 public class ProductJNDIDAO implements ProductDAO_interface {
 
@@ -67,14 +68,13 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 					}
 					// 把取得的主鍵放入productVO,讓servlet可以get
 					productVO.setProductId(next_product_id);
-					return productVO;
 
 				} catch (SQLException se) {
 					throw new RuntimeException("A database error occured. " + se.getMessage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				return null;
+				return productVO;
 	}
 
 	@Override
@@ -167,21 +167,22 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 	@Override
 	public boolean delete(ProductVO productVO) {
 		
-		try (Connection con = getRDSConnection(); PreparedStatement pstmt = con.prepareStatement(DELETE)) {
+		try (Connection con = getRDSConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(DELETE)) {
 
 			pstmt.setInt(1, productVO.getStatus());
 			pstmt.setInt(2, productVO.getProductId());
 
 			int rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) insert!");
-			return true;
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -194,18 +195,19 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 			pstmt.setInt(2, productId);
 
 			int rowCount = pstmt.executeUpdate();
-			System.out.println(rowCount + "row(s) insert!");
-			return true;
+			System.out.println(rowCount + "row(s) update(delete)!");
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
 	public ProductVO getOneById(Integer id) {
+		ProductVO productVO = new ProductVO();
 		
 		try (Connection connection = getRDSConnection();
 				PreparedStatement pstmt = connection.prepareStatement(GET_ONE_STMT)) {
@@ -213,7 +215,6 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				ProductVO productVO = new ProductVO();
 				productVO.setProductId(rs.getInt("product_id"));
 				productVO.setProductName(rs.getString("product_name"));
 				productVO.setPrice(rs.getInt("price"));
@@ -227,7 +228,6 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 				productVO.setDescription(rs.getString("description"));
 				productVO.setStatus(rs.getInt("status"));
 				productVO.setTopStatus(rs.getInt("top_status"));
-				return productVO;
 			}
 
 		} catch (SQLException se) {
@@ -235,15 +235,15 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return productVO;
 	}
 
 	@Override
 	public Set<ProductImgVO> getPImgVOsByPdID(Integer pdID) {
+		Set<ProductImgVO> set = new LinkedHashSet<ProductImgVO>();
 		
 		try (Connection connection = getRDSConnection();
 				PreparedStatement pstmt = connection.prepareStatement(GET_PIMGs_ByPId_STMT)) {
-			Set<ProductImgVO> set = new LinkedHashSet<ProductImgVO>();
 			pstmt.setInt(1, pdID);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -252,59 +252,61 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 				pImgVO.setProductId(rs.getInt("product_id"));
 				set.add(pImgVO);
 			}
-			return set;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
-
+		return set;
 	}
 
 	@Override
 	public List<ProductVO> getAll() {
+		List<ProductVO> list = new ArrayList<ProductVO>();
 		System.out.println("List<ProductVO> getAll() 執行成功");
 		try (Connection con = getRDSConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT)) {
 			ResultSet rs = pstmt.executeQuery();
-			List<ProductVO> list = new ArrayList<ProductVO>();
 			while (rs.next()) {
 				ProductVO productVO = new ProductVO();
 				productVO.setProductId(rs.getInt("product_id"));
 				productVO.setProductName(rs.getString("product_name"));
-				productVO.setPrice(rs.getInt("price"));
-				productVO.setAmount(rs.getInt("amount"));
-				productVO.setUpdateTime(rs.getTimestamp("update_time"));
-				productVO.setGroupAmount1(rs.getInt("group_amount1"));
-				productVO.setGroupAmount2(rs.getInt("group_amount2"));
-				productVO.setGroupAmount3(rs.getInt("group_amount3"));
-				productVO.setGroupPrice1(rs.getInt("group_price1"));
-				productVO.setSort2Id(rs.getInt("sort2_id"));
-				productVO.setDescription(rs.getString("description"));
-				productVO.setStatus(rs.getInt("status"));
-				productVO.setTopStatus(rs.getInt("top_status"));
+//				productVO.setPrice(rs.getInt("price"));
+//				productVO.setAmount(rs.getInt("amount"));
+//				productVO.setUpdateTime(rs.getTimestamp("update_time"));
+//				productVO.setGroupAmount1(rs.getInt("group_amount1"));
+//				productVO.setGroupAmount2(rs.getInt("group_amount2"));
+//				productVO.setGroupAmount3(rs.getInt("group_amount3"));
+//				productVO.setGroupPrice1(rs.getInt("group_price1"));
+//				productVO.setSort2Id(rs.getInt("sort2_id"));
+//				productVO.setDescription(rs.getString("description"));
+//				productVO.setStatus(rs.getInt("status"));
+//				productVO.setTopStatus(rs.getInt("top_status"));
 				list.add(productVO);
 			}
-			return list;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 
 	@Override
-	public List<ProductVO> getAll(Map<String, String[]> map) {
-		System.out.println("後臺用的dao");
+	public List<ProductVO> getAll(Map<String, String[]> map, int pageSize, int pageNo) {
+		System.out.println("進入後臺查詢用的dao");
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		ProductVO productVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+		
+//		for(String key : map.keySet()){
+//			   String[] value = map.get(key);
+//			   System.out.println(key+"  "+value);
+//			}
+		
 		//*****Sort1分界點*****//
 		//有輸入sort1Id才串 ,sort1Id有可能是空陣列
 		String[] sort1Id = null;
@@ -348,7 +350,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 		
 		String startTimeValue = null;
 		String endTimeValue = null;
-		StringBuffer andTime = new StringBuffer();
+		StringBuffer whereTime = new StringBuffer();
 		if(map.get("startTime") != null && map.get("endTime") != null) {
 			System.out.println("進入時間串接");
 			startTime = map.get("startTime");
@@ -359,8 +361,8 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 			endTimeValue = endTime[0].toString();
 			System.out.println(endTimeValue);
 			
-			andTime.append(" AND  update_time BETWEEN  ");
-			andTime.append(" ' " + startTimeValue + " ' " + " AND " + " ' " + endTimeValue +" ' " );
+			whereTime.append(" WHERE  update_time BETWEEN  ");
+			whereTime.append(" ' " + startTimeValue + " ' " + " AND " + " ' " + endTimeValue +" ' " );
 			map.remove("startTime");
 			map.remove("endTime");
 		}
@@ -371,21 +373,24 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 		String andSort1IdString = andSort1Id.toString();
 		System.out.println(andSort1IdString);
 		
-		String andTimeString = andTime.toString();
-		System.out.println(andTimeString);
+		String whereTimeString = whereTime.toString();
+		System.out.println(whereTimeString);
 		
 		try {
 			con = getRDSConnection();
 			String finalSQL = "select * from product "
 					+ "JOIN p_sort1 "
 					+" ON product.product_id = p_sort1.product_id "	
+					// 後臺要多拉一對一的表
+					+" JOIN sort2 "	
+					+" ON product.sort2_id = sort2.sort2_id "	
+					+ whereTimeString
 					+ jdbcUtil_CompositeQuery_Product.get_WhereCondition(map)
 					+ andSort1IdString
-					+ andTimeString
 					+ "group by product.product_id "
-					+ "order by product.product_id DESC";
+				    + "order by product.product_id DESC LIMIT " + pageSize + " OFFSET " + pageNo;
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("List<ProductVO> getAll(Map<String, String[]> map) ●●finalSQL(by DAO) = " + finalSQL);
+			System.out.println("List<ProductVO> getAll(Map<String, String[]> map, int pageSize, int pageNo)  ●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -403,21 +408,143 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 				productVO.setDescription(rs.getString("description"));
 				productVO.setStatus(rs.getInt("status"));
 				productVO.setTopStatus(rs.getInt("top_status"));
+				// 後臺要多拉一對一的表
+				productVO.setSort2Name(rs.getString("sort2_Name"));
+				
 				list.add(productVO); // Store the row in the List
 			}
-			return list;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
-		return null;
+		return list;
 	}
-//	@Override
-	// public ProductVO getProductVOByID(int id) {
-
 	@Override
-	public List<ProductVO> getForShopFront(Map<String, String[]> map) {
+	public int getAllTotalCount(Map<String, String[]> map) {
+		System.out.println("後臺用的dao,算筆數");
+		int total = 0;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+//		for(String key : map.keySet()){
+//			   String[] value = map.get(key);
+//			   System.out.println(key+"  "+value);
+//			}
+		
+		//*****Sort1分界點*****//
+		//有輸入sort1Id才串 ,sort1Id有可能是空陣列
+		String[] sort1Id = null;
+		StringBuffer andSort1Id = new StringBuffer();
+		
+		if((String[])map.get("sort1_id") != null) {
+			sort1Id = (String[])map.get("sort1_id");
+			
+			andSort1Id.append(" AND p_sort1.sort1_id ");
+			int count = 0;
+			
+			if(sort1Id!=null) {
+				for (int i = 0; i < sort1Id.length; i++) {
+					System.out.println("分類串接");
+					System.out.println("從listAllproduct.jsp獲得查詢sort1["+i+"],sort1id : " + sort1Id[i]);
+					count++;
+					if (count == 1) {
+						andSort1Id.append(" in ");
+						andSort1Id.append(" ( ");
+						andSort1Id.append(Integer.valueOf(sort1Id[i]));
+					}
+					if (count > 1) {
+						andSort1Id.append(",");
+						andSort1Id.append(Integer.valueOf(sort1Id[i]));
+					}
+					if (count == sort1Id.length) {
+						andSort1Id.append(" ) ");
+					}
+					System.out.println("StringBuffer andSort1Id 串接完成 :" + andSort1Id);
+					
+				}
+				map.remove("sort1_id");
+			}
+		}
+	
+		//*****Sort1分界點*****//
+		
+		//*****時間分界點*****//
+		String[] startTime = null;
+		String[] endTime = null;
+		
+		String startTimeValue = null;
+		String endTimeValue = null;
+		StringBuffer whereTime = new StringBuffer();
+		if(map.get("startTime") != null && map.get("endTime") != null) {
+			System.out.println("進入時間串接");
+			startTime = map.get("startTime");
+			startTimeValue = startTime[0].toString();
+			System.out.println(startTimeValue);
+			
+			endTime = map.get("endTime");
+			endTimeValue = endTime[0].toString();
+			System.out.println(endTimeValue);
+			
+			whereTime.append(" AND  update_time BETWEEN  ");
+			whereTime.append(" ' " + startTimeValue + " ' " + " AND " + " ' " + endTimeValue +" ' " );
+			map.remove("startTime");
+			map.remove("endTime");
+		}
+	
+		//*****時間分界點*****//
+		
+		
+		String andSort1IdString = andSort1Id.toString();
+		System.out.println(andSort1IdString);
+		
+		String whereTimeString = whereTime.toString();
+		System.out.println(whereTimeString);
+		
+	
+		try {
+			con = getRDSConnection();
+			String finalSQL = "select COUNT(DISTINCT(product.product_id)) as total from product "
+					+ "JOIN p_sort1 "
+					+" ON product.product_id = p_sort1.product_id "	
+					+ whereTimeString  
+					+ jdbcUtil_CompositeQuery_Product.get_WhereCondition(map)
+					+ andSort1IdString ;
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("int getAllTotalCount(Map<String, String[]> map)●●finalSQL(by DAO) =" + finalSQL);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				total = rs.getInt("total");
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return total;
+	}
+	
+	@Override
+	public List<ProductVO> getForShopFront(Map<String, String[]> map, int pageSize, int pageNo) {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		ProductVO productVO = null;
 
@@ -427,13 +554,13 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 
 		try {
 			con = getRDSConnection();
-			String finalSQL = "select * from product "
+			String finalSQL = "select product.product_id, product_name, price from product "
 					+ "JOIN p_sort1 "
-					+" ON product.product_id = p_sort1.product_id "		
+					+" ON product.product_id = p_sort1.product_id "	
+			        + "WHERE product.status NOT IN (0) "
 			        + jdbcUtil_CompositeQuery_ProductForFront.get_WhereConditionProductForFront(map)
-			        + "AND  product.status NOT IN (0)"
 			        + "group by product.product_id "
-			        + "order by product.product_id DESC";
+			        + "order by product.product_id DESC LIMIT " + pageSize + " OFFSET " + pageNo;
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("List<ProductVO> getForShopFront() ●●finalSQL(by DAO) = List<ProductVO> getForShopFront()" + finalSQL);
 			rs = pstmt.executeQuery();
@@ -443,25 +570,68 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 				productVO.setProductId(rs.getInt("product_id"));
 				productVO.setProductName(rs.getString("product_name"));
 				productVO.setPrice(rs.getInt("price"));
-				productVO.setAmount(rs.getInt("amount"));
-				productVO.setUpdateTime(rs.getTimestamp("update_time"));
-				productVO.setGroupAmount1(rs.getInt("group_amount1"));
-				productVO.setGroupAmount2(rs.getInt("group_amount2"));
-				productVO.setGroupAmount3(rs.getInt("group_amount3"));
-				productVO.setGroupPrice1(rs.getInt("group_price1"));
-				productVO.setSort2Id(rs.getInt("sort2_id"));
-				productVO.setDescription(rs.getString("description"));
-				productVO.setStatus(rs.getInt("status"));
-				productVO.setTopStatus(rs.getInt("top_status"));
+//				productVO.setAmount(rs.getInt("amount"));
+//				productVO.setUpdateTime(rs.getTimestamp("update_time"));
+//				productVO.setGroupAmount1(rs.getInt("group_amount1"));
+//				productVO.setGroupAmount2(rs.getInt("group_amount2"));
+//				productVO.setGroupAmount3(rs.getInt("group_amount3"));
+//				productVO.setGroupPrice1(rs.getInt("group_price1"));
+//				productVO.setSort2Id(rs.getInt("sort2_id"));
+//				productVO.setDescription(rs.getString("description"));
+//				productVO.setStatus(rs.getInt("status"));
+//				productVO.setTopStatus(rs.getInt("top_status"));
 				list.add(productVO); // Store the row in the List
 			}
-			return list;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
-		return null;
+		return list;
+	}
+	
+	@Override
+	public int getForShopFrontTotalCount(Map<String, String[]> map) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int total = 0;
+		try {
+			con = getRDSConnection();
+			String finalSQL = "select COUNT(DISTINCT(product.product_id)) as total from product "
+					+ "JOIN p_sort1 "
+					+" ON product.product_id = p_sort1.product_id "	
+			        + "WHERE product.status NOT IN (0) "
+			        + jdbcUtil_CompositeQuery_ProductForFront.get_WhereConditionProductForFront(map);
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("List<ProductVO> getForShopFront() ●●finalSQL(by DAO) = " + finalSQL);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				total = rs.getInt("total");
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return total;
 	}
 
 	@Override
@@ -500,13 +670,20 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 				productVO.setTopStatus(rs.getInt("top_status"));
 				list.add(productVO); // Store the row in the List
 			}
-			return list;
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
-		return null;
+		return list;
 	}
 
 }

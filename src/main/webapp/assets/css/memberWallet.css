@@ -47,3 +47,83 @@
 /* .credit-card-box .panel-heading img { */
 /* 	min-width: 180px; */
 /* } */
+
+
+<!--  -->
+
+.sliding{
+  width: auto;
+  padding-left: 20%;
+}
+
+
+.sliding-button0 {
+  text-decoration: none;
+  color: #1D1B26;
+  display: inline-block;
+  position: relative;
+  padding: 15px 30px;
+  border: 1px solid;
+  border-image: linear-gradient(180deg, #ffa600, #be6500, #fa991a, #c77a15, #9b6220);
+  border-image-slice: 1;
+  margin: 10px 20px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  overflow: hidden;
+  letter-spacing: 6px;
+  transition: .5s cubic-bezier(.165, .84, .44, 1);
+}
+.sliding-button0:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 0;
+  width: 100%;
+  z-index: -1;
+  color: white;
+  background: linear-gradient(180deg, #ffa600, #be6500, #fa991a, #c77a15, #9b6220);
+  transition: .5s cubic-bezier(.165, .84, .44, 1);
+}
+
+.sliding-button0:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+.sliding-button0:hover:before {
+  bottom: 0%;
+  top: auto;
+  height: 100%;
+}
+
+
+
+.floating{
+  width: auto;
+  padding-left: 20%;
+}
+
+.floating-button0 {
+  text-decoration: none;
+  display: inline-block;
+  width: 140px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50px;
+  margin: 10px 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: #524f4e;
+  background: white;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+  transition: .6s;
+}
+.floating-button0:hover {
+  background: #e52ed6;
+  box-shadow: 0 15px 20px rgba(229, 46, 189, 0.4);
+  color: white;
+  transform: translateY(-5px);
+}

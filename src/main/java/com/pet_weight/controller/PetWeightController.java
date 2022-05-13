@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.common.controller.CommonController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.pet_weight.model.PetWeightVO;
@@ -22,15 +23,21 @@ import com.pet_weight.service.PetWeightService;
 
 
 @WebServlet("/weight")
-public class PetWeightController extends HttpServlet {
+public class PetWeightController  extends CommonController {
 	private static final long serialVersionUID = 1L;
        
     public PetWeightController() {
         super();
     }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
+    public void doGet(HttpServletRequest req, HttpServletResponse res) {
+    	try {
+			doPost(req, res);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -51,6 +58,9 @@ public class PetWeightController extends HttpServlet {
 			BigDecimal weightDecimal =null;
 			try {
 				weightDecimal = new BigDecimal(weightRecord.trim());
+				if(weightDecimal.doubleValue()<=0) {
+					errorMsgs.put("weightRecord"," (請輸入正數)");
+				}
 			}catch (NumberFormatException e) {
 				errorMsgs.put("weightRecord"," (請輸入數字)");
 			}
@@ -100,8 +110,12 @@ public class PetWeightController extends HttpServlet {
 			BigDecimal weightDecimal =null;
 			try {
 				weightDecimal = new BigDecimal(weightRecord.trim());
+				if(weightDecimal.doubleValue()<=0) {
+					errorMsgs.put("weightRecord"," (請輸入正數)");
+					weightDecimal=null;
+				}
 			}catch (NumberFormatException e) {
-				errorMsgs.put("weightRecord"," (輸入錯誤未更新)");
+				errorMsgs.put("weightRecord"," (請輸入數字)");
 			}
 			Date recordDate = null;
 			try {
@@ -114,7 +128,7 @@ public class PetWeightController extends HttpServlet {
 				recordDate = Date.valueOf(recordTime.trim());
 				if(recordDate.getTime() > currentTime) throw new IllegalArgumentException();
 			} catch (IllegalArgumentException e) {
-				errorMsgs.put("recordTime"," (輸入錯誤未更新)");
+				errorMsgs.put("recordTime"," (請輸入正確日期)");
 				recordDate = null;
 			}
 			// 正常送出

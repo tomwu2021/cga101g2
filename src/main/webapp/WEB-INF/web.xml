@@ -4,6 +4,21 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	id="WebApp_ID" version="4.0">
 	<filter>
+		<filter-name>FilterForEmpLogin</filter-name>
+		<filter-class>com.filters.FilterForEmpLogin</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>FilterForEmpLogin</filter-name>
+<!-- 		<url-pattern>/back/xxx.jsp</url-pattern> -->
+		<url-pattern></url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+
+	<filter>
 		<filter-name>FilterForMemberLogin</filter-name>
 		<filter-class>com.filters.FilterForMemberLogin</filter-class>
 	</filter>
