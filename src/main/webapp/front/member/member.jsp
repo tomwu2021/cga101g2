@@ -2,16 +2,16 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<head>
+<meta charset="UTF-8" />
+<title>會員中心</title>
 <!-- 共用的CSS startr-->
 <!-- include <head></head> -->
 <%@ include file="/front/layout/head.jsp"%>
 <%@include file="/back/layout/commonCSS.jsp"%>
 <!-- 共用的CSS end-->
 
-<!-- 額外添加的CSS -->
-<!-- 	路徑舉例 -->
-<%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/????待討論> --%>
-<!-- 額外添加的CSS -->
+</head>
 <body onload="executeAfterloadedBody()">
 	<!-- 共用的header start-->
 	<%@ include file="/front/layout/header.jsp"%>

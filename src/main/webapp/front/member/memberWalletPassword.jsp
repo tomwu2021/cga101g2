@@ -2,10 +2,14 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<head>
+<meta charset="UTF-8" />
+<title>會員修改錢包密碼</title>
 <!-- 共用的CSS startr-->
 <!-- include <head></head> -->
 <%@ include file="/front/layout/head.jsp"%>
 <%@include file="/back/layout/commonCSS.jsp"%>
+</head>
 <body>
 	<!-- 共用的header start-->
 	<%@ include file="/front/layout/header.jsp"%>
@@ -28,7 +32,7 @@
 									<!-- Horizontal Form -->
 									<div class="card">
 										<div class="card-header">
-											<h3 class="h6 text-uppercase mb-0">我的檔案</h3>
+											<h3 class="h6 text-uppercase mb-0">會員修改錢包密碼</h3>
 										</div>
 										<div class="card-body">
 											<div class="row">

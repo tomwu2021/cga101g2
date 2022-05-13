@@ -5,7 +5,7 @@
 
 <head>
 <meta charset="UTF-8" />
-<title>PCLUB</title>
+<title>PCLUB 登入</title>
 <!-- login 的 css -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/login.css" />

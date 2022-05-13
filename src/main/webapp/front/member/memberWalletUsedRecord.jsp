@@ -2,12 +2,15 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<head>
+<meta charset="UTF-8" />
+<title>會員錢包使用紀錄</title>
 <!-- include <head></head> -->
 <%@ include file="/front/layout/head.jsp"%>
 <!-- 共用的CSS startr-->
 <%@include file="/back/layout/commonCSS.jsp"%>
 <!-- 共用的CSS end-->
-
+</head>
 <body>
 	<!-- 共用的header start-->
 	<%@ include file="/front/layout/header.jsp"%>

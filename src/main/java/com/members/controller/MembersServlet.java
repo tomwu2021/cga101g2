@@ -395,7 +395,7 @@ public class MembersServlet extends HttpServlet {
 			messages.put("errorNewPhone", "*密碼不可為空");
 		} else {
 			if (!nwePhone.trim().matches(regex)) {
-				messages.put("errorNewPhone", "*手機格式錯誤");
+				messages.put("errorNewPhone", "*密碼格式錯誤");
 			}
 		}
 
@@ -537,7 +537,7 @@ public class MembersServlet extends HttpServlet {
 					.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
 			messages.put("updatePasswordSuccess", "修改密碼成功！");
 			// successful 的頁面
-			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletPassword.jsp");
+			RequestDispatcher successView = req.getRequestDispatcher("/CGA101G2/front/member/memberSetWalletPassword.jsp");
 			successView.forward(req, res);
 			return;// 程式中斷
 		}
