@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.members.model.*"%>
 <%@ page import="com.pet_activity.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-Integer memberId = (Integer)(session.getAttribute("memberId"));
-Integer petId = (Integer)(session.getAttribute("petId"));
+Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)session.getAttribute("membersVO")).getPetVO().getPetId();
 %>
 <!-- Recent Activity -->
 <div class="card border-bottom-info">
