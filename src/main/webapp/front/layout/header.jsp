@@ -26,19 +26,18 @@
                                     <!-- <li><a class="active"  href="index.html">寵物商城</a>
                                     </li> -->
                                     <li><a href="<%=request.getContextPath()%>/article?action=all_Display">最新消息</a></li>
-                                    <li><a href="<%=request.getContextPath()%>/front/shop/shop.jsp">商品專區<i
+                                    <li><a href="<%=request.getContextPath()%>/shop?action=listProducts_Byfind">商品專區<i
                                             class="fa fa-angle-down"></i></a>
                                         <ul class="sub_menu pages">
-                                            <li><a href="<%=request.getContextPath()%>blog-details.html">貓貓專區</a></li>
-                                            <li><a href="<%=request.getContextPath()%>blog-fullwidth.html">狗狗專區</a></li>
-                                            <li><a href="<%=request.getContextPath()%>blog-sidebar.html">貓狗通用</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/shop?action=listProducts_Byfind&sort1_id=1">貓貓專區</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/shop?action=listProducts_Byfind&sort1_id=2">狗狗專區</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="<%=request.getContextPath()%>groupshop.html">團購專區<i
+                                    <li><a href="<%=request.getContextPath()%>/groupShop?action=listGroupProducts_Byfind">團購專區<i
                                             class="fa fa-angle-down"></i></a>
                                         <ul class="sub_menu pages">
-                                            <li><a href="<%=request.getContextPath()%>groupshop.html">我要開團</a></li>
-                                            <li><a href="<%=request.getContextPath()%>groupshop.html">我要跟團</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/groupShop?action=listGroupProducts_Byfind">我要開團</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/groupShop?action=listGroupProducts_Byfind">我要跟團</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="<%=request.getContextPath()%>/MainPost?action=selectChangePost">寵物社群<i
