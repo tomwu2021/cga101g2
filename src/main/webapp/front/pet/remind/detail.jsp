@@ -6,9 +6,6 @@
 <%
 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 %>
-<%
-Integer memberId = (Integer)(session.getAttribute("memberId"));
-%>
 <% 
 	java.util.Calendar cal = java.util.Calendar.getInstance();
 	cal.set(Calendar.MINUTE, 0);
@@ -48,7 +45,7 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 										<div class="col-lg-2 col-md-12"></div>
 											<div class="col-lg-10 col-md-12">
 	<!-- ============================= Main ============================= -->
-	<a class="text-dark mb-1" href='<%=request.getContextPath()%>/pet?memberId=<%=(Integer)session.getAttribute("memberId")%>&petId=<%=(Integer)session.getAttribute("petId")%>&action=profile' >
+	<a class="text-dark mb-1" href='<%=request.getContextPath()%>/pet?memberId=<%=loginId%>&action=profile' >
 		<i class="fas fa-arrow-left"></i> 返回
 	</a>
 	<section class="section dashboard">
@@ -82,7 +79,7 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 		                    </div>
 		                    <div class="modal-footer">
 		                      <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-		                      <input type="hidden" name="memberId" value="<%=memberId%>">
+		                      <input type="hidden" name="memberId" value="<%=loginId%>">
 		                      <input type="hidden" name="action" value="delete">
 		                      <button type="submit" class="btn btn-danger">確認</button>
 		                    </div>
@@ -109,7 +106,7 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 							<div id="editBox">
 								<%-- Activity Edit --%>
 								<jsp:include page="/front/pet/remind/edit.jsp">
-									<jsp:param value="<%=memberId%>" name="memberId"/>
+									<jsp:param value="<%=loginId%>" name="memberId"/>
 								</jsp:include>
 								<%-- End Activity Edit --%>
 							</div>
@@ -119,7 +116,7 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 							<div class="col-lg-6 mb-5 mt-3" id="listAll">
 							<%-- Activity List --%>
 							<jsp:include page="/front/pet/remind/list.jsp">
-								<jsp:param value="<%=memberId%>" name="memberId"/>
+								<jsp:param value="<%=loginId%>" name="memberId"/>
 							</jsp:include>
 							<%-- Activity List --%>
 							</div>
@@ -156,6 +153,10 @@ let rId = '${param.remindId}'? '${param.remindId}':$('.allItem:first').attr("id"
 				function(data,status){
 				if(status=="success"){
 					$("#getRemindId").val(rId);
+					if('${errorMsgs.time}${errorMsgs.content}' !== ''){
+						alert('${errorMsgs.time}${errorMsgs.content}');
+						$('#updateBtn').click();
+						}
 					if($('#content').val()==""){
 						$("#updateBtn").attr("disabled","disabled");
 					}

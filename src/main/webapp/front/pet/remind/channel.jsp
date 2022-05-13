@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.members.model.*"%>
 <%@ page import="com.remind.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-Integer memberId = (Integer)(session.getAttribute("memberId"));
-Integer petId = (Integer)(session.getAttribute("petId"));
+Integer memberId = session.getAttribute("membersVO")==null ? -999:((MembersVO)session.getAttribute("membersVO")).getMemberId();
 %>
 <!-- Recent Remind -->
 <div class="card border-bottom-danger">

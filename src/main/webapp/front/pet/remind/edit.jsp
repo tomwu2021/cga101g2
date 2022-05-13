@@ -2,13 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.members.model.*"%>
 <%@ page import="com.remind.model.*"%>
 <%@ page import="com.remind.service.*"%>
 <%
 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 %>
 <%
-Integer memberId = (Integer)(session.getAttribute("memberId"));
+Integer memberId = session.getAttribute("membersVO")==null ? -999:((MembersVO)session.getAttribute("membersVO")).getMemberId();
 %>
 <% 
 	java.util.Calendar cal = java.util.Calendar.getInstance();
@@ -19,16 +20,15 @@ Integer memberId = (Integer)(session.getAttribute("memberId"));
 	java.sql.Timestamp defaultTime = new java.sql.Timestamp(cal.getTime().getTime());
 %>
 <!-- Activity Edit -->
-<form method="post" action="/CGA101G2/remind" id="editForm">
+<form method="post" action="<%=request.getContextPath()%>/remind" id="editForm">
 	<div class="row">
 		<div class="mb-3 col-lg-9" style="font-size: 2em;">
 			<input name="time" id="r_date1" type="text" value="<fmt:formatDate value="${rVO.time}" pattern="yyyy-MM-dd HH:mm" />"  style="border:none;max-width:300px;background:none;" disabled/>
 			<input name="remindId" type="hidden" value="${rVO.remindId}">
-			<span>${errorMsgs.time}</span>
 		</div>
 
 	</div>
-	<textarea id="content" name="content" class="form-control" placeholder="${errorMsgs.content}"  style="border:none;height:40vh;width:96%;background:none;resize:none;" disabled>${rVO.content}</textarea>
+	<textarea id="content" name="content" class="form-control" style="border:none;height:40vh;width:96%;background:none;resize:none;" disabled>${rVO.content}</textarea>
 	<input name="memberId" type="hidden" value="<%=memberId%>">
 </form>
 <script>
@@ -44,10 +44,10 @@ function updateBtn(){
 <!-- End Activity Edit -->
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 <link rel="stylesheet" type="text/css"
-	href="/CGA101G2/front/pet/datetimepicker/jquery.datetimepicker.css" />
-<script src="/CGA101G2/front/pet/datetimepicker/jquery.js"></script>
+	href="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.js"></script>
 <script
-	src="/CGA101G2/front/pet/datetimepicker/jquery.datetimepicker.full.js"></script>
+	src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
 .xdsoft_datetimepicker .xdsoft_datepicker {

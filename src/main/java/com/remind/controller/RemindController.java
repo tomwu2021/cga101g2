@@ -9,15 +9,15 @@ import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.common.controller.CommonController;
 import com.remind.model.RemindVO;
 import com.remind.service.RemindService;
 
 @WebServlet("/remind")
-public class RemindController extends HttpServlet {
+public class RemindController extends CommonController {
 	private static final long serialVersionUID = 1L;
        
     public RemindController() {
@@ -25,8 +25,14 @@ public class RemindController extends HttpServlet {
     }
 
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
+    public void doGet(HttpServletRequest req, HttpServletResponse res) {
+    	try {
+			doPost(req, res);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -82,7 +88,7 @@ public class RemindController extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			// 檢查輸入
 			if(content == null || content.trim().isEmpty()) {
-				errorMsgs.put("content"," (輸入空白未更新)");
+				errorMsgs.put("content"," (請輸入內容)");
 			}
 			try {
 				java.util.Calendar cal = java.util.Calendar.getInstance();
@@ -90,7 +96,7 @@ public class RemindController extends HttpServlet {
 				_time = Timestamp.valueOf(time.trim()+":00");
 				if(_time.getTime() < currentTime) throw new IllegalArgumentException();
 			} catch (IllegalArgumentException e) {
-				errorMsgs.put("time"," (輸入錯誤未更新)");
+				errorMsgs.put("time"," (請輸入正確時間)");
 				_time = null;
 			}
 			// 正常送出
