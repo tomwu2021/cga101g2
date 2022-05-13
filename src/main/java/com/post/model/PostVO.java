@@ -19,7 +19,9 @@ public class PostVO implements java.io.Serializable{
 	private Date createTime;	
 	private Date updateTime;
 	private List<PictureVO> pictureList;
-	private PictureVO pictureVO;
+	private PictureVO pictureVO;        //頭貼照片
+	private PictureVO pictureVO2;		//貼文照片
+	
 	
 	public PostVO() {
 		super();
@@ -142,6 +144,14 @@ public class PostVO implements java.io.Serializable{
 
 	public void setPictureVO(PictureVO pictureVO) {
 		this.pictureVO = pictureVO;
+	}
+
+	public PictureVO getPictureVO2() {
+		return pictureVO2;
+	}
+
+	public void setPictureVO2(PictureVO pictureVO2) {
+		this.pictureVO2 = pictureVO2;
 	}
 	
 	

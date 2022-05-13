@@ -191,12 +191,17 @@ public class PostJDBCDAO implements PostDAO_interface {
 	}
 	
 	public List<PostVO> selectPost(Integer memberid, Connection con)  {
-		final String SELECT_POST = "SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url FROM post po  "
-				+ "			     JOIN members m ON(po.member_id = m.member_id)  "
-				+ "			     JOIN pet p ON(m.member_id = p.member_id)  "
-				+ "			     JOIN picture pic ON(p.picture_id = pic.picture_id)  "
-				+ "			     WHERE po.status = 0 and po.member_id = ?"
-				+ "				 order by create_time desc";
+		final String SELECT_POST = "SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url,pic2.url,pic2.preview_url "
+				+ "FROM post po  "
+				+ "JOIN members m ON(po.member_id = m.member_id)   "
+				+ "JOIN pet p ON(m.member_id = p.member_id)   "
+				+ "JOIN picture pic ON(p.picture_id = pic.picture_id)  "
+				+ "JOIN post_pic ppc ON(ppc.post_id = po.post_id)  "
+				+ "JOIN picture pic2 ON(pic2.picture_id = ppc.picture_id) 	 "
+				+ "WHERE po.status = 0 and po.member_id = ? "
+				+ "group by po.post_id "
+				+ "order by create_time desc";
+		
 		
 		try (
 			PreparedStatement pstmt = con.prepareStatement(SELECT_POST);) {
@@ -210,6 +215,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 				PostVO postVO = new PostVO();
 				PictureVO pictureVO = new PictureVO(); 
 				MembersVO membersVO = new MembersVO();
+				PictureVO pictureVO2 = new PictureVO();
 				
 				postVO.setPostId(rs.getInt("post_id"));
 				postVO.setMemberId(rs.getInt("member_id"));
@@ -222,10 +228,19 @@ public class PostJDBCDAO implements PostDAO_interface {
 				
 				membersVO.setName(rs.getNString("name"));
 				postVO.setMembersVO(membersVO);
-				pictureVO.setPictureId(rs.getInt("picture_id"));
-				pictureVO.setUrl(rs.getString("url"));
-				pictureVO.setPreviewUrl(rs.getString("preview_url"));
+				
+//				頭貼照片
+				pictureVO.setPictureId(rs.getInt("pic.picture_id"));  
+				pictureVO.setUrl(rs.getString("pic.url"));
+				pictureVO.setPreviewUrl(rs.getString("pic.preview_url"));
 				postVO.setPictureVO(pictureVO);
+				
+//				貼文照片
+//				pictureVO2.setPictureId(rs.getInt("pic.picture_id"));  
+				pictureVO2.setUrl(rs.getString("pic2.url"));
+				pictureVO2.setPreviewUrl(rs.getString("pic2.preview_url"));
+				postVO.setPictureVO2(pictureVO2);
+								
 				postList.add(postVO);
 			}
 			
@@ -240,42 +255,62 @@ public class PostJDBCDAO implements PostDAO_interface {
 		
 	//查詢貼文，顯示 status狀態0:正常1:審核中2:刪除
 	@Override
-	public List<PostVO> selectChangePost(Integer memberid) {
-		final String SELECT_CHANGEPOST = "select p.post_id, member_id, content, like_count, create_time, url "
-				+ "from post p join post_pic pc on p.post_id = pc.post_id "
-				+ "			   join picture pi on pc.picture_id = pi.picture_id "
-				+ "			   where status = 0 AND member_id = ? "
-				+ "            order by create_time desc";
+	public List<PostVO> selectChangePost() {
+		final String SELECT_CHANGEPOST = "SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url,pic2.url,pic2.preview_url "
+				+ "		  FROM post po  "
+				+ "		  JOIN members m ON(po.member_id = m.member_id)   "
+				+ "		  JOIN pet p ON(m.member_id = p.member_id)   "
+				+ "		  JOIN picture pic ON(p.picture_id = pic.picture_id)  "
+				+ "		  JOIN post_pic ppc ON(ppc.post_id = po.post_id)  "
+				+ "		  JOIN picture pic2 ON(pic2.picture_id = ppc.picture_id) 	 "
+				+ "		  WHERE po.status = 0  "
+				+ "       group by po.post_id "
+				+ "		  order by create_time desc "
+				+ "       limit 10;";
 				
 		
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(SELECT_CHANGEPOST);) {
-			pstmt.setInt(1, memberid);
+			
 			ResultSet rs = pstmt.executeQuery();
 			
 			List< PostVO> poList = new ArrayList<PostVO>();
 			
 			while (rs.next()) {
 				PostVO postVO = new PostVO();
-				PictureVO pictureVO = new PictureVO();
+				PictureVO pictureVO = new PictureVO(); 
+				MembersVO membersVO = new MembersVO();
+				PictureVO pictureVO2 = new PictureVO();
+				
 				postVO.setPostId(rs.getInt("post_id"));
 				postVO.setMemberId(rs.getInt("member_id"));
 				postVO.setContent(rs.getString("content"));
 				postVO.setLikeCount(rs.getInt("like_count"));
+				postVO.setStatus(rs.getInt("status"));
+				postVO.setAuthority(rs.getInt("authority"));
 				postVO.setCreateTime(rs.getDate("create_time"));
+				postVO.setUpdateTime(rs.getDate("update_time"));
 				
-				pictureVO.setUrl(rs.getString("url"));  //這個pictureVO放url
+				membersVO.setName(rs.getNString("name"));
+				postVO.setMembersVO(membersVO);
 				
+//				貼文照片
+				pictureVO.setPictureId(rs.getInt("pic.picture_id"));  
+				pictureVO.setUrl(rs.getString("pic.url"));
+				pictureVO.setPreviewUrl(rs.getString("pic.preview_url"));
 				postVO.setPictureVO(pictureVO);
+				
+//				頭貼照片 
+				pictureVO2.setUrl(rs.getString("pic2.url"));
+				pictureVO2.setPreviewUrl(rs.getString("pic2.preview_url"));
+				postVO.setPictureVO2(pictureVO2);
 				
 				poList.add(postVO);
 				
 			}
 			return poList;      //顯示status狀態正常(0)含圖的貼文
 			
-			
-			
-			
+						
 		}catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}
