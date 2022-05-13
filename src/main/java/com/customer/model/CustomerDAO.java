@@ -9,21 +9,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import connection.JDBCConnection;
+import connection.JNDIConnection;
 
-public class CustomerJDBCDAO implements CustomerDAO_interface {
+public class CustomerDAO implements CustomerDAO_interface {
 	Connection con;
 	
 //	① create 客戶提出問顕(前)------------------------	
 	@Override
 	public CustomerVO insert(CustomerVO customerVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		CustomerVO customerVO2 = insert(customerVO, con);
-		
+				
 		try {
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		return customerVO2;
 	}
@@ -61,13 +62,14 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 //	③ update 回覆客戶問題(後)------------------------	
 	@Override
 	public CustomerVO update(CustomerVO customerVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		CustomerVO customerVO2 = update(customerVO, con);
 		
 		try {
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
 		}
 		return customerVO2;
 	}
@@ -96,7 +98,7 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 	public CustomerVO getOneById(Integer id) {
 		final String GET_ONE = "SELECT case_id, mail_address, nickname, content, send_time, reply_status, emp_no "
 							 + "FROM customer WHERE case_id = ?";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		CustomerVO customerVO =new CustomerVO();
 			
 		if (con != null) {
@@ -115,7 +117,8 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 					customerVO.setEmpNo(rs.getInt(index++));
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new RuntimeException("A database error occured. "
+						+ e.getMessage());
 			}
 		} else {
 			return null;
@@ -132,8 +135,8 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 	@Override
 	public List<CustomerVO> getOneByEmail(String mailAddress) {
 		final String GET_ONE_EMAIL = "SELECT case_id, mail_address, nickname, content, send_time, reply_status, emp_no "
-								   + "FROM customer WHERE mail_address = ?";
-		con = JDBCConnection.getRDSConnection();
+								   + "FROM customer WHERE mail_address = ? ORDER BY case_id DESC";
+		con = JNDIConnection.getRDSConnection();
 		List<CustomerVO> list = new ArrayList<CustomerVO>();
 		if (con != null) {
 			try {
@@ -154,7 +157,8 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 					index = 1;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new RuntimeException("A database error occured. "
+						+ e.getMessage());
 			}
 		} else {
 			return null;
@@ -172,7 +176,7 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 	public List<CustomerVO> getAll() {
 		final String GET_ALL = "SELECT case_id, mail_address, nickname, content, send_time, reply_status, emp_no "
 							 + "FROM customer ORDER BY case_id DESC";
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 				List<CustomerVO> list = new ArrayList<CustomerVO>();
 		
 		if (con != null) {
@@ -193,7 +197,8 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 					index = 1;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new RuntimeException("A database error occured. "
+						+ e.getMessage());
 			}
 		} else {
 			return null;
@@ -211,8 +216,8 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 	@Override
 	public List<CustomerVO> getAllByStatus(Integer replyStatus) {
 		final String GET_REPLY_STATUS = "SELECT case_id, mail_address, nickname, content, send_time, reply_status, emp_no "
-				   + "FROM customer WHERE reply_status = ?";
-		con = JDBCConnection.getRDSConnection();
+				   + "FROM customer WHERE reply_status = ? ORDER BY case_id DESC";
+		con = JNDIConnection.getRDSConnection();
 		List<CustomerVO> list = new ArrayList<CustomerVO>();
 		
 		if (con != null) {
@@ -234,7 +239,8 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 				index = 1;
 			}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new RuntimeException("A database error occured. "
+						+ e.getMessage());
 			}
 		} else {
 			return null;
@@ -251,8 +257,8 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 	@Override
 	public List<CustomerVO> getAllByKeyword(String keyword) {
 		final String GET_KEYWORD = "SELECT case_id, mail_address, nickname, content, send_time, reply_status, emp_no "
-				   + "FROM customer WHERE content LIKE ?";
-		con = JDBCConnection.getRDSConnection();
+				   + "FROM customer WHERE content LIKE ? ORDER BY case_id DESC";
+		con = JNDIConnection.getRDSConnection();
 		List<CustomerVO> list = new ArrayList<CustomerVO>();
 		
 		if (con != null) {
@@ -274,7 +280,8 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 				index = 1;
 			}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new RuntimeException("A database error occured. "
+						+ e.getMessage());
 			}
 		} else {
 			return null;
@@ -321,5 +328,4 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 		 } 
 		 return str; 
 	}
-
 }

@@ -54,15 +54,14 @@ public class CustomerVO {
 	public void setEmpNo(Integer empNo) {
 		this.empNo = empNo;
 	}
+	public com.emp.model.EmpVO getEmpVO(){
+		com.emp.model.EmpService empSvc =new com.emp.model.EmpService();
+		com.emp.model.EmpVO empVO = empSvc.getOneById(empNo);
+		return empVO;
+	}
 	@Override
 	public String toString() {
-
-		String nickname = this.nickname;
-		String content = this.content;
-		if(nickname == null || content == null) {
-			return "OK";
-		}else
-		return "["+nickname+","+content+"]";
+		return "CustomerVO[ "+ caseId + ", " + mailAddress + ", " + nickname + ", " + content + ", " + sendTime + ", " + replyStatus + ", " + empNo + " ]";
 	}
 	
 }
