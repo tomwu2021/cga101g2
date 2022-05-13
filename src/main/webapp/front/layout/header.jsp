@@ -60,10 +60,11 @@
                         <!--                         justify-content-start 往左靠齊 -->
                         <div class="header_account_area  justify-content-start">
                             <!--mini cart end-->
+                            <% if(loginId>0){ %>
                             <div class="header_account-list top_links" onclick="openChatList()">
                                 <a><i class="bi bi-chat-fill"></i></a>
                             </div>
-
+                            <% } %>
                             <div class="header_account-list top_links">
                                 <a href=""><i class="bi bi-bell-fill"></i></a>
                                 <div class="dropdown_links">
@@ -103,15 +104,19 @@
             </div>
         </div>
 <%--        聊天室列表--%>
+
+        <% if(loginId>0){ %>
         <div class="dropdown_links chatroom_list" id="private-chatroom-list">
             <div class="dropdown_links_list">
-                <h2>聊天室</h2>
+                <span style="margin-right:0px;font-size: 25px;font-family: '微軟正黑體', sans-serif;letter-spacing: 2px">聊天室</span>
+                <span class="bi bi-x-lg chat-button" style="display: inline-block;float: right;" onclick="closePrivateChatroom()"></span>
             </div>
             <div class="dropdown_links_list">
                 <ul id="private-chatroom-list-ul">
                 </ul>
             </div>
         </div>
+        <% } %>
     </div>
 </header>
 <style>
@@ -130,7 +135,23 @@
     #private-chatroom-list-ul .offline {
         color: darkorange;
     }
+
 </style>
+<% if(loginId>0){ %>
+<div class="dropdown_links chatroom_list" id="friend-list-container"
+     style="max-height: 520px !important; width: 750px; display: none;padding: 0;position: absolute;left: calc(50% - 375px);top: calc(50% - 250px);min-height: 0vh;">
+    <div class="dropdown_links_list" style="text-align:center;padding: 20px 0 0;">
+        <span style="margin-left:28px;margin-right:0px;font-size: 25px;font-family: '微軟正黑體', sans-serif;letter-spacing: 2px">邀請想一起聊天的朋友</span>
+        <span class="bi bi-x-lg chat-button" style="display: inline-block;float: right;" onClick="closeFriendContainer()"></span>
+    </div>
+    <div class="dropdown_links_list">
+        <ul id="friend-list">
+        </ul>
+
+    </div>
+</div>
+
+
 
 <div class="chatroom_window" id="private-chat">
     <div class="dropdown_links_list" id="chat-buttons">
@@ -147,3 +168,4 @@
         </div>
     </div>
 </div>
+<% } %>

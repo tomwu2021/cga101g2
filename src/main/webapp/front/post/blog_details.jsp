@@ -11,16 +11,28 @@
 <!-- 共用的CSS end-->
 <meta charset="UTF-8">
 
-<!-- Main Style CSS -->
-<link rel="stylesheet" href="other/style copy.css">
 
+<!-- Main Style CSS -->
+<%--<link rel="stylesheet" href="other/style copy.css">--%>
+<!-- comment css -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/comment/comment.css">
+
+<script>
+	function getContextPath(){
+		return "<%=request.getContextPath()%>";
+	}
+</script>
 </head>
 
 <body>
+
+<!-- 共用的JS -->
+<%@include file="/front/layout/commonJS.jsp"%>
+
 	<!-- 共用的header start-->
 	<%@include file="/front/layout/header.jsp"%>
 	<!-- 共用的header end-->
-
+<input type="hidden" id="postId" value="${postVO.postId}">
 	<!--! ========內容======== -->
 	<!--blog body area start-->
 	<div class="blog_details">
@@ -144,90 +156,24 @@
 
 					<!-- 已刪除最近貼文區塊 -->
 					<!-- 留言區開始 -->
-					<div class="comments_box">
-						<h3>3 Comments</h3>
-						<div class="comment_list">
-							<div class="comment_thumb">
-								<img src="assets/img/blog/comment3.png.jpg" alt="">
-							</div>
-							<div class="comment_content">
-								<div class="comment_meta">
-									<h5>
-										<a href="#">Admin</a>
-									</h5>
-									<span>October 16, 2022 at 1:38 am</span>
-								</div>
-								<p>But I must explain to you how all this mistaken idea of
-									denouncing pleasure</p>
-								<div class="comment_reply">
-									<a href="#">Reply</a>
-								</div>
-							</div>
+					<div class="comments_box" id="comment-container" class="col-12">
 
-						</div>
-						<div class="comment_list list_two">
-							<div class="comment_thumb">
-								<img src="assets/img/blog/comment3.png.jpg" alt="">
-							</div>
-							<div class="comment_content">
-								<div class="comment_meta">
-									<h5>
-										<a href="#">Demo</a>
-									</h5>
-									<span>October 16, 2022 at 1:38 am</span>
-								</div>
-								<p>Quisque semper nunc vitae erat pellentesque, ac placerat
-									arcu consectetur</p>
-								<div class="comment_reply">
-									<a href="#">Reply</a>
-								</div>
-							</div>
-						</div>
-						<div class="comment_list">
-							<div class="comment_thumb">
-								<img src="assets/img/blog/comment3.png.jpg" alt="">
-							</div>
-							<div class="comment_content">
-								<div class="comment_meta">
-									<h5>
-										<a href="#">Admin</a>
-									</h5>
-									<span>October 16, 2022 at 1:38 am</span>
-								</div>
-								<p>Quisque orci nibh, porta vitae sagittis sit amet,
-									vehicula vel mauris. Aenean at</p>
-								<div class="comment_reply">
-									<a href="#">Reply</a>
-								</div>
-							</div>
-						</div>
 					</div>
+
+					<% if(loginId>0){ %>
 					<div class="comments_form">
-						<h3>Leave a Reply</h3>
-						<p>Your email address will not be published. Required fields
-							are marked *</p>
-						<form action="#">
+						<h3 id="comment-for">給　<i>${postVO.membersVO.name}</i>　留個言吧！</h3>
+						<form>
 							<div class="row">
 								<div class="col-12">
-									<label for="review_comment">Comment </label>
+									<label for="review_comment">留言：</label>
 									<textarea name="comment" id="review_comment"></textarea>
 								</div>
-								<div class="col-lg-4 col-md-4">
-									<label for="author">Name</label> <input id="author" type="text">
-
-								</div>
-								<div class="col-lg-4 col-md-4">
-									<label for="email">Email </label> <input id="email" type="text">
-								</div>
-								<div class="col-lg-4 col-md-4">
-									<label for="website">Website </label> <input id="website"
-										type="text">
-								</div>
 							</div>
-							<button class="button" type="submit">Post Comment</button>
 						</form>
 					</div>
-
+					<button class="button send-comment" onclick="sendComment()">發送</button>
+					<% } %>
 				</div>
 				<!--blog grid area start-->
 			</div>
@@ -376,9 +322,7 @@
 	</div>
 	<!--blog section area end-->
 	<!-- 側邊欄結束 -->
-
-	<!-- 共用的JS -->
-	<%@include file="/front/layout/commonJS.jsp"%>
-	<!-- 共用的JS -->
+<!-- 個別JS -->
+<script src="<%=request.getContextPath()%>/assets/js/comment/comment.js"></script>
 </body>
 </html>

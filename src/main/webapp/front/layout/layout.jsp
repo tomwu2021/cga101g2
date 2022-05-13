@@ -4,20 +4,22 @@
 <html class="no-js" lang="en">
 
 <!-- include  <html>  & <head></head> -->
-<jsp:include page="./head.jsp" />
+<jsp:include page="/front/layout/head.jsp" />
 
 
 
 <body>
 
+
 <!-- include  common JS-->
 <%@ include file="/front/layout/commonJS.jsp"%>
 
 <!-- include  header-->
-<jsp:include page="./header.jsp" />
+<jsp:include page="/front/layout/header.jsp" />
 
 
 <!-- main contain start -->
+
 <!--breadcrumbs area start-->
 <div class="breadcrumbs_area">
     <div class="container">
