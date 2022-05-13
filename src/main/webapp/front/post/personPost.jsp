@@ -35,7 +35,7 @@
 
     width: 150px;
     height: 150px;
-    transform: translateY(-50px);
+    transform: translateY(-65px);
 	}
 	
 	#img_text {
@@ -50,6 +50,7 @@
 	height:50px;
 	text-align: center;
 	line-height: 30px;
+	transform: translateY(10px);
 	}
 	
 	img {
@@ -58,27 +59,55 @@
 	}
 	
 	.shop_toolbar_wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid #ddd;
-  padding: 85px 250px;
-  margin: 0 0 30px;
- }
- 
- .select_option {
-  display: flex;
-  align-items: center;
-  transform: translateX(90px);
-  transform: translateY(20px);
-  }
+  	display: flex;
+  	justify-content: space-between;
+  	align-items: center;
+  	border: 1px solid #ddd;
+  	padding: 85px 250px;
+  	margin: 10px;
+  	transform: translateY(-100px);
+ 	}
+ 	 
+	.select_option {
+	display: flex;
+	align-items: center;
+	transform: translateX(90px);
+	transform: translateY(20px);
+	}
+	
+	.row.shop_wrapper {
+    flex-direction: row;
+    transform: translateY(-50px);
+	}
   
-  .shop_toolbar_btn>button.btn-grid-4 {
-  /* background: url(../img/icon/bkg_grid4.png) no-repeat scroll center center; */
-  width: 26px;
-  height: 22px;
-  transform: translateX(235px) translateY(60px);
-  }
+	.button1 {
+	/* background: url(../img/icon/bkg_grid4.png) no-repeat scroll center center; */
+	background-color: #7f1912;
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 8px;
+	transform: translateY(50px) translateX(-60px);
+	}
+  
+	.button2 {
+	/* background: url(../img/icon/bkg_grid4.png) no-repeat scroll center center; */
+	background-color: #504c4c;
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 8px;
+	transform: translateY(50px) translateX(-50px);
+	}
+  
 
 	
 	</style>
@@ -127,21 +156,26 @@
                     <div class="shop_toolbar_wrapper">
                         <div class="shop_toolbar_btn">
 
-
+							
                             <div id="demo_border" style="position: relative;">
 								<div id="image_photo"><img src="${personList[0].pictureVO.previewUrl}"></div>										
 								<div id="img_text">${personList[0].membersVO.name}</div>
 							</div>
 							
-							
+														 
 
-                            <button data-role="grid_4" type="button" class=" btn-grid-4" data-toggle="tooltip"
+                            <!-- <button data-role="grid_4" type="button" id=" btn-grid-4" data-toggle="tooltip"
                                 title="4"></button>
 
                             <button data-role="grid_list" type="button" class="btn-list" data-toggle="tooltip"
-                                title="List"></button>
+                                title="List"></button> --> 
                         </div>
-                        <div class=" niceselect_option">
+                        <!-- 新增的追蹤跟封鎖按鈕 -->
+                        <div class="button1">追蹤</div>
+                        <div class="button2">封鎖</div>
+                        
+                        <!-- sort by average rating按鈕 -->
+                        <!-- <div class=" niceselect_option">
                             <form class="select_option" action="#">
                                 <select name="orderby" id="short">
 
@@ -153,11 +187,15 @@
                                     <option value="6">Product Name: Z</option>
                                 </select>
                             </form>
-                        </div>
-                        <div class="page_amount">
+                        </div> -->
+                        
+                        <!-- showing 1-9 0f 21 results按鈕 -->
+                        <!-- <div class="page_amount">
                             <p>Showing 1–9 of 21 results</p>
-                        </div>
+                        </div> -->
+                        
                     </div>
+                    
                     <!--shop toolbar end-->
                     <div class="row shop_wrapper">
                      	<!-- 範圍開始 -->
@@ -171,10 +209,10 @@
                                     
                                         
                                         <!-- 圖 -->
-                                       <%--  <c:forEach var="postVO" items="${list}" >  --%>
+                                       
                                         <c:if test="${postVO.pictureList.size() != 0 }">
                                         <a class="primary_img" href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"><img
-                                                src="${postVO.pictureList.get(0).previewUrl}" alt=""></a>
+                                                src="${postVO.pictureVO2.previewUrl}" alt=""></a>
                                         </c:if>
 
                                     </div>
@@ -196,7 +234,7 @@
                     </div>
 					  
 					  
-                    <div class="shop_toolbar t_bottom">
+                    <!-- <div class="shop_toolbar t_bottom">
                         <div class="pagination">
                             <ul>
                                 <li class="current">1</li>
@@ -206,7 +244,7 @@
                                 <li><a href="#">>></a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                     </div>
                     <c:if test="${isOwner==1}">
                     <div>

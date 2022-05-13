@@ -125,6 +125,7 @@ public class PostPersonController extends CommonController {
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("personList", personList); 
+				System.out.println(personList);
 				String url = "/front/post/personPost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
