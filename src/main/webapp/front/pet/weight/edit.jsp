@@ -2,13 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.members.model.*"%>
 <%@ page import="com.pet_weight.model.*"%>
 <%@ page import="com.pet_weight.service.*"%>
 <%
 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 %>
 <%
-Integer petId = (Integer)(session.getAttribute("petId"));
+Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)session.getAttribute("membersVO")).getPetVO().getPetId();
 %>
 <% 
 	java.util.Calendar cal = Calendar.getInstance();
@@ -31,15 +32,13 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 		<div class="mb-3 col-lg-3">
 			<input name="recordTime" id="r_date1" type="text" value="${pwVO.recordTime}"  style="border:none;max-width:200px;background:none;" disabled/>
 			<input name="recordId" type="hidden" value="${pwVO.recordId}">
-			<span>${errorMsgs.recordTime}</span>
 		</div>
 		<div class="mb-3 col-lg-1">
 			<input type="text" id="activity" name="weightRecord" style="border:none;max-width:200px;background:none;" disabled value='${pwVO.weightRecord}'>
-			<span>${errorMsgs.weightRecord}</span>
 			<input name="petId" type="hidden" value="<%=petId%>">
 	</div>
 	<div class="mb-3 col-lg-4">
-	<span id='kilogram'>&nbsp; kg</span>
+	<span id='kilogram' style='user-select:none;'>&nbsp; kg</span>
 	</div>
 	</div>
 </form>

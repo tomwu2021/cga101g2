@@ -7,7 +7,7 @@
 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 %>
 <%
-Integer petId = (Integer)(session.getAttribute("petId"));
+Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)session.getAttribute("membersVO")).getPetVO().getPetId();
 %>
 <!DOCTYPE html>
 <html>
@@ -40,7 +40,7 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 										<div class="col-lg-2 col-md-12"></div>
 											<div class="col-lg-10 col-md-12">
 	<!-- ============================= Main ============================= -->
-	<a class="text-dark mb-1" href='<%=request.getContextPath()%>/weight?action=all_Display&petId=<%=(Integer)session.getAttribute("petId")%>'>
+	<a class="text-dark mb-1" href='<%=request.getContextPath()%>/weight?action=all_Display&petId=<%=petId%>'>
 		<i class="fas fa-arrow-left"></i> 返回
 	</a>
 	<section class="section dashboard">
@@ -73,7 +73,7 @@ Integer petId = (Integer)(session.getAttribute("petId"));
 							<input name="petId" type="hidden" value="<%=petId%>">
 						</div>
 						<div class="mb-3 col-lg-1">
-							<span id='kilogram'>&nbsp; kg</span>
+							<span id='kilogram' style='user-select:none;'>&nbsp; kg</span>
 						</div>
 						<div class="mb-3 col-lg-6">
 							<input type="hidden" name="action" value="insert">
