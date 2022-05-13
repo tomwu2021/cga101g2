@@ -50,6 +50,11 @@
 							     	<input type="hidden" name="action"	value=""></FORM> --%>
 							     	
 									<h3 class="post_title">Aypi non habent claritatem insitam</h3>
+									
+									
+									<!-- 刪除按鈕 -->
+									<button onclick="confirmEvent()">Confirm</button>
+									
 
 									<div class="blog_meta">
 										<p>
@@ -381,4 +386,16 @@
 	<%@include file="/front/layout/commonJS.jsp"%>
 	<!-- 共用的JS -->
 </body>
+
+	<script>
+		function confirmEvent() {
+			if (confirm("確定刪除這篇貼文嗎")＝＝true) {
+				alert("刪除!!!");
+			}
+			else{
+				alter("取消");
+			}
+		}
+		
+	</script>
 </html>

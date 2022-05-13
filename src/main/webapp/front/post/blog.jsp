@@ -313,7 +313,7 @@
 									<div> --%>
 									
 									<div id="demo_border" style="position: relative;">
-										<div id="image_photo"><img src="${postVO.urlList.get(0)}"></div>
+										<div id="image_photo"><img src="${postVO.pictureVO.url}"></div>
 										
 										<div id="img_text">${postVO.membersVO.name}</div>
 									</div>
@@ -330,7 +330,7 @@
 								            <%-- <c:if test="${postVO.pictureVO.url}">    --%>    
 						                    <div class="blog_thumb">
 						                    
-                                    		<a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"><img src="${postVO.pictureVO.url}" alt=""></a>
+                                    		<a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"><img src="${postVO.pictureVO2.url}" alt=""></a>
                                     		
                                 			</div>	
                                 			<%-- </c:if> --%>
