@@ -13,32 +13,8 @@
 <%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/back/css/????.css"> --%>
 <!-- 額外添加的CSS -->
 
-
-
-<style>
-table {
-	width: 100%;
-	table-layout: fixed;
-}
-
-th, td {
-	border-bottom: 1px solid #ddd;
-	text-align: center;
-}
-
-tr:hover {
-	background-color: coral;
-}
-
-th {
-	background-color: #04AA6D;
-	color: white;
-}
-
-td {
-	word-wrap: break-word;
-}
-</style>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/assets/css/empSelect.css">
 
 </head>
 <body>

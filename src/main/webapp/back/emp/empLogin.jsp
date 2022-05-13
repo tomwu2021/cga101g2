@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="BIG5">
+<meta charset="UTF-8" />
+<title>員工登入</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/empLogin.css">
 </head>
