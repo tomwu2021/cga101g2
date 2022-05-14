@@ -18,6 +18,7 @@ $(function() {
 				if(exist === "false"){
 					window.location.href='memberSetWalletPassword.jsp'; 
 				}else{
+//					window.location.href='memberWalletPassword.jsp'; 
 					return;
 				}
 

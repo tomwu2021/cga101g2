@@ -537,7 +537,7 @@ public class MembersServlet extends HttpServlet {
 					.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
 			messages.put("updatePasswordSuccess", "修改密碼成功！");
 			// successful 的頁面
-			RequestDispatcher successView = req.getRequestDispatcher("/CGA101G2/front/member/memberSetWalletPassword.jsp");
+			RequestDispatcher successView = req.getRequestDispatcher("/front/member/member.jsp"); // 製作一個 success 畫面
 			successView.forward(req, res);
 			return;// 程式中斷
 		}
@@ -561,7 +561,7 @@ public class MembersServlet extends HttpServlet {
 
 		sessionMembersVO.seteWalletPassword(walletPassword);
 
-		System.out.println("執行111");
+//		System.out.println("執行111");
 
 		if (currentWalletPassword == null || currentWalletPassword.trim().length() == 0) {
 			// 跳轉到新建密碼畫面

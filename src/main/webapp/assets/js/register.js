@@ -217,7 +217,9 @@ function registerVerification() {
 
 //				offLoading();
 				if (objectJSON.msgErrorVerificationCode === "" && objectJSON.msgError === "") {
+					history.go(0);
 					alert(objectJSON.registerSuccessful);
+					
 				}
 			},
 		}
