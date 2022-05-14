@@ -2,17 +2,19 @@ package com.group_order.model;
 
 import java.util.List;
 
-public class GroupService {
+public class GroupOrderService {
 	private GroupOrderDAO_Interface dao;
 	
-	public GroupService () {
+	public GroupOrderService () {
 		dao=new GroupOrderJDBCDAO();
 	}
 	
-	public GroupOrderVO addGroupOrder(Integer productId,Integer endType) {		
+	public GroupOrderVO addGroupOrder(Integer productId,Integer endType,Integer finalPrice,Integer minAmount) {		
 		GroupOrderVO groupOrderVO=new GroupOrderVO();
 		groupOrderVO.setProductId(productId);
 		groupOrderVO.setEndType(endType);
+		groupOrderVO.setFinalPrice(finalPrice);
+		groupOrderVO.setMinAmount(minAmount);
 		dao.insert(groupOrderVO);
 		return groupOrderVO;
 	}
@@ -39,6 +41,13 @@ public class GroupService {
 	
 	public void updateStatus(Integer id, Integer status) {
 		dao.updateStatusByGroupOrderId(id, status);
+	}
+	public List<GroupOrderVO> getAllInProgressByProductId(Integer id) {
+		return getAllInProgressByProductId(id);
+	}
+	
+	public List<GroupOrderVO> getAllInProgress() {
+		return dao.getAllInProgress();
 	}
 	
 	
