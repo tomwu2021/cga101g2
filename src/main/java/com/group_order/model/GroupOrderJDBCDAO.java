@@ -7,6 +7,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.group_buyer.model.GroupBuyerVO;
+import com.picture.model.PictureVO;
+import com.product.model.ProductVO;
+
 import connection.JDBCConnection;
 
 public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface{
@@ -17,12 +21,14 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface{
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		//建立時訂單狀態為進行中
-		String insertSql="insert into group_order(product_id, end_time, end_type, status) "
-				+ "values(?,date_add(now(), interval 7 day),?,0);";
+		String insertSql="insert into group_order(product_id, end_time, end_type,final_price,status,min_amount) "
+				+ "values(?,date_add(now(), interval 7 day),?,?,0,?);";
 		try (Connection con=JDBCConnection.getRDSConnection()){
 			ps=con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, groupOrderVO.getProductId());
 			ps.setInt(2, groupOrderVO.getEndType());
+			ps.setInt(3, groupOrderVO.getFinalPrice());
+			ps.setInt(4, groupOrderVO.getMinAmount());
 			ps.executeUpdate();
 			rs=ps.getGeneratedKeys();
 			if (rs.next()) {
@@ -199,23 +205,32 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface{
 	public List<GroupOrderVO> getAllInProgress() {
 		PreparedStatement ps=null;
 		ResultSet rs=null;
-		String getAllByProductIdSql="select group_order_id, product_id, create_time, end_time, end_type, final_price, status from group_order "
-				+ "where status=0";
+		String getAllByProductIdSql="select * from group_order o "
+				+ "join product p on(p.product_id=o.product_id) "
+				+ "join product_img i on(i.product_id=p.product_id) "
+				+ "join picture pt on(i.product_img_id=pt.picture_id) "
+				+ "where o.status=0 group by o.group_order_id";
 		GroupOrderVO groupOrderVO=null;
 		List<GroupOrderVO> groupOrderList=new ArrayList<GroupOrderVO>();
 		try (Connection con=JDBCConnection.getRDSConnection()){
 			ps=con.prepareStatement(getAllByProductIdSql);
 			rs=ps.executeQuery();
 			while(rs.next()) {
-				groupOrderVO=new GroupOrderVO();
-				groupOrderVO.setGroupOrderId(rs.getInt("group_order_id"));
+				groupOrderVO = new GroupOrderVO();
 				groupOrderVO.setProductId(rs.getInt("product_id"));
-				groupOrderVO.setCreateTime(rs.getTimestamp("create_time"));
-				groupOrderVO.setEndTime(rs.getTimestamp("end_time"));
-				groupOrderVO.setEndType(rs.getInt("end_type"));
-				groupOrderVO.setFinalPrice(rs.getInt("final_price"));
 				groupOrderVO.setStatus(rs.getInt("status"));
-				groupOrderList.add(groupOrderVO);
+				ProductVO productVO = new ProductVO();
+				productVO.setProductName(rs.getString("product_name"));
+				productVO.setGroupPrice1(rs.getInt("group_price1"));
+				productVO.setGroupAmount1(rs.getInt("group_amount1"));
+				productVO.setGroupAmount2(rs.getInt("group_amount2"));
+				productVO.setGroupAmount3(rs.getInt("group_amount3"));
+				productVO.setDescription(rs.getString("description"));
+				productVO.setStatus(rs.getInt("status"));
+				PictureVO pictureVO=new PictureVO();
+				pictureVO.setPreviewUrl(rs.getString("preview_url"));
+				groupOrderVO.setPictureVO(pictureVO);
+				groupOrderVO.setProductVO(productVO);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
