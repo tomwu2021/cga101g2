@@ -33,7 +33,7 @@ public interface PetDAO_interface extends JDBCDAO_Interface<PetVO>{
  * (必)[1~12] */
     public List<PetVO> getAllByBirth(Integer birthMonth);
 /**	預設寵物資料：
- * (必)memberId, sort1Id[1-貓,2-狗] */
+ * (必)memberId */
 	public PetVO defaultInsert(PetVO petVO);
 
 }

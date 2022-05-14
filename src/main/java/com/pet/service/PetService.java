@@ -1,37 +1,70 @@
 package com.pet.service;
 
+import java.io.IOException;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
+
+import javax.servlet.http.Part;
 
 import com.pet.model.PetDAO_interface;
 import com.pet.model.PetJDBCDAO;
 import com.pet.model.PetVO;
+import com.picture.model.PictureVO;
+import com.picture.service.PictureService;
 
 public class PetService {
 
 	private PetDAO_interface dao;
-	
+	private PictureService picSvc;
+
 	public PetService() {
 		dao = new PetJDBCDAO();// TODO換連線池版本
+		picSvc= new PictureService();
 	}
 		
 	/**
 	 * 新增一隻寵物
 	 * @return PetVO(petId, memberId, petName, breed, [gender], [introduction], [headShot], [birthday])
 	 */
-	public PetVO addPet(Integer memberId, String petName, Integer breed, Integer gender, String introduction, Integer headShot, Date birthday) {
-		PetVO pVO = new PetVO();
+	public PetVO addPet(Integer memberId, String petName, Integer breed, Integer gender, String introduction, Collection<Part> headshot, Date birthday) {
 		
+		PetVO pVO = new PetVO();
+		PictureVO picVO = new PictureVO();
+		Integer picId = breed==1?999:1000;
+	// 步驟一 上傳大頭貼
+		if (headshot != null) {
+			try {
+				picVO = picSvc.uploadImageByDefaultAlbum(headshot, memberId).get(0);
+				picId = picVO.getPictureId();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	// 步驟二 建立寵物資料	
 		pVO.setMemberId(memberId);
 		pVO.setPetName(petName);
 		pVO.setSort1Id(breed);
 		pVO.setGender(gender);
 		pVO.setIntroduction(introduction);
-		pVO.setPictureId(headShot);
+		pVO.setPictureId(picId);
 		pVO.setBirthday(birthday);
 		dao.insert(pVO);
+		
+		// 步驟三 刪除預設pet
+		PetVO defaultPetId = dao.getOneByMemberId(memberId).get(0);
+		dao.delete(defaultPetId);
+		
 		return pVO;
 	}
+
+	
+	
+	
+	
+	
+	
+	
 			
 	/**
 	 * 修改寵物資料
@@ -87,14 +120,14 @@ public class PetService {
 	}
 	
 	/**
-	 * 會員註冊預設一隻寵物(我是🔘貓派:1 ⚪狗派:2，name='sort1Id')
+	 * 會員註冊預設一隻寵物
 	 * @return PetVO(petId, memberId, breed)
 	 */
-	public PetVO defaultPet(Integer memberId, Integer breed) {
+	public PetVO defaultPet(Integer memberId) {
 		PetVO pVO = new PetVO();
 		
 		pVO.setMemberId(memberId);
-		pVO.setSort1Id(breed);
+		pVO.setSort1Id(1);
 		dao.defaultInsert(pVO);
 		return pVO;
 	}
