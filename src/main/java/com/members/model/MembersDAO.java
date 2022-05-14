@@ -814,12 +814,44 @@ public class MembersDAO implements MembersDAO_interface {
 			// 更新會員錢包的值
 			currentMembersVO.setBonusAmount(originalBonus);
 			currentMembersVO.setMemberId(memberId);
-			membersDAO.changeBonus(currentMembersVO,currentMoney, con);
+			membersDAO.changeBonus(currentMembersVO, currentMoney, con);
 			System.out.println(currentMembersVO);
 
 			return true;
 		}
 
 		return false;
+	}
+
+	// 用 memberId 取得 eWalletPassword
+	@Override
+	public String geteWalletPassword(Integer memberId) {
+		con = JNDIConnection.getRDSConnection();
+		String eWalletPassword = geteWalletPassword(memberId, con);
+
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return eWalletPassword;
+	}
+
+	public String geteWalletPassword(Integer memberId, Connection con) {
+		final String SELECT_EWALLETPASSWORD_BY_MEMBERID = "SELECT ewallet_password FROM members where member_id = ?;";
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(SELECT_EWALLETPASSWORD_BY_MEMBERID);
+				pstmt.setInt(1, memberId);
+				ResultSet rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					return rs.getString("ewallet_password");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "查無此密碼";
 	}
 }

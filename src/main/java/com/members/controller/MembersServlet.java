@@ -10,7 +10,6 @@ import com.chargeRecord.model.ChargeRecordService;
 import com.chargeRecord.model.ChargeRecordVO;
 import com.google.gson.Gson;
 import com.members.model.*;
-import com.pet.model.PetVO;
 import com.pet.service.PetService;
 import com.util.JavaMail;
 import javax.servlet.http.HttpSession;
@@ -242,10 +241,9 @@ public class MembersServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		// 預設一隻寵物，給 memberId ，　1：貓 　2：狗
+		// 預設一隻寵物，給 memberId 
 		PetService pSvc = new PetService();
-		//　註冊成功　取得　memberId
-		pSvc.defaultPet(newMember.getMemberId(), null);
+		pSvc.defaultPet(newMember.getMemberId());
 		
 		
 		String json = new Gson().toJson(messages);
