@@ -10,6 +10,8 @@ import com.chargeRecord.model.ChargeRecordService;
 import com.chargeRecord.model.ChargeRecordVO;
 import com.google.gson.Gson;
 import com.members.model.*;
+import com.pet.model.PetVO;
+import com.pet.service.PetService;
 import com.util.JavaMail;
 import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.WebServlet;
@@ -240,6 +242,12 @@ public class MembersServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
+		// 預設一隻寵物，給 memberId ，　1：貓 　2：狗
+		PetService pSvc = new PetService();
+		//　註冊成功　取得　memberId
+		pSvc.defaultPet(newMember.getMemberId(), null);
+		
+		
 		String json = new Gson().toJson(messages);
 		res.getWriter().write(json);
 		return;
@@ -465,7 +473,7 @@ public class MembersServlet extends HttpServlet {
 		// 儲值成功 DAO
 		MembersService memberSvc = new MembersService();
 		memberSvc.walletPaymentAddMoney(currentMemberId, Integer.valueOf(storedValueAmount));
-		System.out.println(memberSvc.getOneById(currentMemberId).geteWalletAmount());
+//		System.out.println(memberSvc.getOneById(currentMemberId).geteWalletAmount());
 		sessionMembersVO.seteWalletAmount(memberSvc.getOneById(currentMemberId).geteWalletAmount());
 
 		RequestDispatcher successView = req.getRequestDispatcher("/front/member/member.jsp");
@@ -640,16 +648,15 @@ public class MembersServlet extends HttpServlet {
 
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
-		
+
 		ChargeRecordService chargeRecordSvc = new ChargeRecordService();
 
 		List<ChargeRecordVO> listAll = chargeRecordSvc.getAll(sessionMembersVO.getMemberId());
 
 		System.out.println(listAll);
 
-
 		String json = new Gson().toJson(listAll);
 		res.getWriter().write(json);
 		return;
 	}
-}	
+}
