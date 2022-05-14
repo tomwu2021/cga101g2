@@ -8,7 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.common.exception.JDBCException;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
 import com.group_order.model.GroupOrderVO;
+import com.picture.model.PictureResult;
 import com.picture.model.PictureVO;
 import com.product.model.ProductVO;
 
@@ -292,31 +296,51 @@ public class GroupBuyerJDBCDAO implements GroupBuyerDAO_Interface {
 		return groupBuyerVO;
 	}
 	
-//	@Override
-//	public GroupBuyerVO selectByPK(Integer groupOrderId, Integer memberId) {
-//		// TODO Auto-generated method stub
-//		PreparedStatement ps = null;
-//		ResultSet rs = null;
-//		String getAllByGroupOrderIdSql = "select group_order_id, member_id, product_amount, recipient, phone, address from group_buyer "
-//				+ "where group_order_id=? and member_id=?;";
-//		GroupBuyerVO groupBuyerVO = null;
-//		try (Connection con = JDBCConnection.getRDSConnection()) {
-//			ps = con.prepareStatement(getAllByGroupOrderIdSql);
-//			ps.setInt(1, groupOrderId);
-//			ps.setInt(2, memberId);
-//			rs = ps.executeQuery();
-//			while (rs.next()) {
-//				groupBuyerVO = new GroupBuyerVO();
-//				groupBuyerVO.setGroupOrderId(rs.getInt("group_order_id"));
-//				groupBuyerVO.setMemberId(rs.getInt("member_id"));
-//				groupBuyerVO.setAddress(rs.getString("address"));
-//				groupBuyerVO.setPhone(rs.getString("phone"));
-//				groupBuyerVO.setProductAmount(rs.getInt("product_amount"));
-//				groupBuyerVO.setRecipients(rs.getString("recipient"));
-//			}
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		return groupBuyerVO;
-//	}
+	
+	public PageResult<GroupBuyerVO> getPageResult(PageQuery pageQuery) {
+		// sql查結果全部指令
+		String baseSQL = "select member_id,b.group_order_id,product_amount,p.product_id,final_price,o.status,p.product_name "
+				+ "from group_buyer b " + "join group_order o on (b.group_order_id=o.group_order_id) "
+				+ "join product p on(p.product_id=o.product_id) ";
+		int total = 0;
+		List<GroupBuyerVO> groupBuyerList = new ArrayList<GroupBuyerVO>();
+		try (Connection con = JDBCConnection.getRDSConnection()) {
+			if (con != null) {
+				// Step1. 取得總筆數
+				PreparedStatement stmt = con.prepareStatement(pageQuery.getTotalCountSQL(baseSQL));
+				ResultSet rs = stmt.executeQuery();
+				rs.next();
+				total = rs.getInt(1);
+				rs.close();
+				stmt.close();
+
+				// Step2. 取得QueryData
+				stmt = con.prepareStatement(pageQuery.getQuerySQL(baseSQL));
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					GroupBuyerVO groupBuyerVO=new GroupBuyerVO(); 
+					groupBuyerVO.setMemberId(rs.getInt("member_id"));
+					groupBuyerVO.setGroupOrderId(rs.getInt("group_order_id"));
+					groupBuyerVO.setProductAmount(rs.getInt("product_amount"));
+					GroupOrderVO groupOrderVO = new GroupOrderVO();
+					groupOrderVO.setProductId(rs.getInt("product_id"));
+					groupOrderVO.setFinalPrice(rs.getInt("final_price"));
+					groupOrderVO.setStatus(rs.getInt("status"));
+					ProductVO productVO = new ProductVO();
+					productVO.setProductName(rs.getString("product_name"));
+					groupBuyerVO.setGroupOrderVO(groupOrderVO);
+					groupBuyerVO.setProductVO(productVO);
+					groupBuyerList.add(groupBuyerVO);
+				}
+				rs.close();
+				stmt.close();
+				con.close();
+			} else {
+				throw new JDBCException("getPageResult() ::: Connection con is NULL !!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return new PageResult<GroupBuyerVO>(pageQuery,groupBuyerList, total);
+	}
 }

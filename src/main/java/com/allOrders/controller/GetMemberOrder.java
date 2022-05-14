@@ -10,9 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.group_buyer.model.GroupBuyerService;
 import com.group_buyer.model.GroupBuyerVO;
+import com.members.model.MembersVO;
 import com.orders.model.OrdersService;
 import com.orders.model.OrdersVO;
 
@@ -25,8 +27,9 @@ public class GetMemberOrder extends HttpServlet{
 			throws ServletException, IOException {
 		res.setContentType("text/html;charset=UTF-8");
 		req.setCharacterEncoding("UTF-8");
-		
-		Integer memberId = Integer.parseInt(req.getParameter("memberId"));
+		HttpSession session = req.getSession();
+		MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
+		Integer memberId = membersVO.getMemberId();
 		OrdersService ordersService=new OrdersService();
 		List<OrdersVO> getOnesOrder=ordersService.getAllByMemberId(memberId);
 		writePojo2Json(res, getOnesOrder);

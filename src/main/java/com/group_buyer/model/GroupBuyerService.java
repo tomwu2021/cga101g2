@@ -2,6 +2,10 @@ package com.group_buyer.model;
 
 import java.util.List;
 
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
+import com.picture.model.PictureResult;
+
 public class GroupBuyerService {
 
 	private GroupBuyerDAO_Interface dao;
@@ -53,5 +57,8 @@ public class GroupBuyerService {
 
 	public GroupBuyerVO selectOrderDetail(Integer groupOrderId, Integer memberId) {
 		return dao.selectByPK(groupOrderId, memberId);
+	}
+	public PageResult<GroupBuyerVO> getPageResult(PageQuery pageQuery) {
+		return dao.getPageResult(pageQuery);
 	}
 }

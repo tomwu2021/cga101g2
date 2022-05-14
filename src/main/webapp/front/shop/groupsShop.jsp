@@ -62,16 +62,21 @@
 
 							<!--                                 </form>  -->
 							<!--                             </div> -->
+							
 							<div class="widget_list widget_color">
 								<h3>
 									<a href="#">我要開團</a>
 								</h3>
 							</div>
+							
+							<FORM METHOD="post" ACTION="/CGA101G2/member/groupOrder.do" name="join">
 							<div  class="widget_list widget_color">
 								<h3>
-									<a href="#">我要跟團</a>
+									<a href="javascript:document.join.submit();">我要跟團</a>
 								</h3>
 							</div>
+							<input type="hidden" name="action" value="joinGroupOrder">
+							</FORM>
 							<div class="widget_list widget_color"></div>
 							<div class="widget_list widget_color"></div>
 							<div class="widget_list widget_color">

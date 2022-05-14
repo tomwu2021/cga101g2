@@ -4,6 +4,9 @@ import java.sql.Timestamp;
 
 import javax.tools.JavaCompiler;
 
+import com.picture.model.PictureVO;
+import com.product.model.ProductVO;
+
 public class GroupOrderVO implements java.io.Serializable {
 	private Integer groupOrderId;
 	private Integer productId;
@@ -12,6 +15,9 @@ public class GroupOrderVO implements java.io.Serializable {
 	private Integer endType;
 	private Integer finalPrice;
 	private Integer status;
+	private Integer minAmount;
+	private ProductVO productVO;
+	private PictureVO pictureVO;
 
 	public GroupOrderVO() {
 	}
@@ -70,6 +76,34 @@ public class GroupOrderVO implements java.io.Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+	
+
+	public Integer getMinAmount() {
+		return minAmount;
+	}
+
+	public void setMinAmount(Integer minAmount) {
+		this.minAmount = minAmount;
+	}
+	
+	
+
+	public ProductVO getProductVO() {
+		return productVO;
+	}
+
+	public void setProductVO(ProductVO productVO) {
+		this.productVO = productVO;
+	}
+
+	public PictureVO getPictureVO() {
+		return pictureVO;
+	}
+
+	public void setPictureVO(PictureVO pictureVO) {
+		this.pictureVO = pictureVO;
 	}
 
 	@Override

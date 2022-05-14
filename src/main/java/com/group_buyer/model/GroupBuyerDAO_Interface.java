@@ -3,6 +3,8 @@ package com.group_buyer.model;
 import java.util.List;
 
 import com.common.model.JDBCDAO_Interface;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
 
 public interface GroupBuyerDAO_Interface extends JDBCDAO_Interface<GroupBuyerVO> {
 
@@ -18,5 +20,7 @@ public interface GroupBuyerDAO_Interface extends JDBCDAO_Interface<GroupBuyerVO>
 	// 查單筆資料
 
 	public GroupBuyerVO selectByPK(Integer groupOrderId, Integer memberId);
+
+	public PageResult<GroupBuyerVO> getPageResult(PageQuery pageQuery);
 
 }
