@@ -118,7 +118,8 @@ public class GroupOrder extends HttpServlet {
 				established += groupBuyerVO.getProductAmount();
 			}
 			System.out.println("總數"+established);
-			if (established > minAmount && endType == 1) {
+			if (established > minAmount && endType == 2) {
+				System.out.println("有執行");
 				groupOrderService.updateStatus(groupOrderId,2);
 				groupOrderService.updateEndTime(groupOrderId);
 			}
