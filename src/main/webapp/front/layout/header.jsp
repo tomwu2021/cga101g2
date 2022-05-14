@@ -15,7 +15,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2">
                         <div class="logo">
-                            <a href="index.html"><img src=""></a>
+                            <a href="<%=request.getContextPath()%>/index.html"><img src="<%=request.getContextPath()%>/assets/img/logo/logo_icon.png"></a>
                         </div>
                     </div>
                     <div class="col-lg-8">
@@ -83,7 +83,7 @@
                             </div>
 
                             <div class="header_account-list top_links">
-                                <a href=""><i class="bi bi-person-square"></i></a>
+                                <a href=""><i class="bi bi-person-circle"></i></a>
                                 <div class="dropdown_links">
                                     <div class="dropdown_links_list">
                                         <h3>會員名稱</h3>
