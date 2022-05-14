@@ -14,7 +14,7 @@ function search() {
 				str += "<td>" + order.groupOrderVO.finalPrice + "</td>";
 				if (order.groupOrderVO.status === 0) {
 					str += "<td>進行中</td>";
-					str += "<td><a href=" + "/CGA101G2/member/order.do?memberId=" + order.memberId + "&groupOrderId=" + order.groupOrderId
+					str += "<td><a href=" + getContextPath() +"/member/order.do?memberId=" + order.memberId + "&groupOrderId=" + order.groupOrderId
 						+ ">Revise</a></td>";
 				} else if (order.groupOrderVO.status === 1) {
 					str += "<td>未成團</td>";
@@ -30,7 +30,7 @@ function search() {
 			$("#memberGroupOrder").html(str);
 			makePicturePages(result.pageCount);
 			let pageResult = "Showing from " + result.start + " to " + result.end + " of " + result.total + " results";
-			$(".page_amount p").text(pageResult);
+			$(".page_amount").text(pageResult);
 		}
 	})
 }

@@ -1,5 +1,9 @@
 package com.orders.model;
 
+import com.common.exception.JDBCException;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
+
 import java.util.List;
 
 public class OrdersDAO implements OrdersDAO_Interface{
@@ -69,9 +73,9 @@ public class OrdersDAO implements OrdersDAO_Interface{
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
-	
+	@Override
+	public PageResult<OrdersVO> getPageResult(PageQuery pq) throws JDBCException{
+		return null;
+	}
 
 }

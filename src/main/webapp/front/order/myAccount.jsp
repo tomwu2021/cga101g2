@@ -8,7 +8,7 @@
 <!--services img area-->
 <%@ include file="/front/layout/head.jsp"%>
 <!-- include  common JS-->
-
+<body>
 <!-- include  header -->
 <%@ include file="/front/layout/header.jsp"%>
 
@@ -38,7 +38,7 @@
 			</div>
 			<div class="form-select" style="display: flex;">
 				<form action="#" style="display: block;">
-					<select id="creatTime">
+					<select id="createTime">
 						<option value="30">請選擇區間</option>
 						<option value="1">一天內</option>
 						<option value="7">一週內</option>
@@ -57,7 +57,6 @@
 					</select>
 				</form>
 			</div>
-			<input placeholder="Search..." type="text" id="fileName">
 			<div class="page_amount" style="align-self: center">
 				<p></p>
 			</div>
@@ -82,7 +81,7 @@
 						<div class="tab-pane fade show active" id="orders">
 							<h3>Orders</h3>
 							<div class="table-responsive">
-								<table class="table" id="memberOrder">
+								<table class="table">
 									<thead>
 										<tr>
 											<th>訂單編號</th>
@@ -92,7 +91,8 @@
 											<th>查看詳情</th>
 										</tr>
 									</thead>
-
+									<tbody  id="memberOrder">
+									</tbody>
 
 								</table>
 							</div>
@@ -108,11 +108,11 @@
 <%@ include file="/front/layout/commonJS.jsp"%>
 <%@ include file="/front/layout/commonCSS.jsp"%>
 <!-- include  footer -->
-<%@include file="/front/layout/searchPage.jsp"%>
-<%@include file="/front/layout/footer.jsp"%>
+<%@ include file="/front/layout/searchPage.jsp"%>
+<%@ include file="/front/layout/footer.jsp"%>
 
 <!-- 額外添加JS start -->
-<script src="<%=request.getContextPath()%>/assets/js/myAccount.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/order&cart/myAccount.js"></script>
 
 <!-- 額外添加JS end -->
 

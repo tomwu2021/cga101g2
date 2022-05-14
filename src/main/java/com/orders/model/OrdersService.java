@@ -1,6 +1,9 @@
 package com.orders.model;
 
-import java.sql.Timestamp;
+import com.common.exception.JDBCException;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
+
 import java.util.List;
 
 public class OrdersService {
@@ -50,5 +53,9 @@ public class OrdersService {
 	
 	public void addProduct2Order(Integer orderId, Integer productId, Integer quantity, Integer price) {
 		dao.addProduct2Order(orderId, productId, quantity, price);
+	}
+
+	public PageResult<OrdersVO> getPageResult(PageQuery pq) throws JDBCException {
+		return dao.getPageResult(pq);
 	}
 }

@@ -16,7 +16,10 @@ public class OrdersVO implements java.io.Serializable{
 	 private Integer bonus;
 	 private Integer discount;
 	 private Integer payPrice;
-	 private Integer status;
+	/**
+	 * 0:
+	 */
+	private Integer status;
 	 private Timestamp createTime;
 	 //在mapping表欄位，直接宣告在這裡做
 	 private Integer productAmount;
