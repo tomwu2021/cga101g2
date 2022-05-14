@@ -1,59 +1,36 @@
 
-function searchOrder() {
+let status= 0;
+let createTime=$("#createTime").val();
+
+function search() {
     $.get({
-        url: getContextPath() + "/member/orders?memberId=" + memberId + "&status=" + status + "&thisPage=" + thisPage + "&order=create_time&pageSize="
-            + pageSize + "&sort=" + sort + "&create_time=" + creatTime + "&action=search",
+        url: getContextPath() + "/member/orders?status=" + status + "&thisPage=" + thisPage + "&order=create_time&pageSize="
+            + pageSize + "&sort=" + sort + "&create_time=" + createTime + "&action=search",
         success: function (result, status) {
-            let orders = JSON.parse(result);
-            let str = "<tbody>";
+            let str = "";
+            let orders = result.items;
             for (let order of orders) {
                 str += "<tr><td>" + order.orderId + "</td>";
-                str += "<td>" + order.payPrice + "</td>";
+                str += "<td>" + order.sumPrice + "</td>";
                 if (order.status === 0) {
-                    str += "<td>處理中</td>";
+                    str += "<td>未完成</td>";
+                    str += "<td><a href=" + getContextPath()+"/member/order.do?memberId=" + order.memberId + "&groupOrderId=" + order.orderId
+                        + ">" + order.createTime + "</a></td>";
                 } else if (order.status === 1) {
                     str += "<td>取消</td>";
-                } else {
-                    str += "<td>已完成</td>";
-                }
-                str += "<td>" + order.createTime + "</td>";
-                str += "<td><a href=" + getContextPath()+"/member/order.do?orderId=" + order.orderId
-                    + "&action=orderDeatil" + ">View</a></td>";
-            }
-            str += "</tr></tbody>";
-            $("#memberOrder").html(str);
-        }
-    })
-}
-
-
-function searchGroupOrder() {
-    $.get({
-        url: getContextPath() + "/CGA101G2/member/orders?memberId=" + memberId + "&status=" + status + "&thisPage=" + thisPage + "&order=create_time&pageSize="
-            + pageSize + "&sort=" + sort + "&create_time=" + creatTime + "&action=search",
-        success: function (result, status) {
-            let groupOrder = JSON.parse(json);
-            let str = "<tbody>";
-            for (let order of groupOrder) {
-                str += "<tr><td>" + order.productVO.productName + "</td>";
-                str += "<td>" + order.productAmount + "</td>";
-                str += "<td>" + order.groupOrderVO.finalPrice + "</td>";
-                if (order.groupOrderVO.status === 0) {
-                    str += "<td>進行中</td>";
-                    str += "<td><a href=" + "/CGA101G2/member/order.do?memberId=" + order.memberId + "&groupOrderId=" + order.groupOrderId
-                        + ">Revise</a></td>";
-                } else if (order.groupOrderVO.status === 1) {
-                    str += "<td>未成團</td>";
                     str += "<td>X</td>";
                 } else {
-                    str += "<td>已成團</td>";
+                    str += "<td>完成</td>";
                     str += "<td>X</td>";
                 }
-                str += "<td><a href=" + "/CGA101G2/member/order.do?memberId=" + order.memberId + "&groupOrderId=" + order.groupOrderId
+                str += "<td><a href=" + getContextPath() + "/member/order.do?memberId=" + order.memberId + "&groupOrderId=" + order.orderId
                     + "&action=groupOrderDeatil" + ">View</a></td>";
             }
-            str += "</tr></tbody>";
-            $("#memberGroupOrder").html(str);
+            str += "</tr>";
+            $("#memberOrder").html(str);
+            makePicturePages(result.pageCount);
+            let pageResult = "Showing from " + result.start + " to " + result.end + " of " + result.total + " results";
+            $(".page_amount").text(pageResult);
         }
     })
 }
@@ -70,6 +47,40 @@ function go2GroupOrder()
 }
 
 
+$(document).ready(() => search());
+document.getElementById("sort").onchange = getBySort;
+document.getElementById("status").onchange = getByStatus;
+document.getElementById("createTime").onchange = getByTime;
+document.getElementById("pageSize").onchange = getByPageSize;
+
+
+
+function getBySort() {
+    sort = $("#sort").val();
+    console.log(sort);
+    search();
+}
+function getByTime() {
+    createTime = $("#createTime").val();
+    console.log(createTime);
+    thisPage = 1;
+    search();
+}
+
+
+function getByStatus() {
+    status = $("#status").val();
+    console.log(status);
+    thisPage = 1;
+    search();
+}
+
+function getByPageSize() {
+    pageSize = $("#pageSize").val();
+    console.log(pageSize);
+    thisPage = 1;
+    search();
+}
 
 
 

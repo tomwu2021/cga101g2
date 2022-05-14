@@ -9,7 +9,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.common.exception.JDBCException;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
 import com.members.model.MembersVO;
+import com.picture.model.PictureResult;
 import com.picture.model.PictureVO;
 import com.product.model.ProductVO;
 
@@ -155,19 +159,7 @@ public class OrdersJDBCDAO implements OrdersDAO_Interface{
 			ps.setInt(1, id);
 			rs=ps.executeQuery();
 			while(rs.next()) {
-				ordersVO=new OrdersVO();
-				ordersVO.setOrderId(rs.getInt("order_id"));
-				ordersVO.setMemberId(rs.getInt("member_id"));
-				ordersVO.setRecipient(rs.getString("recipient"));
-				ordersVO.setPhone(rs.getString("phone"));
-				ordersVO.setAddress(rs.getString("address"));
-				ordersVO.setSumPrice(rs.getInt("sum_price"));
-				ordersVO.setBonus(rs.getInt("bonus"));
-				ordersVO.setDiscount(rs.getInt("discount"));
-				ordersVO.setPayPrice(rs.getInt("pay_price"));
-				ordersVO.setStatus(rs.getInt("status"));
-				ordersVO.setCreateTime(rs.getTimestamp("create_time"));
-				ordersList.add(ordersVO);			
+				ordersList.add(buildOrdersVO(rs));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -288,7 +280,51 @@ public class OrdersJDBCDAO implements OrdersDAO_Interface{
 
 	}
 
+	public PageResult<OrdersVO> getPageResult(PageQuery pq) throws JDBCException {
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		String baseSQL = "select order_id, member_id, recipient, phone, address, "
+				+ "sum_price, bonus, discount, pay_price, status, create_time from orders ";
+		int total = 0;
+		List<OrdersVO> ordersList = new ArrayList<>();
+		try (Connection con=JDBCConnection.getRDSConnection()){
+			ps=con.prepareStatement(pq.getTotalCountSQL(baseSQL));
+			rs=ps.executeQuery();
+			rs.next();
+			total = rs.getInt(1);
+			rs.close();
+			ps.close();
+			ps=con.prepareStatement(pq.getQuerySQL(baseSQL));
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				ordersList.add(buildOrdersVO(rs));
+			}
+			System.out.println(ordersList);
+			rs.close();
+			ps.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new JDBCException("getPageResult() ::: Connection con is NULL !!");
+		}
+		return new PageResult<OrdersVO>(pq, ordersList, total);
+	}
 
+
+	public OrdersVO buildOrdersVO(ResultSet rs) throws SQLException {
+		OrdersVO ordersVO=new OrdersVO();
+		ordersVO.setOrderId(rs.getInt("order_id"));
+		ordersVO.setMemberId(rs.getInt("member_id"));
+		ordersVO.setRecipient(rs.getString("recipient"));
+		ordersVO.setPhone(rs.getString("phone"));
+		ordersVO.setAddress(rs.getString("address"));
+		ordersVO.setSumPrice(rs.getInt("sum_price"));
+		ordersVO.setBonus(rs.getInt("bonus"));
+		ordersVO.setDiscount(rs.getInt("discount"));
+		ordersVO.setPayPrice(rs.getInt("pay_price"));
+		ordersVO.setStatus(rs.getInt("status"));
+		ordersVO.setCreateTime(rs.getTimestamp("create_time"));
+		return ordersVO;
+	}
 
 
 

@@ -2,7 +2,10 @@ package com.orders.model;
 
 import java.util.List;
 
+import com.common.exception.JDBCException;
 import com.common.model.JDBCDAO_Interface;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
 
 public interface OrdersDAO_Interface extends JDBCDAO_Interface<OrdersVO> {
 
@@ -20,4 +23,7 @@ public interface OrdersDAO_Interface extends JDBCDAO_Interface<OrdersVO> {
 	
 	//
 	public void addProduct2Order(Integer orderId, Integer productId,Integer quantity,Integer price);
+
+	//分頁搜尋
+	public PageResult<OrdersVO> getPageResult(PageQuery pq) throws JDBCException;
 }
