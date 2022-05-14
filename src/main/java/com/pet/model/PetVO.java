@@ -68,7 +68,11 @@ public class PetVO {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
+	public com.picture.model.PictureVO getPicVO(){
+		com.picture.service.PictureService picSvc = new com.picture.service.PictureService();
+		com.picture.model.PictureVO picVO = picSvc.getOne(pictureId);
+		return picVO;
+	}
 	public String toString() {
 		return "PetVO[ "+ petId + ", " + memberId + ", " + petName + ", " + sort1Id+ ", " + gender+ ", " + introduction+ ", " + pictureId+ ", " + birthday+ ", " + status + " ]";
 	}

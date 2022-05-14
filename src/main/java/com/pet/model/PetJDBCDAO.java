@@ -37,7 +37,8 @@ public class PetJDBCDAO implements PetDAO_interface{
 				int index = 1;
 				int breed = petVO.getSort1Id();
 				pstmt.setInt(index++, petVO.getMemberId());
-				pstmt.setString(index++, petVO.getPetName().trim());
+				if (petVO.getPetName() != null) pstmt.setString(index++, petVO.getPetName().trim());
+				else pstmt.setNull(index++, 0);
 				pstmt.setInt(index++, breed);
 				if (petVO.getGender() != null) pstmt.setInt(index++, petVO.getGender());
 				else pstmt.setNull(index++, 0);
@@ -362,11 +363,7 @@ public class PetJDBCDAO implements PetDAO_interface{
 			try {
 				PreparedStatement pstmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 				int index = 1;
-				int defaultPic = 1000;
-				switch (petVO.getSort1Id()) {
-					case 1:
-						defaultPic = 999;
-				}
+				int defaultPic = 999;
 				pstmt.setInt(index++, petVO.getMemberId());
 				pstmt.setInt(index++, petVO.getSort1Id());
 				pstmt.setInt(index++, defaultPic);
