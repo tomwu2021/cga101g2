@@ -53,8 +53,7 @@
 					<!--sidebar widget start ========================================= -->
 					<aside class="sidebar_widget">
 						<div class="widget_inner">
-							<!--                 <div class="widget_list widget_filter">
-<!--                                 <h3>Filter by price</h3> -->
+							<!--                 <div class="widget_list widget_filter">                                <h3>Filter by price</h3> -->
 							<!--                                 <form action="#">  -->
 							<!--                                     <div id="slider-range"></div>    -->
 							<!--                                     <button type="submit">Filter</button> -->
@@ -69,7 +68,7 @@
 								</h3>
 							</div>
 							
-							<FORM METHOD="post" ACTION="/CGA101G2/member/groupOrder.do" name="join">
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/groupOrder.do" name="join">
 							<div  class="widget_list widget_color">
 								<h3>
 									<a href="javascript:document.join.submit();">我要跟團</a>

@@ -17,7 +17,6 @@ public class GroupOrderVO implements java.io.Serializable {
 	private Integer status;
 	private Integer minAmount;
 	private ProductVO productVO;
-	private PictureVO pictureVO;
 
 	public GroupOrderVO() {
 	}
@@ -98,13 +97,6 @@ public class GroupOrderVO implements java.io.Serializable {
 		this.productVO = productVO;
 	}
 
-	public PictureVO getPictureVO() {
-		return pictureVO;
-	}
-
-	public void setPictureVO(PictureVO pictureVO) {
-		this.pictureVO = pictureVO;
-	}
 
 	@Override
 	public String toString() {

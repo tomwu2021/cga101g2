@@ -12,8 +12,6 @@ import java.util.List;
 import com.common.exception.JDBCException;
 import com.common.model.PageQuery;
 import com.common.model.PageResult;
-import com.members.model.MembersVO;
-import com.picture.model.PictureResult;
 import com.picture.model.PictureVO;
 import com.product.model.ProductVO;
 

@@ -102,6 +102,29 @@ public class PictureJDBCDAO implements PictureDAO_Interface {
 		return null;
 	}
 
+	public List<PictureVO> queryShopPicturesByMapping(Integer productId,Connection con) throws SQLException {
+		String sql = "SELECT p.* FROM picture p JOIN  product_img t ON(p.picture_id=t.product_img_id) WHERE "
+				+ " t.product_id = ? " ;
+		if (con != null) {
+			PreparedStatement stmt = con.prepareStatement(sql);
+//				int index = 0;
+				stmt.setInt(1, productId);
+//				stmt.setString(++index, mtd.getColumn1());
+//				stmt.setInt(++index, mtd.getId1());
+			ResultSet rs = stmt.executeQuery();
+			List<PictureVO> pvos = new ArrayList<PictureVO>();
+			while (rs.next()) {
+				PictureVO pvo = buildPictureVO(rs);
+				pvos.add(pvo);
+			}
+			rs.close();
+			stmt.close();
+			return pvos;
+		}
+		return null;
+	}
+
+
 	@Override
 	public PictureVO getOneById(Integer pv) {
 		Connection con = JDBCConnection.getRDSConnection();

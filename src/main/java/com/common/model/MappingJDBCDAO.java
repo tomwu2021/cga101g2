@@ -24,6 +24,7 @@ public class MappingJDBCDAO {
 				stmt.setInt(1, mtd.getId1());
 				stmt.setInt(2, mtd.getId2());
 				stmt.execute();
+				stmt.close();
 				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -33,22 +34,13 @@ public class MappingJDBCDAO {
 		return false;
 	}
 
-	public boolean insertOneMapping(MappingTableDto mtd) {
+	public boolean insertOneMapping(MappingTableDto mtd) throws SQLException {
 		Connection con = JDBCConnection.getRDSConnection();
-
-		try {
-			if (insertOneMapping(mtd, con)) {
-				con.close();
-				return true;
-			} else {
-				con.close();
-				return false;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+		if (insertOneMapping(mtd, con)) {
+			return true;
 		}
-
+		con.close();
+		return false;
 	}
 
 	public boolean insertMultiMapping(List<MappingTableDto> mtds, Connection con) {
@@ -58,8 +50,7 @@ public class MappingJDBCDAO {
 				String table1 = mtds.get(0).getTableName1();
 				String column1 = mtds.get(0).getColumn1();
 				String column2 = mtds.get(0).getColumn2();
-				String sql = "insert into " + table1 + "(" + column1 + ", " + column2
-				+ ") values(?,?);";
+				String sql = " INSERT INTO " + table1 + "(" + column1 + ", " + column2 + ") " + " VALUES(?,?) ";
 				stmt = con.prepareStatement(sql);
 				for (MappingTableDto mtd : mtds) {
 					stmt.setInt(1, mtd.getId1());
@@ -151,16 +142,16 @@ public class MappingJDBCDAO {
 		}
 		return false;
 	}
+
 	public boolean deleteMultiMapping(MappingTableDto mtd) throws SQLException {
 		Connection con = JDBCConnection.getRDSConnection();
-		if(deleteMultiMapping(mtd,con)) {
+		if (deleteMultiMapping(mtd, con)) {
 			con.close();
 			return true;
 		}
 		con.close();
 		return false;
-		
-	}
 
+	}
 
 }

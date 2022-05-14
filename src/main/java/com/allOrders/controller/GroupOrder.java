@@ -1,6 +1,7 @@
 package com.allOrders.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.group_buyer.model.GroupBuyerService;
 import com.group_buyer.model.GroupBuyerVO;
 import com.group_order.model.GroupOrderService;
@@ -28,12 +30,12 @@ import com.ranks.model.RanksVO;
 @WebServlet("/member/groupOrder.do")
 public class GroupOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	Gson gson  = new Gson();
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-		res.setContentType("text/html;charset=UTF-8");
-		req.setCharacterEncoding("UTF-8");
 
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 		MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 		String action = req.getParameter("action");
@@ -41,7 +43,8 @@ public class GroupOrder extends HttpServlet {
 		
 		//進入參團頁面
 		if ("joinGroupOrder".equals(action)) {
-
+			res.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = res.getWriter();
 			System.out.println("有進入");
 			//查詢現在有開團的
 			GroupOrderService groupOrderService=new GroupOrderService();			

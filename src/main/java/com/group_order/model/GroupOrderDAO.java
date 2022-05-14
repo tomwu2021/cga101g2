@@ -1,5 +1,7 @@
 package com.group_order.model;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class GroupOrderDAO implements GroupOrderDAO_Interface{
@@ -53,6 +55,11 @@ public class GroupOrderDAO implements GroupOrderDAO_Interface{
 	}
 
 	@Override
+	public List<GroupOrderVO> getAllInProgress2(Connection con) {
+		return null;
+	}
+
+	@Override
 	public List<GroupOrderVO> getAllInProgressByProductId(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
@@ -61,6 +68,11 @@ public class GroupOrderDAO implements GroupOrderDAO_Interface{
 	@Override
 	public List<GroupOrderVO> getAllInProgress() {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<GroupOrderVO> getAllInProgress(Connection con) throws SQLException {
 		return null;
 	}
 

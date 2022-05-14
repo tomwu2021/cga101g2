@@ -1,9 +1,6 @@
 package com.group_order.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -201,8 +198,7 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface{
 		return groupOrderList;
 	}
 
-	@Override
-	public List<GroupOrderVO> getAllInProgress() {
+	public List<GroupOrderVO> getAllInProgress(Connection con) {
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		String getAllByProductIdSql="select * from group_order o "
@@ -212,7 +208,7 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface{
 				+ "where o.status=0 group by o.group_order_id";
 		GroupOrderVO groupOrderVO=null;
 		List<GroupOrderVO> groupOrderList=new ArrayList<GroupOrderVO>();
-		try (Connection con=JDBCConnection.getRDSConnection()){
+		try {
 			ps=con.prepareStatement(getAllByProductIdSql);
 			rs=ps.executeQuery();
 			while(rs.next()) {
@@ -229,13 +225,65 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface{
 				productVO.setStatus(rs.getInt("status"));
 				PictureVO pictureVO=new PictureVO();
 				pictureVO.setPreviewUrl(rs.getString("preview_url"));
-				groupOrderVO.setPictureVO(pictureVO);
 				groupOrderVO.setProductVO(productVO);
 			}
+			rs.close();
+			ps.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return groupOrderList;
 	}
 
+	@Override
+	public List<GroupOrderVO> getAllInProgress() throws SQLException {
+		Connection con = JDBCConnection.getRDSConnection();
+		List<GroupOrderVO> groupOrderVOList = getAllInProgress(con);
+		con.close();
+		return groupOrderVOList;
+	}
+
+
+	public List<GroupOrderVO> getAllInProgress2(Connection con) {
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		String getAllByProductIdSql="select * from group_order o "
+				+ " join product p on(p.product_id=o.product_id) "
+				+ " where o.status=0 ";
+		List<GroupOrderVO> groupOrderList=new ArrayList<GroupOrderVO>();
+		try {
+			ps=con.prepareStatement(getAllByProductIdSql);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				GroupOrderVO groupOrderVO = new GroupOrderVO();
+				groupOrderVO.setGroupOrderId(rs.getInt("group_order_id"));
+				groupOrderVO.setProductId(rs.getInt("o.product_id"));
+				groupOrderVO.setStatus(rs.getInt("o.status"));
+				ProductVO productVO = new ProductVO();
+				productVO.setPrice(rs.getInt("price"));
+				productVO.setProductName(rs.getString("product_name"));
+				productVO.setGroupPrice1(rs.getInt("group_price1"));
+				productVO.setGroupAmount1(rs.getInt("group_amount1"));
+				productVO.setGroupAmount2(rs.getInt("group_amount2"));
+				productVO.setGroupAmount3(rs.getInt("group_amount3"));
+				productVO.setDescription(rs.getString("description"));
+				productVO.setStatus(rs.getInt("p.status"));
+				groupOrderVO.setProductVO(productVO);
+				groupOrderList.add(groupOrderVO);
+			}
+			rs.close();
+			ps.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return groupOrderList;
+	}
+
+	public List<GroupOrderVO> getAllInProgress2() throws SQLException {
+		Connection con=JDBCConnection.getRDSConnection();
+		List<GroupOrderVO> groupOrderList = getAllInProgress2(con);
+		con.close();
+		return groupOrderList;
+	}
 }
