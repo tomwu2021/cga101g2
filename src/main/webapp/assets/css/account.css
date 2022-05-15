@@ -1,0 +1,369 @@
+/* container  */
+.container-bg {
+    position: relative;
+    margin-bottom: 15px;
+    padding: 15px 5px;
+    border-radius: 5px;
+    font-family: 'Microsoft JhengHei', sans-serif;
+}
+
+/* panel-title */
+.panel-title {
+    position: relative;
+    margin-bottom: 8px;
+    color: #5a5a5a;
+    line-height: 2em;
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 0;
+}
+
+.panel-title span {
+    position: relative;
+    display: block;
+}
+
+.panel-title span:after {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    bottom: 0;
+    visibility: visible;
+    border-bottom: 5px solid #ebebeb;
+    z-index: -1;
+}
+
+.panel-title b {
+    position: relative;
+    display: inline-block;
+    padding: 0.1em;
+}
+
+.panel-title::after {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    bottom: 0;
+    visibility: visible;
+    border-bottom: 2px solid #F53737;
+}
+
+.panel-title b em {
+    margin: 0 5px 0 0;
+    font-size: 13px;
+    font-weight: normal;
+    color: #5A5A5A;
+}
+
+.panel-title em {
+    display: inline-block;
+    margin-left: 10px;
+    line-height: 1.75em;
+    font-size: 13px;
+    font-weight: normal;
+    color: #B71816;
+}
+
+.panel-title em cite {
+    margin: 0 3px;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    vertical-align: bottom;
+}
+
+.panel-title i::before {
+    color: #B71816;
+    margin-right: 0.5em;
+}
+
+.panel-title i.icon-paste-solid::before {
+    font-size: 1.2em;
+}
+
+.panel-title i.icon-globe-1::before,
+.panel-title i.icon-flight::before {
+    font-size: 1.2em;
+    margin-right: 0.2em;
+}
+
+.panel-title i.svg-taiwan::before {
+    content: ' ';
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    margin-right: 0.2em;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-image: url(images/icon-svg-taiwan.svg);
+    vertical-align: text-bottom;
+}
+
+.panel-title button {
+    width: 45px;
+    height: 33px;
+    cursor: pointer;
+    vertical-align: bottom;
+}
+
+.panel-title button i::before {
+    color: #666;
+    margin: 0;
+    line-height: 0;
+    padding-top: 1.25em;
+}
+
+.panel-title .btn-close {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    width: 33px;
+    height: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+}
+
+.panel-title .btn-close i::before {
+    margin: 0;
+    padding: 0;
+    color: #666;
+    font-size: 15px;
+    line-height: 30px;
+}
+
+.panel-title .btn-close:hover {
+    text-decoration: none;
+}
+
+/* mod-002 */
+.mod-002 {
+    margin-bottom: 15px;
+}
+
+.mod-002 .card {
+    position: relative;
+    width: 100%;
+    padding: 5px 5px 8px;
+    border: 1px solid #C0C0C0;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #8C8C8C;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-height: 100px\9;
+}
+
+.mod-002 .card a {
+    color: #F47378;
+    text-decoration: none;
+}
+
+.mod-002 .card a:hover {
+    text-decoration: underline;
+}
+
+.mod-002 .card .info {
+    position: relative;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.mod-002 .card .title {
+    width: 100%;
+    display: block;
+    flex-grow: 1;
+    flex-shrink: 1;
+    color: #F47378;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.mod-002 .card .title+strong {
+    width: 85px;
+    display: block;
+    margin-left: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+    text-align: center;
+    color: #5A5A5A;
+    border-left: 1px solid #d7d7d7;
+    word-wrap: break-word;
+}
+
+.mod-002 .card .title+p {
+    display: block;
+}
+
+.mod-002 .card .right {
+    margin-left: auto;
+    line-height: 1em;
+}
+
+.mod-002 .card .info .font-s {
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.mod-002 .card .note {
+    padding-top: 15px;
+}
+
+.mod-002 .card .note li {
+    margin: 0 0 8px;
+    line-height: 18px;
+}
+
+.mod-002 .card .note li:last-child {
+    margin-bottom: 0;
+}
+
+.mod-002 .card b {
+    font-weight: 400;
+    font-size: 20px;
+    padding: 0 5px;
+}
+
+.mod-002 .card b a {
+    color: #d80000;
+}
+
+.mod-002 .card-wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+
+.mod-002 .card-wrap .item {
+    width: 25%;
+    padding: 0 5px 0;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    display: flex;
+    float: left\9;
+}
+
+.mod-002 .card-wrap.item-a .item:first-child {
+    width: 50%;
+}
+
+.mod-002 .card-wrap.item-a .note {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.mod-002 .card-wrap .note {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.mod-002 .row {
+    display: table-row;
+}
+
+.mod-002 .flex {
+    display: flex;
+}
+
+.mod-002 .card-wrap .cell {
+    display: table-cell;
+    vertical-align: top;
+    color: #5A5A5A;
+    /* height: 75px; */
+    border-left: 1px solid #d7d7d7;
+}
+
+.mod-002 .card-wrap .cell:first-child {
+    border-left: none;
+    padding-right: 5px;
+}
+
+.mod-002 .card-wrap .cell:last-child {
+    padding-left: 5px;
+}
+
+.mod-002 .flex .box {
+    width: 50%;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.mod-002 .flex .box:first-child {
+    padding-right: 5px;
+    border-right: 1px solid #d7d7d7;
+}
+
+.mod-002 .flex .box:last-child {
+    padding-left: 5px;
+}
+
+.mod-002 .card-wrap.item-a .row {
+    display: table-row;
+}
+
+.mod-002 .card-wrap.item-a .cell {
+    display: table-cell;
+    vertical-align: top;
+    color: #5A5A5A;
+    /* height: 75px; */
+    border-left: 1px solid #d7d7d7;
+}
+
+.mod-002 .card-wrap.item-a .cell:first-child {
+    border-left: none;
+    padding-right: 5px;
+}
+
+.mod-002 .card-wrap.item-a .cell:last-child {
+    padding-left: 5px;
+}
+
+.mod-002 .card-wrap.item-a ul {
+    width: 100%;
+}
+
+.mod-002 .card-wrap .item:first-child {
+    padding: 0 5px 0 0;
+}
+
+.mod-002 .card-wrap .item:last-child {
+    padding: 0 0 0 5px;
+}
+
+.mod-002 .btn-more {
+    margin: 0 auto 25px;
+    width: 95%;
+    padding: 13px 5px;
+    display: inline-block;
+    line-height: 1.75em;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    font-size: 13px;
+    color: #797979;
+}
+
+.mod-002 .btn-more i {
+    display: block;
+    margin-top: 0.35em;
+}
+
+.mod-002 .btn-more i::before {
+    font-size: 1.35em;
+    text-align: center;
+    color: #666;
+}
