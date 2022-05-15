@@ -112,5 +112,15 @@ public class WishlistJDBCDAO implements WishlistDAO_interface{
 		}
 		return null;
 	}
+	@Override
+	public boolean insertWishlistVO(WishlistVO wishlistVO) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public WishlistVO getOneWishlistVOForCheck(Integer memberId, Integer productId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

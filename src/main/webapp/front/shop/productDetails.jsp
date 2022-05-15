@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.picture.model.*"%>
 <%@ page import="java.util.*"%>
 <%-- <% --%>
@@ -16,7 +17,6 @@
 
 <!-- 額外添加的CSS -->
 <!-- 	路徑舉例 -->
-<%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/back/css/????.css"> --%>
 <!-- 額外添加的CSS -->
 </head>
 <body>
@@ -55,43 +55,25 @@
 				<div class="col-lg-6 col-md-6">
 					<div class="product-details-tab">
 						<div id="img-1" class="zoomWrapper single-zoom">
-<jsp:useBean id="imgSvc" scope="page" class="com.product_img.model.ProductImgService" />														
-<c:set var="pictureVOList" scope="page" value="${imgSvc.getPicVOsByProductId(param.productId)}"></c:set>
-<!-- 				<pictureVOList 首圖一張開始>				 -->
-<!-- 				防止超出索引值判斷/有圖放圖/開始			 -->
-<c:if test="${pictureVOList.size() != 0 }">
+<!-- 				<pictureVOList 首圖一開始>	-->
+<c:if test="${pictureVOList.size() >= 1 }">
 							<a href="#"> <img id="zoom1"
 								src="${pictureVOList.get(0).url}"
 								data-zoom-image="${pictureVOList.get(0).url}" alt="big-1" />
 							</a>
 </c:if>		
-<!-- 				防止超出索引值判斷/有圖放圖/開始		 -->
-<!-- 				防止超出索引值判斷/沒圖放預設圖/開始			 -->
-<c:if test="${pictureVOList.size() == 0 }">
-							<a href="#"> <img id="zoom1"
-								src="https://d148yrb2gzai3l.cloudfront.net/thumbs/132bbcf5-c503-11ec-99b3-a77a059327a2-pexels-alotrobo-1562983.jpg?d=600x400"
-								data-zoom-image="https://d148yrb2gzai3l.cloudfront.net/thumbs/132bbcf5-c503-11ec-99b3-a77a059327a2-pexels-alotrobo-1562983.jpg?d=600x400" alt="big-1" />
-							</a>
-</c:if>	
-<!-- 				防止超出索引值判斷/沒圖放預設圖/開始			 -->	
-<!-- 				<pictureVOList 首圖一結束>	-->
+<!-- 				<pictureVOList 首圖二開始>	-->
 						</div>
 						<div class="single-zoom-thumb">
 							<ul class="s-tab-zoom owl-carousel single-product-active"
 								id="gallery_01">
-<!-- 				<pictureVOList 如果有第二張循環開始>				 -->
-<!-- 				防止超出索引值判斷/有圖放圖/開始			 -->
-<c:if test="${pictureVOList.size() >= 2  && pictureVOList.size()!=0}">
-<c:forEach var="pictureVO" items="${pictureVOList}">	
+<c:if test="${productVO.pictureVOList.size() >= 2}">
 								<li><a href="#" class="elevatezoom-gallery active"
-									data-update="" data-image="${pictureVO.url}"
-									data-zoom-image="${pictureVO.url}">
-										<img src="${pictureVO.url}" alt="zo-th-1" />
+									data-update="" data-image="${productVO.pictureVOList.get(1).previewUrl}"
+									data-zoom-image="${productVO.pictureVOList.get(1).previewUrl}">
+										<img src="${productVO.pictureVOList.get(1).previewUrl}" alt="zo-th-1" />
 								</a></li>
-</c:forEach>		
 </c:if>		
-<!-- 				防止超出索引值判斷/有圖放圖/結束			 -->
-<!-- 				<pictureVOList 如果有第二張循環結束>				 -->
 							</ul>
 						</div>
 					</div>
@@ -109,8 +91,9 @@
 								<p>PCLUB品質保證</p>
 							</div>
 							<div class="product_variant quantity">
-								<label>數量</label> <input name="productAmout" min="1" max="100" step="1" value="1"
-									type="number" />
+								<label>數量</label>
+								 <input name="productAmout" min="1" max="999" step="1" value="1" type="number" />
+								<label>  &emsp; 還剩  &emsp; ${param.amount}  &emsp; 件</label>	
 							</div>
 							<div class="product_variant quantity">
 								<button class="button" type="submit" style="position: relative; right:20px;" onclick="document.getElementById('addForm').submit()">加入購物車</button>
@@ -121,9 +104,17 @@
 							<input type="hidden" name="productPictureUrl" value="${pictureVOList.get(0).previewUrl}">
 							<input type="hidden" name="action" value="ADDONE">
 							</form>
+							
 							<div class="product_d_action">
 								<ul>
-									<li><button type="button" class="btn btn-outline-danger"><i class="bi bi-heart">加入收藏</i></button></li>
+<!-- 									會員使否有收藏該商品的判斷 -->
+									<c:if test="${wishlistVO.productId != param.productId }">
+									<li><button id="Wlishlist${param.productId}" value="0" type="button" class="btn btn-outline-danger"><i class="bi bi-heart">加入收藏</i></button></li>
+									</c:if> 
+									<c:if test="${wishlistVO.productId == param.productId }">
+									<li><button id="Wlishlist${param.productId}" value="1" type="button" class="btn btn-danger"><i class="bi bi-heart">已加入收藏</i></button></li>
+									</c:if> 
+<!-- 									會員使否有收藏該商品的判斷 -->									
 								</ul>
 							</div>
 							<div class="product_meta">
@@ -200,8 +191,9 @@
 
 	<!-- 額外添加的JS -->
 	<jsp:include page="/front/layout/showMessage.jsp" />
-	<!-- 	路徑舉例 -->
-	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/back/js/?????.js"> --%>
+	<script 
+		src="<%=request.getContextPath()%>/assets/shop/wishlist.js"> 
+	</script>
 	<!-- 額外添加的JS -->
 
 </body>

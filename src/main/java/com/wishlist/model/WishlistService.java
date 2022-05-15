@@ -23,4 +23,15 @@ public class WishlistService {
 	public WishlistVO insert(WishlistVO wishlistVO) {
 		return dao.insert(wishlistVO);
 	}
+	
+	public boolean insertWishlistVO(WishlistVO wishlistVO) {
+		return dao.insertWishlistVO(wishlistVO);
+	}
+	
+	public WishlistVO  getOneWishlistVOForCheck(Integer memberId,Integer productId){
+		return dao.getOneWishlistVOForCheck(memberId, productId);
+	}
 }
+
+
+
