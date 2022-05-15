@@ -38,10 +38,9 @@ public class IndexController extends CommonController {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 //		/*************************** 公告list，商城list，每篇第一張圖片 **************************************/
 			ArticleService artiSvc = new ArticleService();
-			PostService postSvc = new PostService();
 			List<ArticleVO> aList0 = artiSvc.getByArtiType(0);
 			List<ArticleVO> aList1 = artiSvc.getByArtiType(1);
-			List<PostVO> postList = postSvc.selectHotPost();
+			List<PostVO> postList = artiSvc.getHotPosts();
 			req.setAttribute("aList0", aList0);
 			req.setAttribute("aList1", aList1);
 			req.setAttribute("postList", postList);

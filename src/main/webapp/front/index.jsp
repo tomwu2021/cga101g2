@@ -2,11 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.picture.model.*"%>
 <%@ page import="java.util.*"%>
-<%-- <% --%>
-<!-- // PictureVO pictureVOList = (PictureVO) request.getAttribute("pictureVOList");  -->
-<!-- // // EmpVO empVO = (EmpVO) request.getAttribute("empVO"); -->
-<!-- // //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件) -->
-<%-- %> --%>
+
 <html>
 <head>
 <title>PCLUB-寵物們的快樂天堂</title>
@@ -71,7 +67,7 @@
 					<div class="col-lg-12 col-md-12 col-sm-12">
 					    <figure class="single_banner">
 					        <div class="banner_thumb">
-					            <a href="shop.html"><img src='${artiVO.picVO.url}' alt="" style="max-height:100%;width:100%"></a>
+					            <a href="${artiVO.content}"><img src='${artiVO.picVO.url}' alt="" style="max-height:100%;width:100%"></a>
 					        </div>
 					    </figure>
 					</div>
@@ -99,11 +95,11 @@
                         <c:forEach var="postVO" items="${postList}">
                         <div class="col-lg-4">
                             <div class="single-testimonial">
-                                <div class="testimonial_author">
-                                    <a href="#">${postVO.memberId}</a>
+                                <div class="testimonial_author mb-1">
+                                    <a href="<%=request.getContextPath()%>/PersonPost?action=getOne_For_Display&memberId=${postVO.memberId}"  style='line-height:36px;font-size:20px;'><img src='${postVO.pictureVO2.previewUrl}' style='display:inline-block;height:32px;width:32px;object-fit:cover;border-radius:50%;'>&nbsp;&nbsp;${postVO.membersVO.name}</a>
                                 </div>
                                 <div class="testimonial_thumb">
-                                    <a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"><img src="${postVO.pictureVO.url}" alt=""></a>
+                                    <a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"><img src="${postVO.pictureVO.url}" style='border-radius:20px;'></a>
                                 </div>
                                 <div class="testimonial_content">
                                     <div class="testimonial-rating">
@@ -112,7 +108,7 @@
                                             <li><a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"> ${postVO.likeCount} 個讚</a></li>
                                         </ul>
                                     </div>
-                                    <p style='height:7vh;overflow:hidden;display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;text-overflow: ellipsis;'>${postVO.content}</p>
+                                    <p style='height:7vh;overflow:hidden;display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;text-overflow: ellipsis;text-align:start;'>${postVO.content}</p>
                                 </div>
                             </div>
                         </div>
