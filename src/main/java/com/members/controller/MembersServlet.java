@@ -119,10 +119,18 @@ public class MembersServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				session.setAttribute("membersVO", membersVO);
 				req.setAttribute("membersVO", membersVO); // 資料庫取出的 membersVO 物件，存入 req
-				String url = "/article?action=all_Display";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
-				return;
+
+				if (session.getAttribute("location") != null) {
+					String url = session.getAttribute("location").toString();
+					System.out.println(url);
+					res.sendRedirect(url);
+					return;
+				} else {
+					RequestDispatcher successView = req.getRequestDispatcher("/article?action=all_Display");
+					successView.forward(req, res);
+					return;
+				}
+
 			} else if (membersVO == null) {
 				messages.put("messagesPassword", "請確認會員密碼");
 				messages.put("originalAccount", loginAccount);

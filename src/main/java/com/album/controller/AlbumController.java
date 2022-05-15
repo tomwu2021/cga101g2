@@ -79,7 +79,6 @@ public class AlbumController extends CommonController {
 		action = action == null ? "list" : action;
 		System.out.println(action);
 		switch (action) {
-// JSON使用out.write(必回)
 		case "addAlbum":
 			addAlbum(req, res);
 			break;
