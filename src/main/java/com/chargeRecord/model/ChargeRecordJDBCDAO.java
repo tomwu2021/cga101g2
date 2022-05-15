@@ -3,7 +3,7 @@ package com.chargeRecord.model;
 import java.sql.*;
 import java.util.*;
 import com.members.model.*;
-import connection.JDBCConnection;
+import connection.JNDIConnection;
 
 public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 
@@ -12,11 +12,11 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 // 情境一 insert：會員儲值或消費成功後，新增一筆儲值紀錄，並將金額加入到 member 表格中的 E_WALLET_AMOUNT
 	@Override
 	public ChargeRecordVO insert(ChargeRecordVO chargeRecordVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 
 		// 新增一筆儲值或消費紀錄
 		ChargeRecordVO chargeRecordVO2 = insert(chargeRecordVO, con);
-		
+
 		// 儲值或消費成功後，將金額加入 member 表格中的 E_WALLET_AMOUNT
 		MembersJDBCDAO memberDao = new MembersJDBCDAO();
 		MembersVO membersVO1 = new MembersVO();
@@ -67,7 +67,7 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 
 		final String GETALL = "SELECT record_id, member_id, charge_amount, record_time FROM charge_record;";
 
-		try (Connection con = JDBCConnection.getRDSConnection();
+		try (Connection con = JNDIConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
 
 			ResultSet rs = pstmt.executeQuery();
@@ -91,9 +91,9 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 	@Override
 	public List<ChargeRecordVO> getAll(Integer id) {
 
-		final String GETALL = "SELECT record_id, member_id, charge_amount, record_time,DATE_FORMAT(record_time,'%Y-%m-%d %H:%i') recordTimeString FROM charge_record WHERE member_id =?;";
+		final String GETALL = "SELECT record_id, member_id, charge_amount, record_time,DATE_FORMAT(record_time,'%Y-%m-%d %H:%i') recordTimeString FROM charge_record WHERE member_id =? order by record_time DESC;";
 
-		try (Connection con = JDBCConnection.getRDSConnection();
+		try (Connection con = JNDIConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
@@ -113,6 +113,45 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 		}
 		return null;
 	}
+
+	// 用 memberId 查詢某會員累積儲值金額
+	@Override
+	public Integer updateMemberRank(Integer memberId) {
+		con = JNDIConnection.getRDSConnection();
+		Integer sumChargeAmount = updateMemberRank(memberId, con);
+
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sumChargeAmount;
+	}
+
+	public Integer updateMemberRank(Integer memberId, Connection con) {
+		final String SELECT_SUM_CHARGE_AMOUNT = "SELECT sum(charge_amount) sumChargeAmount FROM cga_02.charge_record where member_id = ?;";
+		if (con != null) {
+
+			PreparedStatement pstmt;
+			try {
+				pstmt = con.prepareStatement(SELECT_SUM_CHARGE_AMOUNT);
+				pstmt.setInt(1, memberId);
+				ResultSet rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					int sumChargeAmount = rs.getInt("sumChargeAmount");
+					return sumChargeAmount;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		return null;
+	}
+
 	@Override
 	public ChargeRecordVO getOneById(Integer id) {
 		return null;

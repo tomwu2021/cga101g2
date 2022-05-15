@@ -64,4 +64,7 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 	
 	// 用 memberId 取得 eWalletPassword
 	public String geteWalletPassword(Integer memberId);
+	
+	// 修改會員等級
+	public Boolean updateRank(Integer memberId,Integer rankId);
 }
