@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>	發文頁面測試</title>
+<title>	發文頁面測試 </title>
 
 <!-- 共用的CSS start-->
 <%@include file="/front/layout/commonCSS.jsp"%>
@@ -58,9 +58,7 @@
 							<div class="col-lg-12">
 							<img src="add-image.png" class="ml-3" style="height:300px;width:300px;" onclick="add()" id="addimage">
 							<span style="color:#f33;">${errorMsgs.parts}</span>
-							</div>
-						
-						
+							</div>						
 					</div>		
 					
 					<div class="col-md-6">
@@ -74,18 +72,16 @@
 					   	</div>
 					   	
 					   	<div class="col-lg-6 ">
-									<input type="hidden" name="action" value="insert">
-									
-									
-									<input type="submit" value ="發文" class="btn btn-success" style="position: fixed; bottom: 120px; right: 150px;">
+							<input type="hidden" name="action" value="insert">									
+							<input type="submit" value ="發文" class="btn btn-success" style="position: fixed; bottom: 120px; right: 150px;">
 									
 						</div>
 						</form>
 						
-					</div>	
-				</div>
+				  </div>	
 			</div>
 		</div>
+	</div>
 		
 	<!-- 共通的footer start-->
 	<%@include file="/front/layout/footer.jsp"%>
