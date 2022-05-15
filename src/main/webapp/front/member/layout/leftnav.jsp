@@ -3,72 +3,27 @@
 <!-- 	筆記  class="sidebar-link text-white"  改變字體顏色 -->
  <div class="d-flex align-items-stretch">
       <div id="sidebar" class="sidebar py-3" >
-        <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">MAIN</div>
+        <div class="-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">&nbsp;</div>
         <ul class="sidebar-menu list-unstyled">
-          <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-gray" ><i class="o-home-1 mr-3 text-gray"></i><span>會員中心</span></a>
-            <div id="pages" class="collapse">
-              <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/layout/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/TEST.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/layout/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/layout/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
+          <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#member" aria-expanded="false" aria-controls="pages" class="sidebar-link " ><i class="bi bi-house-door-fill mr-3 "></i><span>會員中心</span></a>
+            <div id="member" class="collapse">
+              <ul class="sidebar-menu list-unstyled border-left border-thick">
+                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/front/member/member.jsp" class="sidebar-link  pl-lg-5">基本資料</a></li>
+                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/layout/footer.jsp" class="sidebar-link  pl-lg-5">Ｐ幣錢包 </a></li>
+                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/layout/footer.jsp" class="sidebar-link  pl-lg-5">我的訂單 </a></li>
               </ul>
             </div>
           </li>
           
-           <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-gray" ><i class="o-sales-up-1 mr-3 text-gray"></i><span>商品</span></a>
-            <div id="pages" class="collapse">
-              <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/layout/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/layout/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/layout/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/layout/footer.jspp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
+           <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pet" aria-expanded="false" aria-controls="pages" class="sidebar-link " ><i class="bi bi-clipboard-heart mr-3 "></i><span>寵物日記</span></a>
+            <div id="pet" class="collapse">
+              <ul class="sidebar-menu list-unstyled border-left border-thick">
+                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/pet?memberId=${membersVO.memberId}&action=profile" class="sidebar-link  pl-lg-5">寵物主頁 </a></li>
+                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/weight?action=all_Display&petId=${membersVO.petVO.petId}" class="sidebar-link  pl-lg-5">體重紀錄 </a></li>
+                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/activity?action=all_Display&petId=${membersVO.petVO.petId}" class="sidebar-link  pl-lg-5">活動紀錄 </a></li>
+                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/remind?action=all_Display&memberId=${membersVO.memberId}" class="sidebar-link  pl-lg-5">提醒事項 </a></li>
               </ul>
             </div>
           </li>
           
-             <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-gray" ><i class="o-database-1 mr-3 text-gray"></i><span>商品</span></a>
-            <div id="pages" class="collapse">
-              <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/index/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/index/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/index/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/index/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-              </ul>
-            </div>
-          </li>
-          
-       <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-gray" ><i class="o-table-content-1 mr-3 text-gray"></i><span>商品</span></a>
-            <div id="pages" class="collapse">
-              <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/index/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/index/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/index/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/index/footer.jsp" class="sidebar-link text-gray pl-lg-5">商品列表 </a></li>
-              </ul>
-            </div>
-          </li>
- 
-<!--               <li class="sidebar-list-item"><a href="charts.html" class="sidebar-link text-muted "><i class="o-sales-up-1 mr-3 text-white"></i><span>Charts</span></a></li> -->
-<!--               <li class="sidebar-list-item"><a href="tables.html" class="sidebar-link text-muted"><i class="o-table-content-1 mr-3 text-white"></i><span>Tables</span></a></li> -->
-<!--               <li class="sidebar-list-item"><a href="forms.html" class="sidebar-link text-muted"><i class="o-survey-1 mr-3 text-white"></i><span>Forms</span></a></li> -->
-<!--           <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-muted"><i class="o-wireframe-1 mr-3 text-white"></i><span>Pages</span></a> -->
-<!--             <div id="pages" class="collapse"> -->
-<!--               <ul class="sidebar-menu list-unstyled border-left border-primary border-thick"> -->
-<!--                 <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5">Page one</a></li> -->
-<!--                 <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5">Page two</a></li> -->
-<!--                 <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5">Page three</a></li> -->
-<!--                 <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5">Page four</a></li> -->
-<!--               </ul> -->
-<!--             </div> -->
-<!--           </li> -->
-<!--               <li class="sidebar-list-item"><a href="login.html" class="sidebar-link text-muted"><i class="o-exit-1 mr-3 text-white"></i><span>Login</span></a></li> -->
-<!--         </ul> -->
-<!--         <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">EXTRAS</div> -->
-<!--         <ul class="sidebar-menu list-unstyled"> -->
-<!--               <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-database-1 mr-3 text-white"></i><span>Demo</span></a></li> -->
-<!--               <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-imac-screen-1 mr-3 text-white"></i><span>Demo</span></a></li> -->
-<!--               <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-paperwork-1 mr-3 text-white"></i><span>Demo</span></a></li> -->
-<!--               <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-wireframe-1 mr-3 text-white"></i><span>Demo</span></a></li> -->
-<!--         </ul> -->
       </div>

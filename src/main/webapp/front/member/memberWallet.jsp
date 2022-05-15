@@ -54,6 +54,10 @@
 											<form method="post"
 												action="<%=request.getContextPath()%>/front/member.do"
 												id="payment-form">
+
+
+
+
 												<div class="row">
 													<div class="col-xs-12">
 														<div class="form-group">
@@ -65,11 +69,15 @@
 																<input type="text" class="form-control"
 																	name="storedValueAmount"
 																	placeholder="Stored value amount"
-																	autocomplete="cc-number" required autofocus />
+																	autocomplete="cc-number" required autofocus value="${messages.resStoredValueAmount}"/>
 															</div>
 														</div>
 													</div>
 												</div>
+
+
+
+
 												<div class="row">
 													<div class="col-xs-12" style="margin-top: 15px;">
 														<div class="form-group" style="display: inline-block">
@@ -82,12 +90,15 @@
 																<input type="tel" class="form-control" name="cardNumber"
 																	placeholder="Valid Card Number"
 																	autocomplete="cc-number" required autofocus
-																	value="${messages.cardNumber}" />
+																	value="${messages.resCardNumber}" />
 															</div>
 
 														</div>
 													</div>
 												</div>
+
+
+
 												<div class="row">
 													<div class="col-xs-7 col-md-7" style="margin-top: 15px;">
 														<div class="form-group">
@@ -107,6 +118,28 @@
 														</div>
 													</div>
 												</div>
+
+
+
+												<div class="row">
+													<div class="col-xs-12">
+														<div class="form-group">
+															<label for="cardNumber"
+																style="padding-left: 15px; margin-top: 20px; font-weight: bold; font-size: 20px">錢包密碼<font
+																color=red>
+																	${messages.inputErrorpasswordWallet}</font></label>
+															<div class="input-group"
+																style="width: 350px; padding-left: 15px">
+																<input type="text" class="form-control"
+																	name="passwordWallet"
+																	placeholder="Password Wallet" autocomplete="cc-number"
+																	required autofocus value="${messages.resPasswordWallet}"  />
+															</div>
+														</div>
+													</div>
+												</div>
+
+
 												<div class="row">
 													<div class="col-xs-12">
 														<div class="form-group"></div>
@@ -122,6 +155,9 @@
 															type="submit"
 															style="font-size: 16px; background-color: orange; line-height: 35px">送出</button>
 														<input type="hidden" name="action" value="walletAddMoney">
+														<% session.setAttribute("submit","OK"); %>
+														
+
 													</div>
 												</div>
 												<div class="row" style="display: none;">

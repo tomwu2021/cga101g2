@@ -4876,6 +4876,8 @@ textarea:-ms-input-placeholder {
 .footer_bottom {
   padding: 15px 0;
   background: #F53737;
+  position: relative;
+  z-index: 98;
 }
 
 @media only screen and (max-width: 767px) {
@@ -11602,9 +11604,9 @@ textarea:-ms-input-placeholder {
   left: 0;
   width: 100%;
   height: 100%;
-    background: radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0, .8));
+  background: radial-gradient(rgba(20, 20, 20, .8), rgba(0, 0, 0, .8));
 
-  background: -webkit-radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0,.8));
+  background: -webkit-radial-gradient(rgba(20, 20, 20, .8), rgba(0, 0, 0, .8));
 }
 
 /* :not(:required) hides these rules from IE9 and below */
@@ -11630,8 +11632,8 @@ textarea:-ms-input-placeholder {
   -o-animation: spinner 150ms infinite linear;
   animation: spinner 150ms infinite linear;
   border-radius: 0.5em;
-  -webkit-box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1.1em 0 0, rgba(255,255,255, 0.75) 0 1.5em 0 0, rgba(255,255,255, 0.75) -1.1em 1.1em 0 0, rgba(255,255,255, 0.75) -1.5em 0 0 0, rgba(255,255,255, 0.75) -1.1em -1.1em 0 0, rgba(255,255,255, 0.75) 0 -1.5em 0 0, rgba(255,255,255, 0.75) 1.1em -1.1em 0 0;
-box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1.1em 0 0, rgba(255,255,255, 0.75) 0 1.5em 0 0, rgba(255,255,255, 0.75) -1.1em 1.1em 0 0, rgba(255,255,255, 0.75) -1.5em 0 0 0, rgba(255,255,255, 0.75) -1.1em -1.1em 0 0, rgba(255,255,255, 0.75) 0 -1.5em 0 0, rgba(255,255,255, 0.75) 1.1em -1.1em 0 0;
+  -webkit-box-shadow: rgba(255, 255, 255, 0.75) 1.5em 0 0 0, rgba(255, 255, 255, 0.75) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) 0 1.5em 0 0, rgba(255, 255, 255, 0.75) -1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) -1.5em 0 0 0, rgba(255, 255, 255, 0.75) -1.1em -1.1em 0 0, rgba(255, 255, 255, 0.75) 0 -1.5em 0 0, rgba(255, 255, 255, 0.75) 1.1em -1.1em 0 0;
+  box-shadow: rgba(255, 255, 255, 0.75) 1.5em 0 0 0, rgba(255, 255, 255, 0.75) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) 0 1.5em 0 0, rgba(255, 255, 255, 0.75) -1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) -1.5em 0 0 0, rgba(255, 255, 255, 0.75) -1.1em -1.1em 0 0, rgba(255, 255, 255, 0.75) 0 -1.5em 0 0, rgba(255, 255, 255, 0.75) 1.1em -1.1em 0 0;
 }
 
 /* Animation */
@@ -11644,6 +11646,7 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     -moz-transform: rotate(360deg);
@@ -11652,6 +11655,7 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
     transform: rotate(360deg);
   }
 }
+
 @-moz-keyframes spinner {
   0% {
     -webkit-transform: rotate(0deg);
@@ -11660,6 +11664,7 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     -moz-transform: rotate(360deg);
@@ -11668,6 +11673,7 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
     transform: rotate(360deg);
   }
 }
+
 @-o-keyframes spinner {
   0% {
     -webkit-transform: rotate(0deg);
@@ -11676,6 +11682,7 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     -moz-transform: rotate(360deg);
@@ -11684,6 +11691,7 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
     transform: rotate(360deg);
   }
 }
+
 @keyframes spinner {
   0% {
     -webkit-transform: rotate(0deg);
@@ -11692,6 +11700,7 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(360deg);
     -moz-transform: rotate(360deg);
@@ -11700,53 +11709,55 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
     transform: rotate(360deg);
   }
 }
+
 /*<!-- loading -->*/
-#spinner{
-	display:none;
-	z-index:9999;
+#spinner {
+  display: none;
+  z-index: 9999;
   position: fixed;
 }
 
 
 /*<!-- chatroom -->*/
 
-.bi-x-lg,.bi-plus-lg {
+.bi-x-lg,
+.bi-plus-lg {
   font-weight: 600;
   font-size: 20px;
-  margin-left:10px;
+  margin-left: 10px;
 }
 
 
 
- .chatroom_list {
-   visibility: visible;
-   width: 360px;
-   min-height: 90vh;
-   max-height: 90vh;
-   padding: 20px;
-   right: 20px;
-   top: 7vh;
-   display: none;
-   overflow: auto;
- }
+.chatroom_list {
+  visibility: visible;
+  width: 360px;
+  min-height: 90vh;
+  max-height: 90vh;
+  padding: 20px;
+  right: 20px;
+  top: 7vh;
+  display: none;
+  overflow: auto;
+}
 
- .chatroom_window {
-   background: #fff;
-   box-shadow: 0 3px 11px 0 rgb(0 0 0 / 10%);
-   text-align: left;
-   transition: all .5s ease-out;
-   overflow: hidden;
-   z-index: 1;
-   border-radius: 3px;
-   visibility: visible;
-   width: 360px;
-   min-height: 450px;
-   padding: 20px;
-   right: 75px;
-   position: fixed;
-   bottom: 0;
-   display: none;
- }
+.chatroom_window {
+  background: #fff;
+  box-shadow: 0 3px 11px 0 rgb(0 0 0 / 10%);
+  text-align: left;
+  transition: all .5s ease-out;
+  overflow: hidden;
+  z-index: 1;
+  border-radius: 3px;
+  visibility: visible;
+  width: 360px;
+  min-height: 450px;
+  padding: 20px;
+  right: 75px;
+  position: fixed;
+  bottom: 0;
+  display: none;
+}
 
 .chat_container {
   height: 310px;
@@ -11758,16 +11769,19 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
   text-align: right;
   padding-right: 20px;
 }
-#message-list-ul>li{
-  height:50px;
+
+#message-list-ul>li {
+  height: 50px;
   border-radius: 10px;
 }
-.chat-button{
+
+.chat-button {
   font-weight: 500;
 }
-.chat-button:hover{
+
+.chat-button:hover {
   font-weight: 800;
   font-size: 22px;
   cursor: pointer;
-  margin-left:2.5px;
+  margin-left: 2.5px;
 }

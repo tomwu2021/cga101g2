@@ -15,7 +15,8 @@
 */
 body {
   /*font-family: "Open Sans", sans-serif;*/
-  background: #FAFAFE;
+  background: #F7F7F7;
+  /*#FAFAFE */
   height: calc(100% - 166px);
   /*color: #444444;*/
 }
@@ -350,7 +351,7 @@ ico
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
-.logo {
+/*.logo {
   line-height: 1;
 }
 
@@ -371,7 +372,7 @@ ico
   color: #012970;
   font-family: "Nunito", sans-serif;
 }
-
+*/
 .header {
   transition: all 0.5s;
   z-index: 997;
@@ -383,6 +384,7 @@ ico
   /* Search Bar */
 }
 
+/*
 .header .toggle-sidebar-btn {
   font-size: 32px;
   padding-left: 10px;
@@ -449,7 +451,7 @@ ico
 .header .search-form button i {
   color: #012970;
 }
-
+*/
 /*--------------------------------------------------------------
 # Header Nav
 --------------------------------------------------------------*/
@@ -587,15 +589,15 @@ ico
   top: 60px;
   left: 0;
   bottom: 0;
-  width: 300px;
-  z-index: 996;
-  transition: all 0.3s;
-  padding: 20px;
+  width: 260px;
+  z-index: 96;
+  transition: all 0.2s;
+  padding: 0;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
   /*box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);*/
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 1);
 }
 
 @media (max-width: 1199px) {

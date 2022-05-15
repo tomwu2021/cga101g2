@@ -37,7 +37,7 @@
 			<div class="col-lg-10">
 			<img src='new-pet.png' class='text-danger' style='width:360px;'>
 			<a href='<%=request.getContextPath()%>/front/pet/intro/add.jsp'>
-			<button class='btn btn-primary btn-lg'>新增寵物&nbsp;&nbsp;<i class='fas fa-plus'></i></button>
+			<button class='btn btn-lg' style='background-color:#F47378;border-bottom:3px solid #F53737;border-right:3px solid #F53737;'>新增寵物&nbsp;&nbsp;<i class='fas fa-plus'></i></button>
 			</a>
 			</div>
 

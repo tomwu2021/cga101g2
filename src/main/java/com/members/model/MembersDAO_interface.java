@@ -61,4 +61,7 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 	
 	// 紅利 消費/發送
 	public boolean bonusPaymentAddValue(Integer memberId,Integer bonus);
+	
+	// 用 memberId 取得 eWalletPassword
+	public String geteWalletPassword(Integer memberId);
 }

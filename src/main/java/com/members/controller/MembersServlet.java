@@ -10,6 +10,7 @@ import com.chargeRecord.model.ChargeRecordService;
 import com.chargeRecord.model.ChargeRecordVO;
 import com.google.gson.Gson;
 import com.members.model.*;
+import com.pet.service.PetService;
 import com.util.JavaMail;
 import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.WebServlet;
@@ -240,6 +241,10 @@ public class MembersServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
+		// 預設一隻寵物，給 memberId
+		PetService pSvc = new PetService();
+		pSvc.defaultPet(newMember.getMemberId());
+
 		String json = new Gson().toJson(messages);
 		res.getWriter().write(json);
 		return;
@@ -434,41 +439,70 @@ public class MembersServlet extends HttpServlet {
 
 	/*************************** 會員錢包儲值 **********************/
 	public void walletAddMoney(HttpServletRequest req, HttpServletResponse res) {
-		res.setContentType("application/json; charset=UTF-8");
-		// 訊息存在 Map
-		Map<String, String> messages = new LinkedHashMap<String, String>();
-		req.setAttribute("messages", messages);
 
-		// 接收參數
-		String storedValueAmount = req.getParameter("storedValueAmount");
-		String cardNumber = req.getParameter("cardNumber");
-		System.out.println(storedValueAmount);
-
-		String regex = "^[0-9]*$";
-		if (!storedValueAmount.trim().matches(regex)) {
-			messages.put("inputError", "請輸入正整數");
-			System.out.println("請輸入正整數");
-			messages.put("cardNumber", cardNumber);
-			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberWallet.jsp");
-			try {
-				failureView.forward(req, res);
-			} catch (ServletException | IOException e) {
-				e.printStackTrace();
-			}
-			return;// 程式中斷
-		}
-		System.out.println("成功");
+		// session MemberVO
 		HttpSession currentSession = req.getSession();
 		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
 		Integer currentMemberId = sessionMembersVO.getMemberId();
+		
+		
+		if (currentSession.getAttribute("submit") != null) {
+			// 邏輯判斷
+			res.setContentType("application/json; charset=UTF-8");
+			// 訊息存在 Map
+			Map<String, String> messages = new LinkedHashMap<String, String>();
+			req.setAttribute("messages", messages);
 
-		// 儲值成功 DAO
-		MembersService memberSvc = new MembersService();
-		memberSvc.walletPaymentAddMoney(currentMemberId, Integer.valueOf(storedValueAmount));
-		System.out.println(memberSvc.getOneById(currentMemberId).geteWalletAmount());
-		sessionMembersVO.seteWalletAmount(memberSvc.getOneById(currentMemberId).geteWalletAmount());
+			// 接收參數
+			String storedValueAmount = req.getParameter("storedValueAmount");
+			String cardNumber = req.getParameter("cardNumber");
+			String passwordWallet = req.getParameter("passwordWallet");
+			String regex = "^[0-9]*$";
 
-		RequestDispatcher successView = req.getRequestDispatcher("/front/member/member.jsp");
+
+			// MembersService
+			MembersService memberSvc = new MembersService();
+
+			// 判斷是否輸入數字
+			if (!storedValueAmount.trim().matches(regex)) {
+				messages.put("inputError", "*請輸入正整數");
+			}
+
+			// 判斷錢包密碼是否正確
+			String dbPassword = memberSvc.geteWalletPassword(currentMemberId);
+			if (!passwordWallet.equals(dbPassword)) {
+				messages.put("inputErrorpasswordWallet", "*錢包密碼輸入錯誤");
+			}
+
+			if (!messages.isEmpty()) {
+				messages.put("resStoredValueAmount", storedValueAmount);
+				messages.put("resCardNumber", cardNumber);
+				messages.put("resPasswordWallet", passwordWallet);
+				RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberWallet.jsp");
+				try {
+					failureView.forward(req, res);
+					return;
+				} catch (ServletException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			// 儲值成功 DAO
+			memberSvc.walletPaymentAddMoney(currentMemberId, Integer.valueOf(storedValueAmount));
+			sessionMembersVO.seteWalletAmount(memberSvc.getOneById(currentMemberId).geteWalletAmount());
+
+			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletUsedRecord.jsp");
+			try {
+				successView.forward(req, res);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+			
+			currentSession.removeAttribute("submit");
+			return;
+		}
+		
+		RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletUsedRecord.jsp");
 		try {
 			successView.forward(req, res);
 		} catch (ServletException | IOException e) {
@@ -640,16 +674,15 @@ public class MembersServlet extends HttpServlet {
 
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
-		
+
 		ChargeRecordService chargeRecordSvc = new ChargeRecordService();
 
 		List<ChargeRecordVO> listAll = chargeRecordSvc.getAll(sessionMembersVO.getMemberId());
 
 		System.out.println(listAll);
 
-
 		String json = new Gson().toJson(listAll);
 		res.getWriter().write(json);
 		return;
 	}
-}	
+}

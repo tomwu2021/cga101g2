@@ -91,7 +91,7 @@ public class ChargeRecordDAO implements ChargeRecordDAO_interface {
 	@Override
 	public List<ChargeRecordVO> getAll(Integer id) {
 
-		final String GETALL = "SELECT record_id, member_id, charge_amount, record_time,DATE_FORMAT(record_time,'%Y-%m-%d %H:%i') recordTimeString FROM charge_record WHERE member_id =?;";
+		final String GETALL = "SELECT record_id, member_id, charge_amount, record_time,DATE_FORMAT(record_time,'%Y-%m-%d %H:%i') recordTimeString FROM charge_record WHERE member_id =? order by record_time DESC;";
 
 		try (Connection con = JNDIConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETALL)) {

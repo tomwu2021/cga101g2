@@ -111,10 +111,14 @@ public class MembersService {
 	public boolean walletPaymentAddMoney(Integer memberId, Integer money) {
 		return dao.walletPaymentAddMoney(memberId, money);
 	}
-	
+
 	// 紅利 消費/發送
-	public boolean bonusPaymentAddValue(Integer memberId,Integer bonus) {
+	public boolean bonusPaymentAddValue(Integer memberId, Integer bonus) {
 		return dao.bonusPaymentAddValue(memberId, bonus);
 	}
 
+	// 用 memberId 取得 eWalletPassword
+	public String geteWalletPassword(Integer memberId) {
+		return dao.geteWalletPassword(memberId);
+	}
 }

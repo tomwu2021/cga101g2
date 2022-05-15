@@ -38,7 +38,8 @@ public class PetDAO implements PetDAO_interface{
 				int index = 1;
 				int breed = petVO.getSort1Id();
 				pstmt.setInt(index++, petVO.getMemberId());
-				pstmt.setString(index++, petVO.getPetName().trim());
+				if (petVO.getPetName() != null) pstmt.setString(index++, petVO.getPetName().trim());
+				else pstmt.setNull(index++, 0);
 				pstmt.setInt(index++, breed);
 				if (petVO.getGender() != null) pstmt.setInt(index++, petVO.getGender());
 				else pstmt.setNull(index++, 0);
@@ -363,26 +364,22 @@ public class PetDAO implements PetDAO_interface{
 	/** @see #defaultInsert*/
 	public PetVO defaultInsert(PetVO petVO, Connection con) {
 		final String INSERT = "INSERT INTO pet (member_id, sort1_id, picture_id, status)"
-							+ "VALUES (?, ?, ?, 0)";
-	
+				+ "VALUES (?, ?, ?, 0)";
+
 		if (con != null) {
-			try {
-				PreparedStatement pstmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-				int index = 1;
-				int defaultPic = 1000;
-				switch (petVO.getSort1Id()) {
-					case 1:
-						defaultPic = 999;
-				}
-				pstmt.setInt(index++, petVO.getMemberId());
-				pstmt.setInt(index++, petVO.getSort1Id());
-				pstmt.setInt(index++, defaultPic);
-				pstmt.execute();
-				ResultSet rs = pstmt.getGeneratedKeys();
-				if (rs.next()) {
-					petVO.setPetId(rs.getInt(1));
-				}
-			} catch (SQLException e) {
+		try {
+			PreparedStatement pstmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+			int index = 1;
+			int defaultPic = 999;
+			pstmt.setInt(index++, petVO.getMemberId());
+			pstmt.setInt(index++, petVO.getSort1Id());
+			pstmt.setInt(index++, defaultPic);
+			pstmt.execute();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				petVO.setPetId(rs.getInt(1));
+			}
+		} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		} else {
