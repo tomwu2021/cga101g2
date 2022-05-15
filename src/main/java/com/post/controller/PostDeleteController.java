@@ -1,5 +1,7 @@
 package com.post.controller;
 
+import static com.util.GSONUtil.json2Pojo;
+
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.post.model.PostService;
 import com.post.model.PostVO;
+import com.wishlist.model.WishlistVO;
 
 
 
@@ -28,9 +31,8 @@ public class PostDeleteController extends HttpServlet {
 	}
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		req.setCharacterEncoding("UTF-8");
+		System.out.println("PostDeleteController 執行成功");
 		String action = req.getParameter("action");
-		
 		
 		
 	//  列舉client送來的所有請求參數名稱
@@ -56,7 +58,8 @@ public class PostDeleteController extends HttpServlet {
 			req.setAttribute("msg", msg);
 			
 			/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************************/ 
-			Integer postId = Integer.valueOf(req.getParameter("postId").trim());			
+//			Integer postId = Integer.valueOf(req.getParameter("postId").trim());	
+			final Integer postId = json2Pojo(req, PostVO.class).getPostId();
 						
 			/***************************2.開始查詢資料***************************************/
 			// 1.呼叫postService
