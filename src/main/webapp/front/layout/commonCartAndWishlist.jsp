@@ -4,7 +4,7 @@
 <!-- 改變icon顏色 span	 -->
 
 <!--! Cart svg設定  -->
-<FORM METHOD="post" ACTION="/CGA101G2/front/shop/shoppingCart.jsp" id="cartForm">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front/shop/shoppingCart.jsp" id="cartForm">
 <div style="position: fixed; bottom: 200px; right: 120px; z-index: 10;">
 	<a style="color:#CE0000	;" onclick="document.getElementById('cartForm').submit()"> 
 	<span class="glyphicon glyphicon-usd text-danger"> 
