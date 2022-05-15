@@ -13,6 +13,7 @@ const io = new Server(server, ioOption);
 const port = 3000;
 const DyDBService = require('./dynamoDBService.js');
 const MemberService = require('./memberMySQLService');
+const commentMySQLService = require('./commentMySQLService.js');
 app.get('/', (req, res) => {
     res.send(`<h1>Websocket is listening on *:${port}</h1>`);
 });
@@ -89,12 +90,6 @@ function broadcastUpdateOnlineFriends(memberId) {
     });
 }
 
-io.of('/post').on('connection', (socket) => {
-    socket.on('add-member', (postId) => {
-        socket.join(postId);
-        broadcast(postId, '已經加入POST:' + postId);
-    });
-});
 
 let chatRoomMap = new Map();
 const privateIO = io.of('/private');
@@ -131,12 +126,21 @@ privateIO.on('connection', (socket) => {
     });
 
     socket.on('send-message', (data) => {
+        let readCount = aliveCount(data.message.chatroom_id);
+        data.message.read_count = readCount;
+        let members = data.members;
+        //broadcast publicIO ->members
+        //loop members -> lambda -> 取得未讀總數(memberId) & 取得個別聊天未讀總數(memberId,chatroom)
+        //java -> dynamo -> 取得初始個別聊天室未讀數
+        //
         broadcast(privateIO, data.message.chatroom_id, data.message);
+
         putRecord(data);
     });
 
     socket.on('on-read', async (message) => {
-        setTimeout(async () => await DyDBService.updateOneUnread(message), 200);
+        setTimeout(async () => await DyDBService.updateOneUnread(message), 300);
+
     });
 
     socket.on('disconnect', (data) => {
@@ -165,10 +169,10 @@ function removeConnectionFromRoom(roomId, socket) {
             room.set('' + socket.memberId, connections);
         }
     }
-
 }
 
 function broadcast(io, id, data) {
+    console.log("ressssssssss:"+JSON.stringify(data)+"///id:"+id);
     io.to(parseInt(id)).emit('broadcast', JSON.stringify(data));
 }
 
@@ -200,7 +204,9 @@ function isOnline(roomId, id) {
     let room = chatRoomMap.get('' + roomId);
     console.log(room);
     console.log('===========================keys');
-    return room.has('' + id);
+    if(room) {
+        return room.has('' + id);
+    }
 }
 
 function aliveCount(roomId) {
@@ -208,4 +214,45 @@ function aliveCount(roomId) {
         return chatRoomMap.get('' + roomId).size - 1;
     }
     return 0;
+}
+
+const postIO = io.of('/post');
+postIO.on('connection', (socket) => {
+    socket.on('add-member', (data) => {
+        socket.join(parseInt(data.postId));
+        console.log("add!");
+        // broadcast(postIO,data.postId,data.memberId+"成功加入post"+data.postId);
+    });
+
+    socket.on('send-comment', async (data) => {
+        console.log("send-comment!");
+        await commentMySQLService.insertComment(data).then((res)=>{
+            broadcast(postIO,data.postId,res);
+        });
+    });
+    socket.on('send-reply', async (data) => {
+        console.log("send-reply!");
+        await commentMySQLService.insertReply(data).then((res)=>{
+            broadcast(postIO,parseInt(data.postId),res);
+        });
+    });
+    socket.on('update-comment', async(data)=>{
+        console.log("update");
+        updateBroadcast(postIO,parseInt(data.postId),data);
+        await commentMySQLService.updateComment(data);
+    });
+    socket.on('delete-comment', async(data)=>{
+        console.log(data);
+        deleteBroadcast(postIO,parseInt(data.postId), data)
+        await commentMySQLService.deleteComment(data);
+    });
+
+});
+function updateBroadcast(io, id, data) {
+    console.log("updateressssssssss:"+JSON.stringify(data)+"///id:"+id);
+    io.to(parseInt(id)).emit('update-broadcast', JSON.stringify(data));
+}
+function deleteBroadcast(io, id, data) {
+    console.log("deleteressssssssss:"+JSON.stringify(data)+"///id:"+id);
+    io.to(parseInt(id)).emit('delete-broadcast', JSON.stringify(data));
 }
