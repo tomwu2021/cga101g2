@@ -1,3 +1,5 @@
+let objectJSON = '';
+
 // 會員帳號和姓名消除 @後面的英文字
 function removeGmail(account) {
 	let rg = account.indexOf('@');
@@ -44,6 +46,56 @@ function viewStatus(status) {
 
 }
 
+// 狀態  0(停權) 1(正常)
+function viewStatusNo(status) {
+	if (status === 1) {
+		return "正常";
+	} else {
+		return "停權";
+	}
+
+}
+
+// 顯示正常化面
+function viewBody(objectJSON) {
+	let html = '';
+	html += "<div class='main' >";
+	html += "<table width='100%'; style='table-layout:fixed' >";
+	html += "<tr>";
+	html += "<th style='display: none;'>會員編號</th>"; // 隱藏的 MemberId
+	html += "<th>會員帳號</th>";
+	html += "<th>會員姓名</th>";
+	html += "<th width=30%>會員地址</th>";
+	html += "<th>會員手機</th>";
+	html += "<th>會員等級</th>";
+	html += "<th>會員紅利</th>";
+	html += "<th>會員狀態</th>";
+	html += "<th>創建日期</th>";
+	html += "<th>修改</th>";
+	html += "</tr>";
+
+	for (let i = 0; i < objectJSON.length; i++) {
+		let memberVO = objectJSON[i];
+		html += "<tr>";
+		html += "<td style='display: none;'>" + memberVO.memberId + "</td>"; // 隱藏的 MemberId
+		html += "<td>" + removeGmail(memberVO.account) + "</td>";
+		html += "<td>" + removeGmail(memberVO.name) + "</td>";
+		html += removeUndefined(memberVO.address);
+		html += removeUndefined(memberVO.phone);
+		html += "<td>" + viewRanks(memberVO.rankId) + "</td>";
+		html += "<td>" + memberVO.bonusAmount + "</td>";
+		html += viewStatus(memberVO.status);
+		html += "<td>" + memberVO.createTimeString + "</td>";
+		html += "<td><button data-boolean='false' onclick='updateInfo(this)' id='" + memberVO.memberId + "'>修改</button></td>";
+		html += "</tr>";
+	}
+
+	html += "</table>";
+
+	return html;
+}
+
+
 // ------------------ 顯示全部 ------------------
 $(function() {
 
@@ -57,42 +109,8 @@ $(function() {
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
-				let objectJSON = JSON.parse(json);
-
-				let html = '';
-				html += "<div class='main' >";
-				html += "<table width='100%'; style='table-layout:fixed' >";
-				html += "<tr>";
-				html += "<th style='display: none;'>會員編號</th>"; // 隱藏的 MemberId
-				html += "<th>會員帳號</th>";
-				html += "<th>會員姓名</th>";
-				html += "<th width=30%>會員地址</th>";
-				html += "<th>會員手機</th>";
-				html += "<th>會員等級</th>";
-				html += "<th>會員紅利</th>";
-				html += "<th>會員狀態</th>";
-				html += "<th>創建日期</th>";
-				html += "<th>修改</th>";
-				html += "</tr>";
-
-				for (let i = 0; i < objectJSON.length; i++) {
-					let memberVO = objectJSON[i];
-					html += "<tr>";
-					html += "<td style='display: none;'>" + memberVO.memberId + "</td>"; // 隱藏的 MemberId
-					html += "<td>" + removeGmail(memberVO.account) + "</td>";
-					html += "<td>" + removeGmail(memberVO.name) + "</td>";
-					html += removeUndefined(memberVO.address);
-					html += removeUndefined(memberVO.phone);
-					html += "<td>" + viewRanks(memberVO.rankId) + "</td>";
-					html += "<td>" + memberVO.bonusAmount + "</td>";
-					html += viewStatus(memberVO.status);
-					html += "<td>" + memberVO.createTimeString + "</td>";
-					html += "<td><button data-boolean='false' onclick='updateInfo(this)' id='" + memberVO.memberId + "'>修改</button></td>";
-					html += "</tr>";
-				}
-
-				html += "</table>";
-
+				objectJSON = JSON.parse(json);
+				let html = viewBody(objectJSON);
 				document.getElementById("show").innerHTML = html;
 			},
 		}
@@ -100,32 +118,84 @@ $(function() {
 
 });
 
-// ------------------ 修改 ------------------
 
-function updateInfo(obj) { // obj.id：會員編號
-
-	let thisId = obj.id;
-
-	let boo = obj.getAttribute("data-boolean");
-	// 按下修改後，變成 true (確定)
-	if (boo.toString() == 'false') {
-		document.getElementById(thisId).innerHTML = '確定';
-		obj.setAttribute("data-boolean", true);
-	}
-
-	if (boo.toString() == 'true') {
-		document.getElementById(thisId).innerHTML = '修改';
-		obj.setAttribute("data-boolean", false);
-	}
-
-}
-
-		// 將會員狀態變成下拉式選單
-//		let html = '';
-//		<select>
-//			<option>請選擇你最愛的寵物</option>
-//			<option>正常</option>
-//			<option>Cat</option>
-//		</select>
-
-// ------------------ 查詢 ------------------
+//// ------------------ 修改 ------------------
+//function updateInfo(obj) { // obj.id：會員編號
+//	let thisId = obj.id;
+//	let boo = obj.getAttribute("data-boolean");
+//	// 按下修改後，變成 true (確定)
+//	if (boo.toString() === "false") {
+//		let html = viewUpdate(objectJSON);
+//		document.getElementById("show").innerHTML = html;
+//		
+//		document.getElementById(thisId).innerHTML = '確定';
+//	}
+//}
+//
+//// ------------------ 顯示修改畫面 ------------------
+//function viewUpdate(objectJSON) {
+//	console.log(objectJSON);
+//	let html = '';
+//	html += "<div class='main' >";
+//	html += "<table width='100%'; style='table-layout:fixed' >";
+//	html += "<tr>";
+//	html += "<th style='display: none;'>會員編號</th>"; // 隱藏的 MemberId
+//	html += "<th>會員帳號</th>";
+//	html += "<th>會員姓名</th>";
+//	html += "<th width=30%>會員地址</th>";
+//	html += "<th>會員手機</th>";
+//	html += "<th>會員等級</th>";
+//	html += "<th>會員紅利</th>";
+//	html += "<th>會員狀態</th>";
+//	html += "<th>創建日期</th>";
+//	html += "<th>修改</th>";
+//	html += "</tr>";
+//
+//	for (let i = 0; i < objectJSON.length; i++) {
+//		let memberVO = objectJSON[i];
+//		html += "<tr>";
+//		html += "<td style='display: none;'>" + memberVO.memberId + "</td>"; // 隱藏的 MemberId
+//		html += "<td>" + removeGmail(memberVO.account) + "</td>";
+//		html += "<td>" + removeGmail(memberVO.name) + "</td>";
+//		html += removeUndefined(memberVO.address);
+//		html += removeUndefined(memberVO.phone);
+//		html += "<td>" + viewRanks(memberVO.rankId) + "</td>";
+//		html += "<td>" + memberVO.bonusAmount + "</td>";
+//
+//
+//		//		html += viewStatus(memberVO.status);
+//		html += "<td><select  onchange='myFunction(this)'  id='" + memberVO.memberId + "'><option></option><option>停權</option><option>正常</option></select></td>";
+//
+//		html += "<td>" + memberVO.createTimeString + "</td>";
+//		html += "<td><button data-boolean='false' onclick='sureInfo(this)' id='" + memberVO.memberId + "'>修改</button></td>";
+//		html += "</tr>";
+//	}
+//
+//	html += "</table>";
+//
+//	return html;
+//}
+//
+//// ------------------ 下拉式選單值改變 ------------------
+//function myFunction(){
+//	let thisId = obj.id;
+//	console.log(thisId);
+//}
+//
+//
+//// ------------------ 確定 ------------------
+//function sureInfo(obj) { // obj.id：會員編號
+//	let thisId = obj.id;
+//	let boo = obj.getAttribute("data-boolean");
+//	// 按下修改後，變成 true (確定)
+//	if (boo.toString() === "false") {
+//		let html = viewBody(objectJSON);
+//		document.getElementById("show").innerHTML = html;
+//		
+//		document.getElementById(thisId).innerHTML = '修改';
+//		obj.setAttribute("data-boolean", "true");
+//	}
+//}
+//
+//
+//// ------------------ 查詢 ------------------

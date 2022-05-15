@@ -6,12 +6,6 @@
 <title>後台員工查詢</title>
 <!-- 共用的CSS startr-->
 <%@include file="/back/layout/commonCSS.jsp"%>
-<!-- 共用的CSS end-->
-
-<!-- 額外添加的CSS -->
-<!-- 	路徑舉例 -->
-<%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/back/css/????.css"> --%>
-<!-- 額外添加的CSS -->
 
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/assets/css/empSelect.css">
@@ -35,7 +29,12 @@
 						<section class="py-5">
 							<div class="row">
 
-
+									<div class="form-group row" style="width:400px">
+										<label class="col-md-3 form-control-label">會員查詢</label> 
+										<input type="text" id="" onclick="" > 
+										<input type="submit" value="確定" class="btn btn-primary"
+											onclick="" >
+									</div>
 
 								<div id="show"></div>
 
