@@ -17,7 +17,7 @@ public interface PostDAO_interface extends JDBCDAO_Interface<PostVO> {
 	public List<PostVO> selectChangePost();
 	
 	//刪除貼文
-	public PostVO updatedelete(Integer postId);
+	public boolean updatedelete(Integer postId);
 	
 	
 	

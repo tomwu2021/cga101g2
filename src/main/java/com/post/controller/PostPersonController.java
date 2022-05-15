@@ -13,6 +13,9 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.hibernate.hql.spi.id.cte.CteValuesListUpdateHandlerImpl;
 
 import com.common.controller.CommonController;
 import com.members.model.MembersService;
@@ -60,11 +63,13 @@ public class PostPersonController extends CommonController {
 		   System.out.println(e.toString());
 		  }
 		  
-		  Integer memberId = Integer.valueOf(req.getParameter("memberId").trim());
-			int isOwner= super.getIsOwner(req, res);
-			req.setAttribute("isOwner", isOwner);
-			req.setAttribute("memberId",memberId);
-			System.out.println(isOwner);
+		  		
+//		  Integer memberId = Integer.valueOf(req.getParameter("memberId").trim());
+//			int isOwner= super.getIsOwner(req, res);
+//			req.setAttribute("isOwner", isOwner);
+//			req.setAttribute("memberId",memberId);
+//			System.out.println(isOwner);
+		  
 			
 		/**
 		 * 查詢全部個人貼文
@@ -77,35 +82,24 @@ public class PostPersonController extends CommonController {
 
 			/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 			
-//			Integer memberId =9;	
 			
-				
-//				if (str == null || (str.trim()).length() == 0) {
-//					errorMsgs.put("memberId","請輸入會員編號");
-//				}
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/front/post/post.jsp");
-//					failureView.forward(req, res);
-//					return;
-//				}
-//				
-//				Integer memberId = null;
-//				try {
-//					memberId = Integer.valueOf(str);
-//				} catch (Exception e) {
-//					errorMsgs.put("memberId","會員編號格式不正確");
-//				}
-//				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("front/post/post.jsp");
-//					failureView.forward(req, res);
-//					return;
-//				}
-			
-			  
+			/**
+			*修改  
+		    */
+			  Integer memberId = Integer.valueOf(req.getParameter("memberId").trim());   //memberIdNotMe
+			    //這一行是對方的個人頁面的id
+			    Integer isOwner = null;   //memberIdIsMe
+			    HttpSession session = req.getSession();
+			    if((MembersVO)session.getAttribute("membersVO")!=null) {
+			    MembersVO memberVO = (MembersVO)session.getAttribute("membersVO");
+			    isOwner = memberVO.getMemberId();			    
+			    }else {
+			    //錯誤訊息,叫他去登入
+				   errorMsgs.put("msg", "1");
+			    }
+			    req.setAttribute("memberId",memberId);   //memberIdNotMe
+			    req.setAttribute("isOwner", isOwner); 	//memberIdIsMe
+						  
 				
 				/***************************2.開始查詢資料*****************************************/
 				PostService ps = new PostService();

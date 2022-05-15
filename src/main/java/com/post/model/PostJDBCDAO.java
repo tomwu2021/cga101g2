@@ -360,7 +360,8 @@ public class PostJDBCDAO implements PostDAO_interface {
 	 * 把貼文狀態從status=0(正常)變成status=2（刪除）
 	 */
 	@Override
-	public PostVO updatedelete(Integer postId) {
+	public boolean updatedelete(Integer postId) {
+		int rowCount = 0;
 		final String UPDATEDELETE = "update post set status = 2 where (post_id = ?)";
 		
 		try(Connection con =JDBCConnection.getRDSConnection();
@@ -368,12 +369,15 @@ public class PostJDBCDAO implements PostDAO_interface {
 								
 				pstmt.setInt(1, postId);
 				
-				pstmt.executeUpdate();
+				rowCount = pstmt.executeUpdate();
+				System.out.println(rowCount + "row(s) delete!");
 				
 		}catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}
 		
-		return null;
+		return true;
 	}	
+	
+	
 }

@@ -12,9 +12,11 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.common.controller.CommonController;
+import com.members.model.MembersVO;
 import com.post.model.PostService;
 
 
@@ -63,10 +65,26 @@ public class PostAddController extends CommonController {
 
 
 			/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-//				Integer memberId = Integer.valueOf(req.getParameter("memberId").trim());
-//				Integer memberId =9;
+								
+//				Integer memberId = super.getLoginInfo(req, res).getMemberId();
+			
+						 	
+			    //這一行是對方的個人頁面的id
+			    Integer isOwner = null;   //memberIdIsMe
+			    HttpSession session = req.getSession();
+			    if((MembersVO)session.getAttribute("membersVO")!=null) {
+			    MembersVO memberVO = (MembersVO)session.getAttribute("membersVO");
+			    isOwner = memberVO.getMemberId();			    
+			    }else {
+			    //錯誤訊息,叫他去登入
+				   errorMsgs.put("msg", "1");
+			    }
+
+			    req.setAttribute("isOwner", isOwner); 	//memberIdIsMe
+			
+				
 				String content = req.getParameter("content");
-				Integer memberId = super.getLoginInfo(req, res).getMemberId();
+				
 				Collection<Part> parts=req.getParts();
 				System.out.println(parts);
 				if(parts ==null) {
@@ -82,12 +100,12 @@ public class PostAddController extends CommonController {
 				}
 				/***************************2.開始新增資料***************************************/
 				PostService ps = new PostService();
-				ps.uploadPost(memberId, content, parts);
+				ps.uploadPost(isOwner, content, parts);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/front/post/personPost.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); 
-				successView.forward(req, res);					
+				
+				res.sendRedirect(req.getContextPath()+"/PersonPost?memberId="+isOwner+"&action=getOne_For_Display");
+								
 		}
         
         

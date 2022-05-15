@@ -213,7 +213,7 @@ public class PostService {
 	 * 把貼文狀態從status=0(正常)變成status=2（刪除）
 	 */
 	
-	public PostVO updatedelete(Integer postId) {
+	public boolean updatedelete(Integer postId) {
 		return dao.updatedelete(postId);
 	}
 	

@@ -29,6 +29,8 @@
     #image_photo {
 　　position: absolute;
     background-image: url("");
+    
+    
     background-repeat: no-repeat;
     border-radius: 50%;
     overflow: hidden;
@@ -214,6 +216,12 @@
                                         <a class="primary_img" href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"><img
                                                 src="${postVO.pictureVO2.previewUrl}" alt=""></a>
                                         </c:if>
+                                        
+                                        <c:if test="${memberId == isOwner}">
+                                        <!-- 刪除按鈕 -->
+                                		<button id="deletePost${postVO.postId}">Confirm</button>
+                                		</c:if>
+                                		
 
                                     </div>
                                    	<!--  整個文字框 -->
@@ -246,7 +254,11 @@
                         </div>
                     </div> -->
                     </div>
-                    <c:if test="${isOwner==1}">
+                    
+                    <%-- <c:if test="${isOwner==1}"> --%>
+                    
+                    <c:if test="${memberId == isOwner}">
+                    
                     <div>
                     <img src="front/post/addpost.png" class="ml-3" style="height:40px;width:40px; position: fixed; top: 80px; right: 14px;" onclick="window.location='http://localhost:8081/CGA101G2/front/post/addPost.jsp'" id="addpost">
                     </div>
@@ -270,6 +282,88 @@
 	<%@include file="/front/layout/commonJS.jsp"%>
 	<!-- 共用的JS -->
 	
-	
+	<script>
+	    function getContextPath() {
+    	 return window.location.pathname.substring(0, window.location.pathname.indexOf('/', 2));
+    	};
+    	//wlishlist.jsp的垃圾桶icon
+    	$("[id^='deletePost']").click(function() {      
+    	 //fetch DOM elements
+    	 let id = $(this).attr("id");
+    	 let postId = id.substring(10);
+    	 Swal.fire({
+    	  title: '確定刪除?',
+    	  icon: 'warning',
+    	  showCancelButton: true,
+    	  confirmButtonColor: '#3085d6',
+    	  cancelButtonColor: '#d33',
+    	  confirmButtonText: 'Yes!'
+    	 }).then((result) => {
+    	  if (result.isConfirmed) {
+
+    	   $.ajax({
+    	    url:`${getContextPath()}/deletePost`,
+    	    type: "POST",
+    	    data: JSON.stringify({
+    	     postId
+    	    }),
+    	    dataType: "json", // 返回格式為json
+    	    success: function(data) {
+    	     console.log(data);
+    	     console.log(data.msg);
+    	     if (data.msg === '1') {
+    	      Swal.fire(
+    	       '刪除成功',
+    	       ' ',
+    	       'success'
+    	      )
+    	      location.reload();
+    	     }
+    	     else if (data.msg === '-1') {
+    	      Swal.fire(
+    	       'Oops...',
+    	       '刪除失敗',
+    	       'warning'
+    	      )
+    	     }
+    	    },
+    	    error: function(data) {
+    	     alert("操作異常,回報錯誤給服務供應商" + data.responseText);
+    	    }
+    	   })
+    	  }
+    	 })
+
+    	});
+
+
+</script>
 </body>
+
+<!-- <script>
+    function confirmEvent() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to delete 確定刪除這篇貼文嗎 ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: 'darkgrey',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+
+            //刪除方法
+
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your post has been deleted.',
+                    'success'
+                )
+            }
+        });
+    }
+
+</script> -->
+
 </html>

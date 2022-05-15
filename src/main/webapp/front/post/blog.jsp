@@ -321,11 +321,11 @@
 										</div>
 										
 										<div id="img_text">${postVO.membersVO.name}</div>
+										
 									</div>
 									
 									 <div class="blog_meta">
-										
-											<%-- <span><a href="#">${postVO.membersVO.name}</a></span> --%>
+																					
 										
 									</div>
 									
