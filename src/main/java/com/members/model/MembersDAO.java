@@ -753,7 +753,6 @@ public class MembersDAO implements MembersDAO_interface {
 		if (con != null) {
 			MembersVO originalMembersVO = new MembersVO();
 			MembersVO currentMembersVO = new MembersVO();
-
 			ChargeRecordVO chargeRecordVO = new ChargeRecordVO();
 
 			MembersDAO membersDAO = new MembersDAO();
@@ -770,12 +769,13 @@ public class MembersDAO implements MembersDAO_interface {
 			currentMembersVO.seteWalletAmount(currentMoney);
 			currentMembersVO.setMemberId(memberId);
 			membersDAO.changeEWalletAmount(currentMembersVO, con);
-			System.out.println(currentMembersVO);
+//			System.out.println(currentMembersVO);
 
 			// 呼叫 ChargeRecordDAO 新增一筆交易紀錄
 			chargeRecordVO.setMemberId(memberId);
 			chargeRecordVO.setChargeAmount(money);
 			chargeRecordDAO.insert(chargeRecordVO, con);
+
 			return true;
 		}
 
@@ -853,5 +853,36 @@ public class MembersDAO implements MembersDAO_interface {
 			}
 		}
 		return "查無此密碼";
+	}
+
+	// 修改會員等級
+	@Override
+	public Boolean updateRank(Integer memberId, Integer rankId) {
+		con = JNDIConnection.getRDSConnection();
+		Boolean boo = updateRank(memberId, rankId, con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return boo;
+	}
+
+	public Boolean updateRank(Integer memberId, Integer rankId, Connection con) {
+		final String UPDATE_RANK = "UPDATE members SET rank_id = ? where member_id = ?;";
+		if (con != null) {
+			try {
+
+				PreparedStatement pstmt = con.prepareStatement(UPDATE_RANK);
+				pstmt.setInt(1, rankId);
+				pstmt.setInt(2, memberId);
+				pstmt.executeUpdate();
+				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+
 	}
 }

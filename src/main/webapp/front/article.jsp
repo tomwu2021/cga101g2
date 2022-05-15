@@ -45,7 +45,7 @@
 							    <!--slider area start-->
 							        <div class="slider_area owl-carousel">
 							        <c:forEach var="picVO" items="${artiVO.picList}">
-							            <div class="single_slider d-flex align-items-center" data-bgimg='${artiVO.picVO.url}'></div>
+							            <div class="single_slider d-flex align-items-center" data-bgimg='${picVO.url}'></div>
 							        </c:forEach>
 							        </div>
 							    <!--slider area end-->

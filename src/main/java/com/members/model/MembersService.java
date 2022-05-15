@@ -121,4 +121,9 @@ public class MembersService {
 	public String geteWalletPassword(Integer memberId) {
 		return dao.geteWalletPassword(memberId);
 	}
+
+	// 修改會員等級
+	public Boolean updateRank(Integer memberId, Integer rankId) {
+		return dao.updateRank(memberId, rankId);
+	}
 }

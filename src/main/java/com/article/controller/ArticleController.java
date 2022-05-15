@@ -57,7 +57,7 @@ public class ArticleController extends CommonController {
 			req.setAttribute("errorMsgs", errorMsgs);
 			content = req.getParameter("content");
 			Part file = req.getPart("file");
-			if (file == null) {
+			if (file == null || file.getSize()==0) {
 				errorMsgs.put("file","(請上傳圖片)");
 			}
 			if (title == null || title.trim().isEmpty()) {
@@ -133,7 +133,7 @@ public class ArticleController extends CommonController {
 				errorMsgs.put("content","(內容請勿空白)");
 			}
 			Collection<Part> parts = req.getParts();
-			if (file == null && Integer.parseInt(picCount)==delCount) {
+			if ((file == null || file.getSize()==0) && Integer.parseInt(picCount)==delCount) {
 				errorMsgs.put("file","(圖片不得為空)");
 				picIds = null;
 				parts = null;

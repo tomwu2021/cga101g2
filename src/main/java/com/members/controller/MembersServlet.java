@@ -6,6 +6,7 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import com.album.model.AlbumJDBCDAO;
+import com.chargeRecord.model.ChargeRecordDAO;
 import com.chargeRecord.model.ChargeRecordService;
 import com.chargeRecord.model.ChargeRecordVO;
 import com.google.gson.Gson;
@@ -444,11 +445,15 @@ public class MembersServlet extends HttpServlet {
 		HttpSession currentSession = req.getSession();
 		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
 		Integer currentMemberId = sessionMembersVO.getMemberId();
-		
-		
+
 		if (currentSession.getAttribute("submit") != null) {
-			// 邏輯判斷
+
 			res.setContentType("application/json; charset=UTF-8");
+
+			// Service
+			MembersService memberSvc = new MembersService();
+			ChargeRecordDAO chargeRecordDAO = new ChargeRecordDAO();
+
 			// 訊息存在 Map
 			Map<String, String> messages = new LinkedHashMap<String, String>();
 			req.setAttribute("messages", messages);
@@ -458,10 +463,6 @@ public class MembersServlet extends HttpServlet {
 			String cardNumber = req.getParameter("cardNumber");
 			String passwordWallet = req.getParameter("passwordWallet");
 			String regex = "^[0-9]*$";
-
-
-			// MembersService
-			MembersService memberSvc = new MembersService();
 
 			// 判斷是否輸入數字
 			if (!storedValueAmount.trim().matches(regex)) {
@@ -491,17 +492,47 @@ public class MembersServlet extends HttpServlet {
 			memberSvc.walletPaymentAddMoney(currentMemberId, Integer.valueOf(storedValueAmount));
 			sessionMembersVO.seteWalletAmount(memberSvc.getOneById(currentMemberId).geteWalletAmount());
 
-			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletUsedRecord.jsp");
-			try {
-				successView.forward(req, res);
-			} catch (ServletException | IOException e) {
-				e.printStackTrace();
+			// 儲值成功後判斷累積儲值金額修改會員等級
+			Integer sumChargeAmount = chargeRecordDAO.SumChargeAmount(currentMemberId);
+			System.out.println(sumChargeAmount);
+
+			if (sumChargeAmount >= 10001) {
+				memberSvc.updateRank(currentMemberId, 4);
+				sessionMembersVO.setRankId(4);
+				RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletUsedRecord.jsp");
+				try {
+					successView.forward(req, res);
+				} catch (ServletException | IOException e) {
+					e.printStackTrace();
+				}
+				currentSession.removeAttribute("submit");
+				return;
+			} else if (sumChargeAmount >= 5001) {
+				memberSvc.updateRank(currentMemberId, 3);
+				sessionMembersVO.setRankId(3);
+				RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletUsedRecord.jsp");
+				try {
+					successView.forward(req, res);
+				} catch (ServletException | IOException e) {
+					e.printStackTrace();
+				}
+				currentSession.removeAttribute("submit");
+				return;
+			} else {
+				memberSvc.updateRank(currentMemberId, 2);
+				sessionMembersVO.setRankId(2);
+				RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletUsedRecord.jsp");
+				try {
+					successView.forward(req, res);
+				} catch (ServletException | IOException e) {
+					e.printStackTrace();
+				}
+				currentSession.removeAttribute("submit");
+				return;
 			}
-			
-			currentSession.removeAttribute("submit");
-			return;
+
 		}
-		
+
 		RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletUsedRecord.jsp");
 		try {
 			successView.forward(req, res);

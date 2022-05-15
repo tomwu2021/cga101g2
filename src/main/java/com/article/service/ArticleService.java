@@ -13,10 +13,14 @@ import com.article.model.ArticleDAO_interface;
 import com.article.model.ArticleJDBCDAO;
 import com.article.model.ArticleVO;
 import com.common.model.*;
+import com.members.model.MembersService;
+import com.pet.service.PetService;
 import com.picture.model.PictureDAO_Interface;
 import com.picture.model.PictureJDBCDAO;
 import com.picture.model.PictureVO;
 import com.picture.service.PictureService;
+import com.post.model.PostService;
+import com.post.model.PostVO;
 
 import connection.JDBCConnection;
 
@@ -144,6 +148,20 @@ public class ArticleService {
 	public List<ArticleVO> getByArtiType(Integer type){
 		List<ArticleVO> artiList = artiDAO.getAllByType(type);
 		return artiList;
+	}
+		// 查最新貼文
+	public List<PostVO> getHotPosts(){
+		PetService petSvc =new PetService();
+		PostService postSvc = new PostService();
+		MembersService memSvc = new MembersService();
+		List<PostVO> postVOs = postSvc.selectHotPost();
+		List<PostVO> postList = new ArrayList<>();
+		for(PostVO postVO: postVOs) {
+			postVO.setMembersVO(memSvc.getOneById(postVO.getMemberId()));
+			postVO.setPictureVO2(petSvc.getByMemberId(postVO.getMemberId()).get(0).getPicVO());
+			postList.add(postVO);
+		}
+		return postList;
 	}
 	
 	

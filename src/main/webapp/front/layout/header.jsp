@@ -86,10 +86,9 @@
                                 <a href=""><i class="bi bi-person-circle"></i></a>
                                 <div class="dropdown_links">
                                     <div class="dropdown_links_list">
-                                        <h3>會員名稱</h3>
+                                        <h3>${membersVO.name}<small>&nbsp;您好！</small></h3>
                                         <ul>
-                                            <li><a href="<%=request.getContextPath()%>/front/member/member.jsp">前往會員中心</a></li>
-                                            <li><a href="#">歡迎來到P.club</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/front/account.jsp">前往會員中心</a></li>
                                         </ul>
                                     </div>
                                     <div class="dropdown_links_list">

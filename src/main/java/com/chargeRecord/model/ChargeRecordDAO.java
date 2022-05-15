@@ -16,7 +16,7 @@ public class ChargeRecordDAO implements ChargeRecordDAO_interface {
 
 		// 新增一筆儲值或消費紀錄
 		ChargeRecordVO chargeRecordVO2 = insert(chargeRecordVO, con);
-		
+
 		// 儲值或消費成功後，將金額加入 member 表格中的 E_WALLET_AMOUNT
 		MembersJDBCDAO memberDao = new MembersJDBCDAO();
 		MembersVO membersVO1 = new MembersVO();
@@ -111,6 +111,44 @@ public class ChargeRecordDAO implements ChargeRecordDAO_interface {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	// 用 memberId 查詢某會員累積儲值金額
+	@Override
+	public Integer SumChargeAmount(Integer memberId) {
+		con = JNDIConnection.getRDSConnection();
+		Integer sumChargeAmount = SumChargeAmount(memberId, con);
+
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sumChargeAmount;
+	}
+
+	public Integer SumChargeAmount(Integer memberId, Connection con) {
+		final String SELECT_SUM_CHARGE_AMOUNT = "SELECT sum(charge_amount) sumChargeAmount FROM cga_02.charge_record where member_id = ?;";
+		if (con != null) {
+
+			PreparedStatement pstmt;
+			try {
+				pstmt = con.prepareStatement(SELECT_SUM_CHARGE_AMOUNT);
+				pstmt.setInt(1, memberId);
+				ResultSet rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					int sumChargeAmount = rs.getInt("sumChargeAmount");
+					return sumChargeAmount;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+
 		return null;
 	}
 
