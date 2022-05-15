@@ -313,7 +313,12 @@
 									<div> --%>
 									
 									<div id="demo_border" style="position: relative;">
-										<div id="image_photo"><img src="${postVO.pictureVO.url}"></div>
+									
+										<div id="image_photo">
+										
+										<a href="<%=request.getContextPath()%>/PersonPost?memberId=${postVO.memberId}&action=getOne_For_Display"><img src="${postVO.pictureVO.url}"></a>
+										
+										</div>
 										
 										<div id="img_text">${postVO.membersVO.name}</div>
 									</div>
