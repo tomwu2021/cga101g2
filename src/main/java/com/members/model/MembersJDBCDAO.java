@@ -8,7 +8,6 @@ import com.chargeRecord.model.ChargeRecordVO;
 import com.ranks.model.RanksVO;
 
 import connection.JDBCConnection;
-import connection.JNDIConnection;
 
 public class MembersJDBCDAO implements MembersDAO_interface {
 
@@ -402,7 +401,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	@Override
 	public List<MembersVO> getAll() {
 
-		final String GETALL = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time FROM members;";
+		final String GETALL = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time,DATE_FORMAT(create_time,'%Y-%m-%d %H:%i') createTimeString FROM members;";
 
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETALL)) {
@@ -420,6 +419,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 				newMember.setBonusAmount(rs.getInt("bonus_amount"));
 				newMember.setStatus(rs.getInt("status"));
 				newMember.setCreateTime(rs.getTimestamp("create_time"));
+				newMember.setCreateTimeString(rs.getString("createTimeString"));
 				list.add(newMember);
 			}
 			return list;
@@ -507,8 +507,8 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 // select 情境十三：查詢登入時帳號和密碼 ------------------------------------------------------------------------------
 	public MembersVO selectForLogin(String name, String password, Connection con) {
 
-		final String SELECT_FOR_LOGIN = "SELECT member_id, account, password, name, address, phone, rank_id, ewallet_amount, ewallet_password, bonus_amount, status, create_time from members\r\n"
-				+ "where account = ? and password = ?;";
+		final String SELECT_FOR_LOGIN = "SELECT member_id, account, password, name, address, phone, rank_id, ewallet_amount, ewallet_password, bonus_amount, status, create_time, DATE_FORMAT(create_time,'%Y-%m-%d %H:%i') createTimeString from members\r\n"
+				+ "				where account = ? and password = ?;";
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(SELECT_FOR_LOGIN);
@@ -530,6 +530,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 					newMember.setBonusAmount(rs.getInt("bonus_amount"));
 					newMember.setStatus(rs.getInt("status"));
 					newMember.setCreateTime(rs.getTimestamp("create_time"));
+					newMember.setCreateTimeString(rs.getString("createTimeString"));
 					return newMember;
 				}
 			} catch (Exception e) {
@@ -752,10 +753,9 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		if (con != null) {
 			MembersVO originalMembersVO = new MembersVO();
 			MembersVO currentMembersVO = new MembersVO();
-
 			ChargeRecordVO chargeRecordVO = new ChargeRecordVO();
 
-			MembersJDBCDAO membersDAO = new MembersJDBCDAO();
+			MembersDAO membersDAO = new MembersDAO();
 			ChargeRecordDAO chargeRecordDAO = new ChargeRecordDAO();
 
 			// 用 memberId 取得 會員的錢包的餘額
@@ -769,12 +769,13 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 			currentMembersVO.seteWalletAmount(currentMoney);
 			currentMembersVO.setMemberId(memberId);
 			membersDAO.changeEWalletAmount(currentMembersVO, con);
-			System.out.println(currentMembersVO);
+//			System.out.println(currentMembersVO);
 
 			// 呼叫 ChargeRecordDAO 新增一筆交易紀錄
 			chargeRecordVO.setMemberId(memberId);
 			chargeRecordVO.setChargeAmount(money);
 			chargeRecordDAO.insert(chargeRecordVO, con);
+
 			return true;
 		}
 
@@ -798,7 +799,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 
 	public boolean bonusPaymentAddValue(Integer memberId, Integer bonus, Connection con) {
 		if (con != null) {
-			MembersJDBCDAO membersDAO = new MembersJDBCDAO();
+			MembersDAO membersDAO = new MembersDAO();
 
 			MembersVO originalMembersVO = new MembersVO();
 			MembersVO currentMembersVO = new MembersVO();
@@ -852,5 +853,36 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 			}
 		}
 		return "查無此密碼";
+	}
+
+	// 修改會員等級
+	@Override
+	public Boolean updateRank(Integer memberId, Integer rankId) {
+		con = JDBCConnection.getRDSConnection();
+		Boolean boo = updateRank(memberId, rankId, con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return boo;
+	}
+
+	public Boolean updateRank(Integer memberId, Integer rankId, Connection con) {
+		final String UPDATE_RANK = "UPDATE members SET rank_id = ? where member_id = ?;";
+		if (con != null) {
+			try {
+
+				PreparedStatement pstmt = con.prepareStatement(UPDATE_RANK);
+				pstmt.setInt(1, rankId);
+				pstmt.setInt(2, memberId);
+				pstmt.executeUpdate();
+				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+
 	}
 }

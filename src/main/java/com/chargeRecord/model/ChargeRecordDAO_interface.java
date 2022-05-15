@@ -9,5 +9,5 @@ public interface ChargeRecordDAO_interface extends JDBCDAO_Interface<ChargeRecor
 	public List<ChargeRecordVO> getAll(Integer id);
 	
 	// 用 memberId 查詢某會員累積儲值金額
-	public Integer updateMemberRank(Integer id);
+	public Integer SumChargeAmount(Integer id);
 }

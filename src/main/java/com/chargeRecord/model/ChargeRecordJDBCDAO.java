@@ -116,9 +116,9 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 
 	// 用 memberId 查詢某會員累積儲值金額
 	@Override
-	public Integer updateMemberRank(Integer memberId) {
+	public Integer SumChargeAmount(Integer memberId) {
 		con = JNDIConnection.getRDSConnection();
-		Integer sumChargeAmount = updateMemberRank(memberId, con);
+		Integer sumChargeAmount = SumChargeAmount(memberId, con);
 
 		try {
 			con.close();
@@ -128,7 +128,7 @@ public class ChargeRecordJDBCDAO implements ChargeRecordDAO_interface {
 		return sumChargeAmount;
 	}
 
-	public Integer updateMemberRank(Integer memberId, Connection con) {
+	public Integer SumChargeAmount(Integer memberId, Connection con) {
 		final String SELECT_SUM_CHARGE_AMOUNT = "SELECT sum(charge_amount) sumChargeAmount FROM cga_02.charge_record where member_id = ?;";
 		if (con != null) {
 

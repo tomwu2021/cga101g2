@@ -445,16 +445,15 @@ public class MembersServlet extends HttpServlet {
 		HttpSession currentSession = req.getSession();
 		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
 		Integer currentMemberId = sessionMembersVO.getMemberId();
-		
-		
+
 		if (currentSession.getAttribute("submit") != null) {
-			
+
 			res.setContentType("application/json; charset=UTF-8");
-			
+
 			// Service
 			MembersService memberSvc = new MembersService();
 			ChargeRecordDAO chargeRecordDAO = new ChargeRecordDAO();
-			
+
 			// 訊息存在 Map
 			Map<String, String> messages = new LinkedHashMap<String, String>();
 			req.setAttribute("messages", messages);
@@ -492,32 +491,48 @@ public class MembersServlet extends HttpServlet {
 			// 儲值成功 DAO
 			memberSvc.walletPaymentAddMoney(currentMemberId, Integer.valueOf(storedValueAmount));
 			sessionMembersVO.seteWalletAmount(memberSvc.getOneById(currentMemberId).geteWalletAmount());
-			
+
 			// 儲值成功後判斷累積儲值金額修改會員等級
-			Integer sumChargeAmount = chargeRecordDAO.updateMemberRank(currentMemberId);
+			Integer sumChargeAmount = chargeRecordDAO.SumChargeAmount(currentMemberId);
 			System.out.println(sumChargeAmount);
 
 			if (sumChargeAmount >= 10001) {
 				memberSvc.updateRank(currentMemberId, 4);
 				sessionMembersVO.setRankId(4);
+				RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletUsedRecord.jsp");
+				try {
+					successView.forward(req, res);
+				} catch (ServletException | IOException e) {
+					e.printStackTrace();
+				}
+				currentSession.removeAttribute("submit");
+				return;
 			} else if (sumChargeAmount >= 5001) {
 				memberSvc.updateRank(currentMemberId, 3);
 				sessionMembersVO.setRankId(3);
+				RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletUsedRecord.jsp");
+				try {
+					successView.forward(req, res);
+				} catch (ServletException | IOException e) {
+					e.printStackTrace();
+				}
+				currentSession.removeAttribute("submit");
+				return;
 			} else {
 				memberSvc.updateRank(currentMemberId, 2);
 				sessionMembersVO.setRankId(2);
+				RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletUsedRecord.jsp");
+				try {
+					successView.forward(req, res);
+				} catch (ServletException | IOException e) {
+					e.printStackTrace();
+				}
+				currentSession.removeAttribute("submit");
+				return;
 			}
-			
-			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletUsedRecord.jsp");
-			try {
-				successView.forward(req, res);
-			} catch (ServletException | IOException e) {
-				e.printStackTrace();
-			}
-			currentSession.removeAttribute("submit");
-			return;
+
 		}
-		
+
 		RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletUsedRecord.jsp");
 		try {
 			successView.forward(req, res);
