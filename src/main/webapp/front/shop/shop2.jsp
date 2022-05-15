@@ -178,9 +178,13 @@
 							<h4 class="product_name">
 								<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop"> ${productVO.productName}</a>
 							</h4>
+							
+							<c:if test="${productVO.totalView!=null}">
 							<div class="price_box">
 								<i class="bi bi-eye-fill"></i>累積觀看${productVO.totalView}次
 							</div>
+							</c:if>
+							
 							<div class="price_box">
 								<span class="current_price">${productVO.price}元</span>
 							</div>

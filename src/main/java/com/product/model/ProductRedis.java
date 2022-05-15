@@ -21,8 +21,8 @@ public class ProductRedis {
 			jedis.select(2);
 			jedis.ping();
 			String key = "productId:"+productId+":totalView"; 
-			System.out.println("key值 :"+key);
-			System.out.println("redis回傳結果: "+jedis.get(key)); 
+//			System.out.println("key值 :"+key);
+//			System.out.println("redis回傳結果: "+jedis.get(key)); 
 			if(jedis.get(key)==null) {
 				jedis.set(key, "1");
 			}
@@ -52,8 +52,8 @@ public class ProductRedis {
 			jedis.select(2);
 			jedis.ping();
 			String key = "productId:"+productId+":totalView"; 
-			System.out.println("key值 :"+key);
-			System.out.println("redis回傳結果: "+jedis.get(key)); 
+//			System.out.println("key值 :"+key);
+//			System.out.println("redis回傳結果: "+jedis.get(key)); 
 			if(jedis.get(key)==null) {
 				jedis.set(key, "1");
 			}
