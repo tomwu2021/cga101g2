@@ -44,7 +44,7 @@ public class WishlistDeleteServlet extends HttpServlet {
 			msg.put("msg", "-2");
 			String json = new Gson().toJson(msg);
 			res.getWriter().write(json);
-			System.out.println("無會員資訊");
+//			System.out.println("無會員資訊");
 			return;
 		}
 
@@ -62,13 +62,13 @@ public class WishlistDeleteServlet extends HttpServlet {
 			msg.put("msg", "1");
 			String json = new Gson().toJson(msg);
 			res.getWriter().write(json);
-			System.out.println("刪除收藏商品成功");
+//			System.out.println("刪除收藏商品成功");
 			return;
 		} else {
 			msg.put("msg", "-1");
 			String json = new Gson().toJson(msg);
 			res.getWriter().write(json);
-			System.out.println("刪除收藏商品失敗");
+//			System.out.println("刪除收藏商品失敗");
 			return;
 		}
 	}

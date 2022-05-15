@@ -62,13 +62,13 @@ public class WishlistInsertServlet extends HttpServlet {
 			msg.put("msg", "1");
 			String json = new Gson().toJson(msg);
 			res.getWriter().write(json);
-			System.out.println("新增收藏商品成功");
+//			System.out.println("新增收藏商品成功");
 			return;
 		} else {
 			msg.put("msg", "-1");
 			String json = new Gson().toJson(msg);
 			res.getWriter().write(json);
-			System.out.println("新增收藏商品失敗");
+//			System.out.println("新增收藏商品失敗");
 			return;
 		}
 	}

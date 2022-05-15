@@ -20,7 +20,7 @@ $("#goWishlist").click(function() {
 				Swal.fire({
 					icon: 'info',
 					title: 'Oops...',
-					text: '先登入才能收藏喔！',
+					text: '先登入才能看收藏清單喔！',
 					footer: '<a href=' + `${getContextPath()}/front/login.jsp` + '>前往登入頁面</a>'
 				})
 			}
@@ -192,7 +192,7 @@ $("[id^='Wlishlist']").click(function thisfunction() {
 					console.log($(this));
 					thisButton.attr('class', 'btn btn-outline-danger')
 					.val('0')
-					.children().text('已加入收藏');
+					.children().text('加入收藏');
 					console.log(thisButton.val());
 					thisButton.off('click');//先關閉click事件。
 					thisButton.on('click', thisfunction);//執行完後打開click 事件，並執行thisfunction
@@ -226,7 +226,7 @@ $("[id^='Wlishlist']").click(function thisfunction() {
 
 ///***初版參考**///
 //商品細節愛心icon新增單個收藏商品
-$("[id^='insertWlishlist']").click(function() {
+$("").click(function() {
 	//fetch DOM elements
 	let id = $(this).attr("id");
 	let productId = id.substring(15);
@@ -280,7 +280,7 @@ $("[id^='insertWlishlist']").click(function() {
 });
 
 //商品細節頁面  刪除單個收藏商品
-$("[id^='deleteWlishlist']").click(function() {
+$("").click(function() {
 	//fetch DOM elements
 	let id = $(this).attr("id");
 	let productId = id.substring(15);

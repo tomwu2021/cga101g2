@@ -98,6 +98,13 @@ public class GoWishlistServlet extends HttpServlet {
 			for (ProductVO vo : topProdcutList) {
 				List<PictureVO> pictureVOList = piSvc.getPicVOsByProductId(vo.getProductId());
 				vo.setPictureVOList(pictureVOList);
+				///********查詢ProductRedis 開始*********///
+				//添增try / catch防止沒開啟Redis 而死機
+				try  {
+					vo.setTotalView(pdSvc.getProductIdTotalView(vo.getProductId()));
+				} catch (Exception e) {
+			    }
+				///********查詢ProductRedis 結束*********///
 			}
 			/// ********推薦商品資料 結束*********///
 

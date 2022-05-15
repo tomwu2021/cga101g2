@@ -169,22 +169,17 @@
 									<img src="${productVO.pictureVOList.get(1).previewUrl}" alt=""></a>
 								</c:if>	
 <!--                                  商品照片點 end    -->
-                                    <div class="action_links">
-                                        <ul>
-<!--                                             <li class="quick_button"> -->
-<!--                                             <a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view">  -->
-<!--                                             <i class="icon icon-Eye"></i></a></li> -->
-                                            <li class="wishlist">
-                                            <a href="wishlist.html" title="Add to Wishlist">
-                                            <i class="icon icon-Heart"></i></a></li>  
-                                        </ul>
-                                    </div>
                                 </div>
                                 <figcaption class="product_content">
                                     <h4 class="product_name">
                                     	<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop"> 
                                     	${productVO.productName}</a>
                                     </h4>
+                                    <c:if test="${productVO.totalView!=null}">
+											<div class="price_box">
+													<i class="bi bi-eye-fill fa-1x"></i>累積觀看${productVO.totalView}次
+											</div>
+									</c:if>
                                     <div class="price_box"> 
                                         <span class="current_price">${productVO.price}元</span>
                                     </div>
@@ -217,7 +212,7 @@
 	<!-- 額外添加的JS -->
 	<!-- 	路徑舉例 -->
 	<script 
-		src="<%=request.getContextPath()%>/assets/shop/wishlist.js"> 
+		  src="<%=request.getContextPath()%>/assets/js/order&cart/addToCart.js">
 	</script>
 	<!-- 額外添加的JS -->
 
