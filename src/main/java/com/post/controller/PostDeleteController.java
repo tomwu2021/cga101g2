@@ -32,7 +32,12 @@ public class PostDeleteController extends HttpServlet {
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("PostDeleteController 執行成功");
-		String action = req.getParameter("action");
+		
+		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************************/ 
+//		Integer postId = Integer.valueOf(req.getParameter("postId").trim());	
+		final Integer postId = json2Pojo(req, PostVO.class).getPostId();
+		System.out.println(postId);
+		
 		
 		
 	//  列舉client送來的所有請求參數名稱
@@ -47,20 +52,14 @@ public class PostDeleteController extends HttpServlet {
 		   System.out.println(e.toString());
 		  }
 		
-
         /**
          *修改貼文內容
          * 
          */
-		
-        if("delete".equals(action)) {
         	Map<String,String> msg = new LinkedHashMap<String,String>();
 			req.setAttribute("msg", msg);
 			
-			/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************************/ 
-//			Integer postId = Integer.valueOf(req.getParameter("postId").trim());	
-			final Integer postId = json2Pojo(req, PostVO.class).getPostId();
-						
+
 			/***************************2.開始查詢資料***************************************/
 			// 1.呼叫postService
 			PostService postService = new PostService();
@@ -89,7 +88,5 @@ public class PostDeleteController extends HttpServlet {
 		
 			
         }
-
-	}
 
 }
