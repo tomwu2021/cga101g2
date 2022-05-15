@@ -9,7 +9,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>FilterForEmpLogin</filter-name>
-<!-- 		<url-pattern>/back/xxx.jsp</url-pattern> -->
+		<!-- <url-pattern>/back/xxx.jsp</url-pattern> -->
 		<url-pattern></url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
@@ -60,6 +60,16 @@
 	<servlet-mapping>
 		<servlet-name>PictureDeleteController</servlet-name>
 		<url-pattern>/PictureDeleteController</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>GroupOrderCheckController</servlet-name>
+		<servlet-class>com.allOrders.controller.GroupOrderCheckController</servlet-class>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GroupOrderCheckController</servlet-name>
+		<url-pattern>/GroupOrderCheckController</url-pattern>
 	</servlet-mapping>
 
 
