@@ -37,7 +37,16 @@ public class ProductVO implements java.io.Serializable {
 	private List<PictureVO> pictureVOList;
 	private List<Sort1VO> PSort1VOList;
 	
+	private Integer totalView;
 	
+	public Integer getTotalView() {
+		return totalView;
+	}
+
+	public void setTotalView(Integer totalView) {
+		this.totalView = totalView;
+	}
+
 	public List<Sort1VO> getPSort1VOList() {
 		return PSort1VOList;
 	}

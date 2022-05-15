@@ -17,10 +17,13 @@ public class ProductService {
 
 	private ProductDAO_interface dao;
 
+	private ProductRedis daoRedis;
+	
 	public ProductService() {
 		dao = new ProductJNDIDAO();
+		daoRedis = new ProductRedis();
 	}
-
+	
 	public ProductVO updateProduct(Integer productId ,String productName, Integer price, Integer amount, Integer sort2Id,
 			Integer groupPrice1, Integer groupAmount1, Integer groupAmount2, Integer groupAmount3, String description,
 			String sort1Id[], ArrayList<Part> partsList,String deleteImg[]) {
@@ -153,6 +156,13 @@ public class ProductService {
 		return productVO;
 	}
 	
+	public int getProductIdTotalView(Integer productId) {
+		return daoRedis.getProductIdTotalView(productId);
+	}
+	
+	public int addProductIdTotalView(Integer productId) {
+		return daoRedis.addProductIdTotalView(productId);
+	}
 	
 	public ProductVO getOneProductByid(Integer prodouctId) {
 		return dao.getOneById(prodouctId);

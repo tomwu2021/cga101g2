@@ -26,6 +26,8 @@ import com.sort2.model.Sort2Service;
 import com.sort2.model.Sort2VO;
 import com.sort_mix.model.SortMixService;
 
+import redis.clients.jedis.JedisPool;
+
 @WebServlet("/shop")
 public class ShopFrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -93,6 +95,13 @@ public class ShopFrontServlet extends HttpServlet {
 		    for(ProductVO vo: topProdcutList) {
 				List<PictureVO> pictureVOList = piSvc.getPicVOsByProductId(vo.getProductId());
 				vo.setPictureVOList(pictureVOList);
+				///********查詢ProductRedis 開始*********///
+				//添增try / catch防止沒開啟Redis 而死機
+				try  {
+					vo.setTotalView(pdSvc.getProductIdTotalView(vo.getProductId()));
+				} catch (Exception e) {
+			    }
+				///********查詢ProductRedis 結束*********///
 			}
 		    ///********推薦商品資料 結束*********///
 
@@ -101,6 +110,15 @@ public class ShopFrontServlet extends HttpServlet {
 			for(ProductVO vo: list) {
 				List<PictureVO> pictureVOList = piSvc.getPicVOsByProductId(vo.getProductId());
 				vo.setPictureVOList(pictureVOList);
+				///********查詢ProductRedis 開始*********///
+				//添增try / catch防止沒開啟Redis 而死機
+				try  {
+					vo.setTotalView(pdSvc.getProductIdTotalView(vo.getProductId()));
+				} catch (Exception e) {
+//					System.out.println("未開啟Redis,所以沒有查詢TotalView");
+//			        e.getMessage();
+			    }
+				///********查詢ProductRedis 結束*********///
 			}
 			//搜尋所有主分類"們" 放入對應的子分類"們"
 			Sort1Service sort1Service = new Sort1Service();
@@ -134,19 +152,20 @@ public class ShopFrontServlet extends HttpServlet {
 			long totalSeconds2 = (System.currentTimeMillis()) ;
 			System.out.println(totalSeconds2 - totalSeconds1);
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			 ///********推薦商品資料 開始*********///
-			req.setAttribute("topProdcutList", topProdcutList);
-		    ///********推薦商品資料 結束*********///
 			req.setAttribute("listProducts_Byfind", list); // 資料庫取出的list物件,存入request
 			System.out.println(total);
 			System.out.println(whichPage);
 			req.setAttribute("total", total);
 			req.setAttribute("currPage", whichPage);
 			req.setAttribute("sort1VOListIncludesort2VOList", sort1VOList);
+			
+			 ///********推薦商品資料 開始*********///
+			req.setAttribute("topProdcutList", topProdcutList);
+		    ///********推薦商品資料 結束*********///
 			///********跳轉到該分類頁面的分類資料分界點 開始*********///
 			req.setAttribute("thisSort1VO", sort1VO);
 			req.setAttribute("thisSort2VO", sort2VO);
-			///********分類的分界點 結束*********///
+			///********跳轉到該分類頁面的分類資料分界點*********///
 			
 			// **********************0506要轉交給shop2改成轉交給shop***********************//
 			RequestDispatcher successView = req.getRequestDispatcher("/front/shop/shop2.jsp"); // 成功轉交shop.jsp

@@ -75,15 +75,6 @@
 					<!--sidebar widget start ========================================= -->
 					<aside class="sidebar_widget">
 						<div class="widget_inner">
-							<!--                 <div class="widget_list widget_filter">
-<!--                                 <h3>Filter by price</h3> -->
-							<!--                                 <form action="#">  -->
-							<!--                                     <div id="slider-range"></div>    -->
-							<!--                                     <button type="submit">Filter</button> -->
-							<!--                                     <input type="text" name="text" id="amount" />    -->
-
-							<!--                                 </form>  -->
-							<!--                             </div> -->
 							<c:set var="sort1VOList"  scope="page" value="${sort1VOListIncludesort2VOList}" />
 							
 							<div class="widget_list widget_color">
@@ -107,12 +98,6 @@
 							</div>
 							</c:forEach>
 							<!-- 結束 -->
-							<div class="widget_list shopside_banner">
-								<div class="banner_thumb">
-									<a href="#"><img src=""
-										alt="" /></a>
-								</div>
-							</div>
 						</div>
 					</aside>
 					<!--sidebar widget end-->
@@ -129,27 +114,7 @@
 		<div class="shop_toolbar_btn">
 			<button data-role="grid_3" type="button" class="active btn-grid-3"
 				data-toggle="tooltip" title="3"></button>
-
-			<button data-role="grid_4" type="button" class="btn-grid-4"
-				data-toggle="tooltip" title="4"></button>
-
-			<button data-role="grid_list" type="button" class="btn-list"
-				data-toggle="tooltip" title="List"></button>
 		</div>
-<!-- 		<div class="niceselect_option"> -->
-<!-- 			<form class="select_option" action="#"> -->
-<!-- 				<select name="orderby" id="short"> -->
-<!-- 					<option selected value="1">價格由高到低</option> -->
-<!-- 					<option value="2">Sort by popularity</option> -->
-<!-- 					<option value="3">Sort by newness</option> -->
-<!-- 					<option value="4">Sort by price: low to high</option> -->
-<!-- 					<option value="5">Sort by price: high to low</option> -->
-<!-- 					<option value="6">Product Name: Z</option> -->
-<!-- 				</select> -->
-<!-- 			</form> -->
-<!-- 		</div> -->
-<%-- <%@ include file="pages/shop2/page1_ByCompositeQuery.file" %>  --%>
-		
 		<div class="niceselect_option">
 			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/shop" id="myPageForm">   
 		       <select size="1" name="whichPage" id="myPage">
@@ -208,49 +173,19 @@
 								<a class="secondary_img" href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop">
 								<img src="${productVO.pictureVOList.get(1).previewUrl}" alt=""></a>
 							</c:if>	
-							<div class="action_links">
-<!-- 								<ul> -->
-<!-- 									<li class="quick_button"><a href="#" data-toggle="modal" -->
-<!-- 										data-target="#modal_box" title="quick view"> <i -->
-<!-- 											class="icon icon-Eye"></i></a></li> -->
-<!-- 									<li class="wishlist"><a href="wishlist.html" -->
-<!-- 										title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li> -->
-<!-- 								</ul> -->
-							</div>
 						</div>
 						<div class="product_content grid_content">
 							<h4 class="product_name">
 								<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop"> ${productVO.productName}</a>
 							</h4>
 							<div class="price_box">
+								<i class="bi bi-eye-fill"></i>累積觀看${productVO.totalView}次
+							</div>
+							<div class="price_box">
 								<span class="current_price">${productVO.price}元</span>
 							</div>
 							<div class="add_to_cart">								
 								<a title="Add to cart" onclick="addToCart(${productVO.productId})">Add to Cart</a>
-							</div>
-						</div>
-						<div class="product_content list_content">
-							<h4 class="product_name">
-								<a href="product-details.html">quidem totam, voluptatem quae
-									quasi possimus</a>
-							</h4>
-							<div class="product_desc">
-								<p> ${productVO.description}</p>
-							</div>
-							<div class="price_box">
-								<span class="current_price">$145.00</span> <span
-									class="old_price">$178.00</span>
-							</div>
-							<div class="action_links list_action_right">
-								<ul>
-									<li class="add_to_cart"><a href="cart.html"
-										title="Add to cart">Add to Cart</a></li>
-									<li class="quick_button"><a href="#" data-toggle="modal"
-										data-target="#modal_box" title="quick view"> <i
-											class="icon icon-Eye"></i></a></li>
-									<li class="wishlist"><a href="wishlist.html"
-										title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>
-								</ul>
 							</div>
 						</div>
 					</figure>
@@ -266,123 +201,6 @@
 	</div>
  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/shop"></FORM>	
 	<!--單一商品結束 -->
-<!-- modal area start-->
-	<div class="modal fade" id="modal_box" tabindex="-1" role="dialog"
-		aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true"><i class="ion-android-close"></i></span>
-				</button>
-				<div class="modal_body">
-					<div class="container">
-						<div class="row">
-							<div class="col-lg-5 col-md-5 col-sm-12">
-								<div class="modal_tab">
-									<div class="tab-content product-details-large">
-										<div class="tab-pane fade show active" id="tab1"
-											role="tabpanel">
-											<div class="modal_tab_img">
-												<a href="#"><img
-													src="" alt="" /></a>
-											</div>
-										</div>
-										<div class="tab-pane fade" id="tab2" role="tabpanel">
-											<div class="modal_tab_img">
-												<a href="#"><img
-													src="" alt="" /></a>
-											</div>
-										</div>
-										<div class="tab-pane fade" id="tab3" role="tabpanel">
-											<div class="modal_tab_img">
-												<a href="#"><img
-													src=" alt="" /></a>
-											</div>
-										</div>
-										<div class="tab-pane fade" id="tab4" role="tabpanel">
-											<div class="modal_tab_img">
-												<a href="#"><img
-													src="" alt="" /></a>
-											</div>
-										</div>
-									</div>
-									<div class="modal_tab_button">
-										<ul class="nav product_navactive owl-carousel" role="tablist">
-											<li><a class="nav-link active" data-toggle="tab"
-												href="#tab1" role="tab" aria-controls="tab1"
-												aria-selected="false"><img
-													src="" alt="" /></a></li>
-											<li><a class="nav-link" data-toggle="tab" href="#tab2"
-												role="tab" aria-controls="tab2" aria-selected="false"><img
-													src="" alt="" /></a></li>
-											<li><a class="nav-link button_three" data-toggle="tab"
-												href="#tab3" role="tab" aria-controls="tab3"
-												aria-selected="false"><img
-													src="" alt="" /></a></li>
-											<li><a class="nav-link" data-toggle="tab" href="#tab4"
-												role="tab" aria-controls="tab4" aria-selected="false"><img
-													src="" alt="" /></a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-7 col-md-7 col-sm-12">
-								<div class="modal_right">
-									<div class="modal_title mb-10">
-										<h2>}</h2>
-									</div>
-									<div class="modal_price mb-10">
-										<span class="new_price">${productVO.price}元</span>
-									</div>
-									<div class="modal_description mb-15">
-										<p> >${productVO.description}</p>
-									</div>
-									<div class="variants_selects">
-										<div class="modal_add_to_cart">
-											<form action="#">
-												<input min="1" max="100" step="2" value="1" type="number" />
-												<button type="submit">add to cart</button>
-											</form>
-										</div>
-									</div>
-									<div class="modal_social">
-										<h2>Share this product</h2>
-										<ul>
-											<li class="facebook"><a href="#"><i
-													class="fa fa-facebook"></i></a></li>
-											<li class="twitter"><a href="#"><i
-													class="fa fa-twitter"></i></a></li>
-											<li class="pinterest"><a href="#"><i
-													class="fa fa-pinterest"></i></a></li>
-											<li class="google-plus"><a href="#"><i
-													class="fa fa-google-plus"></i></a></li>
-											<li class="linkedin"><a href="#"><i
-													class="fa fa-linkedin"></i></a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-		</div>
-	</div>
-	<!-- modal area end-->
-
-<!-- 	<div class="shop_toolbar t_bottom"> -->
-<!-- 		<div class="pagination"> -->
-<!-- 			<ul> -->
-<!-- 				<li class="current">1</li> -->
-<!-- 				<li><a href="#">2</a></li> -->
-<!-- 				<li><a href="#">3</a></li> -->
-<!-- 				<li class="next"><a href="#">next</a></li> -->
-<!-- 				<li><a href="#">>></a></li> -->
-<!-- 			</ul> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-	<!--shop toolbar end-->
-						<!--shop wrapper end-->
 					</div>
 				</div>
 			</div>
@@ -423,22 +241,15 @@
 									<img src="${productVO.pictureVOList.get(1).previewUrl}" alt=""></a>
 								</c:if>	
 <!--                                  商品照片點 end    -->
-                                    <div class="action_links">
-                                        <ul>
-<!--                                             <li class="quick_button"> -->
-<!--                                             <a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view">  -->
-<!--                                             <i class="icon icon-Eye"></i></a></li> -->
-                                            <li class="wishlist">
-                                            <a href="wishlist.html" title="Add to Wishlist">
-                                            <i class="icon icon-Heart"></i></a></li>  
-                                        </ul>
-                                    </div>
                                 </div>
                                 <figcaption class="product_content">
                                     <h4 class="product_name">
                                     	<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop"> 
                                     	${productVO.productName}</a>
                                     </h4>
+                                    <div class="price_box">
+										<i class="bi bi-eye-fill"></i>累積觀看${productVO.totalView}次
+									</div>
                                     <div class="price_box"> 
                                         <span class="current_price">${productVO.price}元</span>
                                     </div>

@@ -88,12 +88,14 @@
 								<span class="current_price">${param.price}元</span>
 							</div>
 							<div class="product_desc">
-								<p>PCLUB品質保證</p>
+								<p>PCLUB品質保證</p> 
+								<c:if test="${param.totalView!=null}">
+								<p><i class="bi bi-eye-fill fa-1x"></i>累積觀看&ensp; ${param.totalView}&ensp; 次</p> 
+								</c:if>
 							</div>
 							<div class="product_variant quantity">
 								<label>數量</label>
 								 <input name="productAmout" min="1" max="999" step="1" value="1" type="number" />
-								<label>  &emsp; 還剩  &emsp; ${param.amount}  &emsp; 件</label>	
 							</div>
 							<div class="product_variant quantity">
 								<button class="button" type="submit" style="position: relative; right:20px;" onclick="document.getElementById('addForm').submit()">加入購物車</button>

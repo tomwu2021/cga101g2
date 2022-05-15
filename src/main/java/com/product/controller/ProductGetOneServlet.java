@@ -95,11 +95,13 @@ public class ProductGetOneServlet extends HttpServlet {
 							.replace(":","%3A").replace("@","%40").replace("=","%3D")
 							.replace("$","%24").replace("#","%23").replace(" ","%20");
 							//****自助式轉碼****//
+						
 							
 			String url = "/back/shop/updateProduct.jsp" + param;
 
 			ProductImgService pImgSvc = new ProductImgService();
 			List<PictureVO> pictureVOList = pImgSvc.getPicVOsByProductId(productId);
+			
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
 			req.setAttribute("pictureVOList", pictureVOList); // 資料庫取出的list物件,存入request
@@ -338,6 +340,7 @@ public class ProductGetOneServlet extends HttpServlet {
 				memberId = memberVO.getMemberId();
 			} 
 			//**收藏商品分界 結束**//
+			
 			/*************************** 2.開始查詢資料 ****************************************/
 			ProductService pdSvc = new ProductService();
 			ProductVO pdVO = pdSvc.getOneProductByid(productId);
@@ -348,6 +351,17 @@ public class ProductGetOneServlet extends HttpServlet {
 			ProductImgService pImgSvc = new ProductImgService();
 			List<PictureVO> pictureVOList = pImgSvc.getPicVOsByProductId(productId);
 
+			///********新增&查詢ProductRedis 開始*********///
+			//添增try / catch防止沒開啟Redis 而死機
+			Integer totalView = null; 
+			try  {
+				pdSvc.addProductIdTotalView(productId);
+				totalView = pdSvc.getProductIdTotalView(productId);
+			} catch (Exception e) {
+//				System.out.println("未開啟Redis,所以沒有查詢TotalView");
+//		        e.getMessage();
+		    }
+			///********新增&查詢ProductRedis 結束*********///
 			String param = "?productId=" + pdVO.getProductId() 
 						+ "&productName=" + pdVO.getProductName() 
 						//****自助式轉碼  從資料庫取出****//
@@ -370,7 +384,8 @@ public class ProductGetOneServlet extends HttpServlet {
 						.replace("$","%24").replace("#","%23").replace(" ","%20")
 						//****自助式轉碼****//
 						// 子分類的名字
-						+ "&sort2Name=" + sort2VO.getSort2Name();
+						+ "&sort2Name=" + sort2VO.getSort2Name()
+						+ "&totalView=" + totalView ;
 			
 			//**收藏商品分界 開始**//
 			if (memberId != null) {

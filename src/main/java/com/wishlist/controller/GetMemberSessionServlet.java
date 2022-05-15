@@ -59,13 +59,13 @@ public class GetMemberSessionServlet extends HttpServlet {
 			Msgs.put("memberId", String.valueOf(memberId));
 			String json = new Gson().toJson(Msgs);
 			res.getWriter().write(json);
-			System.out.println("收藏清單有登入");
+//			System.out.println("收藏清單有登入");
 			return;
 		}else {
 			Msgs.put("msg", "0");
 			String json = new Gson().toJson(Msgs);
 			res.getWriter().write(json);
-			System.out.println("收藏清單沒登入");
+//			System.out.println("收藏清單沒登入");
 			return;
 		}
 		
