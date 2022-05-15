@@ -43,9 +43,11 @@
 <script src="<%=request.getContextPath()%>/assets/js/plugins.js"></script>
 
 <!-- websocket -->
-<script src = "<%=request.getContextPath()%>/assets/js/socket_io/socket.io.js"></script>
+<script
+	src="<%=request.getContextPath()%>/assets/js/socket_io/socket.io.js"></script>
 <!-- chatroom JS -->
-<script src="<%=request.getContextPath()%>/assets/js/chatroom/chatroom.js"></script>
+<script
+	src="<%=request.getContextPath()%>/assets/js/chatroom/chatroom.js"></script>
 <!-- chatroom-Public JS -->
 <script src="<%=request.getContextPath()%>/assets/js/chatroom/public.js"></script>
 <!-- Main JS -->
@@ -57,3 +59,4 @@
 <script
 	src="<%=request.getContextPath()%>/assets/js/common/sweetalert2.all.min.js"></script>
 
+<script src="<%=request.getContextPath()%>/assets/shop/wishlist.js"></script>
