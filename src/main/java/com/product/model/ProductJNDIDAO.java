@@ -302,10 +302,10 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-//		for(String key : map.keySet()){
-//			   String[] value = map.get(key);
-//			   System.out.println(key+"  "+value);
-//			}
+		for(String key : map.keySet()){
+			   String[] value = map.get(key);
+			   System.out.println(key+"  "+value);
+			}
 		
 		//*****Sort1分界點*****//
 		//有輸入sort1Id才串 ,sort1Id有可能是空陣列
@@ -437,10 +437,10 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-//		for(String key : map.keySet()){
-//			   String[] value = map.get(key);
-//			   System.out.println(key+"  "+value);
-//			}
+		for(String key : map.keySet()){
+			   String[] value = map.get(key);
+			   System.out.println(key+"  "+value);
+			}
 		
 		//*****Sort1分界點*****//
 		//有輸入sort1Id才串 ,sort1Id有可能是空陣列

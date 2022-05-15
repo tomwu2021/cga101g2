@@ -1,7 +1,6 @@
 package com.sort_mix.controller;
 
 import static com.util.GSONUtil.writePojo2Json;
-import static com.util.GSONUtil.json2Pojo;
 
 import java.io.IOException;
 
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sort2.model.Sort2VO;
 import com.sort_mix.model.SortMixService;
 @WebServlet("/shop/getSort1VOsBySort2Id")
 public class getSort1VOsBySort2Id extends HttpServlet {

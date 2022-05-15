@@ -213,10 +213,11 @@ public class ProductInsertServlet extends HttpServlet {
 					groupAmount3, description, sort1Id,partsList);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			String url = "/back/shop/listAllProduct.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 更改成功後轉交updateProduct.jsp
-			successView.forward(req, res);
-
+			res.sendRedirect(req.getContextPath()+"/back/shop?action=listProducts_Byfind");
+//			RequestDispatcher successView = req.getRequestDispatcher(url); 
+//			successView.forward(req, res);
+//			不能用以上兩行,因為req參數會被帶過去
+			
 //				/***************************其他可能的錯誤處理**********************************/
 //			} catch (Exception e) {
 //				errorMsgs.put("Exception","新資料失敗:" + e.getMessage());

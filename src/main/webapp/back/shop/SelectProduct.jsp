@@ -8,6 +8,8 @@
 <%@ page import="com.sort2.model.*"%>
 <%@ page import="com.sort_mix.model.*"%>
 
+<jsp:useBean id="listProducts_Byfind" scope="page" type="java.util.List<ProductVO>" /> <!-- 於EL此行可省略 -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -253,12 +255,12 @@
 														 onclick="javascript:window.location='<%=request.getContextPath()%>/back/shop/addProduct.jsp'">
 														 +新增商品</button>
 														<input id ="selectProduct" type="submit" value="送出查詢" class="btn btn btn-primary"  style="margin-right: 40px;">
-														<input type="hidden" name="action" value="listProducts_Byfind">
-														</FORM>
+														<input id ="action" type="hidden" name="action" value="listProducts_Byfind">
+															
 													</div>
 											</div>
 <div class="col-lg-12 mb-5">
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">									
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">											
 <div class="niceselect_option">
 <select size="1" name="whichPage" id="myPage">
 		      	  <option value="-1">請選擇
@@ -293,8 +295,6 @@
 	      </div>
 	    </div>
 	  </div>  
-	  
-			
 												<div class="form-group row">
 												<div class="col-lg-12">
 													<div class="card-body">
@@ -456,6 +456,7 @@
 	<script src="<%=request.getContextPath()%>/assets/shop/datetimepicker/time.js"></script>
 	
 	<script src="<%=request.getContextPath()%>/assets/shop/backProduct/selectSort1Id.js"> </script>
+<%-- 	<script src="<%=request.getContextPath()%>/assets/shop/backProduct/selectProduct.js"> </script> --%>
 	<script src="<%=request.getContextPath()%>/assets/shop/backNewPage.js"> </script>
 	
 	

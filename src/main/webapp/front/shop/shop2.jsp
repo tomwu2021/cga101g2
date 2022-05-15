@@ -209,13 +209,13 @@
 								<img src="${productVO.pictureVOList.get(1).previewUrl}" alt=""></a>
 							</c:if>	
 							<div class="action_links">
-								<ul>
+<!-- 								<ul> -->
 <!-- 									<li class="quick_button"><a href="#" data-toggle="modal" -->
 <!-- 										data-target="#modal_box" title="quick view"> <i -->
 <!-- 											class="icon icon-Eye"></i></a></li> -->
-									<li class="wishlist"><a href="wishlist.html"
-										title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>
-								</ul>
+<!-- 									<li class="wishlist"><a href="wishlist.html" -->
+<!-- 										title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li> -->
+<!-- 								</ul> -->
 							</div>
 						</div>
 						<div class="product_content grid_content">
@@ -370,17 +370,17 @@
 	</div>
 	<!-- modal area end-->
 
-	<div class="shop_toolbar t_bottom">
-		<div class="pagination">
-			<ul>
-				<li class="current">1</li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li class="next"><a href="#">next</a></li>
-				<li><a href="#">>></a></li>
-			</ul>
-		</div>
-	</div>
+<!-- 	<div class="shop_toolbar t_bottom"> -->
+<!-- 		<div class="pagination"> -->
+<!-- 			<ul> -->
+<!-- 				<li class="current">1</li> -->
+<!-- 				<li><a href="#">2</a></li> -->
+<!-- 				<li><a href="#">3</a></li> -->
+<!-- 				<li class="next"><a href="#">next</a></li> -->
+<!-- 				<li><a href="#">>></a></li> -->
+<!-- 			</ul> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
 	<!--shop toolbar end-->
 						<!--shop wrapper end-->
 					</div>
@@ -396,7 +396,7 @@
                 <div class="col-12">
                     <div class="section_title">
                        <h2><span>推薦</span>商城主打</h2>
-                       <p>寵物熱門推薦</p>
+                       <p>寵物商品熱門推薦</p>
                     </div>
                 </div>
             </div> 
@@ -425,9 +425,9 @@
 <!--                                  商品照片點 end    -->
                                     <div class="action_links">
                                         <ul>
-                                            <li class="quick_button">
-                                            <a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> 
-                                            <i class="icon icon-Eye"></i></a></li>
+<!--                                             <li class="quick_button"> -->
+<!--                                             <a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view">  -->
+<!--                                             <i class="icon icon-Eye"></i></a></li> -->
                                             <li class="wishlist">
                                             <a href="wishlist.html" title="Add to Wishlist">
                                             <i class="icon icon-Heart"></i></a></li>  

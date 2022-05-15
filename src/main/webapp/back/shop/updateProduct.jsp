@@ -50,9 +50,7 @@
 
 								<!--! Horizontal Form-->
 								<div class="col-lg-12 mb-5">
-									<FORM METHOD="post"
-										ACTION="<%=request.getContextPath()%>/shop/ProductGetOneServlet"
-										name="form1" enctype="multipart/form-data">
+<FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/shop/ProductGetOneServlet" name="form1" enctype="multipart/form-data">
 										<div class="card">
 											<div class="card-header">
 												<h3 class="h6 text-uppercase mb-0">更新商品</h3> 
@@ -85,13 +83,12 @@
 																</div>
 															</div>
 
-
 															<div class="form-group row">
 																<label class="col-md-3 form-control-label">商品價格</label>
 																<div class="col-md-6">
 																	<input id="inputHorizontalSuccess" type="number"
 																		value="${param.price}" name="price" placeholder=""
-																		step="1" min="1" max="9999"
+																		step="1" min="1" max="99999"
 																		class="form-control form-control-success"> <small
 																		class="form-text text-muted ml-3 text-danger">${errorMsgs.price}</small>
 																</div>
@@ -102,7 +99,7 @@
 																<div class="col-md-6">
 																	<input id="inputHorizontalSuccess" type="number"
 																		value="${param.amount}" name="amount" placeholder=""
-																		step="1" min="1" max="999"
+																		step="1" min="1" max="9999"
 																		class="form-control form-control-success"> <small
 																		class="form-text text-muted ml-3 text-danger">${errorMsgs.amount}</small>
 																</div>

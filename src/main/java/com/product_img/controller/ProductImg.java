@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.product.model.ProductService;
-import com.product.model.ProductVO;
 import com.product_img.model.ProductImgService;
 import com.product_img.model.ProductImgVO;
 

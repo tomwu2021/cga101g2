@@ -15,15 +15,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.members.model.MembersVO;
 import com.picture.model.PictureVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 import com.product_img.model.ProductImgService;
-import com.product_img.model.ProductImgVO;
 import com.sort2.model.Sort2Service;
 import com.sort2.model.Sort2VO;
+import com.wishlist.model.WishlistService;
+import com.wishlist.model.WishlistVO;
 
 /**
  * Servlet implementation class InsertServlet
@@ -40,11 +43,12 @@ public class ProductGetOneServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
 		req.setCharacterEncoding("UTF-8");// client 端向 Servlet 請求的編碼
 		res.setCharacterEncoding("UTF-8");// response，設定回應的格式及編碼
 		
 		String action = req.getParameter("action");
+		System.out.println("ProductGetOneServlet 執行成功");
+		
 //		列舉client送來的所有請求參數名稱
 		try {
 			String name;
@@ -56,6 +60,7 @@ public class ProductGetOneServlet extends HttpServlet {
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
+		
 
 		if ("getOne_For_Update".equals(action)) { // 來自listAllProduct.jsp的請求
 
@@ -325,6 +330,14 @@ public class ProductGetOneServlet extends HttpServlet {
 			/*************************** 1.接收請求參數 ****************************************/
 			Integer productId = Integer.valueOf(req.getParameter("productId"));
 
+			//**收藏商品分界 開始**//
+			Integer memberId = null;
+			HttpSession session = req.getSession();
+			if ((MembersVO) session.getAttribute("membersVO") != null) {
+				MembersVO memberVO = (MembersVO) session.getAttribute("membersVO");
+				memberId = memberVO.getMemberId();
+			} 
+			//**收藏商品分界 結束**//
 			/*************************** 2.開始查詢資料 ****************************************/
 			ProductService pdSvc = new ProductService();
 			ProductVO pdVO = pdSvc.getOneProductByid(productId);
@@ -332,10 +345,9 @@ public class ProductGetOneServlet extends HttpServlet {
 			Sort2Service sort2Svc = new Sort2Service();
 			Sort2VO sort2VO = sort2Svc.getOneById(pdVO.getSort2Id());
 
-//			ProductImgService pdImgService = new ProductImgService();
-//			List<PictureVO> pictureVOList = pdImgService.getPicVOsByProductId(productId);
+			ProductImgService pImgSvc = new ProductImgService();
+			List<PictureVO> pictureVOList = pImgSvc.getPicVOsByProductId(productId);
 
-			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			String param = "?productId=" + pdVO.getProductId() 
 						+ "&productName=" + pdVO.getProductName() 
 						//****自助式轉碼  從資料庫取出****//
@@ -359,10 +371,17 @@ public class ProductGetOneServlet extends HttpServlet {
 						//****自助式轉碼****//
 						// 子分類的名字
 						+ "&sort2Name=" + sort2VO.getSort2Name();
-			// 商品照片的集合
-//						+ "&pictureVOList=" + pdVO.getPictureVOList();
-//			req.setAttribute("pictureVOList", pictureVOList);
+			
+			//**收藏商品分界 開始**//
+			if (memberId != null) {
+				WishlistService wishSvc = new WishlistService();
+				WishlistVO wishlistVO = wishSvc.getOneWishlistVOForCheck(memberId, productId);
+				req.setAttribute("wishlistVO", wishlistVO); 
+			}
+			//**收藏商品分界 結束**//
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
+			req.setAttribute("pictureVOList", pictureVOList); // 資料庫取出的list物件,存入request
 			String url = "/front/shop/productDetails.jsp" + param;
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 /front/shop/productDetails.jsp"
 			successView.forward(req, res);

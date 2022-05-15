@@ -1,8 +1,6 @@
 package com.product.controller;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.picture.model.PictureVO;
-import com.picture.service.PictureService;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 import com.product_img.model.ProductImgService;

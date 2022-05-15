@@ -12,6 +12,9 @@
 //   });
 // });
 
+function getContextPath() {
+	return window.location.pathname.substring(0, window.location.pathname.indexOf('/', 2));
+};
 //針對 select tag 設定onchange="get_sort1index()"
 function get_sort1index() {
   //清空sort2CheckBox上次的選項 移除子節點
@@ -25,7 +28,7 @@ function get_sort1index() {
 
   //發送請求帶入變數
   $.ajax({
-    url: "getSort1VOsBySort2Id?sort2Id=" + selectname,
+    url: `${getContextPath()}/shop/getSort1VOsBySort2Id?sort2Id=` + selectname,
     type: "GET",
     //do yourself
     success: function (data) {
