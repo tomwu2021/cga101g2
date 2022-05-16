@@ -1,10 +1,10 @@
 let status= 0;
-let endTime=$("#endTime").val();
+//let endTime=$("#endTime").val();
 function search() {
 	status =$("#status").val();
 	$.get({
 		url: getContextPath() + "/member/groupOrders?status=" + status + "&thisPage=" + thisPage + "&order=end_time&pageSize="
-			+ pageSize + "&sort=" + sort + "&end_time=" + endTime + "&action=search",
+			+ pageSize + "&sort=" + sort  + "&action=search",
 		success: function(result, status) {
 			let str = "";
 			let groupOrder = result.items;
@@ -52,7 +52,7 @@ function go2GroupOrder() {
 $(document).ready(() => search());
 document.getElementById("sort").onchange = getBySort;
 document.getElementById("status").onchange = getByStatus;
-document.getElementById("endTime").onchange = getByTime;
+//document.getElementById("endTime").onchange = getByTime;
 document.getElementById("pageSize").onchange = getByPageSize;
 
 
@@ -62,12 +62,12 @@ function getBySort() {
 	console.log(sort);
 	search();
 }
-function getByTime() {
-	uploadTime = $("#endTime").val();
-	console.log(uploadTime);
-	thisPage = 1;
-	search();
-}
+//function getByTime() {
+//	endTime = $("#endTime").val();
+//	console.log(endTime);
+//	thisPage = 1;
+//	search();
+//}
 
 
 function getByStatus() {

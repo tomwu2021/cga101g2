@@ -250,11 +250,12 @@ public class Cart extends HttpServlet {
 
 				for (OrdersVO o : productList) {
 					productDetail.add(ordersService.getAllProductPicture(orderId, o.getProductVO().getProductId()));
-				}
-				System.out.println(productList.get(0).getSumPrice());
+				}				
 				req.setAttribute("orderDetail", productDetail.get(0));
 				req.setAttribute("productDetail", productDetail);
 				String msg = "已成功結帳";
+				//更新session
+				membersVO.seteWalletAmount(membersVO.geteWalletAmount()-payPrice);
 				req.setAttribute("msg", msg);
 				String url = "/front/order/orderDetail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);

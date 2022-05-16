@@ -106,20 +106,20 @@ public class PostPersonController extends CommonController {
 				List<PostVO> personList = ps.selectPost(memberId);
 				
 				
-				if (personList == null) {
-					errorMsgs.put("memberId","查無資料");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("front/post/post.jsp");
-					failureView.forward(req, res);
-					return;
-				}
+//				if (personList == null) {
+//					errorMsgs.put("memberId","查無資料");
+//				}
+//				// Send the use back to the form, if there were errors
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher("front/post/post.jsp");
+//					failureView.forward(req, res);
+//					return;
+//				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("personList", personList); 
-				System.out.println(personList);
+				
 				String url = "/front/post/personPost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);

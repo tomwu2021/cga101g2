@@ -67,24 +67,23 @@ MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
                             <h3>Billing Details</h3>
                             <div class="row">
                             
-                                <div class="col-lg-6 mb-20">
+                                <div class="col-lg-6 mb-20" id="mname">
                                     <label>姓名 <span>*</span></label>
-                                    <input type="text" name="memberName">
+                                    <input type="text" name="memberName" id="memberName">
                                 </div>
-                                <div class="col-12 mb-20">
+                                <div class="col-12 mb-20" id="mpho">
                                     <label>電話<span>*</span></label>
-                                    <input type="text" name="memberPhone">
+                                    <input type="text" name="memberPhone" id="memberPhone">
                                 </div>
-                       			<div class="col-12 mb-20">
+                       			<div class="col-12 mb-20" id="made">
                        			  <label>地址<span>*</span></label>
-								 <div id="zipcode3">
+								 <div id="zipcode3" >
 									<div class="f3" data-role="county"></div>
 									<div class="f4" data-role="district"></div>
 									</div>
 									<input type="text" name="address" class="form-control"
 									id="exampleFormControlInput1">
 						 		</div>
-						 		
 						 		
 						 		<div class="col-12 mb-20">
                                     <input id="address" type="checkbox" data-target="createp_account" name="same"/>
@@ -95,16 +94,16 @@ MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
                                         <div class="row">
                                                                                                                                                                         
                                            <div class="col-lg-6 mb-20">
-			                                    <label>姓名 <span>*</span></label>
-			                                    <input type="text" value="<%=membersVO.getName()%>">
+			                                    <label>姓名 </label>
+			                                    <input type="text" value="<%=membersVO.getName()%>" readonly="readonly">
 			                                </div>
 			                                <div class="col-12 mb-20">
-			                                    <label>電話<span>*</span></label>
-			                                    <input type="text" value="<%=membersVO.getPhone() %>">
+			                                    <label>電話</label>
+			                                    <input type="text" value="<%=membersVO.getPhone() %>" readonly="readonly">
 			                                </div>
 			                                 <div class="col-12 mb-20">
-			                                    <label>地址<span>*</span></label>
-			                                    <input type="text" value="<%=membersVO.getAddress() %>">
+			                                    <label>地址</label>
+			                                    <input type="text" value="<%=membersVO.getAddress() %>" readonly="readonly">
 			                                </div>
 			                                
                                         </div>

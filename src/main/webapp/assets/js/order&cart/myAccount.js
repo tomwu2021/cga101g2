@@ -14,7 +14,7 @@ function search() {
                 str += "<td>" + order.sumPrice + "</td>";
                 if (order.status === 0) {
                     str += "<td>未完成</td>";
-                    str += "<td><a href=" + getContextPath()+"/member/order.do?memberId=" + order.memberId + "&groupOrderId=" + order.orderId
+                    str += "<td><a href=" + getContextPath()+"/member/order.do?memberId=" + order.memberId + "&orderId=" + order.orderId
                         + ">" + order.createTime + "</a></td>";
                 } else if (order.status === 1) {
                     str += "<td>取消</td>";
@@ -23,8 +23,8 @@ function search() {
                     str += "<td>完成</td>";
                     str += "<td>X</td>";
                 }
-                str += "<td><a href=" + getContextPath() + "/member/order.do?memberId=" + order.memberId + "&groupOrderId=" + order.orderId
-                    + "&action=groupOrderDeatil" + ">View</a></td>";
+                str += "<td><a href=" + getContextPath() + "/member/order.do?memberId=" + order.memberId + "&orderId=" + order.orderId
+                    + "&action=orderDeatil" + ">View</a></td>";
             }
             str += "</tr>";
             $("#memberOrder").html(str);

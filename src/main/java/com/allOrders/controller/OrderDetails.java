@@ -75,7 +75,7 @@ public class OrderDetails extends HttpServlet{
 			Integer groupOrderId = Integer.valueOf(req.getParameter("groupOrderId").trim());
 			GroupBuyerService groupBuyerService=new GroupBuyerService();
 			//查詢回傳資料
-			GroupBuyerVO groupBuyerVO=groupBuyerService.selectOrderDetail(groupOrderId, memberId);	
+			GroupBuyerVO groupBuyerVO=groupBuyerService.selectOrderDetail(groupOrderId, memberId);
 			System.out.println(groupBuyerVO.getPictureVO().getPreviewUrl());
 			req.setAttribute("groupBuyerVO", groupBuyerVO);
 			

@@ -37,8 +37,7 @@ public class PostAddController extends CommonController {
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		req.setCharacterEncoding("UTF-8");
-		String action = req.getParameter("action");
-		action = "insert";
+		String action = req.getParameter("action");		
 		
 	//  列舉client送來的所有請求參數名稱
 		  try {
@@ -69,7 +68,7 @@ public class PostAddController extends CommonController {
 //				Integer memberId = super.getLoginInfo(req, res).getMemberId();
 			
 						 	
-			    //這一行是對方的個人頁面的id
+			    
 			    Integer isOwner = null;   //memberIdIsMe
 			    HttpSession session = req.getSession();
 			    if((MembersVO)session.getAttribute("membersVO")!=null) {

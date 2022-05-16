@@ -60,8 +60,10 @@ public class PostJDBCDAO implements PostDAO_interface {
 		return false;
 	}
 
-	
-	//修改貼文內容
+	/**
+	 * 修改貼文內容 
+	 */
+
 	@Override
 	public PostVO update(PostVO postVO) {
 		con = JDBCConnection.getRDSConnection();
@@ -102,8 +104,10 @@ public class PostJDBCDAO implements PostDAO_interface {
 		return null;
 	}
 	
-
-	//查看單篇詳細貼文
+	
+	/**
+	 * 查看單篇詳細貼文 
+	 */
 	@Override
 	public PostVO getOneById(Integer postId, Integer memberId) {
 		
@@ -178,8 +182,10 @@ public class PostJDBCDAO implements PostDAO_interface {
 		return list;
 	}
 	
-	
-	//查詢個人頁面
+	/**
+	 * 查詢個人頁面
+	 * 
+	 */
 	@Override
 	public List<PostVO> selectPost(Integer memberid) {
 		List<PostVO> poList = null;				
@@ -257,8 +263,11 @@ public class PostJDBCDAO implements PostDAO_interface {
 	}
 	
 
-		
-	//查詢貼文，顯示 status狀態0:正常1:審核中2:刪除
+	/**
+	 * 查詢貼文，顯示 status狀態0:正常1:審核中2:刪除
+	 * 
+	 */	
+	
 	@Override
 	public List<PostVO> selectChangePost() {
 		final String SELECT_CHANGEPOST = "SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url,pic2.url,pic2.preview_url "
@@ -323,7 +332,9 @@ public class PostJDBCDAO implements PostDAO_interface {
 		
 	}
 	
-	//查詢熱門貼文  
+	/**
+	 * 查詢熱門貼文
+	 */  
 	@Override
 	public List<PostVO> selectHotPost() {
 		final String SELECT_HOTPOST = "select p.post_id, member_id, content, like_count, create_time, preview_url"
