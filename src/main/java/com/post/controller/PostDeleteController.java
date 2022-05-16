@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.post.model.PostService;
 import com.post.model.PostVO;
-import com.wishlist.model.WishlistVO;
 
 
 

@@ -1,10 +1,10 @@
 (function ($) {
-            var width_crop = 350, // 圖片裁切寬度 px 值
-                height_crop = 350, // 圖片裁切高度 px 值
+            var width_crop = 300, // 圖片裁切寬度 px 值
+                height_crop = 300, // 圖片裁切高度 px 值
                 type_crop = "square", // 裁切形狀: square 為方形, circle 為圓形
-                width_preview = 350, // 預覽區塊寬度 px 值
-                height_preview = 350, // 預覽區塊高度 px 值
-                compress_ratio = 0.85, // 圖片壓縮比例 0~1
+                width_preview = 300, // 預覽區塊寬度 px 值
+                height_preview = 300, // 預覽區塊高度 px 值
+                compress_ratio = 0.75, // 圖片壓縮比例 0~1
                 type_img = "png", // 圖檔格式 jpeg png webp
                 oldImg = new Image(),
                 myCrop, file, oldImgDataUrl;
@@ -50,6 +50,7 @@
             function displayCropImg(src) {
                 var html = "<img src='" + src + "' />";
                 $("#newImg").html(html);
+                $('#newImg-base64').val(src);
             }
 
             $("#upload_img").on("change", function () {

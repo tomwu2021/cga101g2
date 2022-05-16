@@ -98,16 +98,16 @@ if (buylist != null && (buylist.size() > 0)) {
                                         <div class="row">
                                                                                                                                                                         
                                            <div class="col-lg-6 mb-20">
-			                                    <label>姓名 <span>*</span></label>
-			                                    <input type="text" value="<%=membersVO.getName()%>">
+			                                    <label>姓名 </label>
+			                                    <input type="text" value="<%=membersVO.getName()%>" readonly="readonly">
 			                                </div>
 			                                <div class="col-12 mb-20">
-			                                    <label>電話<span>*</span></label>
-			                                    <input type="text" value="<%=membersVO.getPhone() %>">
+			                                    <label>電話</label>
+			                                    <input type="text" value="<%=membersVO.getPhone() %>" readonly="readonly">
 			                                </div>
 			                                 <div class="col-12 mb-20">
-			                                    <label>地址<span>*</span></label>
-			                                    <input type="text" value="<%=membersVO.getAddress() %>">
+			                                    <label>地址</label>
+			                                    <input type="text" value="<%=membersVO.getAddress() %>" readonly="readonly">
 			                                </div>
 			                                
                                         </div>

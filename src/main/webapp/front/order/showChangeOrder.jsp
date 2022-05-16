@@ -14,7 +14,6 @@ GroupBuyerVO groupBuyerVO = (GroupBuyerVO) request.getAttribute("groupBuyerVO");
 
 <!-- 主要內容 start -->
 <!--breadcrumbs area start-->
-<FORM METHOD="post" ACTION="/CGA101G2/front/order/myAccount.jsp">
 	<div class="breadcrumbs_area">
 		<div class="container">
 			<div class="row">
@@ -32,7 +31,6 @@ GroupBuyerVO groupBuyerVO = (GroupBuyerVO) request.getAttribute("groupBuyerVO");
 	</div>
 	<div class="shopping_cart_area mt-100">
 		<div class="container">
-			<form action="#">
 				<div class="row">
 					<div class="col-12">
 						<div class="table_desc">
@@ -86,6 +84,7 @@ GroupBuyerVO groupBuyerVO = (GroupBuyerVO) request.getAttribute("groupBuyerVO");
 								</div>
 							</div>
 						</div>
+						
 						<div class="col-lg-6 col-md-6">
 							<div class="coupon_code right">
 								<h3>Cart Totals</h3>
@@ -94,16 +93,19 @@ GroupBuyerVO groupBuyerVO = (GroupBuyerVO) request.getAttribute("groupBuyerVO");
 										<p>總金額</p>
 										<p class="cart_amount">${groupBuyerVO.groupOrderVO.finalPrice*groupBuyerVO.productAmount}</p>
 									</div>	
-									<div class="checkout_btn" onclick="history.back()">
-										<a href="#">回上頁</a>
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/groupOrder.do" name="join">
+									<div class="checkout_btn" onclick="javascript:document.join.submit();">
+									<input type="hidden" name="action" value="joinGroupOrder">
+										<a href="#">到商城</a>
 									</div>
+									</FORM>
+								
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<!--coupon code area end-->
-			</form>
 		</div>
 	</div>
 

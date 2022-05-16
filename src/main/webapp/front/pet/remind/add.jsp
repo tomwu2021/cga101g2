@@ -84,11 +84,11 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 								<div class="row">
 									<div class="mb-3 col-lg-9" style="font-size: 2em;">
 										<input name="time" id="r_date1" type="text" placeholder="請輸入時間"
-												value="${rVO.time}"  style="border:none;max-width:300px;background:none;"/><label class="btn btn-muted form-btn-circle btn-sm" for="r_date1"><i class="fas fa-calendar text-muted"></i></label>
+												value="${param.time}"  style="border:none;max-width:300px;background:none;"/><label class="btn btn-muted form-btn-circle btn-sm" for="r_date1"><i class="fas fa-calendar text-muted"></i></label>
 									</div>
 							
 								</div>
-								<textarea id="content" name="content" class="form-control" placeholder="請輸入內容"  style="border:#4680FF 1px solid;height:40vh;width:96%;background:none;resize:none;" autofocus>${rVO.content}</textarea>
+								<textarea id="content" name="content" class="form-control" placeholder="請輸入內容"  style="border:#4680FF 1px solid;height:40vh;width:96%;background:none;resize:none;" autofocus>${param.content}</textarea>
 								<input name="memberId" type="hidden" value="<%=loginId%>">
 
 							<div id="submitBtn">

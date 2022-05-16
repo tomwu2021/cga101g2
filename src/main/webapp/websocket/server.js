@@ -76,7 +76,6 @@ publicIO.on('connection', async (socket) => {
                             onLineMap.set(item.target_id, onlineFriends);
                         }
                     });
-
                 }
             );
         }
@@ -89,7 +88,13 @@ function broadcastUpdateOnlineFriends(memberId) {
         data: onLineMap.get(memberId) || []
     });
 }
+function broadcastUnread(memberId,data) {
+    publicIO.to(memberId).emit('broadcast-unread', JSON.stringify(data));
+}
 
+function broadcastRead(chatroomId,data) {
+    privateIO.to(chatroomId).emit('broadcast-read', JSON.stringify(data));
+}
 
 let chatRoomMap = new Map();
 const privateIO = io.of('/private');
@@ -125,22 +130,28 @@ privateIO.on('connection', (socket) => {
         removeConnectionFromRoom(roomId, socket);
     });
 
-    socket.on('send-message', (data) => {
+    socket.on('send-message', async (data) => {
         let readCount = aliveCount(data.message.chatroom_id);
         data.message.read_count = readCount;
         let members = data.members;
+        data.message["message_id"] = parseInt('' + data.message.chatroom_id + data.message.memberId + data.message.create_time);
         //broadcast publicIO ->members
         //loop members -> lambda -> 取得未讀總數(memberId) & 取得個別聊天未讀總數(memberId,chatroom)
         //java -> dynamo -> 取得初始個別聊天室未讀數
         //
         broadcast(privateIO, data.message.chatroom_id, data.message);
-
         putRecord(data);
+        for(let member of members) {
+            if(member.memberId!==data.message.sender) {
+                await broadcastUnread(member.memberId, "未讀訊息+1");
+            }
+        }
     });
 
     socket.on('on-read', async (message) => {
         setTimeout(async () => await DyDBService.updateOneUnread(message), 300);
-
+        broadcastUpdateOnlineFriends();
+        broadcastRead(message.chatroom_id,message);
     });
 
     socket.on('disconnect', (data) => {
@@ -181,6 +192,7 @@ server.listen(port, () => {
 });
 
 function putRecord(data) {
+    console.log(data)
     let members = data.members;
     let message = data.message;
     // console.log(`${message.chatroom_id}: ${message.message}`);

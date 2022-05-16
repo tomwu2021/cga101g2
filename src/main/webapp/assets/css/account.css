@@ -1,3 +1,7 @@
+body {
+    background-color: #fff;
+}
+
 /* container  */
 .container-bg {
     position: relative;
@@ -49,7 +53,7 @@
     width: 100%;
     bottom: 0;
     visibility: visible;
-    border-bottom: 2px solid #F53737;
+    border-bottom: 2px solid #EC9A96;
 }
 
 .panel-title b em {
@@ -77,7 +81,7 @@
 }
 
 .panel-title i::before {
-    color: #B71816;
+    color: #FFB27D;
     margin-right: 0.5em;
 }
 
@@ -165,7 +169,7 @@
 }
 
 .mod-002 .card a {
-    color: #F47378;
+    color: currentColor;
     text-decoration: none;
 }
 
@@ -185,7 +189,7 @@
     display: block;
     flex-grow: 1;
     flex-shrink: 1;
-    color: #F47378;
+    color: #395F79;
     font-size: 15px;
     font-weight: bold;
 }
@@ -237,6 +241,7 @@
 
 .mod-002 .card b a {
     color: #d80000;
+    pointer-events: none;
 }
 
 .mod-002 .card-wrap {

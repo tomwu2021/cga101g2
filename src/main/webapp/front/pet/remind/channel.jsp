@@ -15,7 +15,7 @@ Integer memberId = session.getAttribute("membersVO")==null ? -999:((MembersVO)se
 	    <div class="dropdown_links filtermenu">
 	        <div class="dropdown_links_list">
 	            <ul>
-	                <li><a href="front/pet/remind/add.jsp" class="dropdown-item">新增紀錄</a></li>
+	                <li><a href="front/pet/remind/add.jsp" class="dropdown-item">新增提醒</a></li>
 	                <li><a href="<%=request.getContextPath()%>/remind?action=all_Display&memberId=<%=memberId%>" class="dropdown-item">查看更多</a></li>
                 </ul>
 	        </div>

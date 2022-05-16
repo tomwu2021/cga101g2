@@ -31,7 +31,7 @@ public class PetService {
 		
 		PetVO pVO = new PetVO();
 		PictureVO picVO = new PictureVO();
-		Integer picId = breed==1?999:1000;
+		Integer picId = 999;
 	// 步驟一 上傳大頭貼
 		if (headshot != null) {
 			try {
@@ -57,27 +57,30 @@ public class PetService {
 		
 		return pVO;
 	}
-
-	
-	
-	
-	
-	
-	
-	
 			
 	/**
 	 * 修改寵物資料
 	 * @return PetVO(petId, petName, breed, [gender], [introduction], [headShot], [birthday])
 	 */
-	public PetVO updatePet(String petName, Integer breed, Integer gender, String introduction, Integer headShot, Date birthday, Integer petId) {
+	public PetVO updatePet(Integer memberId, String petName, Integer breed, Integer gender, String introduction, Collection<Part> headshot, Date birthday, Integer petId) {
 		PetVO pVO = new PetVO();
-		
+		PictureVO picVO = new PictureVO();
+		Integer picId = picVO.getPictureId();
+	// 步驟一 上傳新大頭貼
+		if (headshot != null) {
+			try {
+				picVO = picSvc.uploadImageByDefaultAlbum(headshot, memberId).get(0);
+				picId = picVO.getPictureId();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	// 步驟二 修改寵物資料	
 		pVO.setPetName(petName);
 		pVO.setSort1Id(breed);
 		pVO.setGender(gender);
 		pVO.setIntroduction(introduction);
-		pVO.setPictureId(headShot);
+		pVO.setPictureId(picId);
 		pVO.setBirthday(birthday);
 		pVO.setPetId(petId);
 		dao.update(pVO);

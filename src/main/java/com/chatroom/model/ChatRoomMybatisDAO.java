@@ -93,22 +93,28 @@ public class ChatRoomMybatisDAO {
 	}
 
 	public int checkIsOpen(Integer memberId, Integer targetId, Connection con) throws SQLException {
-		String sql ="SELECT (? IN (SELECT member_id FROM chatroom_member WHERE chatroom_id " +
+		System.out.println("start checking=====================...........");
+		String sql =" SELECT (? IN (SELECT member_id FROM chatroom_member WHERE chatroom_id " +
 				" IN (SELECT crm2.chatroom_id FROM chatroom_member crm2 " +
-				"		JOIN chatroom cr2 ON cr2.chatroom_id=crm2.chatroom_id " +
-				"       WHERE cr2.chatroom_type=0 AND  member_id = ?))) as is_open " +
+				"		JOIN chatroom cr2 ON cr2.chatroom_id = crm2.chatroom_id " +
+				"       WHERE cr2.chatroom_type = 0 AND  member_id = ?))) as is_open " +
 				" FROM chatroom_member crm " +
 				" JOIN chatroom cr ON (crm.chatroom_id = cr.chatroom_id) " +
-				"  LIMIT 1";
+				"  LIMIT 1 ";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1,targetId);
 		stmt.setInt(2,memberId);
 		ResultSet rs = stmt.executeQuery();
 		rs.next();
+
 		int isOpen = rs.getInt(1);
+		System.out.println("isopen=========================="+isOpen);
+		if(isOpen != 1){
+			return 0;
+		}
 		rs.close();
 		stmt.close();
-		return isOpen;
+		return 1;
 	}
 	public int checkIsOpen(Integer memberId, Integer targetId) throws SQLException{
 		Connection con = JDBCConnection.getRDSConnection();
@@ -123,10 +129,12 @@ public class ChatRoomMybatisDAO {
 					" JOIN chatroom cr ON (crm.chatroom_id = cr.chatroom_id) " +
 					" JOIN pet p ON(m.member_id = p.member_id) " +
 					" JOIN picture pic ON(p.picture_id = pic.picture_id) " +
-				" WHERE ((crm.member_id != ? " +
-				" AND ? IN (SELECT member_id FROM chatroom_member WHERE cr.chatroom_type=0))) " +
+				" WHERE ((m.member_id != ? " +
+				" AND cr.chatroom_id IN (SELECT cr2.chatroom_id FROM chatroom_member crm2 " +
+				" JOIN chatroom cr2 ON (crm2.chatroom_id = cr2.chatroom_id) " +
+				"                        WHERE cr2.chatroom_type=0 AND crm2.member_id = ? ))) " +
 				" OR (crm.member_id = ? AND (m.member_id != ? OR cr.chatroom_type =1)) " +
-				" ORDER BY cr.create_time DESC";
+				" ORDER BY cr.create_time DESC ";
 
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1,memberId);
@@ -187,6 +195,34 @@ public class ChatRoomMybatisDAO {
 		crm.setName(rs.getString("m.name"));
 		crm.setPreviewUrl(rs.getString("pic.preview_url"));
 		return crm;
+	}
+
+	public ChatroomResult getChatroomResultById(Integer memberId,Integer chatroomId,Connection con) throws SQLException {
+		System.out.println("start checking=====================...........");
+		String sql ="SELECT cr.*,m.name,m.member_id,pic.picture_id,pic.preview_url " +
+				" FROM chatroom_member crm " +
+				" JOIN members m ON (m.member_id=crm.member_id) " +
+				" JOIN chatroom cr ON (crm.chatroom_id = cr.chatroom_id) " +
+				" JOIN pet p ON(m.member_id = p.member_id) " +
+				" JOIN picture pic ON(p.picture_id = pic.picture_id) " +
+				" WHERE cr.chatroom_id = ? " +
+				" AND crm.member_id != ? ";
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setInt(1,chatroomId);
+		stmt.setInt(2,memberId);
+		ResultSet rs = stmt.executeQuery();
+		rs.next();
+		ChatroomResult crr = buildChatroomResult(rs);
+		crr.setChatroomType(rs.getInt("cr.chatroom_type"));
+		rs.close();
+		stmt.close();
+		return crr;
+	}
+	public ChatroomResult getChatroomResultById(Integer memberId,Integer chatroomId) throws SQLException {
+		Connection con = JDBCConnection.getRDSConnection();
+		ChatroomResult crr = getChatroomResultById(memberId,chatroomId,con);
+		con.close();
+		return crr;
 	}
 
 }

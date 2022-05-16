@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.amazonaws.services.s3.model.EmailAddressGrantee;
 import com.customer.model.*;
 import com.customer.service.CustomerService;
+import com.google.gson.Gson;
+import com.util.JavaMail;
 
 @WebServlet("/contact")
 public class CustomerController extends HttpServlet {
@@ -31,7 +34,6 @@ public class CustomerController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		String searchBox = req.getParameter("searchBox");
-		String radio = req.getParameter("radio");
 		String caseId = req.getParameter("caseId");
 		String empNo = req.getParameter("empNo");
 		/*************************** 1.新增回報資料 ****************************************/
@@ -79,13 +81,12 @@ public class CustomerController extends HttpServlet {
 		}
 		/*************************** 2.依email查詢 ****************************************/
 		if("email_Display".equals(action)){
+			String email = req.getParameter("email");
 			CustomerService custSvc = new CustomerService();
-			List<CustomerVO> list = custSvc.getByCustEmail(searchBox);
+			List<CustomerVO> list = custSvc.getByCustEmail(email);
 			//TODO 查無資料
 			req.setAttribute("list", list);
-			req.setAttribute("action", action);
-			req.setAttribute("searchBox", searchBox);
-			String url = "/front/PetTest/filtCust.jsp";
+			String url = "/back/customer/select.jsp";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
@@ -95,39 +96,56 @@ public class CustomerController extends HttpServlet {
 			List<CustomerVO> list = custSvc.getByKeyWord(searchBox);
 			//TODO 查無資料
 			req.setAttribute("list", list);
-			req.setAttribute("action", action);
 			req.setAttribute("searchBox", searchBox);
-			String url = "/front/PetTest/filtCust.jsp";
+			String url = "/back/customer/select.jsp";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
-		/*************************** 4.依回覆狀態查詢 ****************************************/
-		if("status_Display".equals(action)){
+		/*************************** 4.全部資料查看 ****************************************/
+		if("all_Display".equals(action)){
 			CustomerService custSvc = new CustomerService();
-			List<CustomerVO> list = custSvc.getByReplyStatus(Integer.parseInt(radio));
-			//TODO 查無資料
-			req.setAttribute("list", list);
-			req.setAttribute("action", action);
-			String url = "/front/PetTest/filtCust.jsp";
-			RequestDispatcher view =req.getRequestDispatcher(url);
-			view.forward(req, res);
+			List<CustomerVO> list = custSvc.getAllCustomer();
+			req.getSession().setAttribute("list", list);
+			res.sendRedirect(req.getContextPath()+"/back/customer/list.jsp");
 		}
+//		if("status_Display".equals(action)){
+//			CustomerService custSvc = new CustomerService();
+//			List<CustomerVO> list = custSvc.getByReplyStatus(Integer.parseInt(radio));
+//			// 查無資料
+//			req.setAttribute("list", list);
+//			req.setAttribute("action", action);
+//			String url = "/front/PetTest/filtCust.jsp";
+//			RequestDispatcher view =req.getRequestDispatcher(url);
+//			view.forward(req, res);
+//		}
 		/*************************** 5.單筆資料查看 ****************************************/
 		if("one_Display".equals(action)){
+			String email = req.getParameter("email");
 			CustomerService custSvc = new CustomerService();
+			List<CustomerVO> list = custSvc.getByCustEmail(email);
 			CustomerVO custVO = custSvc.getByCustId(Integer.parseInt(caseId));
+			req.setAttribute("list", list);
 			req.setAttribute("custVO", custVO);
-			String url = "/front/PetTest/listOneCust.jsp";
+			String url = "/back/customer/detail.jsp";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}
 		/*************************** 6.員工回覆已處理 **************************************/
 		if ("update".equals(action)) {
+			CustomerDAO custDAO = new CustomerDAO();
+			String mailAddress = req.getParameter("mailAddress");
+			String nickname = req.getParameter("nickname");
+			String replyContent = req.getParameter("replyContent");
+			String replyTxt = custDAO.transInner(replyContent);
 			CustomerService custSvc = new CustomerService();
-			CustomerVO custVO = custSvc.updateCustomer(Integer.parseInt(empNo),Integer.parseInt(caseId));
-					   custVO = custSvc.getByCustId(Integer.parseInt(caseId));
-			req.setAttribute("custVO", custVO);
-			String url = "/front/PetTest/listOneCust.jsp";
+			custSvc.updateCustomer(Integer.parseInt(empNo),Integer.parseInt(caseId));
+			// 寄送回信
+			JavaMail javaMail = new JavaMail();
+			javaMail.setRecipient(mailAddress);
+			javaMail.setSubject("PCLUB客服中心回覆通知函");
+			javaMail.setTxt("親愛的<b>"+nickname+"</b>小姐/先生 您好，<br/>感謝您的來信，以下為您的問題回覆：<br/>"+replyTxt+"<br/>望能解決您的問題。");
+			javaMail.SendMail(); 
+			String url = "/contact?action=all_Display";
 			RequestDispatcher view =req.getRequestDispatcher(url);
 			view.forward(req, res);
 		}

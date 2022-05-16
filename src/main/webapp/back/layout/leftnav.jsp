@@ -21,7 +21,7 @@
              <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#service-pages" aria-expanded="true" aria-controls="pages" class="sidebar-link text-white" onmouseover="hover_color(this);"  onmouseout="default_color(this);"><i class="o-contact-card-1 mr-3 text-white"></i><span>客戶服務</span></a>
             <div id="service-pages" class="expanded">
               <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/customer.jsp" class="sidebar-link text-white pl-lg-5"onmouseover="hover_color(this);"  onmouseout="default_color(this);">客戶問題列表 </a></li>
+                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/contact?action=all_Display" class="sidebar-link text-white pl-lg-5"onmouseover="hover_color(this);"  onmouseout="default_color(this);">客戶問題列表 </a></li>
                 <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/index/footer.jsp" class="sidebar-link text-white pl-lg-5"onmouseover="hover_color(this);"  onmouseout="default_color(this);">檢舉貼文管理 </a></li>
               </ul>
             </div>

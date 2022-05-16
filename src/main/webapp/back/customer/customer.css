@@ -1,0 +1,29 @@
+@charset "UTF-8";
+#dataTables-customer th, #dataTables-customer  td{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+#dataTables-customer tr th{
+	position:sticky;
+	top:0;
+	background-color:#f8f9fb;
+	border:#f8f9fb;
+}
+#dataTables-customer tr td:nth-of-type(2){
+	color:cornflowerblue;
+}
+#page-select{
+	width:240px;
+	text-align:center;
+}
+#page-select b:nth-of-type(1) font{
+	color:currentcolor !important;
+	font-weight:normal !important;	
+}
+#page-select b:nth-of-type(2),#page-select form,#page-select br{
+    display: none;
+}
+#page-select a:hover{
+	color:darkred;
+}

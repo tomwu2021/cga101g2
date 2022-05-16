@@ -12,13 +12,14 @@ import java.util.List;
 public class ChatroomService {
 
     ChatRoomMybatisDAO crDao = new ChatRoomMybatisDAO();
-    MappingJDBCDAO mdao  = new MappingJDBCDAO();
+    MappingJDBCDAO mdao = new MappingJDBCDAO();
 
-    public ChatroomVO makePrivateChatroom(Integer memberId,Integer targetId,String name){
-        try (Connection con = JDBCConnection.getRDSConnection()){
-            int i = crDao.checkIsOpen(memberId,targetId,con);
-            System.out.println("open"+i);
-            if( i == 0) {
+    public ChatroomResult makePrivateChatroom(Integer memberId, Integer targetId, String name) {
+        System.out.println("start connect=====================...........");
+        try (Connection con = JDBCConnection.getRDSConnection()) {
+            System.out.println("start checking2222=====================...........");
+            int i = crDao.checkIsOpen(memberId, targetId, con);
+            if (i == 0) {
                 ChatroomVO chatroom = new ChatroomVO();
                 chatroom.setChatroomName(name);
                 chatroom.setChatroomType(0);
@@ -26,59 +27,81 @@ public class ChatroomService {
                 if (chatroom2 != null) {
                     mdao.insertOneMapping(makeChatroomDto(chatroom2.getChatroomId(), memberId), con);
                     mdao.insertOneMapping(makeChatroomDto(chatroom2.getChatroomId(), targetId), con);
-                    return chatroom2;
                 }
+                ChatroomResult crr = crDao.getChatroomResultById(memberId, chatroom2.getChatroomId(), con);
+                return crr;
             }
-            return null;
-        }catch(SQLException e){
-            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+        return null;
     }
 
-    public ChatroomVO makeGroupChatroom(List<Integer> memberIds, String name){
+    public ChatroomVO makeGroupChatroom(List<Integer> memberIds, String name) {
         ChatroomVO chatroom = new ChatroomVO();
         chatroom.setChatroomName(name);
         chatroom.setChatroomType(1);
-        Connection con = JDBCConnection.getRDSConnection();
+
         ChatroomVO chatroom2 = crDao.insertChatroom(chatroom);
         List<MappingTableDto> mtds = new ArrayList<>();
-        for(Integer memberId:memberIds) {
-            if (chatroom2 != null) {
-                mtds.add(makeChatroomDto(memberId, chatroom2.getChatroomId()));
+
+        System.out.println("**************members:" + memberIds.size());
+        Integer chatroomId = chatroom2.getChatroomId();
+        System.out.println("==========chatroom2id:" + chatroomId);
+        try {
+            if (chatroomId != null) {
+                memberIds.forEach(id -> {
+                    System.out.println("id:" + id);
+                });
+                Connection con = JDBCConnection.getRDSConnection();
+                memberIds.forEach(id -> {
+                    System.out.println("id:" + id);
+                    MappingTableDto mkct = makeChatroomDto(chatroomId, id);
+                    mtds.add(mkct);
+                });
+                mdao.insertMultiMapping(mtds, con);
+                con.close();
             }
+            return chatroom2;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getMessage());
+            throw new RuntimeException(e);
         }
-        mdao.insertMultiMapping(mtds, con);
-        return chatroom2;
     }
-    public List<ChatroomVO>  getPersonalChatroom(Integer memberId) {
+
+    public List<ChatroomVO> getPersonalChatroom(Integer memberId) {
         return crDao.getPersonalChatroom(memberId);
     }
 
-    public List<ChatroomVO> searchChatrooms(Integer memberId, String keyword){
-        return crDao.searchChatrooms(memberId,keyword);
+    public List<ChatroomVO> searchChatrooms(Integer memberId, String keyword) {
+        return crDao.searchChatrooms(memberId, keyword);
     }
-    public MappingTableDto makeChatroomDto(Integer chatroomId,Integer memberId){
+
+    public MappingTableDto makeChatroomDto(Integer chatroomId, Integer memberId) {
         MappingTableDto mtd = new MappingTableDto();
         mtd.setTableName1("chatroom_member");
         mtd.setColumn1("chatroom_id");
         mtd.setColumn2("member_id");
         mtd.setId1(chatroomId);
         mtd.setId2(memberId);
+        System.out.println(mtd);
         return mtd;
     }
 
-    public boolean updateChatroomName(Integer chatroomId,String chatroomName ){
+    public boolean updateChatroomName(Integer chatroomId, String chatroomName) {
         ChatroomVO chatroom = new ChatroomVO();
         chatroom.setChatroomId(chatroomId);
         chatroom.setChatroomName(chatroomName);
         return crDao.updateChatroomName(chatroom);
     }
+
     public List<ChatroomResult> getPrivateChatroom(Integer memberId) {
         try {
             Connection con = JDBCConnection.getRDSConnection();
-            List<ChatroomResult> crrs =  crDao.getPrivateChatroom(memberId,con);
-            for(ChatroomResult crr:crrs){
-                List<ChatroomMemberResult> crms = crDao.getChatroomMember(crr.getChatroomId(),con);
+            List<ChatroomResult> crrs = crDao.getPrivateChatroom(memberId, con);
+            for (ChatroomResult crr : crrs) {
+                List<ChatroomMemberResult> crms = crDao.getChatroomMember(crr.getChatroomId(), con);
                 crr.setCrms(crms);
             }
             return crrs;
@@ -86,15 +109,20 @@ public class ChatroomService {
             throw new RuntimeException(e);
         }
     }
-    public boolean joinChatroom(Integer chatroomId,Integer targetId){
-        if(mdao.insertOneMapping(makeChatroomDto(chatroomId, targetId))){
-            return true;
+
+    public boolean joinChatroom(Integer chatroomId, Integer targetId) {
+        try {
+            if (mdao.insertOneMapping(makeChatroomDto(chatroomId, targetId))) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return false;
     }
 
-    public boolean exitChatroom(Integer chatroomId,Integer memberId){
-        if(mdao.deleteOneMapping(makeChatroomDto(chatroomId, memberId))){
+    public boolean exitChatroom(Integer chatroomId, Integer memberId) {
+        if (mdao.deleteOneMapping(makeChatroomDto(chatroomId, memberId))) {
             return true;
         }
         return false;
