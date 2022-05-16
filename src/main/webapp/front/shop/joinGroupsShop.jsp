@@ -111,9 +111,6 @@
                 <!--shop wrapper start 右邊菜單內容展示 content是切換點不可更動========================-->
                 <div id="content">
                     <!--shop toolbar start-->
-
-                    <!--shop wrapper start 嚙賢�莎蕭嚙踝蕭嚙踝蕭獢�嚙賣�寞����嚙質�瘀蕭 content嚙質�穿蕭嚙踝蕭嚙賣�綽蕭��嚙踝蕭��嚙賣虜嚙踝蕭========================-->
-                    <!--shop toolbar start-->
                     <div class="shop_toolbar_wrapper">
                         <div class="shop_toolbar_btn">
                             <button data-role="grid_3" type="button" class="active btn-grid-3"
@@ -142,12 +139,13 @@
                     <div class="row shop_wrapper">
                         <!--s內容開始========================-->
 <%--						<% List groupOrderVOList=(List)request.getAttribute("groupList");--%>
-<%--						    request.setAttribute("groupOrderVOList",groupOrderVOList);--%>
-<%--                            for(Object groupOrderVO:groupOrderVOList){--%>
-<%--                                groupOrderVO = (GroupOrderVO)groupOrderVO;%>--%>
+
 
                         <c:forEach var="groupOrderVO" items="${groupList}">
-
+							 <Form ACTION="<%=request.getContextPath()%>/member/groupOrder.do" Method="Post" name="GO${groupOrderVO.groupOrderId}">
+							  <input type="hidden" name="action" value="toJoinDetial">
+							  <input type="hidden" name="groupOrderId" value="${groupOrderVO.groupOrderId}">
+						    </Form>
                             <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                                 <!--單一商品開始 -->
 
@@ -156,13 +154,13 @@
                                         <div class="product_thumb">
                                             <c:if test="${groupOrderVO.productVO.pictureVOList.size() != 0 }">
                                                 <a class="primary_img"
-                                                   href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${groupOrderVO.productId}&action=getOne_For_GroupShop">
+                                                   href="javascript:document.GO${groupOrderVO.groupOrderId}.submit();">
                                                     <img src="${groupOrderVO.productVO.pictureVOList.get(0).previewUrl}"
                                                          alt=""></a>
                                             </c:if>
                                             <c:if test="${groupOrderVO.productVO.pictureVOList.size()>= 2}">
                                                 <a class="secondary_img"
-                                                   href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${groupOrderVO.productId}&action=getOne_For_GroupShop">
+                                                   href="javascript:document.GO${groupOrderVO.groupOrderId}.submit();">
                                                     <img src="${groupOrderVO.productVO.pictureVOList.get(1).previewUrl}"
                                                          alt=""></a>
                                             </c:if>
@@ -180,7 +178,7 @@
                                         </div>
                                         <div class="product_content grid_content">
                                             <h4 class="product_name">
-                                                <a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${groupOrderVO.productId}&action=getOne_For_GroupShop"> ${groupOrderVO.productVO.productName}</a>
+                                                <a href="javascript:document.GO${groupOrderVO.groupOrderId}.submit();"> ${groupOrderVO.productVO.productName}</a>
                                             </h4>
                                             <div class="price_box">
                                                 <span class="old_price">原價${groupOrderVO.productVO.price}元</span>
@@ -189,8 +187,10 @@
                                                 <span class="current_price">基本成團價${groupOrderVO.productVO.groupPrice1}元</span>
                                             </div>
                                             <div class="add_to_cart">
-                                                <a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${groupOrderVO.productVO.productId}&action=getOne_For_GroupShop"
-                                                   title="Add to cart"> 我要參團 </a>
+                                             
+                                              <a href="javascript:document.GO${groupOrderVO.groupOrderId}.submit();"
+                                                   title="Add to cart"> 我要參團 </a>											 
+                                               
                                             </div>
                                         </div>
                                         <div class="product_content list_content">
@@ -211,16 +211,14 @@
                                                                                 data-target="#modal_box"
                                                                                 title="quick view"> <i
                                                             class="icon icon-Eye"></i></a></li>
-                                                    <!-- 									<li class="wishlist"><a href="wishlist.html" -->
-                                                    <!-- 										title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li> -->
                                                 </ul>
                                             </div>
                                         </div>
                                     </figure>
                                 </article>
                             </div><!--單一商品結束 -->
+                            
                         </c:forEach>
-<%--                        <% } %>--%>
                     </div>
 
                         <div class="shop_toolbar t_bottom">

@@ -76,4 +76,16 @@ public class GroupOrderDAO implements GroupOrderDAO_Interface{
 		return null;
 	}
 
+	@Override
+	public Integer updateFinalPriceByGroupOrderId(Integer id, Integer finalPrice) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<GroupOrderVO> check() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

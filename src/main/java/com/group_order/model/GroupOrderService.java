@@ -33,8 +33,21 @@ public class GroupOrderService {
     }
 
     public GroupOrderVO getOneOrder(Integer id) {
-
-        return dao.getOneById(id);
+    	 try (Connection con = JDBCConnection.getRDSConnection()) {
+    		 	GroupOrderVO gvo=dao.getOneById(id);
+    		 	System.out.println(gvo.getProductId());
+                 ProductVO productVO = gvo.getProductVO();
+                 List<PictureVO> picList = picDao.queryShopPicturesByMapping(gvo.getProductId(), con);
+                 picList.forEach((p)->{
+                     System.out.println(p.getPreviewUrl()+"\n");
+                 });
+                 productVO.setPictureVOList(picList);
+                 gvo.setProductVO(productVO);
+             return gvo;
+         } catch (Exception e) {
+             e.printStackTrace();
+             throw new RuntimeException();
+         }
     }
 
     public List<GroupOrderVO> getAll() {
@@ -46,6 +59,10 @@ public class GroupOrderService {
 
         return dao.getAllByProductId(id);
     }
+    
+	public List<GroupOrderVO> check() {
+		 return dao.check();
+	}
 
     public void updateEndTime(Integer id) {
 
@@ -54,6 +71,9 @@ public class GroupOrderService {
 
     public void updateStatus(Integer id, Integer status) {
         dao.updateStatusByGroupOrderId(id, status);
+    }
+    public void updateFinalPrice(Integer id, Integer finalPrice) {
+        dao.updateFinalPriceByGroupOrderId(id,finalPrice);
     }
 
     public List<GroupOrderVO> getAllInProgressByProductId(Integer id) {

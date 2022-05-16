@@ -52,33 +52,45 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface{
 		return null;
 
 	}
+	
 
 	@Override
 	public GroupOrderVO getOneById(Integer id) {
 		// TODO Auto-generated method stub
 		PreparedStatement ps=null;
 		ResultSet rs=null;
-		String getOneByIdSql="select group_order_id, product_id, create_time, end_time, end_type, final_price, status from group_order "
-				+ "where group_order_id=?;";
-		GroupOrderVO groupOrderVO=null;
+		String getAllByProductIdSql="select * from group_order o "
+				+ " join product p on(p.product_id=o.product_id) "
+				+ " where o.group_order_id=? ";
+		GroupOrderVO groupOrderVO = new GroupOrderVO();
 		try (Connection con=JDBCConnection.getRDSConnection()){
-			ps=con.prepareStatement(getOneByIdSql);
+			ps=con.prepareStatement(getAllByProductIdSql);
 			ps.setInt(1, id);
 			rs=ps.executeQuery();
 			while(rs.next()) {
-				groupOrderVO=new GroupOrderVO();
 				groupOrderVO.setGroupOrderId(rs.getInt("group_order_id"));
-				groupOrderVO.setProductId(rs.getInt("product_id"));
-				groupOrderVO.setCreateTime(rs.getTimestamp("create_time"));
+				groupOrderVO.setProductId(rs.getInt("o.product_id"));
+				groupOrderVO.setStatus(rs.getInt("o.status"));
 				groupOrderVO.setEndTime(rs.getTimestamp("end_time"));
 				groupOrderVO.setEndType(rs.getInt("end_type"));
-				groupOrderVO.setFinalPrice(rs.getInt("final_price"));
-				groupOrderVO.setStatus(rs.getInt("status"));
+				groupOrderVO.setMinAmount(rs.getInt("min_amount"));
+				ProductVO productVO = new ProductVO();
+				productVO.setPrice(rs.getInt("price"));
+				productVO.setProductName(rs.getString("product_name"));
+				productVO.setGroupPrice1(rs.getInt("group_price1"));
+				productVO.setGroupAmount1(rs.getInt("group_amount1"));
+				productVO.setGroupAmount2(rs.getInt("group_amount2"));
+				productVO.setGroupAmount3(rs.getInt("group_amount3"));
+				productVO.setDescription(rs.getString("description"));
+				productVO.setStatus(rs.getInt("p.status"));
+				groupOrderVO.setProductVO(productVO);
 			}
+			rs.close();
+			ps.close();
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
-		
 		return groupOrderVO;
 	}
 
@@ -161,6 +173,21 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface{
 		try (Connection con=JDBCConnection.getRDSConnection()){
 			ps=con.prepareStatement(updateStatusByGroupOrderIdSql);
 			ps.setInt(1, status);
+			ps.setInt(2, id);
+			ps.executeUpdate();	
+		} catch (Exception e) {
+			// TODO: handle exception
+		}		
+		return id;
+	}
+	
+	@Override
+	public Integer updateFinalPriceByGroupOrderId(Integer id, Integer finalPrice) {
+		PreparedStatement ps=null;
+		String updateStatusByGroupOrderIdSql="UPDATE group_order SET final_price=? WHERE group_order_id=?;";
+		try (Connection con=JDBCConnection.getRDSConnection()){
+			ps=con.prepareStatement(updateStatusByGroupOrderIdSql);
+			ps.setInt(1, finalPrice);
 			ps.setInt(2, id);
 			ps.executeUpdate();	
 		} catch (Exception e) {
@@ -284,6 +311,41 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface{
 		Connection con=JDBCConnection.getRDSConnection();
 		List<GroupOrderVO> groupOrderList = getAllInProgress2(con);
 		con.close();
+		return groupOrderList;
+	}
+	
+	@Override
+	public List<GroupOrderVO> check() {
+		// TODO Auto-generated method stub
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		String getAllSql="select * from group_order o join product p on(p.product_id=o.product_id) where o.status=0 and end_time<now();";
+		List<GroupOrderVO> groupOrderList=new ArrayList<GroupOrderVO>();
+		GroupOrderVO groupOrderVO=null;
+		try (Connection con=JDBCConnection.getRDSConnection()){
+			ps=con.prepareStatement(getAllSql);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				groupOrderVO=new GroupOrderVO();
+				groupOrderVO.setGroupOrderId(rs.getInt("group_order_id"));
+				groupOrderVO.setProductId(rs.getInt("product_id"));
+				groupOrderVO.setCreateTime(rs.getTimestamp("create_time"));
+				groupOrderVO.setEndTime(rs.getTimestamp("end_time"));
+				groupOrderVO.setEndType(rs.getInt("end_type"));
+				groupOrderVO.setFinalPrice(rs.getInt("final_price"));
+				groupOrderVO.setStatus(rs.getInt("status"));
+				groupOrderVO.setMinAmount(rs.getInt("min_amount"));
+				ProductVO productVO = new ProductVO();
+				productVO.setGroupPrice1(rs.getInt("group_price1"));
+				productVO.setGroupAmount1(rs.getInt("group_amount1"));
+				productVO.setGroupAmount2(rs.getInt("group_amount2"));
+				productVO.setGroupAmount3(rs.getInt("group_amount3"));
+				groupOrderVO.setProductVO(productVO);
+				groupOrderList.add(groupOrderVO);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return groupOrderList;
 	}
 }

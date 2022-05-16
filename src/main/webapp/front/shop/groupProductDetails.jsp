@@ -13,6 +13,7 @@
 <title>我要開團商品細節</title>
 <!-- 共用的CSS startr-->
 <%@include file="/front/layout/commonCSS.jsp"%>
+
 <!-- 共用的CSS end-->
 
 <!-- 額外添加的CSS -->
@@ -21,7 +22,8 @@
 <!-- 額外添加的CSS -->
 </head>
 <body>
-
+	<!-- 共用的JS -->
+	<%@include file="/front/layout/commonJS.jsp"%>
 	<!-- 共用的header start-->
 	<%@include file="/front/layout/header.jsp"%>
 	<!-- 共用的header end-->
@@ -130,20 +132,20 @@
 								<tr>
 									<th scope="row">最低開團數量</th>
 									<td>${param.groupAmount1}</td>
-									<td>官方折扣</td>
+									<td>團購價</td>
 									<td>${param.groupPrice1}</td>
 								</tr>
 								<tr>
 									<th scope="row">開團數量二</th>
 									<td>${param.groupAmount2}</td>
-									<td>再打8折</td>
+									<td>團購價打8折</td>
 									<td>${Math.round(param.groupPrice1*(0.8))}</td>
 								</tr>
 								<tr>
 									<th scope="row">開團數量三</th>
 									<td>${param.groupAmount3}</td>
-									<td>再打7折</td>
-									<td>${Math.round(param.groupPrice1*(0.8)*(0.7))}</td>
+									<td>團購價打7折</td>
+									<td>${Math.round(param.groupPrice1*(0.7))}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -153,7 +155,7 @@
 								<label>選擇結團方式</label> <select name="endType" id="choose"
 									class="form-select form-select-lg mb-3"
 									aria-label=".form-select-lg example"
-									style="height: 30px; width: 84px; margin: 17px 0px 0px 17px;">
+									style="height: 30px; width: 84px; margin: 17px 0px 0px 17px;" onchange="choose()">
 									<!--   <option selected>選擇開團方式</option> -->
 									<option value="1">時間結單</option>
 									<option value="2">數量結單</option>
@@ -162,9 +164,10 @@
 
 							<div class="product_variant quantity">
 								<!-- 							數量至少min於&起始於最低開團級距一 -->
-								<label>選擇開團數量</label> <input name="minAmount" id="amout"
+								<label>選擇開團數量</label> 
+								<input name="minAmount" id="minAmount" value="${param.groupAmount1}" 
 									min="${param.groupAmount1}" max="999" step="1"
-									value="${param.groupAmount1}" type="number" />
+									type="number" />
 							</div>
 
 
@@ -223,39 +226,16 @@
 			</div>
 		</div>
 	</div>
-	<!--product info end-->
-
-
-	<!--product info start-->
-
-	<!--     預留include推薦商品區 -->
-
-	<!--product info end-->
-
-	<!--! 內容 結束-->
 
 
 	<!-- 共通的footer start-->
 	<%@include file="/front/layout/footer.jsp"%>
-	<!-- 共通的footer end-->
-	<!-- 共用的JS -->
-	<%@include file="/front/layout/commonJS.jsp"%>
-	<!-- 共用的JS -->
 
-	<!-- 額外添加的JS -->
-	<!-- 	路徑舉例 -->
-	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/back/js/?????.js"> --%>
-	<!-- 額外添加的JS -->
+	<script
+	src="<%=request.getContextPath()%>/assets/js/order&cart/groupDetial.js"></script>
+
 
 </body>
-<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
-<script
-	src="<%=request.getContextPath()%>/assets/js/order&cart/groupDetial.js""></script>
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.css" />
-<script
-	src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.js"></script>
-<script
-	src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.full.js"></script>
+
 
 </html>

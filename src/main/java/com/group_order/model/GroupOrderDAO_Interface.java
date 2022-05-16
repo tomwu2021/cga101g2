@@ -25,4 +25,10 @@ public interface GroupOrderDAO_Interface extends JDBCDAO_Interface<GroupOrderVO>
 	public Integer updateStatusByGroupOrderId(Integer id, Integer status);
 
 	List<GroupOrderVO> getAllInProgress2(Connection con);
+
+	//改最終價錢
+	public Integer updateFinalPriceByGroupOrderId(Integer id, Integer finalPrice);
+	
+	//排程器
+	List<GroupOrderVO> check();
 }

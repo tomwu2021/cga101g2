@@ -1,18 +1,10 @@
-choose();
-amountCount();
+//choose();
 
 function choose(){
-	if($("#choose").val()===2){
-		$("#amount").attr("readonly","readonly");
+	if($("#choose").val()===1){
+		$("#amount").attr("display","none");
 	}else{
-		$("#amount").removeAttr("readonly");
+		$("#amount").removeAttr("display");
 	}
 	
 }
-
-function amountCount(){
-	var count=$("#count").val();
-	$("#amount").text(count);
-	var payPrice=(Number($("#amount").text())*Number($("#price").text()));
-}
-
