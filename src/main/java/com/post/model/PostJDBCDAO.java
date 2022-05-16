@@ -385,4 +385,51 @@ public class PostJDBCDAO implements PostDAO_interface {
 	}
 	
 	
+	 @Override
+		public int selectOnePostLikeCount(Integer postId) {
+			int likeCount = 0;
+			final String DELETE = "SELECT like_count FROM cga_02.post WHERE post_id = ? ;";
+
+			try (Connection con =JDBCConnection.getRDSConnection();
+					PreparedStatement pstmt = con.prepareStatement(DELETE)) {
+
+				pstmt.setInt(1, postId);
+
+				ResultSet rs = pstmt.executeQuery();
+				while (rs.next()) {
+				likeCount = rs.getInt("like_count");
+				}
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return likeCount;
+		}
+
+		@Override
+		public boolean updateOnePostLikeCount(Integer newLikeCount,Integer postId) {
+			int rowCount = 0;
+			final String DELETE = "UPDATE cga_02.post SET like_count = ? WHERE post_id = ? ;";
+
+			try (Connection con =JDBCConnection.getRDSConnection();
+					PreparedStatement pstmt = con.prepareStatement(DELETE)) {
+
+				pstmt.setInt(1, newLikeCount);
+				pstmt.setInt(2, postId);
+
+				rowCount = pstmt.executeUpdate();
+				System.out.println(rowCount + "row(s) update!");
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+			if (rowCount == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 }

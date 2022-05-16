@@ -1,6 +1,8 @@
 package com.likelist.model;
 
 
+import static connection.JNDIConnection.getRDSConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,9 +53,28 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 	}
 
 	@Override
-	public boolean delete(LikelistVO t) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(LikelistVO likelistVO) {
+		int rowCount = 0;
+		final String DELETE = "DELETE FROM cga_02.post WHERE post_id = ? AND member_id =?";
+
+		try (Connection con = getRDSConnection(); PreparedStatement pstmt = con.prepareStatement(DELETE)) {
+
+			pstmt.setInt(2, likelistVO.getPostId());
+			pstmt.setInt(1, likelistVO.getMemberId());
+
+			rowCount = pstmt.executeUpdate();
+			System.out.println(rowCount + "row(s) delete!");
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		if (rowCount == 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
