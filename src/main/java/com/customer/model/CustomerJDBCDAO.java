@@ -132,7 +132,7 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 	@Override
 	public List<CustomerVO> getOneByEmail(String mailAddress) {
 		final String GET_ONE_EMAIL = "SELECT case_id, mail_address, nickname, content, send_time, reply_status, emp_no "
-								   + "FROM customer WHERE mail_address = ?";
+								   + "FROM customer WHERE mail_address = ? ORDER BY case_id DESC";
 		con = JDBCConnection.getRDSConnection();
 		List<CustomerVO> list = new ArrayList<CustomerVO>();
 		if (con != null) {
@@ -251,7 +251,7 @@ public class CustomerJDBCDAO implements CustomerDAO_interface {
 	@Override
 	public List<CustomerVO> getAllByKeyword(String keyword) {
 		final String GET_KEYWORD = "SELECT case_id, mail_address, nickname, content, send_time, reply_status, emp_no "
-				   + "FROM customer WHERE content LIKE ?";
+				   + "FROM customer WHERE content LIKE ? ORDER BY case_id DESC";
 		con = JDBCConnection.getRDSConnection();
 		List<CustomerVO> list = new ArrayList<CustomerVO>();
 		
