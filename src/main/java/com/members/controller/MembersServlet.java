@@ -71,6 +71,9 @@ public class MembersServlet extends HttpServlet {
 		case "firstLogin":
 			firstLogin(req, res); // 首次登入判斷
 			break;
+		case "logout":
+			logout(req, res); // 首次登入判斷
+			break;
 		}
 	}
 
@@ -131,7 +134,7 @@ public class MembersServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;// 程式中斷
 				} else {
-					
+
 					HttpSession session = req.getSession();
 					session.setAttribute("membersVO", membersVO);
 					req.setAttribute("membersVO", membersVO); // 資料庫取出的 membersVO 物件，存入 req
@@ -141,7 +144,7 @@ public class MembersServlet extends HttpServlet {
 //						System.out.println(url);
 						res.sendRedirect(url);
 						return;
-					} else { //http://localhost:8081/CGA101G2
+					} else { // http://localhost:8081/CGA101G2
 						RequestDispatcher successView = req.getRequestDispatcher("/index.html");
 						successView.forward(req, res);
 						return;
@@ -742,18 +745,17 @@ public class MembersServlet extends HttpServlet {
 		return;
 	}
 
-	
 	public void firstLogin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
+
 		HttpSession session = req.getSession();
 		MembersVO sessionMembersVO = (MembersVO) session.getAttribute("membersVO"); // 取得 MembersVO
-		
+
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
-		
+
 		// 首次登入
 		if (sessionMembersVO.getBonusAmount() == 0 && sessionMembersVO.geteWalletPassword() == null) {
-			
+
 			System.out.println("這是第一次登入要執行的事情");
 			// 首次登入發送紅利
 			// ewallet_password == null，代表此會員未消費，所以也不曾使用過紅利點數，因為要使用紅利點數就需要設定錢包密碼進行儲值消費
@@ -761,11 +763,11 @@ public class MembersServlet extends HttpServlet {
 			// 兩者條件成立即 => 首次登入發送紅利
 			MembersService memberSvc = new MembersService();
 			MembersVO bonusMembersVO = new MembersVO();
-			
+
 			bonusMembersVO.setMemberId(sessionMembersVO.getMemberId());
 			bonusMembersVO.setBonusAmount(100);
 			memberSvc.changeBonus(bonusMembersVO);
-			
+
 			sessionMembersVO.setBonusAmount(100);
 			messages.put("firstLogin", "firstLogin");
 			String json = new Gson().toJson(messages);
@@ -773,6 +775,14 @@ public class MembersServlet extends HttpServlet {
 			return;
 		}
 		return;
-		
+
+	}
+
+	public void logout(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		session.removeAttribute("membersVO");
+		RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
+		failureView.forward(req, res);
+		return;
 	}
 }
