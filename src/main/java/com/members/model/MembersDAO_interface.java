@@ -67,4 +67,10 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 	
 	// 修改會員等級
 	public Boolean updateRank(Integer memberId,Integer rankId);
+	
+	// 用帳號模糊查詢
+	public List<MembersVO> SelectAllByAccount(String account);
+	
+	// 用姓名模糊查詢
+	public List<MembersVO> SelectAllByName(String name);
 }

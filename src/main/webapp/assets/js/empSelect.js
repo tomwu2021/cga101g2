@@ -127,7 +127,7 @@ function updateInfo(obj) { // obj.id：會員編號
 
 // ------------------ 顯示修改畫面 ------------------
 function viewUpdate(objectJSON, objMemberId) {
-//	console.log(objectJSON);
+	//	console.log(objectJSON);
 	let html = '';
 	html += "<div class='main' >";
 	html += "<table width='100%'; style='table-layout:fixed' >";
@@ -177,13 +177,13 @@ function viewUpdate(objectJSON, objMemberId) {
 function sureInfo(obj) { // obj.id：會員編號
 	let status = $("#changeSelect").val();
 	let newStatus = '';
-//	console.log(status);
+	//	console.log(status);
 	if (status === '停權') {
 		newStatus = '0';
-//		console.log(newStatus);
+		//		console.log(newStatus);
 	} else {
 		newStatus = '1';
-//		console.log(newStatus);
+		//		console.log(newStatus);
 	}
 	// 取得 select 值，呼叫 Servelt 修改資料庫值，並重新撈取資料
 	let dataJSON = {
@@ -207,4 +207,69 @@ function sureInfo(obj) { // obj.id：會員編號
 }
 
 
-//// ------------------ 查詢 ------------------
+// ------------------ 帳號查詢 ------------------
+function accountSelect() {
+	let memberAccount = $("#account").val();
+	console.log(memberAccount);
+	let dataJSON = {
+		action: "accountSelect",
+		memberAccount: memberAccount,
+	}
+
+	$.ajax(
+		{
+			url: "/CGA101G2/front/emp.do",
+			type: "post",
+			data: dataJSON,
+			success: function(json) {
+				objectJSON = JSON.parse(json);
+				let html = viewBody(objectJSON);
+				document.getElementById("show").innerHTML = html;
+			},
+		}
+	);
+}
+
+// ------------------ 姓名查詢 ------------------
+
+function nameSelect() {
+	let memberName = $("#name").val();
+	console.log(memberName);
+	let dataJSON = {
+		action: "nameSelect",
+		memberName: memberName,
+	}
+
+	$.ajax(
+		{
+			url: "/CGA101G2/front/emp.do",
+			type: "post",
+			data: dataJSON,
+			success: function(json) {
+				objectJSON = JSON.parse(json);
+				let html = viewBody(objectJSON);
+				document.getElementById("show").innerHTML = html;
+			},
+		}
+	);
+}
+
+// 顯示所有資料
+function selectAll(){
+		let dataJSON = {
+		action: "empSelect"
+	}
+
+	$.ajax(
+		{
+			url: "/CGA101G2/front/emp.do",
+			type: "post",
+			data: dataJSON,
+			success: function(json) {
+				objectJSON = JSON.parse(json);
+				let html = viewBody(objectJSON);
+				document.getElementById("show").innerHTML = html;
+			},
+		}
+	);
+}

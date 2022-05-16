@@ -885,4 +885,96 @@ public class MembersDAO implements MembersDAO_interface {
 		return false;
 
 	}
+
+	@Override
+	public List<MembersVO> SelectAllByAccount(String account) {
+		con = JNDIConnection.getRDSConnection();
+		List<MembersVO> list = SelectAllByAccount(account, con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<MembersVO> SelectAllByAccount(String account,Connection con) {
+		final String ACCOUNT_SELECT_ALL = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time,DATE_FORMAT(create_time,'%Y-%m-%d %H:%i') createTimeString FROM members where account like ?;";
+		
+		
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(ACCOUNT_SELECT_ALL);
+				pstmt.setString(1, "%" + account + "%");
+				ResultSet rs = pstmt.executeQuery();
+				List<MembersVO> list = new ArrayList<>();
+				while (rs.next()) {
+					MembersVO newMember = new MembersVO();
+					newMember.setMemberId(rs.getInt("member_id"));
+					newMember.setAccount(rs.getString("account"));
+					newMember.setName(rs.getString("name"));
+					newMember.setAddress(rs.getString("address"));
+					newMember.setPhone(rs.getString("phone"));
+					newMember.setRankId(rs.getInt("rank_id"));
+					newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
+					newMember.setBonusAmount(rs.getInt("bonus_amount"));
+					newMember.setStatus(rs.getInt("status"));
+					newMember.setCreateTime(rs.getTimestamp("create_time"));
+					newMember.setCreateTimeString(rs.getString("createTimeString"));
+					list.add(newMember);
+				}
+				return list;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public List<MembersVO> SelectAllByName(String name) {
+		con = JNDIConnection.getRDSConnection();
+		List<MembersVO> list = SelectAllByName(name, con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<MembersVO> SelectAllByName(String name,Connection con) {
+		final String NAME_SELECT_ALL = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time,DATE_FORMAT(create_time,'%Y-%m-%d %H:%i') createTimeString FROM members where name like ?;";
+		
+		
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(NAME_SELECT_ALL);
+				pstmt.setString(1, "%" + name + "%");
+				ResultSet rs = pstmt.executeQuery();
+				List<MembersVO> list = new ArrayList<>();
+				while (rs.next()) {
+					MembersVO newMember = new MembersVO();
+					newMember.setMemberId(rs.getInt("member_id"));
+					newMember.setAccount(rs.getString("account"));
+					newMember.setName(rs.getString("name"));
+					newMember.setAddress(rs.getString("address"));
+					newMember.setPhone(rs.getString("phone"));
+					newMember.setRankId(rs.getInt("rank_id"));
+					newMember.seteWalletAmount(rs.getInt("ewallet_amount"));
+					newMember.setBonusAmount(rs.getInt("bonus_amount"));
+					newMember.setStatus(rs.getInt("status"));
+					newMember.setCreateTime(rs.getTimestamp("create_time"));
+					newMember.setCreateTimeString(rs.getString("createTimeString"));
+					list.add(newMember);
+				}
+				return list;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+
 }

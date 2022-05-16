@@ -1,5 +1,6 @@
 package com.members.model;
 
+import java.sql.Connection;
 import java.util.*;
 
 import com.ranks.model.RanksVO;
@@ -125,5 +126,15 @@ public class MembersService {
 	// 修改會員等級
 	public Boolean updateRank(Integer memberId, Integer rankId) {
 		return dao.updateRank(memberId, rankId);
+	}
+	
+	// 會員帳號模糊查詢
+	public List<MembersVO> SelectAllByAccount(String account){
+		return dao.SelectAllByAccount(account);
+	}
+	
+	// 會員姓名模糊查詢
+	public List<MembersVO> SelectAllByName(String account){
+		return dao.SelectAllByName(account);
 	}
 }

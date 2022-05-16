@@ -38,6 +38,12 @@ public class empServlet extends HttpServlet {
 		case "empChangeStatus":
 			empChangeStatus(req, res);
 			break;
+		case "accountSelect":
+			accountSelect(req, res);
+			break;
+		case "nameSelect":
+			nameSelect(req, res);
+			break;
 		}
 	}
 
@@ -116,21 +122,45 @@ public class empServlet extends HttpServlet {
 		// 取得修改值
 		System.out.println(newStatus);
 		System.out.println(memberId);
-		
+
 		// 呼叫 修改 會員狀態 service
 		MembersService memberSvc = new MembersService();
 		MembersVO membersVO = new MembersVO();
 		membersVO.setMemberId(Integer.parseInt(memberId));
 		membersVO.setStatus(Integer.parseInt(newStatus));
 		memberSvc.changeStatus(membersVO);
-		
+
 		// 查詢 會員 資料
 		MembersService memberSVC = new MembersService();
 		List<MembersVO> listMemberVO = memberSVC.getAll();
 		String json = new Gson().toJson(listMemberVO);
 		res.getWriter().write(json);
 		return;
+
+	}
+
+	public void accountSelect(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		String memberAccount = req.getParameter("memberAccount");
+		System.out.println(memberAccount);
 		
+		// 用帳號模糊查詢
+		MembersService memberSvc = new MembersService();
+		List<MembersVO> listMemberVO = memberSvc.SelectAllByAccount(memberAccount);
+		String json = new Gson().toJson(listMemberVO);
+		res.getWriter().write(json);
+		return;
 	}
 	
+	public void nameSelect(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		String memberName = req.getParameter("memberName");
+		System.out.println(memberName);
+		
+		// 用帳號模糊查詢
+		MembersService memberSvc = new MembersService();
+		List<MembersVO> listMemberVO = memberSvc.SelectAllByName(memberName);
+		String json = new Gson().toJson(listMemberVO);
+		res.getWriter().write(json);
+		return;
+	}
+
 }
