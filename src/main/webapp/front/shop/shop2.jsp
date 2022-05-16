@@ -27,12 +27,10 @@
 </head>
 <body>
 	<!-- 共用的JS -->
-	<%@include file="/front/layout/commonShopJS.jsp"%>
+	<%@include file="/front/layout/commonJS.jsp"%>
 	<!-- 共用的JS -->
 	
-	<script
-		src="<%=request.getContextPath()%>/assets/js/addToCart.js">
-	</script> 
+	
 	<!-- 共用的header start-->
 	<%@include file="/front/layout/header.jsp"%>
 	<!-- 共用的header end-->
@@ -281,8 +279,10 @@
 	<!-- 額外添加的JS -->
 	<!--leftnavlink.js -->
 	
-	<%@include file="/front/layout/templateJS.jsp"%>
-	
+<%-- 	<%@include file="/front/layout/commonJS.jsp"%> --%>
+	<script
+		src="<%=request.getContextPath()%>/assets/js/order&cart/addToCart.js">
+	</script> 
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/leftnav/leftnavlink.js">
 	</script>
