@@ -60,10 +60,20 @@
                         <div class="header_account_area  justify-content-start">
                             <!--mini cart end-->
                             <% if(loginId>0){ %>
-                            <div class="header_account-list top_links" onclick="openChatList()">
+                            <div class="header_account-list top_links" id="chat-icon" onclick="openChatList()">
+                                <div id="unread-count" style="text-align:center;border-radius:50%;width: 20px;height: 20px;font-weight:600;position:absolute;background-color: red;font-size: 10px;z-index: 1;top: -10px;left: 10px;border: 2px white solid;line-height: 20px;color: white;">
+
+                                </div>
                                 <a><i class="bi bi-chat-fill"></i></a>
                             </div>
                             <% } %>
+                            <div class="header_account-list top_links">
+                                <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front/shop/shoppingCart.jsp" id="cartForm">
+                                    <a onclick="document.getElementById('cartForm').submit()">
+                                        <i class="bi bi-cart-fill" style="font-size: 20px"></i></a>
+                                    </a>
+                                </FORM>
+                            </div>
                             <div class="header_account-list top_links">
                                 <a href=""><i class="bi bi-bell-fill"></i></a>
                                 <div class="dropdown_links">
@@ -167,3 +177,4 @@
     </div>
 </div>
 <% } %>
+
