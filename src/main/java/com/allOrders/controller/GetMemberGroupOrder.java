@@ -43,9 +43,7 @@ public class GetMemberGroupOrder extends HttpServlet{
 		Integer pageSize = Integer.parseInt(req.getParameter("pageSize")); // 設置每頁顯示筆數
 		String sort = req.getParameter("sort"); // 設置排序方式 (升降冪)
 		String order = req.getParameter("order"); // 設置排序欄位
-		long days = Long.parseLong(req.getParameter("end_time")); // 取得天數
-		// long 避免int overflow
-		Timestamp endTime = new Timestamp(System.currentTimeMillis() - days * 24 * 3600 * 1000); // 天數轉換
+
 		//客製條件
 		Map<String, Object> map = new HashMap<>(); // 創建多筆指定欄位條件 Map
 		map.put("member_id", memberId);
@@ -58,7 +56,6 @@ public class GetMemberGroupOrder extends HttpServlet{
 
 		
 		PageQuery pq = new PageQuery(thisPage, pageSize, sort, order, map); // 創建分頁查訊物件
-		pq.setFindByAfter("end_time",endTime ); // 設置時間條件
 		
 		GroupBuyerService groupBuyerService=new GroupBuyerService();
 		PageResult<GroupBuyerVO> rpq = groupBuyerService.getPageResult(pq);

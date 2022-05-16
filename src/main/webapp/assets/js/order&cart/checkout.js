@@ -1,3 +1,19 @@
+$("#address").click(function() {
+
+	if ($("#address").is(':checked')) {
+		$("#mname").attr("style", "display:none");
+		$("#mpho").attr("style", "display:none");
+		$("#made").attr("style", "display:none");
+
+
+	} else {
+		$("#mname").removeAttr("style");
+		$("#mpho").removeAttr("style");
+		$("#made").removeAttr("style");
+	}
+
+});
+
 	//地址預設
 	$("#zipcode3").twzipcode({
 		"zipcodeIntoDistrict" : true,
