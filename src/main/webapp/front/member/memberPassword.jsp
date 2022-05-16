@@ -44,7 +44,7 @@
 															<label class="col-md-3 form-control-label">舊密碼</label>
 															<div class="col-md-9">
 																<input  type="password" name="oldPhone" placeholder="請輸入舊密碼"
-																	class="form-control form-control-success" value="${messages.userInput1}"> <font
+																	class="form-control form-control-success" value="${messages.userInput1}" maxlength="12"> <font
 																	color=red>${messages.errorOldPhone}</font>
 															</div>
 														</div>
@@ -52,8 +52,8 @@
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">新密碼</label>
 															<div class="col-md-9">
-																<input type="password" name="newPhone" placeholder="至少八個字符，至少一個字母和一個數字"
-																	class="form-control form-control-success" value="${messages.userInput2}"> <font
+																<input type="password" name="newPhone" placeholder="輸入 8 ~ 12 個字符，至少一個英文字母和一個數字"
+																	class="form-control form-control-success" value="${messages.userInput2}" maxlength="12"> <font
 																	color=red>${messages.errorNewPhone}</font>
 															</div>
 														</div>
@@ -62,7 +62,7 @@
 															<label class="col-md-3 form-control-label">確認密碼</label>
 															<div class="col-md-9">
 																<input type="password" name="checkNewPhone" placeholder="請再次確認密碼"
-																	class="form-control form-control-success" > <font
+																	class="form-control form-control-success" maxlength="12"> <font
 																	color=red>${messages.errorCheckNewPhone}</font>
 																	
 															</div>

@@ -43,7 +43,7 @@
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">設定密碼</label>
 															<div class="col-md-9">
-																<input type="password" name="setWalletPassword" placeholder="請輸入六位數字"
+																<input maxlength="6" type="password" name="setWalletPassword" placeholder="請輸入六位數字"
 																	class="form-control form-control-success"
 																	value="${messages.userInput1}"> <font color=red>${messages.errorSetWalletPassword}</font>
 															</div>
@@ -52,7 +52,7 @@
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">確認密碼</label>
 															<div class="col-md-9">
-																<input type="password" name="checkWalletPassword"
+																<input maxlength="6" type="password" name="checkWalletPassword"
 																	placeholder="請輸入六位數字"
 																	class="form-control form-control-success"
 																	> <font color=red>${messages.errorCheckWalletPassword}</font>
