@@ -27,6 +27,11 @@ $(document).ready(() => {
                 onlineFriends.splice(key, 1);
         })
     });
+
+    socket_public.on('broadcast-unread',(data)=>{
+        console.log(data);
+        getTotalUnread();
+    })
 })
 
 async function onPublicMessage(message) {
