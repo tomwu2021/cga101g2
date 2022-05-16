@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wishlist.model.WishlistVO;
+
 import connection.JDBCConnection;
 
 public class LikelistJDBCDAO implements LikelistDAO_interface {
@@ -157,6 +159,32 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public LikelistVO getOneLikelistVOForCheck(Integer memberId, Integer postId) {
+		LikelistVO likelistVO = new LikelistVO();
+		final String INSERT_STMT = "SELECT  member_id, post_id "
+								+ "FROM  cga_02.likelist "
+								+ "WHERE  member_id = ? "
+								+ "AND  post_id = ? " ;
+		try (Connection con = getRDSConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
+
+			pstmt.setInt(1, memberId );
+			pstmt.setInt(2, postId );
+
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				likelistVO.setMemberId(rs.getInt("member_id"));
+				likelistVO.setPostId(rs.getInt("post_id"));
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			return likelistVO;
+	}
 	}	
-}
 

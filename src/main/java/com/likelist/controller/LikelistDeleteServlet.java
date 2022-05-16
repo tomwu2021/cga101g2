@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.likelist.model.LikelistService;
 import com.likelist.model.LikelistVO;
 import com.members.model.MembersVO;
+import com.post.model.PostService;
 import com.wishlist.model.WishlistService;
 import com.wishlist.model.WishlistVO;
 
@@ -65,10 +66,17 @@ public class LikelistDeleteServlet extends HttpServlet {
 
 		boolean boo = likelistSvc.delete(likelistVO);
 		if (boo == true) {
+			//likelist新增成功功能正常才可以搜尋該篇貼文的讚數,並且+1後回傳給client端
+			PostService postSvc = new PostService();
+			int oldlikeCount = postSvc.selectOnePostLikeCount(postId);
+			int newlikeCount = oldlikeCount-1;
+			postSvc.updateOnePostLikeCount(newlikeCount, postId);
 			msg.put("msg", "1");
+			msg.put("newlikeCount", String.valueOf(newlikeCount));
+			System.out.println("postId : 原本的讚數:"+oldlikeCount+"收回後讚數:"+ newlikeCount);
 			String json = new Gson().toJson(msg);
 			res.getWriter().write(json);
-			System.out.println("收回貼文按讚成功");
+			System.out.println("新增貼文按讚成功");
 			return;
 		} else {
 			msg.put("msg", "-1");

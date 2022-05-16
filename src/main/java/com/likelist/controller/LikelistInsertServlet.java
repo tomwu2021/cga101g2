@@ -68,10 +68,12 @@ public class LikelistInsertServlet extends HttpServlet {
 		if (boo == true) {
 			//likelist新增成功功能正常才可以搜尋該篇貼文的讚數,並且+1後回傳給client端
 			PostService postSvc = new PostService();
-			int oldlikeCount = postSvc.GET
-			
+			int oldlikeCount = postSvc.selectOnePostLikeCount(postId);
+			int newlikeCount = oldlikeCount+1;
+			postSvc.updateOnePostLikeCount(newlikeCount, postId);
 			msg.put("msg", "1");
-			//likelist新增成功功能正常才可以搜尋該篇貼文的讚數,並且回傳
+			msg.put("newlikeCount", String.valueOf(newlikeCount));
+			System.out.println("postId : 原本的讚數:"+oldlikeCount+"新增後讚數:"+ newlikeCount);
 			String json = new Gson().toJson(msg);
 			res.getWriter().write(json);
 			System.out.println("新增貼文按讚成功");
