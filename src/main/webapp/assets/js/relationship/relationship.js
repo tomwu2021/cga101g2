@@ -73,58 +73,57 @@ function search(e){
 function makeList(e,relation){
     let html="";
     html+=`<div class="comments_box col-lg-6" style="margin: 0 auto;text-align:left;">
-        <div class="comment_list" style="margin: 20px auto;">
-            <div class="comment_thumb" style="width: 100px;height: 100px;">
-                <i class="bi bi-circle-fill ${isOnline(relation.memberId)?'online':'offline'}"></i>
-                <img src="${relation.previewUrl}" alt="" style="height:64%;width: 96%;margin-top: 16px;">
-            </div>
-            <div class="comment_content" style="width: calc(100% - 100px) !important;margin-left: 100px;height:100px">
-                <div class="comment_meta">
-                    <h5><a href="#">${relation.name}</a></h5>
-                </div>
-                <p>${relation.account}</p>`;
-    switch (e) {
-        case 1:
-            let crName = relation.name;
-            html+=`<div class="comment_reply" onclick="deleteFriend(${relation.memberId})">
-                    <a style="color:white">刪除好友</a>
-                </div>
-                <div class="comment_reply" style="top: 60px;" onclick="makeChatroom(${relation.memberId},'${crName}')">
-                <a style="color:white">開始聊天</a>
-                </div>`
-            break;
-        case 2:
-            html+=`<div class="comment_reply" onclick="deleteBlock(${relation.memberId})">
-                    <a style="color:white">移除黑名單</a>
-                </div>`
-            break;
-        case 3:
-            html+=`<div class="comment_reply" onclick="cancelInvite(${relation.memberId})">
-                    <a style="color:white">取消邀請</a>
-                </div>`
-            break;
-        case 4:
-            html+=`<div class="comment_reply" onclick="accpetInvite(${relation.memberId})">
-                    <a style="color:white">接受申請</a>
-                </div>
-                <div class="comment_reply" style="top: 60px;" onclick="cancelInvite(${relation.memberId})">
-                <a style="color:white">狠心拒絕</a>
-                </div>`
-            break;
-        default:
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: '無此分類!'
-            });
-            break;
+                <div class="comment_list" style="margin: 20px auto;">
+                    <div class="comment_thumb" style="width: 100px;height: 100px;">
+                        <i class="bi bi-circle-fill ${isOnline(relation.memberId)?'online':'offline'}"></i>
+                        <img src="${relation.previewUrl}" alt="" style="height:64%;width: 96%;margin-top: 16px;">
+                    </div>
+                    <div class="comment_content" style="width: calc(100% - 100px) !important;margin-left: 100px;height:100px">
+                        <div class="comment_meta">
+                            <h5><a href="#">${relation.name}</a></h5>
+                        </div>
+                        <p>${relation.account}</p>`;
+    if(isOwner === 1){
+        switch (e) {
+            case 1:
+                let crName = relation.name;
+                html += `<div class="comment_reply" onclick="deleteFriend(${relation.memberId})">
+                            <a style="color:white">刪除好友</a>
+                        </div>
+                        <div class="comment_reply" style="top: 60px;" onclick="makeChatroom(${relation.memberId},'${crName}')">
+                            <a style="color:white">開始聊天</a>
+                        </div>`
+                break;
+            case 2:
+                html += `<div class="comment_reply" onclick="deleteBlock(${relation.memberId})">
+                            <a style="color:white">移除黑名單</a>
+                        </div>`
+                break;
+            case 3:
+                html += `<div class="comment_reply" onclick="cancelInvite(${relation.memberId},3)">
+                            <a style="color:white">取消邀請</a>
+                        </div>`
+                break;
+            case 4:
+                html += `<div class="comment_reply" onclick="accpetInvite(${relation.memberId})">
+                               <a style="color:white">接受申請</a>
+                        </div>
+                        <div class="comment_reply" style="top: 60px;" onclick="cancelInvite(${relation.memberId},4)">
+                            <a style="color:white">狠心拒絕</a>
+                        </div>`
+                break;
+            default:
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '無此分類!'
+                });
+        }
 
     }
-    html+=            `</div>
-                    </div>
-                </figure>
-            </article>
-        </div>`
+    html+=          `</div>
+                </div>
+             </div>`
     return html;
 }
 search(1);
@@ -159,27 +158,31 @@ function makeChatroom(targetId,crName){
     $.get({
         url: getContextPath() + "/chatroom?action=makePrivateChatroom&targetId=" + targetId +"&name="+ crName + "&memberId="+memberId,
         success: function(result, status) {
-            offLoading();
+            let html = makeChatroomList(result);
+            $('#private-chatroom-list-ul').prepend(html);
+
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: '已成功建立聊天室',
+                title: '已成功建立聊天室，現在可以開始聊天了',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1200
             })
-            getPrivateChatroom();
-            let crs2 = document.getElementsByClassName('indivi-chatroom');
-            crs2[0].click();
+            // setTimeout(1500);
+            console.log(result.chatroomId);
+            $(`#${result.chatroomId}`).click();
+            offLoading();
+            // $(`.indivi-chatroom`).click();
         }
     });
     offLoading();
 }
-function cancelInvite(i){
+function cancelInvite(i,e){
     loading();
     $.get({
         url: getContextPath() + "/relationship?action=cancelInvite&targetId=" + i +"&memberId="+memberId,
         success: function(result, status) {
-            search(2);
+            search(e);
             offLoading();
             Swal.fire({
                 position: 'center',
