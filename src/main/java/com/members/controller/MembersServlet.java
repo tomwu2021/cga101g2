@@ -92,6 +92,9 @@ public class MembersServlet extends HttpServlet {
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
 
+		// service
+		MembersService memberSvc = new MembersService();
+
 		// 接收參數
 		String loginAccount = req.getParameter("loginAccount");
 		String loginPassword = req.getParameter("loginPassword");
@@ -109,26 +112,36 @@ public class MembersServlet extends HttpServlet {
 			failureView.forward(req, res);
 			return;// 程式中斷
 		}
-		MembersService memberSvc = new MembersService();
+
 		// 資料庫是否有此筆資料
 		Boolean boo = memberSvc.getOneByAccount(loginAccount);
 
 		if (boo == true) {
 			MembersVO membersVO = memberSvc.selectForLogin(loginAccount, loginPassword);
-			if (membersVO != null) {
-				HttpSession session = req.getSession();
-				session.setAttribute("membersVO", membersVO);
-				req.setAttribute("membersVO", membersVO); // 資料庫取出的 membersVO 物件，存入 req
+			// 判斷停權會員無法登入
 
-				if (session.getAttribute("location") != null) {
-					String url = session.getAttribute("location").toString();
-					System.out.println(url);
-					res.sendRedirect(url);
-					return;
+			if (membersVO != null) {
+
+				if (membersVO.getStatus().equals(0)) {
+					messages.put("messagesAccount", "此帳號已被停權無法登入");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
 				} else {
-					RequestDispatcher successView = req.getRequestDispatcher("/article?action=all_Display");
-					successView.forward(req, res);
-					return;
+					HttpSession session = req.getSession();
+					session.setAttribute("membersVO", membersVO);
+					req.setAttribute("membersVO", membersVO); // 資料庫取出的 membersVO 物件，存入 req
+
+					if (session.getAttribute("location") != null) {
+						String url = session.getAttribute("location").toString();
+						System.out.println(url);
+						res.sendRedirect(url);
+						return;
+					} else {
+						RequestDispatcher successView = req.getRequestDispatcher("/article?action=all_Display");
+						successView.forward(req, res);
+						return;
+					}
 				}
 
 			} else if (membersVO == null) {
