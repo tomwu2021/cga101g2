@@ -8,6 +8,7 @@
         
           <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/pet?memberId=${membersVO.memberId}&action=profile" class="sidebar-link " ><i class="bi bi-clipboard-heart mr-3 "></i><span>寵物日記</span></a>
           </li>
+          
           <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#member-pages" aria-expanded="true" aria-controls="pages" class="sidebar-link " ><i class="bi bi-person mr-3 "></i><span>個人專區</span></a>
             <div id="member-pages" class="expanded">
               <ul class="sidebar-menu list-unstyled border-left border-thick">
@@ -16,13 +17,22 @@
               </ul>
             </div>
           </li>
-          
+                    
           <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#wallet-pages" aria-expanded="true" aria-controls="pages" class="sidebar-link " ><i class="bi bi-piggy-bank mr-3 "></i><span>我的錢包</span></a>
             <div id="wallet-pages" class="expanded">
               <ul class="sidebar-menu list-unstyled border-left border-thick">
                 <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/front/member/memberWalletUsedRecord.jsp" class="sidebar-link  pl-lg-5">消費紀錄</a></li>
                 <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/front/member/memberWallet.jsp" class="sidebar-link  pl-lg-5">刷卡儲值</a></li>
                 <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/front/member/memberWalletPassword.jsp" class="sidebar-link  pl-lg-5">修改錢包密碼</a></li>
+              </ul>
+            </div>
+          </li>
+          
+           <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#member-pages" aria-expanded="true" aria-controls="pages" class="sidebar-link " ><i class="bi bi-file-text mr-3 "></i><span>交易紀錄</span></a>
+            <div id="member-pages" class="expanded">
+              <ul class="sidebar-menu list-unstyled border-left border-thick">
+                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/front/order/myAccount.jsp" class="sidebar-link  pl-lg-5">訂單查詢</a></li>
+                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/front/order/myAccountGroup.jsp" class="sidebar-link  pl-lg-5">團購查詢</a></li>
               </ul>
             </div>
           </li>

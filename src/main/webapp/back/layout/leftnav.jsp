@@ -18,6 +18,9 @@
             </div>
           </li>
           
+          <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>" class="sidebar-link text-white" onmouseover="hover_color(this);"  onmouseout="default_color(this);"><i class="o-paper-stack-1 mr-3 text-white"></i><span>訂單管理</span></a>
+          </li>
+          
              <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#service-pages" aria-expanded="true" aria-controls="pages" class="sidebar-link text-white" onmouseover="hover_color(this);"  onmouseout="default_color(this);"><i class="o-contact-card-1 mr-3 text-white"></i><span>客戶服務</span></a>
             <div id="service-pages" class="expanded">
               <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
