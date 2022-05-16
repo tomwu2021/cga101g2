@@ -59,7 +59,10 @@ public class ProductBackServlet extends HttpServlet {
 			int pageSize = 9;
 			int pageNo = 0;
 			if (whichPage != null) {
-				pageNo = (Integer.parseInt(whichPage) - 1) * 9;
+				int page = Integer.parseInt(whichPage);
+				if(page >= 1) {
+					pageNo = (page - 1) * 9;
+				} 
 			}
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -74,11 +77,12 @@ public class ProductBackServlet extends HttpServlet {
 			Map<String, String[]> map = (Map<String, String[]>) session.getAttribute("map");
 
 			// 以下的 if 區塊只對第一次執行時有效
-			if (req.getParameter("whichPage") == null) {
+//			if (req.getParameter("whichPage") == null) {
 				Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+				map1.remove("whichPage");
 				session.setAttribute("map", map1);
 				map = map1;
-			}
+//			}
 			// ***儲存clent端有輸入的參數 START***//
 			Map<String, String> userMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("userMsgs", userMsgs);

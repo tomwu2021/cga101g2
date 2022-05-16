@@ -254,7 +254,6 @@
 														 +新增商品</button>
 														<input id ="selectProduct" type="submit" value="送出查詢" class="btn btn btn-primary"  style="margin-right: 40px;">
 														<input type="hidden" name="action" value="listProducts_Byfind">
-														</FORM>
 													</div>
 											</div>
 <div class="col-lg-12 mb-5">
@@ -293,7 +292,7 @@
 	      </div>
 	    </div>
 	  </div>  
-	  
+</FORM>	  
 			
 												<div class="form-group row">
 												<div class="col-lg-12">

@@ -27,8 +27,13 @@ public class jdbcUtil_CompositeQuery_Product {
 //		else if ("update_time".equals(columnName)) // 用於date
 //			aCondition = "product." + columnName + "=" + "'" + value + "'"; // for 其它DB 的 date
 //		    aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";  //for Oracle 的 date
-
-		return aCondition + " ";
+		System.err.println("==============================================");
+		System.out.println("name: " + columnName + "value: " + value);
+		if (aCondition == null) {
+			return " ";
+		} else {
+			return aCondition + " ";
+		}
 	}
 
 	public static String get_WhereCondition(Map<String, String[]> map) {
