@@ -779,6 +779,7 @@ public class MembersServlet extends HttpServlet {
 	}
 
 	public void logout(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		System.out.println("把拔別把我登出!!!!");
 		HttpSession session = req.getSession();
 		session.removeAttribute("membersVO");
 		RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
