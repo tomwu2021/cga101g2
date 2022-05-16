@@ -349,23 +349,17 @@
                                     <div class="blog_meta">
                                         <p> 
 <!--                                     會員是否有點讚該文章的判斷 --> 
-									<c:if test="${likelistVO.memberId != sessionMemberId }">
-									
 										<span class="glyphicon glyphicon-usd text-danger"> 
-                                      	  <i id="" class="bi bi-suit-heart fa-2x"></i> 
+											<c:if test="${sessionMemberId == null || postVO.likelistVO.memberId != sessionMemberId }">
+                                      	 		 <input type="hidden" name="likelistStatus" value="0">
+                                      	  		<i id="likelist${postVO.postId}"  class="bi bi-suit-heart fa-2x" style="cursor: pointer;"></i> 
+                                      	 	 </c:if> 
+                                      	 	 <c:if test="${sessionMemberId != null && postVO.likelistVO.memberId == sessionMemberId }">
+                                      	 		 <input type="hidden" name="likelistStatus" value="1">
+                                      	  		<i id="likelist${postVO.postId}"  class="bi bi-suit-heart-fill fa-2x" style="cursor: pointer;"></i> 
+                                      	 	 </c:if> 
                                   	   </span> 
                                         <a href="#">${postVO.likeCount}</a> 個讚 &ensp;  <a href="#">${postVO.createTime}</a> 
-                                        
-									</c:if> 
-									
-									<c:if test="${likelistVO.memberId == sessionMemberId }">
-									
-									<span class="glyphicon glyphicon-usd text-danger"> 
-                                      	  <i id="" class="bi bi-suit-heart-fill fa-2x"></i> 
-                                  	   </span> 
-                                        <a href="#">${postVO.likeCount}</a> 個讚 &ensp; <a href="#">${postVO.createTime}</a> 
-                                        
-									</c:if> 
 <!-- 									會員是否有點讚該文章的判斷 -->
                                         
                                     </div>
@@ -555,5 +549,12 @@
 	<!-- 共用的JS -->
 	<%@include file="/front/layout/commonJS.jsp"%>
 	<!-- 共用的JS -->
+	
+	
+	<!-- 點讚用的JS 完成後記得移入commonJS-->
+	<script 
+		src="<%=request.getContextPath()%>/front/post/likelist.js"> 
+	</script>
+	<!-- 點讚用的JS -->
 </body>
 </html>

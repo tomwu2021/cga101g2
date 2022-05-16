@@ -7,16 +7,19 @@ public class LikelistService {
 
 //	改寫預設建構子
 	public LikelistService() {
-		dao = new LikelistJDBCDAO(); 
+		dao = new LikelistJDBCDAO();
 	}
-	
-	public boolean insertAndBoo(LikelistVO likelistVO) {
-		return dao.insertAndBoo(likelistVO);
+
+	// 新增按讚
+	public boolean insertAndBoo(LikelistVO likelistVO, Integer newLikeCount, Integer postId) {
+		return dao.insertAndBoo(likelistVO, newLikeCount, postId);
 	}
-	
-	public boolean delete(LikelistVO likelistVO) {
-		return dao.delete(likelistVO);
+
+	// 刪除按讚（收回讚）
+	public boolean delete(LikelistVO likelistVO, Integer newLikeCount, Integer postId) {
+		return dao.delete(likelistVO, newLikeCount, postId);
 	}
+
 	public LikelistVO getOneLikelistVOForCheck(Integer memberId, Integer postId) {
 		return dao.getOneLikelistVOForCheck(memberId, postId);
 	}

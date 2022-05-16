@@ -1,10 +1,8 @@
 package com.likelist.controller;
 
-import static com.util.GSONUtil.writePojo2Json;
 import static com.util.GSONUtil.json2Pojo;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,8 +18,6 @@ import com.likelist.model.LikelistService;
 import com.likelist.model.LikelistVO;
 import com.members.model.MembersVO;
 import com.post.model.PostService;
-import com.wishlist.model.WishlistService;
-import com.wishlist.model.WishlistVO;
 
 @WebServlet("/post/LikelistInsertServlet")
 public class LikelistInsertServlet extends HttpServlet {
@@ -56,24 +52,24 @@ public class LikelistInsertServlet extends HttpServlet {
 			return;
 		}
 
-		// 1.呼叫LikelistService
+		// 1.查詢該篇貼文的讚數
+		PostService postSvc = new PostService();
+		int oldlikeCount = postSvc.selectOnePostLikeCount(postId);
+		// 2.呼叫LikelistService
 		LikelistService likelistSvc = new LikelistService();
-
-		// 2.新增讚
+		// 3.新增讚
 		LikelistVO likelistVO = new LikelistVO();
 		likelistVO.setMemberId(memberId);
 		likelistVO.setPostId(postId);
 
-		boolean boo = likelistSvc.insertAndBoo(likelistVO);
+		boolean boo = likelistSvc.insertAndBoo(likelistVO, (oldlikeCount+1), postId);
 		if (boo == true) {
-			//likelist新增成功功能正常才可以搜尋該篇貼文的讚數,並且+1後回傳給client端
-			PostService postSvc = new PostService();
-			int oldlikeCount = postSvc.selectOnePostLikeCount(postId);
-			int newlikeCount = oldlikeCount+1;
-			postSvc.updateOnePostLikeCount(newlikeCount, postId);
+			//交易邏輯:likelistVO新增成功且postupdate like_count成功
+			//功能都正常才可以搜尋該篇貼文的讚數
+			int newlikeCount = postSvc.selectOnePostLikeCount(postId);
 			msg.put("msg", "1");
 			msg.put("newlikeCount", String.valueOf(newlikeCount));
-			System.out.println("postId : 原本的讚數:"+oldlikeCount+"新增後讚數:"+ newlikeCount);
+			System.out.println("postId : 原本的讚數: "+oldlikeCount+"新增後讚數: "+ newlikeCount);
 			String json = new Gson().toJson(msg);
 			res.getWriter().write(json);
 			System.out.println("新增貼文按讚成功");

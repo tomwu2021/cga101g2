@@ -229,9 +229,4 @@ public class PostService {
 		return dao.selectOnePostLikeCount(postId);
 	}
 	
-	public boolean updateOnePostLikeCount(Integer newLikeCount,Integer postId) {
-		return dao.updateOnePostLikeCount(newLikeCount,postId);
-	}
-	
-
 }

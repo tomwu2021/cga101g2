@@ -87,6 +87,7 @@ public class PostMainController extends HttpServlet {
 			// **點讚清單分界 結束**//
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("postlist", postlist);
+			req.setAttribute("sessionMemberId", memberId);
 
 //				java.util.Date date2 = new java.util.Date();
 //				System.out.println("elapsed time: " + (date2.getTime() - date1.getTime()));

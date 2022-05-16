@@ -22,8 +22,9 @@ public interface PostDAO_interface extends JDBCDAO_Interface<PostVO> {
 
 	// 查詢單篇貼文讚數
 	int selectOnePostLikeCount(Integer postId);
-
-	// 修改單篇貼文讚數
-	boolean updateOnePostLikeCount(Integer newLikeCount, Integer postId);
+	
+	// 更新單篇貼文讚數
+	//同時新增likelistVO跟單篇貼文讚數 (實務上並不常用, 一次新增成功)
+	int updateOnePostLikeCount(Integer newLikeCount, Integer postId, java.sql.Connection con);
 
 }
