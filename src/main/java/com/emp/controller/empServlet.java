@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import com.chargeRecord.model.ChargeRecordService;
+import com.chargeRecord.model.ChargeRecordVO;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
 import com.google.gson.Gson;
@@ -43,6 +46,12 @@ public class empServlet extends HttpServlet {
 			break;
 		case "nameSelect":
 			nameSelect(req, res);
+			break;
+		case "empSelectMemberRecord":
+			empSelectMemberRecord(req, res);
+			break;
+		case "getNameByMemberId":
+			getNameByMemberId(req, res);
 			break;
 		}
 	}
@@ -142,7 +151,7 @@ public class empServlet extends HttpServlet {
 	public void accountSelect(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String memberAccount = req.getParameter("memberAccount");
 		System.out.println(memberAccount);
-		
+
 		// 用帳號模糊查詢
 		MembersService memberSvc = new MembersService();
 		List<MembersVO> listMemberVO = memberSvc.SelectAllByAccount(memberAccount);
@@ -150,11 +159,11 @@ public class empServlet extends HttpServlet {
 		res.getWriter().write(json);
 		return;
 	}
-	
+
 	public void nameSelect(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String memberName = req.getParameter("memberName");
 		System.out.println(memberName);
-		
+
 		// 用帳號模糊查詢
 		MembersService memberSvc = new MembersService();
 		List<MembersVO> listMemberVO = memberSvc.SelectAllByName(memberName);
@@ -163,4 +172,37 @@ public class empServlet extends HttpServlet {
 		return;
 	}
 
+	// 員工查詢會員錢包紀錄 ------未完成
+	public void empSelectMemberRecord(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+		String memberAccount = req.getParameter("memberAccount");
+		System.out.println(memberAccount);
+		MembersService memberSvc = new MembersService();
+		MembersVO membersVO = memberSvc.selectMemberIdByAccount(memberAccount);
+
+		// 用 信箱查詢 memberId
+		ChargeRecordService chargeRecordSvc = new ChargeRecordService();
+		List<ChargeRecordVO> listAll = chargeRecordSvc.getAll(membersVO.getMemberId());
+		System.out.println(listAll);
+		String json = new Gson().toJson(listAll);
+		res.getWriter().write(json);
+		return;
+
+	}
+
+	public void getNameByMemberId(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+
+		String memberId = req.getParameter("memberId");
+		MembersService memberSvc = new MembersService();
+		String memberName = memberSvc.getOneById(Integer.parseInt(memberId)).getName();
+		System.out.println(memberName);
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+
+		messages.put("memberName", memberName);
+		String json = new Gson().toJson(messages);
+		res.getWriter().write(json);
+		return;
+	}
 }

@@ -68,7 +68,8 @@ function viewBody(objectJSON) {
 	html += "<th width=30%>會員地址</th>";
 	html += "<th>會員手機</th>";
 	html += "<th>會員等級</th>";
-	html += "<th>會員紅利</th>";
+	//	html += "<th>會員紅利</th>";
+	html += "<th>會員錢包</th>";
 	html += "<th>會員狀態</th>";
 	html += "<th>創建日期</th>";
 	html += "<th>修改</th>";
@@ -83,7 +84,8 @@ function viewBody(objectJSON) {
 		html += removeUndefined(memberVO.address);
 		html += removeUndefined(memberVO.phone);
 		html += "<td>" + viewRanks(memberVO.rankId) + "</td>";
-		html += "<td>" + memberVO.bonusAmount + "</td>";
+		//		html += "<td>" + memberVO.bonusAmount + "</td>";
+		html += "<td onclick='viewRecord(this)' id='" + memberVO.account + "'>" + memberVO.eWalletAmount + "</td>";
 		html += viewStatus(memberVO.status);
 		html += "<td>" + memberVO.createTimeString + "</td>";
 		html += "<td><button onclick='updateInfo(this)' id='" + memberVO.memberId + "'>修改</button></td>";
@@ -138,7 +140,7 @@ function viewUpdate(objectJSON, objMemberId) {
 	html += "<th width=30%>會員地址</th>";
 	html += "<th>會員手機</th>";
 	html += "<th>會員等級</th>";
-	html += "<th>會員紅利</th>";
+	html += "<th>會員錢包</th>";
 	html += "<th>會員狀態</th>";
 	html += "<th>創建日期</th>";
 	html += "<th>修改</th>";
@@ -153,7 +155,7 @@ function viewUpdate(objectJSON, objMemberId) {
 		html += removeUndefined(memberVO.address);
 		html += removeUndefined(memberVO.phone);
 		html += "<td>" + viewRanks(memberVO.rankId) + "</td>";
-		html += "<td>" + memberVO.bonusAmount + "</td>";
+		html += "<td>" + memberVO.eWalletAmount + "</td>";
 
 		if (objMemberId == memberVO.memberId) {
 			html += "<td><select id='changeSelect'><option>" + viewStatusNo(memberVO.status) + "</option><option>停權</option><option>正常</option></select></td>";
@@ -255,8 +257,8 @@ function nameSelect() {
 }
 
 // 顯示所有資料
-function selectAll(){
-		let dataJSON = {
+function selectAll() {
+	let dataJSON = {
 		action: "empSelect"
 	}
 
@@ -273,3 +275,81 @@ function selectAll(){
 		}
 	);
 }
+
+
+// 顯示儲值消費紀錄 ---------------- 未完成
+function viewRecord(obj) {
+	let dataJSON = {
+		action: "empSelectMemberRecord",
+		memberAccount: obj.id,
+	}
+	console.log(obj.id); // 信箱
+	$.ajax(
+		{
+			url: "/CGA101G2/front/emp.do",
+			type: "post",
+			data: dataJSON,
+			success: function(json) {
+				objectJSON = JSON.parse(json);
+				let html = '';
+				html += "<table class='table table-striped table-hover card-text'>";
+				html += "<thead>";
+				html += "<tr class='text-center'>";
+				html += "<th>交易編號</th>";
+				html += "<th>姓名</th>";
+				html += "<th>消費/儲值</th>";
+				html += "<th>日期</th>";
+				html += "</tr>";
+				html += "</thead>";
+				html += "<tbody>";
+				for (let i = 0; i < objectJSON.length; i++) {
+					html += "<tr class='text-center'>";
+					html += "<td>" + objectJSON[i].recordId + "</td>";
+					html += "<td class='getName'>" + getNameByMemberId(objectJSON[i].memberId) + "</td>";
+					html += firstChar(objectJSON[i].chargeAmount);
+					html += "<td>" + objectJSON[i].recordTimeString + "</td>";
+					html += "</tr>"
+				}
+				html += "</tbody>";
+				html += "</table>";
+
+				document.getElementById("show").innerHTML = html;
+			},
+		}
+	);
+}
+
+
+
+function firstChar(str) {
+	let number = parseInt(str);
+	if (number < 0) {
+		return "<td style='color:red;'>" + str + "</td>"
+	} else {
+		return "<td>" + str + "</td>"
+	}
+}
+
+
+function getNameByMemberId(memberId) {
+	let dataJSON = {
+		action: "getNameByMemberId",
+		memberId: memberId,
+	}
+
+	$.ajax(
+		{
+			url: "/CGA101G2/front/emp.do",
+			type: "post",
+			data: dataJSON,
+			success: function(json) {
+				responseName = JSON.parse(json);
+				const nodeList = document.querySelectorAll(".getName");
+				for (let i = 0; i < nodeList.length; i++) {
+					nodeList[i].innerHTML = responseName.memberName;
+				}
+			},
+		}
+	);
+}
+
