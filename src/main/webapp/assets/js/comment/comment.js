@@ -13,7 +13,7 @@ $(document).ready(() => {
     socket_post.on('broadcast', (comments) => {
         console.log(comments);
         for (let comment of JSON.parse(comments)) {
-            if (comment.target_id === 0) {
+            if (parseInt(comment.target_id) === 0) {
                 onComment(comment);
             } else {
                 onReply(comment);
