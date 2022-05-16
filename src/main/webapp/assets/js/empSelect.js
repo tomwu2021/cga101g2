@@ -86,7 +86,7 @@ function viewBody(objectJSON) {
 		html += "<td>" + memberVO.bonusAmount + "</td>";
 		html += viewStatus(memberVO.status);
 		html += "<td>" + memberVO.createTimeString + "</td>";
-		html += "<td><button data-boolean='false' onclick='updateInfo(this)' id='" + memberVO.memberId + "'>修改</button></td>";
+		html += "<td><button onclick='updateInfo(this)' id='" + memberVO.memberId + "'>修改</button></td>";
 		html += "</tr>";
 	}
 
@@ -119,83 +119,92 @@ $(function() {
 });
 
 
-//// ------------------ 修改 ------------------
-//function updateInfo(obj) { // obj.id：會員編號
-//	let thisId = obj.id;
-//	let boo = obj.getAttribute("data-boolean");
-//	// 按下修改後，變成 true (確定)
-//	if (boo.toString() === "false") {
-//		let html = viewUpdate(objectJSON);
-//		document.getElementById("show").innerHTML = html;
-//		
-//		document.getElementById(thisId).innerHTML = '確定';
-//	}
-//}
-//
-//// ------------------ 顯示修改畫面 ------------------
-//function viewUpdate(objectJSON) {
+// ------------------ 修改 ------------------
+function updateInfo(obj) { // obj.id：會員編號
+	let html = viewUpdate(objectJSON, obj.id);
+	document.getElementById("show").innerHTML = html;
+}
+
+// ------------------ 顯示修改畫面 ------------------
+function viewUpdate(objectJSON, objMemberId) {
 //	console.log(objectJSON);
-//	let html = '';
-//	html += "<div class='main' >";
-//	html += "<table width='100%'; style='table-layout:fixed' >";
-//	html += "<tr>";
-//	html += "<th style='display: none;'>會員編號</th>"; // 隱藏的 MemberId
-//	html += "<th>會員帳號</th>";
-//	html += "<th>會員姓名</th>";
-//	html += "<th width=30%>會員地址</th>";
-//	html += "<th>會員手機</th>";
-//	html += "<th>會員等級</th>";
-//	html += "<th>會員紅利</th>";
-//	html += "<th>會員狀態</th>";
-//	html += "<th>創建日期</th>";
-//	html += "<th>修改</th>";
-//	html += "</tr>";
-//
-//	for (let i = 0; i < objectJSON.length; i++) {
-//		let memberVO = objectJSON[i];
-//		html += "<tr>";
-//		html += "<td style='display: none;'>" + memberVO.memberId + "</td>"; // 隱藏的 MemberId
-//		html += "<td>" + removeGmail(memberVO.account) + "</td>";
-//		html += "<td>" + removeGmail(memberVO.name) + "</td>";
-//		html += removeUndefined(memberVO.address);
-//		html += removeUndefined(memberVO.phone);
-//		html += "<td>" + viewRanks(memberVO.rankId) + "</td>";
-//		html += "<td>" + memberVO.bonusAmount + "</td>";
-//
-//
-//		//		html += viewStatus(memberVO.status);
-//		html += "<td><select  onchange='myFunction(this)'  id='" + memberVO.memberId + "'><option></option><option>停權</option><option>正常</option></select></td>";
-//
-//		html += "<td>" + memberVO.createTimeString + "</td>";
-//		html += "<td><button data-boolean='false' onclick='sureInfo(this)' id='" + memberVO.memberId + "'>修改</button></td>";
-//		html += "</tr>";
-//	}
-//
-//	html += "</table>";
-//
-//	return html;
-//}
-//
-//// ------------------ 下拉式選單值改變 ------------------
-//function myFunction(){
-//	let thisId = obj.id;
-//	console.log(thisId);
-//}
-//
-//
-//// ------------------ 確定 ------------------
-//function sureInfo(obj) { // obj.id：會員編號
-//	let thisId = obj.id;
-//	let boo = obj.getAttribute("data-boolean");
-//	// 按下修改後，變成 true (確定)
-//	if (boo.toString() === "false") {
-//		let html = viewBody(objectJSON);
-//		document.getElementById("show").innerHTML = html;
-//		
-//		document.getElementById(thisId).innerHTML = '修改';
-//		obj.setAttribute("data-boolean", "true");
-//	}
-//}
-//
-//
+	let html = '';
+	html += "<div class='main' >";
+	html += "<table width='100%'; style='table-layout:fixed' >";
+	html += "<tr>";
+	html += "<th style='display: none;'>會員編號</th>"; // 隱藏的 MemberId
+	html += "<th>會員帳號</th>";
+	html += "<th>會員姓名</th>";
+	html += "<th width=30%>會員地址</th>";
+	html += "<th>會員手機</th>";
+	html += "<th>會員等級</th>";
+	html += "<th>會員紅利</th>";
+	html += "<th>會員狀態</th>";
+	html += "<th>創建日期</th>";
+	html += "<th>修改</th>";
+	html += "</tr>";
+
+	for (let i = 0; i < objectJSON.length; i++) {
+		let memberVO = objectJSON[i];
+		html += "<tr>";
+		html += "<td style='display: none;'>" + memberVO.memberId + "</td>"; // 隱藏的 MemberId
+		html += "<td>" + removeGmail(memberVO.account) + "</td>";
+		html += "<td>" + removeGmail(memberVO.name) + "</td>";
+		html += removeUndefined(memberVO.address);
+		html += removeUndefined(memberVO.phone);
+		html += "<td>" + viewRanks(memberVO.rankId) + "</td>";
+		html += "<td>" + memberVO.bonusAmount + "</td>";
+
+		if (objMemberId == memberVO.memberId) {
+			html += "<td><select id='changeSelect'><option>" + viewStatusNo(memberVO.status) + "</option><option>停權</option><option>正常</option></select></td>";
+			html += "<td>" + memberVO.createTimeString + "</td>";
+			html += "<td><button onclick='sureInfo(this)' id='" + memberVO.memberId + "'>確定</button></td>";
+		} else {
+			html += viewStatus(memberVO.status);
+			html += "<td>" + memberVO.createTimeString + "</td>";
+			html += "<td><button id='" + memberVO.memberId + "'>修改</button></td>";
+		}
+
+
+		html += "</tr>";
+	}
+
+	html += "</table>";
+	return html;
+}
+
+//// ------------------ 按下確定取得 select 值 ------------------
+function sureInfo(obj) { // obj.id：會員編號
+	let status = $("#changeSelect").val();
+	let newStatus = '';
+//	console.log(status);
+	if (status === '停權') {
+		newStatus = '0';
+//		console.log(newStatus);
+	} else {
+		newStatus = '1';
+//		console.log(newStatus);
+	}
+	// 取得 select 值，呼叫 Servelt 修改資料庫值，並重新撈取資料
+	let dataJSON = {
+		action: "empChangeStatus",
+		newStatus: newStatus,
+		memberId: obj.id,
+	}
+	$.ajax(
+		{
+			url: "/CGA101G2/front/emp.do",
+			type: "post",
+			data: dataJSON,
+			success: function(json) {
+				objectJSON = JSON.parse(json);
+				let html = viewBody(objectJSON);
+				document.getElementById("show").innerHTML = html;
+			},
+		}
+	);
+
+}
+
+
 //// ------------------ 查詢 ------------------

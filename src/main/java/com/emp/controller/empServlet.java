@@ -35,6 +35,9 @@ public class empServlet extends HttpServlet {
 		case "empSelect":
 			empSelect(req, res);
 			break;
+		case "empChangeStatus":
+			empChangeStatus(req, res);
+			break;
 		}
 	}
 
@@ -105,4 +108,29 @@ public class empServlet extends HttpServlet {
 		res.getWriter().write(json);
 		return;
 	}
+
+	// 修改會員狀態
+	public void empChangeStatus(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		String newStatus = req.getParameter("newStatus");
+		String memberId = req.getParameter("memberId");
+		// 取得修改值
+		System.out.println(newStatus);
+		System.out.println(memberId);
+		
+		// 呼叫 修改 會員狀態 service
+		MembersService memberSvc = new MembersService();
+		MembersVO membersVO = new MembersVO();
+		membersVO.setMemberId(Integer.parseInt(memberId));
+		membersVO.setStatus(Integer.parseInt(newStatus));
+		memberSvc.changeStatus(membersVO);
+		
+		// 查詢 會員 資料
+		MembersService memberSVC = new MembersService();
+		List<MembersVO> listMemberVO = memberSVC.getAll();
+		String json = new Gson().toJson(listMemberVO);
+		res.getWriter().write(json);
+		return;
+		
+	}
+	
 }
