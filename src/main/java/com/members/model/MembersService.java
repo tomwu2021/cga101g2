@@ -3,6 +3,7 @@ package com.members.model;
 import java.sql.Connection;
 import java.util.*;
 
+import com.pet.model.PetVO;
 import com.ranks.model.RanksVO;
 
 public class MembersService {
@@ -137,9 +138,5 @@ public class MembersService {
 	public List<MembersVO> SelectAllByName(String account){
 		return dao.SelectAllByName(account);
 	}
-	
-	// 用 MemberId 取得 寵物的生日
-	public String getAllPetBirthday(Integer memberId) {
-		return dao.getAllPetBirthday(memberId);
-	}
+
 }
