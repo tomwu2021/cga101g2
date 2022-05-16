@@ -32,41 +32,44 @@ public class MembersServlet extends HttpServlet {
 		action = action == null ? "" : action;
 
 		switch (action) {
-		case "forLogin":
+		case "forLogin": // 登入
 			forLogin(req, res);
 			break;
-		case "checkAccount":
+		case "checkAccount": // 帳號確認
 			checkAccount(req, res);
 			break;
-		case "registerVerification":
+		case "registerVerification": // 註冊帳號驗證
 			registerVerification(req, res);
 			break;
-		case "sendforgotMail":
+		case "sendforgotMail": // 忘記密碼發送Email
 			sendforgotMail(req, res);
 			break;
-		case "getRankName":
+		case "getRankName": // 取得會員等級
 			getRankName(req, res);
 			break;
-		case "updateMemberInfo":
+		case "updateMemberInfo": // 會員修改基本資料
 			updateMemberInfo(req, res);
 			break;
-		case "updateMemberPassword":
+		case "updateMemberPassword": // 會員修改密碼
 			updateMemberPassword(req, res);
 			break;
-		case "walletAddMoney":
+		case "walletAddMoney": // 會員儲值
 			walletAddMoney(req, res);
 			break;
-		case "updateMemberWalletPassword":
+		case "updateMemberWalletPassword": // 會員修改錢包密碼
 			updateMemberWalletPassword(req, res);
 			break;
-		case "checkWalletPassword":
+		case "checkWalletPassword": // 確認會員錢包密碼
 			checkWalletPassword(req, res);
 			break;
-		case "updateSetWalletPassword":
+		case "updateSetWalletPassword": // 設定錢包密碼
 			updateSetWalletPassword(req, res);
 			break;
-		case "memberWalletUsedRecord":
+		case "memberWalletUsedRecord": // 會員儲值/消費紀錄
 			memberWalletUsedRecord(req, res);
+			break;
+		case "firstLogin":
+			firstLogin(req, res); // 首次登入判斷
 			break;
 		}
 	}
@@ -128,17 +131,18 @@ public class MembersServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;// 程式中斷
 				} else {
+					
 					HttpSession session = req.getSession();
 					session.setAttribute("membersVO", membersVO);
 					req.setAttribute("membersVO", membersVO); // 資料庫取出的 membersVO 物件，存入 req
 
 					if (session.getAttribute("location") != null) {
 						String url = session.getAttribute("location").toString();
-						System.out.println(url);
+//						System.out.println(url);
 						res.sendRedirect(url);
 						return;
-					} else {
-						RequestDispatcher successView = req.getRequestDispatcher("/article?action=all_Display");
+					} else { //http://localhost:8081/CGA101G2
+						RequestDispatcher successView = req.getRequestDispatcher("/index.html");
 						successView.forward(req, res);
 						return;
 					}
@@ -736,5 +740,39 @@ public class MembersServlet extends HttpServlet {
 		String json = new Gson().toJson(listAll);
 		res.getWriter().write(json);
 		return;
+	}
+
+	
+	public void firstLogin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		HttpSession session = req.getSession();
+		MembersVO sessionMembersVO = (MembersVO) session.getAttribute("membersVO"); // 取得 MembersVO
+		
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+		
+		// 首次登入
+		if (sessionMembersVO.getBonusAmount() == 0 && sessionMembersVO.geteWalletPassword() == null) {
+			
+			System.out.println("這是第一次登入要執行的事情");
+			// 首次登入發送紅利
+			// ewallet_password == null，代表此會員未消費，所以也不曾使用過紅利點數，因為要使用紅利點數就需要設定錢包密碼進行儲值消費
+			// 再判斷 bonus == 0，代表會員從未領過紅利點數
+			// 兩者條件成立即 => 首次登入發送紅利
+			MembersService memberSvc = new MembersService();
+			MembersVO bonusMembersVO = new MembersVO();
+			
+			bonusMembersVO.setMemberId(sessionMembersVO.getMemberId());
+			bonusMembersVO.setBonusAmount(100);
+			memberSvc.changeBonus(bonusMembersVO);
+			
+			sessionMembersVO.setBonusAmount(100);
+			messages.put("firstLogin", "firstLogin");
+			String json = new Gson().toJson(messages);
+			res.getWriter().write(json);
+			return;
+		}
+		return;
+		
 	}
 }
