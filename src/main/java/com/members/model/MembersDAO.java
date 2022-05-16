@@ -897,11 +897,10 @@ public class MembersDAO implements MembersDAO_interface {
 		}
 		return list;
 	}
-	
-	public List<MembersVO> SelectAllByAccount(String account,Connection con) {
+
+	public List<MembersVO> SelectAllByAccount(String account, Connection con) {
 		final String ACCOUNT_SELECT_ALL = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time,DATE_FORMAT(create_time,'%Y-%m-%d %H:%i') createTimeString FROM members where account like ?;";
-		
-		
+
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(ACCOUNT_SELECT_ALL);
@@ -942,11 +941,10 @@ public class MembersDAO implements MembersDAO_interface {
 		}
 		return list;
 	}
-	
-	public List<MembersVO> SelectAllByName(String name,Connection con) {
+
+	public List<MembersVO> SelectAllByName(String name, Connection con) {
 		final String NAME_SELECT_ALL = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time,DATE_FORMAT(create_time,'%Y-%m-%d %H:%i') createTimeString FROM members where name like ?;";
-		
-		
+
 		if (con != null) {
 			try {
 				PreparedStatement pstmt = con.prepareStatement(NAME_SELECT_ALL);
@@ -969,6 +967,35 @@ public class MembersDAO implements MembersDAO_interface {
 					list.add(newMember);
 				}
 				return list;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public String getAllPetBirthday(Integer memberId) {
+		con = JNDIConnection.getRDSConnection();
+		String petBirthday = getAllPetBirthday(memberId, con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return petBirthday;
+	}
+
+	public String getAllPetBirthday(Integer memberId,Connection con) {
+		final String GET_PET_BIRTHDAY = "SELECT DATE_FORMAT(birthday,'%Y-%m-%d') petBirthday FROM pet WHERE member_id = 3;";
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(GET_PET_BIRTHDAY);
+				pstmt.setInt(1, memberId);
+				ResultSet rs = pstmt.executeQuery();
+				if (rs.next()) {
+					return rs.getString("petBirthday");
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

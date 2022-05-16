@@ -137,4 +137,9 @@ public class MembersService {
 	public List<MembersVO> SelectAllByName(String account){
 		return dao.SelectAllByName(account);
 	}
+	
+	// 用 MemberId 取得 寵物的生日
+	public String getAllPetBirthday(Integer memberId) {
+		return dao.getAllPetBirthday(memberId);
+	}
 }

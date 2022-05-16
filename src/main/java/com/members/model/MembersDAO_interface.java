@@ -73,4 +73,7 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 	
 	// 用姓名模糊查詢
 	public List<MembersVO> SelectAllByName(String name);
+	
+	// 取得 全部的寵物的生日
+	public String getAllPetBirthday(Integer memberId);
 }
