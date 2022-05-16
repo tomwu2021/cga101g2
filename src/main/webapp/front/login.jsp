@@ -38,7 +38,7 @@
 				<div id="wrapper">
 					<div id="popup" class="opoups_height_width">帳號註冊</div>
 					<div id="popup22" class="opoups_height_width">忘記密碼</div>
-					<div id="popup3" class="opoups_height_width"><a href="<%=request.getContextPath()%>/article?action=all_Display">訪客進入</a></div>
+					<div id="popup3" class="opoups_height_width"><a href="<%=request.getContextPath()%>/index.html">訪客進入</a></div>
 				</div>
 			</div>
 		</div>

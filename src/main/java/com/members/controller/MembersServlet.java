@@ -72,7 +72,10 @@ public class MembersServlet extends HttpServlet {
 			firstLogin(req, res); // 首次登入判斷
 			break;
 		case "logout":
-			logout(req, res); // 首次登入判斷
+			logout(req, res); // 登出
+			break;
+		case "totalMoney": // 取得總儲值金額
+			totalMoney(req, res);
 			break;
 		}
 	}
@@ -381,7 +384,7 @@ public class MembersServlet extends HttpServlet {
 
 //		System.out.println(messages);
 
-		if (!messages.isEmpty()) {
+		if (!messages.isEmpty()) {//
 			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberUpdate.jsp");
 			failureView.forward(req, res);
 			return;// 程式中斷
@@ -459,7 +462,7 @@ public class MembersServlet extends HttpServlet {
 
 			messages.put("updatePasswordSuccess", "修改密碼成功！");
 			// successful 的頁面
-			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberPassword.jsp");
+			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberSuccess.jsp");
 			successView.forward(req, res);
 			return;// 程式中斷
 		}
@@ -630,7 +633,8 @@ public class MembersServlet extends HttpServlet {
 					.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
 			messages.put("updatePasswordSuccess", "修改密碼成功！");
 			// successful 的頁面
-			RequestDispatcher successView = req.getRequestDispatcher("/front/member/member.jsp"); // 製作一個 success 畫面
+			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberSuccess.jsp"); // 製作一個 success
+																											// 畫面
 			successView.forward(req, res);
 			return;// 程式中斷
 		}
@@ -703,7 +707,7 @@ public class MembersServlet extends HttpServlet {
 		}
 		if (!messages.isEmpty()) {
 			messages.put("userInput1", setWalletPassword);
-			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberSetWalletPassword.jsp");
+			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberSuccess.jsp");
 			failureView.forward(req, res);
 			return;// 程式中斷
 		} else {
@@ -784,6 +788,23 @@ public class MembersServlet extends HttpServlet {
 		session.removeAttribute("membersVO");
 		RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
 		failureView.forward(req, res);
+		return;
+	}
+
+	public void totalMoney(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		// 取得總儲值金額後回傳
+		HttpSession currentSession = req.getSession();
+		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
+		Integer currentMemberId = sessionMembersVO.getMemberId();
+		ChargeRecordDAO chargeRecordDAO = new ChargeRecordDAO();
+		Integer sumChargeAmount = chargeRecordDAO.SumChargeAmount(currentMemberId);
+		
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+		
+		messages.put("totalMoney", String.valueOf(sumChargeAmount));
+		String json = new Gson().toJson(messages);
+		res.getWriter().write(json);
 		return;
 	}
 }

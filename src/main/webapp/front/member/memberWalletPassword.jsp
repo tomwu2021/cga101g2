@@ -43,7 +43,7 @@
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">舊密碼</label>
 															<div class="col-md-9">
-																<input name="oldWalletPassword" placeholder="請輸入舊密碼"
+																<input type="password" name="oldWalletPassword" placeholder="請輸入舊密碼"
 																	class="form-control form-control-success"
 																	value="${messages.userInput1}"> <font color=red>${messages.errorOldoldWalletPassword}</font>
 															</div>

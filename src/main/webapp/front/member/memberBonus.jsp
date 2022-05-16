@@ -38,20 +38,19 @@
                         <h3 class="h6 text-uppercase mb-0">會員等級</h3>
                       </div>
                       <div class="card-body">
-                        <p>Lorem ipsum dolor sit amet consectetur.</p>
                         <div class="row">
                         <div class="col-lg-9 mb-5">
                         <!-- <form class="form-horizontal"> -->
                           <div class="form-group row">
                             <label class="col-md-3 form-control-label">您的會員等級 :</label>
                             <div class="col-md-9">
-                              <label class="col-md-12 form-control-label"><span class="highlight">黃金</span>(等級期限 2022/08/31 止)</label>
+                              <label class="col-md-12 form-control-label"><span class="highlight" id="rankId">${membersVO.rankId}</span></label>
                             </div>
                           </div>
                           <div class="form-group row">
                             <label class="col-md-3 form-control-label">累積消費金額 :</label>
                             <div class="col-md-9">
-                              <label class="col-md-10 form-control-label"><span class="highlight">100000 </span>元</label>
+                              <label class="col-md-10 form-control-label"><span class="highlight" id="totalMoney"> </span>元</label>
                             </div>
                           </div>
                           <div class="form-group row">
@@ -61,23 +60,26 @@
                                 <thead>
                                   <tr>
                                     <th>#</th>
+                                    <th>一般會員</th>
                                     <th>黃金會員</th>
-                                    <th>黃金會員</th>
-                                    <th>黃金會員</th>
+                                    <th>白金會員</th>
+                                    <th>鑽石會員</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr>
                                     <th scope="row">折數</th>
+                                    <td>無</td>
                                     <td>95折</td>
-                                    <td>98折</td>
-                                    <td>56折</td>
+                                    <td>9折</td>
+                                    <td>85折</td>
                                   </tr>
                                   <tr>
                                     <th scope="row">累積消費</th>
-                                    <td>0~5000元</td>
-                                    <td>5000~8000元</td>
-                                    <td>8000元以上</td>
+                                    <td>0 ~ 2000 元</td>
+                                    <td>2001 ~ 5000 元</td>
+                                    <td>5001 ~ 10000 元</td>
+                                    <td>10001 元以上</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -116,10 +118,8 @@
 	<%@include file="/back/layout/commonJS.jsp"%>
 	<!-- 共用的JS -->
 
-	<!-- 額外添加的JS -->
-	<!-- 	路徑舉例 -->
-	<%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/?????待討論"> --%>
-	<!-- 額外添加的JS -->
+	<script type="text/javascript"
+		src="<%=request.getContextPath()%>/assets/js/memberBonus.js"></script>
 
 </body>
 
