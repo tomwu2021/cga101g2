@@ -6,6 +6,7 @@ import java.util.List;
 import com.members.model.MembersVO;
 import com.pet.model.PetVO;
 import com.picture.model.PictureVO;
+import com.likelist.model.LikelistVO;
 
 public class PostVO implements java.io.Serializable{
 	private Integer postId;
@@ -22,7 +23,17 @@ public class PostVO implements java.io.Serializable{
 	private PictureVO pictureVO;        //頭貼照片
 	private PictureVO pictureVO2;		//貼文照片
 	
+	private LikelistVO likelistVO;		//按讚清單
 	
+
+	public LikelistVO getLikelistVO() {
+		return likelistVO;
+	}
+
+	public void setLikelistVO(LikelistVO likelistVO) {
+		this.likelistVO = likelistVO;
+	}
+
 	public PostVO() {
 		super();
 		// TODO Auto-generated constructor stub

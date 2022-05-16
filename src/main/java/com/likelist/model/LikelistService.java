@@ -17,4 +17,7 @@ public class LikelistService {
 	public boolean delete(LikelistVO likelistVO) {
 		return dao.delete(likelistVO);
 	}
+	public LikelistVO getOneLikelistVOForCheck(Integer memberId, Integer postId) {
+		return dao.getOneLikelistVOForCheck(memberId, postId);
+	}
 }

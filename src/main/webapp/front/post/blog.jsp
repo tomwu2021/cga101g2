@@ -347,7 +347,27 @@
                                    
                                    <!-- 貼文發布時間 -->
                                     <div class="blog_meta">
-                                        <p> <a href="#">${postVO.likeCount}</a> 個讚 &ensp; <a href="#">${postVO.createTime}</a> 
+                                        <p> 
+<!--                                     會員是否有點讚該文章的判斷 --> 
+									<c:if test="${likelistVO.memberId != sessionMemberId }">
+									
+										<span class="glyphicon glyphicon-usd text-danger"> 
+                                      	  <i id="" class="bi bi-suit-heart fa-2x"></i> 
+                                  	   </span> 
+                                        <a href="#">${postVO.likeCount}</a> 個讚 &ensp;  <a href="#">${postVO.createTime}</a> 
+                                        
+									</c:if> 
+									
+									<c:if test="${likelistVO.memberId == sessionMemberId }">
+									
+									<span class="glyphicon glyphicon-usd text-danger"> 
+                                      	  <i id="" class="bi bi-suit-heart-fill fa-2x"></i> 
+                                  	   </span> 
+                                        <a href="#">${postVO.likeCount}</a> 個讚 &ensp; <a href="#">${postVO.createTime}</a> 
+                                        
+									</c:if> 
+<!-- 									會員是否有點讚該文章的判斷 -->
+                                        
                                     </div>
                                     
                                     <!-- 貼文內容 -->
