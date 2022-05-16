@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.pet_activity.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)session.getAttribute("membersVO")).getPetVO().getPetId();
 %>
@@ -45,7 +46,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
     <div class="container-bg" style="">
             <div class="mod-002">
             <h3 class="panel-title">
-                <b><i class="bi bi-person"></i>個人專區</b>
+                <b><i class="bi bi-person-fill"></i>個人專區</b>
             </h3>
             <div class="card-wrap" id="member_wrap">
                 <div class="item">
@@ -63,10 +64,10 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
                 <div class="item">
                     <div class="card">
                         <div class="info">
-                            <strong class="title" style="">會員等級</strong>
+                            <strong class="title">會員等級</strong>
                         </div>
                         <ul class="note">
-                            <li id="rankId">${membersVO.rankId}</li>
+                            <li><strong id="rankId" style="color:goldenrod;">${membersVO.rankId}</strong></li>
                         </ul>
                     </div>
                 </div>
@@ -76,7 +77,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
                             <strong class="title">紅利回饋</strong>
                         </div>
                         <ul class="note">
-                            <li><strong>累積<b>${membersVO.bonusAmount}</b>點</strong></li>
+                            <li><strong>累積<b><a><fmt:formatNumber type="number" maxIntegerDigits="10" value="${membersVO.bonusAmount}" /></a></b>點</strong></li>
                         </ul>
                     </div>
                 </div>
@@ -86,7 +87,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
         </div>
         <div class="mod-002" style="">
             <h3 class="panel-title" style="">
-                <b><i class="bi bi-journal-text"></i>交易記錄</b>
+                <b><i class="bi bi-file-text-fill"></i>交易紀錄</b>
             </h3>
             <div class="card-wrap">
 	            <div class="item">
@@ -133,7 +134,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
         
         <div class="mod-002">
             <h3 class="panel-title">
-                <b><i class="bi bi-piggy-bank"></i>我的錢包</b>
+                <b><i class="bi bi-piggy-bank-fill"></i>我的錢包</b>
             </h3>
             <div class="card-wrap">
             	<div class="item">
@@ -166,7 +167,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
                                     href="<%=request.getContextPath()%>/front/member/memberWalletUsedRecord.jsp">可用餘額</a></strong>
                          </div>
                         <ul class="note">
-                            <li><strong>尚有<b>${membersVO.eWalletAmount}</b>元</strong></li>
+                            <li><strong>尚有<b><a><fmt:formatNumber type="number" maxIntegerDigits="10" value="${membersVO.eWalletAmount}" /></a></b>元</strong></li>
                         </ul>
                     </div>
                 </div>
@@ -176,7 +177,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
         
         <div class="mod-002">
             <h3 class="panel-title">
-                <b><i class="bi bi-clipboard-heart"></i>寵物日記</b>
+                <b><i class="bi bi-clipboard-heart-fill"></i>寵物日記</b>
             </h3>
             <div class="card-wrap">
                 <div class="item">

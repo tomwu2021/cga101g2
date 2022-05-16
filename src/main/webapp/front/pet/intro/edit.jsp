@@ -1,3 +1,4 @@
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
@@ -7,8 +8,8 @@
 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 %>
 <%
-Integer memberId = session.getAttribute("membersVO")==null ? -999:((MembersVO)session.getAttribute("membersVO")).getMemberId();
-Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)session.getAttribute("membersVO")).getPetVO().getPetId();
+Integer memberId = ((MembersVO)session.getAttribute("membersVO")).getMemberId();
+Integer petId = ((MembersVO)session.getAttribute("membersVO")).getPetVO().getPetId();
 %>
 <%--舊的petId --%>
 <!DOCTYPE html>
@@ -53,11 +54,11 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 					<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/pet" id="editForm">
 						<div class="card-body">
 							<div class="row">
-								<div class="card-title col-lg-11">新建寵物資料</div>
+								<div class="card-title col-lg-11">修改寵物資料</div>
 								<div class="card-title col-lg-1">
 									<input type="hidden" name="memberId" value="<%=memberId%>">
 									<input type="hidden" name="petId" value="<%=petId%>">
-									<input type="hidden" name="action" value="insert">
+									<input type="hidden" name="action" value="update">
 									<button class="btn btn-success form-btn-circle" type="submit">
 									送出 <i class="fas fa-arrow-right"></i>
 									</button>
@@ -72,7 +73,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 											<div class="row mb-3">
 												<label for="inputText" class="col-lg-2 col-form-label">暱稱<span style='color:#f33;'> *</span></label>
 												<div class="col-lg-8">
-													<input name="petName" type="text" class="form-control" style="width:100%" value='${param.petName}'>
+													<input name="petName" type="text" class="form-control" style="width:100%" value='${petName}'>
 													<span style="color:#f33;">${errorMsgs.petName}</span>
 												</div>
 											</div>
@@ -82,13 +83,13 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 												<div class="col-lg-8">
 													<div class="form-check" style="display:inline-block">
 														<input class="form-check-input" type="radio"
-														name="sort1Id" id="gridRadios1" value="2" ${(param.sort1Id==2)?'checked':''}>
+														name="sort1Id" id="gridRadios1" value="2" ${(sort1Id==2)?'checked':''}>
 														<label class="form-check-label"
 														for="gridRadios1"> 狗 </label>
 													</div>
 													<div class="form-check" style="display:inline-block">
 													<input class="form-check-input" type="radio"
-														name="sort1Id" id="gridRadios2" value="1" ${(param.sort1Id==1)?'checked':''}>
+														name="sort1Id" id="gridRadios2" value="1" ${(sort1Id==1)?'checked':''}>
 													<label class="form-check-label" for="gridRadios2"> 貓 <span style="color:#f33;">${errorMsgs.sort1Id}</span></label>
 													</div>
 												</div>
@@ -97,7 +98,8 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 												<label for="inputNumber"
 												class="col-lg-2 col-form-label">頭貼</label>
 												<div class="col-lg-8" id='headshotBox'>
-													<label class="btn btn-primary mb-3"><input id="upload_img" style="display:none;" name='file' type="file" accept="image/*"><i class="fa fa-photo"></i> 上傳相片</label>
+													<label class="btn btn-primary mb-3"><input id="upload_img" style="display:none;" name='file' type="file" accept="image/*"><i class="fa fa-photo"></i> 更換相片</label>
+													<img src="${pictureUrl}" id="headshot" class="mb-3 ml-3" style="height:250px;width:250px;object-fit: cover;">
 												</div>
 											</div>
 										</div>
@@ -108,13 +110,13 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 												<div class="col-lg-9">
 													<div class="form-check" style="display:inline-block">
 														<input class="form-check-input" type="radio"
-														name="gender" id="gridRadios1" value="1" ${(param.gender==1)?'checked':''}>
+														name="gender" id="gridRadios1" value="1" ${(gender==1)?'checked':''}>
 														<label class="form-check-label"
 														for="gridRadios1"> 男孩 </label>
 													</div>
 													<div class="form-check" style="display:inline-block">
 													<input class="form-check-input" type="radio"
-														name="gender" id="gridRadios2" value="2" ${(param.gender==2)?'checked':''}>
+														name="gender" id="gridRadios2" value="2" ${(gender==2)?'checked':''}>
 													<label class="form-check-label" for="gridRadios2"> 女孩 </label>
 													</div>
 												</div>
@@ -122,7 +124,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 											<div class="row mb-3">
 												<label class="col-lg-2 col-form-label">生日</label>
 												<div class="col-lg-9">
-												<input name="birthday" id='r_date1' type="text" class="form-control" style="width:30%" value='${param.birthday}'>
+												<input name="birthday" id='r_date1' type="text" class="form-control" style="width:30%" value='${birthday}'>
 												<span style="color:#f33;">${errorMsgs.birthday}</span>
 												</div>
 											</div>
@@ -130,7 +132,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 												<label for="inputPassword"
 													class="col-lg-2 col-form-label">簡介</label>
 												<div class="col-lg-9">
-													<textarea name="introduction" class="form-control" style="height:30vh;width:100%;resize:none;">${param.introduction}</textarea>
+													<textarea name="introduction" class="form-control" style="height:30vh;width:100%;resize:none;">${introduction}</textarea>
 												</div>
 											</div>
 										</div>
