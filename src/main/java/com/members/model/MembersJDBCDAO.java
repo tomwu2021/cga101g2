@@ -885,4 +885,22 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return false;
 
 	}
+
+	@Override
+	public List<MembersVO> SelectAllByAccount(String account) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MembersVO> SelectAllByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getAllPetBirthday(Integer memberId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
