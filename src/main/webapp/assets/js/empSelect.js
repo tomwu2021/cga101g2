@@ -56,7 +56,7 @@ function viewStatusNo(status) {
 
 }
 
-// 顯示正常化面
+// 顯示正常畫面
 function viewBody(objectJSON) {
 	let html = '';
 	html += "<div class='main' >";
