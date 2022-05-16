@@ -5,6 +5,7 @@ import java.util.*;
 
 import com.chargeRecord.model.ChargeRecordDAO;
 import com.chargeRecord.model.ChargeRecordVO;
+import com.pet.model.PetVO;
 import com.ranks.model.RanksVO;
 
 import connection.JDBCConnection;
@@ -898,9 +899,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 		return null;
 	}
 
-	@Override
-	public String getAllPetBirthday(Integer memberId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+
+
 }

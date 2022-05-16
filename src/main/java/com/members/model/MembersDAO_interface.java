@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.amazonaws.services.s3.model.PublicAccessBlockConfiguration;
 import com.common.model.JDBCDAO_Interface;
+import com.pet.model.PetVO;
 import com.ranks.model.RanksVO;
 
 public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
@@ -74,6 +75,4 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 	// 用姓名模糊查詢
 	public List<MembersVO> SelectAllByName(String name);
 	
-	// 取得 全部的寵物的生日
-	public String getAllPetBirthday(Integer memberId);
 }

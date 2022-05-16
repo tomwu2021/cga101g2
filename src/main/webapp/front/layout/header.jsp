@@ -37,7 +37,7 @@
                                             class="fa fa-angle-down"></i></a>
                                         <ul class="sub_menu pages">
                                             <li><a href="<%=request.getContextPath()%>/groupShop?action=listGroupProducts_Byfind">我要開團</a></li>
-                                            <li><a href="<%=request.getContextPath()%>/groupShop?action=listGroupProducts_Byfind">我要跟團</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/member/groupOrder.do?action=joinGroupOrder">我要跟團</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="<%=request.getContextPath()%>/MainPost?action=selectChangePost">寵物社群<i
@@ -102,7 +102,7 @@
                                         </ul>
                                     </div>
                                     <div class="dropdown_links_list">
-                                        <h3><img src="" alt="">Logout</h3>
+                                        <h3><a href='<%=request.getContextPath()%>/front/member.do?action=logout'>Logout</a></h3>
                                     </div>
                                 </div>
                             </div>

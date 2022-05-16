@@ -5,6 +5,8 @@ import java.util.*;
 
 import com.chargeRecord.model.ChargeRecordDAO;
 import com.chargeRecord.model.ChargeRecordVO;
+import com.pet.model.PetVO;
+import com.pet.service.PetService;
 import com.ranks.model.RanksVO;
 
 import connection.JNDIConnection;
@@ -973,35 +975,5 @@ public class MembersDAO implements MembersDAO_interface {
 		}
 		return null;
 	}
-
-	@Override
-	public String getAllPetBirthday(Integer memberId) {
-		con = JNDIConnection.getRDSConnection();
-		String petBirthday = getAllPetBirthday(memberId, con);
-		try {
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return petBirthday;
-	}
-
-	public String getAllPetBirthday(Integer memberId,Connection con) {
-		final String GET_PET_BIRTHDAY = "SELECT DATE_FORMAT(birthday,'%Y-%m-%d') petBirthday FROM pet WHERE member_id = 3;";
-		if (con != null) {
-			try {
-				PreparedStatement pstmt = con.prepareStatement(GET_PET_BIRTHDAY);
-				pstmt.setInt(1, memberId);
-				ResultSet rs = pstmt.executeQuery();
-				if (rs.next()) {
-					return rs.getString("petBirthday");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
-
 
 }

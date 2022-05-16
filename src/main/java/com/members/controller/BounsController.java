@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.members.model.MembersService;
 import com.members.model.MembersVO;
+import com.pet.model.PetVO;
 
 
 @WebServlet("/BounsController")
@@ -41,9 +42,9 @@ public class BounsController extends HttpServlet implements Runnable {
 		System.out.println("紅利排程器啟動中");
 		
 		// 生日發送紅利
-//		MembersService memberSvc = new MembersService();
-//		memberSvc.getAllPetBirthday(null);
-//		System.out.println();
+		MembersService memberSvc = new MembersService();
+		List<PetVO>  AllpetVO = memberSvc.getAllPetBirthday();
+		System.out.println(AllpetVO);
 		
 	}
 

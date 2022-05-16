@@ -94,7 +94,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 	                    <div class="card">
 	                        <div class="info">
 	                            <strong class="title"><a
-	                                    href="#">訂單查詢</a></strong>
+	                                    href="<%=request.getContextPath()%>/front/order/myAccount.jsp">訂單查詢</a></strong>
 	                        </div>
 	                        <ul class="note">
 	                            <div class="row">
@@ -116,7 +116,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
                     <div class="card" style="">
                         <div class="info">
                             <strong class="title" style=""><a
-                                    href="#">團購查詢</a></strong>
+                                    href="<%=request.getContextPath()%>/front/order/myAccountGroup.jsp">團購查詢</a></strong>
                         </div>
                         <ul class="note" style="">
                             <li style="">結團時間因應團主設定</li>
