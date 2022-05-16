@@ -10,7 +10,7 @@ public class ProductRedis {
 
 	// 輸入productId 獲得 totalView ,如果資料庫沒有這筆資料,就去創相對應的key
 	public int getProductIdTotalView(Integer productId) {
-		System.out.println("getProductIdTotalView執行成功");
+//		System.out.println("getProductIdTotalView執行成功");
 		
 		Integer totalView =null;
 		pool = JedisUtil.getJedisPool();
@@ -41,7 +41,7 @@ public class ProductRedis {
 	
 	// 輸入productId 新增 totalView ,如果資料庫沒有這筆資料,就去創相對應的key
 	public int addProductIdTotalView(Integer productId) {
-		System.out.println("addProductIdTotalView執行成功");
+//		System.out.println("addProductIdTotalView執行成功");
 		
 		Integer newTotalView =null;
 		pool = JedisUtil.getJedisPool();
