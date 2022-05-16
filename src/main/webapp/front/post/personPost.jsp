@@ -213,7 +213,7 @@
                                         <!-- 圖 -->
                                        
                                         <c:if test="${postVO.pictureList.size() != 0 }">
-                                        <a class="primary_img" href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"><img
+                                        <a class="primary_img" href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&memberId=${postVO.memberId}&action=selectdetail"><img
                                                 src="${postVO.pictureVO2.previewUrl}" alt=""></a>
                                         </c:if>
                                         

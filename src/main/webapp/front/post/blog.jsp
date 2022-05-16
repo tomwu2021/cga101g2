@@ -316,7 +316,7 @@
 									
 										<div id="image_photo">
 										
-										<a href="<%=request.getContextPath()%>/PersonPost?memberId=${postVO.memberId}&action=getOne_For_Display"><img src="${postVO.pictureVO.url}"></a>
+										<a href="<%=request.getContextPath()%>/PersonPost?memberId=${postVO.memberId}&postId=&${postVO.memberId}action=getOne_For_Display"><img src="${postVO.pictureVO.url}"></a>
 										
 										</div>
 										
@@ -335,7 +335,7 @@
 								            <%-- <c:if test="${postVO.pictureVO.url}">    --%>    
 						                    <div class="blog_thumb">
 						                    
-                                    		<a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"><img src="${postVO.pictureVO2.url}" alt=""></a>
+                                    		<a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&memberId=${postVO.memberId}&action=selectdetail"><img src="${postVO.pictureVO2.url}" alt=""></a>
                                     		
                                 			</div>	
                                 			<%-- </c:if> --%>
