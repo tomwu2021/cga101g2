@@ -55,18 +55,12 @@
                                     <%-- <span><a href="#">${postVO.membersVO.name}</a></span> --%>
                                 </figure>
 
-                                <!-- 修改鈕 -->
-                                <%-- <form method="post" action="<%=request.getContextPath()%>/" enctype="multipart/form-data">
-                                <input type="submit" value="修改">
-                                 <input type="hidden" name="postupdateVO"  value="${PostVO.content}">
-                                 <input type="hidden" name="action"	value=""></FORM> --%>
-
                                 <h3 class="post_title">Aypi non habent claritatem insitam</h3>
-
-
-                                <!-- 刪除按鈕 -->
-                                <button onclick="confirmEvent()">Confirm</button>
-
+                                
+								<c:if test="${memberId == isOwner}">
+                                <!-- 修改按鈕 -->
+                                <button id="updatePost${postVO.postId}">Confirm</button>
+								</c:if>
 
                                 <div class="blog_meta">
                                     <p>
@@ -331,32 +325,8 @@
 <!-- 側邊欄結束 -->
 <!-- 個別JS -->
 <script src="<%=request.getContextPath()%>/assets/js/comment/comment.js"></script>
+<script src="<%=request.getContextPath()%>/front/post/update.js"></script>
 </body>
 
-<script>
-    function confirmEvent() {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you want to delete 確定刪除這篇貼文嗎 ?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: 'darkgrey',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
 
-            //刪除方法
-
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Your post has been deleted.',
-                    'success'
-                )
-            }
-        });
-    }
-
-
-</script>
 </html>
