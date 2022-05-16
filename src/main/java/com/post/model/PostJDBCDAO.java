@@ -96,23 +96,28 @@ public class PostJDBCDAO implements PostDAO_interface {
 	}
 	
 	
+	@Override
+	public PostVO getOneById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
-
 
 	//查看單篇詳細貼文
 	@Override
-	public PostVO getOneById(Integer postId) {
+	public PostVO getOneById(Integer postId, Integer memberId) {
 		
 		final String GETONE ="SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url FROM post po  "
 				+ "			     JOIN members m ON(po.member_id = m.member_id)  "
 				+ "			     JOIN pet p ON(m.member_id = p.member_id)  "
 				+ "			     JOIN picture pic ON(p.picture_id = pic.picture_id)  "
-				+ "			     WHERE po.status = 0 and po.post_id = ?";
+				+ "			     WHERE po.status = 0 and po.post_id = ? and po.member_id = ?";
 		
 		try(Connection con =JDBCConnection.getRDSConnection();
 			PreparedStatement pstmt = con.prepareStatement(GETONE);){
 			
 			pstmt.setInt(1, postId);
+			pstmt.setInt(2, memberId);
 			ResultSet rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
@@ -377,7 +382,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 		}
 		
 		return true;
-	}	
+	}
 	
 	
 }

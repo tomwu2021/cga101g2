@@ -185,10 +185,10 @@ public class PostService {
 	 * 
 	 */
 	
-	public PostVO getOneById(Integer postId) {
+	public PostVO getOneById(Integer postId, Integer memberId) {
 				
 		PictureJDBCDAO picdao = new PictureJDBCDAO();
-		PostVO postVO = dao.getOneById(postId);
+		PostVO postVO = dao.getOneById(postId, memberId);
 		MappingTableDto dto = postPicMapping(postId);
 		List<PictureVO> piclist = picdao.queryPicturesByMapping(dto);
 		
