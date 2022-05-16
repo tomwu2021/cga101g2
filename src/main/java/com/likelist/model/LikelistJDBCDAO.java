@@ -43,12 +43,11 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 				if (rs.next()) {
 					likelistVO.setPostId(rs.getInt(1));
 				}
-				return likelistVO;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return null;
+		return likelistVO;
 		
 	}
 
@@ -133,6 +132,31 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 			e.printStackTrace();
 		}
 		return true;
+	}
+
+	@Override
+	public boolean insertAndBoo(LikelistVO likelistVO) {
+		int rowCount = 0;
+		final String DELETE = "insert into likelist (post_id , member_id) values (?, ?)";
+
+		try (Connection con = getRDSConnection(); PreparedStatement pstmt = con.prepareStatement(DELETE)) {
+
+			pstmt.setInt(2, likelistVO.getPostId());
+			pstmt.setInt(1, likelistVO.getMemberId());
+
+			rowCount = pstmt.executeUpdate();
+			System.out.println(rowCount + "row(s) LikelistVO insertAndBoo!");
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		if (rowCount == 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}	
 }
 

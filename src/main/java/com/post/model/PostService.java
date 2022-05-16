@@ -220,5 +220,18 @@ public class PostService {
 	
 	// 六、搜尋貼文 
 	
+	
+	/**
+	 *貼文的讚
+	 * 
+	 */
+	public int selectOnePostLikeCount(Integer postId) {
+		return dao.selectOnePostLikeCount(postId);
+	}
+	
+	public boolean updateOnePostLikeCount(Integer newLikeCount,Integer postId) {
+		return dao.updateOnePostLikeCount(newLikeCount,postId);
+	}
+	
 
 }
