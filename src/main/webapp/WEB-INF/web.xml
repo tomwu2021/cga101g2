@@ -72,7 +72,16 @@
 		<url-pattern>/GroupOrderCheckController</url-pattern>
 	</servlet-mapping>
 
-
+	<servlet>
+		<servlet-name>RemindTaskController</servlet-name>
+		<servlet-class>com.remind.controller.RemindTaskController</servlet-class>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RemindTaskController</servlet-name>
+		<url-pattern>/RemindTaskController</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>StatViewServlet</servlet-name>
 		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>

@@ -81,7 +81,7 @@ public class RemindService {
 	}
 
 	/**
-	 * 查詢一會員最近3則提醒
+	 * 查詢一會員未到期提醒
 	 * @return RemindVO的list集合
 	 */
 	public List<RemindVO> getUndueByMemberId(Integer id){
