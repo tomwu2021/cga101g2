@@ -252,9 +252,13 @@
                                     <div class="price_box">
 										<i class="bi bi-eye-fill"></i>累積觀看${productVO.totalView}次
 									</div>
+									
+									<c:if test="${productVO.totalView!=null}">
                                     <div class="price_box"> 
                                         <span class="current_price">${productVO.price}元</span>
                                     </div>
+                                    </c:if>
+                                    
                                     <div class="add_to_cart">
                                         <a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop" 
                                         title="Look More">Look More</a>
@@ -279,7 +283,7 @@
 	<!-- 額外添加的JS -->
 	<!--leftnavlink.js -->
 	
-<%-- 	<%@include file="/front/layout/commonJS.jsp"%> --%>
+	<%@include file="/front/layout/templateJS.jsp"%>
 	<script
 		src="<%=request.getContextPath()%>/assets/js/order&cart/addToCart.js">
 	</script> 
