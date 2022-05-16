@@ -29,7 +29,7 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		System.out.println("有在跑");
+		new GroupOrderCheckController();
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 		service = Executors.newScheduledThreadPool(10);
 		long initialDelay = 10;
 		long period = 10;
-		// 從現在開始1秒鐘之後，每隔1秒鐘執行一次job1
+		// 從現在開始10秒鐘之後，每隔10秒鐘執行一次
 		service.scheduleAtFixedRate(new GroupOrderCheckController(), initialDelay, period, TimeUnit.SECONDS);
 
 	}
@@ -78,6 +78,7 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 	
 	public GroupOrderCheckController() {
 		super();
+		System.out.println("有執行");
 		List<GroupOrderVO> checkList = groupOrderService.check();
 		for (GroupOrderVO groupOrderVO : checkList) {
 			int established = 0;
