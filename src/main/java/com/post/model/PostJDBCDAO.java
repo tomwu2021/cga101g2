@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.text.AbstractDocument.Content;
+
 import com.members.model.MembersVO;
 import com.picture.model.PictureVO;
 
@@ -148,35 +150,90 @@ public class PostJDBCDAO implements PostDAO_interface {
 		return null;
 	}
 
+	
 	@Override
 	public List<PostVO> getAll() {
-		List<PostVO> list = new ArrayList<PostVO>();
-		PostVO postVO = null;
-		final String GETAll = "select post_id, member_id, content, like_count, status, authority, create_time, update_time from post";
-
+//		List<PostVO> list = new ArrayList<PostVO>();
+//		PostVO postVO = null;
+//		final String GETAll = "SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url,pic2.url,pic2.preview_url "
+//				+ "		  FROM post po "
+//				+ "		  JOIN members m ON(po.member_id = m.member_id) "
+//				+ "		  JOIN pet p ON(m.member_id = p.member_id) "
+//				+ "		  JOIN picture pic ON(p.picture_id = pic.picture_id) "
+//				+ "		  JOIN post_pic ppc ON(ppc.post_id = po.post_id) "
+//				+ "		  JOIN picture pic2 ON(pic2.picture_id = ppc.picture_id) "
+//				+ "		  WHERE po.status = 0 and po.content like '%+?+%' "
+//				+ "		  group by po.post_id "
+//				+ "		  order by create_time desc "
+//				+ "		  limit 10 ";
+//
+//		try (Connection con = JDBCConnection.getRDSConnection();
+//				PreparedStatement pstmt = con.prepareStatement(GETAll);) {
+//			
+//			pstmt.setString(1, content);
+//			ResultSet rs = pstmt.executeQuery();
+//
+//			while (rs.next()) {
+//				postVO = new PostVO();
+//				postVO.setPostId(rs.getInt("post_id"));
+//				postVO.setMemberId(rs.getInt("member_id"));
+//				postVO.setContent(rs.getString("content"));
+//				postVO.setLikeCount(rs.getInt("like_count"));
+//				postVO.setStatus(rs.getInt("status"));
+//				postVO.setAuthority(rs.getInt("authority"));
+//				postVO.setCreateTime(rs.getDate("create_time"));
+//				postVO.setUpdateTime(rs.getDate("update_time"));
+//
+//				list.add(postVO);
+//			}
+//
+//		} catch (SQLException e) {
+//			throw new RuntimeException("A database error occured. " + e.getMessage());
+//		}
+		return null;
+	}
+	
+	
+	
+	/**
+	 * 讀取會員頭貼跟姓名
+	 */
+	@Override
+	public MembersVO selectmember(Integer memberId) {
+		
+		MembersVO membersVO = new MembersVO();
+		final String SELECTMEMBER = "SELECT m.name,pic.picture_id,pic.url,pic.preview_url "
+				+ "			   FROM members m "
+				+ "			   JOIN pet p ON(m.member_id = p.member_id) "
+				+ "			   JOIN picture pic ON(p.picture_id = pic.picture_id) "
+				+ "			   WHERE m.member_id = ? ";
 		try (Connection con = JDBCConnection.getRDSConnection();
-				PreparedStatement pstmt = con.prepareStatement(GETAll);
-				ResultSet rs = pstmt.executeQuery();) {
+				PreparedStatement pstmt = con.prepareStatement(SELECTMEMBER);) {
+			
+			
+			pstmt.setInt(1, memberId);
+			ResultSet rs = pstmt.executeQuery();
 
-			while (rs.next()) {
-				postVO = new PostVO();
-				postVO.setPostId(rs.getInt("post_id"));
-				postVO.setMemberId(rs.getInt("member_id"));
-				postVO.setContent(rs.getString("content"));
-				postVO.setLikeCount(rs.getInt("like_count"));
-				postVO.setStatus(rs.getInt("status"));
-				postVO.setAuthority(rs.getInt("authority"));
-				postVO.setCreateTime(rs.getDate("create_time"));
-				postVO.setUpdateTime(rs.getDate("update_time"));
-
-				list.add(postVO);
+			if (rs.next()) {
+				
+//				PictureVO pictureVO = new PictureVO();
+				membersVO.setName(rs.getString("name"));
+				membersVO.setUrl(rs.getString("url"));
+				
+//				頭貼照片
+//				pictureVO.setPictureId(rs.getInt("picture_id"));
+//				pictureVO.setUrl(rs.getString("url"));
+//				pictureVO.setPreviewUrl(rs.getString("preview_url"));
+//				postVO.setPictureVO(pictureVO);			
 			}
 
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}
-		return list;
+		
+		return membersVO;
 	}
+	
 
 	/**
 	 * 查詢個人頁面
@@ -236,8 +293,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 				pictureVO.setPreviewUrl(rs.getString("pic.preview_url"));
 				postVO.setPictureVO(pictureVO);
 
-//				貼文照片
-//				pictureVO2.setPictureId(rs.getInt("pic.picture_id"));  
+//				貼文照片 
 				pictureVO2.setUrl(rs.getString("pic2.url"));
 				pictureVO2.setPreviewUrl(rs.getString("pic2.preview_url"));
 				postVO.setPictureVO2(pictureVO2);
@@ -396,7 +452,9 @@ public class PostJDBCDAO implements PostDAO_interface {
 		return likeCount;
 	}
 
-
+	/**
+	 * 搜尋貼文
+	 */
 	@Override
 	public int updateOnePostLikeCount(Integer newLikeCount, Integer postId, Connection con) {
 		int rowCount2 = 0;
@@ -436,4 +494,51 @@ public class PostJDBCDAO implements PostDAO_interface {
 		}
 		return rowCount2;
 	}
+
+	/**
+	 * 搜尋貼文
+	 */
+	@Override
+	public List<PostVO> selectkeyword(String content) {
+		List<PostVO> list = new ArrayList<PostVO>();
+		PostVO postVO = null;
+		final String GETAll = "SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url,pic2.url,pic2.preview_url "
+				+ "		  FROM post po "
+				+ "		  JOIN members m ON(po.member_id = m.member_id) "
+				+ "		  JOIN pet p ON(m.member_id = p.member_id) "
+				+ "		  JOIN picture pic ON(p.picture_id = pic.picture_id) "
+				+ "		  JOIN post_pic ppc ON(ppc.post_id = po.post_id) "
+				+ "		  JOIN picture pic2 ON(pic2.picture_id = ppc.picture_id) "
+				+ "		  WHERE po.status = 0 and po.content like '%+?+%' "
+				+ "		  group by po.post_id "
+				+ "		  order by create_time desc "
+				+ "		  limit 10 ";
+
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(GETAll);) {
+			
+			pstmt.setString(1, content);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				postVO = new PostVO();
+				postVO.setPostId(rs.getInt("post_id"));
+				postVO.setMemberId(rs.getInt("member_id"));
+				postVO.setContent(rs.getString("content"));
+				postVO.setLikeCount(rs.getInt("like_count"));
+				postVO.setStatus(rs.getInt("status"));
+				postVO.setAuthority(rs.getInt("authority"));
+				postVO.setCreateTime(rs.getDate("create_time"));
+				postVO.setUpdateTime(rs.getDate("update_time"));
+
+				list.add(postVO);
+			}
+
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		}
+		return list;
+	}
+
+
 }
