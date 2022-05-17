@@ -221,6 +221,7 @@
 	<!-- 自訂的JS -->
 <script type="text/javascript"
 		src="<%=request.getContextPath()%>/assets/js/memberWallet.js"></script>
+		<jsp:include page="/front/layout/showMessage.jsp" />
 </body>
 	
 </html>
