@@ -67,12 +67,14 @@
 						<div class="single-zoom-thumb">
 							<ul class="s-tab-zoom owl-carousel single-product-active"
 								id="gallery_01">
-<c:if test="${productVO.pictureVOList.size() >= 2}">
+<c:if test="${pictureVOList.size() >= 2}">
+<c:forEach var="pictureVO" items="${pictureVOList}">
 								<li><a href="#" class="elevatezoom-gallery active"
-									data-update="" data-image="${productVO.pictureVOList.get(1).previewUrl}"
-									data-zoom-image="${productVO.pictureVOList.get(1).previewUrl}">
-										<img src="${productVO.pictureVOList.get(1).previewUrl}" alt="zo-th-1" />
+									data-update="" data-image="${pictureVO.previewUrl}"
+									data-zoom-image="${pictureVO.previewUrl}">
+										<img src="${pictureVO.previewUrl}" alt="zo-th-1" />
 								</a></li>
+</c:forEach>								
 </c:if>		
 							</ul>
 						</div>
