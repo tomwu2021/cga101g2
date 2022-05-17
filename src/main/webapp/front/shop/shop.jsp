@@ -69,15 +69,7 @@ pageContext.setAttribute("list", list);
 					<!--sidebar widget start ========================================= -->
 					<aside class="sidebar_widget">
 						<div class="widget_inner">
-							<!--                 <div class="widget_list widget_filter">
-<!--                                 <h3>Filter by price</h3> -->
-							<!--                                 <form action="#">  -->
-							<!--                                     <div id="slider-range"></div>    -->
-							<!--                                     <button type="submit">Filter</button> -->
-							<!--                                     <input type="text" name="text" id="amount" />    -->
 
-							<!--                                 </form>  -->
-							<!--                             </div> -->
 							<div id="NewFile.jsp" class="widget_list widget_color">
 								<h3>
 									<a href="#" onclick="showAtRight('NewFile.jsp')">全部商品</a>
@@ -154,7 +146,7 @@ pageContext.setAttribute("list", list);
 		<c:forEach var="productVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<div class="col-lg-4 col-md-4 col-sm-6 col-12">
 				<!--嚙賣�嚙踝蕭嚙踝蕭嚙踝蕭嚙賣�迎蕭�綽蕭 -->
-				<Form id="${productVO.productId}" action="/CGA101G2/member/cart.do" Method="Post">
+				<Form id="${productVO.productId}" action="<%=request.getContextPath()%>/member/cart.do" Method="Post">
 				<article class="single_product">
 					<figure>
 						<div class="product_thumb">

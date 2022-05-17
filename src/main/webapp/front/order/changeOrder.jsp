@@ -34,7 +34,7 @@
 			<div class="col-lg-6 col-md-12">
 				<div class="contact_message form">
 					<h3>更改寄送資訊</h3>
-					<FORM METHOD="post" ACTION="/CGA101G2/member/order.do">
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/order.do">
 						<p>
 							<label> 收件人姓名</label> <input type="text" name="recipient"
 								class="form-control" id="exampleFormControlInput1"

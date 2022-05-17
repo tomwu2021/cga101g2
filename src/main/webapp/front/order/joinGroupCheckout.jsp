@@ -89,7 +89,7 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 
 							<div class="col-12 mb-20">
 								<input id="address" type="checkbox"
-									data-target="createp_account" name="same" /> <label
+									data-target="createp_account" name="same" style="display:none"/> <label
 									class="righ_0" for="address" data-toggle="collapse"
 									data-target="#collapsetwo" aria-controls="collapseOne">等同會員資料</label>
 
@@ -183,7 +183,7 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 					<div class="payment_method">
 
 
-						<div class="order_button">
+						<div class="order_button" style="display:none">
 							<button type="submit" onclick="checking()">確認付款</button>
 						</div>
 

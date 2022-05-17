@@ -66,7 +66,7 @@ if (buylist != null && (buylist.size() > 0)) {
             <div class="checkout_form">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
-                        <Form action="/CGA101G2/member/cart.do" Method="Post" id="CHECKOUT">
+                        <Form action="<%=request.getContextPath()%>/member/cart.do" Method="Post" id="CHECKOUT">
                             <h3>Billing Details</h3>
                             <div class="row">
                             
@@ -90,7 +90,7 @@ if (buylist != null && (buylist.size() > 0)) {
 
 						 		
 						 		<div class="col-12 mb-20">
-                                    <input id="address" type="checkbox" data-target="createp_account" name="same"/>
+                                    <input id="address" type="checkbox" data-target="createp_account" name="same" style="display:none"/>
                                     <label class="righ_0" for="address" data-toggle="collapse"
                                         data-target="#collapsetwo" aria-controls="collapseOne">等同會員資料</label>
 

@@ -25,7 +25,23 @@
 	<!-- 共用的CartAndWishlist-->
 	<%@include file="/front/layout/commonCartAndWishlist.jsp"%>
 	<!-- 共用的CartAndWishlist-->
+	<style>
+div.product_variant:nth-of-type(1)>label {
+	padding-right: 5px;
+	background-color: moccasin;
+	line-height: 24px;
+}
 
+div.product_variant:nth-of-type(1)>label:nth-of-type(1) {
+	padding-left: 5px;
+	border-radius: 5px 0 0 5px;
+	font-weight: bold;
+}
+
+div.product_variant:nth-of-type(1)>label:last-of-type {
+	border-radius: 0 5px 5px 0;
+}
+</style>
 	<!--breadcrumbs area start-->
 	<div class="breadcrumbs_area">
 		<div class="container">
@@ -57,7 +73,8 @@
 							<c:if test="${groupOrderVO.productVO.pictureVOList.size() != 0 }">
 								<a href="#"> <img id="zoom1"
 									src="${groupOrderVO.productVO.pictureVOList.get(0).url}"
-									data-zoom-image="${groupOrderVO.productVO.pictureVOList.get(0).url}" alt="big-1" />
+									data-zoom-image="${groupOrderVO.productVO.pictureVOList.get(0).url}"
+									alt="big-1" />
 								</a>
 							</c:if>
 							<!-- 				防止超出索引值判斷/有圖放圖/開始		 -->
@@ -79,7 +96,8 @@
 								<!-- 				防止超出索引值判斷/有圖放圖/開始			 -->
 								<c:if
 									test="${groupOrderVO.productVO.pictureVOList.size() >= 2 }">
-									<c:forEach var="pictureVO" items="${groupOrderVO.productVO.pictureVOList}">
+									<c:forEach var="pictureVO"
+										items="${groupOrderVO.productVO.pictureVOList}">
 										<li><a href="#" class="elevatezoom-gallery active"
 											data-update="" data-image="${pictureVO.url}"
 											data-zoom-image="${pictureVO.url}"> <img
@@ -140,22 +158,20 @@
 							</tbody>
 						</table>
 
-						<FORM METHOD="post" ACTION="/CGA101G2/member/groupOrder.do">
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/groupOrder.do">
 
 							<div class="product_variant quantity">
 								<!-- 							數量至少min於&起始於最低開團級距一 -->
-								<label>截單時間:</label> 
-								<c:if
-									test="${groupOrderVO.endType == 1 }">
-										<label>於${groupOrderVO.endTime}截單</label> 
+								<label>截單時間:</label>
+								<c:if test="${groupOrderVO.endType == 1 }">
+									<label>於${groupOrderVO.endTime}截單</label>
 								</c:if>
-									<c:if
-									test="${groupOrderVO.endType == 2 }">
-										<label>依分數截單(${groupOrderVO.minAmount}份)</label> 
-										<label>目前份數:${established}份</label> 
-										<label>最終時間:${groupOrderVO.endTime}</label> 
+								<c:if test="${groupOrderVO.endType == 2 }">
+									<label>依分數截單(${groupOrderVO.minAmount}份)</label>
+									<label>目前份數:${established}份</label>
+									<label>最終時間:${groupOrderVO.endTime}</label>
 								</c:if>
-								
+
 							</div>
 
 
@@ -165,7 +181,8 @@
 							</div>
 
 							<input type="hidden" name="action" value="toJoinGroupOrder">
-							<input type="hidden" name="groupOrderId" value="${groupOrderVO.groupOrderId}">
+							<input type="hidden" name="groupOrderId"
+								value="${groupOrderVO.groupOrderId}">
 
 						</form>
 
@@ -213,7 +230,7 @@
 	<%@include file="/front/layout/footer.jsp"%>
 
 	<script
-	src="<%=request.getContextPath()%>/assets/js/order&cart/groupDetial.js"></script>
+		src="<%=request.getContextPath()%>/assets/js/order&cart/groupDetial.js"></script>
 
 
 </body>

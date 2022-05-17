@@ -9,6 +9,23 @@
 <!-- // EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件) -->
 <%-- %> --%>
 <html>
+<style>
+div.product_variant:nth-of-type(1)>label {
+	padding-right: 5px;
+	background-color: moccasin;
+	line-height: 24px;
+}
+
+div.product_variant:nth-of-type(1)>label:nth-of-type(1) {
+	padding-left: 5px;
+	border-radius: 5px 0 0 5px;
+	font-weight: bold;
+}
+
+div.product_variant:nth-of-type(1)>label:last-of-type {
+	border-radius: 0 5px 5px 0;
+}
+</style>
 <head>
 <title>我要開團商品細節</title>
 <!-- 共用的CSS startr-->
@@ -142,17 +159,20 @@
 							</tbody>
 						</table>
 
-						<FORM METHOD="post" ACTION="/CGA101G2/member/groupOrder.do">
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/groupOrder.do">
 
 							<div class="product_variant quantity">
 								<!-- 							數量至少min於&起始於最低開團級距一 -->
-								<label>截單時間:</label>
+								<label>截單方式:</label>
 								<c:if test="${groupOrderVO.endType == 1 }">
-									<label>於${groupOrderVO.endTime}截單</label>
+								<label>時間截單</label><br>
+								<label>於${groupOrderVO.endTime}截單</label>
 								</c:if>
 								<c:if test="${groupOrderVO.endType == 2 }">
 									<label>依分數截單(${groupOrderVO.minAmount}份)</label>
+									<br>
 									<label>目前份數:${established}份</label>
+									<br>
 									<label>最終時間:${groupOrderVO.endTime}</label>
 								</c:if>
 

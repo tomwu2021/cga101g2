@@ -74,10 +74,7 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
-		
-	
-	
+
 	public GroupOrderCheckController() {
 		super();
 		System.out.println("有執行");
@@ -99,12 +96,14 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 				if (established >= groupOrderVO.getProductVO().getGroupAmount2()
 						&& established < groupOrderVO.getProductVO().getGroupAmount3()) {
 					// 改團單最終價錢
-					groupOrderService.updateFinalPrice(groupOrderVO.getGroupOrderId(), (int)Math.round(groupOrderVO.getProductVO().getGroupPrice1() * 0.8));
+					groupOrderService.updateFinalPrice(groupOrderVO.getGroupOrderId(),
+							(int) Math.round(groupOrderVO.getProductVO().getGroupPrice1() * 0.8));
 				} else if (established >= groupOrderVO.getProductVO().getGroupAmount3()) {
 					// 改團單最終價錢
-					groupOrderService.updateFinalPrice(groupOrderVO.getGroupOrderId(), (int)Math.round(groupOrderVO.getProductVO().getGroupPrice1() * 0.7));
+					groupOrderService.updateFinalPrice(groupOrderVO.getGroupOrderId(),
+							(int) Math.round(groupOrderVO.getProductVO().getGroupPrice1() * 0.7));
 				}
-				//退會員折扣的金額
+				// 退會員折扣的金額
 				for (GroupBuyerVO groupBuyerVO : groupBuyerService
 						.getAllByGroupOrderId(groupOrderVO.getGroupOrderId())) {
 					if (established >= groupOrderVO.getProductVO().getGroupAmount2()
@@ -112,18 +111,18 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 						// 錢包退款
 						membersService.walletPaymentAddMoney(groupBuyerVO.getMemberId(),
 								reimburse1 * groupBuyerVO.getProductAmount());
-						
-						System.out.println("退"+reimburse1 * groupBuyerVO.getProductAmount());
+
+						System.out.println("退" + reimburse1 * groupBuyerVO.getProductAmount());
 					} else if (established >= groupOrderVO.getProductVO().getGroupAmount3()) {
 						// 錢包退款
 						membersService.walletPaymentAddMoney(groupBuyerVO.getMemberId(),
 								reimburse2 * groupBuyerVO.getProductAmount());
-						System.out.println("退"+reimburse2 * groupBuyerVO.getProductAmount());
+						System.out.println("退" + reimburse2 * groupBuyerVO.getProductAmount());
 					}
 				}
 				// 更改訂單狀態
 				groupOrderService.updateStatus(groupOrderVO.getGroupOrderId(), 2);
-				System.out.println("============第"+groupOrderVO.getGroupOrderId()+"筆成立============");
+				System.out.println("============第" + groupOrderVO.getGroupOrderId() + "筆成立============");
 			}
 			// 依時間結算但未達標
 			else if (groupOrderVO.getEndType() == 1 && established < groupOrderVO.getProductVO().getGroupAmount1()) {
@@ -150,6 +149,46 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 				}
 				// 更改訂單狀態
 				groupOrderService.updateStatus(groupOrderVO.getGroupOrderId(), 1);
+			}
+
+			// 依份數結算且達標
+			else if (groupOrderVO.getEndType() == 2 && established > groupOrderVO.getMinAmount()) {
+				int reimburse1 = (int) (groupOrderVO.getProductVO().getGroupPrice1()
+						- (Math.round(groupOrderVO.getProductVO().getGroupPrice1() * 0.8)));
+				int reimburse2 = (int) (groupOrderVO.getProductVO().getGroupPrice1()
+						- (Math.round(groupOrderVO.getProductVO().getGroupPrice1() * 0.7)));
+
+				// 檢查達標哪個級距
+				if (established >= groupOrderVO.getProductVO().getGroupAmount2()
+						&& established < groupOrderVO.getProductVO().getGroupAmount3()) {
+					// 改團單最終價錢
+					groupOrderService.updateFinalPrice(groupOrderVO.getGroupOrderId(),
+							(int) Math.round(groupOrderVO.getProductVO().getGroupPrice1() * 0.8));
+				} else if (established >= groupOrderVO.getProductVO().getGroupAmount3()) {
+					// 改團單最終價錢
+					groupOrderService.updateFinalPrice(groupOrderVO.getGroupOrderId(),
+							(int) Math.round(groupOrderVO.getProductVO().getGroupPrice1() * 0.7));
+				}
+				// 退會員折扣的金額
+				for (GroupBuyerVO groupBuyerVO : groupBuyerService
+						.getAllByGroupOrderId(groupOrderVO.getGroupOrderId())) {
+					if (established >= groupOrderVO.getProductVO().getGroupAmount2()
+							&& established < groupOrderVO.getProductVO().getGroupAmount3()) {
+						// 錢包退款
+						membersService.walletPaymentAddMoney(groupBuyerVO.getMemberId(),
+								reimburse1 * groupBuyerVO.getProductAmount());
+
+						System.out.println("退" + reimburse1 * groupBuyerVO.getProductAmount());
+					} else if (established >= groupOrderVO.getProductVO().getGroupAmount3()) {
+						// 錢包退款
+						membersService.walletPaymentAddMoney(groupBuyerVO.getMemberId(),
+								reimburse2 * groupBuyerVO.getProductAmount());
+						System.out.println("退" + reimburse2 * groupBuyerVO.getProductAmount());
+					}
+				}
+				// 更改訂單狀態
+				groupOrderService.updateStatus(groupOrderVO.getGroupOrderId(), 2);
+				System.out.println("============第" + groupOrderVO.getGroupOrderId() + "筆成立============");
 			}
 		}
 	}

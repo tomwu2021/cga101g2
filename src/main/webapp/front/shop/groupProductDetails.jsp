@@ -150,7 +150,7 @@
 							</tbody>
 						</table>
 
-						<FORM METHOD="post" ACTION="/CGA101G2/member/groupOrder.do">
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/groupOrder.do">
 							<div class="product_variant quantity">
 								<label>選擇結團方式</label> <select name="endType" id="choose"
 									class="form-select form-select-lg mb-3"

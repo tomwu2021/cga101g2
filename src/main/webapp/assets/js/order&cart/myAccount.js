@@ -11,7 +11,7 @@ function search() {
             let orders = result.items;
             for (let order of orders) {
                 str += "<tr><td>" + order.orderId + "</td>";
-                str += "<td>" + order.sumPrice + "</td>";
+                str += "<td>" + order.payPrice + "</td>";
                 if (order.status === 0) {
                     str += "<td>未完成</td>";
                     str += "<td>"+ order.createTime + "</a></td>";
