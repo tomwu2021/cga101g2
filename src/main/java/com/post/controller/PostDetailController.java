@@ -1,8 +1,10 @@
 package com.post.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.members.model.MembersVO;
 import com.post.model.PostService;
 import com.post.model.PostVO;
@@ -24,6 +27,8 @@ import com.post.model.PostVO;
 @WebServlet("/detailPost")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 10 * 10 * 1024 * 1024, maxRequestSize = 10 * 10 * 1024 * 1024)
 public class PostDetailController extends HttpServlet {
+	
+	Gson gson = new Gson();
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -117,6 +122,14 @@ public class PostDetailController extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);			
 			
+        }
+        
+        if("getHotPost".equals(action)){
+        	   PrintWriter out = res.getWriter();
+        	   res.setContentType("application/json; charset=UTF-8");
+        	   PostService postService = new PostService();
+        	   List<PostVO> postVOList = postService.selectHotPost();
+        	   out.print(gson.toJson(postVOList));
         }
 
 	}

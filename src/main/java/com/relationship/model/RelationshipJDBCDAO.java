@@ -278,4 +278,34 @@ public class RelationshipJDBCDAO {
 		relationMember.setUrl(rs.getString("pic.url"));
 		return relationMember;
 	}
+
+	public List<RelationResult> findRecentFriend(Integer loginId) throws SQLException {
+			Connection con = JDBCConnection.getRDSConnection();
+			String sql =  " SELECT m.member_id,m.name,cr.chatroom_id,m.account,ra.rank_name,pic.preview_url,pic.url " +
+					" FROM relationship r " +
+					" 	JOIN members m ON(r.target_id = m.member_id) " +
+					" 	JOIN chatroom_member crm ON(m.member_id = crm.member_id) " +
+					" 	JOIN chatroom cr ON(cr.chatroom_id = crm.chatroom_id) " +
+					" 	JOIN pet p ON(m.member_id = p.member_id) " +
+					" 	JOIN picture pic ON(p.picture_id = pic.picture_id) " +
+					" 	JOIN ranks ra ON(ra.rank_id = m.rank_id) " +
+					" WHERE crm.member_id IN (SELECT target_id FROM relationship WHERE member_id =  ?) " +
+					" 	AND r.relation_type = 0 " +
+					" 	AND cr.chatroom_type = 0 " +
+					" GROUP BY cr.chatroom_id " +
+					" ORDER BY cr.chatroom_id DESC " +
+					" LIMIT 10 ";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			int index = 0;
+			stmt.setInt(++index,loginId);
+			ResultSet rs = stmt.executeQuery();
+			List<RelationResult> relationMembers = new ArrayList<RelationResult>();
+			while(rs.next()) {
+				relationMembers.add(makeResult(rs));
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+			return relationMembers;
+		}
 }

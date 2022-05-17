@@ -172,6 +172,13 @@ public class RelationshipService {
             return null;
         }
     }
+    public List<RelationResult> findRecentFriend(Integer memberId){
+        try {
+            return relateDao.findRecentFriend(memberId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     public boolean isFriend(Integer memberId, Integer targetId, Connection con) throws SQLException {

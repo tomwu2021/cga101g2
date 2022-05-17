@@ -53,7 +53,7 @@ public class CommentJDBCDAO {
     }
 
     public List<CommentResult> getRecentComment(Integer memberId) throws SQLException {
-        String sql = " SELECT m.name,c.*,po.post_id,pic.picture_id,pic.preview_url " +
+        String sql = " SELECT m.name,c.*,pic.picture_id,pic.preview_url,pic.url " +
                 " FROM comment c " +
                 " JOIN post po ON (po.post_id = c.post_id) " +
                 " JOIN members m ON(m.member_id = c.member_id) " +
@@ -62,7 +62,7 @@ public class CommentJDBCDAO {
                 " WHERE c.post_id IN (SELECT post_id FROM post WHERE member_id = ?) " +
                 "   AND c.target_id = 0 " +
                 " ORDER BY c.comment_time DESC " +
-                " LIMIT 5 ";
+                " LIMIT 8 ";
         Connection con = JDBCConnection.getRDSConnection();
         PreparedStatement stmt = con.prepareStatement(sql);
         List<CommentResult> cmrs = new ArrayList<>();

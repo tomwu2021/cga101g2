@@ -89,6 +89,9 @@ public class RelationshipController extends CommonController {
             case "searchInvited":
                 searchInvited(req, res);
                 break;
+            case "findRecentFriend":
+                findRecentFriend(req,res);
+                break;
             default:
                 list(req, res);
         }
@@ -258,6 +261,12 @@ public class RelationshipController extends CommonController {
     public void list(HttpServletRequest req, HttpServletResponse res) throws IOException {
         req.setAttribute("memberId",memberId);
         super.routeTo(req,res,"community","/relationship/relationship");
+    }
+
+    public void findRecentFriend(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        PrintWriter out = res.getWriter();
+        List<RelationResult> membersVOS =  relaServ.findRecentFriend(memberId);
+        out.write(gson.toJson(membersVOS));
     }
 
 }

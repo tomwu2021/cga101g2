@@ -4,13 +4,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>每則貼文頁面</title>
     <!-- 共用的CSS startr-->
     <%@include file="/front/layout/commonCSS.jsp" %>
     <!-- 共用的CSS end-->
-    <meta charset="UTF-8">
 
+  <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon"
+          href="<%=request.getContextPath()%>/assets/img/favicon.ico">
 
     <!-- Main Style CSS -->
     <%--<link rel="stylesheet" href="other/style copy.css">--%>
@@ -28,7 +34,6 @@
 
 <!-- 共用的JS -->
 <%@include file="/front/layout/commonJS.jsp" %>
-
 <!-- 共用的header start-->
 <%@include file="/front/layout/header.jsp" %>
 <!-- 共用的header end-->
@@ -182,148 +187,16 @@
 
 
             <!-- 側邊欄開始 -->
-            <div class="col-lg-3 col-md-12">
-                <div class="blog_sidebar_widget">
-                    <div class="widget_list widget_search">
-                        <div class="widget_title">
-                            <h3>Search</h3>
-                        </div>
-                        <form action="#">
-                            <input placeholder="Search..." type="text">
-                            <button type="submit">search</button>
-                        </form>
-                    </div>
-                    <div class="widget_list comments">
-                        <div class="widget_title">
-                            <h3>Recent Comments</h3>
-                        </div>
-                        <div class="post_wrapper">
-                            <div class="post_thumb">
-                                <a href="blog-details.html"><img
-                                        src="assets/img/blog/comment2.png.jpg" alt=""></a>
-                            </div>
-                            <div class="post_info">
-								<span> <a href="#">demo</a> says:
-								</span> <a href="blog-details.html">Quisque semper nunc</a>
-                            </div>
-                        </div>
-                        <div class="post_wrapper">
-                            <div class="post_thumb">
-                                <a href="blog-details.html"><img
-                                        src="assets/img/blog/comment2.png.jpg" alt=""></a>
-                            </div>
-                            <div class="post_info">
-                                <span><a href="#">admin</a> says:</span> <a
-                                    href="blog-details.html">Quisque orci porta...</a>
-                            </div>
-                        </div>
-                        <div class="post_wrapper">
-                            <div class="post_thumb">
-                                <a href="blog-details.html"><img
-                                        src="assets/img/blog/comment2.png.jpg" alt=""></a>
-                            </div>
-                            <div class="post_info">
-                                <span><a href="#">demo</a> says:</span> <a
-                                    href="blog-details.html">Quisque semper nunc</a>
-                            </div>
-                        </div>
-                        <div class="post_wrapper">
-                            <div class="post_thumb">
-                                <a href="blog-details.html"><img
-                                        src="assets/img/blog/comment2.png.jpg" alt=""></a>
-                            </div>
-                            <div class="post_info">
-                                <span><a href="#">admin</a> says:</span> <a
-                                    href="blog-details.html">Quisque semper nunc</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget_list widget_post">
-                        <div class="widget_title">
-                            <h3>Recent Posts</h3>
-                        </div>
-                        <div class="post_wrapper">
-                            <div class="post_thumb">
-                                <a href="blog-details.html"><img
-                                        src="assets/img/blog/blog1.jpg" alt=""></a>
-                            </div>
-                            <div class="post_info">
-                                <h4>
-                                    <a href="blog-details.html">Blog image post</a>
-                                </h4>
-                                <span>March 16, 2022 </span>
-                            </div>
-                        </div>
-                        <div class="post_wrapper">
-                            <div class="post_thumb">
-                                <a href="blog-details.html"><img
-                                        src="assets/img/blog/blog2.jpg" alt=""></a>
-                            </div>
-                            <div class="post_info">
-                                <h4>
-                                    <a href="blog-details.html">Post with Gallery</a>
-                                </h4>
-                                <span>March 16, 2022 </span>
-                            </div>
-                        </div>
-                        <div class="post_wrapper">
-                            <div class="post_thumb">
-                                <a href="blog-details.html"><img
-                                        src="assets/img/blog/blog3.jpg" alt=""></a>
-                            </div>
-                            <div class="post_info">
-                                <h4>
-                                    <a href="blog-details.html">Post with Audio</a>
-                                </h4>
-                                <span>March 16, 2022 </span>
-                            </div>
-                        </div>
-                        <div class="post_wrapper">
-                            <div class="post_thumb">
-                                <a href="blog-details.html"><img
-                                        src="assets/img/blog/blog4.jpg" alt=""></a>
-                            </div>
-                            <div class="post_info">
-                                <h4>
-                                    <a href="blog-details.html">Post with Video</a>
-                                </h4>
-                                <span>March 16, 2022 </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget_list widget_categories">
-                        <div class="widget_title">
-                            <h3>Categories</h3>
-                        </div>
-                        <ul>
-                            <li><a href="#">Audio</a></li>
-                            <li><a href="#">Company</a></li>
-                            <li><a href="#">Gallery</a></li>
-                            <li><a href="#">Image</a></li>
-                            <li><a href="#">Other</a></li>
-                            <li><a href="#">Travel</a></li>
-                        </ul>
-                    </div>
-                    <div class="widget_list widget_tag">
-                        <div class="widget_title">
-                            <h3>Tag products</h3>
-                        </div>
-                        <div class="tag_widget">
-                            <ul>
-                                <li><a href="#">asian</a></li>
-                                <li><a href="#">brown</a></li>
-                                <li><a href="#">euro</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <%@include file="/front/post/rightSideBar.jsp"%>
         </div>
     </div>
 </div>
+
 <!--blog section area end-->
 <!-- 側邊欄結束 -->
 <!-- 個別JS -->
+
+s
 <script src="<%=request.getContextPath()%>/assets/js/comment/comment.js"></script>
 <script src="<%=request.getContextPath()%>/front/post/update.js"></script>
 </body>

@@ -14,7 +14,10 @@ import com.members.model.MembersVO;
 import com.picture.model.PictureVO;
 
 import connection.JDBCConnection;
+import connection.JNDIConnection;
 import net.bytebuddy.asm.Advice.Return;
+
+import static connection.JNDIConnection.getRDSConnection;
 
 public class PostJDBCDAO implements PostDAO_interface {
 
@@ -437,8 +440,9 @@ public class PostJDBCDAO implements PostDAO_interface {
 		int likeCount = 0;
 		final String DELETE = "SELECT like_count FROM cga_02.post WHERE post_id = ? ;";
 
-		try (Connection con = JDBCConnection.getRDSConnection();
+		try (Connection con = JNDIConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(DELETE)) {
+			
 
 			pstmt.setInt(1, postId);
 
@@ -454,9 +458,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 		return likeCount;
 	}
 
-	/**
-	 * 搜尋貼文
-	 */
+	
 	@Override
 	public int updateOnePostLikeCount(Integer newLikeCount, Integer postId, Connection con) {
 		int rowCount2 = 0;

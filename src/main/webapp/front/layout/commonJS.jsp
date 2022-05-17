@@ -60,3 +60,5 @@
 	src="<%=request.getContextPath()%>/assets/js/common/sweetalert2.all.min.js"></script>
 
 <script src="<%=request.getContextPath()%>/assets/shop/wishlist.js"></script>
+
+<script src="<%=request.getContextPath()%>/assets/js/post/rightSideBar.js"></script>
