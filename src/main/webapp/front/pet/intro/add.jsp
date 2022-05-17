@@ -23,6 +23,19 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 	href="<%=request.getContextPath()%>/front/pet/style.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/sb-admin-2.min.css">
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.css" />
+
+
+<style>
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
+</style>
 <body>
 	<!-- 共用的header start -->
 	<%@ include file="/front/layout/header.jsp"%>
@@ -178,22 +191,9 @@ $('#headshotBox').append('<img src="'+url+'" id="headshot" class="mb-3 ml-3" sty
 
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.js"></script>
 <script
 	src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-<style>
-.xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
-}
-
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-	height: 151px; /* height:  151px; */
-}
-</style>
-
 <script>
 	$.datetimepicker.setLocale('zh');
 	$('#r_date1').datetimepicker({

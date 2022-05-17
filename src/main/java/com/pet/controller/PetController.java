@@ -74,6 +74,7 @@ public class PetController extends CommonController {
 			req.setAttribute("pwList", GSON.toJson(pwList));//
 			req.setAttribute("recentWgt", recentWgt);
 			req.setAttribute("averageWgt", averageWgt);
+			req.setAttribute("title", "PCLUB-"+pList.get(0).getPetName()+"的資訊主頁");
 			RequestDispatcher view =req.getRequestDispatcher("/front/pet/profile.jsp");
 			view.forward(req, res);
 		}
@@ -146,6 +147,7 @@ public class PetController extends CommonController {
 			req.setAttribute("introduction", pVO.getIntroduction());
 			req.setAttribute("pictureUrl", pVO.getPicVO().getUrl());
 			req.setAttribute("birthday", pVO.getBirthday());
+			req.setAttribute("title", "PCLUB-"+"修改寵物基本資訊");
 			RequestDispatcher view =req.getRequestDispatcher("/front/pet/intro/edit.jsp");
 			view.forward(req, res);
 		}

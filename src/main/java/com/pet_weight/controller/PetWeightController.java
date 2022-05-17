@@ -79,8 +79,12 @@ public class PetWeightController  extends CommonController {
 			}
 			// 錯誤處理
 			if (!errorMsgs.isEmpty()) {
+				PetWeightService pwSvc = new PetWeightService();
+				final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+				List<PetWeightVO> pwAll = pwSvc.getByPetId(Integer.parseInt(petId));
 				req.setAttribute("weightRecord", weightRecord);
 				req.setAttribute("recordTime", recordTime);
+				req.setAttribute("pwChart", GSON.toJson(pwAll));
 				RequestDispatcher failureView = req.getRequestDispatcher("/front/pet/weight/add.jsp");
 				failureView.forward(req, res);
 				return;

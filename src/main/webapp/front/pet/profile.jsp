@@ -5,9 +5,9 @@
 <%@ page import="com.pet.model.*"%>
 <%@ page import="com.pet_activity.model.*"%>
 <%@ page import="com.pet_weight.model.*"%>
-<%
+<%--
 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-%>
+--%>
 <!DOCTYPE html>
 <html>
 <!-- include <head></head> -->

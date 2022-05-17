@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<% request.setAttribute("title", "PCLUB-寵物體重紀錄"); %>
 <%@ page import="java.util.*"%>
 <%@ page import="com.pet_weight.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -34,6 +35,21 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/sb-admin-2.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front/pet/style.css">
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.js"></script>
+<script
+	src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+<style>
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
+</style>
 <body>
 	<!-- 共用的header start -->
 	<%@ include file="/front/layout/header.jsp"%>
@@ -284,21 +300,6 @@ function getDetail(record){
 <img src="../addActivity.png" style=" filter:hue-rotate(180deg) saturate(0.7);"></a></div>
 <div>有新活動嗎？快來記錄吧！</div>-->
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.js"></script>
-<script
-	src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-<style>
-.xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
-}
-
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-	height: 151px; /* height:  151px; */
-}
-</style>
 
 <script>
 	$.datetimepicker.setLocale('zh');

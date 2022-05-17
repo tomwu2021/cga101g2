@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<% request.setAttribute("title", "PCLUB-新增寵物體重紀錄"); %>
 <%@ page import="java.util.*"%>
 <%@ page import="com.pet_weight.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,6 +9,21 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 %>
 <%
 Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)session.getAttribute("membersVO")).getPetVO().getPetId();
+%>
+<% 
+	java.util.Calendar cal = Calendar.getInstance();
+	cal.set(Calendar.MINUTE, 0);
+	cal.set(Calendar.SECOND, 0);
+	cal.set(Calendar.MILLISECOND,0);
+	cal.set(Calendar.HOUR, 0);
+	java.sql.Date defaultDate = new java.sql.Date(cal.getTime().getTime());
+
+	java.sql.Date tempTime = null;
+	try{
+		tempTime = java.sql.Date.valueOf(request.getParameter("recordTime").trim());
+	} catch(Exception e){
+		tempTime = new java.sql.Date(System.currentTimeMillis());
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -19,6 +35,19 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/sb-admin-2.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front/pet/style.css">
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.css" />
+
+
+<style>
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
+</style>
 <body>
 	<!-- 共用的header start -->
 	<%@ include file="/front/layout/header.jsp"%>
@@ -65,11 +94,10 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 					<div class="row mt-3" id="editForm" style="font-size: 1.6em;">
 						<div class="mb-3 col-lg-2" style="display:inline-flex">
 						<label class="btn btn-muted form-btn-circle btn-sm" for="r_date1"><i class="fas fa-calendar text-muted"></i></label>
-							<input name="recordTime" id="r_date1" type="text" value="${pwVO.recordTime}"  style="border:none;max-width:160px;background:none;"/>
-							<input name="recordId" type="hidden" value="${pwVO.recordId}">
+							<input name="recordTime" id="r_date1" type="text" value="${param.recordTime}"  style="border:none;max-width:160px;background:none;"/>
 						</div>
 						<div class="mb-3 col-lg-1">
-							<input type="text" id="activity" name="weightRecord" style="border:#4680FF 1px solid;background:none;max-width:150px;" autofocus value='${pwVO.weightRecord}'>
+							<input type="text" id="activity" name="weightRecord" style="border:#4680FF 1px solid;background:none;max-width:150px;" autofocus value='${param.weightRecord}'>
 							<input name="petId" type="hidden" value="<%=petId%>">
 						</div>
 						<div class="mb-3 col-lg-1">
@@ -187,22 +215,10 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 <img src="../addActivity.png" style=" filter:hue-rotate(180deg) saturate(0.7);"></a></div>
 <div>有新活動嗎？快來記錄吧！</div>-->
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.css" />
+
 <script src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.js"></script>
 <script
 	src="<%=request.getContextPath()%>/assets/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-<style>
-.xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
-}
-
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-	height: 151px; /* height:  151px; */
-}
-</style>
-
 <script>
 	$.datetimepicker.setLocale('zh');
 	$('#r_date1').datetimepicker({
@@ -210,7 +226,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 		timepicker : false, //timepicker:true,
 		step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
 		format : 'Y-m-d', //format:'Y-m-d H:i:s',
-		value: new Date(),
+		value: '<%=tempTime%>',    // value:   new Date(),
 		maxDate: new Date(),
 	//disabledDates:        ['2022/06/08','20/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
