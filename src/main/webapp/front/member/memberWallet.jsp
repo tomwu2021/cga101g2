@@ -7,14 +7,17 @@
 <title>會員錢包儲值</title>
 <!-- include <head></head> -->
 <%@ include file="/front/layout/head.jsp"%>
-<!-- 共用的CSS startr-->
-<%@include file="/back/layout/commonCSS.jsp"%>
+<!-- 共用的CSS -->
+<%@ include file="/back/layout/commonCSS.jsp"%>
 <!-- 共用的CSS end-->
-
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/front/pet/style.css">
 <!-- 額外添加的CSS -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/assets/css/memberWallet.css">
+
 </head>
+
 <body>
 	<!-- 共用的header start-->
 	<%@ include file="/front/layout/header.jsp"%>
@@ -23,8 +26,18 @@
 	<!-- 共用的leftnav start-->
 	<%@include file="/front/member/layout/leftnav.jsp"%>
 	<!-- 共用的leftnav end-->
-
-	<!--! ========內容======== -->
+<div class="page-holder w-100 d-flex flex-wrap">
+		<div class="container-fluid px-xl-5">
+			<section>
+				<div class="page-holder w-100 d-flex flex-wrap">
+					<div class="container-fluid">
+						<section class="py-5">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="row">
+										<div class="col-lg-2 col-md-12"></div>
+											<div class="col-lg-10 col-md-12">
+	<!-- ============================= Main ============================= -->
 	<div class="page-holder w-100 d-flex flex-wrap">
 		<div class="container-fluid px-xl-5">
 			<section>
@@ -130,7 +143,7 @@
 																	${messages.inputErrorpasswordWallet}</font></label>
 															<div class="input-group"
 																style="width: 350px; padding-left: 15px">
-																<input type="text" class="form-control"
+																<input  maxlength="6" type="password" class="form-control"
 																	name="passwordWallet"
 																	placeholder="Password Wallet" autocomplete="cc-number"
 																	required autofocus value="${messages.resPasswordWallet}"  />
@@ -188,23 +201,26 @@
 			</section>
 			<!--! Horizontal Form結束-->
 
-
-			<!-- 共通的footer start-->
-			<%@include file="/back/layout/footer.jsp"%>
-			<!-- 共通的footer end-->
 		</div>
 	</div>
-
+<!-- =========================== End Main =========================== -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>
+	<%@include file="/front/pet/footer.jsp"%>
 	<!-- 共用的JS -->
-	<%@include file="/back/layout/commonJS.jsp"%>
-
-	<!-- 共用的JS -->
-
-	<!-- 額外添加的JS -->
-	<!-- 	路徑舉例 -->
-
-	<script type="text/javascript"
+	<%@include file="/front/layout/commonJS.jsp"%>
+	<!-- 自訂的JS -->
+<script type="text/javascript"
 		src="<%=request.getContextPath()%>/assets/js/memberWallet.js"></script>
 </body>
-
+	
 </html>
