@@ -22,4 +22,12 @@ public class CommentService {
             throw new RuntimeException(e);
         }
     }
+
+    public List<CommentResult> getRecentComment(Integer memberId){
+        try {
+            return cdao.getRecentComment(memberId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

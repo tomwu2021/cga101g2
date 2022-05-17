@@ -33,7 +33,7 @@ $(document).ready(() => {
 
 function getComment() {
     $.get({
-        url: getContextPath() + "/comment?action=&postId=" + postId,
+        url: getContextPath() + "/comment?postId=" + postId,
         success: function (result, status) {
             let html = "";
             html += `<h3 style="font-size: 25px;font-family:微軟正黑體, sans-serif;text-align: left;letter-spacing: 10px;margin: 20px 0;">回應</h3>`;
