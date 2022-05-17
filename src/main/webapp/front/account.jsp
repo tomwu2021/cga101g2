@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<% request.setAttribute("title", "PCLUB-會員中心"); %>
 <%@ page import="java.util.*"%>
 <%@ page import="com.pet_activity.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -27,10 +28,10 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 	        <div class="row">
 	            <div class="col-12">
 	                <div class="breadcrumb_content">
-	                    <h3>${title}會員中心</h3>
+	                    <h3>會員中心</h3>
 	                    <ul>
-	                        <li><a href="<%=request.getContextPath()%>/index.html">home</a></li>
-	                        <li>${title}會員中心</li>
+	                        <li><a href="<%=request.getContextPath()%>/index.html">Home</a></li>
+	                        <li>會員中心</li>
 	                    </ul>
 	                </div>
 	            </div>
@@ -64,7 +65,8 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
                 <div class="item">
                     <div class="card">
                         <div class="info">
-                            <strong class="title">會員等級</strong>
+                            <strong class="title"><a
+                                    href="<%=request.getContextPath()%>/front/member/memberBonus.jsp">會員等級</a></strong>
                         </div>
                         <ul class="note">
                             <li><strong id="rankId" style="color:goldenrod;">${membersVO.rankId}</strong></li>
@@ -97,18 +99,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 	                                    href="<%=request.getContextPath()%>/front/order/myAccount.jsp">訂單查詢</a></strong>
 	                        </div>
 	                        <ul class="note">
-	                            <div class="row">
-	                                <div class="cell">
-	                                    <ul>
-	                                        <li><strong>已出貨<b>0</b></strong></li>
-	                                    </ul>
-	                                </div>
-	                                <div class="cell">
-	                                    <ul>
-	                                        <li><strong>未出貨<b>0</b></strong></li>
-	                                    </ul>
-	                                </div>
-	                            </div>
+	                            <li style="">商城購買訂單紀錄</li>
 	                        </ul>
 	                    </div>
 	                </div>
@@ -119,7 +110,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
                                     href="<%=request.getContextPath()%>/front/order/myAccountGroup.jsp">團購查詢</a></strong>
                         </div>
                         <ul class="note" style="">
-                            <li style="">結團時間因應團主設定</li>
+                            <li style="">參與團購訂單紀錄</li>
                         </ul>
                     </div>
                 </div>

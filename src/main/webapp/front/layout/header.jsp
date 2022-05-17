@@ -93,7 +93,7 @@
                             </div>
 
                             <div class="header_account-list top_links">
-                                <a href=""><i class="bi bi-person-circle"></i></a>
+                                <a><i class="bi bi-person-circle"></i></a>
                                 <div class="dropdown_links">
                                     <div class="dropdown_links_list">
                                         <h3>${membersVO.name}<small>&nbsp;您好！</small></h3>

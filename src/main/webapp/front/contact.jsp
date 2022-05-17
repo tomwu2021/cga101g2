@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 %>
-<%
+<%--
 String success = (String)request.getAttribute("success");
-%>
+--%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,10 +61,10 @@ String success = (String)request.getAttribute("success");
 	        <div class="row">
 	            <div class="col-12">
 	                <div class="breadcrumb_content">
-	                    <h3>${title}客服信箱</h3>
+	                    <h3>客服信箱</h3>
 	                    <ul>
-	                        <li><a href="<%=request.getContextPath()%>/index">首頁</a></li>
-	                        <li>${title}找客服</li>
+	                        <li><a href="<%=request.getContextPath()%>/index">Home</a></li>
+	                        <li>找客服</li>
 	                    </ul>
 	                </div>
 	            </div>
@@ -79,8 +80,11 @@ String success = (String)request.getAttribute("success");
             <div class="row justify-content-center">
 
                 <div class="col-lg-8 col-md-12 mt-50 contact_box">
+                <c:if test="${success != null}">
                 <h3 class='success'><b>感謝您的提問</b></h3>
-                <p class='success'><%=success%> 您好，我們將於24小時內回覆至您指定的信箱！</p>
+                <p class='success'>${success} 您好，我們將於24小時內回覆至您指定的信箱！</p>
+                </c:if>
+                <c:if test="${success == null}">
                     <div class="contact_message form mt-30 mb-100">
                         <h3><b>讓我們了解您的問題</b></h3>
                         <form id="contact_form" method='post' action='/CGA101G2/contact'>
@@ -110,6 +114,7 @@ String success = (String)request.getAttribute("success");
                         </form>
 
                     </div>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -133,11 +138,6 @@ String success = (String)request.getAttribute("success");
 <!-- Phyllis's JS Start-->
 
     <script>
-    	$('.success').hide();
-		if(<%=success%> !== null){
-			$('.contact_message').hide();
-			$('.success').show();
-		}
         let code;
         function createCaptcha() {
             document.getElementById('captcha').remove();
