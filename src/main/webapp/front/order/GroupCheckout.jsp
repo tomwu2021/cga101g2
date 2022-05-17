@@ -113,15 +113,20 @@ MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
 										
 						 		<div class="col-12 mb-20">
                                     <label>購買份數<span>*</span></label>
-                                    	<input min="1" max="99" value="1" type="number" id="count" name="amount" onchange="amountCount();">
+                                    	<input min="1" max="999" value="1" type="number" id="count" name="amount" 
+                                    	oninput="if(value>999)value=999;if(value<0)value=0;" onchange="amountCount();">
                                 </div>
 						 		
 						 		
 						 		                              
                                 <div class="col-lg-6 mb-20">
                                     <label>請輸入錢包密碼<span>*</span></label>
-                                    <input type="password" name="password">
-                                </div>                                                     
+                                    <input type="password" name="password" id="password">
+                                </div> 
+                                 <div class="order_button" id="check" >
+                                 <br>
+                                    <button type="button" onclick="check()">密碼驗證</button>
+                                </div>                                                       
                             </div>
                             <input type="hidden" name="productId" value="${productVO.productId}">
                             <input type="hidden" name="endType" value="${groupOrderVO.endType}">
@@ -180,7 +185,7 @@ MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
                            
                                
                                 <div class="order_button">
-                                    <button type="submit" onclick="document.getElementById('CHECKOUT').submit()">確認付款</button>
+                                    <button type="submit" onclick="checking()">確認付款</button>
                                 </div>
                                
                             </div>

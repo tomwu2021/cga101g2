@@ -25,7 +25,7 @@ let data={
 			   	Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title:result.message,
+                title:"成功加入購物車",
                 showConfirmButton: false,
                 timer: 1500
             })

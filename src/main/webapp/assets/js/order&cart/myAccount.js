@@ -14,8 +14,7 @@ function search() {
                 str += "<td>" + order.sumPrice + "</td>";
                 if (order.status === 0) {
                     str += "<td>未完成</td>";
-                    str += "<td><a href=" + getContextPath()+"/member/order.do?memberId=" + order.memberId + "&orderId=" + order.orderId
-                        + ">" + order.createTime + "</a></td>";
+                    str += "<td>"+ order.createTime + "</a></td>";
                 } else if (order.status === 1) {
                     str += "<td>取消</td>";
                     str += "<td>X</td>";

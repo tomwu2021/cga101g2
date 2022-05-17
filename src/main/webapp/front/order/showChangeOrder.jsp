@@ -93,6 +93,13 @@ GroupBuyerVO groupBuyerVO = (GroupBuyerVO) request.getAttribute("groupBuyerVO");
 										<p>總金額</p>
 										<p class="cart_amount">${groupBuyerVO.groupOrderVO.finalPrice*groupBuyerVO.productAmount}</p>
 									</div>	
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/groupOrder.do" name="seeMore">
+									<div class="checkout_btn" onclick="javascript:document.seeMore.submit();">
+									<input type="hidden" name="action" value="seeMore">
+									<input type="hidden" name="groupOrderId" value="${groupBuyerVO.groupOrderId}">
+										<a href="#">看詳情</a>
+									</div>
+									</FORM>
 									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/groupOrder.do" name="join">
 									<div class="checkout_btn" onclick="javascript:document.join.submit();">
 									<input type="hidden" name="action" value="joinGroupOrder">

@@ -126,7 +126,11 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 
 							<div class="col-lg-6 mb-20">
 								<label>請輸入錢包密碼<span>*</span></label> <input type="password"
-									name="password">
+									name="password" id="password">
+							</div>
+							<div class="order_button" id="check">
+								<br>
+								<button type="button" onclick="check()">密碼驗證</button>
 							</div>
 						</div>
 						<input type="hidden" name="groupOrderId"
@@ -180,8 +184,7 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 
 
 						<div class="order_button">
-							<button type="submit"
-								onclick="document.getElementById('CHECKOUT').submit()">確認付款</button>
+							<button type="submit" onclick="checking()">確認付款</button>
 						</div>
 
 					</div>

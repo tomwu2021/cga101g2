@@ -70,15 +70,15 @@ if (buylist != null && (buylist.size() > 0)) {
                             <h3>Billing Details</h3>
                             <div class="row">
                             
-                                <div class="col-lg-6 mb-20">
+                                <div class="col-lg-6 mb-20" id="mname">
                                     <label>姓名 <span>*</span></label>
-                                    <input type="text" name="memberName">
+                                    <input type="text" name="memberName" id="memberName">
                                 </div>
-                                <div class="col-12 mb-20">
+                                <div class="col-12 mb-20" id="mpho">
                                     <label>電話<span>*</span></label>
-                                    <input type="text" name="memberPhone">
+                                    <input type="text" name="memberPhone" id="memberPhone">
                                 </div>
-                       			<div class="col-12 mb-20">
+                       			<div class="col-12 mb-20" id=made>
                        			  <label>地址<span>*</span></label>
 								 <div id="zipcode3">
 									<div class="f3" data-role="county"></div>
@@ -87,7 +87,7 @@ if (buylist != null && (buylist.size() > 0)) {
 									<input type="text" name="address" class="form-control"
 									id="exampleFormControlInput1">
 						 		</div>
-						 		
+
 						 		
 						 		<div class="col-12 mb-20">
                                     <input id="address" type="checkbox" data-target="createp_account" name="same"/>
@@ -132,18 +132,24 @@ if (buylist != null && (buylist.size() > 0)) {
 										
 						 		<div class="col-12 mb-20">
                                     <label>使用紅利<span>*</span></label>
-                                    	<input min="0" max="<%=maxBonus %>" value="<%=maxBonus %>" type="number" name="bonus" id="bonusCount" onchange="bonusChange()">
+                                    	<input min="0" max="<%=maxBonus %>" value="<%=maxBonus %>" type="number" name="bonus" id="bonusCount" 
+                                    	oninput="if(value><%=maxBonus %>)value=<%=maxBonus %>;if(value<0)value=0;" onchange="bonusChange()">
                                 </div>
 						 		
-						 		
-						 		                              
+						 		 <input type="hidden" name="action" value="CHECKOUT">
+                        </form>
+						 		       	                       
                                 <div class="col-lg-6 mb-20">
                                     <label>請輸入錢包密碼<span>*</span></label>
-                                    <input type="password" name="password">
-                                </div>                                                     
+                                    <input type="password" name="password" id="password">
+                                </div> 
+                                
+                                 <div class="order_button" id="check">
+                                 <br>
+                                    <button type="button" onclick="check()">密碼驗證</button>
+                                </div>                                                    
                             </div>
-                            <input type="hidden" name="action" value="CHECKOUT">
-                        </form>
+                      		
                                     
                             
                     </div>
@@ -195,10 +201,9 @@ if (buylist != null && (buylist.size() > 0)) {
                             <div class="payment_method">
                            
                                
-                                <div class="order_button">
-                                    <button type="submit" onclick="document.getElementById('CHECKOUT').submit()">確認付款</button>
+                                <div class="order_button" id="submit" style="display:none">
+                                    <button type="submit" onclick="checking()">確認付款</button>
                                 </div>
-                               
                             </div>
                        
                     </div>

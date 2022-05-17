@@ -57,7 +57,8 @@
 							<c:if test="${groupOrderVO.productVO.pictureVOList.size() != 0 }">
 								<a href="#"> <img id="zoom1"
 									src="${groupOrderVO.productVO.pictureVOList.get(0).url}"
-									data-zoom-image="${groupOrderVO.productVO.pictureVOList.get(0).url}" alt="big-1" />
+									data-zoom-image="${groupOrderVO.productVO.pictureVOList.get(0).url}"
+									alt="big-1" />
 								</a>
 							</c:if>
 							<!-- 				防止超出索引值判斷/有圖放圖/開始		 -->
@@ -79,7 +80,8 @@
 								<!-- 				防止超出索引值判斷/有圖放圖/開始			 -->
 								<c:if
 									test="${groupOrderVO.productVO.pictureVOList.size() >= 2 }">
-									<c:forEach var="pictureVO" items="${groupOrderVO.productVO.pictureVOList}">
+									<c:forEach var="pictureVO"
+										items="${groupOrderVO.productVO.pictureVOList}">
 										<li><a href="#" class="elevatezoom-gallery active"
 											data-update="" data-image="${pictureVO.url}"
 											data-zoom-image="${pictureVO.url}"> <img
@@ -144,30 +146,27 @@
 
 							<div class="product_variant quantity">
 								<!-- 							數量至少min於&起始於最低開團級距一 -->
-								<label>截單時間:</label> 
-								<c:if
-									test="${groupOrderVO.endType == 1 }">
-										<label>於${groupOrderVO.endTime}截單</label> 
+								<label>截單時間:</label>
+								<c:if test="${groupOrderVO.endType == 1 }">
+									<label>於${groupOrderVO.endTime}截單</label>
 								</c:if>
-									<c:if
-									test="${groupOrderVO.endType == 2 }">
-										<label>依分數截單(${groupOrderVO.minAmount}份)</label> 
-										<label>目前份數:${established}份</label> 
-										<label>最終時間:${groupOrderVO.endTime}</label> 
+								<c:if test="${groupOrderVO.endType == 2 }">
+									<label>依分數截單(${groupOrderVO.minAmount}份)</label>
+									<label>目前份數:${established}份</label>
+									<label>最終時間:${groupOrderVO.endTime}</label>
 								</c:if>
-								
+
 							</div>
-
-
-							<div class="product_variant quantity">
-								<button class="button" type="submit"
-									style="position: relative; right: 20px;">加入團購</button>
-							</div>
-
 							<input type="hidden" name="action" value="toJoinGroupOrder">
-							<input type="hidden" name="groupOrderId" value="${groupOrderVO.groupOrderId}">
+							<input type="hidden" name="groupOrderId"
+								value="${groupOrderVO.groupOrderId}">
 
 						</form>
+						<div class="checkout_btn"
+							onclick="javascript:document.join.submit();">
+							<input type="hidden" name="action" value="joinGroupOrder">
+							<a href="<%=request.getContextPath()%>/front/order/myAccount.jsp">回訂單</a>
+						</div>
 
 						<div class="priduct_social">
 							<ul>
@@ -213,7 +212,7 @@
 	<%@include file="/front/layout/footer.jsp"%>
 
 	<script
-	src="<%=request.getContextPath()%>/assets/js/order&cart/groupDetial.js"></script>
+		src="<%=request.getContextPath()%>/assets/js/order&cart/groupDetial.js"></script>
 
 
 </body>

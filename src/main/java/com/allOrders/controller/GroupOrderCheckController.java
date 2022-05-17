@@ -12,12 +12,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.group_buyer.model.GroupBuyerService;
 import com.group_buyer.model.GroupBuyerVO;
 import com.group_order.model.GroupOrderService;
 import com.group_order.model.GroupOrderVO;
 import com.members.model.MembersService;
+import com.members.model.MembersVO;
 
 public class GroupOrderCheckController extends HttpServlet implements Runnable {
 	private static final long serialVersionUID = 1L;
@@ -110,6 +112,7 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 						// 錢包退款
 						membersService.walletPaymentAddMoney(groupBuyerVO.getMemberId(),
 								reimburse1 * groupBuyerVO.getProductAmount());
+						
 						System.out.println("退"+reimburse1 * groupBuyerVO.getProductAmount());
 					} else if (established >= groupOrderVO.getProductVO().getGroupAmount3()) {
 						// 錢包退款

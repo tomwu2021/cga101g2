@@ -101,7 +101,8 @@ public class Cart extends HttpServlet {
 			String msg = "成功加入購物車";
 			req.setAttribute("msg", msg);
 			System.out.println(session.getAttribute("shopingCart"));
-			String url = "/front/shop/productDetails.jsp";
+			String url = "/shop/ProductGetOneServlet?productId="+newProductVO.getProductId()+"&action=getOne_For_Shop";
+//			String url = "/front/shop/productDetails.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
 		}
@@ -187,10 +188,29 @@ public class Cart extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
+		
+		if ("CHECK".equals(action)) {
+			// 驗證錢包密碼用
+			System.out.println("有進密碼驗證");
+			String password = req.getParameter("password");
+			MembersService membersService=new MembersService();
+			MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
+			String dbPassword = membersService.geteWalletPassword(membersVO.getMemberId());
+			if (password.equals(dbPassword)) {
+				System.out.println("正確");
+				PrintWriter out = res.getWriter();
+				out.write("對");
+			}else {
+				System.out.println("錯誤");
+				PrintWriter out = res.getWriter();
+				out.write("錯");
+			}
+			
+
+		}
 
 		if ("CHECKOUT".equals(action)) {
-			// 驗證錢包密碼用
-			String password = req.getParameter("password");
+			
 			// 結帳
 			// 先算總金額
 			int total = 0;
@@ -256,6 +276,7 @@ public class Cart extends HttpServlet {
 				String msg = "已成功結帳";
 				//更新session
 				membersVO.seteWalletAmount(membersVO.geteWalletAmount()-payPrice);
+				membersVO.setBonusAmount(membersVO.getBonusAmount()-bonus);
 				req.setAttribute("msg", msg);
 				String url = "/front/order/orderDetail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
