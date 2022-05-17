@@ -61,8 +61,8 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 		try (Connection con = JNDIConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(DELETE)) {
 
-			pstmt.setInt(2, likelistVO.getPostId());
-			pstmt.setInt(1, likelistVO.getMemberId());
+			pstmt.setInt(1, likelistVO.getPostId());
+			pstmt.setInt(2, likelistVO.getMemberId());
 
 			rowCount = pstmt.executeUpdate();
 			System.out.println(rowCount + "row(s) delete!");

@@ -28,7 +28,7 @@ public class LikelistServlet extends HttpServlet {
 //	}
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("LikelistInsertServlet 執行成功");
+//		System.out.println("LikelistServlet 執行成功");
 		
 		// 訊息用 Map 存放
 		Map<String, String> msg = new LinkedHashMap<String, String>();
@@ -45,7 +45,7 @@ public class LikelistServlet extends HttpServlet {
 			msg.put("msg", "-2");
 			String json = new Gson().toJson(msg);
 			res.getWriter().write(json);
-			System.out.println("無會員資訊");
+//			System.out.println("無會員資訊");
 			return;
 		}
 		
@@ -54,10 +54,10 @@ public class LikelistServlet extends HttpServlet {
 		final Integer postId = Integer.parseInt((String) req.getParameter("postId"));
 		final Integer val = Integer.parseInt((String) req.getParameter("val"));
 		// 收集參數
-		System.out.println("==============");
-		System.out.println("postId:" + postId);
-		System.out.println("val:" + val); // 0: insert, 1: delete
-		System.out.println("==============");
+//		System.out.println("==============");
+//		System.out.println("postId:" + postId);
+//		System.out.println("val:" + val); // 0: insert, 1: delete
+//		System.out.println("==============");
 		
 		
 		if(val == 0) {
@@ -78,16 +78,16 @@ public class LikelistServlet extends HttpServlet {
 				int newlikeCount = postSvc.selectOnePostLikeCount(postId);
 				msg.put("msg", "1");
 				msg.put("newlikeCount", String.valueOf(newlikeCount));
-				System.out.println("postId : 原本的讚數: "+oldlikeCount+"新增後讚數: "+ newlikeCount);
+//				System.out.println("postId : 原本的讚數: "+oldlikeCount+"新增後讚數: "+ newlikeCount);
 				String json = new Gson().toJson(msg);
 				res.getWriter().write(json);
-				System.out.println("新增貼文按讚成功");
+//				System.out.println("新增貼文按讚成功");
 				return;
 			} else {
 				msg.put("msg", "-1");
 				String json = new Gson().toJson(msg);
 				res.getWriter().write(json);
-				System.out.println("新增貼文按讚失敗");
+//				System.out.println("新增貼文按讚失敗");
 				return;
 			}
 		} else {
@@ -108,16 +108,16 @@ public class LikelistServlet extends HttpServlet {
 				int newlikeCount = postSvc.selectOnePostLikeCount(postId);
 				msg.put("msg", "2");
 				msg.put("newlikeCount", String.valueOf(newlikeCount));
-				System.out.println("postId : 原本的讚數: "+oldlikeCount+"收回後讚數: "+ newlikeCount);
+//				System.out.println("postId : 原本的讚數: "+oldlikeCount+"收回後讚數: "+ newlikeCount);
 				String json = new Gson().toJson(msg);
 				res.getWriter().write(json);
-				System.out.println("收回貼文按讚成功");
+//				System.out.println("收回貼文按讚成功");
 				return;
 			} else {
 				msg.put("msg", "-1");
 				String json = new Gson().toJson(msg);
 				res.getWriter().write(json);
-				System.out.println("收回貼文按讚失敗");
+//				System.out.println("收回貼文按讚失敗");
 				return;
 			}
 		}
