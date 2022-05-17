@@ -57,7 +57,7 @@ function search() {
 				html += makeAlbum(album);
 			}
 			let pageResult = "Showing from " + result.start + " to " + result.end + " of " + result.total + " results";
-			$(".page_amount p").text(pageResult);
+			$(".page_amount").text(pageResult);
 			$("#album-container").html(html);
 			makePicturePages(result.pageCount);
 			offLoading();
