@@ -2,8 +2,11 @@ package com.allOrders.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.common.exception.JDBCException;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
 import com.google.gson.Gson;
 import com.group_buyer.model.GroupBuyerService;
 import com.group_buyer.model.GroupBuyerVO;
@@ -57,25 +63,54 @@ public class GroupOrder extends HttpServlet {
 
 		// 查詢參團詳情
 		if ("toJoinDetial".equals(action)) {
-			res.setContentType("text/html;charset=UTF-8");
-			System.out.println("toJoinDetial有進入");
-			// 查詢參團詳情
-			Integer groupOrderId = Integer.valueOf(req.getParameter("groupOrderId").trim());
-			System.out.println("getParameter:" + groupOrderId);
-			GroupOrderService groupOrderService = new GroupOrderService();
-			GroupOrderVO groupOrderVO = groupOrderService.getOneOrder(groupOrderId);
-			// 查詢目前份數
-			int established = 0;
-			GroupBuyerService groupBuyerService = new GroupBuyerService();
-			for (GroupBuyerVO groupBuyerVO : groupBuyerService.getAllByGroupOrderId(groupOrderId)) {
-				established += groupBuyerVO.getProductAmount();
+			res.setContentType("application/json; charset=UTF-8");
+			req.setCharacterEncoding("UTF-8");
+			PrintWriter out = res.getWriter();
+			//分頁條件
+			Integer thisPage = Integer.parseInt(req.getParameter("thisPage")); // 設置當前頁數
+			Integer pageSize = Integer.parseInt(req.getParameter("pageSize")); // 設置每頁顯示筆數
+			String sort = req.getParameter("sort"); // 設置排序方式 (升降冪)
+			String order = req.getParameter("order"); // 設置排序欄位		
+			//客製條件
+			Map<String, Object> map = new HashMap<>(); // 創建多筆指定欄位條件 Map
+			if(req.getParameter("status") != null) {
+				Integer status = Integer.parseInt(req.getParameter("status"));
+				map.put("status", status);
 			}
-			System.out.println("總數" + established);
-			req.setAttribute("established", established);
-			req.setAttribute("groupOrderVO", groupOrderVO);
-			String url = "/front/shop/joinProductDetails.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
+			String[] keywords = req.getParameter("productName").split(" "); // 使用空格切割關鍵字
+			PageQuery pq = new PageQuery(thisPage, pageSize, sort, order, map); // 創建分頁查訊物件
+			pq.setFindByLikeMultiValues("product_name", keywords);
+			GroupOrderService groupOrderService=new GroupOrderService();
+			PageResult<GroupOrderVO> rpq = null;
+			try {
+				rpq = groupOrderService.getPageResult(pq);
+			} catch (JDBCException e) {
+				throw new RuntimeException(e);
+			}
+			Gson gson = new Gson();
+			out.write(gson.toJson(rpq));
+			
+			
+			
+//			res.setContentType("text/html;charset=UTF-8");
+//			System.out.println("toJoinDetial有進入");
+//			// 查詢參團詳情
+//			Integer groupOrderId = Integer.valueOf(req.getParameter("groupOrderId").trim());
+//			System.out.println("getParameter:" + groupOrderId);
+//			GroupOrderService groupOrderService = new GroupOrderService();
+//			GroupOrderVO groupOrderVO = groupOrderService.getOneOrder(groupOrderId);
+//			// 查詢目前份數
+//			int established = 0;
+//			GroupBuyerService groupBuyerService = new GroupBuyerService();
+//			for (GroupBuyerVO groupBuyerVO : groupBuyerService.getAllByGroupOrderId(groupOrderId)) {
+//				established += groupBuyerVO.getProductAmount();
+//			}
+//			System.out.println("總數" + established);
+//			req.setAttribute("established", established);
+//			req.setAttribute("groupOrderVO", groupOrderVO);
+//			String url = "/front/shop/joinProductDetails.jsp";
+//			RequestDispatcher successView = req.getRequestDispatcher(url);
+//			successView.forward(req, res);
 		}
 		
 		// 從訂單參團詳情

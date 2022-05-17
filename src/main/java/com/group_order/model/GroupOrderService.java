@@ -2,6 +2,8 @@ package com.group_order.model;
 
 import com.common.model.MappingJDBCDAO;
 import com.common.model.MappingTableDto;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
 import com.picture.model.PictureJDBCDAO;
 import com.picture.model.PictureVO;
 import com.product.model.ProductVO;
@@ -101,5 +103,10 @@ public class GroupOrderService {
             throw new RuntimeException();
         }
 
+    }
+    
+
+    public PageResult<GroupOrderVO> getPageResult(PageQuery pq) {
+       return dao.getPageResult(pq);
     }
 }

@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.common.model.PageQuery;
 import com.group_buyer.model.GroupBuyerVO;
 import com.picture.model.PictureVO;
 import com.product.model.ProductVO;
@@ -341,5 +342,10 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface {
 			// TODO: handle exception
 		}
 		return groupOrderList;
+	}
+	
+	public List<GroupOrderVO> getPageResult(PageQuery pq) {
+		return null;
+		
 	}
 }

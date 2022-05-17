@@ -192,6 +192,7 @@ public class Cart extends HttpServlet {
 		if ("CHECK".equals(action)) {
 			// 驗證錢包密碼用
 			System.out.println("有進密碼驗證");
+//			res.setContentType("application/json; charset=UTF-8");
 			String password = req.getParameter("password");
 			MembersService membersService=new MembersService();
 			MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");

@@ -37,7 +37,7 @@ let data={
 		data:data,
 		success:function(result,status){
 			var remove = document.getElementById(del);
-			  remove.remove();
+			remove.remove();
 			}
 		})
 			
