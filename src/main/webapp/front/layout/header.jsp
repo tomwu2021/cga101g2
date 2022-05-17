@@ -143,6 +143,10 @@
     #private-chatroom-list-ul .offline {
         color: darkorange;
     }
+    
+    .product_name{
+ 	   height: 48px;
+    }
 
 </style>
 <% if(loginId>0){ %>
