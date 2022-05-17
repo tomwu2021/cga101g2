@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
@@ -53,25 +54,27 @@ pageContext.setAttribute("sort2list", sort2list);
 
 								<!--! Horizontal Form-->
 								<div class="col-lg-12 mb-5">
-									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back/shop/productInsert" name="form1" enctype="multipart/form-data">
+									<FORM METHOD="post"
+										ACTION="<%=request.getContextPath()%>/back/shop/productInsert"
+										name="form1" enctype="multipart/form-data">
 										<div class="card">
 											<div class="card-header">
 												<h3 class="h6 text-uppercase mb-0">新增商品</h3>
 											</div>
 											<div class="card-body">
-<!-- 												<p></p> -->
+												<!-- 												<p></p> -->
 												<div class="row">
 													<div class="col-lg-6 mb-5">
 														<form class="form-horizontal">
 															<div class="form-group row">
 																<label class="col-md-3 form-control-label">商品名稱</label>
 																<div class="col-md-6">
-																	<input id="inputHorizontalSuccess" type="text"
-																		value="${param.productName}" name="productName"
-																		placeholder="輸入商品名稱"
-																		class="form-control form-control-success"> <small
-																		class="form-text text-muted ml-3">限制20個字</small> <small
-																		class="form-text text-muted ml-3 text-danger">${errorMsgs.productName}</small>
+																	<input id="inputHorizontalSuccessCheckProductName"
+																		type="text" value="${param.productName}"
+																		name="productName" placeholder="輸入商品名稱"
+																		class="form-control form-control-success"> 
+																		<small class="form-text text-muted ml-3">限制5個字(含)以上20個字以內</small> 
+																		<small class="form-text text-muted ml-3 text-danger">${errorMsgs.productName}</small>
 																</div>
 															</div>
 
@@ -206,55 +209,59 @@ pageContext.setAttribute("sort2list", sort2list);
 												<div class="row">
 													<div class="col-lg-12 mb-5">
 														<div class="form-group row">
-															<label class="col-md-3 form-control-label">商品照片 &emsp; (第一張為首圖)</label>
+															<label class="col-md-3 form-control-label">商品照片
+																&emsp; (第一張為首圖)</label>
 															<div class="col-md-6"></div>
 														</div>
 														<div class="form-group">
 															<div class="col-md-12">
 																<!--weui-uploader 照片上传功能-->
 																<!--上傳圖片的按鈕-->
-																<img src="<%=request.getContextPath()%>/assets/shop/backProduct/img/addimg.png"
-																 class="ml-3" style="height:200px;width:200px;" onclick="add();" id="addimage">
-<!-- 																<label class="btn btn-info"> -->
-<!-- 																 <input type="file" name="img" accept="image/*" multiple="multiple" -->
-<!-- 																		id="showimg" style="display: none;" multiple /> 上傳圖片 -->
-<!-- 																</label> -->
-<!-- 																<div class='row'> -->
-<!-- 																	<div id='previewMultiple'></div> -->
-<!-- 																</div> -->
+																<img
+																	src="<%=request.getContextPath()%>/assets/shop/backProduct/img/addimg.png"
+																	class="ml-3" style="height: 200px; width: 200px;"
+																	onclick="add();" id="addimage">
+																<!-- 																<label class="btn btn-info"> -->
+																<!-- 																 <input type="file" name="img" accept="image/*" multiple="multiple" -->
+																<!-- 																		id="showimg" style="display: none;" multiple /> 上傳圖片 -->
+																<!-- 																</label> -->
+																<!-- 																<div class='row'> -->
+																<!-- 																	<div id='previewMultiple'></div> -->
+																<!-- 																</div> -->
 															</div>
-																<small class="form-text text-muted ml-3 text-danger">${errorMsgs.img}</small>
+															<small class="form-text text-muted ml-3 text-danger">${errorMsgs.img}</small>
 														</div>
 													</div>
-												</div>	
+												</div>
 												<!--! 商品照片上傳end -->
 												<!--! 提交按鈕start -->
 												<div class="row">
 													<div class="col-md-12">
 														<div class="form-group">
-															<input type="submit" value="送出新增" class="btn btn-primary">
-															<input type="hidden" name="action" value="insert">
+															<input type="submit" value="送出新增" class="btn btn-primary"
+																id="submitProduct"  disabled="disabled"> 
+																<input type="hidden" name="action" value="insert">
 														</div>
 													</div>
 												</div>
 												<!--! 提交按鈕end -->
-													</div>
-													
-												</div>
-					</FORM>
 											</div>
+
 										</div>
+									</FORM>
 								</div>
 							</div>
 					</div>
-			</section>
-			<!--! ========內容結束========-->
-
-
-			<!-- 共通的footer start-->
-			<%@include file="/back/layout/footer.jsp"%>
-			<!-- 共通的footer end-->
+				</div>
 		</div>
+		</section>
+		<!--! ========內容結束========-->
+
+
+		<!-- 共通的footer start-->
+		<%@include file="/back/layout/footer.jsp"%>
+		<!-- 共通的footer end-->
+	</div>
 	</div>
 
 
@@ -267,19 +274,19 @@ pageContext.setAttribute("sort2list", sort2list);
 	<!-- 	圖片上傳 -->
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/upimg/js/upimg.js">
-		
 	</script>
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/upimg2/upimg2.js">
-	</script> 
+	</script>
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/addproduct/js/sort1VOCheckBox.js">
 	</script>
-	
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/backProduct/img/addimg.js">
-	</script>  
-
+	</script>
+	<script
+		src="<%=request.getContextPath()%>/assets/shop/addproduct/js/checkProductName.js">
+	</script>
 	<!-- 額外添加的JS -->
 </body>
 

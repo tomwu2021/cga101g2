@@ -82,7 +82,7 @@
 				</div>
 				<div class="col-lg-6 col-md-6">
 					<div class="product_d_right">
-						<Form id="addForm" action="<%=request.getContextPath()%>/member/cart.do" Method="Post">
+						<Form id="addForm" action="/CGA101G2/member/cart.do" Method="Post">
 							<h1>
 								<a href="#">${param.productName}</a>
 							</h1>
@@ -91,7 +91,7 @@
 							</div>
 							<div class="product_desc">
 								<p>PCLUB品質保證</p> 
-								<c:if test="${param.totalView != null} ">
+								<c:if test="${param.totalView != null}">
 								<p><i class="bi bi-eye-fill fa-1x"></i>累積觀看&ensp; ${param.totalView}&ensp; 次</p> 
 								</c:if>
 							</div>

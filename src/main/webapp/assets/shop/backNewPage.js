@@ -67,7 +67,7 @@ myPage.addEventListener('change', function() {
 		}
 
 		let action = document.getElementById("action");
-		alert('現在的的myPage.value值' + myPage.value + '確認後提交');
+//		alert('現在的的myPage.value值' + myPage.value + '確認後提交');
 		myPageForm.submit();
 	}
 });

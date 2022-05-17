@@ -456,6 +456,12 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 		return 0;
 	}
 
+	@Override
+	public ProductVO checkProdcutName(String prodcutName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	
 	

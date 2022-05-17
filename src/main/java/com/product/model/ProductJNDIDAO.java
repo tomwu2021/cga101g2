@@ -15,6 +15,8 @@ import java.util.Set;
 import com.product_img.model.ProductImgVO;
 import com.sort2.model.Sort2VO;
 
+import connection.JNDIConnection;
+
 public class ProductJNDIDAO implements ProductDAO_interface {
 
 	
@@ -686,4 +688,27 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 		return list;
 	}
 
-}
+	@Override
+	public ProductVO checkProdcutName(String prodcutName) {
+		ProductVO productVO = new ProductVO();
+		final String CHECKNAME = "SELECT product_name "
+							+ "FROM cga_02.product "
+							+ "WHERE product_name LIKE '%"+prodcutName+"%';";
+
+		try (Connection con = JNDIConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(CHECKNAME)) {
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				productVO.setProductName(rs.getString("product_name"));
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			return productVO;
+		}
+	}
+

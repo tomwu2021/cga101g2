@@ -68,13 +68,20 @@
 													<input type=button value="返回商品列表" class="btn btn-success" style="position: relative; left: 3%"
 													onclick="javascript:window.location='<%=request.getContextPath()%>/back/shop?action=listProducts_Byfind'">
 													<!-- 返回商品列表 END -->
+													<!-- 查看該筆商品前台畫面 僅限有上架的商品START -->
+													<c:if test="${param.status != 0}">
+													<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${param.productId}&action=getOne_For_Shop">
+													<input type=button value="查看前台" class="btn btn-info" style="position: relative; left: 3%">
+													</a>
+													</c:if>
+													<!-- 查看該筆商品前台畫面 END -->
 												<div class="row">
 													<div class="col-lg-6 mb-5">
 														<form class="form-horizontal">
 															<div class="form-group row">
 																<label class="col-md-3 form-control-label">商品名稱</label>
 																<div class="col-md-6">
-																	<input id="inputHorizontalSuccess" type="text"
+																	<input id="inputHorizontalSuccessCheckProductName" type="text"
 																		value="${param.productName}" name="productName"
 																		placeholder="輸入商品名稱"
 																		class="form-control form-control-success"> <small
@@ -280,7 +287,7 @@
 												<div class="row">
 													<div class="col-md-12">
 														<div class="form-group">
-															<input type="submit" value="送出修改" class="btn btn-primary">
+															<input type="submit" value="送出修改" class="btn btn-primary" id="submitProduct" >
 															<input type="hidden" name="action" value="update">
 															<input type="hidden" name="productId" value="${param.productId}">
 														</div>
@@ -326,6 +333,9 @@
 	</script>
 	
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/assets/shop/addproduct/js/checkProductName.js">
+	</script>
 	
 <script>
 	

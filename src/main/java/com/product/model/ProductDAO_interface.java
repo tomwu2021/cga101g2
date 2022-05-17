@@ -9,7 +9,9 @@ import com.product_img.model.ProductImgVO;
 
 public interface ProductDAO_interface extends JDBCDAO_Interface<ProductVO> {
 
-	
+	// 確認商品名稱是否重複
+	public ProductVO checkProdcutName(String prodcutName);
+		
 	// 改變推薦狀態
 	public boolean deleteByTopStatus(Integer topStatus,Integer productId);
 	

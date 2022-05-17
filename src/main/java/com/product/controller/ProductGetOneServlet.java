@@ -84,6 +84,7 @@ public class ProductGetOneServlet extends HttpServlet {
 							+ "&price="+ pdVO.getPrice() 
 							+ "&amount=" + pdVO.getAmount()
 							+ "&sort2Id=" + pdVO.getSort2Id() 
+							+ "&status=" + pdVO.getStatus()
 							+ "&updateTime="+ pdVO.getUpdateTime() 
 							+ "&groupPrice1=" + pdVO.getGroupPrice1() 
 							+ "&groupAmount1="+ pdVO.getGroupAmount1()
