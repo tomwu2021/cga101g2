@@ -25,9 +25,15 @@ $(document).ready(()=>{
 
     getPrivateChatroom();
     getTotalUnread();
+
 })
 
-
+    // $("#header-icon-area").on('click','#chat-icon',function(){
+    //     openChatList();
+    // })
+    // $("header").on('click','#close-window',function(){
+    //     closePrivateChatroom();
+    // })
 
 
 //個人聊天室
@@ -104,6 +110,7 @@ function makeChatroomList(chatroom) {
 }
 
 function searchFriend(){
+    loading();
     let html='';
     let action = "getFriends";
     $.get({
@@ -127,8 +134,8 @@ function blurInviteButton(){
     $("#invite-button").css("background-color","black");
 }
 function hoverInviteButton(){
-        $("#invite-button").css("background-color","#bd2130");
-        $("#invite-button").css("border","2px grey");
+    $("#invite-button").css("background-color","#bd2130");
+    $("#invite-button").css("border","2px grey");
 }
 
 function showGroupChatroom(){
@@ -463,5 +470,4 @@ function updateChatroomName(chatroomId) {
         }
     });
 }
-
 

@@ -153,7 +153,7 @@ public class AlbumController extends CommonController {
 		albumId = Integer.parseInt(req.getParameter("albumId"));
 		if (albumId != null && name != null && isOwner == 1) {
 			alServ.updateName(albumId, name);
-			String alert = "{status:改名成功}";
+			String alert = "{\"status\":\"改名成功\"}";
 			out.write(gson.toJson(alert));
 			return true;
 		}
