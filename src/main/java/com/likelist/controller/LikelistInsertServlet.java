@@ -19,7 +19,7 @@ import com.likelist.model.LikelistVO;
 import com.members.model.MembersVO;
 import com.post.model.PostService;
 
-@WebServlet("/post/LikelistInsertServlet")
+@WebServlet("/post/likelistInsertServlet")
 public class LikelistInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

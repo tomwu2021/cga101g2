@@ -9,7 +9,7 @@ $("[id^='likelist']").click(function thisfunction() {
 	let id = $(this).attr("id");
 	console.log("當前元素id編號: " + id);
 	let postId = id.substring(8);
-	console.log("當前商品編號: " + postId);
+	console.log("當前貼文編號: " + postId);
 	let val = $(this).prev().val();
 	console.log("上一個隱藏的input元素value: " + val);
 	//儲存這個DOM點
@@ -19,7 +19,7 @@ $("[id^='likelist']").click(function thisfunction() {
 	//0代表未點讚,點擊後給讚,改變icon與讚數 
 	if (val === '0') {
 		$.ajax({
-			url:`${getContextPath()}/post/LikelistInsertServlet` ,
+			url:`${getContextPath()}/post/likelistInsertServlet` ,
 			type: "POST",
 			data: JSON.stringify({
 				postId
@@ -32,15 +32,15 @@ $("[id^='likelist']").click(function thisfunction() {
 				if (data.msg === '1') {
 					Swal.fire(
 						'點讚成功!',
-						'已新增至listVO',
+						' ',
 						'success'
 					)
 					console.log($(this));
 					thisIcon.attr('class', 'bi bi-suit-heart-fill fa-2x').prev().val('1');
-					thisIcon.next().text(data.newlikeCount);
-					console.log(thisIcon.next().val());
-					thisButton.off('click');//先關閉click事件。
-					thisButton.on('click', thisfunction);//執行完後打開click 事件，並執行thisfunction
+					thisIcon.parent().next().text(data.newlikeCount);
+					console.log("修改過後的讚數:"+thisIcon.parent().next().text());
+					thisIcon.off('click');//先關閉click事件。
+					thisIcon.on('click', thisfunction);//執行完後打開click 事件，並執行thisfunction
 				}
 				else if (data.msg === '-1') {
 					Swal.fire(
@@ -67,10 +67,10 @@ $("[id^='likelist']").click(function thisfunction() {
 	}
 	else if (val === '1') {
 		$.ajax({
-			url: "deleteWishlist",
+			url: `${getContextPath()}/post/likelistDeleteServlet`,
 			type: "POST",
 			data: JSON.stringify({
-				productId
+				postId
 			}),
 			dataType: "json", // 返回格式為json
 			success: function(data) {
@@ -80,16 +80,15 @@ $("[id^='likelist']").click(function thisfunction() {
 				if (data.msg === '1') {
 					Swal.fire(
 						'收回讚成功!',
-						'已移除listVO',
+						' ',
 						'success'
 					)
 					console.log($(this));
-					thisButton.attr('class', 'btn btn-outline-danger')
-					.val('0')
-					.children().text('加入收藏');
-					console.log(thisButton.val());
-					thisButton.off('click');//先關閉click事件。
-					thisButton.on('click', thisfunction);//執行完後打開click 事件，並執行thisfunction
+					thisIcon.attr('class', 'bi bi-suit-heart fa-2x').prev().val('0');
+					thisIcon.parent().next().text(data.newlikeCount);
+					console.log("修改過後的讚數:"+thisIcon.parent().next().text());
+					thisIcon.off('click');//先關閉click事件。
+					thisIcon.on('click', thisfunction);//執行完後打開click 事件，並執行thisfunction
 				}
 				else if (data.msg === '-1') {
 					Swal.fire(
@@ -102,7 +101,7 @@ $("[id^='likelist']").click(function thisfunction() {
 					Swal.fire({
 						icon: 'info',
 						title: 'Oops...',
-						text: '移除失敗...先登入才能收回讚喔！',
+						text: '收讚失敗...先登入才能收回讚喔！',
 						footer: '<a href=' + `${getContextPath()}/front/login.jsp` + '>前往登入頁面</a>'
 					})
 				}

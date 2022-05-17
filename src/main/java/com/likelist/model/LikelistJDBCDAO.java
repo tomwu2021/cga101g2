@@ -10,12 +10,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.emp.model.EmpJDBCDAO;
 import com.post.model.PostJDBCDAO;
-import com.post.model.PostVO;
-import com.wishlist.model.WishlistVO;
 
 import connection.JDBCConnection;
+import connection.JNDIConnection;
 
 public class LikelistJDBCDAO implements LikelistDAO_interface {
 
@@ -60,7 +58,8 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 		int rowCount = 0;
 		final String DELETE = "DELETE FROM cga_02.post WHERE post_id = ? AND member_id =?";
 
-		try (Connection con = getRDSConnection(); PreparedStatement pstmt = con.prepareStatement(DELETE)) {
+		try (Connection con = JNDIConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(DELETE)) {
 
 			pstmt.setInt(2, likelistVO.getPostId());
 			pstmt.setInt(1, likelistVO.getMemberId());
@@ -128,14 +127,14 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = JDBCConnection.getRDSConnection();
+			con = JNDIConnection.getRDSConnection();
 
 			// 1●設定於 pstm.executeUpdate()之前
 			con.setAutoCommit(false);
 
 			pstmt = con.prepareStatement(DELETE);
-			pstmt.setInt(2, likelistVO.getPostId());
-			pstmt.setInt(1, likelistVO.getMemberId());
+			pstmt.setInt(1, likelistVO.getPostId());
+			pstmt.setInt(2, likelistVO.getMemberId());
 			rowCount1 = pstmt.executeUpdate();
 			System.out.println(rowCount1 + "row(s) LikelistVO delete!");
 
@@ -192,7 +191,7 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = JDBCConnection.getRDSConnection();
+			con = JNDIConnection.getRDSConnection();
 
 			// 1●設定於 pstm.executeUpdate()之前
 			con.setAutoCommit(false);
@@ -249,9 +248,12 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 	@Override
 	public LikelistVO getOneLikelistVOForCheck(Integer memberId, Integer postId) {
 		LikelistVO likelistVO = new LikelistVO();
-		final String INSERT_STMT = "SELECT  member_id, post_id " + "FROM  cga_02.likelist " + "WHERE  member_id = ? "
-				+ "AND  post_id = ? ";
-		try (Connection con = getRDSConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
+		final String INSERT_STMT = "SELECT  member_id, post_id "
+								+ "FROM  cga_02.likelist " 
+								+ "WHERE  member_id = ? "
+								+ "AND  post_id = ? ";
+		try (Connection con = JNDIConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
 
 			pstmt.setInt(1, memberId);
 			pstmt.setInt(2, postId);

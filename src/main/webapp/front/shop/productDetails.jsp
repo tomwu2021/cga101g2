@@ -89,7 +89,7 @@
 							</div>
 							<div class="product_desc">
 								<p>PCLUB品質保證</p> 
-								<c:if test="${param.totalView!=null}">
+								<c:if test="${param.totalView != null} ">
 								<p><i class="bi bi-eye-fill fa-1x"></i>累積觀看&ensp; ${param.totalView}&ensp; 次</p> 
 								</c:if>
 							</div>
