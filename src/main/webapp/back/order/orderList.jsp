@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>後台員工查詢</title>
+<title>後台訂單列表</title>
 <!-- 共用的CSS startr-->
 <%@include file="/back/layout/commonCSS.jsp"%>
 
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/assets/css/empSelect.css">
+	href="<%=request.getContextPath()%>/assets/css/orderList.css">
 
 </head>
 <body>
@@ -29,23 +29,12 @@
 						<section class="py-5">
 							<div class="row">
 
-								<div class="form-group row" style="width: 400px">
-									<label class="col-md-3 form-control-label">帳號查詢</label> <input
-										type="text" id="account"> <input type="submit"
-										value="確定" class="btn btn-primary" onclick="accountSelect()">
-								</div>
-								<br>
-								<div class="form-group row" style="width: 400px">
-									<label class="col-md-3 form-control-label">姓名查詢</label> <input
-										type="text" id="name"> <input type="submit" value="確定"
-										class="btn btn-primary" onclick="nameSelect()">
-								</div>
-								<div class="form-group row" style="width: 400px; float:right;">
-									 <input
-										type="submit" value="顯示所有會員" class="btn btn-primary"
-										onclick="selectAll()">
-								</div>
-								
+
+<!-- 								<div class="form-group row" style="width: 400px"> -->
+<!-- 									<label class="col-md-3 form-control-label">帳號查詢</label> <input -->
+<!-- 										type="text" id="account"> <input type="submit" -->
+<!-- 										value="確定" class="btn btn-primary" onclick="accountSelect()"> -->
+<!-- 								</div> -->
 
 								<div id="show"></div>
 
@@ -72,7 +61,7 @@
 
 	<!-- 額外添加的JS -->
 	<script type="text/javascript"
-		src="<%=request.getContextPath()%>/assets/js/empSelect.js"></script>
+		src="<%=request.getContextPath()%>/assets/js/orderList.js"></script>
 
 </body>
 

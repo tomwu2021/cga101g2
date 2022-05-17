@@ -29,7 +29,7 @@
 		<input type="text" name="loginAccount" placeholder="請輸入電子郵件" value="${messages.originalAccount}" />
 
 		<h2 style="font-size:28px;margin-top:20px;font-weight:bold">密碼<font color=red>　${messages.messagesPassword}</font></h2>
-		<input type="password" name="loginPassword" placeholder="請輸入密碼" />
+		<input type="password" name="loginPassword" placeholder="請輸入密碼" maxlength="12" />
 		
 		<div class="btns">
 			<input type="hidden" name="action" value="forLogin">
@@ -38,7 +38,7 @@
 				<div id="wrapper">
 					<div id="popup" class="opoups_height_width">帳號註冊</div>
 					<div id="popup22" class="opoups_height_width">忘記密碼</div>
-					<div id="popup3" class="opoups_height_width"><a href="<%=request.getContextPath()%>/article?action=all_Display">訪客進入</a></div>
+					<div id="popup3" class="opoups_height_width"><a href="<%=request.getContextPath()%>/index.html">訪客進入</a></div>
 				</div>
 			</div>
 		</div>
@@ -58,13 +58,13 @@
 			密碼
 			<div id="viewpassword" style="display: inline; color: red;font-weight: bold;" ></div>
 		</h2>
-		<input type="password" name="registerpassword" id="registerpassword" placeholder="至少八個字符，至少一個字母和一個數字" value="" />
+		<input type="password" name="registerpassword" id="registerpassword" placeholder="輸入 8 ~ 12 個字符，至少一個英文字母和一個數字" value="" maxlength="12"/>
 
 		<h2 style="margin-top: 8px;margin-left:15px;font-weight: bold;">
 			確認密碼
 			<div id="viewcheckpassword" style="display: inline; color: red;font-weight: bold;"></div>
 		</h2>
-		<input type="password" name="registercheckpasswordr" id="registercheckpasswordr" placeholder="至少八個字符，至少一個字母和一個數字" />
+		<input type="password" name="registercheckpasswordr" id="registercheckpasswordr" placeholder="輸入 8 ~ 12 個字符，至少一個英文字母和一個數字" maxlength="12"/>
 
 		<h2 style="margin-top: 8px;margin-left:15px;font-weight: bold;">
 			輸入驗證碼

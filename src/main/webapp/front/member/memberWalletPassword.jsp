@@ -43,7 +43,7 @@
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">舊密碼</label>
 															<div class="col-md-9">
-																<input name="oldWalletPassword" placeholder="請輸入舊密碼"
+																<input  maxlength="6" type="password" name="oldWalletPassword" placeholder="請輸入舊密碼"
 																	class="form-control form-control-success"
 																	value="${messages.userInput1}"> <font color=red>${messages.errorOldoldWalletPassword}</font>
 															</div>
@@ -52,7 +52,7 @@
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">新密碼</label>
 															<div class="col-md-9">
-																<input type="password" name="newWalletPassword"
+																<input maxlength="6" type="password" name="newWalletPassword"
 																	placeholder="輸入六位數字"
 																	class="form-control form-control-success"
 																	value="${messages.userInput2}"> <font color=red>${messages.errornewWalletPassword}</font>
@@ -62,7 +62,7 @@
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">確認密碼</label>
 															<div class="col-md-9">
-																<input type="password" name="checkNewWalletPassword"
+																<input maxlength="6" type="password" name="checkNewWalletPassword"
 																	placeholder="請再次確認密碼"
 																	class="form-control form-control-success"> <font
 																	color=red>${messages.checkNewWalletPassword}</font>
@@ -73,7 +73,7 @@
 														<div class="form-group row">
 															<!-- 提交按鈕 -->
 															<div class="col-md-9 ml-auto">
-																<input type="hidden" name="action"
+																<input maxlength="6" type="hidden" name="action"
 																	value="updateMemberWalletPassword"> <input
 																	type="submit" value="儲存" class="btn btn-primary"><font
 																	color=red>${messages.updatePasswordSuccess}</font>

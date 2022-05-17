@@ -56,7 +56,7 @@
 																<div class="col-md-9">
 																	<input name="phone" value="${membersVO.phone}"
 																		placeholder="User Phone"
-																		class="form-control form-control-success"><font
+																		class="form-control form-control-success" maxlength="10"><font
 																		color=red>${messages.errorPhone}</font>
 																</div>
 															</div>
