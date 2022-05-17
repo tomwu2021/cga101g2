@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 =========================================
 =========================================
@@ -4433,15 +4434,15 @@ code {
   color: #6c757d;
 }
 
-/* !會員提交圖片 */
+/* !����漱���� */
 .head_div {
   width: 300px;
   height: 400px;
   display: flex;
   flex-direction: column;
-  /* 直排 (這裡主軸線與交錯軸位置改變囉) */
+  /* ���� (�ㄐ銝餉遘蝺�漱�頠訾�蔭�霈��) */
   align-items: center;
-  /* 交錯軸置中 */
+  /* 鈭日頠貊蔭銝� */
   padding: 5% 0%;
   border-left: 2px #f0f0f0 solid;
 }
@@ -4461,26 +4462,26 @@ code {
   object-fit: cover;
 }
 
-/* !會員提交圖片 結束 */
+/* !����漱���� 蝯�� */
 
-/* !變更button */
+/* !霈button */
 /* .change_button{
   border:0;
 background-color:#ffffff;
 color:#003C9D;
 border-bottom:1px #003C9D solid;
 } */
-/* !變更button 結束 */
+/* !霈button 蝯�� */
 
-/* !span換顏色加粗 顯眼*/
+/* !span������� 憿舐*/
 .highlight {
   color: #0072E3;
   font-size: 1.2em;
 }
 
-/* !變更button 結束 */
+/* !霈button 蝯�� */
 
-/* !分頁符號*/
+/* !���泵���*/
 ul.pagination {
   display: inline-block;
   padding: 0;
@@ -4509,18 +4510,18 @@ ul.pagination li a:hover:not(.active) {
   background-color: #ddd;
 }
 
-/* !分頁符號 結束 */
+/* !���泵��� 蝯�� */
 
-/* !表格文字置中*/
+/* !銵冽���蔭銝�*/
 /* https://blog.csdn.net/Peng_Hong_fu/article/details/70662979 */
 .table tbody tr td {
   vertical-align: middle;
 }
 
-/* !表格文字置中 結束*/
+/* !銵冽���蔭銝� 蝯��*/
 
 
-/* 很長很長的商城css設定=___= */
+/* 敺敺����ss閮剖��=___= */
 /*-----------------------------------------------------------------------------------
 
     CSS INDEX
@@ -5529,7 +5530,7 @@ textarea:-ms-input-placeholder {
   }
 }
 
-/*! 會員頭像的css */
+/*! ������ss */
 .img__wrapper {
   width: 50px;
   height: 50px;
@@ -5544,11 +5545,11 @@ textarea:-ms-input-placeholder {
   border-radius: 50%;
 }
 
-/*! 會員頭像的css */
+/*! ������ss */
 .top_links {
   position: relative;
 }
-
+/*
 .top_links:hover .dropdown_links {
   visibility: visible;
   max-height: 460px;
@@ -5662,7 +5663,7 @@ textarea:-ms-input-placeholder {
     line-height: 25px;
   }
 }
-
+*/
 .search_close_btn {
   position: absolute;
   top: 50px;
@@ -5811,7 +5812,7 @@ textarea:-ms-input-placeholder {
 .main_menu nav>ul>li:hover .mega_menu {
   visibility: visible;
   max-height: 300px;
-  /* 展開後的高度 */
+  /* 撅����漲 */
   padding: 25px 30px 30px 30px;
 }
 
@@ -5886,7 +5887,7 @@ textarea:-ms-input-placeholder {
 .main_menu nav>ul>li .mega_menu {
   position: absolute;
   min-width: 65%;
-  /* 筆記:下拉是選單展開後的寬度 */
+  /* 蝑��:銝���撅���祝摨� */
   padding: 0 30px 0 30px;
   background: #ffffff;
   box-shadow: 0 3px 11px 0 rgba(0, 0, 0, 0.1);

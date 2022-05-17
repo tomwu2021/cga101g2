@@ -20,3 +20,8 @@ th {
 td {
 	word-wrap: break-word;
 }
+
+.viewhover:hover{
+	color:red;
+/* 	front-size:18px; */
+}

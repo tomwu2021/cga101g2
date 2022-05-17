@@ -2,6 +2,8 @@ package com.members.model;
 
 import java.sql.Timestamp;
 
+import com.picture.model.PictureVO;
+
 public class MembersVO implements java.io.Serializable {
 	private Integer memberId;
 	private String account;
@@ -16,6 +18,17 @@ public class MembersVO implements java.io.Serializable {
 	private Integer status;
 	private Timestamp createTime;
 	private String createTimeString; // yyyy-MM-dd
+	
+	
+	private String url;
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	public MembersVO() {
 	}
@@ -137,5 +150,7 @@ public class MembersVO implements java.io.Serializable {
 				+ eWalletAmount + ", eWalletPassword=" + eWalletPassword + ", bonusAmount=" + bonusAmount + ", status="
 				+ status + ", createTime=" + createTime + "]";
 	}
+
+
 
 }

@@ -8,10 +8,6 @@
 <%@include file="/back/layout/commonCSS.jsp"%>
 <!-- 共用的CSS end-->
 
-<!-- 額外添加的CSS -->
-<!-- 	路徑舉例 -->
-<%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/?????待討論"> --%>
-<!-- 額外添加的CSS -->
 <body>
 	<!-- 共用的header start-->
 	<%@ include file="/front/layout/header.jsp"%>
@@ -41,22 +37,16 @@
 			<!--! Horizontal Form結束-->
 
 
-			<!-- 共通的footer start-->
-			<%@include file="/back/layout/footer.jsp"%>
-			<!-- 共通的footer end-->
+
 		</div>
 	</div>
 
 
+</div>
+	<%@include file="/front/pet/footer.jsp"%>
 	<!-- 共用的JS -->
-	<%@include file="/back/layout/commonJS.jsp"%>
-	
-	<!-- 共用的JS -->
-
-	<!-- 額外添加的JS -->
-	<!-- 	路徑舉例 -->
-	<%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/?????待討論"> --%>
-	<!-- 額外添加的JS -->
+	<%@include file="/front/layout/commonJS.jsp"%>
+	<!-- 自訂的JS -->
 
 </body>
 

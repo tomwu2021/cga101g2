@@ -678,8 +678,6 @@ public class MembersServlet extends HttpServlet {
 	public void updateSetWalletPassword(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
-		System.out.println("執行");
-
 		HttpSession currentSession = req.getSession();
 		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
 
@@ -707,7 +705,7 @@ public class MembersServlet extends HttpServlet {
 		}
 		if (!messages.isEmpty()) {
 			messages.put("userInput1", setWalletPassword);
-			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberSuccess.jsp");
+			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberSetWalletPassword.jsp");
 			failureView.forward(req, res);
 			return;// 程式中斷
 		} else {
@@ -723,7 +721,7 @@ public class MembersServlet extends HttpServlet {
 					.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
 			messages.put("updatePasswordSuccess", "成功設定錢包密碼！");
 			// successful 的頁面
-			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberSetWalletPassword.jsp");
+			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberSuccess.jsp");
 			successView.forward(req, res);
 			return;// 程式中斷
 		}

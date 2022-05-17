@@ -79,7 +79,7 @@
 
                         <div class="widget_list widget_color">
                             <h3>
-                                <a href="#">我要開團</a>
+                                <a href="<%=request.getContextPath()%>/groupShop?action=listGroupProducts_Byfind">我要開團</a>
                             </h3>
                         </div>
 

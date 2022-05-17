@@ -49,6 +49,9 @@ public class CommentController extends CommonController {
             case "getReplyByCommentId":
                 getReplyByCommentId(req, res);
                 break;
+            case "getRecentComment":
+                getRecentComment(req, res);
+                break;
             default:
                 getCommentByPostId(req, res);
         }
@@ -63,5 +66,11 @@ public class CommentController extends CommonController {
         Integer commentId = Integer.parseInt(req.getParameter("commentId"));
         PrintWriter out = res.getWriter();
         out.print(gson.toJson(cms.getReplyByCommentId(commentId)));
+    }
+
+    public void getRecentComment(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        PrintWriter out = res.getWriter();
+        Integer loginId = super.getLoginInfo(req,res).getMemberId();
+        out.print(gson.toJson(cms.getRecentComment(loginId)));
     }
 }

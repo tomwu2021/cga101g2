@@ -3,6 +3,7 @@ package com.post.model;
 import java.util.List;
 
 import com.common.model.JDBCDAO_Interface;
+import com.members.model.MembersVO;
 
 public interface PostDAO_interface extends JDBCDAO_Interface<PostVO> {
 
@@ -26,5 +27,11 @@ public interface PostDAO_interface extends JDBCDAO_Interface<PostVO> {
 	// 更新單篇貼文讚數
 	//同時新增likelistVO跟單篇貼文讚數 (實務上並不常用, 一次新增成功)
 	int updateOnePostLikeCount(Integer newLikeCount, Integer postId, java.sql.Connection con);
+	
+	//讀取會員頭貼跟姓名
+	public MembersVO selectmember(Integer memberId);
+	
+	//搜尋貼文關鍵字
+	public List<PostVO> selectkeyword(String content);
 
 }

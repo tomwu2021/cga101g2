@@ -12,6 +12,7 @@ import javax.servlet.http.Part;
 import com.album.model.AlbumJDBCDAO;
 import com.common.model.MappingJDBCDAO;
 import com.common.model.MappingTableDto;
+import com.members.model.MembersVO;
 import com.picture.model.PictureJDBCDAO;
 import com.picture.model.PictureVO;
 import com.picture.service.PictureService;
@@ -115,6 +116,13 @@ public class PostService {
 		mappingTableDto.setId1(id1);
 		mappingTableDto.setId2(id2);
 		return mappingTableDto;
+	}
+	
+	/**
+	 * 讀取會員頭貼跟姓名
+	 */
+	public MembersVO selectmember(Integer memberId) {
+		return dao.selectmember(memberId);
 	}
 	
 	/**

@@ -155,19 +155,19 @@
 								<label>選擇結團方式</label> <select name="endType" id="choose"
 									class="form-select form-select-lg mb-3"
 									aria-label=".form-select-lg example"
-									style="height: 30px; width: 84px; margin: 17px 0px 0px 17px;" onchange="choose()">
+									style="height: 30px; width: 84px; margin: 17px 0px 0px 17px;"
+									onchange="chooseType()">
 									<!--   <option selected>選擇開團方式</option> -->
 									<option value="1">時間結單</option>
 									<option value="2">數量結單</option>
 								</select>
 							</div>
 
-							<div class="product_variant quantity">
+							<div class="product_variant quantity" id="min" style="display:none">
 								<!-- 							數量至少min於&起始於最低開團級距一 -->
-								<label>選擇開團數量</label> 
-								<input name="minAmount" id="minAmount" value="${param.groupAmount1}" 
-									min="${param.groupAmount1}" max="999" step="1"
-									type="number" />
+								<label>選擇開團數量</label> <input name="minAmount" id="minAmount"
+									value="${param.groupAmount1}" min="${param.groupAmount1}"
+									max="999" step="1" type="number"  />
 							</div>
 
 
@@ -232,7 +232,7 @@
 	<%@include file="/front/layout/footer.jsp"%>
 
 	<script
-	src="<%=request.getContextPath()%>/assets/js/order&cart/groupDetial.js"></script>
+		src="<%=request.getContextPath()%>/assets/js/order&cart/groupDetial.js"></script>
 
 
 </body>

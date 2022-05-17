@@ -5,11 +5,14 @@
 <head>
 <meta charset="UTF-8" />
 <title>會員中心</title>
-<!-- 共用的CSS startr-->
+
 <!-- include <head></head> -->
 <%@ include file="/front/layout/head.jsp"%>
-<%@include file="/back/layout/commonCSS.jsp"%>
+<!-- 共用的CSS -->
+<%@ include file="/back/layout/commonCSS.jsp"%>
 <!-- 共用的CSS end-->
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/front/pet/style.css">
 
 </head>
 <body onload="executeAfterloadedBody()">
@@ -20,8 +23,18 @@
 	<!-- 共用的leftnav start-->
 	<%@include file="/front/member/layout/leftnav.jsp"%>
 	<!-- 共用的leftnav end-->
-
-	<!--! ========內容======== -->
+<div class="page-holder w-100 d-flex flex-wrap">
+		<div class="container-fluid px-xl-5">
+			<section>
+				<div class="page-holder w-100 d-flex flex-wrap">
+					<div class="container-fluid">
+						<section class="py-5">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="row">
+										<div class="col-lg-2 col-md-12"></div>
+											<div class="col-lg-10 col-md-12">
+	<!-- ============================= Main ============================= -->
 	<div class="page-holder w-100 d-flex flex-wrap">
 		<div class="container-fluid px-xl-5">
 			<section>
@@ -37,7 +50,7 @@
 										<div class="card-header">
 											<h3 class="h6 text-uppercase mb-0">我的檔案</h3>
 										</div>
-										<div class="card-body">
+										<div class="card-body" style="padding-top:30px">
 											<div class="row">
 												<div class="col-lg-6 mb-5">
 													<form class="form-horizontal">
@@ -66,7 +79,7 @@
 																	style="max-width: 550px">${membersVO.phone}</label>
 															</div>
 														</div>
-														
+
 														<div class="form-group row">
 															<label class="col-md-3 form-control-label">地址</label>
 															<div class="col-md-9">
@@ -74,27 +87,17 @@
 																	style="max-width: 550px">${membersVO.address}</label>
 															</div>
 														</div>
-
-														<!--                           <div class="form-group row"> -->
-														<!--                             <label class="col-sm-3 form-control-label">密碼</label> -->
-														<!--                             <div class="col-md-9"> -->
-														<!--                               <label class="col-sm-9 form-control-label">*****777 <a href="#">變更</a></label> -->
-														<!--                               !看會員提交圖片的css css/style.default.css 4195 -->
-														<!--                             </div> -->
-														<!--                           </div> -->
-
-
-														<!--! 提交按鈕 -->
 														<div class="form-group row">
 															<div class="col-md-9 ml-auto">
-															<a href="<%=request.getContextPath()%>/front/member/memberUpdate.jsp"><input type="button" value="修改" class="btn btn-primary"></a>
-																
+																<a
+																	href="<%=request.getContextPath()%>/front/member/memberUpdate.jsp"><input
+																	type="button" value="修改" class="btn btn-primary"></a>
+
 															</div>
 														</div>
 													</form>
 													<!--! 提交按鈕結束 -->
 												</div>
-												<!-- !看會員提交圖片的css css/style.default.css 4195-->
 												<div class="col-lg-6 mb-5">
 													<div class="form-group row">
 														<label class="col-md-3 form-control-label">會員等級</label>
@@ -132,19 +135,25 @@
 			<!--! Horizontal Form結束-->
 
 
-			<!-- 共通的footer start-->
-			<%@include file="/back/layout/footer.jsp"%>
-			<!-- 共通的footer end-->
 		</div>
 	</div>
-
-
+	<!-- =========================== End Main =========================== -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>
+	<%@include file="/front/pet/footer.jsp"%>
 	<!-- 共用的JS -->
-	<%@include file="/back/layout/commonJS.jsp"%>
-	<!-- 共用的JS -->
-
-	<!-- 額外添加的JS -->
-<script type="text/javascript"
+	<%@include file="/front/layout/commonJS.jsp"%>
+	<!-- 自訂的JS -->
+	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/assets/js/member.js"></script>
 </body>
 
