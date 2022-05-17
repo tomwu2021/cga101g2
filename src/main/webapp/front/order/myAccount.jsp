@@ -101,7 +101,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </section>
 
 <!-- 主要內容 end -->
