@@ -85,7 +85,7 @@ function viewBody(objectJSON) {
 		html += removeUndefined(memberVO.phone);
 		html += "<td>" + viewRanks(memberVO.rankId) + "</td>";
 		//		html += "<td>" + memberVO.bonusAmount + "</td>";
-		html += "<td onclick='viewRecord(this)' id='" + memberVO.account + "'>" + memberVO.eWalletAmount + "</td>";
+		html += "<td class = 'viewhover' onclick='viewRecord(this)' id='" + memberVO.account + "'>" + memberVO.eWalletAmount + "</td>";
 		html += viewStatus(memberVO.status);
 		html += "<td>" + memberVO.createTimeString + "</td>";
 		html += "<td><button onclick='updateInfo(this)' id='" + memberVO.memberId + "'>修改</button></td>";
@@ -155,7 +155,7 @@ function viewUpdate(objectJSON, objMemberId) {
 		html += removeUndefined(memberVO.address);
 		html += removeUndefined(memberVO.phone);
 		html += "<td>" + viewRanks(memberVO.rankId) + "</td>";
-		html += "<td>" + memberVO.eWalletAmount + "</td>";
+		html += "<td class='viewhover'>" + memberVO.eWalletAmount + "</td>";
 
 		if (objMemberId == memberVO.memberId) {
 			html += "<td><select id='changeSelect'><option>" + viewStatusNo(memberVO.status) + "</option><option>停權</option><option>正常</option></select></td>";
@@ -277,7 +277,7 @@ function selectAll() {
 }
 
 
-// 顯示儲值消費紀錄 ---------------- 未完成
+// 顯示儲值消費紀錄 ---------------- 
 function viewRecord(obj) {
 	let dataJSON = {
 		action: "empSelectMemberRecord",
