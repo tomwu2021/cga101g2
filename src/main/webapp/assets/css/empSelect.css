@@ -21,7 +21,11 @@ td {
 	word-wrap: break-word;
 }
 
-.viewhover:hover{
-	color:red;
-/* 	front-size:18px; */
+
+
+.viewhover:hover {
+	border: 2px solid #000;
+	background: #bcc0c7;
+	backface-visibility: hidden;
+	cursor: pointer;
 }

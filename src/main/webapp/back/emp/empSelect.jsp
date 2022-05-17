@@ -21,6 +21,8 @@
 	<!-- 共用的leftnav end-->
 
 	<!--! ========內容======== -->
+
+
 	<div class="page-holder w-100 d-flex flex-wrap">
 		<div class="container-fluid px-xl-5">
 			<section>
@@ -40,12 +42,11 @@
 										type="text" id="name"> <input type="submit" value="確定"
 										class="btn btn-primary" onclick="nameSelect()">
 								</div>
-								<div class="form-group row" style="width: 400px; float:right;">
-									 <input
-										type="submit" value="顯示所有會員" class="btn btn-primary"
+								<div class="form-group row" style="width: 400px; float: right;">
+									<input type="submit" value="顯示所有會員" class="btn btn-primary"
 										onclick="selectAll()">
 								</div>
-								
+
 
 								<div id="show"></div>
 

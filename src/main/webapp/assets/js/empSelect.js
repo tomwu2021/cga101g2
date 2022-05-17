@@ -58,21 +58,21 @@ function viewStatusNo(status) {
 
 // 顯示正常畫面
 function viewBody(objectJSON) {
+
 	let html = '';
-	html += "<div class='main' >";
-	html += "<table width='100%'; style='table-layout:fixed' >";
+	html += "<div class='table-responsive'>";
+	html += "<table class='table table-striped table-bordered table-hover' >";
 	html += "<tr>";
 	html += "<th style='display: none;'>會員編號</th>"; // 隱藏的 MemberId
-	html += "<th>會員帳號</th>";
-	html += "<th>會員姓名</th>";
-	html += "<th width=30%>會員地址</th>";
-	html += "<th>會員手機</th>";
-	html += "<th>會員等級</th>";
-	//	html += "<th>會員紅利</th>";
+	html += "<th style='width:165px'>會員帳號</th>";
+	html += "<th style='width:165px'>會員姓名</th>";
+	html += "<th style='width:200px'>會員地址</th>";
+	html += "<th style='width:120px'>會員手機</th>";
+	html += "<th style='width:120px'>會員等級</th>";
 	html += "<th>會員錢包</th>";
 	html += "<th>會員狀態</th>";
-	html += "<th>創建日期</th>";
-	html += "<th>修改</th>";
+	html += "<th  style='width:120px'>創建日期</th>";
+	html += "<th style='width:80px'>修改</th>";
 	html += "</tr>";
 
 	for (let i = 0; i < objectJSON.length; i++) {
@@ -84,15 +84,14 @@ function viewBody(objectJSON) {
 		html += removeUndefined(memberVO.address);
 		html += removeUndefined(memberVO.phone);
 		html += "<td>" + viewRanks(memberVO.rankId) + "</td>";
-		//		html += "<td>" + memberVO.bonusAmount + "</td>";
 		html += "<td class = 'viewhover' onclick='viewRecord(this)' id='" + memberVO.account + "'>" + memberVO.eWalletAmount + "</td>";
 		html += viewStatus(memberVO.status);
 		html += "<td>" + memberVO.createTimeString + "</td>";
-		html += "<td><button onclick='updateInfo(this)' id='" + memberVO.memberId + "'>修改</button></td>";
+		html += "<td class='viewhover'><button onclick='updateInfo(this)' id='" + memberVO.memberId + "' >修改</button></td>";
 		html += "</tr>";
 	}
-
 	html += "</table>";
+	html += "</div>";
 
 	return html;
 }
@@ -131,19 +130,19 @@ function updateInfo(obj) { // obj.id：會員編號
 function viewUpdate(objectJSON, objMemberId) {
 	//	console.log(objectJSON);
 	let html = '';
-	html += "<div class='main' >";
-	html += "<table width='100%'; style='table-layout:fixed' >";
+	html += "<div class='table-responsive'>";
+	html += "<table class='table table-striped table-bordered table-hover' >";
 	html += "<tr>";
 	html += "<th style='display: none;'>會員編號</th>"; // 隱藏的 MemberId
-	html += "<th>會員帳號</th>";
-	html += "<th>會員姓名</th>";
-	html += "<th width=30%>會員地址</th>";
-	html += "<th>會員手機</th>";
-	html += "<th>會員等級</th>";
+	html += "<th style='width:165px'>會員帳號</th>";
+	html += "<th style='width:165px'>會員姓名</th>";
+	html += "<th style='width:200px'>會員地址</th>";
+	html += "<th style='width:120px'>會員手機</th>";
+	html += "<th style='width:120px'>會員等級</th>";
 	html += "<th>會員錢包</th>";
 	html += "<th>會員狀態</th>";
-	html += "<th>創建日期</th>";
-	html += "<th>修改</th>";
+	html += "<th  style='width:120px'>創建日期</th>";
+	html += "<th style='width:80px'>修改</th>";
 	html += "</tr>";
 
 	for (let i = 0; i < objectJSON.length; i++) {
@@ -172,6 +171,7 @@ function viewUpdate(objectJSON, objMemberId) {
 	}
 
 	html += "</table>";
+	html += "</div>";
 	return html;
 }
 
@@ -292,7 +292,8 @@ function viewRecord(obj) {
 			success: function(json) {
 				objectJSON = JSON.parse(json);
 				let html = '';
-				html += "<table class='table table-striped table-hover card-text'>";
+				html += "<div class='table-responsive'>";
+				html += "<table class='table table-striped table-bordered table-hover'>";
 				html += "<thead>";
 				html += "<tr class='text-center'>";
 				html += "<th>交易編號</th>";
@@ -312,7 +313,7 @@ function viewRecord(obj) {
 				}
 				html += "</tbody>";
 				html += "</table>";
-
+				html += "</div>";
 				document.getElementById("show").innerHTML = html;
 			},
 		}
