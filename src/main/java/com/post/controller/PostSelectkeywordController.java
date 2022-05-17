@@ -75,12 +75,12 @@ public class PostSelectkeywordController extends HttpServlet {
 			/*************************** 2.開始查詢資料 ***************************************/
 			PostService ps = new PostService();
 			
-			List<PostVO> selectlist = ps.selectkeyword(content);
+			List<PostVO> postlist = ps.selectkeyword(content);
 			
 			// **點讚清單分界 開始**//
 			if (memberId != null) {
 				LikelistService likeListSvc = new LikelistService();
-				for (PostVO vo : selectlist) {
+				for (PostVO vo : postlist) {
 					LikelistVO likeListVO = likeListSvc.getOneLikelistVOForCheck(memberId,vo.getPostId());
 					vo.setLikelistVO(likeListVO);
 				}
@@ -88,7 +88,7 @@ public class PostSelectkeywordController extends HttpServlet {
 			// **點讚清單分界 結束**//
 			
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			req.setAttribute("selectlist", selectlist);
+			req.setAttribute("postlist", postlist);
 			req.setAttribute("sessionMemberId", memberId);
 
 			String url = "/front/post/blog.jsp";
