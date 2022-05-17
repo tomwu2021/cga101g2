@@ -160,7 +160,7 @@
 
 							
                             <div id="demo_border" style="position: relative;">
-                            ====${postVO.pictureVO}====
+
 								<div id="image_photo"><img src="${membersVO.url}"></div>										
 								<div id="img_text">${membersVO.name}</div>
 							</div>

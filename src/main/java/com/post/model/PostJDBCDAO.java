@@ -315,6 +315,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 
 	@Override
 	public List<PostVO> selectChangePost() {
+		List<PostVO> poList = new ArrayList<PostVO>();
 		final String SELECT_CHANGEPOST = "SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url,pic2.url,pic2.preview_url "
 				+ "		  FROM post po  " + "		  JOIN members m ON(po.member_id = m.member_id)   "
 				+ "		  JOIN pet p ON(m.member_id = p.member_id)   "
@@ -328,7 +329,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 
 			ResultSet rs = pstmt.executeQuery();
 
-			List<PostVO> poList = new ArrayList<PostVO>();
+			
 
 			while (rs.next()) {
 				PostVO postVO = new PostVO();
@@ -362,11 +363,12 @@ public class PostJDBCDAO implements PostDAO_interface {
 				poList.add(postVO);
 
 			}
-			return poList; // 顯示status狀態正常(0)含圖的貼文
+			
 
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}
+		return poList; // 顯示status狀態正常(0)含圖的貼文
 
 	}
 
@@ -500,7 +502,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 	 */
 	@Override
 	public List<PostVO> selectkeyword(String content) {
-		List<PostVO> list = new ArrayList<PostVO>();
+		List<PostVO> allList = new ArrayList<PostVO>();
 		PostVO postVO = null;
 		final String GETAll = "SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url,pic2.url,pic2.preview_url "
 				+ "		  FROM post po "
@@ -509,19 +511,25 @@ public class PostJDBCDAO implements PostDAO_interface {
 				+ "		  JOIN picture pic ON(p.picture_id = pic.picture_id) "
 				+ "		  JOIN post_pic ppc ON(ppc.post_id = po.post_id) "
 				+ "		  JOIN picture pic2 ON(pic2.picture_id = ppc.picture_id) "
-				+ "		  WHERE po.status = 0 and po.content like '%+?+%' "
+				+ "		  WHERE po.status = 0 and po.content "+ " LIKE '%"+content+"%' "   
 				+ "		  group by po.post_id "
-				+ "		  order by create_time desc "
-				+ "		  limit 10 ";
+				+ "		  order by create_time desc ";
+		
+		System.out.println(GETAll);
+		
 
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETAll);) {
 			
-			pstmt.setString(1, content);
+//			pstmt.setString(1, content);
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				postVO = new PostVO();
+				PictureVO pictureVO = new PictureVO();
+				MembersVO membersVO = new MembersVO();
+				PictureVO pictureVO2 = new PictureVO();
+
 				postVO.setPostId(rs.getInt("post_id"));
 				postVO.setMemberId(rs.getInt("member_id"));
 				postVO.setContent(rs.getString("content"));
@@ -531,13 +539,28 @@ public class PostJDBCDAO implements PostDAO_interface {
 				postVO.setCreateTime(rs.getDate("create_time"));
 				postVO.setUpdateTime(rs.getDate("update_time"));
 
-				list.add(postVO);
+				membersVO.setName(rs.getNString("name"));
+				postVO.setMembersVO(membersVO);
+
+//				貼文照片
+				pictureVO.setPictureId(rs.getInt("pic.picture_id"));
+				pictureVO.setUrl(rs.getString("pic.url"));
+				pictureVO.setPreviewUrl(rs.getString("pic.preview_url"));
+				postVO.setPictureVO(pictureVO);
+
+//				頭貼照片 
+				pictureVO2.setUrl(rs.getString("pic2.url"));
+				pictureVO2.setPreviewUrl(rs.getString("pic2.preview_url"));
+				postVO.setPictureVO2(pictureVO2);
+
+				allList.add(postVO);
+				
 			}
 
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}
-		return list;
+		return allList;
 	}
 
 

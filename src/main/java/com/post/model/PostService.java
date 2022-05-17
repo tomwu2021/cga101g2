@@ -226,7 +226,12 @@ public class PostService {
 	}
 	
 	
-	// 六、搜尋貼文 
+	/**
+	 * 搜尋貼文 
+	 */
+	public List<PostVO> selectkeyword(String content){
+		return dao.selectkeyword(content);
+	}
 	
 	
 	/**
@@ -236,5 +241,7 @@ public class PostService {
 	public int selectOnePostLikeCount(Integer postId) {
 		return dao.selectOnePostLikeCount(postId);
 	}
+	
+	
 	
 }

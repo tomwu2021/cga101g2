@@ -300,17 +300,7 @@
                             <figure>
                                	<!-- 圖 -->
 
-								<!--  <div class="blog_thumb">
-								
-								<a href="blog-details.html"><img src="assets/img/blog/blog-big1.jpg" alt=""></a>
-								
-								</div>  -->
-								
-								
-<%-- 								 	<div id="demo_border">
-									<div><img style="border-radius: 50%; width: 100px; height: 100px" id="img-demo" src="${postVO.urlList.get(0) }" alt="頭像"/>
-									<div id="img_text">${postVO.membersVO.name}</div></div>
-									<div> --%>
+									<!-------------------------------- 頭像跟名字 -------------------------------->
 									
 									<div id="demo_border" style="position: relative;">
 									
@@ -324,21 +314,19 @@
 										
 									</div>
 									
-									 <div class="blog_meta">
+										<div class="blog_meta">
 																					
 										
-									</div>
+										</div>
 									
+									<!-------------------------------- 貼文圖片 -------------------------------->
 									
-								           
-								                   
-								            <%-- <c:if test="${postVO.pictureVO.url}">    --%>    
-						                    <div class="blog_thumb">
+								    <div class="blog_thumb">
 						                    
-                                    		<a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&memberId=${postVO.memberId}&action=selectdetail"><img src="${postVO.pictureVO2.url}" alt=""></a>
+                                    	<a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&memberId=${postVO.memberId}&action=selectdetail"><img src="${postVO.pictureVO2.url}" alt=""></a>
                                     		
-                                			</div>	
-                                			<%-- </c:if> --%>
+                                	</div>	
+                                			
                                 							        
 						                  
                                    <!-- 整個文 -->
@@ -394,8 +382,11 @@
                             <div class="widget_title">
                                 <h3>Search</h3>
                             </div>
-                            <form action="#">
-                                <input placeholder="Search..." type="text">
+                            <form method="post" action="<%=request.getContextPath()%>/SelectKeyword" enctype="multipart/form-data">
+                                <input placeholder="Search..." type="text" name="content" >
+                                
+                                <input type="hidden" name="action" value="selectPost">									
+							    
                                 <button type="submit">search</button>
                             </form>
                         </div>
