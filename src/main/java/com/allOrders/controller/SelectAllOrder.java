@@ -53,6 +53,10 @@ public class SelectAllOrder extends HttpServlet{
 			Integer status = Integer.parseInt(req.getParameter("status"));
 			OrdersService ordersService=new OrdersService();
 			ordersService.updateStatusByOrderId(orderId,status);
+			PrintWriter out = res.getWriter();
+			List<OrdersVO> list =ordersService.getAll();
+			Gson gson = new Gson();
+			out.write(gson.toJson(list));
 			
 			}
 

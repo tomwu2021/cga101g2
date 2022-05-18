@@ -16,7 +16,7 @@ import com.members.model.MembersVO;
 import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet("/front/emp.do")
+@WebServlet("/back/emp.do")
 public class empServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -89,7 +89,7 @@ public class empServlet extends HttpServlet {
 //			System.out.println("帳號錯誤");
 			messages.put("errorAccount", "請確認帳號");
 			messages.put("originalAccount", username);
-			RequestDispatcher failureView = req.getRequestDispatcher("/back/emp/empLogin.jsp");
+			RequestDispatcher failureView = req.getRequestDispatcher("/back/empLogin.jsp");
 			failureView.forward(req, res);
 			return;
 		} else {
@@ -99,16 +99,32 @@ public class empServlet extends HttpServlet {
 //				System.out.println("密碼錯誤");
 				messages.put("errorPassword", "請確認密碼");
 				messages.put("originalAccount", username);
-				RequestDispatcher failureView = req.getRequestDispatcher("/back/emp/empLogin.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back/empLogin.jsp");
 				failureView.forward(req, res);
 				return;
 			} else {
 				HttpSession session = req.getSession();
 				session.setAttribute("empVO", empVO);
 				req.setAttribute("empVO", empVO); // 資料庫取出的 empVO 物件，存入 req
-				RequestDispatcher successView = req.getRequestDispatcher("/back/emp/empSelect.jsp");
+				RequestDispatcher successView = req.getRequestDispatcher("/back/empSelect.jsp");
 				successView.forward(req, res);
 				return;
+//				if (session.getAttribute("locationEmp") != null) {
+//					System.out.println("session不等於null");
+//					String url = session.getAttribute("locationEmp").toString(); //http://localhost:8081/CGA101G2/back/customer/detail.jsp
+//					System.out.println("locationEmp："+url);
+//					
+//					req.getRequestDispatcher("/back/customer/detail.jsp").forward(req, res);
+//					return;
+//				} else { // http://localhost:8081/CGA101G2
+//					System.out.println("session等於null");
+//					System.out.println(session.getAttribute("locationEmp"));
+//
+////					RequestDispatcher successView = req.getRequestDispatcher(getServletContext().getContextPath()+"/back/empSelect.jsp");
+//					RequestDispatcher successView = req.getRequestDispatcher("http://localhost:8081/CGA101G2/back/empLogin.jsp");
+//					successView.forward(req, res);
+//					return;
+//				}
 			}
 		}
 

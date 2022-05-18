@@ -9,3 +9,6 @@
 <script src="<%=request.getContextPath()%>/assets/hub/js/charts-home.js"></script>
 <script src="<%=request.getContextPath()%>/assets/hub/js/front.js"></script>
 <script src="<%=request.getContextPath()%>/assets/hub/js/back_index.js"></script>
+<!-- sweet alert -->
+<script
+	src="<%=request.getContextPath()%>/assets/js/common/sweetalert2.all.min.js"></script>

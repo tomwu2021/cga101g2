@@ -106,7 +106,7 @@ $(function() {
 
 	$.ajax(
 		{
-			url: "/CGA101G2/front/emp.do",
+			url: "/CGA101G2/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
@@ -195,7 +195,7 @@ function sureInfo(obj) { // obj.id：會員編號
 	}
 	$.ajax(
 		{
-			url: "/CGA101G2/front/emp.do",
+			url: getContextPath()+"/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
@@ -220,7 +220,7 @@ function accountSelect() {
 
 	$.ajax(
 		{
-			url: "/CGA101G2/front/emp.do",
+			url: getContextPath()+"/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
@@ -244,7 +244,7 @@ function nameSelect() {
 
 	$.ajax(
 		{
-			url: "/CGA101G2/front/emp.do",
+			url: getContextPath()+"/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
@@ -264,7 +264,7 @@ function selectAll() {
 
 	$.ajax(
 		{
-			url: "/CGA101G2/front/emp.do",
+			url: getContextPath()+"/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
@@ -286,7 +286,7 @@ function viewRecord(obj) {
 	console.log(obj.id); // 信箱
 	$.ajax(
 		{
-			url: "/CGA101G2/front/emp.do",
+			url: getContextPath()+"/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
@@ -340,7 +340,7 @@ function getNameByMemberId(memberId) {
 
 	$.ajax(
 		{
-			url: "/CGA101G2/front/emp.do",
+			url: getContextPath()+"/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {

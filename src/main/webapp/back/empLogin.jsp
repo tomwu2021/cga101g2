@@ -12,7 +12,7 @@
 
 	<div class="grid">
 
-		<form method="post" action="/CGA101G2/front/emp.do" class="form login">
+		<form method="post" action="<%=request.getContextPath()%>/back/emp.do" class="form login">
 			<font color=red> ${messages.errorAccount}</font>
 			<div class="form__field">
 				<label for="login__username"><svg class="icon">
