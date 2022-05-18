@@ -29,31 +29,29 @@ href="<%=request.getContextPath()%>/front/post/css/personPost.css">
 	}
     
     #image_photo {
-　　position: absolute;
-    background-image: url("");
- 
-    background-repeat: no-repeat;
-    border-radius: 50%;
-    overflow: hidden;
-
-    width: 120px;
-    height: 120px;
-    transform: translateY(-50px);
+    　　position: absolute;
+        /*background-image: url();*/
+        background-repeat: no-repeat;
+        border-radius: 50%;
+        overflow: hidden;
+        width: 120px;
+        height: 120px;
+        transform: translateY(-50px);
 	}
 	
 	#img_text {
-	position: absolute;
-	bottom: 0px;
-	right: 0px;
-	font-size: 16px;
-	color: #926161;
-	border-radius: 50%;
-	/* background-color: #F00; */
-	width: 150px;
-	height:50px;
-	text-align: center;
-	line-height: 30px;
-	transform: translateX(8px) translateY(1px);
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        font-size: 16px;
+        color: #926161;
+        border-radius: 50%;
+        /* background-color: #F00; */
+        width: 150px;
+        height:50px;
+        text-align: center;
+        line-height: 30px;
+        transform: translateX(8px) translateY(1px);
 	}
 </style>
 
@@ -118,8 +116,9 @@ href="<%=request.getContextPath()%>/front/post/css/personPost.css">
                                 title="List"></button> --> 
                         </div>
                         <!-- 新增的追蹤跟封鎖按鈕 -->
-                        <div class="button1">追蹤</div>
-                        <div class="button2">封鎖</div>
+                        <div class="container" id="button-area" style="display: block;margin-left: 380px;margin-top: -70px;">
+
+                        </div>
                         
                         <!-- sort by average rating按鈕 -->
                         <!-- <div class=" niceselect_option">
@@ -205,7 +204,7 @@ href="<%=request.getContextPath()%>/front/post/css/personPost.css">
                     <c:if test="${memberId == isOwner}">
                     
                     <div>
-                    <img src="front/post/image/addpost.png" class="ml-3" style="height:40px;width:40px; position: fixed; top: 80px; right: 14px;" onclick="window.location='http://localhost:8081/CGA101G2/front/post/addPost.jsp'" id="addpost">
+                    <img src="<%=request.getContextPath()%>/front/post/image/addpost.png" class="ml-3" style="height:40px;width:40px; position: fixed; top: 80px; right: 14px;" onclick="window.location='<%=request.getContextPath()%>/front/post/addPost.jsp'" id="addpost">
                     </div>
                     </c:if>
                     
@@ -229,6 +228,9 @@ href="<%=request.getContextPath()%>/front/post/css/personPost.css">
 	<script 
 		  src="<%=request.getContextPath()%>/front/post/js/delete.js">
 	</script>
+<script
+        src="<%=request.getContextPath()%>/front/post/js/personPost.js">
+</script>
 </body>
 
 <!-- <script>

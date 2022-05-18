@@ -121,7 +121,8 @@ public class RelationshipController extends CommonController {
         PrintWriter out = res.getWriter();
         if (membervo != null) {
             Integer targetId = Integer.parseInt(req.getParameter("targetId"));
-            if (relaServ.inviteFreind(memberId,targetId) == 1) {
+            System.out.println("lid:"+loginId+"//mid"+memberId+"//tid:"+targetId);
+            if (relaServ.inviteFreind(loginId,targetId) == 1) {
                 out.write("{\"status\":\"成功邀請好友！\"}");
             } else {
                 out.write("{\"status\":\"無權限進行此操作\"}");
@@ -285,7 +286,9 @@ public class RelationshipController extends CommonController {
 
     public void getRelation(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
-        RelationResult relationResult = relaServ.getRelation(loginId, memberId);
+        Integer targetId = Integer.parseInt(req.getParameter("targetId"));
+        System.out.println("lid:"+loginId+"//mid"+memberId+"//tid:"+targetId);
+        RelationResult relationResult = relaServ.getRelation(loginId, targetId);
         out.write(gson.toJson(relationResult));
     }
 }

@@ -7,43 +7,45 @@ let isBlock;
 let isInviting;
 let isInvited;
 let isBlocked;
-let targetId = $("#memberId").val();
+let targetId = parseInt($("#memberId").val());
+let isOwner = parseInt($("#isOwner").val());
+
 function makeButtonArea() {
-    console.log(targetId);
-    isOwner = $("#isOwner").val();
-    if(targetId <= 0 ||isOwner === 1 ){
+    console.log("/////////lid:"+getLoginId()+"////isOwner:"+isOwner+"////target:"+targetId)
+    if(getLoginId() <= 0 ||getLoginId() === targetId ){
         return;
     }
     $.get({
-        url: `${getContextPath()}/relationship?memberId=${targetId}&action=getRelation`,
+        url: `${getContextPath()}/relationship?memberId=${getLoginId()}&action=getRelation&targetId=${targetId}`,
         success: function (result, status) {
             let html = "";
+            $("#button-area").html(html);
             console.log(result);
             isFriend = parseInt(result.isFriend);
             isBlock = parseInt(result.isBlock);
             isInviting = parseInt(result.isInviting);
             isInvited = parseInt(result.isInvited);
             isBlocked = parseInt(result.isInvited);
-            if(isBlock===1||getLoginId()<0){
-                return;
-            }
             let contextPath = getContextPath();
             if (isFriend === 1) {
-                html += `<div class="button1 buttons" id="inviteFreind"><i class="bi bi-check-lg" style="color:green;"></i>朋友</div>`
-            } else if (isInvited === 0 && isInviting === 0 && isFriend ===0) {
-                html += `<div class="button1 buttons" id="inviteFriend" onclick="inviteFriend()">加為朋友</div>`;
+                html += `<div class="button1" style="margin-bottom:10px;"><i class="bi bi-check-lg" style="color:white;"></i> 朋友 </div>`
             } else if (isInviting === 1) {
-                html += `<div class="button1 buttons" id="acceptInvite" style="border:green 2px solid" onclick="accpetInvite()">接受邀請</div>`;
-            } else if (isInvited === 1) {
-                html += `<div class="button1 buttons" id="cancelInvite" onclick="cancelInvite()">取消邀請</div>`;
+                html += `<div class="button1" id="cancelInvite" style="margin-bottom: 10px;" onclick="cancelInvite()">取消邀請</div>`;
+            } else if (isInvited === 0) {
+                html += `<div class="button1" id="inviteFriend" style="margin-bottom: 10px;" onclick="inviteFriend()">加為朋友</div>`;
+            } else if (isInvited === 1){
+                html += `<div class="button1" id="inviteFriend" style="margin-bottom: 10px;" onclick="accpetInvite()">接受邀請</div>`;
             }
             if (isBlock === 0) {
-                html += `<div class="button2 buttons" id="addBlock" onclick="addBlock()" >封鎖</div>`
+                html += `<div class="button2" id="addBlock" style="margin-bottom: 10px;position: relative;right: 10px;" onclick="addBlock()" >封鎖</div>`
                 html += `<a href="${contextPath}/album?memberId=${targetId}">
                         <div class="button1 buttons">觀看相簿</div>
                     </a>`;
-            }if (isBlock === 1) {
-                html += `<div class="button2 buttons" id="deleteBlock" onclick="deleteBlock()">取消封鎖</div>`
+            }else {
+                html += `<div class="button2" id="deleteBlock"  style="margin-bottom: 10px;position: relative;right: 10px;" onclick="deleteBlock()" >取消封鎖</div>`
+                html += `<a href="${contextPath}/album?memberId=${targetId}">
+                        <div class="button1 buttons">觀看相簿</div>
+                    </a>`;
             }
             $("#button-area").html(html);
         }
@@ -168,7 +170,6 @@ function addBlock() {
 }
 
 function deleteBlock() {
-
     $.get({
         url: `${getContextPath()}/relationship?targetId=${targetId}&action=deleteBlock&memberId=${getLoginId()}`,
         success: function (result, status) {
@@ -196,15 +197,11 @@ function deleteBlock() {
         }
     })
 }
-
 function accpetInvite(){
-    loading();
     $.get({
-        url: getContextPath() + `/relationship?targetId=addFriend&targetId${targetId}`,
+        url: `${getContextPath()}/relationship?action=addFriend&targetId=${targetId}&memberId=${getLoginId()}`,
         success: function(result) {
             if(parseInt(result.status) === 0) {
-                console.log(result.status);
-                offLoading();
                 Swal.fire({
                     position: 'center',
                     icon: 'error',
@@ -213,8 +210,6 @@ function accpetInvite(){
                     timer: 1500
                 })
             }else{
-                makeButtonArea();
-                offLoading();
                 Swal.fire({
                     position: 'center',
                     icon: 'success',

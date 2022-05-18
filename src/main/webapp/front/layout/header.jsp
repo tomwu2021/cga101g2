@@ -174,7 +174,7 @@
 					style="margin-right: 0px; font-size: 25px; font-family: '微軟正黑體', sans-serif; letter-spacing: 2px">聊天室</span>
 				<span class="bi bi-x-lg chat-button"
 					style="display: inline-block; float: right;"
-					onclick="closeChatWindow()"></span>
+					onclick="closePrivateChatroom()"></span>
 			</div>
 			<div class="dropdown_links_list">
 				<ul id="private-chatroom-list-ul">

@@ -75,7 +75,8 @@ public class RelationshipJDBCDAO {
 	}
 
 	public boolean deleteInviting(Integer memberId,Integer targetId,Connection con) throws SQLException {
-		String sql = " DELETE FROM relationship WHERE relation_type = 1 "
+		String sql = " DELETE FROM relationship "
+				+ " WHERE relation_type = 1 "
 				+ " AND ((member_id = ? AND target_id = ?) OR (member_id = ? AND target_id = ?))";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		int index = 0;
@@ -163,28 +164,29 @@ public class RelationshipJDBCDAO {
 		stmt.setInt(++index, relationType);
 		stmt.setInt(++index, memberId);
 		ResultSet rs = stmt.executeQuery();
-		rs.next();
-		int result = rs.getInt(1);
-		System.out.println(result);
+		int result = 0;
+		if(rs.next()) {
+			 result = rs.getInt(1);
+		}
 		return result;
-
 	}
 	public Integer isInvited(Integer memberId,Integer targetId,Connection con) throws SQLException {
-		String sql = " SELECT (? IN (SELECT member_id FROM relationship "
-				+ " WHERE target_id = ? AND relation_type = 1)) as isRelation FROM relationship "
-				+" WHERE target_id = ? LIMIT 1";
+		String sql = " SELECT (? IN (SELECT target_id FROM relationship "
+				+" WHERE member_id = ? AND relation_type = 1)) as isRelation FROM relationship "
+				+" WHERE member_id = ? LIMIT 1 ";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		int index = 0;
+		stmt.setInt(++index, memberId);
 		stmt.setInt(++index, targetId);
-		stmt.setInt(++index, memberId);
-		stmt.setInt(++index, memberId);
+		stmt.setInt(++index, targetId);
 		ResultSet rs = stmt.executeQuery();
-		rs.next();
-		int result = rs.getInt(1);
-		System.out.println(result);
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt(1);
+		}
 		return result;
 	}
-	public Integer isBlock(Integer memberId,Integer targetId,Connection con) throws SQLException {
+	public Integer isBlocked(Integer memberId,Integer targetId,Connection con) throws SQLException {
 		String sql = " SELECT (? IN (SELECT target_id FROM relationship "
 				+ " WHERE member_id = ? AND relation_type = 2)) as isRelation FROM relationship "
 				+" WHERE member_id = ? LIMIT 1";
@@ -194,9 +196,10 @@ public class RelationshipJDBCDAO {
 		stmt.setInt(++index, targetId);
 		stmt.setInt(++index, targetId);
 		ResultSet rs = stmt.executeQuery();
-		rs.next();
-		int result = rs.getInt(1);
-		System.out.println(result);
+		int result = 0;
+		if(rs.next()) {
+			result = rs.getInt(1);
+		}
 		return result;
 	}
 

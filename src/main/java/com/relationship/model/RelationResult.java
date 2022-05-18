@@ -57,7 +57,7 @@ public class RelationResult {
         this.isInvited = isInvited;
     }
 
-    public RelationResult(Integer targetId,Integer memberId) {
+    public RelationResult(Integer memberId,Integer targetId) {
         super();
         try {
             Connection con = JDBCConnection.getRDSConnection();
@@ -69,6 +69,7 @@ public class RelationResult {
             this.isInvited = rServ.isInvited(memberId,targetId,con);
             con.close();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

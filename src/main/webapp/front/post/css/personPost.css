@@ -8,7 +8,7 @@
 
 #image_photo {
 	display: inline-block;
-	background-image: url("");
+	/*background-image: url("");*/
 	background-repeat: no-repeat;
 	border-radius: 50%;
 	overflow: hidden;
@@ -65,10 +65,11 @@ img {
 	padding: 10px 20px;
 	text-align: center;
 	text-decoration: none;
-	display: inline-block;
 	font-size: 16px;
 	border-radius: 8px;
 	transform: translateY(50px) translateX(450px);
+	width: 200px;
+	display: block;
 }
 
 /* 封鎖 */
@@ -80,12 +81,24 @@ img {
 	padding: 10px 20px;
 	text-align: center;
 	text-decoration: none;
-	display: inline-block;
 	font-size: 16px;
 	border-radius: 8px;
 	transform: translateY(50px) translateX(460px);
+	width: 200px;
+	display: block;
+	transition: all 0.3s;
 }
 
+.button1:hover{
+	cursor: pointer;
+	background-color: #be3231;
+	color:white;
+}
+.button2:hover{
+	cursor: pointer;
+	background-color: black;
+	color:white;
+}
 .product_content {
 	display: none;
 }
@@ -103,7 +116,6 @@ img {
 	border: none;
 	font-weight: bold;
 	cursor: grab;
-
 	color: white;
 	text-shadow: #504c4c 2px 2px;
 }

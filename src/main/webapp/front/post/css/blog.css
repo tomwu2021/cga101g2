@@ -5,8 +5,8 @@
 	}
     
     #image_photo {
-¡@¡@position: absolute;
-    background-image: url("");
+    position: absolute;
+    /*background-image: url("");*/
     background-repeat: no-repeat;
     border-radius: 50%;
     overflow: hidden;

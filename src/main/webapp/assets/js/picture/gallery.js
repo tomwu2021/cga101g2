@@ -4,11 +4,6 @@
 let previousFileName = "";
 let fileName = "";
 let uploadTime = $("#uploadTime").val()||30;
-let pageSize = $("#pageSize").val()||12;
-let sort = "DESC";
-let thisPage = 1;
-let total = 0;
-let pageCount = 0;
 let coverId;
 
 

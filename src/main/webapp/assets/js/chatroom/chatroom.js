@@ -247,9 +247,9 @@ function openChat(chatroomId, chatroomType) {
                 <span class="bi bi-x-lg chat-button" style="display: inline-block;float: right;" onclick="closeChatWindow()"></span>`;
     } else {
         html = `<h3 id="chatroom-name" style="display: inline-block;" onBlur="updateChatroomName(${chatroomId})">${crName}</h3>
-        <span class="bi bi-x-lg chat-button" style="display: inline-block;float: right;" onClick="closeChatWindow()"></span>
-        <span class="bi bi-plus-lg chat-button" style="display: inline-block;float: right;" onClick="joinPeople()"></span>
-        <span class="bi bi-pencil-fill chat-button" style="display: inline-block;float: right;" onClick="editName()"></span>`;
+        <span class="bi bi-x-lg chat-button" style="display: inline-block;float: right;" onclick="closeChatWindow()"></span>
+        <span class="bi bi-plus-lg chat-button" style="display: inline-block;float: right;" onclick="joinPeople()"></span>
+        <span class="bi bi-pencil-fill chat-button" style="display: inline-block;float: right;" onclick="editName()"></span>`;
     }
     $("#chat-buttons").html(html);
     // 關閉列表
