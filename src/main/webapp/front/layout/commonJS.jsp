@@ -61,3 +61,6 @@
 
 <script src="<%=request.getContextPath()%>/assets/shop/wishlist.js"></script>
 <script src="<%=request.getContextPath()%>/assets/js/searchPage.js"></script>
+
+<!-- Notification -->
+<script src="<%=request.getContextPath()%>/assets/js/notification.js"></script>
