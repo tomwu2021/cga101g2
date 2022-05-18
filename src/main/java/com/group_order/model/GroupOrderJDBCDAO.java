@@ -100,7 +100,7 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface {
 		// TODO Auto-generated method stub
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String getAllSql = "select group_order_id, product_id, create_time, end_time, end_type, final_price, status from group_order;";
+		String getAllSql = "select group_order_id, product_id, create_time, end_time, end_type, final_price, status,min_amount from group_order;";
 		List<GroupOrderVO> groupOrderList = new ArrayList<GroupOrderVO>();
 		GroupOrderVO groupOrderVO = null;
 		try (Connection con = JDBCConnection.getRDSConnection()) {
@@ -115,6 +115,7 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface {
 				groupOrderVO.setEndType(rs.getInt("end_type"));
 				groupOrderVO.setFinalPrice(rs.getInt("final_price"));
 				groupOrderVO.setStatus(rs.getInt("status"));
+				groupOrderVO.setMinAmount(rs.getInt("min_amount"));
 				groupOrderList.add(groupOrderVO);
 			}
 		} catch (Exception e) {
@@ -345,17 +346,16 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface {
 		}
 		return groupOrderList;
 	}
+
 	public PageResult<GroupOrderVO> getPageResult(PageQuery pageQuery) throws SQLException {
 		Connection con = JDBCConnection.getRDSConnection();
-		PageResult<GroupOrderVO> groupPRs = getPageResult(pageQuery,con);
+		PageResult<GroupOrderVO> groupPRs = getPageResult(pageQuery, con);
 		con.close();
 		return groupPRs;
 	}
 
-
-	public PageResult<GroupOrderVO> getPageResult(PageQuery pageQuery,Connection con) {
-		String baseSQL = " SELECT * FROM group_order o " +
-							" JOIN product p ON(p.product_id=o.product_id) ";
+	public PageResult<GroupOrderVO> getPageResult(PageQuery pageQuery, Connection con) {
+		String baseSQL = " SELECT * FROM group_order o " + " JOIN product p ON(p.product_id=o.product_id) ";
 		int total = 0;
 		List<GroupOrderVO> groupOrderVOs = new ArrayList<>();
 		try {
@@ -366,7 +366,6 @@ public class GroupOrderJDBCDAO implements GroupOrderDAO_Interface {
 				total = rs.getInt(1);
 				rs.close();
 				stmt.close();
-
 
 				stmt = con.prepareStatement(pageQuery.getQuerySQL(baseSQL));
 				rs = stmt.executeQuery();
