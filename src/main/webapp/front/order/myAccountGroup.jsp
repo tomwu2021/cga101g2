@@ -51,7 +51,7 @@
 			<div class="form-select" style="display: flex;">
 				<form action="#" style="display: block;">
 					<select id="status">
-						<option value="0">請選擇區間</option>
+						<option value="0">請選擇狀態</option>
 						<option value="0">進行中</option>
 						<option value="1">未成團</option>
 						<option value="2">已成團</option>

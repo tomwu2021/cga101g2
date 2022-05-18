@@ -162,7 +162,7 @@
 								<label>於${groupOrderVO.endTime}截單</label>
 								</c:if>
 								<c:if test="${groupOrderVO.endType == 2 }">
-									<label>依分數截單(${groupOrderVO.minAmount}份)</label>
+									<label>依份數截單(${groupOrderVO.minAmount}份)</label>
 									<br>
 									<label>目前份數:${established}份</label>
 									<br>
