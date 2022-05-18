@@ -20,3 +20,10 @@ th {
 td {
 	word-wrap: break-word;
 }
+
+.viewhover:hover {
+	border:  #000;
+	background: #bcc0c7;
+	backface-visibility: hidden;
+	cursor: pointer;
+}

@@ -31,11 +31,10 @@
 							<div class="row">
 
 
-								<!-- 								<div class="form-group row" style="width: 400px"> -->
-								<!-- 									<label class="col-md-3 form-control-label">帳號查詢</label> <input -->
-								<!-- 										type="text" id="account"> <input type="submit" -->
-								<!-- 										value="確定" class="btn btn-primary" onclick="accountSelect()"> -->
-								<!-- 								</div> -->
+								<div class="form-group row">
+									<input type="button" value="查詢全部團購訂單" class="btn btn-primary"
+										onclick="selectAll()">
+								</div>
 
 								<div id="show"></div>
 
@@ -55,14 +54,14 @@
 		</div>
 	</div>
 
-<jsp:include page="/front/layout/showMessage.jsp" />
+	<jsp:include page="/front/layout/showMessage.jsp" />
 
 	<!-- 共用的JS -->
 
 	<!-- 額外添加的JS -->
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/assets/js/groupOrderList.js"></script>
-	
+
 </body>
 
 </html>

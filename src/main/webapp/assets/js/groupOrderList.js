@@ -5,9 +5,9 @@ let objectJSON = '';
 function viewType(status) {
 	if (status === 1) {
 		return "時間到結單";
-	} else  {
+	} else {
 		return "數量到結單";
-	} 
+	}
 }
 
 // 年-月-日
@@ -26,11 +26,11 @@ $(function() {
 
 	$.ajax(
 		{
-			url: getContextPath()+"/AllOrders", //http://localhost:8081/CGA101G2/AllOrders
+			url: getContextPath() + "/AllOrders", //http://localhost:8081/CGA101G2/AllOrders
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
-				console.log(json);
+				//				console.log(json);
 				objectJSON = json;
 				let html = viewBody(objectJSON);
 				document.getElementById("show").innerHTML = html;
@@ -59,13 +59,18 @@ function viewBody(objectJSON) {
 	for (let i = 0; i < objectJSON.length; i++) {
 		let groupOrder = objectJSON[i];
 		html += "<tr>";
-		html += "<td>" + groupOrder.groupOrderId + "</td>";
+		html += "<td class='viewhover' onclick='viewRecord(this)' id='" + groupOrder.productId + "'>" + groupOrder.groupOrderId + "</td>";
 		html += "<td>" + groupOrder.productId + "</td>";
 		html += "<td>" + viewDate(groupOrder.createTime) + "</td>";
 		html += "<td>" + viewDate(groupOrder.endTime) + "</td>";
 		html += "<td>" + viewType(groupOrder.endType) + "</td>";
 		html += "<td>" + groupOrder.finalPrice + "</td>";
-		html += "<td>" + groupOrder.minAmount + "</td>";
+
+		if (groupOrder.status === 1) {
+			html += "<td>" + "❌" + "</td>";
+		} else {
+			html += "<td>" + groupOrder.minAmount + "</td>";
+		}
 		html += "</tr>";
 	}
 	html += "</table>";
@@ -73,100 +78,75 @@ function viewBody(objectJSON) {
 
 	return html;
 }
-//
-//// ------------------ 修改 ------------------
-//function updateInfo(obj) {
-//	console.log(obj.id);
-//	let html = viewUpdate(objectJSON, obj.id);
-//	document.getElementById("show").innerHTML = html;
-//}
-//
-//// ------------------ 顯示修改畫面 ------------------
-//function viewUpdate(objectJSON, thisOrderId) {
-//	let html = '';
-//	html += "<div class='table-responsive'>";
-//	html += "<table class='table table-striped table-bordered table-hover' >";
-//	html += "<tr>";
-//	html += "<th>訂單編號</th>";
-//	html += "<th>會員編號</th>";
-//	html += "<th>訂單金額</th>";
-//	html += "<th>訂單狀態</th>";
-//	html += "<th>訂單詳情</th>";
-//	html += "<th>成立時間</th>";
-//	html += "<th>修改</th>";
-//	html += "</tr>";
-//
-//	for (let i = 0; i < objectJSON.length; i++) {
-//		let order = objectJSON[i];
-//		html += "<tr>";
-//		html += "<td>" + order.orderId + "</td>";
-//		html += "<td>" + order.memberId + "</td>";
-//		html += "<td>" + order.payPrice + "</td>";
-//		if (thisOrderId == order.orderId) {
-//			html += "<td><select id='changeStatus'><option>" + viewStatus(order.status) + "</option><option>未出貨</option><option>已取消</option><option>已完成</option></select></td>";
-//			html += "<td><a href=" + getContextPath() + "/member/order.do?memberId=" + order.memberId + "&orderId=" + order.orderId
-//				+ "&action=orderDeatil" + ">View</td>";
-//			html += "<td>" + viewDate(order.createTime) + "</td>";
-//			html += "<td class='viewhover'><button onclick='sureInfo(this)' id='" + order.orderId + "' >確定</button></td>";
-//		} else {
-//			html += "<td>" + viewStatus(order.status) + "</td>";
-//			html += "<td><a href=" + getContextPath() + "/member/order.do?memberId=" + order.memberId + "&orderId=" + order.orderId
-//				+ "&action=orderDeatil" + ">View</td>";
-//			html += "<td>" + viewDate(order.createTime) + "</td>";
-//			html += "<td class='viewhover'><button id='" + order.orderId + "' >修改</button></td>";
-//		}
-//
-//
-//		html += "</tr>";
-//	}
-//	html += "</table>";
-//	html += "</div>";
-//
-//	return html;
-//}
-//
-//// ------------------ 確定按鈕 ------------------
-//function sureInfo(obj) { // obj.id：會員編號
-//	let status = $("#changeStatus").val();
-//	let newStatus = '';
-//	if (status === '未出貨') {
-//		newStatus = '0';
-//		console.log(newStatus);
-//	} else if (status === '已取消') {
-//		newStatus = '1';
-//
-//		console.log(newStatus);
-//
-//	} else {
-//		newStatus = '2';
-//		console.log(newStatus);
-//	}
-//	//	// 取得 changeStatus 值，呼叫 Servelt 修改資料庫值，並重新撈取資料
-//	let dataJSON = {
-//		action: "updateOrder",
-//		status: newStatus,
-//		orderId: obj.id,
-//	}
-//	$.ajax(
-//		{
-//			url: getContextPath() + "/AllOrders",
-//			type: "post",
-//			data: dataJSON,
-//			success: function(json) {
-//				objectJSON = json;
-//				let html = viewBody(objectJSON);
-//				document.getElementById("show").innerHTML = html;
-//
-//				Swal.fire({
-//					position: 'center',
-//					icon: 'success',
-//					title: "修改成功",
-//					showConfirmButton: false,
-//					timer: 1500
-//
-//				});
-//			},
-//		}
-//	);
-//
-//}
+
+// ------------------ 點擊團購訂單編號查看詳情 ------------------
+function viewRecord(obj) {
+	//	console.log(obj.id);
+
+	let dataJSON = {
+		action: "GroupOredrDetial",
+		orderId: obj.id
+	}
+
+	$.ajax(
+		{
+			url: getContextPath() + "/AllOrders",
+			type: "post",
+			data: dataJSON,
+			success: function(json) {
+				//				console.log(json);
+				objectJSON = json;
+				let html = viewGroupOredrDetial(objectJSON);
+				document.getElementById("show").innerHTML = html;
+			},
+		}
+	);
+}
+
+// ------------------ 顯示詳情畫面 ------------------
+function viewGroupOredrDetial() {
+	let html = '';
+	html += "<div class='table-responsive'>";
+	html += "<table class='table table-striped table-bordered table-hover' >";
+	html += "<tr>";
+	html += "<th>團購商品數量</th>";
+	html += "<th>收件人姓名</th>";
+	html += "<th>電話</th>";
+	html += "<th>地址</th>";
+	html += "</tr>";
+
+	for (let i = 0; i < objectJSON.length; i++) {
+		let groupOrderDetial = objectJSON[i];
+		html += "<tr>";
+		html += "<td>" + groupOrderDetial.productAmount + "</td>";
+		html += "<td>" + groupOrderDetial.recipients + "</td>";
+		html += "<td>" + groupOrderDetial.phone + "</td>";
+		html += "<td>" + groupOrderDetial.address + "</td>";
+		html += "</tr>";
+	}
+	html += "</table>";
+	html += "</div>";
+
+	return html;
+}
+
+function selectAll() {
+	
+	let dataJSON = {
+		action: "groupOrderList"
+	}
+
+	$.ajax(
+		{
+			url: getContextPath() + "/AllOrders", 
+			type: "post",
+			data: dataJSON,
+			success: function(json) {
+				objectJSON = json;
+				let html = viewBody(objectJSON);
+				document.getElementById("show").innerHTML = html;
+
+			},
+		}
+	);
+}
