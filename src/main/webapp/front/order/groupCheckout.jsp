@@ -37,7 +37,7 @@
 <%
 
 MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
-%>>
+%>
 
 
 <!-- 主要內容 start -->

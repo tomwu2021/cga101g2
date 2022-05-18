@@ -47,7 +47,7 @@ public class GroupOrder extends HttpServlet {
 		MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 		String action = req.getParameter("action");
 		System.out.println(action);
-		if(action==null||"".equals(action)){
+		if (action == null || "".equals(action)) {
 			action = "list";
 		}
 		// 進入參團頁面
@@ -78,28 +78,26 @@ public class GroupOrder extends HttpServlet {
 			res.setContentType("application/json; charset=UTF-8");
 			req.setCharacterEncoding("UTF-8");
 			PrintWriter out = res.getWriter();
-			//分頁條件
+			// 分頁條件
 			Integer thisPage = Integer.parseInt(req.getParameter("thisPage")); // 設置當前頁數
 			Integer pageSize = Integer.parseInt(req.getParameter("pageSize")); // 設置每頁顯示筆數
 			String sort = req.getParameter("sort"); // 設置排序方式 (升降冪)
-			String order = req.getParameter("order"); // 設置排序欄位		
-			//客製條件
+			String order = req.getParameter("order"); // 設置排序欄位
+			// 客製條件
 			Map<String, Object> map = new HashMap<>(); // 創建多筆指定欄位條件 Map
-			if(req.getParameter("status") != null && !"".equals(req.getParameter("status"))) {
+			if (req.getParameter("status") != null && !"".equals(req.getParameter("status"))) {
 				Integer status = Integer.parseInt(req.getParameter("status"));
 				map.put("o.status", status);
 			}
 			String[] keywords = req.getParameter("productName").split(" "); // 使用空格切割關鍵字
 			PageQuery pq = new PageQuery(thisPage, pageSize, sort, order, map); // 創建分頁查訊物件
 			pq.setFindByLikeMultiValues("product_name", keywords);
-			GroupOrderService groupOrderService=new GroupOrderService();
+			GroupOrderService groupOrderService = new GroupOrderService();
 			PageResult<GroupOrderVO> rpq = null;
 			rpq = groupOrderService.getPageResult(pq);
 			Gson gson = new Gson();
 			out.write(gson.toJson(rpq));
-			
-			
-			
+
 //			res.setContentType("text/html;charset=UTF-8");
 //			System.out.println("toJoinDetial有進入");
 //			// 查詢參團詳情
@@ -120,29 +118,29 @@ public class GroupOrder extends HttpServlet {
 //			RequestDispatcher successView = req.getRequestDispatcher(url);
 //			successView.forward(req, res);
 		}
-		
+
 		// 從訂單參團詳情
-				if ("seeMore".equals(action)) {
-					res.setContentType("text/html;charset=UTF-8");
-					System.out.println("toJoinDetial有進入");
-					// 查詢參團詳情
-					Integer groupOrderId = Integer.valueOf(req.getParameter("groupOrderId").trim());
-					System.out.println("getParameter:" + groupOrderId);
-					GroupOrderService groupOrderService = new GroupOrderService();
-					GroupOrderVO groupOrderVO = groupOrderService.getOneOrder(groupOrderId);
-					// 查詢目前份數
-					int established = 0;
-					GroupBuyerService groupBuyerService = new GroupBuyerService();
-					for (GroupBuyerVO groupBuyerVO : groupBuyerService.getAllByGroupOrderId(groupOrderId)) {
-						established += groupBuyerVO.getProductAmount();
-					}
-					System.out.println("總數" + established);
-					req.setAttribute("established", established);
-					req.setAttribute("groupOrderVO", groupOrderVO);
-					String url = "/front/shop/viewGroupOrder.jsp";
-					RequestDispatcher successView = req.getRequestDispatcher(url);
-					successView.forward(req, res);
-				}
+		if ("seeMore".equals(action)) {
+			res.setContentType("text/html;charset=UTF-8");
+			System.out.println("toJoinDetial有進入");
+			// 查詢參團詳情
+			Integer groupOrderId = Integer.valueOf(req.getParameter("groupOrderId").trim());
+			System.out.println("getParameter:" + groupOrderId);
+			GroupOrderService groupOrderService = new GroupOrderService();
+			GroupOrderVO groupOrderVO = groupOrderService.getOneOrder(groupOrderId);
+			// 查詢目前份數
+			int established = 0;
+			GroupBuyerService groupBuyerService = new GroupBuyerService();
+			for (GroupBuyerVO groupBuyerVO : groupBuyerService.getAllByGroupOrderId(groupOrderId)) {
+				established += groupBuyerVO.getProductAmount();
+			}
+			System.out.println("總數" + established);
+			req.setAttribute("established", established);
+			req.setAttribute("groupOrderVO", groupOrderVO);
+			String url = "/front/shop/viewGroupOrder.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+		}
 
 		// 到開團者填資料
 		if ("toGroupOrder".equals(action)) {
@@ -158,7 +156,6 @@ public class GroupOrder extends HttpServlet {
 
 			Integer minAmount = Integer.valueOf(req.getParameter("minAmount").trim());
 
-
 			groupOrderVO.setEndType(endType);
 			groupOrderVO.setMinAmount(minAmount);
 			productVO.setProductName(productName);
@@ -173,18 +170,16 @@ public class GroupOrder extends HttpServlet {
 
 		// 到參團者填資料
 		if ("toJoinGroupOrder".equals(action)) {
-			
-			
 			// 把商品資訊打包傳到結帳頁面
 			Integer groupOrderId = Integer.valueOf(req.getParameter("groupOrderId").trim());
 			System.out.println("getParameter:" + groupOrderId);
 			GroupOrderService groupOrderService = new GroupOrderService();
 			GroupOrderVO groupOrderVO = groupOrderService.getOneOrder(groupOrderId);
-			//檢查參團者是否已參團
-			GroupBuyerService groupBuyerService=new GroupBuyerService();
-			GroupBuyerVO groupBuyerVO2=groupBuyerService.selectOrderDetail(groupOrderId, membersVO.getMemberId());
-			if(groupBuyerVO2!=null) {			
-				GroupBuyerVO groupBuyerVO=groupBuyerService.selectOrderDetail(groupOrderId, membersVO.getMemberId());
+			// 檢查參團者是否已參團
+			GroupBuyerService groupBuyerService = new GroupBuyerService();
+			GroupBuyerVO groupBuyerVO2 = groupBuyerService.selectOrderDetail(groupOrderId, membersVO.getMemberId());
+			if (groupBuyerVO2 != null) {
+				GroupBuyerVO groupBuyerVO = groupBuyerService.selectOrderDetail(groupOrderId, membersVO.getMemberId());
 				System.out.println(groupBuyerVO.getPictureVO().getPreviewUrl());
 				String msg = "您已參加此團購";
 				req.setAttribute("msg", msg);
@@ -192,7 +187,7 @@ public class GroupOrder extends HttpServlet {
 				String url = "/front/order/showChangeOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-			}else {
+			} else {
 				// 查詢目前份數
 				int established = 0;
 				for (GroupBuyerVO groupBuyerVO : groupBuyerService.getAllByGroupOrderId(groupOrderId)) {
@@ -205,27 +200,25 @@ public class GroupOrder extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			}
-			
 
 		}
-		
-		//驗證
+
+		// 驗證
 		if ("CHECK".equals(action)) {
 			// 驗證錢包密碼用
 			System.out.println("有進密碼驗證");
 			String password = req.getParameter("password");
-			MembersService membersService=new MembersService();
+			MembersService membersService = new MembersService();
 			String dbPassword = membersService.geteWalletPassword(membersVO.getMemberId());
 			if (password.equals(dbPassword)) {
 				System.out.println("正確");
 				PrintWriter out = res.getWriter();
 				out.write("對");
-			}else {
+			} else {
 				System.out.println("錯誤");
 				PrintWriter out = res.getWriter();
 				out.write("錯");
 			}
-			
 
 		}
 
@@ -257,11 +250,11 @@ public class GroupOrder extends HttpServlet {
 				}
 				// 錢包扣款
 				membersService.walletPaymentAddMoney(memberId, -(price * amount));
-				//更新session
-				membersVO.seteWalletAmount(membersVO.geteWalletAmount()-(price * amount));
+				// 更新session
+				membersVO.seteWalletAmount(membersVO.geteWalletAmount() - (price * amount));
 				// 生成一筆團購訂單
 				GroupOrderService groupOrderService = new GroupOrderService();
-				
+
 				int groupOrderId = groupOrderService.addGroupOrder(productId, endType, price, minAmount)
 						.getGroupOrderId();
 
@@ -289,19 +282,19 @@ public class GroupOrder extends HttpServlet {
 							- (Math.round(groupOrderVO.getProductVO().getGroupPrice1() * 0.7)));
 					if (established >= groupOrderVO.getProductVO().getGroupAmount2()
 							&& established < groupOrderVO.getProductVO().getGroupAmount3()) {
-						//改團單最終價錢
+						// 改團單最終價錢
 						groupOrderService.updateFinalPrice(groupOrderId, reimburse1);
 						// 錢包退款
-						membersService.walletPaymentAddMoney(memberId, reimburse1*amount);
-						//更新session
-						membersVO.seteWalletAmount(membersVO.geteWalletAmount()+reimburse1*amount);
+						membersService.walletPaymentAddMoney(memberId, reimburse1 * amount);
+						// 更新session
+						membersVO.seteWalletAmount(membersVO.geteWalletAmount() + reimburse1 * amount);
 					} else if (established >= groupOrderVO.getProductVO().getGroupAmount3()) {
-						//改團單最終價錢
+						// 改團單最終價錢
 						groupOrderService.updateFinalPrice(groupOrderId, reimburse2);
 						// 錢包退款
-						membersService.walletPaymentAddMoney(memberId, reimburse2*amount);
-						//更新session
-						membersVO.seteWalletAmount(membersVO.geteWalletAmount()+reimburse2*amount);
+						membersService.walletPaymentAddMoney(memberId, reimburse2 * amount);
+						// 更新session
+						membersVO.seteWalletAmount(membersVO.geteWalletAmount() + reimburse2 * amount);
 					}
 				}
 				MembersVO membersVO2 = membersService.getOneById(membersVO.getMemberId());
@@ -351,8 +344,8 @@ public class GroupOrder extends HttpServlet {
 				}
 				// 錢包扣款
 				membersService.walletPaymentAddMoney(memberId, -(price * amount));
-				//更新session
-				membersVO.seteWalletAmount(membersVO.geteWalletAmount()-(price * amount));
+				// 更新session
+				membersVO.seteWalletAmount(membersVO.geteWalletAmount() - (price * amount));
 
 				GroupOrderService groupOrderService = new GroupOrderService();
 				GroupBuyerService groupBuyerService = new GroupBuyerService();
@@ -376,21 +369,19 @@ public class GroupOrder extends HttpServlet {
 							- (Math.round(groupOrderVO.getProductVO().getGroupPrice1() * 0.7)));
 					if (established >= groupOrderVO.getProductVO().getGroupAmount2()
 							&& established <= groupOrderVO.getProductVO().getGroupAmount3()) {
-						//改團單最終價錢
+						// 改團單最終價錢
 						groupOrderService.updateFinalPrice(groupOrderId, reimburse1);
 						// 錢包退款
-						membersService.walletPaymentAddMoney(memberId, reimburse1*amount);
-						//更新session
-						membersVO.seteWalletAmount(membersVO.geteWalletAmount()+reimburse1*amount);
+						membersService.walletPaymentAddMoney(memberId, reimburse1 * amount);
+						// 更新session
+						membersVO.seteWalletAmount(membersVO.geteWalletAmount() + reimburse1 * amount);
 					} else if (established >= groupOrderVO.getProductVO().getGroupAmount3()) {
-						//改團單最終價錢
+						// 改團單最終價錢
 						groupOrderService.updateFinalPrice(groupOrderId, reimburse2);
 						// 錢包退款
-						membersService.walletPaymentAddMoney(memberId, reimburse2*amount);
-						membersVO.seteWalletAmount(membersVO.geteWalletAmount()+reimburse2*amount);
+						membersService.walletPaymentAddMoney(memberId, reimburse2 * amount);
+						membersVO.seteWalletAmount(membersVO.geteWalletAmount() + reimburse2 * amount);
 					}
-					
-					
 
 				}
 

@@ -37,7 +37,7 @@
 <!-- 取得session內物品 -->
 <%
 MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
-%>>
+%>
 
 
 <!-- 主要內容 start -->

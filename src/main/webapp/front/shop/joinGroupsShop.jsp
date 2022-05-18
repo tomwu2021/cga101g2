@@ -136,9 +136,6 @@
 						</div>
 						<!--shop toolbar end-->
 						<div class="row shop_wrapper" id="groupShopProduct">						
-
-
-<%-- 							<c:forEach var="groupOrderVO" items="${groupList}"> --%>
 							<Form
 									ACTION="<%=request.getContextPath()%>/member/groupOrder.do"
 								Method="Post" name="GO${groupOrderVO.groupOrderId}">
@@ -146,87 +143,6 @@
 									<input type="hidden" name="groupOrderId"
 								value="${groupOrderVO.groupOrderId}">
 								</Form>
-
-									<!--單一商品開始 -->
-<!-- 								<div class="col-lg-4 col-md-4 col-sm-6 col-12"> -->
-
-<!-- 									<article class="single_product"> -->
-<!-- 										<figure> -->
-<!-- 											<div class="product_thumb"> -->
-<%-- 												<c:if --%>
-<%-- 													test="${groupOrderVO.productVO.pictureVOList.size() != 0 }"> --%>
-<!-- 													<a class="primary_img" -->
-<%-- 														href="javascript:document.GO${groupOrderVO.groupOrderId}.submit();"> --%>
-<!-- 														<img -->
-<%-- 														src="${groupOrderVO.productVO.pictureVOList.get(0).previewUrl}" --%>
-<!-- 														alt=""> -->
-<!-- 													</a> -->
-<%-- 												</c:if> --%>
-<%-- 												<c:if --%>
-<%-- 													test="${groupOrderVO.productVO.pictureVOList.size()>= 2}"> --%>
-<!-- 													<a class="secondary_img" -->
-<%-- 														href="javascript:document.GO${groupOrderVO.groupOrderId}.submit();"> --%>
-<!-- 														<img -->
-<%-- 														src="${groupOrderVO.productVO.pictureVOList.get(1).previewUrl}" --%>
-<!-- 														alt=""> -->
-<!-- 													</a> -->
-<%-- 												</c:if> --%>
-<!-- 												<div class="action_links"> -->
-<!-- 													<ul> -->
-<!-- 														<li class="quick_button"><a href="#" -->
-<!-- 															data-toggle="modal" data-target="#modal_box" -->
-<!-- 															title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
-<!-- 														<li class="wishlist"><a href="wishlist.html" -->
-<!-- 															title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li> -->
-<!-- 													</ul> -->
-<!-- 												</div> -->
-<!-- 											</div> -->
-<!-- 											<div class="product_content grid_content"> -->
-<!-- 												<h4 class="product_name"> -->
-<!-- 													<a -->
-<%-- 														href="javascript:document.GO${groupOrderVO.groupOrderId}.submit();"> --%>
-<%-- 														${groupOrderVO.productVO.productName}</a> --%>
-<!-- 												</h4> -->
-<!-- 												<div class="price_box"> -->
-<%-- 													<span class="old_price">原價${groupOrderVO.productVO.price}元</span> --%>
-<!-- 												</div> -->
-<!-- 												<div class="price_box"> -->
-<%-- 													<span class="current_price">基本成團價${groupOrderVO.productVO.groupPrice1}元</span> --%>
-<!-- 												</div> -->
-<!-- 												<div class="add_to_cart"> -->
-
-<!-- 													<a -->
-<%-- 														href="javascript:document.GO${groupOrderVO.groupOrderId}.submit();" --%>
-<!-- 														title="Add to cart"> 我要參團 </a> -->
-
-<!-- 												</div> -->
-<!-- 											</div> -->
-<!-- 											<div class="product_content list_content"> -->
-<!-- 												<h4 class="product_name"> -->
-<!-- 													<a href="product-details.html">quidem totam, voluptatem -->
-<!-- 														quae quasi possimus</a> -->
-<!-- 												</h4> -->
-<!-- 												<div class="product_desc"> -->
-<%-- 													<p>${groupOrderVO.productVO.description}</p> --%>
-<!-- 												</div> -->
-<!-- 												<div class="price_box"> -->
-<!-- 													<span class="current_price">$145.00</span> <span -->
-<!-- 														class="old_price">$178.00</span> -->
-<!-- 												</div> -->
-<!-- 												<div class="action_links list_action_right"> -->
-<!-- 													<ul> -->
-<!-- 														<li class="quick_button"><a href="#" -->
-<!-- 															data-toggle="modal" data-target="#modal_box" -->
-<!-- 															title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
-<!-- 													</ul> -->
-<!-- 												</div> -->
-<!-- 											</div> -->
-<!-- 										</figure> -->
-<!-- 									</article> -->
-<!-- 								</div> -->
-<!-- 								單一商品結束 -->
-
-<%-- 							</c:forEach> --%>
 						</div>
 						<%@include file="/front/layout/searchPage.jsp"%>
 					</div>
@@ -235,14 +151,11 @@
 		</div>
 	</div>
 	<!--shop  area end-->
-	<!--product area start-->
-	<!--product area end-->
-	<!--! 內容 結束-->
+
 	<!-- 共通的footer start-->
 	<%@include file="/front/layout/footer.jsp"%>
 	<!-- 共通的footer end-->
 	<!-- 額外添加的JS -->
-	<!--leftnavlink.js -->
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/leftnav/leftnavlink.js">
 	</script>

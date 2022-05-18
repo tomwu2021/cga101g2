@@ -3,11 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.picture.model.*"%>
 <%@ page import="java.util.*"%>
-<%-- <% --%>
-<!-- // PictureVO pictureVOList = (PictureVO) request.getAttribute("pictureVOList");  -->
-<!-- // EmpVO empVO = (EmpVO) request.getAttribute("empVO"); -->
-<!-- // EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件) -->
-<%-- %> --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
 <title>我要開團商品細節</title>
@@ -26,20 +22,16 @@
 	<%@include file="/front/layout/commonCartAndWishlist.jsp"%>
 	<!-- 共用的CartAndWishlist-->
 	<style>
-div.product_variant:nth-of-type(1)>label {
-	padding-right: 5px;
-	background-color: moccasin;
-	line-height: 24px;
-}
-
-div.product_variant:nth-of-type(1)>label:nth-of-type(1) {
-	padding-left: 5px;
-	border-radius: 5px 0 0 5px;
-	font-weight: bold;
-}
-
-div.product_variant:nth-of-type(1)>label:last-of-type {
-	border-radius: 0 5px 5px 0;
+.product_variant:nth-of-type(1) {
+	width: fit-content !important;
+	display: block !important;
+	background-color: #FFE5D4;
+	border: 1px solid #FFCCA9;
+	letter-spacing: 1px;
+	color: #333;
+	font-family: 'Microsoft JhengHei';
+	padding: 8px;
+	border-radius: 5px;
 }
 </style>
 	<!--breadcrumbs area start-->
@@ -158,7 +150,8 @@ div.product_variant:nth-of-type(1)>label:last-of-type {
 							</tbody>
 						</table>
 
-						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/groupOrder.do">
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/member/groupOrder.do">
 
 							<div class="product_variant quantity">
 								<!-- 							數量至少min於&起始於最低開團級距一 -->
@@ -167,9 +160,9 @@ div.product_variant:nth-of-type(1)>label:last-of-type {
 									<label>於${groupOrderVO.endTime}截單</label>
 								</c:if>
 								<c:if test="${groupOrderVO.endType == 2 }">
-									<label>依分數截單(${groupOrderVO.minAmount}份)</label>
-									<label>目前份數:${established}份</label>
-									<label>最終時間:${groupOrderVO.endTime}</label>
+									<label>依分數截單(${groupOrderVO.minAmount}份)</label><br>
+									<label>目前份數:${established}份</label><br>
+									<label>最終時間:<fmt:formatDate value="${groupOrderVO.endTime}" pattern="yyyy-MM-dd HH:mm" /></label>
 								</c:if>
 
 							</div>

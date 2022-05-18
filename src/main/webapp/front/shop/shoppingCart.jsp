@@ -11,7 +11,7 @@
 <!-- 取得session內物品 -->
 <%
 Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shopingCart");
-%>>
+%>
 <%
 if (buylist != null && (buylist.size() > 0)) {
 %>

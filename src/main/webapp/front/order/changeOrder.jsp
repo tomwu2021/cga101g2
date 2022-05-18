@@ -57,7 +57,7 @@
 							<input type="text" name="address" class="form-control"
 							id="exampleFormControlInput1" placeholder="${param.address}"
 							value="${param.address}">
-						</p>
+						
 						
 
 						<input type="hidden" name="action" value="update"> <input

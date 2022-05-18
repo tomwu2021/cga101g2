@@ -75,7 +75,7 @@
 					</div>
 				</div>
 			</div>
-				<div class="col-sm-12 col-md-10 col-lg-10">
+				<div class="col-sm-12 col-md-12 col-lg-12">
 					<!-- Tab panes -->
 					<div class="tab-content dashboard_content">
 						<div class="tab-pane fade show active" id="orders">

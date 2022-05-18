@@ -36,7 +36,7 @@
 <%
 Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shopingCart");
 MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
-%>>
+%>
 <%
 if (buylist != null && (buylist.size() > 0)) {
 	int count=0;
@@ -124,7 +124,13 @@ if (buylist != null && (buylist.size() > 0)) {
 										count+=productVO.getCartAmount()*productVO.getPrice();
 									}
 						 		 int maxBonus;
+						 		 if(request.getAttribute("discount")==null){
+						 			String url = "/member/cart.do?action=TOCHECKOUT";
+									RequestDispatcher rd = request.getRequestDispatcher(url);
+									rd.forward(request, response);
+						 		 }
 						 		 int discount=(Integer)request.getAttribute("discount");
+						 		 
 						 		 if(membersVO.getBonusAmount()>count-discount){
 						 		 	maxBonus=count-discount;
 						 		 }else{

@@ -182,8 +182,16 @@ public class Cart extends HttpServlet {
 				int quantity = productVO.getCartAmount();
 				total += (price * quantity);
 			}
-			// 取得會員等級折扣
 			MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
+			if(membersVO==null) {
+				System.out.println("pppppp");
+				String url = "/front/order/checkout.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				return;
+			}
+			// 取得會員等級折扣
+			
 			MembersService membersService = new MembersService();
 			RanksVO ranksVO = membersService.selectRankInfo(membersVO.getMemberId());
 			// 回傳折扣金額
