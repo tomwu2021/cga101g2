@@ -32,7 +32,7 @@
                                 <h1 style="font-size:72px;">${artiVO.title}</h1>
                                 </div>
                                 <%count++;%>
-                                <a class="button" href="/CGA101G2/article?action=all_Display#<%=count%>">了解更多</a>
+                                <a class="button" href="<%=request.getContextPath()%>/article?action=all_Display#<%=count%>">了解更多</a>
                             </div>
                         </div>
                     </div>
@@ -149,7 +149,7 @@ $(function() {
 	}
 	$.ajax(
 		{
-			url: "/CGA101G2/front/member.do", // 請求的url地址，相對位址
+			url: "<%=request.getContextPath()%>/front/member.do", // 請求的url地址，相對位址
 			type: "post", // 請求的方式，通常用 POST
 			data: dataJSON,
 			success: function(json) {

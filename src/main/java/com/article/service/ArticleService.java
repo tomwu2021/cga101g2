@@ -9,10 +9,11 @@ import java.util.List;
 
 import javax.servlet.http.Part;
 
+import com.article.model.ArticleDAO;
 import com.article.model.ArticleDAO_interface;
-import com.article.model.ArticleJDBCDAO;
 import com.article.model.ArticleVO;
-import com.common.model.*;
+import com.common.model.MappingJDBCDAO;
+import com.common.model.MappingTableDto;
 import com.members.model.MembersService;
 import com.pet.service.PetService;
 import com.picture.model.PictureDAO_Interface;
@@ -22,7 +23,7 @@ import com.picture.service.PictureService;
 import com.post.model.PostService;
 import com.post.model.PostVO;
 
-import connection.JDBCConnection;
+import connection.JNDIConnection;
 
 public class ArticleService {
 	
@@ -31,7 +32,7 @@ public class ArticleService {
 	private MappingJDBCDAO mappingDAO;
 	
 	public ArticleService() {
-		artiDAO = new ArticleJDBCDAO();// TODO換連線池版本
+		artiDAO = new ArticleDAO();// TODO換連線池版本
 		picSvc= new PictureService();
 		mappingDAO = new MappingJDBCDAO();
 	}
@@ -60,7 +61,7 @@ public class ArticleService {
 					picIds.add(picId);
 				}
 				List<MappingTableDto> mappingDtos = artiPicMappingBatch(artiId,picIds);
-				try(Connection con = JDBCConnection.getRDSConnection();){ 
+				try(Connection con = JNDIConnection.getRDSConnection();){ 
 				mappingDAO.insertMultiMapping(mappingDtos, con);
 				} catch(SQLException e){
 					e.printStackTrace();
@@ -76,7 +77,7 @@ public class ArticleService {
 		List<PictureVO> picList = getOneArticlePic(id);
 		// 步驟二 刪除mapping
 			                    // transaction用
-		Connection con = JDBCConnection.getRDSConnection(); 
+		Connection con = JNDIConnection.getRDSConnection(); 
 		try {
 			MappingTableDto mappingDto = artiPicMapping(id);
 			mappingDAO.deleteMultiMapping(mappingDto, con);
@@ -221,7 +222,7 @@ public class ArticleService {
 			picIds.add(picId);
 		}
 		List<MappingTableDto> mappingDtos = artiPicMappingBatch(artiId,picIds);
-		try(Connection con = JDBCConnection.getRDSConnection();){ 
+		try(Connection con = JNDIConnection.getRDSConnection();){ 
 		mappingDAO.insertMultiMapping(mappingDtos, con);
 		} catch(SQLException e){
 			e.printStackTrace();

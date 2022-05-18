@@ -51,7 +51,7 @@
 							    <!--slider area end-->
                                 <figcaption class="blog_content">
                                     <div class="post_content">
-                                        <p>${artiVO.content}</p>
+                                        <p style='font-size:18px;'>${artiVO.content}</p>
                                     </div>
                                 </figcaption>
                             </figure>

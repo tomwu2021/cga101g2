@@ -2,23 +2,30 @@ package com.article.model;
 
 import java.util.List;
 
+import com.article.service.ArticleService;
+
 public class TestArticle {
 	
 	public static void main(String[] args) {
 		
 		ArticleJDBCDAO dao = new ArticleJDBCDAO();
 		
+		for(int i = 30; i<=489 ; i++) {
+			ArticleService artiSvc = new ArticleService();
+			artiSvc.deleteArticle(i); 
+		}
+		
 		// 新增
-		ArticleVO aVO1 = new ArticleVO();
-		aVO1.setType(0);
-		aVO1.setTitle("2022/5/2 伺服器暫停服務");
-		aVO1.setContent("嘿嘿嘿不給你買");
-		aVO1.setEmpNo(1);
-		System.out.println(dao.insert(aVO1));
+//		ArticleVO aVO1 = new ArticleVO();
+//		aVO1.setType(0);
+//		aVO1.setTitle("2022/5/2 伺服器暫停服務");
+//		aVO1.setContent("嘿嘿嘿不給你買");
+//		aVO1.setEmpNo(1);
+//		System.out.println(dao.insert(aVO1));
 		
 		// 刪除
 //		ArticleVO aVO2 = new ArticleVO();
-//		aVO2.setArticleId(2);
+//		aVO2.setArticleId(14);
 //		System.out.println(dao.delete(aVO2));
 	
 		// 修改
@@ -41,11 +48,11 @@ public class TestArticle {
 //		}
 		
 		// 查全部
-		List<ArticleVO> tList = dao.getAllByType(0);
-		
-		for(ArticleVO aVO:tList) {
-			System.out.println(aVO);
-		}
+//		List<ArticleVO> tList = dao.getAllByType(0);
+//		
+//		for(ArticleVO aVO:tList) {
+//			System.out.println(aVO);
+//		}
 	}
 	
 }

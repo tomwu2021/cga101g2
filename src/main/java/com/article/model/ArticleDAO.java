@@ -220,7 +220,7 @@ public class ArticleDAO  implements ArticleDAO_interface{
 					articleVO.setArticleId(rs.getInt(index++));
 					articleVO.setType(rs.getInt(index++));
 					articleVO.setTitle(rs.getString(index++));
-					articleVO.setContent(rs.getString(index++));
+					articleVO.setContent(transInner(rs.getString(index++)));
 					articleVO.setCreateTime(rs.getTimestamp(index++));
 					articleVO.setEmpNo(rs.getInt(index++));
 					list.add(articleVO);
@@ -238,6 +238,41 @@ public class ArticleDAO  implements ArticleDAO_interface{
 			e.printStackTrace();
 		}
 		return list;
+	}
+	/**文字換行顯示用*/
+	public String transOuter(String str) { 
+		while (str.indexOf("<") != -1) { 
+			  str = str.substring(0, str.indexOf("<")) + "&lt;" 
+			    + str.substring(str.indexOf("<") + 1); 
+			 }
+		while (str.indexOf(">") != -1) { 
+			  str = str.substring(0, str.indexOf(">")) + "&gt;" 
+			    + str.substring(str.indexOf(">") + 1); 
+			 }
+		 return str; 
+	}
+	public String transInner(String str) { 
+		while (str.indexOf("<") != -1) { 
+			  str = str.substring(0, str.indexOf("<")) + "&lt;" 
+			    + str.substring(str.indexOf("<") + 1); 
+			 }
+		while (str.indexOf(">") != -1) { 
+			  str = str.substring(0, str.indexOf(">")) + "&gt;" 
+			    + str.substring(str.indexOf(">") + 1); 
+			 }
+		while (str.indexOf("\r") != -1) { 
+		  str = str.substring(0, str.indexOf("\r")) 
+		    + str.substring(str.indexOf("\r") + 1); 
+		 } 
+		 while (str.indexOf("\n") != -1) { 
+			  str = str.substring(0, str.indexOf("\n")) + "<br/>" 
+			    + str.substring(str.indexOf("\n") + 1); 
+			 }
+		 while (str.indexOf(" ") != -1) { 
+		  str = str.substring(0, str.indexOf(" ")) + "&nbsp;" 
+		    + str.substring(str.indexOf(" ") + 1); 
+		 } 
+		 return str; 
 	}
 
 }
