@@ -43,6 +43,8 @@
 		<url-pattern>/front/member/*</url-pattern>
 		<url-pattern>/front/pet/*</url-pattern>
 		<url-pattern>/front/account.jsp</url-pattern>
+		<url-pattern>/front/shop/viewGroupOrder.jsp</url-pattern>
+		<url-pattern>/front/order/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
