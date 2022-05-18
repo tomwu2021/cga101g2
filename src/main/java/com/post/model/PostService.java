@@ -280,5 +280,9 @@ public class PostService {
     public boolean updateReport(Integer postId) {
         return dao.updateReport(postId);
     }
+    
+    public boolean updateNormal(Integer postId) {
+    	return dao.updateNormal(postId);
+    }
 
 }

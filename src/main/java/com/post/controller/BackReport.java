@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.post.model.PostService;
 import com.report.model.ReportService;
 import com.report.model.ReportVO;
 
-@WebServlet("/postReport.do")
+@WebServlet("/backReport.do")
 public class BackReport extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +27,30 @@ public class BackReport extends HttpServlet {
 			ReportService reportService = new ReportService();
 			List<ReportVO> list = reportService.getAll();
 			PrintWriter out = res.getWriter();
-			out.print(list);
+			Gson gson = new Gson();
+			out.write(gson.toJson(list));
+		}
+		if ("updateStatus".equals(action)) {
+			ReportService reportService = new ReportService();
+			PostService postService=new PostService();
+			Integer postId = Integer.parseInt(req.getParameter("postId"));
+			Integer status = Integer.parseInt(req.getParameter("status"));
+			Integer reportId = Integer.parseInt(req.getParameter("reportId"));			
+			//審核中
+			if(status==1) {
+				reportService.updateStatus(reportId, status);
+				postService.updateReport(postId);				
+			}else if(status==2){
+				reportService.updateStatus(reportId, status);
+				postService.updatedelete(postId);				
+			}else if(status==0){
+				reportService.updateStatus(reportId, status);
+				postService.updateNormal(postId);				
+			}
+			List<ReportVO> list = reportService.getAll();
+			PrintWriter out = res.getWriter();
+			Gson gson = new Gson();
+			out.write(gson.toJson(list));
 		}
 
 	}

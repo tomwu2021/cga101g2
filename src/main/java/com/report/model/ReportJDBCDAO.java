@@ -98,5 +98,25 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 		}
 		return list;
 	}
+	
+	
+	@Override
+	public boolean updateStatus(Integer reportId,Integer status) {
+		int rowCount = 0;
+		final String UPDATEDELETE = "update report set status = ? report_id = ?";
 
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(UPDATEDELETE);) {
+
+			pstmt.setInt(1, status);
+			pstmt.setInt(2, reportId);
+			rowCount = pstmt.executeUpdate();
+			System.out.println(rowCount + "row(s) delete!");
+
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		}
+
+		return true;
+	}
 }

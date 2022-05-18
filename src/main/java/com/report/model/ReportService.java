@@ -22,7 +22,12 @@ public class ReportService {
 		reportVO.setUrl(url);;
 		return dao.insert(reportVO);
 	}
+	
 	public List<ReportVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public boolean updateStatus(Integer reportId,Integer status) {
+		return dao.updateStatus(reportId, status);
 	}
 }
