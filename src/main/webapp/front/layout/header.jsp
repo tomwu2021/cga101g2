@@ -178,7 +178,7 @@
 </header>
 <style>
 .bi-box2-heart-fill::before {
-	transform: translateY(4px);
+	transform: translateY(2px);
 }
 
 #private-chatroom-list-ul .bi.bi-circle-fill {
