@@ -111,7 +111,7 @@ OrdersVO ordersVO = (OrdersVO) request.getAttribute("ordersVO");
 									<p class="cart_amount">${orderDetail.payPrice}</p>
 								</div>
 								<div class="checkout_btn" onclick="history.back()">
-									<a href="#">回上頁</a>
+									<a href="<%=request.getContextPath()%>/shop?action=listProducts_Byfind&sort1_id=1">到商城</a>
 								</div>
 							</div>
 						</div>
