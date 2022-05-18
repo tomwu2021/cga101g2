@@ -150,7 +150,7 @@ function checkAccount() {
 						showConfirmButton: false,
 						timer: 1800
 					})
-				} else if (objectJSON.exist === '此帳號格式錯誤！'){ 
+				} else if (objectJSON.exist === '此帳號格式錯誤！') {
 					Swal.fire({
 						position: 'center',
 						icon: 'error',
@@ -158,7 +158,7 @@ function checkAccount() {
 						showConfirmButton: false,
 						timer: 1800
 					})
-				}else{
+				} else {
 					Swal.fire({
 						position: 'center',
 						icon: 'success',
@@ -168,7 +168,7 @@ function checkAccount() {
 					})
 				}
 
-		},
+			},
 		}
 	);
 }
@@ -248,7 +248,6 @@ function registerVerification() {
 				}
 
 				if (objectJSON.msgErrorVerificationCode === "" && objectJSON.msgError === "") {
-					history.go(0);
 					//					alert(objectJSON.registerSuccessful);
 					Swal.fire({
 						position: 'center',
@@ -258,6 +257,12 @@ function registerVerification() {
 						timer: 1800
 
 					})
+					
+					function historyZero() {
+						history.go(0);
+					}
+
+					setTimeout(historyZero, 1950);
 
 				}
 			},

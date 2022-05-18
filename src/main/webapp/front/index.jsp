@@ -162,7 +162,7 @@ $(function() {
 				        icon: 'success',
 				        title: "首次登入，發送一百元購物金！",
 				        showConfirmButton: true,
-				        timer: 2500
+				        timer: 5000
 					})
 				}
 			},
