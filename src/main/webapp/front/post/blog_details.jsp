@@ -163,7 +163,7 @@ a, button {
 									<!-- 修改按鈕 -->
 									<button id="updatePost${postVO.postId}"
 										class="btn btn btn-secondary btn-sm"
-										style="transform: translateX(810px) translateY(-80px);">修改</button>
+										style="transform: translateX(710px) translateY(-80px);">修改</button>
 
 								</c:if>
 
