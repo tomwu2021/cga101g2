@@ -184,7 +184,7 @@ MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
                             <div class="payment_method">
                            
                                
-                                <div class="order_button" style="display:none">
+                                <div class="order_button" style="display:none" id="submit">
                                     <button type="submit" onclick="checking()">確認付款</button>
                                 </div>
                                

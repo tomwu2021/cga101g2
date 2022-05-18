@@ -114,6 +114,7 @@ function check() {
 				console.log("對");
 				$("#password").attr("disabled", "disabled");
 				$("#password").attr("style", "background:#CCCCCC");
+				$("#submit").removeAttr("style");
 				Swal.fire({
 					position: 'center',
 					icon: 'success',
