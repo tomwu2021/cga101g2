@@ -55,11 +55,10 @@
 							<div class="f4" data-role="district"></div>
 							</div>
 							<input type="text" name="address" class="form-control"
-							id="exampleFormControlInput1" placeholder="${param.address}"
-							value="${param.address}">
+							id="exampleFormControlInput1" placeholder="${param.addressDetial}">
 						
 						
-
+						<input type="hidden" id="address" value="${param.address}">
 						<input type="hidden" name="action" value="update"> <input
 							type="hidden" name="memberId" value="${param.memberId}">
 						<input type="hidden" name="groupOrderId"
@@ -83,13 +82,8 @@
 <!-- 額外添加JS start -->
 <script
 	src="<%=request.getContextPath()%>/assets/js/jquery.twzipcode.min.js"></script>
-<script>
-	$("#zipcode3").twzipcode({
-		"zipcodeIntoDistrict" : true,
-		"css" : [ "city form-control", "town form-control" ],
-		countySel : "臺北市", // 城市預設值, 字串一定要用繁體的 "臺", 否則抓不到資料
-		districtSel : "大安區", // 地區預設值
-	});
+<script
+		src="<%=request.getContextPath()%>/assets/js/order&cart/changeOrder.js">
 </script>
 
 <!-- 額外添加JS end -->

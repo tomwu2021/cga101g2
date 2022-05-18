@@ -40,7 +40,9 @@ public class OrderDetails extends HttpServlet{
 					   "&memberId=" +groupBuyerVO.getMemberId()+
 			           "&phone=" +groupBuyerVO.getPhone()+
 			           //從空格後輸輸
-			           "&address=" +groupBuyerVO.getAddress().substring(groupBuyerVO.getAddress().indexOf(" ")+1);
+			           "&addressDetial=" +groupBuyerVO.getAddress().substring(groupBuyerVO.getAddress().indexOf(" ")+1)+
+			           "&address=" +groupBuyerVO.getAddress();
+			           
 
 		String url = "/front/order/changeOrder.jsp"+param;
 		RequestDispatcher successView = req.getRequestDispatcher(url);

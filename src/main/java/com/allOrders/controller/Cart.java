@@ -184,7 +184,6 @@ public class Cart extends HttpServlet {
 			}
 			MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 			if(membersVO==null) {
-				System.out.println("pppppp");
 				String url = "/front/order/checkout.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);

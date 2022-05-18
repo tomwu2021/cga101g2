@@ -98,27 +98,6 @@
 								</table>
 							</div>
 						</div>
-
-
-
-						<!-- 						<div class="tab-pane fade" id="groupOrder"> -->
-						<!-- 							<h3>Group Order</h3> -->
-						<!-- 							<div class="table-responsive"> -->
-						<!-- 								<table class="table" id="memberGroupOrder"> -->
-						<!-- 									<thead> -->
-						<!-- 										<tr> -->
-						<!-- 											<th>商品名稱</th> -->
-						<!-- 											<th>訂購數量</th> -->
-						<!-- 											<th>價錢</th> -->
-						<!-- 											<th>狀態</th> -->
-						<!-- 											<th>修改訂單</th> -->
-						<!-- 											<th>查看詳情</th> -->
-						<!-- 										</tr> -->
-						<!-- 									</thead> -->
-
-						<!-- 								</table> -->
-						<!-- 							</div> -->
-						<!-- 						</div> -->
 					</div>
 				</div>
 			</div>

@@ -82,7 +82,7 @@
 				</div>
 				<div class="col-lg-6 col-md-6">
 					<div class="product_d_right">
-						<Form id="addForm" action="/CGA101G2/member/cart.do" Method="Post">
+						<Form id="addForm" action="<%=request.getContextPath()%>/member/cart.do" Method="Post">
 							<h1>
 								<a href="#">${param.productName}</a>
 							</h1>
