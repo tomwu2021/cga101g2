@@ -25,7 +25,7 @@
             <div id="service-pages" class="expanded">
               <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
                 <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/contact?action=all_Display" class="sidebar-link text-white pl-lg-5"onmouseover="hover_color(this);"  onmouseout="default_color(this);">客戶問題列表 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/index/footer.jsp" class="sidebar-link text-white pl-lg-5"onmouseover="hover_color(this);"  onmouseout="default_color(this);">檢舉貼文管理 </a></li>
+<%--                 <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/index/footer.jsp" class="sidebar-link text-white pl-lg-5"onmouseover="hover_color(this);"  onmouseout="default_color(this);">檢舉貼文管理 </a></li> --%>
               </ul>
             </div>
           </li>
