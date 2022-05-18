@@ -5,6 +5,8 @@
 	id="WebApp_ID" version="4.0">
 
 
+
+
 	<filter>
 		<filter-name>FilterForEmpLogin</filter-name>
 		<filter-class>com.filters.FilterForEmpLogin</filter-class>
@@ -14,6 +16,7 @@
 		<filter-name>FilterForEmpLogin</filter-name>
 		<url-pattern>/back/customer/*</url-pattern>
 		<url-pattern>/back/article/*</url-pattern>
+		<url-pattern>/back/order/*</url-pattern>
 		<url-pattern>/back/empSelect.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
@@ -21,6 +24,12 @@
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
+
+
+
+
+
+
 
 
 
@@ -40,6 +49,12 @@
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
+
+
+
+
+
+
 
 
 
