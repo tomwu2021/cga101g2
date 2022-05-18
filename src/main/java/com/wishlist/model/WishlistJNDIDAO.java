@@ -127,7 +127,6 @@ public class WishlistJNDIDAO implements WishlistDAO_interface {
 								+ "FROM  cga_02.wishlist "
 								+ "WHERE  member_id = ? "
 								+ "AND  product_id = ? " ;
-		System.out.println(SELECT_STMT);
 		try (Connection con = getRDSConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(SELECT_STMT)) {
 
