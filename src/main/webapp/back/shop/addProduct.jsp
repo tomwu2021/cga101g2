@@ -239,7 +239,12 @@ pageContext.setAttribute("sort2list", sort2list);
 													<div class="col-md-12">
 														<div class="form-group">
 															<input type="submit" value="送出新增" class="btn btn-primary"
-																id="submitProduct"  disabled="disabled"> 
+																  disabled="disabled"> 
+																<input type="hidden" name="action" value="insert">
+														</div>
+														<div class="form-group">
+															<input type="submit" value="送出新增" class="btn btn-primary"
+																  disabled="disabled"> 
 																<input type="hidden" name="action" value="insert">
 														</div>
 													</div>

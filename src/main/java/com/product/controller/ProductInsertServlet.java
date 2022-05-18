@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.product.model.ProductService;
+import com.product.model.ProductVO;
 
 /**
  * Servlet implementation class InsertServlet
@@ -37,6 +38,7 @@ public class ProductInsertServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");// client 端向 Servlet 請求的編碼
 		res.setCharacterEncoding("UTF-8");// response，設定回應的格式及編碼
 		String action = req.getParameter("action");
+		String status = req.getParameter("status");
 		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 
@@ -209,11 +211,25 @@ public class ProductInsertServlet extends HttpServlet {
 			}
 			/*************************** 2.開始新增資料 ***************************************/
 			ProductService pdSvc = new ProductService();
-			pdSvc.insertProduct(productName, price, amount, sort2Id, groupPrice1, groupAmount1, groupAmount2,
+			ProductVO NewproductVO = new ProductVO();
+			NewproductVO = pdSvc.insertProduct(productName, price, amount, sort2Id, groupPrice1, groupAmount1, groupAmount2,
 					groupAmount3, description, sort1Id,partsList);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			res.sendRedirect(req.getContextPath()+"/back/shop?action=listProducts_Byfind");
+			if ("upToShop".equals(status)) {
+				//更新狀態後致商品更新頁面
+				NewproductVO.setStatus(1);
+				pdSvc.productUpdateStatus(NewproductVO);
+				res.sendRedirect(req.getContextPath()+"/shop/ProductGetOneServlet?productId="+(NewproductVO.getProductId())+"&action=getOne_For_Update");
+			}else if ("upToShopAndGropShop".equals(status)) {
+				//更新狀態後致商品更新頁面
+				NewproductVO.setStatus(2);
+				pdSvc.productUpdateStatus(NewproductVO);
+				res.sendRedirect(req.getContextPath()+"/shop/ProductGetOneServlet?productId="+(NewproductVO.getProductId())+"&action=getOne_For_Update");
+			}else {
+				res.sendRedirect(req.getContextPath()+"/back/shop?action=listProducts_Byfind");
+			}
+			
 //			RequestDispatcher successView = req.getRequestDispatcher(url); 
 //			successView.forward(req, res);
 //			不能用以上兩行,因為req參數會被帶過去

@@ -91,7 +91,7 @@
 							</div>
 							<div class="product_desc">
 								<p>PCLUB品質保證</p> 
-								<c:if test="${param.totalView != null}">
+								<c:if test="${productVO.totalView!=null}">
 								<p><i class="bi bi-eye-fill fa-1x"></i>累積觀看&ensp; ${param.totalView}&ensp; 次</p> 
 								</c:if>
 							</div>
@@ -112,10 +112,10 @@
 							<div class="product_d_action">
 								<ul>
 <!-- 									會員使否有收藏該商品的判斷 -->
-									<c:if test="${wishlistVO.productId != param.productId }">
+									<c:if test="${wishlistVO.productId == null}">
 									<li><button id="Wlishlist${param.productId}" value="0" type="button" class="btn btn-outline-danger"><i class="bi bi-heart">加入收藏</i></button></li>
 									</c:if> 
-									<c:if test="${wishlistVO.productId == param.productId }">
+									<c:if test="${wishlistVO.productId != null}">
 									<li><button id="Wlishlist${param.productId}" value="1" type="button" class="btn btn-danger"><i class="bi bi-heart">已加入收藏</i></button></li>
 									</c:if> 
 <!-- 									會員使否有收藏該商品的判斷 -->									
@@ -195,9 +195,6 @@
 
 	<!-- 額外添加的JS -->
 	<jsp:include page="/front/layout/showMessage.jsp" />
-	<script 
-		src="<%=request.getContextPath()%>/assets/shop/wishlist.js"> 
-	</script>
 	<!-- 額外添加的JS -->
 
 </body>
