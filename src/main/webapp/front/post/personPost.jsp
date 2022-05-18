@@ -23,12 +23,47 @@ href="<%=request.getContextPath()%>/front/post/css/personPost.css">
 <meta charset="UTF-8">
 <style>
 	
-	.container{
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
+	#demo_border {
+	position: relative;
+	width:280px;
+	height:0px;
+	}
+	
+	    #image_photo {
+　　position: absolute;
+    background-image: url("");
+ 
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    overflow: hidden;
+
+    width: 120px;
+    height: 120px;
+    transform: translateY(-50px);
+	}
+	
+	+	#img_text {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+ 	font-size: 16px;
+
+	color: #926161;t
+	border-radius: 50%;
+	/* background-color: #F00; */
+	width: 150px;
+	height:50px;
+	text-align: center;
+	line-height: 30px;
+	transform: translateX(8px) translateY(1px);
+	}
+	
+	
+
+	
+	
     
-      	/* 追蹤 */
+    /* 追蹤 */
 	.button1 {
 	/* background: url(../img/icon/bkg_grid4.png) no-repeat scroll center center; */
 	background-color: #7f1912;
@@ -41,7 +76,7 @@ href="<%=request.getContextPath()%>/front/post/css/personPost.css">
 	font-size: 16px;
 	border-radius: 8px;
 	transform: translateY(50px) translateX(-120px);
-	}
+	} 
   	
   	/* 封鎖 */
 	.button2 {
@@ -57,7 +92,7 @@ href="<%=request.getContextPath()%>/front/post/css/personPost.css">
 	border-radius: 8px;
 	transform: translateY(50px) translateX(-80px);
 	}
-	}
+	
 	
 </style>
 
@@ -172,8 +207,8 @@ href="<%=request.getContextPath()%>/front/post/css/personPost.css">
                                         
                                         <c:if test="${memberId == isOwner}">
                                         <!-- 刪除按鈕 -->
-                                		<button id="deletePost${postVO.postId}" class="btn btn btn-secondary btn-sm">刪除</button>
-                                		
+                                        <button id="deletePost${postVO.postId}">Confirm</button>
+                                                                                                       
                                 		
                                 		</c:if>
                                 		
