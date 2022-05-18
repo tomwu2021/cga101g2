@@ -55,7 +55,23 @@
 
 
 
+	<filter>
+		<filter-name>PetFilter</filter-name>
+		<filter-class>com.filters.FilterForPetInformation</filter-class>
+	</filter>
 
+	<filter-mapping>
+		<filter-name>PetFilter</filter-name>
+		<url-pattern>/pet</url-pattern>
+		<url-pattern>/activity</url-pattern>
+		<url-pattern>/weight</url-pattern>
+		<url-pattern>/remind</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
 
 
 

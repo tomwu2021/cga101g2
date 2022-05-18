@@ -1,7 +1,9 @@
 package com.pet.service;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.Savepoint;
 import java.util.Collection;
 import java.util.List;
 
@@ -12,6 +14,8 @@ import com.pet.model.PetDAO_interface;
 import com.pet.model.PetVO;
 import com.picture.model.PictureVO;
 import com.picture.service.PictureService;
+
+import connection.JDBCConnection;
 
 public class PetService {
 
@@ -32,29 +36,44 @@ public class PetService {
 		PetVO pVO = new PetVO();
 		PictureVO picVO = new PictureVO();
 		Integer picId = 999;
-	// 步驟一 上傳大頭貼
-		if (headshot != null) {
-			try {
-				picVO = picSvc.uploadImageByDefaultAlbum(headshot, memberId).get(0);
-				picId = picVO.getPictureId();
-			} catch (IOException e) {
-				e.printStackTrace();
+		Connection con = JDBCConnection.getRDSConnection();
+		Savepoint sp1;
+		try {
+			con.setAutoCommit(false);
+			sp1 = con.setSavepoint();
+		// 步驟一 上傳大頭貼
+			if (headshot != null) {
+				try {
+					picVO = picSvc.uploadImageByDefaultAlbum(headshot, memberId).get(0);
+					picId = picVO.getPictureId();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
+		// 步驟二 建立寵物資料	
+			pVO.setMemberId(memberId);
+			pVO.setPetName(petName);
+			pVO.setSort1Id(breed);
+			pVO.setGender(gender);
+			pVO.setIntroduction(introduction);
+			pVO.setPictureId(picId);
+			pVO.setBirthday(birthday);
+			dao.insert(pVO);
+			
+			// 步驟三 刪除預設pet
+			PetVO defaultPetId = dao.getOneByMemberId(memberId).get(0);
+			if(defaultPetId == null) {
+				con.rollback(sp1);
+			}else {
+				dao.delete(defaultPetId);
+			}
+			con.commit();
+			con.setAutoCommit(true);
+			con.close();
+		}catch (Exception e) {
+			picSvc.deletePicture(pVO.getPictureId());
+			e.printStackTrace();
 		}
-	// 步驟二 建立寵物資料	
-		pVO.setMemberId(memberId);
-		pVO.setPetName(petName);
-		pVO.setSort1Id(breed);
-		pVO.setGender(gender);
-		pVO.setIntroduction(introduction);
-		pVO.setPictureId(picId);
-		pVO.setBirthday(birthday);
-		dao.insert(pVO);
-		
-		// 步驟三 刪除預設pet
-		PetVO defaultPetId = dao.getOneByMemberId(memberId).get(0);
-		dao.delete(defaultPetId);
-		
 		return pVO;
 	}
 			
