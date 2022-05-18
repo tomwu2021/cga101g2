@@ -42,9 +42,11 @@
 		<filter-name>FilterForMemberLogin</filter-name>
 		<url-pattern>/front/member/*</url-pattern>
 		<url-pattern>/front/pet/*</url-pattern>
+		<url-pattern>/front/order/*</url-pattern>
 		<url-pattern>/front/account.jsp</url-pattern>
 		<url-pattern>/front/shop/viewGroupOrder.jsp</url-pattern>
-		<url-pattern>/front/order/*</url-pattern>
+		<url-pattern>/front/shop/groupProductDetails.jsp</url-pattern>
+		<url-pattern>/front/shop/joinProductDetails.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
