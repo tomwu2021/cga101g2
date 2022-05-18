@@ -46,9 +46,13 @@ href="<%=request.getContextPath()%>/front/post/css/blog.css">
     <div class="blog_page_section blog_fullwidth mt-100">
         <div class="container">
             <div class="row">
+            
+            
                 <div class="col-lg-9 col-md-12">
                     <div class="blog_wrapper">
                     	
+                    	
+                    <%@include file="/front/post/page/page1.file"%>
                     	<c:forEach var="postVO" items="${postlist}" >
                     	<!-- 範圍 -->
                         <article class="single_blog">
@@ -128,6 +132,7 @@ href="<%=request.getContextPath()%>/front/post/css/blog.css">
                             
                         </article>
                         </c:forEach>
+                        <%@include file="/front/post/page/page2.file"%>
 
                     </div>
                 </div>  

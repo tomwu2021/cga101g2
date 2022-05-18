@@ -325,7 +325,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 				+ "		  JOIN picture pic ON(p.picture_id = pic.picture_id)  "
 				+ "		  JOIN post_pic ppc ON(ppc.post_id = po.post_id)  "
 				+ "		  JOIN picture pic2 ON(pic2.picture_id = ppc.picture_id) 	 " + "		  WHERE po.status = 0  "
-				+ "       group by po.post_id " + "		  order by create_time desc " + "       limit 10;";
+				+ "       group by po.post_id " + "		  order by create_time desc " ;
 
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(SELECT_CHANGEPOST);) {
