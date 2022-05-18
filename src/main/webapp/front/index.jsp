@@ -144,6 +144,7 @@
 
 $(function() {
 
+	
 	let dataJSON = {
 		action: "firstLogin"
 	}
@@ -155,7 +156,14 @@ $(function() {
 			success: function(json) {
 				let objectJSON = JSON.parse(json);
 				if(objectJSON.firstLogin === "firstLogin"){
-					alert("首次登入，發送一百元購物金");
+// 					alert("首次登入，發送一百元購物金");
+				    Swal.fire({
+				        position: 'center',
+				        icon: 'success',
+				        title: "首次登入，發送一百元購物金！",
+				        showConfirmButton: true,
+				        timer: 2500
+					})
 				}
 			},
 		}
@@ -169,7 +177,7 @@ $('.slider_area i').css('font-size','50px');
 
 </script>
 	<!-- 額外添加的JS -->
-
+<jsp:include page="/front/layout/showMessage.jsp" />
 </body>
 
 </html>
