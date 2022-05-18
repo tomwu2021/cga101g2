@@ -15,7 +15,7 @@ public class RelationshipService {
             Connection con = JDBCConnection.getRDSConnection();
             con.setAutoCommit(false);
             Savepoint sp = con.setSavepoint();
-            if (!isFriend(memberId, targetId, con) && !isBlock(memberId, targetId, con)) {
+            if (isFriend(memberId, targetId, con) ==0 &&isBlocked(memberId, targetId, con) ==0&& isBlock(memberId, targetId, con) ==0) {
                 if (!relateDao.accpetInvite(memberId, targetId, con)) {
                     con.rollback(sp);
                 } else {
@@ -30,13 +30,13 @@ public class RelationshipService {
         }
         return false;
     }
-    public boolean inviteFreind(Integer memberId, Integer targetId) {
+    public Integer inviteFreind(Integer memberId, Integer targetId) {
         try {
             Connection con = JDBCConnection.getRDSConnection();
-            if(!isFriend(memberId,targetId,con)&&!isBlock(memberId,targetId,con)){
+            if(isFriend(memberId,targetId,con) == 0 && isBlock(memberId,targetId,con)==0){
                 return relateDao.invite(memberId,targetId,con);
             }
-            return false;
+            return 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -63,7 +63,11 @@ public class RelationshipService {
 
     public boolean cancelInvite(Integer memberId,Integer targetId){
         try {
-            relateDao.deleteInviting(memberId, targetId);
+            Connection con = JDBCConnection.getRDSConnection();
+            if(isInviting(memberId,targetId,con)==1) {
+                relateDao.deleteInviting(memberId, targetId,con);
+            }
+            con.close();
             return true;
         }catch(SQLException e) {
             return false;
@@ -71,7 +75,7 @@ public class RelationshipService {
     }
     public boolean deleteFriend(Integer memberId, Integer targetId){
         try(Connection con = JDBCConnection.getRDSConnection()) {
-            if (isFriend(memberId, targetId, con)) {
+            if (isFriend(memberId, targetId, con)==1) {
                 if(relateDao.deleteFriend(memberId, targetId, con)){
                     return true;
                 }
@@ -83,7 +87,7 @@ public class RelationshipService {
     }
     public boolean deleteBlock(Integer memberId, Integer targetId) {
         try(Connection con = JDBCConnection.getRDSConnection()) {
-            if(isBlock(memberId,targetId,con)) {
+            if(isBlock(memberId,targetId,con)==1) {
                 if (relateDao.deleteBlock(memberId, targetId, con)) {
                     return true;
                 }
@@ -180,17 +184,26 @@ public class RelationshipService {
         }
     }
 
+    public RelationResult getRelation(Integer memberId,Integer targetId){
+        return new RelationResult(memberId,targetId);
+    }
 
-    public boolean isFriend(Integer memberId, Integer targetId, Connection con) throws SQLException {
+    public Integer isFriend(Integer memberId, Integer targetId, Connection con) throws SQLException {
         return relateDao.isRelation(memberId,targetId,0,con);
     }
-    public boolean isInviting(Integer memberId, Integer targetId, Connection con) throws SQLException {
+    public Integer isInviting(Integer memberId, Integer targetId, Connection con) throws SQLException {
         return relateDao.isRelation(memberId,targetId,1,con);
     }
-    public boolean isBlock(Integer memberId, Integer targetId, Connection con) throws SQLException {
+    public Integer isBlocked(Integer memberId, Integer targetId, Connection con) throws SQLException {
         return relateDao.isRelation(memberId,targetId,2,con);
     }
+    public Integer isInvited(Integer memberId, Integer targetId, Connection con) throws SQLException {
+        return relateDao.isInvited(memberId,targetId,con);
+    }
 
+    public Integer isBlock(Integer memberId, Integer targetId, Connection con) throws SQLException {
+        return relateDao.isBlock(memberId,targetId,con);
+    }
 
 
 

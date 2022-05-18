@@ -18,19 +18,17 @@ import javax.xml.transform.Result;
 public class RelationshipJDBCDAO {
 	
 // 好友邀請
-	public boolean invite(Integer memberId,Integer targetId,Connection con) throws SQLException {
+	public Integer invite(Integer memberId,Integer targetId,Connection con) throws SQLException {
 		String sql = " INSERT INTO relationship(member_id,target_id,relation_type) VALUE(?,?,1) ";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		int index = 0;
 		stmt.setInt(++index, memberId);
 		stmt.setInt(++index, targetId);
 		int count = stmt.executeUpdate();
-		if(count == 1) {
-			return true;
-		}
-		return false;
+		System.out.println("inviteCount:"+count);
+		return count;
 	}
-	public boolean invite(Integer memberId,Integer targetId) throws SQLException {
+	public Integer invite(Integer memberId,Integer targetId) throws SQLException {
 		Connection con = JDBCConnection.getRDSConnection();
 		return invite(memberId,targetId,con);
 	}
@@ -69,6 +67,7 @@ public class RelationshipJDBCDAO {
 		stmt.setInt(++index, memberId);
 		stmt.setInt(++index, targetId);
 		int count = stmt.executeUpdate();
+		stmt.close();
 		if(count == 1) {
 			return true;
 		}
@@ -111,7 +110,6 @@ public class RelationshipJDBCDAO {
 		stmt.setInt(++index, memberId);
 		int count = stmt.executeUpdate();
 		stmt.close();
-		con.close();
 		if(count == 2) {
 			return true;
 		}
@@ -154,7 +152,7 @@ public class RelationshipJDBCDAO {
 	 * @author Tibame_T14
 	 *
 	 */
-	public boolean isRelation(Integer memberId,Integer targetId,Integer relationType,Connection con) throws SQLException {
+	public Integer isRelation(Integer memberId,Integer targetId,Integer relationType,Connection con) throws SQLException {
 		String sql = " SELECT (? IN (SELECT target_id FROM relationship "
 				+ " WHERE member_id = ? AND relation_type = ?)) as isRelation FROM relationship "
 				+" WHERE member_id = ? LIMIT 1";
@@ -168,12 +166,40 @@ public class RelationshipJDBCDAO {
 		rs.next();
 		int result = rs.getInt(1);
 		System.out.println(result);
-		if(result == 1) {
-			return true;
-		}else {
-			return false;
-		}
+		return result;
+
 	}
+	public Integer isInvited(Integer memberId,Integer targetId,Connection con) throws SQLException {
+		String sql = " SELECT (? IN (SELECT member_id FROM relationship "
+				+ " WHERE target_id = ? AND relation_type = 1)) as isRelation FROM relationship "
+				+" WHERE target_id = ? LIMIT 1";
+		PreparedStatement stmt = con.prepareStatement(sql);
+		int index = 0;
+		stmt.setInt(++index, targetId);
+		stmt.setInt(++index, memberId);
+		stmt.setInt(++index, memberId);
+		ResultSet rs = stmt.executeQuery();
+		rs.next();
+		int result = rs.getInt(1);
+		System.out.println(result);
+		return result;
+	}
+	public Integer isBlock(Integer memberId,Integer targetId,Connection con) throws SQLException {
+		String sql = " SELECT (? IN (SELECT target_id FROM relationship "
+				+ " WHERE member_id = ? AND relation_type = 2)) as isRelation FROM relationship "
+				+" WHERE member_id = ? LIMIT 1";
+		PreparedStatement stmt = con.prepareStatement(sql);
+		int index = 0;
+		stmt.setInt(++index, memberId);
+		stmt.setInt(++index, targetId);
+		stmt.setInt(++index, targetId);
+		ResultSet rs = stmt.executeQuery();
+		rs.next();
+		int result = rs.getInt(1);
+		System.out.println(result);
+		return result;
+	}
+
 	public List<RelationResult> queryByRelationAndMemberId(Integer memberId, Integer relationType) throws SQLException {
 		Connection con = JDBCConnection.getRDSConnection();
 		String sql = "SELECT m.member_id,m.name,m.account,ra.rank_name,pic.preview_url,pic.url " +

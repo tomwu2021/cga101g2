@@ -1,5 +1,10 @@
 package com.relationship.model;
 
+import connection.JDBCConnection;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class RelationResult {
 
     private Integer memberId;
@@ -9,9 +14,66 @@ public class RelationResult {
     private String previewUrl;
     private String url;
 
+    private Integer isFriend;
+    private Integer isBlock;
+    private Integer isInviting;
+    private Integer isInvited;
+    private Integer isBlocked;
+
+
     public RelationResult() {
         super();
 	}
+
+    public Integer getIsFriend() {
+        return isFriend;
+    }
+
+    public void setIsFriend(Integer isFriend) {
+        this.isFriend = isFriend;
+    }
+
+    public Integer getIsBlock() {
+        return isBlock;
+    }
+
+    public void setIsBlock(Integer isBlock) {
+        this.isBlock = isBlock;
+    }
+
+    public Integer getIsInviting() {
+        return isInviting;
+    }
+
+    public void setIsInviting(Integer isInviting) {
+        this.isInviting = isInviting;
+    }
+
+    public Integer getIsInvited() {
+        return isInvited;
+    }
+
+    public void setIsInvited(Integer isInvited) {
+        this.isInvited = isInvited;
+    }
+
+    public RelationResult(Integer targetId,Integer memberId) {
+        super();
+        try {
+            Connection con = JDBCConnection.getRDSConnection();
+            RelationshipService rServ = new RelationshipService();
+            this.isFriend = rServ.isFriend(memberId,targetId,con);
+            this.isBlock = rServ.isBlock(memberId,targetId,con);
+            this.isBlocked = rServ.isBlocked(memberId,targetId,con);
+            this.isInviting =rServ.isInviting(memberId,targetId,con);
+            this.isInvited = rServ.isInvited(memberId,targetId,con);
+            con.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
 	public RelationResult(Integer memberId, String name, String account, String rankName, String previewUrl, String url) {
 		super();

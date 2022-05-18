@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 @WebServlet("/relationship")
 public class RelationshipController extends CommonController {
     RelationshipService relaServ = new RelationshipService();
@@ -26,27 +27,28 @@ public class RelationshipController extends CommonController {
 
     Integer isFriend;
     Integer isBlock;
+
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         doPost(req, res);
     }
+
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException  {
+    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
         req.setCharacterEncoding("UTF-8");
         res.setCharacterEncoding("UTF-8");
         res.setContentType("application/json; charset=UTF-8");
         membervo = super.getLoginInfo(req, res);
         String action = req.getParameter("action");
-        if(membervo!=null) {
+        if (membervo != null) {
             loginId = membervo.getMemberId();
         }
         memberId = Integer.parseInt(req.getParameter("memberId"));
-        isOwner = super.getIsOwner(req,res);
+        isOwner = super.getIsOwner(req, res);
         req.setAttribute("isOwner", isOwner);
         action = action == null ? "" : action;
-        System.out.println("action="+action);
+        System.out.println("action=" + action);
         switch (action) {
-
             case "addFriend":
                 addFriend(req, res);
                 break;
@@ -90,20 +92,24 @@ public class RelationshipController extends CommonController {
                 searchInvited(req, res);
                 break;
             case "findRecentFriend":
-                findRecentFriend(req,res);
+                findRecentFriend(req, res);
+                break;
+            case "getRelation":
+                getRelation(req, res);
                 break;
             default:
                 list(req, res);
         }
     }
+
     public void addFriend(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
-        if(isOwner==1) {
+        if (isOwner == 1) {
             Integer targetId = Integer.parseInt(req.getParameter("targetId"));
-            if(relaServ.addFriend(memberId,targetId)) {
+            if (relaServ.addFriend(memberId, targetId)) {
                 out.write("{\"status\":\"成功新增好友！\"}");
                 return;
-            }else{
+            } else {
                 out.write("{\"status\":\"0\"}");
                 return;
             }
@@ -113,125 +119,133 @@ public class RelationshipController extends CommonController {
 
     public void inviteFreind(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
-        if(membervo!=null) {
-            if(loginId == memberId) {
-                Integer targetId = Integer.parseInt(req.getParameter("targetId"));
-                if(relaServ.inviteFreind(memberId,targetId)) {
-                    out.write("{\"status\":\"成功邀請好友！\"}");
-                }
-            }else{
+        if (membervo != null) {
+            Integer targetId = Integer.parseInt(req.getParameter("targetId"));
+            if (relaServ.inviteFreind(memberId,targetId) == 1) {
+                out.write("{\"status\":\"成功邀請好友！\"}");
+            } else {
                 out.write("{\"status\":\"無權限進行此操作\"}");
             }
-        }else{
+        } else {
             out.write("{\"status\":\"請先登入\"}");
         }
     }
 
     public void addBlock(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
-        if(membervo!=null) {
-            if(loginId == memberId) {
-                Integer targetId = Integer.parseInt(req.getParameter("targetId"));
-                if(relaServ.addBlock(memberId,targetId)) {
-                    out.write("{\"status\":\"成功刪除好友並加入黑名單！\"}");
-                }
-            }else{
+        if (membervo != null) {
+            Integer targetId = Integer.parseInt(req.getParameter("targetId"));
+            if (relaServ.addBlock(loginId, targetId)) {
+                out.write("{\"status\":\"成功刪除好友並加入黑名單！\"}");
+            } else {
                 out.write("{\"status\":\"無權限進行此操作\"}");
             }
-        }else{
+        } else {
             out.write("{\"status\":\"請先登入\"}");
         }
     }
 
     public void cancelInvite(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        if(isOwner==1){
-            PrintWriter out = res.getWriter();
+        PrintWriter out = res.getWriter();
+        if (membervo != null) {
             Integer targetId = Integer.parseInt(req.getParameter("targetId"));
-            relaServ.cancelInvite(memberId, targetId);
+            relaServ.cancelInvite(loginId, targetId);
             out.write("{\"status\":\"成功取消邀請！\"}");
+        } else {
+            out.write("{\"status\":\"請先登入！\"}");
         }
     }
 
 
     public void deleteFriend(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
-        if(isOwner == 1) {
+        if (membervo != null) {
             Integer targetId = Integer.parseInt(req.getParameter("targetId"));
-            relaServ.deleteFriend(memberId,targetId);
+            relaServ.deleteFriend(loginId, targetId);
             out.write("{\"status\":\"成功刪除好友！\"}");
+        } else {
+            out.write("{\"status\":\"請先登入！\"}");
         }
     }
+
     public void deleteBlock(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
-        if(isOwner == 1) {
-            Integer targetId = Integer.parseInt(req.getParameter("targetId"));
-            if(relaServ.deleteBlock(memberId,targetId)) {
+        Integer targetId = Integer.parseInt(req.getParameter("targetId"));
+        if (membervo != null) {
+            if (relaServ.deleteBlock(loginId, targetId)) {
                 out.write("{\"status\":\"成功移除黑名單！\"}");
+            } else {
+                out.write("{\"status\":\"移除失敗！\"}");
             }
-        }else{
-            out.write("{\"status\":\"無權限進行此操作\"}");
+        } else {
+            out.write("{\"status\":\"請先登入！\"}");
         }
     }
 
 
     public void getFriends(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
-        List<RelationResult> mvos=relaServ.getFriends(memberId);
+        List<RelationResult> mvos = relaServ.getFriends(memberId);
         System.out.println(mvos);
-        if(mvos!=null) {
+        if (mvos != null) {
             out.print(gson.toJson(mvos));
         }
     }
+
     public void getInviting(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
         List<RelationResult> mvos = new ArrayList<>();
-        if(membervo!=null) {
-            mvos=relaServ.getInviting(memberId);
-            if(mvos!=null) {
+        if (membervo != null) {
+            mvos = relaServ.getInviting(memberId);
+            if (mvos != null) {
                 out.write(gson.toJson(mvos));
                 return;
             }
         }
         out.write(gson.toJson(mvos));
     }
+
     public void getBlocks(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
-        if(membervo!=null && isOwner==1) {
-            List<RelationResult> mvos=relaServ.getBlocks(memberId);
-            if(mvos!=null) {
+        if (membervo != null && isOwner == 1) {
+            List<RelationResult> mvos = relaServ.getBlocks(memberId);
+            if (mvos != null) {
                 Gson gson = new Gson();
                 out.write(gson.toJson(mvos));
             }
-        }else{
+        } else {
             out.write("{\"status\":\"查無此資料\"}");
         }
     }
+
     public void getInvited(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
-        if(membervo!=null) {
-            List<RelationResult> mvos=relaServ.getInvited(memberId);
-            if(mvos!=null) {
+        if (membervo != null) {
+            List<RelationResult> mvos = relaServ.getInvited(memberId);
+            if (mvos != null) {
                 Gson gson = new Gson();
                 out.write(gson.toJson(mvos));
             }
-        }else{
+        } else {
             out.write("{\"status\":\"查無此資料\"}");
         }
     }
+
     public void searchFriend(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
         String keyword = req.getParameter("keyword");
-        if(keyword!=null) {
-            List<RelationResult> membersVOS =  relaServ.searchFriend(memberId, keyword);
+        if (keyword != null) {
+            List<RelationResult> membersVOS = relaServ.searchFriend(memberId, keyword);
             out.write(gson.toJson(membersVOS));
         }
         out.write("{\"status\":\"查無此資料\"}");
     }
+
     public void searchInviting(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
         String keyword = req.getParameter("keyword");
-        if(keyword!=null) {
-            List<RelationResult> membersVOS =  relaServ.searchInviting(memberId, keyword);
+        if (keyword != null) {
+            List<RelationResult> membersVOS = relaServ.searchInviting(memberId, keyword);
             out.write(gson.toJson(membersVOS));
         }
         out.write("{\"status\":\"查無此資料\"}");
@@ -240,8 +254,8 @@ public class RelationshipController extends CommonController {
     public void searchBlock(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
         String keyword = req.getParameter("keyword");
-        if(keyword!=null) {
-            List<RelationResult> membersVOS =  relaServ.searchBlock(memberId, keyword);
+        if (keyword != null) {
+            List<RelationResult> membersVOS = relaServ.searchBlock(memberId, keyword);
             out.write(gson.toJson(membersVOS));
         }
         out.write("{\"status\":\"查無此資料\"}");
@@ -251,22 +265,27 @@ public class RelationshipController extends CommonController {
     public void searchInvited(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
         String keyword = req.getParameter("keyword");
-        if(keyword!=null) {
-            List<RelationResult> membersVOS =  relaServ.searchInvited(memberId, keyword);
+        if (keyword != null) {
+            List<RelationResult> membersVOS = relaServ.searchInvited(memberId, keyword);
             out.write(gson.toJson(membersVOS));
         }
         out.write("{\"status\":\"查無此資料\"}");
     }
 
     public void list(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        req.setAttribute("memberId",memberId);
-        super.routeTo(req,res,"community","/relationship/relationship");
+        req.setAttribute("memberId", memberId);
+        super.routeTo(req, res, "community", "/relationship/relationship");
     }
 
     public void findRecentFriend(HttpServletRequest req, HttpServletResponse res) throws IOException {
         PrintWriter out = res.getWriter();
-        List<RelationResult> membersVOS =  relaServ.findRecentFriend(memberId);
+        List<RelationResult> membersVOS = relaServ.findRecentFriend(memberId);
         out.write(gson.toJson(membersVOS));
     }
 
+    public void getRelation(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        PrintWriter out = res.getWriter();
+        RelationResult relationResult = relaServ.getRelation(loginId, memberId);
+        out.write(gson.toJson(relationResult));
+    }
 }
