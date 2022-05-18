@@ -116,7 +116,7 @@ MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
 						 		<div class="col-12 mb-20">
                                     <label>購買份數<span>*</span></label>
                                     	<input min="1" max="999" value="1" type="number" id="count" name="amount" 
-                                    	oninput="if(value>999)value=999;if(value<0)value=0;" onchange="amountCount();">
+                                    	oninput="if(value>999)value=999;if(value<0)value=0;" required onchange="amountCount();">
                                 </div>
 						 		
 						 		
