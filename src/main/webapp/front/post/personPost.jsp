@@ -15,12 +15,14 @@
 <%@include file="/front/layout/commonCSS.jsp"%>
 <!-- 共用的CSS end-->
 
-<meta charset="UTF-8">
+<!-- 更改的CSS start-->
+<link rel="stylesheet"
+href="<%=request.getContextPath()%>/front/post/css/personPost.css">
+<!-- 更改的CSS end-->
 
-    
-     <style >
-    
- 	#demo_border {
+<meta charset="UTF-8">
+<style>
+#demo_border {
 	position: relative;
 	width:280px;
 	height:0px;
@@ -29,91 +31,33 @@
     #image_photo {
 　　position: absolute;
     background-image: url("");
-    
-    
+ 
     background-repeat: no-repeat;
     border-radius: 50%;
     overflow: hidden;
 
-    width: 150px;
-    height: 150px;
-    transform: translateY(-65px);
+    width: 120px;
+    height: 120px;
+    transform: translateY(-50px);
 	}
 	
 	#img_text {
 	position: absolute;
 	bottom: 0px;
 	right: 0px;
-	font-size: 20px;
+	font-size: 16px;
 	color: #926161;
 	border-radius: 50%;
 	/* background-color: #F00; */
-	width: 50px;
+	width: 150px;
 	height:50px;
 	text-align: center;
 	line-height: 30px;
-	transform: translateY(10px);
+	transform: translateX(8px) translateY(1px);
 	}
-	
-	img {
-  	max-width: 100%;
-  	height: 100%;
-	}
-	
-	.shop_toolbar_wrapper {
-  	display: flex;
-  	justify-content: space-between;
-  	align-items: center;
-  	border: 1px solid #ddd;
-  	padding: 85px 250px;
-  	margin: 10px;
-  	transform: translateY(-100px);
- 	}
- 	 
-	.select_option {
-	display: flex;
-	align-items: center;
-	transform: translateX(90px);
-	transform: translateY(20px);
-	}
-	
-	.row.shop_wrapper {
-    flex-direction: row;
-    transform: translateY(-50px);
-	}
-  
-	.button1 {
-	/* background: url(../img/icon/bkg_grid4.png) no-repeat scroll center center; */
-	background-color: #7f1912;
-	border: none;
-	color: white;
-	padding: 10px 20px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	border-radius: 8px;
-	transform: translateY(50px) translateX(-60px);
-	}
-  
-	.button2 {
-	/* background: url(../img/icon/bkg_grid4.png) no-repeat scroll center center; */
-	background-color: #504c4c;
-	border: none;
-	color: white;
-	padding: 10px 20px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	border-radius: 8px;
-	transform: translateY(50px) translateX(-50px);
-	}
-  
+</style>
 
-	
-	</style>
-
+    
 </head>
 
 <body>
@@ -261,7 +205,7 @@
                     <c:if test="${memberId == isOwner}">
                     
                     <div>
-                    <img src="front/post/addpost.png" class="ml-3" style="height:40px;width:40px; position: fixed; top: 80px; right: 14px;" onclick="window.location='http://localhost:8081/CGA101G2/front/post/addPost.jsp'" id="addpost">
+                    <img src="front/post/image/addpost.png" class="ml-3" style="height:40px;width:40px; position: fixed; top: 80px; right: 14px;" onclick="window.location='http://localhost:8081/CGA101G2/front/post/addPost.jsp'" id="addpost">
                     </div>
                     </c:if>
                     
@@ -281,9 +225,9 @@
 
 	<!-- 共用的JS -->
 	<%@include file="/front/layout/commonJS.jsp"%>
-	<!-- 共用的JS -->
+	<!-- 刪除鈕的JS -->
 	<script 
-		  src="<%=request.getContextPath()%>/front/post/delete.js">
+		  src="<%=request.getContextPath()%>/front/post/js/delete.js">
 	</script>
 </body>
 

@@ -32,14 +32,15 @@ function buildRecentPost(post) {
     let likeCount = post.likeCount;
     let content = post.content;
     let memberId = post.memberId;
+ 
     html += `<div className="post_wrapper">
                     <span className="post_thumb" style="display:inline-block;margin-right:5px">
-                        <a href="http://localhost:8081/cga101g2/detailPost?memberId=${memberId}&postId=${postId}&action=selectdetail">
+                        <a href="${getContextPath()}/detailPost?memberId=${memberId}&postId=${postId}&action=selectdetail">
                         <img style="width: 50px;height:50px;border-radius: 5px;" src="${postUrl}" alt=""></a>
                     </span>
                     <span className="post_info" style="display:inline-block;position:relative;top:15px;">
                         <h4>
-                             <a href="http://localhost:8081/cga101g2/detailPost?memberId=${memberId}&postId=${postId}&action=selectdetail" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${content}</a>
+                             <a href="${getContextPath()}/detailPost?memberId=${memberId}&postId=${postId}&action=selectdetail" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${content}</a>
                         </h4>
                         <span>${likeCount}個讚</span>
                     </span>
@@ -86,12 +87,12 @@ function buildRecentComment(comment) {
     let memberId = comment.memberId;
     html += `<div className="post_wrapper">
                     <div className="post_thumb" style="margin-right:5px;display:inline-block;">
-                        <a href="http://localhost:8081/cga101g2/detailPost?memberId=${memberId}&postId=${postId}&action=selectdetail">
+                        <a href="${getContextPath()}/detailPost?memberId=${memberId}&postId=${postId}&action=selectdetail">
                         <img src="${commentPreviewUrl}" style="border-radius: 50%;width: 60px;height: 60px;" alt=""></a>
                     </div>
                     <div classname="post_info" style="margin-top:5px;display:inline-block;position: relative;top: 10px;">
                         <h4>
-                             <a href="http://localhost:8081/cga101g2/detailPost?memberId=${memberId}&postId=${postId}&action=selectdetail"
+                             <a href="${getContextPath()}/detailPost?memberId=${memberId}&postId=${postId}&action=selectdetail"
                              style="overflow: hidden;font-size:14px;text-overflow: ellipsis;white-space: nowrap;position:relative;top:5px">
                               <i>${name}</i> 在你的貼文中留言了</a>
                         </h4>

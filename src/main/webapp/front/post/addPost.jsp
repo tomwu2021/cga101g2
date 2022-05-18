@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>	發文頁面測試 </title>
+<title>	發文頁面 </title>
 
 <!-- 共用的CSS start-->
 <%@include file="/front/layout/commonCSS.jsp"%>
@@ -56,7 +56,7 @@
 						<label for="inputNumber"
 							class="col-md-6 col-form-label">圖片</label>
 							<div class="col-lg-12">
-							<img src="add-image.png" class="ml-3" style="height:300px;width:300px;" onclick="add()" id="addimage">
+							<img src="image/add-image.png" class="ml-3" style="height:300px;width:300px;" onclick="add()" id="addimage">
 							<span style="color:#f33;">${errorMsgs.parts}</span>
 							</div>						
 					</div>		

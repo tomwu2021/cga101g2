@@ -434,7 +434,10 @@ public class PostJDBCDAO implements PostDAO_interface {
 
 		return true;
 	}
-
+	
+	/**
+	 * 搜尋按讚數
+	 */
 	@Override
 	public int selectOnePostLikeCount(Integer postId) {
 		int likeCount = 0;
@@ -457,8 +460,10 @@ public class PostJDBCDAO implements PostDAO_interface {
 		}
 		return likeCount;
 	}
-
 	
+	/**
+	 * 更新按讚數
+	 */
 	@Override
 	public int updateOnePostLikeCount(Integer newLikeCount, Integer postId, Connection con) {
 		int rowCount2 = 0;
@@ -477,7 +482,7 @@ public class PostJDBCDAO implements PostDAO_interface {
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
-					// 3●設定於當有exception發生時之catch區塊內
+					//設定於當有exception發生時之catch區塊內
 					System.err.print("Transaction is being ");
 					System.err.println("rolled back-由-emp");
 					con.rollback();
