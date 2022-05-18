@@ -9,12 +9,21 @@ public class NotificationVO implements java.io.Serializable {
 	private String context;
 	private Timestamp time;
 	private Integer status;
+	private String url;
 
 	public NotificationVO() {
 	}
 
 	public Integer getNotificationId() {
 		return notificationId;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public void setNotificationId(Integer notificationId) {

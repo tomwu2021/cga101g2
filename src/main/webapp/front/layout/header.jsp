@@ -95,9 +95,10 @@
 									</a> </a>
 								</FORM>
 							</div>
-							<div class="header_account-list top_links" onclick="selectNotification()">
-								<a><i class="bi bi-bell-fill"></i></a>
-								<div class="dropdown_links">
+							<div class="header_account-list top_links" onclick="selectNotification()" >
+								<a><i class="bi bi-bell-fill" onmousemove="selectNotification()"></i></a>
+<!-- 								<a><i class="bi bi-bell-fill"></i></a> -->
+								<div class="dropdown_links" style="width: 850px">
 									<div class="dropdown_links_list">
 										<h3 
 											style="margin-right: 0px; font-size: 25px; font-family: '微軟正黑體', sans-serif; letter-spacing: 2px">通知列表</h3>
@@ -116,7 +117,7 @@
 									</div>
 									<div class="dropdown_links_list">
 										<h3>
-											<img src="" alt=""> 查看通知總覽
+											<img src="" alt=""> 
 										</h3>
 									</div>
 								</div>

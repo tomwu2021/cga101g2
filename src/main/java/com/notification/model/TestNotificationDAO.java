@@ -7,10 +7,11 @@ public class TestNotificationDAO {
 		NotificationJDBCDAO dao = new NotificationJDBCDAO();
 
 		// 情境一 insert：新增一筆通知
-//		NotificationVO notificationVO1 = new NotificationVO();
-//		notificationVO.setMemberId(3); 
-//		notificationVO.setContext("二還閒入但雲意猶為鄰垂楊前夫：上有何當五月⋯東兒女堂前，國此，三遊山川明朝輪臺。青臨洮芙蓉⋯殷勤城臺城何事之然不得，秋青天蹉跎，一身萋萋太故人無情，道之難窮啼風波，難難於關顏色二一。");
-//		System.out.println(dao.insert(notificationVO));
+		NotificationVO notificationVO1 = new NotificationVO();
+		notificationVO1.setMemberId(3); 
+		notificationVO1.setContext("國此，三遊山川明朝輪臺。青臨洮芙蓉⋯殷勤城臺城何事之然不得，秋青天蹉跎，一身萋萋太故人無情，道之難窮啼風波，難難於關顏色二一。");
+		notificationVO1.setUrl("https://www.google.com.tw");
+		System.out.println(dao.insert(notificationVO1));
 
 		// 情境二 select：查詢某會員所有通知
 //		for (NotificationVO n : dao.getAllById(3)) {

@@ -7,7 +7,7 @@ public class NotificationService {
 	private NotificationDAO_interface dao;
 
 	public NotificationService() {
-		dao = new NotificationJDBCDAO();
+		dao = new NotificationDAO();
 	}
 
 	// 情境一 insert：新增一筆通知

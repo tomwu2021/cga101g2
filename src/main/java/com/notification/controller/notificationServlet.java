@@ -32,6 +32,8 @@ public class notificationServlet extends HttpServlet {
 		case "selectNotification":
 			selectNotification(req, res);
 			break;
+		case "changeSataus":
+			changeSataus(req, res);
 		}
 	}
 
@@ -61,4 +63,18 @@ public class notificationServlet extends HttpServlet {
 		return;
 	}
 
+	public void changeSataus(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+		Integer status = Integer.parseInt(req.getParameter("status"));
+		Integer memberId = Integer.parseInt(req.getParameter("memberId"));
+		NotificationService notificationSvc = new NotificationService();
+		NotificationVO notificationVO = new NotificationVO();
+		notificationVO.setNotificationId(status);
+		notificationSvc.updateStatus(notificationVO);
+		
+		List<NotificationVO> listNotification = notificationSvc.getAllById(memberId);
+		String json = new Gson().toJson(listNotification);
+		res.getWriter().write(json);
+		return;
+	}
 }

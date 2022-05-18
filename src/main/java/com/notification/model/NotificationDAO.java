@@ -2,16 +2,16 @@ package com.notification.model;
 
 import java.sql.*;
 import java.util.*;
-import connection.JDBCConnection;
+import connection.JNDIConnection;
 
-public class NotificationJDBCDAO implements NotificationDAO_interface {
+public class NotificationDAO implements NotificationDAO_interface {
 
 	Connection con;
 
 // 情境一 insert：新增一筆通知
 	@Override
 	public NotificationVO insert(NotificationVO notificationVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		NotificationVO notificationVO2 = insert(notificationVO, con);
 		try {
 			con.close();
@@ -46,7 +46,7 @@ public class NotificationJDBCDAO implements NotificationDAO_interface {
 // 情境二 select：查詢某會員 id 所有通知
 	@Override
 	public List<NotificationVO> getAllById(Integer id) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		List<NotificationVO> list = getAllById(id, con);
 		try {
 			con.close();
@@ -58,7 +58,7 @@ public class NotificationJDBCDAO implements NotificationDAO_interface {
 
 	public List<NotificationVO> getAllById(Integer id, Connection con) {
 
-		final String SELECT_ONE_BYID = "select notification_id, member_id, context, time, status from notification where member_id = ? ORDER BY time DESC;";
+		final String SELECT_ONE_BYID = "select notification_id, member_id, context, time, status, url from notification where member_id = ?;";
 
 		if (con != null) {
 			try {
@@ -73,6 +73,7 @@ public class NotificationJDBCDAO implements NotificationDAO_interface {
 					newNotification.setContext(rs.getString("context"));
 					newNotification.setTime(rs.getTimestamp("time"));
 					newNotification.setStatus(rs.getInt("status"));
+					newNotification.setUrl(rs.getString("url"));
 					list.add(newNotification);
 				}
 				return list;
@@ -86,7 +87,7 @@ public class NotificationJDBCDAO implements NotificationDAO_interface {
 // 情境三 update：會員查看通知後，status 變成已讀 1
 	@Override
 	public Boolean updateStatus(NotificationVO notificationVO) {
-		con = JDBCConnection.getRDSConnection();
+		con = JNDIConnection.getRDSConnection();
 		Boolean b = updateStatus(notificationVO, con);
 		try {
 			con.close();
