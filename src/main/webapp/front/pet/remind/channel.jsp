@@ -16,7 +16,9 @@ Integer memberId = session.getAttribute("membersVO")==null ? -999:((MembersVO)se
 	        <div class="dropdown_links_list">
 	            <ul>
 	                <li><a href="front/pet/remind/add.jsp" class="dropdown-item">新增提醒</a></li>
+	                <c:if test="${rList != '[]'}">
 	                <li><a href="<%=request.getContextPath()%>/remind?action=all_Display&memberId=<%=memberId%>" class="dropdown-item">查看更多</a></li>
+                	</c:if>
                 </ul>
 	        </div>
 	    </div>
@@ -26,7 +28,10 @@ Integer memberId = session.getAttribute("membersVO")==null ? -999:((MembersVO)se
 		<h5 class="card-title">
 			提醒事項
 		</h5>
-
+		<c:if test="${rList == '[]'}">
+		<div class='text-secondary'>(無提醒)</div>
+		</c:if>
+		<c:if test="${rList != '[]'}">
 		<div class="activity">
 			<c:forEach var="rVO" items="${rList}">
 			<!-- Remind Item-->
@@ -41,6 +46,7 @@ Integer memberId = session.getAttribute("membersVO")==null ? -999:((MembersVO)se
 			<!-- End Remind Item-->
 			</c:forEach>
 		</div>
+		</c:if>
 
 	</div>
 </div>

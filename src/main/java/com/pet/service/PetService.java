@@ -7,8 +7,8 @@ import java.util.List;
 
 import javax.servlet.http.Part;
 
+import com.pet.model.PetDAO;
 import com.pet.model.PetDAO_interface;
-import com.pet.model.PetJDBCDAO;
 import com.pet.model.PetVO;
 import com.picture.model.PictureVO;
 import com.picture.service.PictureService;
@@ -19,7 +19,7 @@ public class PetService {
 	private PictureService picSvc;
 
 	public PetService() {
-		dao = new PetJDBCDAO();// TODO換連線池版本
+		dao = new PetDAO();// TODO換連線池版本
 		picSvc= new PictureService();
 	}
 		

@@ -38,7 +38,9 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 			<input name="petId" type="hidden" value="<%=petId%>">
 	</div>
 	<div class="mb-3 col-lg-4">
+	<c:if test="${pwChart != '[]'}">
 	<span id='kilogram' style='user-select:none;'>&nbsp; kg</span>
+	</c:if>
 	</div>
 	</div>
 </form>

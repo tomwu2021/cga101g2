@@ -84,11 +84,13 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 						<div class="card-title col-lg-12">新增體重紀錄</div>
 						</div>
 					<div class='row'>
+					<c:if test="${pwChart != '[]'}">
 					<%-- Weight Chart --%>
 					<jsp:include page="/front/pet/weight/chart.jsp">
 						<jsp:param value="<%=petId%>" name="petId"/>
 					</jsp:include>
 					<%-- End Weight Chart --%>
+					</c:if>
 					</div>	
 					<form method="post" action="<%=request.getContextPath()%>/weight">
 					<div class="row mt-3" id="editForm" style="font-size: 1.6em;">

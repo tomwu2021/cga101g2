@@ -86,11 +86,13 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 						<div class="card-title col-lg-12">體重紀錄</div>
 						</div>
 					<div class='row'>
+					<c:if test="${pwChart != '[]'}">
 					<%-- Weight Chart --%>
 					<jsp:include page="/front/pet/weight/chart.jsp">
 						<jsp:param value="<%=petId%>" name="petId"/>
 					</jsp:include>
 					<%-- End Weight Chart --%>
+					</c:if>
 					</div>	
 					<div class='row'>
 						<div class="card-title col-lg-4">
@@ -272,7 +274,6 @@ let rId = '${param.recordId}'? '${param.recordId}':$('.allItem:first').attr("id"
 						}
 					if($('#activity').val()==""){
 						$("#updateBtn").attr("disabled","disabled");
-						$("#kilogram").hide();
 					}
 				}
 			});	
@@ -287,7 +288,6 @@ function getDetail(record){
 					$("#editBox").html(data);
 					$("#getRecordId").val(rId);
 					$("#updateBtn").removeAttr("disabled");
-					$("#kilogram").show();
 				}
 			}
 	);

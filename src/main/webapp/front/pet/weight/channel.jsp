@@ -38,7 +38,9 @@ startTime = sdf.format(cal.getTime())+" ~ ";
 				<div class="dropdown_links_list">
 					<ul>
 						<li><a href="<%=request.getContextPath()%>/weight?action=goToInsert&petId=<%=petId%>" class="dropdown-item">新增紀錄</a></li>
+						<c:if test="${recentWgt.weightRecord != null}">
 						<li><a href="<%=request.getContextPath()%>/weight?action=all_Display&petId=<%=petId%>" class="dropdown-item">查看更多</a></li>
+						</c:if>
 					</ul>
 				</div>
 			</div>
@@ -48,6 +50,9 @@ startTime = sdf.format(cal.getTime())+" ~ ";
 			<h5 class="card-title">
 				體重紀錄 
 			</h5>
+			<c:if test="${recentWgt.weightRecord == null}">
+			<div class='text-secondary'>(無紀錄)</div>
+			</c:if>
 			<div class="row weight-card">
                 <div class="col-lg-6">
                   <div class="card bg-white text-black">

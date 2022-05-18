@@ -61,11 +61,6 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // H
 					</jsp:include>
 					<%-- End Recent Weight --%>
 				</div>
-				<div class="row">
-				<div class='col-lg-5'></div>
-				<button class='btn btn-secondary'>隱藏寵物主頁</button>
-				<div class='col-lg-5'></div>
-				</div>
 			</div>
 			<!-- End Left side columns -->
 

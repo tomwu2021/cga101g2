@@ -3,6 +3,8 @@ package com.pet.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.pet.service.PetService;
+
 
 public class TestPet {
 	
@@ -10,19 +12,22 @@ public class TestPet {
 
 		PetJDBCDAO dao = new PetJDBCDAO();
 		
-		// 新增
-		PetVO pVO1 = new PetVO();
-		pVO1.setMemberId(1);
-		pVO1.setPetName("白白 ");
-		pVO1.setSort1Id(1);
-		pVO1.setGender(null);
-		pVO1.setIntroduction(null);
-		pVO1.setPictureId(null);
-		Object birthday = "2011-04-10";//也可null
-		if(birthday != null) birthday = Date.valueOf((String) birthday);
-		pVO1.setBirthday((Date)birthday);
-		System.out.println(dao.insert(pVO1));
+		PetService svc = new PetService();
+		svc.defaultPet(37);
 		
+		// 新增
+//		PetVO pVO1 = new PetVO();
+//		pVO1.setMemberId(1);
+//		pVO1.setPetName("白白 ");
+//		pVO1.setSort1Id(1);
+//		pVO1.setGender(null);
+//		pVO1.setIntroduction(null);
+//		pVO1.setPictureId(null);
+//		Object birthday = "2011-04-10";//也可null
+//		if(birthday != null) birthday = Date.valueOf((String) birthday);
+//		pVO1.setBirthday((Date)birthday);
+//		System.out.println(dao.insert(pVO1));
+//		
 		// 刪除
 //		PetVO pVO2 = new PetVO();
 //		pVO2.setPetId(4);
@@ -57,10 +62,10 @@ public class TestPet {
 //		}
 		
 		// 查公開且該月生日的寵物
-		List<PetVO> bList = dao.getAllByBirth(12);
-		for(PetVO pVO:bList) {
-		System.out.println(pVO);
-		}
+//		List<PetVO> bList = dao.getAllByBirth(12);
+//		for(PetVO pVO:bList) {
+//		System.out.println(pVO);
+//		}
 	}
 
 }

@@ -16,7 +16,9 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
             <div class="dropdown_links_list">
                 <ul>
                     <li><a href="front/pet/activity/add.jsp" class="dropdown-item">新增紀錄</a></li>
-                    <li><a href="<%=request.getContextPath()%>/activity?action=all_Display&petId=<%=petId%>" class="dropdown-item">查看更多</a></li>
+                    <c:if test="${paList != '[]'}">
+		            <li><a href="<%=request.getContextPath()%>/activity?action=all_Display&petId=<%=petId%>" class="dropdown-item">查看更多</a></li>
+                	</c:if>
                 </ul>
             </div>
         </div>
@@ -26,6 +28,10 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 		<h5 class="card-title">
 			活動紀錄
 		</h5>
+		<c:if test="${paList == '[]'}">
+		<div class='text-secondary'>(無紀錄)</div>
+		</c:if>
+		<c:if test="${paList != '[]'}">
 		<div class="activity">
 			<c:forEach var="paVO" items="${paList}">
 			<!-- Activity Item-->
@@ -40,6 +46,7 @@ Integer petId = session.getAttribute("membersVO")==null ? -999:((MembersVO)sessi
 			<!-- End Activity Item-->
 			</c:forEach>
 		</div>
+		</c:if>
 	</div>
 </div>
 <!-- End Recent Activity -->

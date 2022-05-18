@@ -14,7 +14,7 @@ public class PetWeightService {
 	private PetWeightDAO_interface dao;
 	
 	public  PetWeightService() {
-		dao = new PetWeightJDBCDAO();// TODO換連線池版本
+		dao = new PetWeightDAO();// TODO換連線池版本
 	}
 	
 	/**

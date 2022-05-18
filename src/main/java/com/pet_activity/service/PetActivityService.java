@@ -9,7 +9,7 @@ public class PetActivityService {
 	private PetActivityDAO_interface dao;
 	
 	public PetActivityService() {
-		dao = new PetActivityJDBCDAO();// TODO 換連線池版本
+		dao = new PetActivityDAO();// TODO 換連線池版本
 	}
 
 	/**

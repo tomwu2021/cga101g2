@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.remind.model.RemindDAO;
 import com.remind.model.RemindDAO_interface;
-import com.remind.model.RemindJDBCDAO;
 import com.remind.model.RemindVO;
 
 public class RemindService {
@@ -13,7 +12,7 @@ public class RemindService {
 	private RemindDAO_interface dao;
 	
 	public RemindService() {
-		dao = new RemindJDBCDAO();// TODO 換JNDI
+		dao = new RemindDAO();// TODO 換JNDI
 	}
 
 	/**
