@@ -11,6 +11,9 @@ import com.chargeRecord.model.ChargeRecordService;
 import com.chargeRecord.model.ChargeRecordVO;
 import com.google.gson.Gson;
 import com.members.model.*;
+import com.notification.model.NotificationJDBCDAO;
+import com.notification.model.NotificationService;
+import com.notification.model.NotificationVO;
 import com.pet.service.PetService;
 import com.util.JavaMail;
 import javax.servlet.http.HttpSession;
@@ -264,6 +267,14 @@ public class MembersServlet extends HttpServlet {
 		messages.put("msgError", "");
 		messages.put("msgErrorVerificationCode", "");
 		messages.put("registerSuccessful", "註冊成功");
+		
+		// 寄送一則通知：首次登入購物金 100 元
+		NotificationService notificationSvc = new NotificationService(); 
+		NotificationVO notificationVO = new NotificationVO();
+		notificationVO.setMemberId(newMember.getMemberId()); 
+		notificationVO.setContext("您的紅利新增100點");
+		notificationVO.setUrl(getServletContext().getContextPath()+"/front/member/member.jsp");
+		notificationSvc.insert(notificationVO);
 
 		// 相簿建立
 		AlbumJDBCDAO aldao = new AlbumJDBCDAO();
