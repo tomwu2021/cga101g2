@@ -272,7 +272,7 @@ public class MembersServlet extends HttpServlet {
 		NotificationService notificationSvc = new NotificationService(); 
 		NotificationVO notificationVO = new NotificationVO();
 		notificationVO.setMemberId(newMember.getMemberId()); 
-		notificationVO.setContext("您的紅利新增100點");
+		notificationVO.setContext("新會員加入即贈 100 點紅利購物金！");
 		notificationVO.setUrl(getServletContext().getContextPath()+"/front/member/member.jsp");
 		notificationSvc.insert(notificationVO);
 
