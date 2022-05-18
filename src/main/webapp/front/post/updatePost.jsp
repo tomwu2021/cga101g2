@@ -16,7 +16,11 @@
 <!-- 共用的CSS end-->
 	 <!-- Main Style CSS -->
     <link rel="stylesheet" href="other/style copy.css">
+  
+<!-- 照片區 -->
 
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/assets/shop/backProduct/updateProduct.css">
 </head>
 
 <body>
@@ -37,15 +41,36 @@
                 <!-- Form Elements -->                    
                     
 						           	          
+	              <form method="post" action="<%=request.getContextPath()%>/updatePost" enctype="multipart/form-data">
+<!-- 	               我是照片區 開始 -->
+						<div class="bob-container "> 
+ 								<div class="bob-row ">
+ 								<span style="color:#f33;">${errorMsgs.img}</span>
+<c:if test="${postVO.pictureList.size() != 0 }">
+<c:forEach var="pictureVO" items="${postVO.pictureList}"> 								
+									<div class="bob-3item">
+    									<img src="${pictureVO.url}"> 
+      									<input type="hidden"  value="${pictureVO.pictureId}">
+      									<button id ="deleteImg${pictureVO.pictureId}" type="button" class="btn btn-primary btn-sm" >
+      									<i class="bi bi-x-lg"></i>刪除</button>
+      									<button id ="cancelDeleteImg${pictureVO.pictureId}" value="${pictureVO.pictureId}"
+      									type="button" class="btn btn-secondary btn-sm" >
+      									<i class="bi bi-check-lg"></i>取消</button>
+    								</div>
+</c:forEach>
+</c:if>    								
+							</div>
+						</div>
+<!-- 	               我是照片區 結束 -->
+	               
+	               
+	               
 	                <div class="col-md-6">
-	                	 <form method="post" action="<%=request.getContextPath()%>/updatePost" enctype="multipart/form-data">
-	                	
-	                	 
 	                	<!-- <input type="file" id="file-btn" accept="image/*" multiple="multiple" name="upfile"> -->
 						<label for="inputNumber"
 							class="col-md-6 col-form-label">圖片</label>
 							<div class="col-lg-12">
-							<img src="add-image.png" class="ml-3" style="height:300px;width:300px;" onclick="add()" id="addimage">
+							<img src="<%=request.getContextPath()%>/front/post/image/add-image.png" class="ml-3" style="height:300px;width:300px;" onclick="add()" id="addimage">
 							<span style="color:#f33;">${errorMsgs.parts}</span>
 							</div>						
 					</div>		
@@ -89,7 +114,7 @@
 let count = 1;
 
 function add(){
-	$('#addimage').before('<div id="div'+count+'" style="float:left;position:relative;"><input name="file" accept="image/*" type="file" id="formFile'+count+'"></div>');
+	$('#addimage').before('<div id="div'+count+'" style="float:left;position:relative;"><input name="img" accept="image/*" type="file" id="formFile'+count+'"></div>');
 	$('#formFile'+count).hide();
 		let Element = document.querySelector('#formFile'+count);
 		Element.addEventListener('change', function() { 
@@ -108,7 +133,9 @@ function letItGo(btn){
 }
 
 </script>
-
+<script
+	src="<%=request.getContextPath()%>/assets/shop/backProduct/img/deleteImg.js">
+</script>
 
 </body>
 </html>

@@ -70,12 +70,15 @@
 													<!-- 返回商品列表 END -->
 													<!-- 查看該筆商品前台畫面 僅限有上架的商品START -->
 													<c:if test="${param.status == 1}">
-													<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${param.productId}&action=getOne_For_Shop">
+													<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${param.productId}&action=getOne_For_Shop" target="_blank">
 													<input type=button value="查看一般購物前台" class="btn btn-info" style="position: relative; left: 3%">
 													</a>
 													</c:if>
-													<c:if test="${param.status == 2}">
-													<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${param.productId}&action=getOne_For_GroupShop">
+													<c:if test="${param.status == 2 }">
+													<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${param.productId}&action=getOne_For_Shop" target="_blank">
+													<input type=button value="查看一般購物前台" class="btn btn-info" style="position: relative; left: 3%">
+													</a>
+													<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${param.productId}&action=getOne_For_GroupShop" target="_blank">
 													<input type=button value="查看團購前台" class="btn btn-info" style="position: relative; left: 3%">
 													</a>
 													</c:if>

@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.post.model.*"%>   
-
+<%@ page import="java.util.List" %>
+<jsp:useBean id="postlist" scope="request" type="java.util.List<PostVO>" /> <!-- 於EL此行可省略 -->
 
 <!DOCTYPE html>
 <html>
@@ -50,10 +50,8 @@ href="<%=request.getContextPath()%>/front/post/css/blog.css">
             
                 <div class="col-lg-9 col-md-12">
                     <div class="blog_wrapper">
-                    	
-                    	
-                    
-                    	<c:forEach var="postVO" items="${postlist}" >
+                    	<%@ include file="page/page1.file"%>
+                    	<c:forEach var="postVO" items="${postlist}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
                     	<!-- 範圍 -->
                         <article class="single_blog">
                         
@@ -132,8 +130,7 @@ href="<%=request.getContextPath()%>/front/post/css/blog.css">
                             
                         </article>
                         </c:forEach>
-                        
-
+                  	 	<%@ include file="page/page2.file"%>
                     </div>
                 </div>  
 

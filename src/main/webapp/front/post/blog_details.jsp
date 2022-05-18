@@ -23,6 +23,9 @@
     <!-- comment css -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/comment/comment.css">
 
+<!-- 照片輪流撥放 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.7.0/flexslider.css">
+
     <script>
         function getContextPath() {
             return "<%=request.getContextPath()%>";
@@ -122,42 +125,52 @@
                             <%-- <div class="blog_thumb">
                                <a href="#"><img src="${postVO.pictureVO.url}" alt=""></a>
                            </div> --%>
-                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="transform: translateY(-40px);">
+<!--                             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="transform: translateY(-40px);"> -->
 
-                                <div class="carousel-inner">
+<!--                                 <div class="carousel-inner"> -->
 
-                                    <% int count = 0;%>
-                                    <c:forEach var="picture" items="${postVO.pictureList}">
-                                        <% if (count == 0) {%>
-                                        <div class="carousel-item active">
-                                            <img src="${picture.url}" class="d-block w-100" alt="...">
-                                        </div>
-                                        <% } %>
-                                        <% if (count > 0) {%>
-                                        <div class="carousel-item">
-                                            <img src="${picture.url}" class="d-block w-100" alt="...">
-                                        </div>
-                                        <% } %>
-                                        <%count++;%>
+<%--                                     <% int count = 0;%> --%>
+<%--                                     <c:forEach var="picture" items="${postVO.pictureList}"> --%>
+<%--                                         <% if (count == 0) {%> --%>
+<!--                                         <div class="carousel-item active"> -->
+<%--                                             <img src="${picture.url}" class="d-block w-100" alt="..."> --%>
+<!--                                         </div> -->
+<%--                                         <% } %> --%>
+<%--                                         <% if (count > 0) {%> --%>
+<!--                                         <div class="carousel-item"> -->
+<%--                                             <img src="${picture.url}" class="d-block w-100" alt="..."> --%>
+<!--                                         </div> -->
+<%--                                         <% } %> --%>
+<%--                                         <%count++;%> --%>
 
-                                    </c:forEach>
+<%--                                     </c:forEach> --%>
 
-                                </div>
+<!--                                 </div> -->
 
-                                <button class="carousel-control-prev" type="button"
-                                        data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
+<!--                                 <button class="carousel-control-prev" type="button" -->
+<!--                                         data-bs-target="#carouselExampleControls" data-bs-slide="prev"> -->
+<!--                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+<!--                                     <span class="visually-hidden">Previous</span> -->
+<!--                                 </button> -->
 
-                                <button class="carousel-control-next" type="button"
-                                        data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-                            </div>
+<!--                                 <button class="carousel-control-next" type="button" -->
+<!--                                         data-bs-target="#carouselExampleControls" data-bs-slide="next"> -->
+<!--                                     <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+<!--                                     <span class="visually-hidden">Next</span> -->
+<!--                                 </button> -->
+<!--                             </div> -->
 
-
+<!-- 靜宜新版的放圖 開始-->
+<c:if test="${postVO.pictureList.size() != 0 }">
+	<div class="flexslider" style="width:700px; margin-left:80px;">
+		<ul class="slides">
+		<c:forEach var="pictureVO" items="${postVO.pictureList}">
+			<li><img src="${pictureVO.url}" alt="" width="350" height="250"></li>
+		</c:forEach>
+		</ul>
+	</div>
+</c:if> 
+<!-- 靜宜新版的放圖 結束-->
                             <figcaption class="blog_content">
 
                                 <div class="post_content">
@@ -243,6 +256,19 @@
 <script src="<%=request.getContextPath()%>/assets/js/comment/comment.js"></script>
 <script src="<%=request.getContextPath()%>/front/post/js/update.js"></script>
 <script src="<%=request.getContextPath()%>/assets/js/post/rightSideBar.js"></script>
+
+<!-- 照片輪流撥放 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.7.0/jquery.flexslider.js"></script>
+
+<script type="text/javascript">
+$(function() {
+    $(".flexslider").flexslider({
+		slideshowSpeed: 5000, //展示时间间隔ms
+		animationSpeed: 500, //滚动时间ms
+		touch: true //是否支持触屏滑动
+	});
+});	
+</script>
 </body>
 
 
