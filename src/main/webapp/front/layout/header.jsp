@@ -95,20 +95,6 @@
 									</a> </a>
 								</FORM>
 							</div>
-							<!--! wishlis設定  -->
-							<%
-							if (loginId > 0) {
-							%>
-							<div class="header_account-list top_links">
-								<div id="goWishlist">
-									<a title="前往收藏清單"> <i class="bi bi-box2-heart-fill"></i>
-									</a>
-								</div>
-							</div>
-							<%
-							}
-							%>
-							<!-- !Mwishlis設定 end  -->
 							<div class="header_account-list top_links">
 								<a href=""><i class="bi bi-bell-fill"></i></a>
 								<div class="dropdown_links">
@@ -138,7 +124,22 @@
 										<ul>
 											<li><a
 												href="<%=request.getContextPath()%>/front/account.jsp">前往會員中心</a></li>
+											<!--! wishlis設定  -->
+											<%
+											if (loginId > 0) {
+											%><li>
+												<div id="goWishlist">
+													<a title="前往收藏清單">前往收藏清單  &nbsp;<i class="bi bi-box2-heart-fill"></i>
+													</a>
+												</div>
+											</li>
+											<%
+											}
+											%>
+											<!-- !Mwishlis設定 end  -->
 										</ul>
+
+
 									</div>
 									<div class="dropdown_links_list">
 										<h3>

@@ -187,7 +187,8 @@
 								<span class="current_price">${productVO.price}元</span>
 							</div>
 							<div class="add_to_cart">								
-								<a title="Add to cart" onclick="addToCart(${productVO.productId})">Add to Cart</a>
+								<a title="加入購物車" onclick="addToCart(${productVO.productId})">
+								<span style="color:white; font-size:1.2em;">加入購物車</span></a>
 							</div>
 						</div>
 					</figure>
@@ -262,7 +263,7 @@
                                     
                                     <div class="add_to_cart">
                                         <a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop" 
-                                        title="Look More">Look More</a>
+                                        title="前往購買"><span style="color:white; font-size:1.2em;">前往購買</span></a>
                                     </div>
                                 </figcaption>
                             </figure>
