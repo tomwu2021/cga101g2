@@ -54,7 +54,7 @@ List<CustomerVO> list = (ArrayList<CustomerVO>)session.getAttribute("list");
 								<br />
 							</div>
 						</div>
-							<form action="/CGA101G2/contact" method="post">
+							<form action="<%=request.getContextPath()%>/contact" method="post">
 						<div class="row">
 								<div class="col-lg-2 ml-3">
 									<div id="type" class="dataTables_filter">
@@ -74,9 +74,9 @@ List<CustomerVO> list = (ArrayList<CustomerVO>)session.getAttribute("list");
 							</form>
 
 						<div class="row">
-							<div class="col-sm-9">
+							<div class="col-sm-8">
 							</div>
-							<div id="page-select">
+							<div class="col-sm-4" id="page-select">
 						<%@ include file="page1.file" %>
 						<span>&nbsp;</span>
 						<%@ include file="/front/page2.file" %>

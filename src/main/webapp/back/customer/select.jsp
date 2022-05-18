@@ -51,7 +51,7 @@
 								<br />
 							</div>
 						</div>
-							<form action="/CGA101G2/contact" method="post">
+							<form action="<%=request.getContextPath()%>/contact" method="post">
 						<div class="row">
 								<div class="col-lg-2 ml-3">
 									<div id="type" class="dataTables_filter">
@@ -116,6 +116,9 @@
 									</c:forEach>
 								</tbody>
 							</table>
+							<c:if test="${list == '[]'}">
+							<div class='text-secondary'>(查無資料)</div>
+							</c:if>
 <!-- <form method="post" action="/CGA101G2/contact"> -->
 <!-- <input type="submit" value="詳情" class="btn btn-info btn-sm"> <input -->
 <%-- 	type="hidden" name="caseId" value="${custVO.caseId}"> --%>

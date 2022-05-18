@@ -87,7 +87,7 @@ String success = (String)request.getAttribute("success");
                 <c:if test="${success == null}">
                     <div class="contact_message form mt-30 mb-100">
                         <h3><b>讓我們了解您的問題</b></h3>
-                        <form id="contact_form" method='post' action='/CGA101G2/contact'>
+                        <form id="contact_form" method='post' action='<%=request.getContextPath()%>/contact'>
                             <p>
                                 <label> 暱稱<span> *</span></label><span>${errorMsgs.nickname}</span>
                                 <input id="name" name="nickname" type="text" value="${param.nickname}">

@@ -51,7 +51,7 @@
 								<br />
 							</div>
 						</div>
-							<form action="/CGA101G2/contact" method="post">
+							<form action="<%=request.getContextPath()%>/contact" method="post">
 						<div class="row">
 								<div class="col-lg-2 ml-3">
 									<div id="type" class="dataTables_filter">
@@ -145,7 +145,7 @@
 			<c:if test="${custVO.empNo == 0}">
 					<!-- Large Modal -->
               <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#largeModal" id='replyBtn'>
-                回覆訊息
+                回覆問題
               </button>
 
               <div class="modal fade" id="largeModal" tabindex="-1">
@@ -153,7 +153,7 @@
                 <form method='post' action=''>
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">回覆訊息</h5>
+                      <h5 class="modal-title">回覆內容</h5>
                       <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
