@@ -130,7 +130,7 @@ a, button {
 										<div id="image_photo">
 											<img style="height: 100%;" src="${postVO.pictureVO.url}">
 										</div>
-										<div class="blog_meta" style="width: 750px;">
+										<div class="blog_meta" style="width: 650px;">
 
 											<a href="<%=request.getContextPath()%>/PersonPost?memberId=${postVO.memberId}&action=getOne_For_Display">${postVO.membersVO.name}</a>
 											<!-- 檢舉功能 -->
