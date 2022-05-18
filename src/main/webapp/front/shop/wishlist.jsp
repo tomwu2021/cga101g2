@@ -116,7 +116,7 @@
                                             <td class="product_name" style ="width:50%"><font size="4">${wishListVO.productName}</font></td>
                                             <td class="product-price" style ="width:10%" >${wishListVO.price}元</td>
                                             <td class="product_total" style ="width:8%"><a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${wishListVO.productId}&action=getOne_For_Shop" target="_blank">
-                                            <font size="3">前往購買</font></a></td>
+                                            <font size="3"><span style="color:white; font-size:1.2em;">前往購買</span></font></a></td>
                                         </tr>
                                     </c:forEach>   
                                     </tbody>
@@ -184,8 +184,8 @@
                                         <span class="current_price">${productVO.price}元</span>
                                     </div>
                                     <div class="add_to_cart">
-                                        <a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop" 
-                                        title="Look More">Look More</a>
+                                      <a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop" 
+                                        title="前往購買"><span style="color:white; font-size:1.2em;">前往購買</span></a>
                                     </div>
                                 </figcaption>
                             </figure>
