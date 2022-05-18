@@ -121,7 +121,7 @@ $(function() {
 
 // 傳送資料到 member.do
 function checkAccount() {
-//	loading();
+	//	loading();
 	let dataJSON = {
 		registerAccount: $("#registerAccount").val(),
 		action: "checkAccount"
@@ -134,7 +134,15 @@ function checkAccount() {
 			success: function(json) {
 				let objectJSON = JSON.parse(json);
 				document.getElementById("viewRegisterAccount").innerHTML = objectJSON.exist;
-//				offLoading();
+				//				offLoading();
+				Swal.fire({
+					position: 'center',
+					icon: 'success',
+					title: "寄送成功",
+					showConfirmButton: true,
+					timer: 2500
+
+				})
 			},
 		}
 	);
@@ -195,7 +203,7 @@ function registerVerification() {
 
 
 
-//	loading();
+	//	loading();
 	let dataJSON = {
 		registerAccount: rAccount,
 		registerpassword: rPassword,
@@ -215,11 +223,19 @@ function registerVerification() {
 					document.getElementById("viewVerificationCode").innerHTML = objectJSON.msgErrorVerificationCode;
 				}
 
-//				offLoading();
+				//				offLoading();
 				if (objectJSON.msgErrorVerificationCode === "" && objectJSON.msgError === "") {
 					history.go(0);
-					alert(objectJSON.registerSuccessful);
-					
+					//					alert(objectJSON.registerSuccessful);
+					Swal.fire({
+						position: 'center',
+						icon: 'success',
+						title: "註冊成功",
+						showConfirmButton: true,
+						timer: 2500
+
+					})
+
 				}
 			},
 		}
@@ -229,10 +245,10 @@ function registerVerification() {
 
 // 忘記密碼
 function sendforgotMail() {
-	
+
 	let forgotPassword = $("#forgotPassword").val();
 	if (forgotPassword !== null && forgotPassword.length !== 0) {
-//		loading();
+		//		loading();
 		let dataJSON = {
 			forgotPassword: $("#forgotPassword").val(),
 			action: "sendforgotMail"
@@ -246,11 +262,18 @@ function sendforgotMail() {
 				success: function(json) {
 					let objectJSON = JSON.parse(json);
 					document.getElementById("viewForgotPassword").innerHTML = objectJSON.msgError;
+					Swal.fire({
+						position: 'center',
+						icon: 'success',
+						title: "寄送成功",
+						showConfirmButton: true,
+						timer: 2500
 
+					})
 				},
 			}
 		);
-//		offLoading();
+		//		offLoading();
 	} else {
 		document.getElementById("viewForgotPassword").innerHTML = "請輸入電子郵件";
 		return;
@@ -258,5 +281,4 @@ function sendforgotMail() {
 
 
 }
-
 

@@ -137,7 +137,8 @@
 	<!-- 共用的JS -->
 	<%@include file="/front/layout/commonJS.jsp"%>
 	<!-- 自訂的JS -->
-		<script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
+	<script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
+		
 </body>
 	
 

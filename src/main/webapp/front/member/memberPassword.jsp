@@ -126,7 +126,7 @@
 	<!-- 共用的JS -->
 	<%@include file="/front/layout/commonJS.jsp"%>
 	<!-- 自訂的JS -->
-		
+	<jsp:include page="/front/layout/showMessage.jsp" />
 </body>
 
 </html>

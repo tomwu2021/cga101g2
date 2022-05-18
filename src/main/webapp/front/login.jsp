@@ -105,6 +105,8 @@
 		src="<%=request.getContextPath()%>/assets/js/register.js"></script>
 
 <div class="loading" id="spinner">Loading&#8230;</div>
+
+<jsp:include page="/front/layout/showMessage.jsp" />
 </body>
 
 </html>
