@@ -27,7 +27,7 @@ public class FilterForMemberLogin implements Filter {
 			res.sendRedirect(req.getContextPath()+"/front/login.jsp"); // 重新導向到 login.jsp 登入畫面
 			return;
 		}else {
-			chain.doFilter(req, res);
+//			chain.doFilter(req, res);
 		}
 
 	}

@@ -1,4 +1,5 @@
 package com.allOrders.controller;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -25,47 +26,44 @@ import com.orders.model.OrdersService;
 import com.orders.model.OrdersVO;
 
 @WebServlet("/AllOrders")
-public class SelectAllOrder extends HttpServlet{
+public class SelectAllOrder extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	public void doGet(HttpServletRequest req, HttpServletResponse res)
-			throws ServletException, IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("application/json; charset=UTF-8");
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		if ("orderList".equals(action)) {
 			PrintWriter out = res.getWriter();
-			OrdersService ordersService=new OrdersService();
-			List<OrdersVO> list =ordersService.getAll();
+			OrdersService ordersService = new OrdersService();
+			List<OrdersVO> list = ordersService.getAll();
 			Gson gson = new Gson();
 			out.write(gson.toJson(list));
-			}
+		}
 		if ("groupOrderList".equals(action)) {
 			PrintWriter out = res.getWriter();
-			GroupOrderService groupOrderService=new GroupOrderService();
-			List<GroupOrderVO> list=groupOrderService.getAll();	
+			GroupOrderService groupOrderService = new GroupOrderService();
+			List<GroupOrderVO> list = groupOrderService.getAll();
 			Gson gson = new Gson();
 			out.write(gson.toJson(list));
-			}
+		}
 		if ("updateOrder".equals(action)) {
 			Integer orderId = Integer.parseInt(req.getParameter("orderId"));
 			Integer status = Integer.parseInt(req.getParameter("status"));
-			OrdersService ordersService=new OrdersService();
-			ordersService.updateStatusByOrderId(orderId,status);
+			OrdersService ordersService = new OrdersService();
+			ordersService.updateStatusByOrderId(orderId, status);
 			PrintWriter out = res.getWriter();
-			List<OrdersVO> list =ordersService.getAll();
+			List<OrdersVO> list = ordersService.getAll();
+			System.out.println(list);
 			Gson gson = new Gson();
 			out.write(gson.toJson(list));
 			
-			}
-
-		
+		}
 
 	}
-	
-	public void doPost(HttpServletRequest req, HttpServletResponse res)
-			throws ServletException, IOException {
+
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doGet(req, res);
 	}
 }

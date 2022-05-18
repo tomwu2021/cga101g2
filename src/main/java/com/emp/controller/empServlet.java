@@ -106,25 +106,24 @@ public class empServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				session.setAttribute("empVO", empVO);
 				req.setAttribute("empVO", empVO); // 資料庫取出的 empVO 物件，存入 req
-				RequestDispatcher successView = req.getRequestDispatcher("/back/empSelect.jsp");
-				successView.forward(req, res);
-				return;
-//				if (session.getAttribute("locationEmp") != null) {
-//					System.out.println("session不等於null");
-//					String url = session.getAttribute("locationEmp").toString(); //http://localhost:8081/CGA101G2/back/customer/detail.jsp
-//					System.out.println("locationEmp："+url);
-//					
-//					req.getRequestDispatcher("/back/customer/detail.jsp").forward(req, res);
-//					return;
-//				} else { // http://localhost:8081/CGA101G2
-//					System.out.println("session等於null");
-//					System.out.println(session.getAttribute("locationEmp"));
-//
-////					RequestDispatcher successView = req.getRequestDispatcher(getServletContext().getContextPath()+"/back/empSelect.jsp");
-//					RequestDispatcher successView = req.getRequestDispatcher("http://localhost:8081/CGA101G2/back/empLogin.jsp");
-//					successView.forward(req, res);
-//					return;
-//				}
+//				RequestDispatcher successView = req.getRequestDispatcher("/back/empSelect.jsp");
+//				successView.forward(req, res);
+//				return;
+				if (session.getAttribute("locationEmp") != null) {
+					System.out.println("session不等於null");
+					String url = session.getAttribute("locationEmp").toString(); //http://localhost:8081/CGA101G2/back/customer/detail.jsp
+					System.out.println("locationEmp："+url);
+					
+					res.sendRedirect(url);
+					return;
+				} else {
+					System.out.println("session等於null");
+					System.out.println("session.getAttribute(\"locationEmp\")：" + session.getAttribute("locationEmp"));
+
+					RequestDispatcher successView = req.getRequestDispatcher("/back/empSelect.jsp");
+					successView.forward(req, res);
+					return;
+				}
 			}
 		}
 

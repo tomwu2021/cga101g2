@@ -154,8 +154,7 @@ function viewUpdate(objectJSON, objMemberId) {
 		html += removeUndefined(memberVO.address);
 		html += removeUndefined(memberVO.phone);
 		html += "<td>" + viewRanks(memberVO.rankId) + "</td>";
-		html += "<td class='viewhover'>" + memberVO.eWalletAmount + "</td>";
-
+html += "<td class = 'viewhover' onclick='viewRecord(this)' id='" + memberVO.account + "'>" + memberVO.eWalletAmount + "</td>";
 		if (objMemberId == memberVO.memberId) {
 			html += "<td><select id='changeSelect'><option>" + viewStatusNo(memberVO.status) + "</option><option>停權</option><option>正常</option></select></td>";
 			html += "<td>" + memberVO.createTimeString + "</td>";
@@ -195,13 +194,21 @@ function sureInfo(obj) { // obj.id：會員編號
 	}
 	$.ajax(
 		{
-			url: getContextPath()+"/back/emp.do",
+			url: getContextPath() + "/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
 				objectJSON = JSON.parse(json);
 				let html = viewBody(objectJSON);
 				document.getElementById("show").innerHTML = html;
+				Swal.fire({
+					position: 'center',
+					icon: 'success',
+					title: "修改會員權限成功",
+					showConfirmButton: false,
+					timer: 1800
+
+				})
 			},
 		}
 	);
@@ -220,13 +227,21 @@ function accountSelect() {
 
 	$.ajax(
 		{
-			url: getContextPath()+"/back/emp.do",
+			url: getContextPath() + "/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
 				objectJSON = JSON.parse(json);
 				let html = viewBody(objectJSON);
 				document.getElementById("show").innerHTML = html;
+				Swal.fire({
+					position: 'center',
+					icon: 'success',
+					title: "帳號查詢成功",
+					showConfirmButton: false,
+					timer: 1800
+
+				})
 			},
 		}
 	);
@@ -244,13 +259,21 @@ function nameSelect() {
 
 	$.ajax(
 		{
-			url: getContextPath()+"/back/emp.do",
+			url: getContextPath() + "/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
 				objectJSON = JSON.parse(json);
 				let html = viewBody(objectJSON);
 				document.getElementById("show").innerHTML = html;
+				Swal.fire({
+					position: 'center',
+					icon: 'success',
+					title: "姓名查詢成功",
+					showConfirmButton: false,
+					timer: 1800
+
+				})
 			},
 		}
 	);
@@ -264,13 +287,21 @@ function selectAll() {
 
 	$.ajax(
 		{
-			url: getContextPath()+"/back/emp.do",
+			url: getContextPath() + "/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
 				objectJSON = JSON.parse(json);
 				let html = viewBody(objectJSON);
 				document.getElementById("show").innerHTML = html;
+				Swal.fire({
+					position: 'center',
+					icon: 'success',
+					title: "查詢成功",
+					showConfirmButton: false,
+					timer: 1800
+
+				})
 			},
 		}
 	);
@@ -286,7 +317,7 @@ function viewRecord(obj) {
 	console.log(obj.id); // 信箱
 	$.ajax(
 		{
-			url: getContextPath()+"/back/emp.do",
+			url: getContextPath() + "/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
@@ -333,6 +364,8 @@ function firstChar(str) {
 
 
 function getNameByMemberId(memberId) {
+	let memberName = '';
+
 	let dataJSON = {
 		action: "getNameByMemberId",
 		memberId: memberId,
@@ -340,17 +373,28 @@ function getNameByMemberId(memberId) {
 
 	$.ajax(
 		{
-			url: getContextPath()+"/back/emp.do",
+			url: getContextPath() + "/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
+
 				responseName = JSON.parse(json);
 				const nodeList = document.querySelectorAll(".getName");
 				for (let i = 0; i < nodeList.length; i++) {
 					nodeList[i].innerHTML = responseName.memberName;
+					memberName = responseName.memberName;
 				}
+
 			},
 		}
 	);
+	Swal.fire({
+		position: 'center',
+		icon: 'success',
+		title: "查詢 " + memberName + " 錢包紀錄",
+		showConfirmButton: false,
+		timer: 1800
+
+	})
 }
 

@@ -21,9 +21,10 @@ public class FilterForEmpLogin implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		
 		HttpSession session = req.getSession();
-		EmpVO empVO = (EmpVO)session.getAttribute("EmpVO");
-		
+		EmpVO empVO = (EmpVO)session.getAttribute("empVO");
+		System.out.println(empVO+" 1");
 		if(empVO == null) {
+			System.out.println(empVO+" 2");
 			session.setAttribute("locationEmp", req.getRequestURL()); 
 			res.sendRedirect(req.getContextPath()+"/back/empLogin.jsp"); 
 			return;
