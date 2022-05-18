@@ -123,12 +123,13 @@ public class WishlistJNDIDAO implements WishlistDAO_interface {
 	@Override
 	public WishlistVO getOneWishlistVOForCheck(Integer memberId, Integer productId) {
 		WishlistVO wishlistVO = new WishlistVO();
-		final String INSERT_STMT = "SELECT  member_id, product_id "
+		final String SELECT_STMT = "SELECT  member_id, product_id "
 								+ "FROM  cga_02.wishlist "
 								+ "WHERE  member_id = ? "
 								+ "AND  product_id = ? " ;
+		System.out.println(SELECT_STMT);
 		try (Connection con = getRDSConnection(); 
-				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
+				PreparedStatement pstmt = con.prepareStatement(SELECT_STMT)) {
 
 			pstmt.setInt(1, memberId );
 			pstmt.setInt(2, productId );

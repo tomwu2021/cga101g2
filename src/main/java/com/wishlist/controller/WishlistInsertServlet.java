@@ -20,7 +20,7 @@ import com.members.model.MembersVO;
 import com.wishlist.model.WishlistService;
 import com.wishlist.model.WishlistVO;
 
-@WebServlet("/shop/insertWishlist")
+//@WebServlet("/shop/wishlistInsertServlet")
 public class WishlistInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -51,7 +51,7 @@ public class WishlistInsertServlet extends HttpServlet {
 		// 1.呼叫wishlistService
 		WishlistService wishSvc = new WishlistService();
 
-		// 2.刪除收藏商品
+		// 2.製作收藏商品
 		WishlistVO wishlistVO = new WishlistVO();
 		wishlistVO.setMemberId(memberId);
 		wishlistVO.setProductId(productId);
