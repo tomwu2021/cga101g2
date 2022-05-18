@@ -1,7 +1,9 @@
 package com.product.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
+import com.google.gson.Gson;
+import com.picture.model.PictureResult;
 import com.picture.model.PictureVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
@@ -36,6 +42,9 @@ public class GroupShopFrontServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");// client 端向 Servlet 請求的編碼
 		res.setCharacterEncoding("UTF-8");// response，設定回應的格式及編碼
 		String action = req.getParameter("action");
+		if(action == null){
+			action = "list";
+		}
 		
 		
 		//給團購商品groupsShop.jsp
@@ -78,6 +87,30 @@ public class GroupShopFrontServlet extends HttpServlet {
 				req.setAttribute("listGroupProducts_Byfind", list); // 資料庫取出的list物件,存入request
 				RequestDispatcher successView = req.getRequestDispatcher("/front/shop/groupsShop.jsp"); // 成功轉交groupsShop.jsp
 				successView.forward(req, res);
+		}
+		if("search".equals(action)){
+			res.setContentType("application/json; charset=UTF-8");
+			PrintWriter out = res.getWriter();
+			Integer thisPage = Integer.parseInt(req.getParameter("thisPage")); // 設置當前頁數
+			Integer pageSize = Integer.parseInt(req.getParameter("pageSize")); // 設置每頁顯示筆數
+			String sort = req.getParameter("sort"); // 設置排序方式 (升降冪)
+			String order = req.getParameter("order"); // 設置排序欄位
+
+			String[] keywords = req.getParameter("productName").split(" "); // 使用空格切割關鍵字
+			String status = "2";
+			Map<String, Object> map = new HashMap<>(); // 創建多筆指定欄位條件 Map
+			map.put("status", status);
+
+			PageQuery pq = new PageQuery(thisPage, pageSize, sort, order, map); // 創建分頁查訊物件
+			pq.setFindByLikeMultiValues("product_name", keywords); // 設置關鍵字條件
+			ProductService pdSvc = new ProductService();
+			PageResult<ProductVO> rpq = pdSvc.getPageResult(pq);
+			Gson gson = new Gson();
+			out.write(gson.toJson(rpq));
+		}
+		if("list".equals(action)){
+			RequestDispatcher successView = req.getRequestDispatcher("/front/shop/groupsShop.jsp"); // 成功轉交groupsShop.jsp
+			successView.forward(req, res);
 		}
 	}
 }

@@ -196,9 +196,9 @@
 <!-- 側邊欄結束 -->
 <!-- 個別JS -->
 
-s
 <script src="<%=request.getContextPath()%>/assets/js/comment/comment.js"></script>
 <script src="<%=request.getContextPath()%>/front/post/update.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/post/rightSideBar.js"></script>
 </body>
 
 

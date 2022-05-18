@@ -167,7 +167,7 @@
 								<!-- 							數量至少min於&起始於最低開團級距一 -->
 								<label>選擇開團數量</label> <input name="minAmount" id="minAmount"
 									value="${param.groupAmount1}" min="${param.groupAmount1}"
-									max="999" step="1" type="number"  />
+									max="999" step="1" type="number" required  />
 							</div>
 
 

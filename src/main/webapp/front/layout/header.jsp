@@ -33,11 +33,11 @@
                                             <li><a href="<%=request.getContextPath()%>/shop?action=listProducts_Byfind&sort1_id=2">狗狗專區</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="<%=request.getContextPath()%>/groupShop?action=listGroupProducts_Byfind">團購專區<i
+                                    <li><a href="<%=request.getContextPath()%>/groupShop">團購專區<i
                                             class="fa fa-angle-down"></i></a>
                                         <ul class="sub_menu pages">
-                                            <li><a href="<%=request.getContextPath()%>/groupShop?action=listGroupProducts_Byfind">我要開團</a></li>
-                                            <li><a href="<%=request.getContextPath()%>/member/groupOrder.do?action=joinGroupOrder">我要跟團</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/groupShop">我要開團</a></li>
+                                            <li><a href="<%=request.getContextPath()%>/member/groupOrder.do">我要跟團</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="<%=request.getContextPath()%>/MainPost?action=selectChangePost">寵物社群<i

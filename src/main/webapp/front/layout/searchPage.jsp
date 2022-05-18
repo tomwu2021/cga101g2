@@ -12,4 +12,3 @@
 	</div>
 </div>
 
-<script src="<%=request.getContextPath()%>/assets/js/searchPage.js"></script>

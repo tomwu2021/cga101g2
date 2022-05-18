@@ -1,17 +1,23 @@
 package com.product.model;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Part;
 
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
 import com.p_sort1.model.PSort1Service;
 import com.p_sort1.model.PSort1VO;
+import com.picture.model.PictureJDBCDAO;
 import com.picture.model.PictureVO;
 import com.picture.service.PictureService;
 import com.product_img.model.ProductImgService;
 import com.product_img.model.ProductImgVO;
+import connection.JDBCConnection;
 
 public class ProductService {
 
@@ -215,5 +221,17 @@ public class ProductService {
 //		}
 //		return filename;
 //	}
-
+	public PageResult<ProductVO> getPageResult(PageQuery pq){
+		try (Connection con = JDBCConnection.getRDSConnection()){
+			ProductJDBCDAO pjdao = new ProductJDBCDAO();
+			PictureJDBCDAO picdao = new PictureJDBCDAO();
+			PageResult<ProductVO>  rpq= pjdao.getPageResult(pq,con);
+			for(ProductVO prVO:rpq.getItems()){
+				prVO.setPictureVOList(picdao.queryShopPicturesByMapping(prVO.getProductId(),con));
+			}
+			return rpq;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+}
 }

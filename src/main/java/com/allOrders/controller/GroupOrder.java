@@ -47,16 +47,28 @@ public class GroupOrder extends HttpServlet {
 		MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 		String action = req.getParameter("action");
 		System.out.println(action);
-
+		if(action==null||"".equals(action)){
+			action = "list";
+		}
 		// 進入參團頁面
 		if ("joinGroupOrder".equals(action)) {
 			res.setContentType("text/html;charset=UTF-8");
-			System.out.println("joinGroupOrder有進入");
-			// 查詢現在有開團的
+			System.out.println("toJoinDetial有進入");
+			// 查詢參團詳情
+			Integer groupOrderId = Integer.valueOf(req.getParameter("groupOrderId").trim());
+			System.out.println("getParameter:" + groupOrderId);
 			GroupOrderService groupOrderService = new GroupOrderService();
-			List<GroupOrderVO> groupList = groupOrderService.getAllInProgress();
-			req.setAttribute("groupList", groupList);
-			String url = "/front/shop/joinGroupsShop.jsp";
+			GroupOrderVO groupOrderVO = groupOrderService.getOneOrder(groupOrderId);
+			// 查詢目前份數
+			int established = 0;
+			GroupBuyerService groupBuyerService = new GroupBuyerService();
+			for (GroupBuyerVO groupBuyerVO : groupBuyerService.getAllByGroupOrderId(groupOrderId)) {
+				established += groupBuyerVO.getProductAmount();
+			}
+			System.out.println("總數" + established);
+			req.setAttribute("established", established);
+			req.setAttribute("groupOrderVO", groupOrderVO);
+			String url = "/front/shop/joinProductDetails.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -73,20 +85,16 @@ public class GroupOrder extends HttpServlet {
 			String order = req.getParameter("order"); // 設置排序欄位		
 			//客製條件
 			Map<String, Object> map = new HashMap<>(); // 創建多筆指定欄位條件 Map
-			if(req.getParameter("status") != null) {
+			if(req.getParameter("status") != null && !"".equals(req.getParameter("status"))) {
 				Integer status = Integer.parseInt(req.getParameter("status"));
-				map.put("status", status);
+				map.put("o.status", status);
 			}
 			String[] keywords = req.getParameter("productName").split(" "); // 使用空格切割關鍵字
 			PageQuery pq = new PageQuery(thisPage, pageSize, sort, order, map); // 創建分頁查訊物件
 			pq.setFindByLikeMultiValues("product_name", keywords);
 			GroupOrderService groupOrderService=new GroupOrderService();
 			PageResult<GroupOrderVO> rpq = null;
-			try {
-				rpq = groupOrderService.getPageResult(pq);
-			} catch (JDBCException e) {
-				throw new RuntimeException(e);
-			}
+			rpq = groupOrderService.getPageResult(pq);
 			Gson gson = new Gson();
 			out.write(gson.toJson(rpq));
 			
@@ -147,7 +155,9 @@ public class GroupOrder extends HttpServlet {
 			Integer productId = Integer.valueOf(req.getParameter("productId").trim());
 			Integer endType = Integer.valueOf(req.getParameter("endType").trim());
 			Integer groupPrice1 = Integer.valueOf(req.getParameter("groupPrice1").trim());
+
 			Integer minAmount = Integer.valueOf(req.getParameter("minAmount").trim());
+
 
 			groupOrderVO.setEndType(endType);
 			groupOrderVO.setMinAmount(minAmount);
@@ -400,6 +410,11 @@ public class GroupOrder extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			}
+		}
+		if ("list".equals(action)) {
+			String url = "/front/shop/joinGroupsShop.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 		}
 	}
 

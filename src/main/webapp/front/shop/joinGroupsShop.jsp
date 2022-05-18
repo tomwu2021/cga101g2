@@ -18,8 +18,7 @@
 
 <script>
         function getContextPath() {
-            return "<%=request.getContextPath()%>
-	";
+            return "<%=request.getContextPath()%>";
 	}
 </script>
 </head>
@@ -69,7 +68,7 @@
 							<div class="widget_list widget_color">
 								<h3>
 									<a
-										href="<%=request.getContextPath()%>/groupShop?action=listGroupProducts_Byfind">我要開團</a>
+										href="<%=request.getContextPath()%>/groupShop">我要開團</a>
 								</h3>
 							</div>
 
@@ -81,7 +80,6 @@
 										<a href="javascript:document.join.submit();">我要跟團</a>
 									</h3>
 								</div>
-								<input type="hidden" name="action" value="joinGroupOrder">
 							</FORM>
 							<div class="widget_list widget_color"></div>
 							<div class="widget_list widget_color"></div>
@@ -131,7 +129,7 @@
 									</select>
 								</form>								
 							</div>
-							<input placeholder="idch..." type="text" id="productName">
+							<input placeholder="輸入關鍵字搜尋..." type="text" id="productName">
 							<div class="page_amount" style="align-self: center">
 								<p></p>
 							</div>
@@ -141,15 +139,16 @@
 
 
 <%-- 							<c:forEach var="groupOrderVO" items="${groupList}"> --%>
-<!-- 								<Form -->
-<%-- 									ACTION="<%=request.getContextPath()%>/member/groupOrder.do" --%>
-<%-- 									Method="Post" name="GO${groupOrderVO.groupOrderId}"> --%>
-<!-- 									<input type="hidden" name="action" value="toJoinDetial"> -->
-<!-- 									<input type="hidden" name="groupOrderId" -->
-<%-- 										value="${groupOrderVO.groupOrderId}"> --%>
-<!-- 								</Form> -->
+							<Form
+									ACTION="<%=request.getContextPath()%>/member/groupOrder.do"
+								Method="Post" name="GO${groupOrderVO.groupOrderId}">
+									<input type="hidden" name="action" value="toJoinDetial">
+									<input type="hidden" name="groupOrderId"
+								value="${groupOrderVO.groupOrderId}">
+								</Form>
+
+									<!--單一商品開始 -->
 <!-- 								<div class="col-lg-4 col-md-4 col-sm-6 col-12"> -->
-<!-- 									單一商品開始 -->
 
 <!-- 									<article class="single_product"> -->
 <!-- 										<figure> -->
@@ -246,7 +245,9 @@
 	<!--leftnavlink.js -->
 	<script
 		src="<%=request.getContextPath()%>/assets/shop/leftnav/leftnavlink.js">
-		
+	</script>
+	<script
+			src="<%=request.getContextPath()%>/assets/js/groupShop/joinGroupShop.js">
 	</script>
 </body>
 

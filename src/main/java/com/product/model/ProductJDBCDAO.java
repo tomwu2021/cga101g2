@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.common.exception.JDBCException;
+import com.common.model.PageQuery;
+import com.common.model.PageResult;
 import com.product_img.model.ProductImgVO;
 
 public class ProductJDBCDAO implements ProductDAO_interface {
@@ -463,11 +466,59 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 	}
 
 
-	
-	
-	
-	
-	
+	public PageResult<ProductVO> getPageResult(PageQuery pageQuery, Connection con){
+		String baseSQL = " SELECT * FROM product ";
+		int total = 0;
+		List<ProductVO> products = new ArrayList<>();
+		try {
+			if (con != null) {
+				PreparedStatement stmt = con.prepareStatement(pageQuery.getTotalCountSQL(baseSQL));
+				ResultSet rs = stmt.executeQuery();
+				rs.next();
+				total = rs.getInt(1);
+				rs.close();
+				stmt.close();
+
+
+				stmt = con.prepareStatement(pageQuery.getQuerySQL(baseSQL));
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					ProductVO productVO = buildProductVO(rs);
+					products.add(productVO);
+				}
+				rs.close();
+				stmt.close();
+			} else {
+				throw new JDBCException("getPageResult() ::: Connection con is NULL !!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return new PageResult<ProductVO>(pageQuery, products, total);
+	}
+
+	public ProductVO buildProductVO(ResultSet rs) throws SQLException {
+		ProductVO productVO = new ProductVO();
+		productVO.setProductId(rs.getInt("product_id"));
+		productVO.setProductName(rs.getString("product_name"));
+		productVO.setPrice(rs.getInt("price"));
+		productVO.setAmount(rs.getInt("amount"));
+		productVO.setUpdateTime(rs.getTimestamp("update_time"));
+		productVO.setGroupAmount1(rs.getInt("group_amount1"));
+		productVO.setGroupAmount2(rs.getInt("group_amount2"));
+		productVO.setGroupAmount3(rs.getInt("group_amount3"));
+		productVO.setGroupPrice1(rs.getInt("group_price1"));
+		productVO.setSort2Id(rs.getInt("sort2_id"));
+		productVO.setDescription(rs.getString("description"));
+		productVO.setStatus(rs.getInt("status"));
+		productVO.setTopStatus(rs.getInt("top_status"));
+		return productVO;
+	}
+
+
+
+
+
 //	@Override
 	// public ProductVO getProductVOByID(int id) {
 

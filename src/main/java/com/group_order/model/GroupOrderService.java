@@ -89,9 +89,6 @@ public class GroupOrderService {
             for (GroupOrderVO gvo : gvos) {
                 ProductVO productVO = gvo.getProductVO();
                 List<PictureVO> picList = picDao.queryShopPicturesByMapping(gvo.getProductId(), con);
-                picList.forEach((p)->{
-                    System.out.println(p.getPreviewUrl()+"\n");
-                });
                 productVO.setPictureVOList(picList);
                 gvo.setProductVO(productVO);
                 gvos2.add(gvo);
@@ -107,6 +104,17 @@ public class GroupOrderService {
     
 
     public PageResult<GroupOrderVO> getPageResult(PageQuery pq) {
-       return dao.getPageResult(pq);
+        try {
+            Connection con = JDBCConnection.getRDSConnection();
+            GroupOrderJDBCDAO groupDao =  new GroupOrderJDBCDAO();
+            PageResult<GroupOrderVO> pqr = groupDao.getPageResult(pq,con);
+            for(GroupOrderVO groupOrderVO:pqr.getItems()) {
+                groupOrderVO.getProductVO().setPictureVOList(picDao.queryShopPicturesByMapping(groupOrderVO.getProductId(), con));
+            }
+            con.close();
+            return pqr;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
