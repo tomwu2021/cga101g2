@@ -79,6 +79,8 @@ public class MembersServlet extends HttpServlet {
 		case "totalMoney": // 取得總儲值金額
 			totalMoney(req, res);
 			break;
+		case "selectAddress":
+			selectAddress(req, res);
 		}
 	}
 
@@ -383,15 +385,18 @@ public class MembersServlet extends HttpServlet {
 		String phone = req.getParameter("phone");
 		String regex = "^09[0-9]{8}$";
 
-		if (phone == null || phone.trim().length() == 0) {
-		} else {
-			if (!phone.trim().matches(regex)) {
-				messages.put("errorPhone", "*手機格式錯誤");
-			}
+		if (phone == null || phone.trim().length() == 0 || !phone.trim().matches(regex) ) {
+			messages.put("errorPhone", "*手機格式錯誤且不可為空");
 		}
-
+		
 		String address = req.getParameter("address");
+		if (address == null || address.trim().length() == 0) {
+			messages.put("errorAddress", "*地址不可為空");
+		}
+		
+		String addressAll = req.getParameter("county") + req.getParameter("district") + " " + req.getParameter("address");
 
+//		String address = req.getParameter("address");
 //		System.out.println(messages);
 
 		if (!messages.isEmpty()) {//
@@ -404,7 +409,7 @@ public class MembersServlet extends HttpServlet {
 		MembersService memberSvc = new MembersService();
 		sessionMembersVO.setName(name); // Name
 		sessionMembersVO.setPhone(phone); // Phone
-		sessionMembersVO.setAddress(address); // Address
+		sessionMembersVO.setAddress(addressAll); // Address
 
 		System.out.println(sessionMembersVO);
 		memberSvc.update(sessionMembersVO);
@@ -671,7 +676,8 @@ public class MembersServlet extends HttpServlet {
 //		System.out.println("執行111");
 
 //		if (currentWalletPassword == null || currentWalletPassword.trim().length() == 0) {
-		if (sessionMembersVO.geteWalletPassword() == null || sessionMembersVO.geteWalletPassword().trim().length() == 0) {
+		if (sessionMembersVO.geteWalletPassword() == null
+				|| sessionMembersVO.geteWalletPassword().trim().length() == 0) {
 			// 跳轉到新建密碼畫面
 			messages.put("exist", "false");
 			String json = new Gson().toJson(messages);
@@ -813,5 +819,28 @@ public class MembersServlet extends HttpServlet {
 		String json = new Gson().toJson(messages);
 		res.getWriter().write(json);
 		return;
+	}
+
+	public void selectAddress(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+		Map<String, String> messages = new LinkedHashMap<String, String>();
+		req.setAttribute("messages", messages);
+
+		Integer memberId = Integer.parseInt(req.getParameter("memberId"));
+		MembersService memberSvc = new MembersService();
+		MembersVO membersVO = memberSvc.getOneById(memberId);
+		String address = membersVO.getAddress();
+		if (null == address) {
+			messages.put("address", "null");
+			String json = new Gson().toJson(messages);
+			res.getWriter().write(json);
+			return;
+		} else {
+			messages.put("address", address);
+			String json = new Gson().toJson(messages);
+			res.getWriter().write(json);
+			return;
+		}
+
 	}
 }
