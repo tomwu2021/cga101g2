@@ -47,6 +47,8 @@
 		<url-pattern>/front/shop/viewGroupOrder.jsp</url-pattern>
 		<url-pattern>/front/shop/groupProductDetails.jsp</url-pattern>
 		<url-pattern>/front/shop/joinProductDetails.jsp</url-pattern>
+		<url-pattern>/front/shop/groupsShop.jsp</url-pattern>
+		<url-pattern>/front/shop/joinGroupsShop.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
