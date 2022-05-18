@@ -58,10 +58,6 @@ href="<%=request.getContextPath()%>/front/post/css/personPost.css">
 	transform: translateX(8px) translateY(1px);
 	}
 	
-	
-
-	
-	
     
     /* 追蹤 */
 	.button1 {
