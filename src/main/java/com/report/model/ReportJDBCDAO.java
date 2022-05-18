@@ -30,7 +30,7 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	}
 
 	public ReportVO insert(ReportVO reportVO, Connection con) {
-		final String INSERT = "insert into report(reporter_id, post_id, report_reason, status) VALUES (?, ?, ?, 0)";
+		final String INSERT = "insert into report(reporter_id, post_id, report_reason, status,url) VALUES (?, ?, ?, 0,?)";
 
 		if (con != null) {
 			try {
@@ -38,6 +38,7 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 				pstmt.setInt(1, reportVO.getReporterId());
 				pstmt.setInt(2, reportVO.getPostId());
 				pstmt.setString(3, reportVO.getReportReason());
+				pstmt.setString(4, reportVO.getUrl());
 				pstmt.executeUpdate();
 
 				ResultSet rs = pstmt.getGeneratedKeys();
@@ -73,7 +74,7 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	@Override
 	public List<ReportVO> getAll() {
 		List<ReportVO> list = new ArrayList<ReportVO>();
-		final String GETAll = "select report_id, reporter_id, post_id, report_reason, report_time, status from report";
+		final String GETAll = "select report_id, reporter_id, post_id, report_reason, report_time, status,url from report";
 
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(GETAll);
@@ -86,6 +87,7 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 				reportVO.setPostId(rs.getInt("post_id"));
 				reportVO.setReportReason(rs.getString("report_reason"));
 				reportVO.setReportTime(rs.getDate("report_time"));
+				reportVO.setUrl(rs.getString("url"));
 				reportVO.setStatus(rs.getInt("status"));
 
 				list.add(reportVO);

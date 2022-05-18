@@ -10,6 +10,7 @@ public class ReportVO implements java.io.Serializable {
 	private String reportReason;
 	private Date reportTime;	
 	private Integer status;
+	private String url;
 	
 	public ReportVO() {
 		super();
@@ -72,7 +73,17 @@ public class ReportVO implements java.io.Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}	
+	
+	
 	
 }
 

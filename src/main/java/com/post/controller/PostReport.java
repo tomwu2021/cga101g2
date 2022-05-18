@@ -26,10 +26,13 @@ public class PostReport extends HttpServlet{
 		Integer reporterId = membersVO.getMemberId();
 		String sPostId = req.getParameter("postId");
 		Integer postId=Integer.valueOf(sPostId);
+		String sMemberId = req.getParameter("memberId");
+		Integer memberId=Integer.valueOf(sMemberId);
 		String reportReason = req.getParameter("reportReason");
+		String url = "/detailPost?action=selectdetail&postId="+postId+"&memberId="+memberId;
 		//創建一則檢舉
 		ReportService reportService=new ReportService();
-		reportService.insert(reporterId, postId, reportReason);
+		reportService.insert(reporterId, postId, reportReason,url);
 		//將貼文狀態改為隱藏
 		PostService postService=new PostService();
 		postService.updateReport(postId);

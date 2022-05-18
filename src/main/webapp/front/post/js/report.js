@@ -3,6 +3,7 @@ $("#report").click(function() {
 
 	let postId = $('#postId').val();
 	let reportReason = $('#forgotPassword').val();
+	let memberId = $('#memberId').val();
 
 	Swal.fire({
 		title: '確定檢舉?',
@@ -23,7 +24,7 @@ $("#report").click(function() {
 				})
 			} else {
 				$.get({
-					url: `${getContextPath()}/postReport.do?postId=${postId}&reportReason=${reportReason}`,
+					url: `${getContextPath()}/postReport.do?postId=${postId}&reportReason=${reportReason}&memberId=${memberId}`,
 					success: function() {
 						Swal.fire({
 					position: 'center',

@@ -109,6 +109,7 @@ a, button {
 	<%@include file="/front/layout/header.jsp"%>
 	<!-- 共用的header end-->
 	<input type="hidden" id="postId" value="${postVO.postId}">
+	<input type="hidden" id="memberId" value="${postVO.memberId}">
 	<!--! ========內容======== -->
 	<!--blog body area start-->
 	<div class="blog_details">
