@@ -102,7 +102,6 @@ GroupBuyerVO groupBuyerVO = (GroupBuyerVO) request.getAttribute("groupBuyerVO");
 									</FORM>
 									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/groupOrder.do" name="join">
 									<div class="checkout_btn" onclick="javascript:document.join.submit();">
-									<input type="hidden" name="action" value="joinGroupOrder">
 										<a href="#">到商城</a>
 									</div>
 									</FORM>
