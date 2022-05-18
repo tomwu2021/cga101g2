@@ -11,7 +11,7 @@ function viewStatus(status) {
 		return "已完成";
 	}
 }
-
+	
 // 年-月-日
 function viewDate(date) {	//	"May 10, 2022, 2:29:42 AM"
 	let someday = new Date(date);
@@ -28,7 +28,7 @@ $(function() {
 
 	$.ajax(
 		{
-			url: getContextPath() + "/front/AllOrders",
+			url: getContextPath() + "/AllOrders",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
