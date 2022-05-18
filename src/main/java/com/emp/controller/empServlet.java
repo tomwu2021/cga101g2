@@ -106,19 +106,16 @@ public class empServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				session.setAttribute("empVO", empVO);
 				req.setAttribute("empVO", empVO); // 資料庫取出的 empVO 物件，存入 req
-//				RequestDispatcher successView = req.getRequestDispatcher("/back/empSelect.jsp");
-//				successView.forward(req, res);
-//				return;
 				if (session.getAttribute("locationEmp") != null) {
-					System.out.println("session不等於null");
+//					System.out.println("session不等於null");
 					String url = session.getAttribute("locationEmp").toString(); //http://localhost:8081/CGA101G2/back/customer/detail.jsp
-					System.out.println("locationEmp："+url);
+//					System.out.println("locationEmp："+url);
 					
 					res.sendRedirect(url);
 					return;
 				} else {
-					System.out.println("session等於null");
-					System.out.println("session.getAttribute(\"locationEmp\")：" + session.getAttribute("locationEmp"));
+//					System.out.println("session等於null");
+//					System.out.println("session.getAttribute(\"locationEmp\")：" + session.getAttribute("locationEmp"));
 
 					RequestDispatcher successView = req.getRequestDispatcher("/back/empSelect.jsp");
 					successView.forward(req, res);
@@ -144,8 +141,8 @@ public class empServlet extends HttpServlet {
 		String newStatus = req.getParameter("newStatus");
 		String memberId = req.getParameter("memberId");
 		// 取得修改值
-		System.out.println(newStatus);
-		System.out.println(memberId);
+//		System.out.println(newStatus);
+//		System.out.println(memberId);
 
 		// 呼叫 修改 會員狀態 service
 		MembersService memberSvc = new MembersService();
@@ -165,7 +162,7 @@ public class empServlet extends HttpServlet {
 
 	public void accountSelect(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String memberAccount = req.getParameter("memberAccount");
-		System.out.println(memberAccount);
+//		System.out.println(memberAccount);
 
 		// 用帳號模糊查詢
 		MembersService memberSvc = new MembersService();
@@ -177,7 +174,7 @@ public class empServlet extends HttpServlet {
 
 	public void nameSelect(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String memberName = req.getParameter("memberName");
-		System.out.println(memberName);
+//		System.out.println(memberName);
 
 		// 用帳號模糊查詢
 		MembersService memberSvc = new MembersService();
@@ -191,14 +188,14 @@ public class empServlet extends HttpServlet {
 	public void empSelectMemberRecord(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		String memberAccount = req.getParameter("memberAccount");
-		System.out.println(memberAccount);
+//		System.out.println(memberAccount);
 		MembersService memberSvc = new MembersService();
 		MembersVO membersVO = memberSvc.selectMemberIdByAccount(memberAccount);
 
 		// 用 信箱查詢 memberId
 		ChargeRecordService chargeRecordSvc = new ChargeRecordService();
 		List<ChargeRecordVO> listAll = chargeRecordSvc.getAll(membersVO.getMemberId());
-		System.out.println(listAll);
+//		System.out.println(listAll);
 		String json = new Gson().toJson(listAll);
 		res.getWriter().write(json);
 		return;
@@ -211,7 +208,7 @@ public class empServlet extends HttpServlet {
 		String memberId = req.getParameter("memberId");
 		MembersService memberSvc = new MembersService();
 		String memberName = memberSvc.getOneById(Integer.parseInt(memberId)).getName();
-		System.out.println(memberName);
+//		System.out.println(memberName);
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
 

@@ -28,7 +28,7 @@ $(function() {
 
 	$.ajax(
 		{
-			url: "/CGA101G2/AllOrders",
+			url: getContextPath() + "/front/AllOrders",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {

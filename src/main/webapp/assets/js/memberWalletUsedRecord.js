@@ -18,7 +18,7 @@ $(function() {
 
 	$.ajax(
 		{
-			url: "/CGA101G2/front/member.do",
+			url: getContextPath() + "/front/member.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
@@ -138,7 +138,7 @@ function selectByDate() {
 
 	$.ajax(
 		{
-			url: "/CGA101G2/front/member.do",
+			url: getContextPath() + "/front/member.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {

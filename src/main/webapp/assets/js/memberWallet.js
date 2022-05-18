@@ -6,7 +6,7 @@ $(function() {
 
 	$.ajax(
 		{
-			url: "/CGA101G2/front/member.do",
+			url: getContextPath() + "/front/member.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
@@ -18,13 +18,17 @@ $(function() {
 				if (exist === "false") {
 					Swal.fire({
 						position: 'center',
-						icon: 'error',
+						icon: 'info',
 						title: "請設定錢包密碼",
 						showConfirmButton: true,
 						timer: 2500
-
 					})
-					window.location.href = 'memberSetWalletPassword.jsp';
+
+					function historyZero() {
+						window.location.href = 'memberSetWalletPassword.jsp';
+					}
+
+					setTimeout(historyZero, 1950);
 				} else {
 					return;
 				}

@@ -11,7 +11,6 @@ import com.chargeRecord.model.ChargeRecordService;
 import com.chargeRecord.model.ChargeRecordVO;
 import com.google.gson.Gson;
 import com.members.model.*;
-import com.notification.model.NotificationJDBCDAO;
 import com.notification.model.NotificationService;
 import com.notification.model.NotificationVO;
 import com.pet.service.PetService;
@@ -209,7 +208,7 @@ public class MembersServlet extends HttpServlet {
 				sessionVC.setAttribute("authCode", verificationCode);
 				sessionVC.setAttribute("registerAccount", registerAccount);
 
-				System.out.println(verificationCode);
+//				System.out.println(verificationCode);
 
 				// 寄送 JavaMail
 				JavaMail javaMail = new JavaMail();
@@ -267,13 +266,13 @@ public class MembersServlet extends HttpServlet {
 		messages.put("msgError", "");
 		messages.put("msgErrorVerificationCode", "");
 		messages.put("registerSuccessful", "註冊成功");
-		
+
 		// 寄送一則通知：首次登入購物金 100 元
-		NotificationService notificationSvc = new NotificationService(); 
+		NotificationService notificationSvc = new NotificationService();
 		NotificationVO notificationVO = new NotificationVO();
-		notificationVO.setMemberId(newMember.getMemberId()); 
+		notificationVO.setMemberId(newMember.getMemberId());
 		notificationVO.setContext("新會員加入即贈 100 點紅利購物金！");
-		notificationVO.setUrl(getServletContext().getContextPath()+"/front/member/member.jsp");
+		notificationVO.setUrl(getServletContext().getContextPath() + "/front/member/member.jsp");
 		notificationSvc.insert(notificationVO);
 
 		// 相簿建立
@@ -536,7 +535,7 @@ public class MembersServlet extends HttpServlet {
 
 			// 儲值成功後判斷累積儲值金額修改會員等級
 			Integer sumChargeAmount = chargeRecordDAO.SumChargeAmount(currentMemberId);
-			System.out.println(sumChargeAmount);
+//			System.out.println(sumChargeAmount);
 
 			if (sumChargeAmount >= 10001) {
 				memberSvc.updateRank(currentMemberId, 4);
@@ -596,8 +595,8 @@ public class MembersServlet extends HttpServlet {
 
 		String oldWalletPassword = req.getParameter("oldWalletPassword");
 
-		System.out.println(currentWalletPassword);
-		System.out.println(oldWalletPassword);
+//		System.out.println(currentWalletPassword);
+//		System.out.println(oldWalletPassword);
 
 		if (oldWalletPassword == null || oldWalletPassword.trim().length() == 0) {
 			messages.put("errorOldoldWalletPassword", "*密碼不可為空");
@@ -609,7 +608,7 @@ public class MembersServlet extends HttpServlet {
 
 		String regex = "^[0-9]{6}$";
 		String newWalletPassword = req.getParameter("newWalletPassword");
-		System.out.println(newWalletPassword);
+//		System.out.println(newWalletPassword);
 		if (newWalletPassword == null || newWalletPassword.trim().length() == 0) {
 			messages.put("errornewWalletPassword", "*密碼不可為空");
 		} else {
@@ -665,13 +664,14 @@ public class MembersServlet extends HttpServlet {
 		MembersService memberSvc = new MembersService();
 		String walletPassword = memberSvc.selectForLogin(sessionMembersVO.getAccount(), sessionMembersVO.getPassword())
 				.geteWalletPassword();
-		System.out.println(walletPassword);
+//		System.out.println(walletPassword);
 
 		sessionMembersVO.seteWalletPassword(walletPassword);
 
 //		System.out.println("執行111");
 
-		if (currentWalletPassword == null || currentWalletPassword.trim().length() == 0) {
+//		if (currentWalletPassword == null || currentWalletPassword.trim().length() == 0) {
+		if (sessionMembersVO.geteWalletPassword() == null || sessionMembersVO.geteWalletPassword().trim().length() == 0) {
 			// 跳轉到新建密碼畫面
 			messages.put("exist", "false");
 			String json = new Gson().toJson(messages);
@@ -697,7 +697,7 @@ public class MembersServlet extends HttpServlet {
 
 		String regex = "^[0-9]{6}$";
 		String setWalletPassword = req.getParameter("setWalletPassword");
-		System.out.println(setWalletPassword);
+//		System.out.println(setWalletPassword);
 		if (setWalletPassword == null || setWalletPassword.trim().length() == 0) {
 			messages.put("errorSetWalletPassword", "*密碼不可為空");
 		} else {
@@ -726,8 +726,7 @@ public class MembersServlet extends HttpServlet {
 			newMemberVO.setMemberId(sessionMembersVO.getMemberId());
 			newMemberVO.seteWalletPassword(setWalletPassword);
 			memberSvc.update(newMemberVO);
-			System.out.println("執行");
-			System.out.println(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
+//			System.out.println(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
 			sessionMembersVO
 					.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
 			messages.put("updatePasswordSuccess", "成功設定錢包密碼！");
@@ -751,7 +750,7 @@ public class MembersServlet extends HttpServlet {
 
 		List<ChargeRecordVO> listAll = chargeRecordSvc.getAll(sessionMembersVO.getMemberId());
 
-		System.out.println(listAll);
+//		System.out.println(listAll);
 
 		String json = new Gson().toJson(listAll);
 		res.getWriter().write(json);
@@ -769,7 +768,6 @@ public class MembersServlet extends HttpServlet {
 		// 首次登入
 		if (sessionMembersVO.getBonusAmount() == 0 && sessionMembersVO.geteWalletPassword() == null) {
 
-			System.out.println("這是第一次登入要執行的事情");
 			// 首次登入發送紅利
 			// ewallet_password == null，代表此會員未消費，所以也不曾使用過紅利點數，因為要使用紅利點數就需要設定錢包密碼進行儲值消費
 			// 再判斷 bonus == 0，代表會員從未領過紅利點數
@@ -792,7 +790,7 @@ public class MembersServlet extends HttpServlet {
 	}
 
 	public void logout(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("把拔別把我登出!!!!");
+//		System.out.println("把拔別把我登出!!!!");
 		HttpSession session = req.getSession();
 		session.removeAttribute("membersVO");
 		RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
@@ -807,10 +805,10 @@ public class MembersServlet extends HttpServlet {
 		Integer currentMemberId = sessionMembersVO.getMemberId();
 		ChargeRecordDAO chargeRecordDAO = new ChargeRecordDAO();
 		Integer sumChargeAmount = chargeRecordDAO.SumChargeAmount(currentMemberId);
-		
+
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
-		
+
 		messages.put("totalMoney", String.valueOf(sumChargeAmount));
 		String json = new Gson().toJson(messages);
 		res.getWriter().write(json);

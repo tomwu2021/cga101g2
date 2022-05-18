@@ -6,7 +6,7 @@ $(function() {
 	
 	$.ajax(
 		{
-			url: "/CGA101G2/front/member.do",
+			url: getContextPath() + "/front/member.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {
@@ -16,6 +16,10 @@ $(function() {
 				console.log(exist);
 				
 				if(exist === "true"){
+					function historyZero() {
+						window.location.href = 'memberSetWalletPassword.jsp';
+					}
+					setTimeout(historyZero, 1500);
 					window.location.href='memberWalletPassword.jsp'; 
 				}else{
 					return;
