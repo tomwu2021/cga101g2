@@ -60,33 +60,38 @@
     flex-direction: row;
     transform: translateY(-50px);
 	}
+	
+	#demo_border {
+	position: relative;
+	width:280px;
+	height:0px;
+	}
+    
+    #image_photo {
+　　position: absolute;
+    background-image: url("");
+ 
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    overflow: hidden;
+
+    width: 120px;
+    height: 120px;
+    transform: translateY(-50px);
+	}
+	
+	#img_text {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	font-size: 16px;
+	color: #926161;
+	border-radius: 50%;
+	/* background-color: #F00; */
+	width: 150px;
+	height:50px;
+	text-align: center;
+	line-height: 30px;
+	transform: translateX(8px) translateY(1px);
+	}
   
-  	/* 追蹤 */
-	.button1 {
-	/* background: url(../img/icon/bkg_grid4.png) no-repeat scroll center center; */
-	background-color: #7f1912;
-	border: none;
-	color: white;
-	padding: 10px 20px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	border-radius: 8px;
-	transform: translateY(50px) translateX(-60px);
-	}
-  	
-  	/* 封鎖 */
-	.button2 {
-	/* background: url(../img/icon/bkg_grid4.png) no-repeat scroll center center; */
-	background-color: #504c4c;
-	border: none;
-	color: white;
-	padding: 10px 20px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	border-radius: 8px;
-	transform: translateY(50px) translateX(-50px);
-	}

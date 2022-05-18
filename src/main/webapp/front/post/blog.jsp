@@ -71,7 +71,7 @@ href="<%=request.getContextPath()%>/front/post/css/blog.css">
 										
 										</div>
 										
-										<div id="img_text">${postVO.membersVO.name}</div>
+										<a href="<%=request.getContextPath()%>/PersonPost?memberId=${postVO.memberId}&action=getOne_For_Display"><div id="img_text">${postVO.membersVO.name}</div></a>
 										
 									</div>
 									
@@ -108,7 +108,7 @@ href="<%=request.getContextPath()%>/front/post/css/blog.css">
                                       	  		<i id="likelist${postVO.postId}"  class="bi bi-suit-heart-fill fa-2x" style="cursor: pointer;"></i> 
                                       	 	 </c:if> 
                                   	   </span> 
-                                        <a href="#">&ensp;${postVO.likeCount}</a> <span style="font-size: 16px;">個讚</span> &ensp;  <a href="#">${postVO.createTime}</a> 
+                                        <a href="#">&ensp;${postVO.likeCount}</a> <span style="font-size: 16px; color: #eca2a2;">個讚</span> &ensp;  <a href="#">${postVO.createTime}</a> 
 <!-- 									會員是否有點讚該文章的判斷 -->
                                         
                                     </div>

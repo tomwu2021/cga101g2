@@ -19,14 +19,14 @@
 	bottom: 0px;
 	right: 0px;
 	font-size: 15px;
-	color: #5a4a4a;
+	color: #836c71;
 	border-radius: 50%;
 	/* background-color: #F00; */
 	width: 350px;
 	height: 40px;
 	text-align: center;
 	line-height: 30px;
-	transform: translateY(-20px) translateX(150px);
+	transform: translateY(-20px) translateX(145px);
 	}
 	
 	img {
@@ -47,3 +47,24 @@
     .mt-100 {
     margin-top: 30px;
     }
+    
+    .blog_wrapper .blog_content .btn_more a {
+    color: #fff;
+    font-size: 13px;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 25px;
+    display: inline-block;
+    text-transform: capitalize;
+    background: #6c4343;
+    font-weight: 500;
+    border-radius: 20px;
+	}
+	
+	blog_content p.post_desc {
+    font-size: 14px;
+    line-height: 24px;
+    margin-bottom: 0;
+    color: #635656;
+    }
+

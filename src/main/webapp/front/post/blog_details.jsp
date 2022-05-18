@@ -28,6 +28,47 @@
             return "<%=request.getContextPath()%>";
         }
     </script>
+    
+    <style>
+    #demo_border {
+	position: relative;
+	width:200px;
+	height:0px;
+	}
+    
+    #image_photo {
+　　position: absolute;
+    background-image: url("");
+ 
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    overflow: hidden;
+
+    width: 75px;
+    height: 75px;
+    transform: translateY(5px);
+	}
+	
+	
+	img {
+  	max-width: 100%;
+  	height: 100%;
+	}
+	
+	.blog_details .blog_meta {
+    margin-bottom: 0;
+    transform: translateY(-40px) translateX(120px);
+	}
+	
+	a, button {
+    color: #836c71;
+    line-height: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+	}
+	
+    </style>
 </head>
 
 <body>
@@ -50,35 +91,38 @@
 
 
                 <div class="blog_wrapper blog_wrapper_details">
-                    <article class="single_blog">
-                        <figure>
-                            <!-- 圖上方標題 放頭像 姓名 讚數 創貼文時間-->
-                            <div class="post_header">
-                                <figure style="width: 60px; height: 60px;">
-										<span><img class="img-responsive "
-                                                   src="${postVO.pictureVO.url}" alt="頭像"/></span>
-                                    <%-- <span><a href="#">${postVO.membersVO.name}</a></span> --%>
+                    <article class="single_blog">                                           
+                                                           
+                            	<!-- 圖上方標題 放頭像 姓名 讚數 創貼文時間-->
+                            	<div class="post_header">
+                                <figure style="width: 100px; height: 100px;">
+                                <div id="demo_border" style="position: relative;">
+                                <div id="image_photo"><img style="height: 100%;" src="${postVO.pictureVO.url}"></div>										
+								<div class="blog_meta">
+                                    
+                                       <a href="#">${postVO.membersVO.name}</a>
+                                    
+                                </div>
+								</div>	
+								                                   
                                 </figure>
 
-                                <h3 class="post_title">Aypi non habent claritatem insitam</h3>
+                                
                                 
 								<c:if test="${memberId == isOwner}">
                                 <!-- 修改按鈕 -->
-                                <button id="updatePost${postVO.postId}">Confirm</button>
+                                <button id="updatePost${postVO.postId}" class="btn btn btn-secondary btn-sm" style="transform: translateX(810px) translateY(-80px);">修改</button>
+                                
 								</c:if>
 
-                                <div class="blog_meta">
-                                    <p>
-                                        Posted by : <a href="#">${postVO.membersVO.name}</a>
-                                    </p>
-                                </div>
+                                
 
                             </div>
                             <!-- 放圖 -->
                             <%-- <div class="blog_thumb">
                                <a href="#"><img src="${postVO.pictureVO.url}" alt=""></a>
                            </div> --%>
-                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="transform: translateY(-40px);">
 
                                 <div class="carousel-inner">
 
@@ -120,7 +164,7 @@
 
                                     <!-- 貼文內容 -->
 
-                                    <p>
+                                    <p style="color: #836c71;">
                                         <a href="#">${postVO.likeCount}</a>個讚
                                     </p>
                                     <blockquote>
@@ -197,7 +241,7 @@
 <!-- 個別JS -->
 
 <script src="<%=request.getContextPath()%>/assets/js/comment/comment.js"></script>
-<script src="<%=request.getContextPath()%>/front/post/update.js"></script>
+<script src="<%=request.getContextPath()%>/front/post/js/update.js"></script>
 <script src="<%=request.getContextPath()%>/assets/js/post/rightSideBar.js"></script>
 </body>
 

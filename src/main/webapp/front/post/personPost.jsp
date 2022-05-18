@@ -22,39 +22,43 @@ href="<%=request.getContextPath()%>/front/post/css/personPost.css">
 
 <meta charset="UTF-8">
 <style>
-#demo_border {
-	position: relative;
-	width:280px;
-	height:0px;
-	}
+	
+	.container{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
     
-    #image_photo {
-　　position: absolute;
-    background-image: url("");
- 
-    background-repeat: no-repeat;
-    border-radius: 50%;
-    overflow: hidden;
-
-    width: 120px;
-    height: 120px;
-    transform: translateY(-50px);
+      	/* 追蹤 */
+	.button1 {
+	/* background: url(../img/icon/bkg_grid4.png) no-repeat scroll center center; */
+	background-color: #7f1912;
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 8px;
+	transform: translateY(50px) translateX(-120px);
+	}
+  	
+  	/* 封鎖 */
+	.button2 {
+	/* background: url(../img/icon/bkg_grid4.png) no-repeat scroll center center; */
+	background-color: #504c4c;
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 8px;
+	transform: translateY(50px) translateX(-80px);
+	}
 	}
 	
-	#img_text {
-	position: absolute;
-	bottom: 0px;
-	right: 0px;
-	font-size: 16px;
-	color: #926161;
-	border-radius: 50%;
-	/* background-color: #F00; */
-	width: 150px;
-	height:50px;
-	text-align: center;
-	line-height: 30px;
-	transform: translateX(8px) translateY(1px);
-	}
 </style>
 
     
@@ -118,8 +122,12 @@ href="<%=request.getContextPath()%>/front/post/css/personPost.css">
                                 title="List"></button> --> 
                         </div>
                         <!-- 新增的追蹤跟封鎖按鈕 -->
+                        <div class="container">
                         <div class="button1">追蹤</div>
                         <div class="button2">封鎖</div>
+                        </div>
+                        
+                        
                         
                         <!-- sort by average rating按鈕 -->
                         <!-- <div class=" niceselect_option">
@@ -164,7 +172,9 @@ href="<%=request.getContextPath()%>/front/post/css/personPost.css">
                                         
                                         <c:if test="${memberId == isOwner}">
                                         <!-- 刪除按鈕 -->
-                                		<button id="deletePost${postVO.postId}">Confirm</button>
+                                		<button id="deletePost${postVO.postId}" class="btn btn btn-secondary btn-sm">刪除</button>
+                                		
+                                		
                                 		</c:if>
                                 		
 
