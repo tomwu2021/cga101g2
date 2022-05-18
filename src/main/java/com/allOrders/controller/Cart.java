@@ -130,6 +130,10 @@ public class Cart extends HttpServlet {
 
 			session.setAttribute("shopingCart", buylist);
 			System.out.println("刪除第" + del + "筆");
+			if (buylist.size()==0) {
+				PrintWriter out = res.getWriter();
+				out.write("空");
+			}
 
 		}
 

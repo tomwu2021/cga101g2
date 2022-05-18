@@ -12,17 +12,19 @@
 <%@ include file="/front/layout/header.jsp"%>
 <style>
 .f3 {
-	float: left;
-	margin-left: 5px;
-	margin-right: 5px;
-	width: calc(15% - 10px)
+ float: left;
+ margin-left: 5px;
+ margin-right: 5px;
+ margin-bottom: 10px;
+ width: 100px;
 }
 
 .f4 {
-	float: left;
-	margin-left: 5px;
-	margin-right: 5px;
-	width: calc(20% - 10px)
+ float: left;
+ margin-left: 5px;
+ margin-right: 5px;
+ margin-bottom: 10px;
+ width: 150px;
 }
 .f13{
 	float:left;

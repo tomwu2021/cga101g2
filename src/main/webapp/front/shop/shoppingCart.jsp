@@ -118,7 +118,7 @@ if (buylist != null && (buylist.size() > 0)) {
 	                        <p>趕快去商城幫毛小孩買些東西吧</p>
 	                        <form action="#">
 <!-- 	                         <a href="#" onclick="document.getElementById('backToShop').submit()">回商城</a> -->
- 								 <a href="#"  onclick="history.back()">回商城</a>
+ 								 <a href="<%=request.getContextPath()%>/shop?action=listProducts_Byfind&sort1_id=1">回商城</a>
 	                        </form>
 	                       
 	                    </div>
