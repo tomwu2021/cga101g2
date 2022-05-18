@@ -30,7 +30,7 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	}
 
 	public ReportVO insert(ReportVO reportVO, Connection con) {
-		final String INSERT = "insert into report(reporter_id, post_id, report_reason, status) VALUES (?, ?, ?, ?)";
+		final String INSERT = "insert into report(reporter_id, post_id, report_reason, status) VALUES (?, ?, ?, 0)";
 
 		if (con != null) {
 			try {
@@ -38,7 +38,6 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 				pstmt.setInt(1, reportVO.getReporterId());
 				pstmt.setInt(2, reportVO.getPostId());
 				pstmt.setString(3, reportVO.getReportReason());
-				pstmt.setInt(4, reportVO.getStatus());
 				pstmt.executeUpdate();
 
 				ResultSet rs = pstmt.getGeneratedKeys();

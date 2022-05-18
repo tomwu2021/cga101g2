@@ -277,5 +277,8 @@ public class PostService {
 	public int selectOnePostLikeCount(Integer postId) {
 		return dao.selectOnePostLikeCount(postId);
 	}
+    public boolean updateReport(Integer postId) {
+        return dao.updateReport(postId);
+    }
 
 }

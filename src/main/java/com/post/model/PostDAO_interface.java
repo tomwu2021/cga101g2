@@ -33,5 +33,7 @@ public interface PostDAO_interface extends JDBCDAO_Interface<PostVO> {
 	
 	//搜尋貼文關鍵字
 	public List<PostVO> selectkeyword(String content);
+	
+	public boolean updateReport(Integer postId);
 
 }

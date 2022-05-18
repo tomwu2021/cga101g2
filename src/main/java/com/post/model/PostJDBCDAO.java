@@ -569,6 +569,24 @@ public class PostJDBCDAO implements PostDAO_interface {
 		}
 		return allList;
 	}
+	
+	
+	@Override
+	public boolean updateReport(Integer postId) {
+		final String UPDATEREPORT = "update post set status = 1 where post_id = ?";
+		int rowCount = 0;
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(UPDATEREPORT);) {
+			pstmt.setInt(1, postId);
+			
+			rowCount = pstmt.executeUpdate();
+			System.out.println(rowCount + "row(s) update!");
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		}
+
+		return true;
+	}
 
 
 }
