@@ -1,0 +1,22 @@
+table {
+	width: 100%;
+	table-layout: fixed;
+}
+
+th, td {
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+}
+
+tr:hover {
+	background-color: coral;
+}
+
+th {
+	background-color: #04AA6D;
+	color: white;
+}
+
+td {
+	word-wrap: break-word;
+}
