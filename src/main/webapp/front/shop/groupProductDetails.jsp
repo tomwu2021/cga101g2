@@ -15,11 +15,6 @@
 <%@include file="/front/layout/commonCSS.jsp"%>
 
 <!-- 共用的CSS end-->
-
-<!-- 額外添加的CSS -->
-<!-- 	路徑舉例 -->
-<%-- <link rel="stylesheet"href="<%=request.getContextPath()%>/assets/back/css/????.css"> --%>
-<!-- 額外添加的CSS -->
 </head>
 <body>
 	<!-- 共用的JS -->

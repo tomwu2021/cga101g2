@@ -141,7 +141,7 @@ if (buylist != null && (buylist.size() > 0)) {
 						 		<div class="col-12 mb-20">
                                     <label>使用紅利<span>*</span></label>
                                     	<input min="0" max="<%=maxBonus %>" value="<%=maxBonus %>" type="number" name="bonus" id="bonusCount" 
-                                    	oninput="if(value><%=maxBonus %>)value=<%=maxBonus %>;if(value<0)value=0;" onchange="bonusChange()">
+                                    	oninput="if(value><%=maxBonus %>)value=<%=maxBonus %>;if(value<0)value=0;" required onchange="bonusChange()">
                                 </div>
 						 		
 						 		 <input type="hidden" name="action" value="CHECKOUT">
