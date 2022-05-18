@@ -60,6 +60,16 @@ public class SelectAllOrder extends HttpServlet {
 			out.write(gson.toJson(list));
 			
 		}
+		if ("GroupOredrDetial".equals(action)) {
+			Integer orderId = Integer.parseInt(req.getParameter("orderId"));
+		    GroupBuyerService groupBuyerService=new GroupBuyerService();	
+			PrintWriter out = res.getWriter();
+			List<GroupBuyerVO> list = groupBuyerService.getAllByGroupOrderId(orderId);
+			System.out.println(list);
+			Gson gson = new Gson();
+			out.write(gson.toJson(list));
+			
+		}
 
 	}
 
