@@ -72,11 +72,11 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 
 							<div class="col-lg-6 mb-20">
 								<label>姓名 <span>*</span></label> <input type="text"
-									name="memberName">
+									name="memberName" id="memberName">
 							</div>
 							<div class="col-12 mb-20">
 								<label>電話<span>*</span></label> <input type="text"
-									name="memberPhone">
+									name="memberPhone" id="memberPhone">
 							</div>
 							<div class="col-12 mb-20">
 								<label>地址<span>*</span></label>

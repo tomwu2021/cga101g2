@@ -33,7 +33,7 @@ public class CommentJDBCDAO {
         return cmrs;
     }
     public List<CommentResult> getReplyByCommentId(Integer commentId) throws SQLException {
-        String sql = " SELECT c.*,m.member_id,m.name,pic.picture_id,pic.preview_url,pic.url" +
+        String sql = " SELECT c.*,m.member_id,m.name,pic.picture_id,pic.preview_url,pic.url " +
                 " FROM comment c JOIN members m ON(m.member_id = c.member_id) " +
                 " JOIN pet p ON(p.member_id = m.member_id) " +
                 " JOIN picture pic ON(p.picture_id = pic.picture_id)" +
@@ -44,7 +44,8 @@ public class CommentJDBCDAO {
         stmt.setInt(1,commentId);
         ResultSet rs = stmt.executeQuery();
         while(rs.next()) {
-            cmrs.add(buildCommentResult(rs));
+        	CommentResult cmr = buildCommentResult(rs);
+            cmrs.add(cmr);
         }
         rs.close();
         stmt.close();
@@ -53,14 +54,14 @@ public class CommentJDBCDAO {
     }
 
     public List<CommentResult> getRecentComment(Integer memberId) throws SQLException {
-        String sql = " SELECT m.name,c.*,pic.picture_id,pic.preview_url,pic.url " +
+        String sql = " SELECT m.name,c.*,pic.picture_id,pic.preview_url,pic.url,po.member_id " +
                 " FROM comment c " +
                 " JOIN post po ON (po.post_id = c.post_id) " +
                 " JOIN members m ON(m.member_id = c.member_id) " +
                 " JOIN pet p ON(m.member_id = p.member_id)" +
                 " JOIN picture pic ON(pic.picture_id = p.picture_id)" +
                 " WHERE c.post_id IN (SELECT post_id FROM post WHERE member_id = ?) " +
-                "   AND c.target_id = 0 " +
+                "   AND c.target_id = 0 AND po.status = 0" +
                 " ORDER BY c.comment_time DESC " +
                 " LIMIT 8 ";
         Connection con = JDBCConnection.getRDSConnection();
@@ -69,7 +70,9 @@ public class CommentJDBCDAO {
         stmt.setInt(1,memberId);
         ResultSet rs = stmt.executeQuery();
         while(rs.next()) {
-            cmrs.add(buildCommentResult(rs));
+        	CommentResult cmr = buildCommentResult(rs);
+        	cmr.setPostMemberId(rs.getInt("po.member_id"));
+            cmrs.add(cmr);
         }
         rs.close();
         stmt.close();

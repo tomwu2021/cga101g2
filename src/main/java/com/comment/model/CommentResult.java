@@ -5,21 +5,25 @@ public class CommentResult extends CommentVO{
     private String name;
     private String previewUrl;
     private String url;
-
+    private Integer postMemberId;
     private Integer pictureId;
 
     public CommentResult() {
         super();
     }
 
-    public CommentResult(Integer memberId, String name, String previewUrl, String url) {
-        super();
-        this.name = name;
-        this.previewUrl = previewUrl;
-        this.url = url;
-    }
 
-    public String getName() {
+
+    public CommentResult(String name, String previewUrl, String url, Integer postMemberId, Integer pictureId) {
+		super();
+		this.name = name;
+		this.previewUrl = previewUrl;
+		this.url = url;
+		this.postMemberId = postMemberId;
+		this.pictureId = pictureId;
+	}
+
+	public String getName() {
         return name;
     }
 
@@ -51,7 +55,17 @@ public class CommentResult extends CommentVO{
         this.pictureId = pictureId;
     }
 
-    @Override
+    public Integer getPostMemberId() {
+		return postMemberId;
+	}
+
+	public void setPostMemberId(Integer postMemberId) {
+		this.postMemberId = postMemberId;
+	}
+
+	
+	
+	@Override
     public String toString() {
         return "CommentResult{" +
                 ", name='" + name + '\'' +

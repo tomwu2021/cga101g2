@@ -145,26 +145,7 @@ href="<%=request.getContextPath()%>/front/post/css/blog.css">
         </div>
     </div>
     <!--blog area end-->
-    
-    <!--blog pagination area start-->
-    <div class="blog_pagination">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="pagination">
-                        <ul>
-                            <li class="current">1</li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li class="next"><a href="#">next</a></li>
-                            <li><a href="#">>></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--blog pagination area end-->    	
+      	
 
 
 
@@ -183,5 +164,8 @@ href="<%=request.getContextPath()%>/front/post/css/blog.css">
 		src="<%=request.getContextPath()%>/front/post/likelist.js"> 
 	</script>
 	<!-- 點讚用的JS -->
+		<script
+		src="<%=request.getContextPath()%>/assets/js/post/rightSideBar.js">
+		</script>
 </body>
 </html>

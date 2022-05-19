@@ -58,7 +58,7 @@ public class NotificationDAO implements NotificationDAO_interface {
 
 	public List<NotificationVO> getAllById(Integer id, Connection con) {
 
-		final String SELECT_ONE_BYID = "select notification_id, member_id, context, time, status, url from notification where member_id = ?;";
+		final String SELECT_ONE_BYID = "select notification_id, member_id, context, time, status, url from notification where member_id = ? order by time DESC;";
 
 		if (con != null) {
 			try {

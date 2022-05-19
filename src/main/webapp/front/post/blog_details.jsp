@@ -32,8 +32,7 @@
 
 <script>
         function getContextPath() {
-            return "<%=request.getContextPath()%>
-	";
+            return "<%=request.getContextPath()%>";
 	}
 </script>
 
@@ -229,7 +228,7 @@ a, button {
 									<!-- 貼文內容 -->
 
 									<p style="color: #836c71;">
-										<a href="#">${postVO.likeCount}</a>個讚
+										<a>${postVO.likeCount}</a>個讚
 									</p>
 									<blockquote>
 										<p style="overflow: hidden; word-break: break-all">${postVO.content}</p>
@@ -240,25 +239,9 @@ a, button {
 								<div class="entry_content">
 									<div class="post_meta">
 										<!-- <span>Tags: </span> -->
-										<span><a href="#">${postVO.createTime}</a></span>
+										<span><a>${postVO.createTime}</a></span>
 										<!-- <span><a href="#">, t-shirt</a></span>
                                                     <span><a href="#">, white</a></span> -->
-									</div>
-
-									<div class="social_sharing">
-										<p>share this post:</p>
-										<ul>
-											<li><a href="#" title="facebook"><i
-													class="fa fa-facebook"></i></a></li>
-											<li><a href="#" title="twitter"><i
-													class="fa fa-twitter"></i></a></li>
-											<li><a href="#" title="pinterest"><i
-													class="fa fa-pinterest"></i></a></li>
-											<li><a href="#" title="google+"><i
-													class="fa fa-google-plus"></i></a></li>
-											<li><a href="#" title="linkedin"><i
-													class="fa fa-linkedin"></i></a></li>
-										</ul>
 									</div>
 								</div>
 							</figcaption>

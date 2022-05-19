@@ -85,17 +85,18 @@ function buildRecentComment(comment) {
     let name = comment.name;
     let commentTime = comment.commentTime;
     let memberId = comment.memberId;
-    html += `<div className="post_wrapper">
-                    <div className="post_thumb" style="margin-right:5px;display:inline-block;">
-                        <a href="${getContextPath()}/detailPost?memberId=${memberId}&postId=${postId}&action=selectdetail">
+    let postMemberId = comment.postMemberId
+    html += `<div className="post_wrapper" style="margin-bottom:10px;margin-top:10px">
+                    <div className="post_thumb" style="margin-right:5px;display:block;">
+                        <a href="${getContextPath()}/detailPost?memberId=${postMemberId}&postId=${postId}&action=selectdetail">
                         <img src="${commentPreviewUrl}" style="border-radius: 50%;width: 60px;height: 60px;" alt=""></a>
                     </div>
-                    <div classname="post_info" style="margin-top:5px;display:inline-block;position: relative;top: 10px;">
-                        <h4>
-                             <a href="${getContextPath()}/detailPost?memberId=${memberId}&postId=${postId}&action=selectdetail"
-                             style="overflow: hidden;font-size:14px;text-overflow: ellipsis;white-space: nowrap;position:relative;top:5px">
+                    <div classname="post_info" style="margin-top:5px;display:block;position: relative;top: 10px;">
+                        <h5 style="max-width: 200px;text-overflow: ellipsis;;white-space: nowrap;">
+                             <a href="${getContextPath()}/detailPost?memberId=${postMemberId}&postId=${postId}&action=selectdetail"
+                             style="overflow: hidden;font-size:14px;position:relative;top:5px">
                               <i>${name}</i> 在你的貼文中留言了</a>
-                        </h4>
+                        </h5>
                         <span>${commentTime}</span>
                     </div>
                 </div>

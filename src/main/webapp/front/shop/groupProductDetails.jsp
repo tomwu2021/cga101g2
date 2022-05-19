@@ -183,13 +183,13 @@
 							<span>子分類:${param.sort2Name}</span>
 						</div>
 
-						<div class="priduct_social">
-							<ul>
-								<li><a class="facebook" href="#" title="facebook"> <i
-										class="bi bi-share-fill"></i>分享PCLUB社群
-								</a></li>
-							</ul>
-						</div>
+<!-- 						<div class="priduct_social"> -->
+<!-- 							<ul> -->
+<!-- 								<li><a class="facebook" href="#" title="facebook"> <i -->
+<!-- 										class="bi bi-share-fill"></i>分享PCLUB社群 -->
+<!-- 								</a></li> -->
+<!-- 							</ul> -->
+<!-- 						</div> -->
 					</div>
 				</div>
 			</div>
