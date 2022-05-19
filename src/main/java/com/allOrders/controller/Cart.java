@@ -18,6 +18,8 @@ import com.common.model.ResponseMessageDto;
 import com.google.gson.Gson;
 import com.members.model.MembersService;
 import com.members.model.MembersVO;
+import com.notification.model.NotificationService;
+import com.notification.model.NotificationVO;
 import com.orders.model.OrdersService;
 import com.orders.model.OrdersVO;
 import com.picture.model.PictureVO;
@@ -289,6 +291,14 @@ public class Cart extends HttpServlet {
 				//更新session
 				membersVO.seteWalletAmount(membersVO.geteWalletAmount()-payPrice);
 				membersVO.setBonusAmount(membersVO.getBonusAmount()-bonus);
+				// 加入一則通知
+				  NotificationService notificationSvc = new NotificationService();
+				  NotificationVO notificationVO = new NotificationVO();
+				  notificationVO.setMemberId(membersVO.getMemberId());
+				  notificationVO.setContext("訂單已成立,訂單編號:"+orderId+"點擊查看詳情");
+				  notificationVO.setUrl(getServletContext().getContextPath() +
+						  "/member/order.do?orderId="+orderId+"&action=orderDeatil");
+				  notificationSvc.insert(notificationVO);
 				req.setAttribute("msg", msg);
 				String url = "/front/order/orderDetail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);

@@ -28,6 +28,8 @@ import com.group_order.model.GroupOrderVO;
 import com.members.model.MembersService;
 import com.members.model.MembersVO;
 import com.mysql.cj.x.protobuf.MysqlxNotice.GroupReplicationStateChangedOrBuilder;
+import com.notification.model.NotificationService;
+import com.notification.model.NotificationVO;
 import com.orders.model.OrdersService;
 import com.orders.model.OrdersVO;
 import com.picture.model.PictureVO;
@@ -263,6 +265,15 @@ public class GroupOrder extends HttpServlet {
 				GroupBuyerService groupBuyerService = new GroupBuyerService();
 				// 將成員加到團購訂單中
 				groupBuyerService.addGroupBuyer(groupOrderId, memberId, amount, memberPhone, address, memberName);
+				
+				// 加入一則通知
+				  NotificationService notificationSvc = new NotificationService();
+				  NotificationVO notificationVO = new NotificationVO();
+				  notificationVO.setMemberId(membersVO.getMemberId());
+				  notificationVO.setContext("已成功開團,團購編號:"+groupOrderId+"點擊查看詳情");
+				  notificationVO.setUrl(getServletContext().getContextPath() +
+						  "/member/groupOrder.do?groupOrderId="+groupOrderId+"&action=seeMore");
+				  notificationSvc.insert(notificationVO);
 
 				// 如果以數量達標成團了,改團購狀態
 				int established = 0;
@@ -287,7 +298,8 @@ public class GroupOrder extends HttpServlet {
 						// 錢包退款
 						membersService.walletPaymentAddMoney(memberId, reimburse1 * amount);
 						// 更新session
-						membersVO.seteWalletAmount(membersVO.geteWalletAmount() + reimburse1 * amount);
+						membersVO.seteWalletAmount(membersVO.geteWalletAmount() + reimburse1 * amount);						
+						
 					} else if (established >= groupOrderVO.getProductVO().getGroupAmount3()) {
 						// 改團單最終價錢
 						groupOrderService.updateFinalPrice(groupOrderId, reimburse2);
@@ -296,6 +308,12 @@ public class GroupOrder extends HttpServlet {
 						// 更新session
 						membersVO.seteWalletAmount(membersVO.geteWalletAmount() + reimburse2 * amount);
 					}
+					// 加入一則通知
+					  notificationVO.setMemberId(membersVO.getMemberId());
+					  notificationVO.setContext("恭喜您!團購已達標,團購編號:"+groupOrderId+"點擊查看詳情");
+					  notificationVO.setUrl(getServletContext().getContextPath() +
+							  "/member/groupOrder.do?groupOrderId="+groupOrderId+"&action=seeMore");
+					  notificationSvc.insert(notificationVO);
 				}
 				MembersVO membersVO2 = membersService.getOneById(membersVO.getMemberId());
 
@@ -351,6 +369,14 @@ public class GroupOrder extends HttpServlet {
 				GroupBuyerService groupBuyerService = new GroupBuyerService();
 				// 將成員加到團購訂單中
 				groupBuyerService.addGroupBuyer(groupOrderId, memberId, amount, memberPhone, address, memberName);
+				// 加入一則通知
+				  NotificationService notificationSvc = new NotificationService();
+				  NotificationVO notificationVO = new NotificationVO();
+				  notificationVO.setMemberId(membersVO.getMemberId());
+				  notificationVO.setContext("已成功參團,團購編號:"+groupOrderId+"點擊查看詳情");
+				  notificationVO.setUrl(getServletContext().getContextPath() +
+						  "/member/groupOrder.do?groupOrderId="+groupOrderId+"&action=seeMore");
+				  notificationSvc.insert(notificationVO);
 				// 如果以數量達標成團了,改團購狀態
 				int established = 0;
 				for (GroupBuyerVO groupBuyerVO : groupBuyerService.getAllByGroupOrderId(groupOrderId)) {
@@ -382,6 +408,12 @@ public class GroupOrder extends HttpServlet {
 						membersService.walletPaymentAddMoney(memberId, reimburse2 * amount);
 						membersVO.seteWalletAmount(membersVO.geteWalletAmount() + reimburse2 * amount);
 					}
+					// 加入一則通知
+					  notificationVO.setMemberId(membersVO.getMemberId());
+					  notificationVO.setContext("恭喜您!團購已達標,團購編號:"+groupOrderId+"點擊查看詳情");
+					  notificationVO.setUrl(getServletContext().getContextPath() +
+								"/member/groupOrder.do?groupOrderId=" + groupOrderId + "&action=seeMore");
+					  notificationSvc.insert(notificationVO);
 
 				}
 

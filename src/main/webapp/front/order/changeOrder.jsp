@@ -39,13 +39,13 @@
 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/order.do">
 						<p>
 							<label> 收件人姓名</label> <input type="text" name="recipient"
-								class="form-control" id="exampleFormControlInput1"
+								class="form-control" 
 								placeholder="${param.recipient}" value="${param.recipient}">
 						</p>
 						<p>
 							<label> 收件人電話(市話請加上區碼)</label> <input type="tel" name="phone" size="10"
 								minlength="10" maxlength="10" pattern="0\d{1}\d{2}\d{6}"
-								class="form-control" id="exampleFormControlInput1"
+								class="form-control" 
 								placeholder="${param.phone}" value="${param.phone}">
 						</p>
 						<p>
