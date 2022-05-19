@@ -103,7 +103,7 @@ public class ReportJDBCDAO implements ReportDAO_interface {
 	@Override
 	public boolean updateStatus(Integer reportId,Integer status) {
 		int rowCount = 0;
-		final String UPDATEDELETE = "update report set status = ? report_id = ?";
+		final String UPDATEDELETE = "update report set status = ? and report_id = ?";
 
 		try (Connection con = JDBCConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(UPDATEDELETE);) {

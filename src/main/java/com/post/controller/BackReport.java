@@ -38,13 +38,13 @@ public class BackReport extends HttpServlet {
 			Integer reportId = Integer.parseInt(req.getParameter("reportId"));			
 			//審核中
 			if(status==1) {
-				reportService.updateStatus(reportId, status);
-				postService.updateReport(postId);				
+				reportService.updateStatus(reportId,0);
+				postService.updateReport(postId);	
 			}else if(status==2){
-				reportService.updateStatus(reportId, status);
-				postService.updatedelete(postId);				
+				reportService.updateStatus(reportId,1);
+				postService.updatedelete(postId);			
 			}else if(status==0){
-				reportService.updateStatus(reportId, status);
+				reportService.updateStatus(reportId,1);
 				postService.updateNormal(postId);				
 			}
 			List<ReportVO> list = reportService.getAll();
