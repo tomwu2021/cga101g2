@@ -91,6 +91,39 @@ public class PostDetailController extends HttpServlet {
 			
         }
         
+        if("selectReport".equals(action)) {
+        	Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************************/ 
+			Integer postId = Integer.valueOf(req.getParameter("postId").trim());
+			
+			Integer memberId = Integer.valueOf(req.getParameter("memberId").trim());   //memberIdNotMe
+			//這一行是對方的個人頁面的id
+			Integer isOwner = null;   //memberIdIsMe
+			HttpSession session = req.getSession();
+			if((MembersVO)session.getAttribute("membersVO")!=null) {
+			MembersVO memberVO = (MembersVO)session.getAttribute("membersVO");
+			isOwner = memberVO.getMemberId();			    
+			}
+			
+			req.setAttribute("memberId",memberId);   //memberIdNotMe
+			req.setAttribute("isOwner", isOwner); 	//memberIdIsMe
+						
+			/***************************2.開始查詢資料***************************************/
+			PostService postService = new PostService();         
+			
+			PostVO postVO = postService.getOneByReport(postId, memberId);      //getOneById(postId)會回傳整個查詢詳細貼文資料
+			
+			/***************************3.查詢完成,準備轉交(Send the Success view)************/
+			req.setAttribute("postVO", postVO);
+			
+			String url = "/front/post/blog_details.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);			
+			
+        }
+        
           
         
         if("changecontent".equals(action)) {

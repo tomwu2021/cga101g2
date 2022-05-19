@@ -29,7 +29,7 @@ public class PostReport extends HttpServlet{
 		String sMemberId = req.getParameter("memberId");
 		Integer memberId=Integer.valueOf(sMemberId);
 		String reportReason = req.getParameter("reportReason");
-		String url = "/detailPost?action=selectdetail&postId="+postId+"&memberId="+memberId;
+		String url = "/detailPost?action=selectReport&postId="+postId+"&memberId="+memberId;
 		//創建一則檢舉
 		ReportService reportService=new ReportService();
 		reportService.insert(reporterId, postId, reportReason,url);

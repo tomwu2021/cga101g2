@@ -38,4 +38,6 @@ public interface PostDAO_interface extends JDBCDAO_Interface<PostVO> {
 
 	boolean updateNormal(Integer postId);
 
+	PostVO getOneByReport(Integer postId, Integer memberId);
+
 }

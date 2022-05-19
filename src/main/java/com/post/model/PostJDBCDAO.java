@@ -603,6 +603,47 @@ public class PostJDBCDAO implements PostDAO_interface {
 
 		return true;
 	}
+	
+	@Override
+	public PostVO getOneByReport(Integer postId, Integer memberId) {
+
+		final String GETONE = "SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url FROM post po  "
+				+ "			     JOIN members m ON(po.member_id = m.member_id)  "
+				+ "			     JOIN pet p ON(m.member_id = p.member_id)  "
+				+ "			     JOIN picture pic ON(p.picture_id = pic.picture_id)  "
+				+ "			     WHERE po.post_id = ? and po.member_id = ?";
+
+		try (Connection con = JDBCConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(GETONE);) {
+
+			pstmt.setInt(1, postId);
+			pstmt.setInt(2, memberId);
+			ResultSet rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				PostVO postVO = new PostVO();
+				PictureVO pictureVO = new PictureVO();
+				MembersVO membersVO = new MembersVO();
+				membersVO.setName(rs.getNString("name"));
+				postVO.setPostId(rs.getInt("post_id"));
+				postVO.setMemberId(rs.getInt("member_id"));
+				postVO.setContent(rs.getString("content"));
+				postVO.setLikeCount(rs.getInt("like_count"));
+				postVO.setCreateTime(rs.getDate("create_time"));
+				postVO.setMembersVO(membersVO);
+				pictureVO.setPictureId(rs.getInt("picture_id"));
+				pictureVO.setUrl(rs.getString("url"));
+				pictureVO.setPreviewUrl(rs.getString("preview_url"));
+				postVO.setPictureVO(pictureVO);
+
+				return postVO;
+			}
+
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		}
+		return null;
+	}
 
 
 }

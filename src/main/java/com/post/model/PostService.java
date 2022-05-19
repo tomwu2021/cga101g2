@@ -203,6 +203,19 @@ public class PostService {
 
 		return postVO;
 	}
+	
+	public PostVO getOneByReport(Integer postId, Integer memberId) {
+		
+		PictureJDBCDAO picdao = new PictureJDBCDAO();
+		PostVO postVO = dao.getOneByReport(postId, memberId);
+		MappingTableDto dto = postPicMapping(postId);
+		List<PictureVO> piclist = picdao.queryPicturesByMapping(dto);
+
+		postVO.setPictureList(piclist);
+
+		return postVO;
+		
+	}
 
 	/**
 	 * 修改貼文內容
