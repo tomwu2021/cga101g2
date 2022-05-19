@@ -109,6 +109,28 @@ public class OrderDetails extends HttpServlet{
 			}
 		
 		
+		if ("BackOrderDeatil".equals(action)) {
+			System.out.println("有執行");	
+			Integer orderId = Integer.valueOf(req.getParameter("orderId").trim());
+			OrdersService ordersService=new OrdersService();
+			//先查商品ID，拿到單筆訂單所有商品id
+			List<OrdersVO> productList=ordersService.getAllProductInOrder(orderId);
+			//再用商品ID找圖片
+			List<OrdersVO> productDetail=new ArrayList<OrdersVO>();
+			
+			for(OrdersVO o:productList) {
+				productDetail.add(ordersService.getAllProductPicture(orderId, o.getProductVO().getProductId()));
+			}
+			System.out.println(productList.get(0).getSumPrice());
+			req.setAttribute("orderDetail", productDetail.get(0));
+			req.setAttribute("productDetail", productDetail);
+			
+			String url = "/front/order/backOrderDetail.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); 
+			successView.forward(req, res);
+
+			}
+		
 	}
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
