@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.pet_weight.model.PetWeightDAO;
 import com.pet_weight.model.PetWeightDAO_interface;
-import com.pet_weight.model.PetWeightJDBCDAO;
 import com.pet_weight.model.PetWeightVO;
 
 public class PetWeightService {

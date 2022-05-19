@@ -130,12 +130,16 @@
 										<h3>${membersVO.name}<small>&nbsp;您好！</small>
 										</h3>
 										<ul>
-											<li><a
-												href="<%=request.getContextPath()%>/front/account.jsp">前往會員中心</a></li>
+											<li><a title="前往會員中心"
+												href="<%=request.getContextPath()%>/account">前往會員中心</a></li>
 											<!--! wishlis設定  -->
 											<%
 											if (loginId > 0) {
-											%><li><a href="" id="goWishlist" title="前往收藏清單">前往收藏清單</a></li>
+											%><li>
+												<div id="goWishlist">
+													<a title="前往收藏清單">前往收藏清單</a>
+												</div>
+											</li>
 											<%
 											}
 											%>
@@ -202,6 +206,9 @@
 
 .product_name {
 	height: 48px;
+}
+#goWishlist:hover{
+	color:#F53737;
 }
 </style>
 <%

@@ -43,7 +43,7 @@
 		<url-pattern>/front/member/*</url-pattern>
 		<url-pattern>/front/pet/*</url-pattern>
 		<url-pattern>/front/order/*</url-pattern>
-		<url-pattern>/front/account.jsp</url-pattern>
+		<url-pattern>/account</url-pattern>
 		<url-pattern>/front/shop/viewGroupOrder.jsp</url-pattern>
 		<url-pattern>/front/shop/groupProductDetails.jsp</url-pattern>
 		<url-pattern>/front/shop/joinProductDetails.jsp</url-pattern>
