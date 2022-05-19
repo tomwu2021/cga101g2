@@ -1,4 +1,8 @@
 @charset "UTF-8";
+#dataTables-customer{
+	width:500px;
+}
+
 #dataTables-customer th, #dataTables-customer  td{
 	white-space: nowrap;
 	overflow: hidden;
@@ -13,6 +17,24 @@
 #dataTables-customer tr td:nth-of-type(2){
 	color:cornflowerblue;
 }
+
+#dataTables-customer tr th,#dataTables-customer tr td{
+	width:90px;
+}
+
+#dataTables-customer tr th:nth-of-type(2),#dataTables-customer tr td:nth-of-type(2),#dataTables-customer tr th:nth-of-type(5),#dataTables-customer tr td:nth-of-type(5){
+	width:180px;
+}
+
+#dataTables-customer tr th:nth-of-type(4),#dataTables-customer tr td:nth-of-type(4){
+	width:120px;
+}
+
+#dataTables-customer tr th:nth-of-type(6),#dataTables-customer tr td:nth-of-type(6){
+	width:120px;
+}
+
+
 #page-select{
 	width:240px;
 	text-align:center;
