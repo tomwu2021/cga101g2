@@ -91,8 +91,10 @@
 									ACTION="<%=request.getContextPath()%>/front/shop/shoppingCart.jsp"
 									id="cartForm">
 									<a onclick="document.getElementById('cartForm').submit()">
+									<div id="cart-count" style="text-align: center; border-radius: 50%; width: 20px; height: 20px; font-weight: 600; position: absolute; background-color: red; font-size: 10px; z-index: 1; top: -10px; left: 10px; border: 2px white solid; line-height: 20px; color: white;">
+									</div>
 										<i class="bi bi-cart-fill" style="font-size: 20px"></i>
-									</a> </a>
+									</a>
 								</FORM>
 							</div>
 							<div class="header_account-list top_links" onclick="selectNotification()" >

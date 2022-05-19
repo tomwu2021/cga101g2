@@ -34,9 +34,9 @@ $(document).ready(() => {
     })
 })
 
-async function onPublicMessage(message) {
 
-}
+
+
 
 async function onPublicBroadcastHandler(res) {
     switch (res.type) {

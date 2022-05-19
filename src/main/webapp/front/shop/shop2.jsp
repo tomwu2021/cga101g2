@@ -187,7 +187,7 @@
 								<span class="current_price">${productVO.price}元</span>
 							</div>
 							<div class="add_to_cart">								
-								<a href="#" title="Add to cart" onclick="addToCart(${productVO.productId})"style="font-size:1.2em;">
+								<a title="Add to cart" onclick="addToCart(${productVO.productId})"style="font-size:1.2em;">
 								加入購物車</a>
 							</div>
 						</div>
