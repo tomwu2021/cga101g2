@@ -155,7 +155,8 @@
 								<!-- 							數量至少min於&起始於最低開團級距一 -->
 								<span>截單時間：</span>
 								<c:if test="${groupOrderVO.endType == 1 }">
-									<span>於${groupOrderVO.endTime}截單</span>
+									<span>於${groupOrderVO.endTime}截單</span><br>
+									<span>目前份數： </span><span style='color:#d80000;'>${established}</span><span>份</span><br>									
 								</c:if>
 								<c:if test="${groupOrderVO.endType == 2 }">
 									<span>依份數截單(${groupOrderVO.minAmount}份)</span><br>

@@ -12,14 +12,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.group_buyer.model.GroupBuyerService;
 import com.group_buyer.model.GroupBuyerVO;
 import com.group_order.model.GroupOrderService;
 import com.group_order.model.GroupOrderVO;
 import com.members.model.MembersService;
-import com.members.model.MembersVO;
+import com.notification.model.NotificationService;
+import com.notification.model.NotificationVO;
 
 public class GroupOrderCheckController extends HttpServlet implements Runnable {
 	private static final long serialVersionUID = 1L;
@@ -106,6 +106,21 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 				// 退會員折扣的金額
 				for (GroupBuyerVO groupBuyerVO : groupBuyerService
 						.getAllByGroupOrderId(groupOrderVO.getGroupOrderId())) {
+
+//					// 加入一則通知
+//					if (true) {
+//						System.out.println("有拉");
+//						NotificationService notificationSvc = new NotificationService();
+//						NotificationVO notificationVO = new NotificationVO();
+//						notificationVO.setMemberId(groupBuyerVO.getMemberId());
+//						notificationVO.setContext("恭喜您!團購已達標,團購編號:" + groupBuyerVO.getGroupOrderId() + "點擊查看詳情");
+//						notificationVO
+//								.setUrl(getServletContext().getContextPath() + "/member/groupOrder.do?groupOrderId="
+//										+ groupBuyerVO.getGroupOrderId() + "&action=seeMore");
+//						notificationSvc.insert(notificationVO);
+//						System.out.println(notificationVO);
+//					}
+
 					if (established >= groupOrderVO.getProductVO().getGroupAmount2()
 							&& established < groupOrderVO.getProductVO().getGroupAmount3()) {
 						// 錢包退款
@@ -119,6 +134,7 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 								reimburse2 * groupBuyerVO.getProductAmount());
 						System.out.println("退" + reimburse2 * groupBuyerVO.getProductAmount());
 					}
+
 				}
 				// 更改訂單狀態
 				groupOrderService.updateStatus(groupOrderVO.getGroupOrderId(), 2);
@@ -133,6 +149,15 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 						.getAllByGroupOrderId(groupOrderVO.getGroupOrderId())) {
 					membersService.walletPaymentAddMoney(groupBuyerVO.getMemberId(),
 							groupOrderVO.getProductVO().getGroupPrice1() * groupBuyerVO.getProductAmount());
+
+//					// 加入一則通知
+//					NotificationService notificationSvc = new NotificationService();
+//					NotificationVO notificationVO = new NotificationVO();
+//					notificationVO.setMemberId(groupBuyerVO.getMemberId());
+//					notificationVO.setContext("很可惜，團購未達標,已退款到錢包,團購編號:" + groupBuyerVO.getGroupOrderId() + "點擊查看詳情");
+//					notificationVO.setUrl(getServletContext().getContextPath() + "/member/groupOrder.do?groupOrderId="
+//							+ groupBuyerVO.getGroupOrderId() + "&action=seeMore");
+//					notificationSvc.insert(notificationVO);
 				}
 				// 更改訂單狀態
 				groupOrderService.updateStatus(groupOrderVO.getGroupOrderId(), 1);
@@ -146,6 +171,14 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 						.getAllByGroupOrderId(groupOrderVO.getGroupOrderId())) {
 					membersService.walletPaymentAddMoney(groupBuyerVO.getMemberId(),
 							groupOrderVO.getProductVO().getGroupPrice1() * groupBuyerVO.getProductAmount());
+//					// 加入一則通知
+//					NotificationService notificationSvc = new NotificationService();
+//					NotificationVO notificationVO = new NotificationVO();
+//					notificationVO.setMemberId(groupBuyerVO.getMemberId());
+//					notificationVO.setContext("很可惜，團購未達標,已退款到錢包,團購編號:" + groupBuyerVO.getGroupOrderId() + "點擊查看詳情");
+//					notificationVO.setUrl(getServletContext().getContextPath() + "/member/groupOrder.do?groupOrderId="
+//							+ groupBuyerVO.getGroupOrderId() + "&action=seeMore");
+//					notificationSvc.insert(notificationVO);
 				}
 				// 更改訂單狀態
 				groupOrderService.updateStatus(groupOrderVO.getGroupOrderId(), 1);
@@ -185,6 +218,14 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 								reimburse2 * groupBuyerVO.getProductAmount());
 						System.out.println("退" + reimburse2 * groupBuyerVO.getProductAmount());
 					}
+					// 加入一則通知
+//					NotificationService notificationSvc = new NotificationService();
+//					NotificationVO notificationVO = new NotificationVO();
+//					notificationVO.setMemberId(groupBuyerVO.getMemberId());
+//					notificationVO.setContext("恭喜您!團購已達標,團購編號:" + groupBuyerVO.getGroupOrderId() + "點擊查看詳情");
+//					notificationVO.setUrl(getServletContext().getContextPath() + "/member/groupOrder.do?groupOrderId="
+//							+ groupBuyerVO.getGroupOrderId() + "&action=seeMore");
+//					notificationSvc.insert(notificationVO);
 				}
 				// 更改訂單狀態
 				groupOrderService.updateStatus(groupOrderVO.getGroupOrderId(), 2);

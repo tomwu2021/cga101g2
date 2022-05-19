@@ -82,7 +82,8 @@ if (buylist != null && (buylist.size() > 0)) {
 										<td class="product_quantity"><label></label>
 										<!--更改購物車數量 -->										
 											<input id="pamout-<%= productVO.getProductId() %>" name="count" min="1" max="100" 
-											value="<%= productVO.getCartAmount()%>" type="number" onchange="cartChangeCount(<%= productVO.getProductId() %>)">										
+											value="<%= productVO.getCartAmount()%>" type="number" onchange="cartChangeCount(<%= productVO.getProductId() %>)"
+											oninput="if(value>100)value=100;if(value<0)value=0;" required>										
 										</td>										
 										<td class="product_total" id="ptotal-<%= productVO.getProductId() %>"><%= productVO.getCartAmount()*productVO.getPrice()%></td>
 										

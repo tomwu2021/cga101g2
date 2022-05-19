@@ -18,7 +18,7 @@
 }
 </style>
 <head>
-<title>我要開團商品細節</title>
+<title>商品細節</title>
 <!-- 共用的CSS startr-->
 <%@include file="/front/layout/commonCSS.jsp"%>
 
@@ -158,6 +158,8 @@
 								<c:if test="${groupOrderVO.endType == 1 }">
 								<span>限時截單</span><br>
 								<span>於<fmt:formatDate value="${groupOrderVO.endTime}" pattern="yyyy-MM-dd HH:mm" />截單</span>
+								<br>
+								<span>目前份數： </span><span style='color:#d80000;'>${established}</span><span>份</span>
 								</c:if>
 								<c:if test="${groupOrderVO.endType == 2 }">
 									<span>依份數截單(${groupOrderVO.minAmount}份)</span>

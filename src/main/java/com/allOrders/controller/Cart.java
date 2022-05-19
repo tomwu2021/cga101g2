@@ -306,7 +306,7 @@ public class Cart extends HttpServlet {
 
 			} else {
 				String msg = "錢包餘額不足，請儲值";
-				req.setAttribute("msg", msg);
+				req.setAttribute("errormsg", msg);
 				String url = "/front/member/memberWallet.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
