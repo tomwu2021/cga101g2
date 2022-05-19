@@ -9,14 +9,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.product.model.ProductVO;
+
+import connection.JNDIConnection;
+
 public class Sort1JNDIDAO implements Sort1DAO_interface {
 
 	@Override
 	public Sort1VO insert(Sort1VO sort1VO) {
 
 		final String INSERT_STMT = "INSERT INTO cga_02.sort1(sort1_name) VALUES ( ? );";
-		try (Connection con = getRDSConnection(); 
-				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
+		try (Connection con = getRDSConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
 
 			pstmt.setString(1, sort1VO.getSort1Name());
 
@@ -33,14 +36,14 @@ public class Sort1JNDIDAO implements Sort1DAO_interface {
 
 	@Override
 	public boolean delete(Sort1VO sort1VO) {
-		final String DELETE = "DELETE FROM cga_02.sort2 " + "WHERE sort2_id = ?; ";
+		final String DELETE = "DELETE FROM cga_02.sort1 " + "WHERE sort1_id = ?; ";
 		try (Connection connection = getRDSConnection();
 				PreparedStatement pstmt = connection.prepareStatement(DELETE)) {
 
 			pstmt.setInt(1, sort1VO.getSort1Id());
 
 			int rowCount = pstmt.executeUpdate();
-			System.out.println(rowCount + "row(s) updated!");
+			System.out.println(rowCount + "row(s) delete!");
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -77,8 +80,7 @@ public class Sort1JNDIDAO implements Sort1DAO_interface {
 		Sort1VO sort1VO = new Sort1VO();
 
 		final String sql = "select * from sort1 where sort1_id = ? ";
-		try (Connection conn = getRDSConnection(); 
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		try (Connection conn = getRDSConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setInt(1, id);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
@@ -95,22 +97,23 @@ public class Sort1JNDIDAO implements Sort1DAO_interface {
 	@Override
 	public Sort1VO selectBySort1Name(String sort1Name) {
 		Sort1VO sort1VO = new Sort1VO();
-		final String sql = "select * from sort1 where sort1_name = ?";
-
-		try (Connection conn = getRDSConnection(); 
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		final String CHECKNAME = "SELECT * from sort1 WHERE sort1_name =? ;";
+		try (Connection con = JNDIConnection.getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(CHECKNAME)) {
 			pstmt.setString(1, sort1Name);
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					sort1VO.setSort1Id(rs.getInt("sort1_id"));
-					sort1VO.setSort1Name(rs.getString("sort1_Name"));
-				}
+			
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				sort1VO.setSort1Name(rs.getString("sort1_name"));
 			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return sort1VO;
 	}
+
 
 	@Override
 	public List<Sort1VO> getAll() {
@@ -143,8 +146,7 @@ public class Sort1JNDIDAO implements Sort1DAO_interface {
 	public int getSort1Count() {
 		int count = 0;
 		final String sql = "SELECT sort1_id FROM sort1;";
-		try (Connection conn = getRDSConnection(); 
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		try (Connection conn = getRDSConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			try (ResultSet rs = pstmt.executeQuery()) {
 				while (rs.next()) {
 					++count;

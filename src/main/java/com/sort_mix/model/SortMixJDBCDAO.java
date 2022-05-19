@@ -8,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.product.model.ProductVO;
 import com.sort1.model.Sort1VO;
 import com.sort2.model.Sort2VO;
 
@@ -233,6 +235,30 @@ public class SortMixJDBCDAO implements SortMixDAO_interface {
 			e.printStackTrace();
 		}
 		return sort2VOList;
+	}
+
+	@Override
+	public List<ProductVO> getProductIdByMap(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean deleteBySort2Id(Integer sort2Id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteBySort1Id(Integer sort1Id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public SortMixVO getOneBySortMixVO(SortMixVO sortMixVO) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

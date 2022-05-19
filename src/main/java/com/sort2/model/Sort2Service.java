@@ -36,5 +36,15 @@ public class Sort2Service implements Sort2Service_interface{
 	public Sort2VO getOneById(Integer sort2Id) {
 		return dao.getOneById(sort2Id);
 	}
+	
+	public boolean delete(Sort2VO sort2VO) {
+		return dao.delete(sort2VO);
+	}
+	public Sort2VO selectBySort2Name(String sort2Name) {
+		return dao.selectBySort2Name(sort2Name);
+	}
 
+	public Sort2VO insert(Sort2VO sort2VO) {
+		return dao.insert(sort2VO);
+	}
 }

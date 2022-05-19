@@ -34,5 +34,15 @@ public class Sort1Service implements Sort1Service_interface{
 		return dao.getOneById(sort1Id);
 	}
 	
-
+	public boolean delete(Sort1VO sort1VO) {
+		return dao.delete(sort1VO);
+	}
+	
+	public Sort1VO selectBySort1Name(String sort1Name) {
+		return dao.selectBySort1Name(sort1Name);
+	}
+	
+	public Sort1VO insert(Sort1VO sort1VO) {
+		return dao.insert(sort1VO);
+	}
 }

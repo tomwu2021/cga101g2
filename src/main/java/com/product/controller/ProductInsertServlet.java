@@ -38,7 +38,6 @@ public class ProductInsertServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");// client 端向 Servlet 請求的編碼
 		res.setCharacterEncoding("UTF-8");// response，設定回應的格式及編碼
 		String action = req.getParameter("action");
-		String status = req.getParameter("status");
 		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 
@@ -216,18 +215,22 @@ public class ProductInsertServlet extends HttpServlet {
 					groupAmount3, description, sort1Id,partsList);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			if ("upToShop".equals(status)) {
+			String upToShop = req.getParameter("upToShop");
+			String upToShopAndGropShop = req.getParameter("upToShopAndGropShop");
+			
+			if ("upToShop".equals(upToShop)) {
 				//更新狀態後致商品更新頁面
 				NewproductVO.setStatus(1);
 				pdSvc.productUpdateStatus(NewproductVO);
 				res.sendRedirect(req.getContextPath()+"/shop/ProductGetOneServlet?productId="+(NewproductVO.getProductId())+"&action=getOne_For_Update");
-			}else if ("upToShopAndGropShop".equals(status)) {
+			}else if ("upToShopAndGropShop".equals(upToShopAndGropShop)) {
 				//更新狀態後致商品更新頁面
 				NewproductVO.setStatus(2);
 				pdSvc.productUpdateStatus(NewproductVO);
 				res.sendRedirect(req.getContextPath()+"/shop/ProductGetOneServlet?productId="+(NewproductVO.getProductId())+"&action=getOne_For_Update");
 			}else {
-				res.sendRedirect(req.getContextPath()+"/back/shop?action=listProducts_Byfind");
+				res.sendRedirect(req.getContextPath()+"/shop/ProductGetOneServlet?productId="+(NewproductVO.getProductId())+"&action=getOne_For_Update");
+//				res.sendRedirect(req.getContextPath()+"/back/shop?action=listProducts_Byfind");
 			}
 			
 //			RequestDispatcher successView = req.getRequestDispatcher(url); 

@@ -15,7 +15,7 @@ import com.sort1.model.Sort1Service;
 public class getAllSort1 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		/*
 		 * 1.Controller(控制器)/Servlet(導演)接收到請求 <依照功能劃分>

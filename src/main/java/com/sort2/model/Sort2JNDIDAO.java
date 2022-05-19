@@ -41,9 +41,23 @@ public class Sort2JNDIDAO implements Sort2DAO_interface {
 	}
 
 	@Override
-	public boolean delete(Sort2VO t) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(Sort2VO sort2VO) {
+		final String DELETE = "DELETE FROM cga_02.sort2 " + "WHERE sort2_id = ?; ";
+		try (Connection connection = getRDSConnection();
+				PreparedStatement pstmt = connection.prepareStatement(DELETE)) {
+
+			pstmt.setInt(1, sort2VO.getSort2Id());
+
+			int rowCount = pstmt.executeUpdate();
+			System.out.println(rowCount + "row(s) delete!");
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -98,16 +112,18 @@ public class Sort2JNDIDAO implements Sort2DAO_interface {
 	@Override
 	public Sort2VO selectBySort2Name(String sort2Name) {
 		Sort2VO sort2VO = new Sort2VO();
-		final String sql = "select * from sort2 where sort2_name = ?";
-		try (Connection conn =  getRDSConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		final String CHECKNAME = "SELECT * from sort1 where sort1_name = ? ";
+
+		try (Connection con = getRDSConnection();
+				PreparedStatement pstmt = con.prepareStatement(CHECKNAME)) {
 			pstmt.setString(1, sort2Name);
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					sort2VO.setSort2Id(rs.getInt("sort2_id"));
-					sort2VO.setSort2Name(rs.getString("sort2_Name"));
-				}
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				sort2VO.setSort2Name(rs.getString("sort2_name"));
 			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

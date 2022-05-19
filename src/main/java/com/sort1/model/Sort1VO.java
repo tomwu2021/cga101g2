@@ -2,6 +2,7 @@ package com.sort1.model;
 
 import java.util.List;
 
+import com.product.model.ProductVO;
 import com.sort2.model.Sort2VO;
 
 public class Sort1VO implements java.io.Serializable {
@@ -12,7 +13,16 @@ public class Sort1VO implements java.io.Serializable {
 	private Integer sort1Id;
 	private String sort1Name;
 	private List<Sort2VO> Sort2VOList;
+	private List<ProductVO> productVOList;
 	
+	public List<ProductVO> getProductVOList() {
+		return productVOList;
+	}
+
+	public void setProductVOList(List<ProductVO> productVOList) {
+		this.productVOList = productVOList;
+	}
+
 	public List<Sort2VO> getSort2VOList() {
 		return Sort2VOList;
 	}

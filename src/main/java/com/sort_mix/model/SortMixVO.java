@@ -2,6 +2,7 @@ package com.sort_mix.model;
 
 import java.util.List;
 
+import com.product.model.ProductVO;
 import com.sort1.model.Sort1VO;
 import com.sort2.model.Sort2VO;
 
@@ -15,7 +16,14 @@ public class SortMixVO implements java.io.Serializable{
 	private  Integer sort2Id;
 	private  String sort1Name;
 	private  String sort2Name;
+	private List<ProductVO> productVOList;
 	
+	public List<ProductVO> getProductVOList() {
+		return productVOList;
+	}
+	public void setProductVOList(List<ProductVO> productVOList) {
+		this.productVOList = productVOList;
+	}
 	public String getSort1Name() {
 		return sort1Name;
 	}
