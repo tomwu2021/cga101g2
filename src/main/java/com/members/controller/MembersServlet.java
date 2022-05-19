@@ -385,16 +385,17 @@ public class MembersServlet extends HttpServlet {
 		String phone = req.getParameter("phone");
 		String regex = "^09[0-9]{8}$";
 
-		if (phone == null || phone.trim().length() == 0 || !phone.trim().matches(regex) ) {
+		if (phone == null || phone.trim().length() == 0 || !phone.trim().matches(regex)) {
 			messages.put("errorPhone", "*手機格式錯誤且不可為空");
 		}
-		
+
 		String address = req.getParameter("address");
 		if (address == null || address.trim().length() == 0) {
 			messages.put("errorAddress", "*地址不可為空");
 		}
-		
-		String addressAll = req.getParameter("county") + req.getParameter("district") + " " + req.getParameter("address");
+
+		String addressAll = req.getParameter("county") + req.getParameter("district") + " "
+				+ req.getParameter("address");
 
 //		String address = req.getParameter("address");
 //		System.out.println(messages);
@@ -429,36 +430,53 @@ public class MembersServlet extends HttpServlet {
 
 		HttpSession currentSession = req.getSession();
 		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
-		String currentPassword = sessionMembersVO.getPassword();
+//		String currentPassword = sessionMembersVO.getPassword();
 
+		// 舊密碼
 		String oldPhone = req.getParameter("oldPhone");
+		// 新密碼
+		String nwePhone = req.getParameter("newPhone");
+		// 確認密碼
+		String checkNewPhone = req.getParameter("checkNewPhone");
+		// 密碼正則表達
+		String regex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+		// service
+		MembersService memberSvc = new MembersService();
+		
 		if (oldPhone == null || oldPhone.trim().length() == 0) {
 			messages.put("errorOldPhone", "*密碼不可為空");
-		} else {
-			if (!currentPassword.equals(oldPhone)) {
-				messages.put("errorOldPhone", "*密碼不符合");
-			}
 		}
-
-		String regex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
-		String nwePhone = req.getParameter("newPhone");
-
 		if (nwePhone == null || nwePhone.trim().length() == 0) {
 			messages.put("errorNewPhone", "*密碼不可為空");
-		} else {
-			if (!nwePhone.trim().matches(regex)) {
-				messages.put("errorNewPhone", "*密碼格式錯誤");
-			}
 		}
-
-		String checkNewPhone = req.getParameter("checkNewPhone");
 		if (checkNewPhone == null || checkNewPhone.trim().length() == 0) {
 			messages.put("errorCheckNewPhone", "*密碼不可為空");
-		} else {
-			if (!checkNewPhone.equals(nwePhone)) {
-				messages.put("errorCheckNewPhone", "*密碼與前次輸入不相符");
-			}
 		}
+		
+		if (!messages.isEmpty()) {
+			System.out.println("執行這行");
+			messages.put("userInput1", oldPhone);
+			messages.put("userInput2", nwePhone);
+
+			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberPassword.jsp");
+			failureView.forward(req, res);
+			return;// 程式中斷
+		}
+		
+		// 從資料庫拿值
+		String Password = memberSvc.getePassword(sessionMembersVO.getMemberId());
+		if (!Password.equals(oldPhone)) {
+			messages.put("errorOldPhone", "*密碼不符合");
+		}
+
+		if (!nwePhone.trim().matches(regex)) {
+			messages.put("errorNewPhone", "*密碼格式錯誤");
+		}
+
+		if (!checkNewPhone.equals(nwePhone)) {
+			messages.put("errorCheckNewPhone", "*密碼與前次輸入不相符");
+		}
+
 		if (!messages.isEmpty()) {
 			messages.put("userInput1", oldPhone);
 			messages.put("userInput2", nwePhone);
@@ -469,7 +487,7 @@ public class MembersServlet extends HttpServlet {
 		} else {
 
 			// 輸入正確後，呼叫 DAO 修改資料庫密碼 nwePhone
-			MembersService memberSvc = new MembersService();
+		
 			MembersVO newMemberVO = new MembersVO();
 			newMemberVO.setMemberId(sessionMembersVO.getMemberId());
 			newMemberVO.setPassword(nwePhone);

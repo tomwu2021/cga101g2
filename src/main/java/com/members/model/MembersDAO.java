@@ -976,4 +976,35 @@ public class MembersDAO implements MembersDAO_interface {
 		return null;
 	}
 
+	@Override
+	public String getePassword(Integer memberId) {
+		con = JNDIConnection.getRDSConnection();
+		String Password = getePassword(memberId, con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Password;
+	}
+
+	public String getePassword(Integer memberId, Connection con) {
+		final String SELECT_EWALLETPASSWORD_BY_MEMBERID = "SELECT password FROM members where member_id = ?;";
+		if (con != null) {
+			try {
+				PreparedStatement pstmt = con.prepareStatement(SELECT_EWALLETPASSWORD_BY_MEMBERID);
+				pstmt.setInt(1, memberId);
+				ResultSet rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					return rs.getString("password");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "查無此密碼";
+	}
+
+
 }

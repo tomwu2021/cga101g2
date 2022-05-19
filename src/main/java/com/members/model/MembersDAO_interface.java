@@ -75,4 +75,6 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 	// 用姓名模糊查詢
 	public List<MembersVO> SelectAllByName(String name);
 	
+	// 用 memberId 取得 Password
+	public String getePassword(Integer memberId);
 }

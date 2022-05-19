@@ -139,4 +139,9 @@ public class MembersService {
 		return dao.SelectAllByName(account);
 	}
 
+	// Password
+	public String getePassword(Integer memberId) {
+		return dao.getePassword(memberId);
+	}
+	
 }
