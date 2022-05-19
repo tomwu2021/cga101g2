@@ -313,6 +313,16 @@ public class Cart extends HttpServlet {
 			}
 
 		}
+		if ("getCartCount".equals(action)) {
+			PrintWriter out = res.getWriter();
+			res.setContentType("application/json; charset=UTF-8");
+			res.setCharacterEncoding("UTF-8");
+			if(buylist!=null) {
+				out.print(buylist.size());
+			}else {
+				out.print(0);
+			}
+		}
 	}
 
 	// 把資料塞進VO

@@ -173,7 +173,6 @@ public class AlbumController extends CommonController {
 	boolean changeCover(HttpServletRequest req, HttpServletResponse res) {
 		Integer coverId = Integer.parseInt(req.getParameter("pictureId").trim());
 		albumId = Integer.parseInt(req.getParameter("albumId"));
-		System.out.println(isOwner);
 		if (albumId != null && coverId != null && isOwner == 1) {
 			alServ.updateCover(albumId, coverId);
 			return true;

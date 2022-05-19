@@ -16,6 +16,7 @@ function cartChangeCount(sum) {
 		data: data,
 		success: function(result, status) {
 			$(`#ptotal-${sum}`).text(result);
+			getTotalCartCount();
 		}
 	})
 
@@ -38,11 +39,10 @@ function deleteOne(del) {
 		success: function(result, status) {
 			var remove = document.getElementById(del);
 			remove.remove();
-
 			if (result == "空") {
-				history.back(0)
-
+				location.reload()
 			}
+			getTotalCartCount();
 
 		}
 	})
