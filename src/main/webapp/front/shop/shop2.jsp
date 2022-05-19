@@ -159,7 +159,7 @@
 		<c:forEach var="productVO" items="${listProducts_Byfind}" >
 			<div class="col-lg-4 col-md-4 col-sm-6 col-12">
 				<!--單一商品開始 -->
-				<Form id="${productVO.productId}" action="/CGA101G2/member/cart.do" Method="Post">
+				<Form id="${productVO.productId}" action="<%=request.getContextPath()%>/member/cart.do" Method="Post">
 				<article class="single_product">
 					<figure>
 						<div class="product_thumb">

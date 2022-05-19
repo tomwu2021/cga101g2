@@ -96,7 +96,7 @@ if (buylist != null && (buylist.size() > 0)) {
 
 							</table>
 						</div>
-						<Form action="/CGA101G2/member/cart.do" Method="Post">
+						<Form action="<%=request.getContextPath()%>/member/cart.do" Method="Post">
 						<div class="cart_submit">
 							<button type="submit">結帳</button>
 							 <input type="hidden" name="action" value="TOCHECKOUT">

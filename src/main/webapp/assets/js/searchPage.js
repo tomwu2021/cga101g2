@@ -6,7 +6,7 @@ function search() {
 
 	$.get({
 		
-		url: "/CGA101G2/PictureController?fileName=" + fileName + "&thisPage=" + thisPage + "&order=" + order + "&pageSize="
+		url: getContextPath() + "/PictureController?fileName=" + fileName + "&thisPage=" + thisPage + "&order=" + order + "&pageSize="
 			+ pageSize + "&sort=" + sort + "&time=" + time + "&action=search",  
 
 		//url後面為分頁查詢必須的條件 後面可再加屬於自己方法的條件

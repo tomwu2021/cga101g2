@@ -106,7 +106,7 @@ $(function() {
 
 	$.ajax(
 		{
-			url: "/CGA101G2/back/emp.do",
+			url: getContextPath()+"/back/emp.do",
 			type: "post",
 			data: dataJSON,
 			success: function(json) {

@@ -61,7 +61,7 @@ table td{
 
 <!-- 主要內容 start -->
 <!--breadcrumbs area start-->
-<FORM METHOD="post" ACTION="/CGA101G2/front/order/myAccount.jsp">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front/order/myAccount.jsp">
 	<div class="main">
 	<label>訂單寄送詳情</label><br>
 		<table>
