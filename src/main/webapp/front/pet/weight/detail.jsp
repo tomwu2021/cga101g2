@@ -274,6 +274,7 @@ let rId = '${param.recordId}'? '${param.recordId}':$('.allItem:first').attr("id"
 						}
 					if($('#activity').val()==""){
 						$("#updateBtn").attr("disabled","disabled");
+						$('#kilogram').hide();
 					}
 				}
 			});	
@@ -288,6 +289,7 @@ function getDetail(record){
 					$("#editBox").html(data);
 					$("#getRecordId").val(rId);
 					$("#updateBtn").removeAttr("disabled");
+					$('#kilogram').show();
 				}
 			}
 	);

@@ -67,7 +67,7 @@
 					<div class="col-lg-12 col-md-12 col-sm-12">
 					    <figure class="single_banner">
 					        <div class="banner_thumb">
-					            <a href="${artiVO.content}"><img src='${artiVO.picVO.url}' alt="" style="max-height:100%;width:100%"></a>
+					            <a href="<%=request.getContextPath()%>/${artiVO.content}"><img src='${artiVO.picVO.url}' alt="" style="max-height:100%;width:100%"></a>
 					        </div>
 					    </figure>
 					</div>
