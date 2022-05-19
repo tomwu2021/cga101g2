@@ -10,13 +10,11 @@
 .product_variant:nth-of-type(1){
     width: fit-content !important;
     display: block !important;
-    background-color: #FFE5D4;
-    border: 1px solid #FFCCA9;
     letter-spacing: 1px;
     color: #333;
     font-family: 'Microsoft JhengHei';
+    font-weight: bold;
     padding: 8px;
-    border-radius: 5px;
 }
 </style>
 <head>
@@ -156,17 +154,17 @@
 
 							<div class="product_variant quantity">
 								<!-- 							數量至少min於&起始於最低開團級距一 -->
-								<label>截單方式:</label>
+								<span>截單方式：</span>
 								<c:if test="${groupOrderVO.endType == 1 }">
-								<label>時間截單</label><br>
-								<label>於${groupOrderVO.endTime}截單</label>
+								<span>限時截單</span><br>
+								<span>於<fmt:formatDate value="${groupOrderVO.endTime}" pattern="yyyy-MM-dd HH:mm" />截單</span>
 								</c:if>
 								<c:if test="${groupOrderVO.endType == 2 }">
-									<label>依份數截單(${groupOrderVO.minAmount}份)</label>
+									<span>依份數截單(${groupOrderVO.minAmount}份)</span>
 									<br>
-									<label>目前份數:${established}份</label>
+									<span>目前份數： </span><span style='color:#d80000;'>${established}</span><span>份</span>
 									<br>
-									<label>最終時間:<fmt:formatDate value="${groupOrderVO.endTime}" pattern="yyyy-MM-dd HH:mm" /></label>
+									<span>最終時間： </span><span style='color:#3B5999;'><fmt:formatDate value="${groupOrderVO.endTime}" pattern="yyyy-MM-dd HH:mm" /></span>
 								</c:if>
 
 							</div>

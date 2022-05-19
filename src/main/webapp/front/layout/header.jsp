@@ -135,13 +135,7 @@
 											<!--! wishlis設定  -->
 											<%
 											if (loginId > 0) {
-											%><li>
-												<div id="goWishlist">
-													<a title="前往收藏清單">前往收藏清單 &nbsp;<i
-														class="bi bi-box2-heart-fill"></i>
-													</a>
-												</div>
-											</li>
+											%><li><a href="" id="goWishlist" title="前往收藏清單">前往收藏清單</a></li>
 											<%
 											}
 											%>

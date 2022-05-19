@@ -99,7 +99,7 @@
                                     <a href="<%=request.getContextPath()%>/PersonPost?action=getOne_For_Display&memberId=${postVO.memberId}"  style='line-height:36px;font-size:20px;'><img src='${postVO.pictureVO2.previewUrl}' style='display:inline-block;height:32px;width:32px;object-fit:cover;border-radius:50%;'>&nbsp;&nbsp;${postVO.membersVO.name}</a>
                                 </div>
                                 <div class="testimonial_thumb">
-                                    <a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&action=selectdetail"><img src="${postVO.pictureVO.url}" style='border-radius:20px;'></a>
+                                    <a href="<%=request.getContextPath()%>/detailPost?postId=${postVO.postId}&memberId=${postVO.memberId}&action=selectdetail"><img src="${postVO.pictureVO.url}" style='border-radius:20px;'></a>
                                 </div>
                                 <div class="testimonial_content">
                                     <div class="testimonial-rating">

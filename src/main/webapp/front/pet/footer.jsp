@@ -10,12 +10,9 @@
               </div>    
               <div class="col-lg-6 col-md-6">    
                   <div class="footer_social">
-                      <ul>
-<!--                           <li><a href="#"><i class="ion-social-facebook"></i></a></li> -->
-<!--                           <li><a href="#"><i class="ion-social-twitter"></i></a></li> -->
-<!--                           <li><a href="#"><i class="ion-social-googleplus"></i></a></li> -->
-<!--                           <li><a href="#"><i class="ion-social-youtube-outline"></i></a></li> -->
-                      </ul>
+					<ul>
+                       <li style="font-size: 15px;color:#fff;">服務時間：週一至週五 09:30-18:00</li>
+                   </ul>
                   </div>
               </div>
           </div>
