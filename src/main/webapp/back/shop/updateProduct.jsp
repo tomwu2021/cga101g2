@@ -56,7 +56,6 @@
 												<h3 class="h6 text-uppercase mb-0">更新商品</h3> 
 											</div>
 											<div class="card-body">
-												<p>
 													商品編號 : ${param.productId} &emsp; 最後更新時間 :
 													<!-- 字串轉日期 -->
 													<fmt:parseDate var="dateObj" value="${param.updateTime}"
@@ -79,7 +78,7 @@
 													<input type=button value="查看一般購物前台" class="btn btn-info" style="position: relative; left: 3%">
 													</a>
 													<a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${param.productId}&action=getOne_For_GroupShop" target="_blank">
-													<input type=button value="查看團購前台" class="btn btn-info" style="position: relative; left: 3%">
+													<input type=button value="查看團購前台" class="btn btn-warning" style="position: relative; left: 3%">
 													</a>
 													</c:if>
 													<!-- 查看該筆商品前台畫面 END -->

@@ -56,7 +56,7 @@ pageContext.setAttribute("sort2list", sort2list);
 								<div class="col-lg-12 mb-5">
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/back/shop/productInsert"
-										name="form1" enctype="multipart/form-data">
+										name="form1" enctype="multipart/form-data" id="productInsertFrom">
 										<div class="card">
 											<div class="card-header">
 												<h3 class="h6 text-uppercase mb-0">新增商品</h3>
@@ -73,7 +73,7 @@ pageContext.setAttribute("sort2list", sort2list);
 																		type="text" value="${param.productName}"
 																		name="productName" placeholder="輸入商品名稱"
 																		class="form-control form-control-success"> 
-																		<small class="form-text text-muted ml-3">限制5個字(含)以上20個字以內</small> 
+																		<small class="form-text text-muted ml-3">限制5個字(含)以上40個字以內</small> 
 																		<small class="form-text text-muted ml-3 text-danger">${errorMsgs.productName}</small>
 																</div>
 															</div>
@@ -238,14 +238,14 @@ pageContext.setAttribute("sort2list", sort2list);
 												<div class="row">
 													<div class="col-md-12">
 														<div class="form-group">
-															<input type="submit" value="送出新增" class="btn btn-primary"
-																  disabled="disabled"> 
-																<input type="hidden" name="action" value="insert">
-														</div>
-														<div class="form-group">
-															<input type="submit" value="送出新增" class="btn btn-primary"
-																  disabled="disabled"> 
-																<input type="hidden" name="action" value="insert">
+															<input id="upTo" type="submit" value="送出新增" class="btn btn-primary" disabled="disabled"> 
+															<input type="hidden" name="action" value="insert">
+															
+															<input id="upToShop"  value="新增並且上架一般購物" class="btn btn-info"disabled="disabled"> 
+															<input type="hidden" name="upToShop" value=" ">
+															
+															<input id="upToShopAndGropShop"  value="新增並且上架一般與團購" class="btn btn-warning" disabled="disabled"> 
+															<input type="hidden" name="upToShopAndGropShop" value=" ">
 														</div>
 													</div>
 												</div>
