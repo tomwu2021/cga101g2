@@ -693,12 +693,13 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 		ProductVO productVO = new ProductVO();
 		final String CHECKNAME = "SELECT product_name "
 							+ "FROM cga_02.product "
-							+ "WHERE product_name LIKE '%"+prodcutName+"%';";
+							+ "WHERE product_name = ? ;";
 
 		try (Connection con = JNDIConnection.getRDSConnection();
 				PreparedStatement pstmt = con.prepareStatement(CHECKNAME)) {
-			ResultSet rs = pstmt.executeQuery();
 
+			pstmt.setString(1, prodcutName);
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				productVO.setProductName(rs.getString("product_name"));
 			}

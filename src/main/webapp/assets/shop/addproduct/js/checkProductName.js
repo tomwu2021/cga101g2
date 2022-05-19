@@ -8,7 +8,8 @@ $("#inputHorizontalSuccessCheckProductName").on('blur', CheckProductName);
 function CheckProductName() {
 	let productName = $(this).val().trim();
 	let input = $(this);
-
+	$(this).off('blur');
+	
 	var strProductName = String(productName);
 	let length = strProductName.trim().length;
 	if (length <= 4) {
@@ -28,6 +29,8 @@ function CheckProductName() {
 			},
 			dataType: "json", // 返回格式為json
 			success: function(data) {
+				console.log(data);
+				input.on('blur', CheckProductName);
 				if (data.msg === '-1') {
 					input.next().next().text("不可空白")
 				}
@@ -35,8 +38,6 @@ function CheckProductName() {
 					input.next().next().text("與現有的商品名稱重複")
 				}
 				else if (data.msg === '1') {
-					$(this).off('blur');
-					input.on('blur', CheckProductName);
 					input.next().next().text(" ")
 					$("#upTo").removeAttr("disabled");
 					$("#upToShop").removeAttr("disabled");
@@ -53,12 +54,12 @@ function CheckProductName() {
 
 let productInsertFrom = document.getElementById("productInsertFrom");
 
-$("#upToShop").click(function () {
+$("#upToShop").click(function() {
 	$(this).next().val('upToShop');
 	productInsertFrom.submit();
 });
 
-$("#upToShopAndGropShop").click(function () {
+$("#upToShopAndGropShop").click(function() {
 	$(this).next().val('upToShopAndGropShop');
 	productInsertFrom.submit();
 });

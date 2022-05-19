@@ -54,7 +54,8 @@ public class CheckProductNameServlet extends HttpServlet {
 		} else {
 			ProductService pdSvc = new ProductService();
 			ProductVO productVO = pdSvc.checkProdcutName(productName);
-			// 0代表沒重複 1代表有重複
+			//0代表有重複,不可以送出
+			//1代表沒重複,可以送出
 			if (productVO.getProductName() == null) {
 				msg.put("msg", "1");
 				String json = new Gson().toJson(msg);
