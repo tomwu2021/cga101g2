@@ -442,7 +442,7 @@ public class MembersServlet extends HttpServlet {
 		String regex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
 		// service
 		MembersService memberSvc = new MembersService();
-		
+
 		if (oldPhone == null || oldPhone.trim().length() == 0) {
 			messages.put("errorOldPhone", "*密碼不可為空");
 		}
@@ -452,7 +452,7 @@ public class MembersServlet extends HttpServlet {
 		if (checkNewPhone == null || checkNewPhone.trim().length() == 0) {
 			messages.put("errorCheckNewPhone", "*密碼不可為空");
 		}
-		
+
 		if (!messages.isEmpty()) {
 			System.out.println("執行這行");
 			messages.put("userInput1", oldPhone);
@@ -462,7 +462,7 @@ public class MembersServlet extends HttpServlet {
 			failureView.forward(req, res);
 			return;// 程式中斷
 		}
-		
+
 		// 從資料庫拿值
 		String Password = memberSvc.getePassword(sessionMembersVO.getMemberId());
 		if (!Password.equals(oldPhone)) {
@@ -487,7 +487,7 @@ public class MembersServlet extends HttpServlet {
 		} else {
 
 			// 輸入正確後，呼叫 DAO 修改資料庫密碼 nwePhone
-		
+
 			MembersVO newMemberVO = new MembersVO();
 			newMemberVO.setMemberId(sessionMembersVO.getMemberId());
 			newMemberVO.setPassword(nwePhone);
@@ -679,23 +679,16 @@ public class MembersServlet extends HttpServlet {
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
 
+		// 取得 serssionVO
 		HttpSession currentSession = req.getSession();
 		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
-		String currentWalletPassword = sessionMembersVO.geteWalletPassword();
-//		System.out.println(currentWalletPassword);
 
 		MembersService memberSvc = new MembersService();
-		String walletPassword = memberSvc.selectForLogin(sessionMembersVO.getAccount(), sessionMembersVO.getPassword())
-				.geteWalletPassword();
-//		System.out.println(walletPassword);
 
-		sessionMembersVO.seteWalletPassword(walletPassword);
+		// 資料庫錢包密碼
+		String dbwalletPassword = memberSvc.geteWalletPassword(sessionMembersVO.getMemberId());
 
-//		System.out.println("執行111");
-
-//		if (currentWalletPassword == null || currentWalletPassword.trim().length() == 0) {
-		if (sessionMembersVO.geteWalletPassword() == null
-				|| sessionMembersVO.geteWalletPassword().trim().length() == 0) {
+		if (dbwalletPassword == null || dbwalletPassword.trim().length() == 0) {
 			// 跳轉到新建密碼畫面
 			messages.put("exist", "false");
 			String json = new Gson().toJson(messages);
@@ -789,15 +782,15 @@ public class MembersServlet extends HttpServlet {
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
 
-		// 首次登入
-		if (sessionMembersVO.getBonusAmount() == 0 && sessionMembersVO.geteWalletPassword() == null) {
+		MembersService memberSvc = new MembersService();
+		MembersVO bonusMembersVO = new MembersVO();
 
-			// 首次登入發送紅利
-			// ewallet_password == null，代表此會員未消費，所以也不曾使用過紅利點數，因為要使用紅利點數就需要設定錢包密碼進行儲值消費
-			// 再判斷 bonus == 0，代表會員從未領過紅利點數
-			// 兩者條件成立即 => 首次登入發送紅利
-			MembersService memberSvc = new MembersService();
-			MembersVO bonusMembersVO = new MembersVO();
+		// 首次登入發送紅利
+		// ewallet_password == null，代表此會員未消費，所以也不曾使用過紅利點數，因為要使用紅利點數就需要設定錢包密碼進行儲值消費
+		// 再判斷 bonus == 0，代表會員從未領過紅利點數
+		// 兩者條件成立即 => 首次登入發送紅利
+		if (memberSvc.selectBonusAmount(sessionMembersVO) == 0
+				&& memberSvc.geteWalletPassword(sessionMembersVO.getMemberId()) == null) {
 
 			bonusMembersVO.setMemberId(sessionMembersVO.getMemberId());
 			bonusMembersVO.setBonusAmount(100);
