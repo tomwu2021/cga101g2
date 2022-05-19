@@ -109,12 +109,12 @@ public class PostUpdateController extends HttpServlet {
 //			計算該productId的pictureVOList數量
 			PostService postService = new PostService();         
 			PostVO postVO = postService.getOneById(postId, isOwner);   
-			List<PictureVO> pictureVOList = postVO.getPictureList();
+			List<PictureVO> pictureVOList = postVO.getPictureList();	 //讀取原本照片數量						
 			if(deleteImg !=null) {
 				Integer nowPdimgCounts = pictureVOList.size();
 				System.out.println("貼文編號 :"+postVO.getPostId()+"的照片總數 : "+nowPdimgCounts);
-				if ((deleteImg.length - partsList.size()) == nowPdimgCounts) {
-					errorMsgs.put("img", "不可全部刪除，商品至少要有一張照片");
+				if ((deleteImg.length - partsList.size()) == nowPdimgCounts) {					//deleteImg 要刪除的 partsList要新增的
+					errorMsgs.put("img", "不可全部刪除，商品至少要有一張照片");						//nowPdimgCountsg尚未修改前照片總數量
 				}
 			}
 			//***收集照片參數結束***//

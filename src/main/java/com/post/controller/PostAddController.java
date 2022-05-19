@@ -83,20 +83,24 @@ public class PostAddController extends CommonController {
 			
 				
 				String content = req.getParameter("content");
-				
-				Collection<Part> parts=req.getParts();
-				System.out.println(parts);
-				if(parts ==null) {
-					errorMsgs.put("part","����: �撠銝�撘萄��");	
-				}
-
+							
+								
+				 if (req.getPart("parts") == null) {
+					    errorMsgs.put("parts", "至少上傳一張照片");
+				 }
+				 
+				 Collection<Part> parts=req.getParts();
+				 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
+					System.out.println("false area");
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front/post/postNew.jsp");
+							.getRequestDispatcher("front/post/addPost.jsp");
 					failureView.forward(req, res);
-					return;
+					return;//程式中斷
 				}
+
+				
 				/***************************2.開始新增資料***************************************/
 				PostService ps = new PostService();
 				ps.uploadPost(isOwner, content, parts);

@@ -91,8 +91,8 @@
 					   	<div class="col-lg-6 ">
 							<input type="hidden" name="action" value="updatepostcontent">	
 							<input type="hidden" name="postId" value="${postVO.postId}">									
-							<input type="submit" value ="修改" class="btn btn-success" style="position: fixed; bottom: 120px; right: 150px;">
-									
+							<!-- <input type="submit" value ="修改" class="btn btn-success" style="position: fixed; bottom: 120px; right: 150px;"> -->
+							<input type="submit" value="修改" class="btn btn-primary" style="position: absolute;bottom: 600px; left: 1000px;">		
 						</div>
 						</form>
 						

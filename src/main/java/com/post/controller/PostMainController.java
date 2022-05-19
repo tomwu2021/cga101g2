@@ -36,6 +36,8 @@ public class PostMainController extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		
+	
 
 		// 列舉client送來的所有請求參數名稱
 		try {

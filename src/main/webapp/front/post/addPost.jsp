@@ -56,8 +56,9 @@
 						<label for="inputNumber"
 							class="col-md-6 col-form-label">圖片</label>
 							<div class="col-lg-12">
-							<img src="image/add-image.png" class="ml-3" style="height:300px;width:300px;" onclick="add()" id="addimage">
-							<span style="color:#f33;">${errorMsgs.parts}</span>
+							<img src="<%=request.getContextPath()%>/front/post/image/add-image.png" class="ml-3" style="height:300px;width:300px;" onclick="add()" id="addimage">
+							
+							<span style="color:#f33; position: relative;top: 180px;right: 300px;">${errorMsgs.parts}</span>
 							</div>						
 					</div>		
 					
@@ -67,14 +68,14 @@
 					 		class="col-lg-6 col-form-label">內容</label>
 							<div class="col-lg-12">
 							<textarea name="content" class="form-control" style="height:30vh;width:100%;resize:none;">${param.content}</textarea>
-							<span style="color:#f33;">${errorMsgs.content}</span>
+							<div style="color:#f33; transform: translateX(10px) translateY(30px); ">${errorMsgs.content}</div>
 							<%-- <input type="TEXT" name="content" size="90" value="${param.content}"/>${errorMsgs.content} --%>
 					   	</div>
 					   	
 					   	<div class="col-lg-6 ">
 							<input type="hidden" name="action" value="insert">									
-							<input type="submit" value ="發文" class="btn btn-success" style="position: fixed; bottom: 120px; right: 150px;">
-									
+							<input type="submit" value="發文" class="btn btn-primary" style="position: absolute;top: 140px; right: -265px;">
+								
 						</div>
 						</form>
 						
@@ -96,12 +97,12 @@
 let count = 1;
 
 function add(){
-	$('#addimage').before('<div id="div'+count+'" style="float:left;position:relative;"><input name="file" accept="image/*" type="file" id="formFile'+count+'"></div>');
+	$('#addimage').before('<div id="div'+count+'" style="float:left;position:relative;"><input name="parts" accept="image/*" type="file" id="formFile'+count+'"></div>');
 	$('#formFile'+count).hide();
 		let Element = document.querySelector('#formFile'+count);
 		Element.addEventListener('change', function() { 
 		let url = URL.createObjectURL(Element.files[0]); 
-		$(this).after('<img src="'+url+'" id="img'+ (count-1) +'" class="mb-3 ml-3" style="height:266px;width:400px;object-fit: cover;"><i class="far fa-window-close text-muted" id="btn'+ (count-1) +'" style="position:absolute;top:0;right:0;font-size:2em;" onclick="letItGo(this.id)"></i>');
+		$(this).after('<img src="'+url+'" id="img'+ (count-1) +'" class="mb-3 ml-3" style="height:266px;width:400px;object-fit: cover;"><i class="bi bi-x" id="btn'+ (count-1) +'" style="position:absolute;top:0;right:0;font-size:2em;" onclick="letItGo(this.id)"></i>');
 	
 		});
 	document.querySelector('#formFile'+count).click();
