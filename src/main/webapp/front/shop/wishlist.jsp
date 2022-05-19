@@ -184,8 +184,8 @@
                                         <span class="current_price">${productVO.price}元</span>
                                     </div>
                                     <div class="add_to_cart">
-                                      <a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop" 
-                                        title="前往購買"><span style="color:white; font-size:1.2em;">前往購買</span></a>
+                                        <a href="<%=request.getContextPath()%>/shop/ProductGetOneServlet?productId=${productVO.productId}&action=getOne_For_Shop" 
+                                        title="前往購買" style="font-size:1.2em;">前往購買</a>
                                     </div>
                                 </figcaption>
                             </figure>
