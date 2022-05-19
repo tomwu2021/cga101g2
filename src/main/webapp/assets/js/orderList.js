@@ -65,7 +65,7 @@ function viewBody(objectJSON) {
 		html += "<td>" + order.payPrice + "</td>";
 		html += "<td>" + viewStatus(order.status) + "</td>";
 		html += "<td><a href=" + getContextPath() + "/member/order.do?memberId=" + order.memberId + "&orderId=" + order.orderId
-			+ "&action=orderDeatil" + ">View</td>";
+			+ "&action=BackOrderDetail" + ">View</td>";
 		html += "<td>" + viewDate(order.createTime) + "</td>";
 		html += "<td class='viewhover'><button onclick='updateInfo(this)' id='" + order.orderId + "' >修改</button></td>";
 		html += "</tr>";
@@ -107,13 +107,13 @@ function viewUpdate(objectJSON, thisOrderId) {
 		if (thisOrderId == order.orderId) {
 			html += "<td><select id='changeStatus'><option>" + viewStatus(order.status) + "</option><option>未出貨</option><option>已取消</option><option>已完成</option></select></td>";
 			html += "<td><a href=" + getContextPath() + "/member/order.do?memberId=" + order.memberId + "&orderId=" + order.orderId
-				+ "&action=orderDeatil" + ">View</td>";
+				+ "&action=BackOrderDetail" + ">View</td>";
 			html += "<td>" + viewDate(order.createTime) + "</td>";
 			html += "<td class='viewhover'><button onclick='sureInfo(this)' id='" + order.orderId + "' >確定</button></td>";
 		} else {
 			html += "<td>" + viewStatus(order.status) + "</td>";
 			html += "<td><a href=" + getContextPath() + "/member/order.do?memberId=" + order.memberId + "&orderId=" + order.orderId
-				+ "&action=orderDeatil" + ">View</td>";
+				+ "&action=BackOrderDetail" + ">View</td>";
 			html += "<td>" + viewDate(order.createTime) + "</td>";
 			html += "<td class='viewhover'><button id='" + order.orderId + "' >修改</button></td>";
 		}

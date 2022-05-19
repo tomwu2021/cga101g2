@@ -59,7 +59,7 @@ function viewBody(objectJSON) {
 	for (let i = 0; i < objectJSON.length; i++) {
 		let groupOrder = objectJSON[i];
 		html += "<tr>";
-		html += "<td class='viewhover' onclick='viewRecord(this)' id='" + groupOrder.productId + "'>" + groupOrder.groupOrderId + "</td>";
+		html += "<td class='viewhover' onclick='viewRecord("+groupOrder.groupOrderId+")' id='" + groupOrder.productId + "'>" + groupOrder.groupOrderId + "</td>";
 		html += "<td>" + groupOrder.productId + "</td>";
 		html += "<td>" + viewDate(groupOrder.createTime) + "</td>";
 		html += "<td>" + viewDate(groupOrder.endTime) + "</td>";
@@ -80,12 +80,12 @@ function viewBody(objectJSON) {
 }
 
 // ------------------ 點擊團購訂單編號查看詳情 ------------------
-function viewRecord(obj) {
+function viewRecord(groupOrderId) {
 	//	console.log(obj.id);
 
 	let dataJSON = {
-		action: "GroupOredrDetial",
-		orderId: obj.id
+		action: "GroupOredrDetail",
+		orderId: groupOrderId
 	}
 
 	$.ajax(

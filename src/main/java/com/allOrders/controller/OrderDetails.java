@@ -28,7 +28,7 @@ public class OrderDetails extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		//要再改
-		if (true && !"update".equals(action)&& !"groupOrderDeatil".equals(action)&& !"orderDeatil".equals(action)) {
+		if (true && !"update".equals(action)&& !"groupOrderDeatil".equals(action)&& !"orderDeatil".equals(action)&& !"BackOrderDetail".equals(action)) {
 		Integer memberId = Integer.parseInt(req.getParameter("memberId"));
 		Integer groupOederId = Integer.parseInt(req.getParameter("groupOrderId"));
 		GroupBuyerVO groupBuyerVO=new GroupBuyerVO();
@@ -109,7 +109,7 @@ public class OrderDetails extends HttpServlet{
 			}
 		
 		
-		if ("BackOrderDeatil".equals(action)) {
+		if ("BackOrderDetail".equals(action)) {
 			System.out.println("有執行");	
 			Integer orderId = Integer.valueOf(req.getParameter("orderId").trim());
 			OrdersService ordersService=new OrdersService();
@@ -125,7 +125,7 @@ public class OrderDetails extends HttpServlet{
 			req.setAttribute("orderDetail", productDetail.get(0));
 			req.setAttribute("productDetail", productDetail);
 			
-			String url = "/front/order/backOrderDetail.jsp";
+			String url = "/front/backOrderDetail.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); 
 			successView.forward(req, res);
 

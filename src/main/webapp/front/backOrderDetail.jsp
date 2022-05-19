@@ -104,7 +104,7 @@ OrdersVO ordersVO = (OrdersVO) request.getAttribute("ordersVO");
 									<p class="cart_amount">${orderDetail.payPrice}</p>
 								</div>
 								<div class="checkout_btn" >
-									<a onclick="history.back()">到商城</a>
+									<a onclick="history.back()">上一頁</a>
 								</div>
 							</div>
 						</div>
