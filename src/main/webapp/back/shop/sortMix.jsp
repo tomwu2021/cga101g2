@@ -62,7 +62,7 @@
 													<tr class="text-center">
 														<th>主分類編號</th>
 														<th>主分類名稱</th>
-														<th>編輯</th>
+<!-- 														<th>編輯</th> -->
 														<th>刪除</th>
 														<th>不可刪除的原因</th>
 													</tr>
@@ -72,7 +72,7 @@
 													<tr class="text-center">
 														<th scope="row">${sort1VO.sort1Id}</th>
 														<td>${sort1VO.sort1Name}</td>
-														<td><button  class="btn btn-danger btn-sm">修改</button></td>
+<!-- 														<td><button  class="btn btn-danger btn-sm">修改</button></td> -->
 														<c:if test="${sort1VO.productVOList.size() != 0}">
 														<td>不可刪除</td>
 														<td>尚有歸類在此商品分類的商品</td>
@@ -127,7 +127,7 @@
 													<tr class="text-center">
 														<th>子分類編號</th>
 														<th>子分類名稱</th>
-														<th>編輯</th>
+<!-- 														<th>編輯</th> -->
 														<th>刪除</th>
 														<th>尚不可刪除的原因</th>
 													</tr>
@@ -137,7 +137,7 @@
 													<tr class="text-center">
 														<th scope="row">${Sort2VO.sort2Id}</th>
 														<td>${Sort2VO.sort2Name}</td>
-														<td><button  class="btn btn-danger btn-sm">修改</button></td>
+<!-- 														<td><button  class="btn btn-danger btn-sm">修改</button></td> -->
 														<c:if test="${Sort2VO.productVOList.size() != 0}">
 														<td>不可刪除</td>
 														<td>尚有歸類在此商品分類的商品</td>
@@ -146,7 +146,7 @@
 														<td>
 														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back/shop/sortMix">
 														<input type="submit" value="刪除" class="btn btn-secondary btn-sm">														
-														<input type="hidden" name="sort2Id" value="${sort2VO.sort2Id}">
+														<input type="hidden" name="sort2Id" value="${Sort2VO.sort2Id}">
 														<input type="hidden" name="action" value="deleteSort2VO">
 														</FORM>
 														</td>

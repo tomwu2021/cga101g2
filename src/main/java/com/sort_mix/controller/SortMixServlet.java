@@ -165,8 +165,8 @@ public class SortMixServlet extends HttpServlet {
 			/***************************1.接收請求參數***************************************/
 			String sort1Name = req.getParameter("sort1Name");
 			/***************************2.開始新增資料***************************************/
-			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
+			Map<String, String> errorMsg = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsg", errorMsg);
 			Sort1Service sort1Svc = new Sort1Service();
 			Sort1VO sort1VO = new Sort1VO();
 			sort1VO = sort1Svc.selectBySort1Name(sort1Name);
@@ -174,7 +174,7 @@ public class SortMixServlet extends HttpServlet {
 				sort1VO.setSort1Name(sort1Name);
 				sort1Svc.insert(sort1VO);
 			}else {
-				errorMsgs.put("sort1Name", "主分類名稱重複");
+				errorMsg.put("sort1Name", "主分類名稱重複");
 			}
 			/***************************3.刪除完成,準備轉交(Send the Success view)***********/
 			String url = "/back/shop/sortMix?action=select";
@@ -189,8 +189,8 @@ public class SortMixServlet extends HttpServlet {
 			/***************************1.接收請求參數***************************************/
 			String sort2Name = req.getParameter("sort2Name");
 			/***************************2.開始新增資料***************************************/
-			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
+			Map<String, String> errorMsg = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsg", errorMsg);
 			Sort2Service sort2Svc = new Sort2Service();
 			Sort2VO sort2VO = new Sort2VO();
 			sort2VO = sort2Svc.selectBySort2Name(sort2Name);
@@ -198,7 +198,7 @@ public class SortMixServlet extends HttpServlet {
 				sort2VO.setSort2Name(sort2Name);
 				sort2Svc.insert(sort2VO);
 			}else {
-				errorMsgs.put("sort2Name", "子分類名稱重複");
+				errorMsg.put("errorMsg", "子分類名稱重複");
 			}
 			/***************************3.刪除完成,準備轉交(Send the Success view)***********/
 			String url = "/back/shop/sortMix?action=select";
@@ -213,16 +213,16 @@ public class SortMixServlet extends HttpServlet {
 			Integer sort1Id = Integer.valueOf(req.getParameter("sort1Id"));
 			Integer sort2Id = Integer.valueOf(req.getParameter("sort2Id"));
 			/***************************2.開始新增資料***************************************/
-			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			Map<String, String> errorMsg = new LinkedHashMap<String, String>();
 			SortMixService sMix2Svc = new SortMixService();
 			SortMixVO sMixVO = new SortMixVO();
 			sMixVO = sMix2Svc.getOneBySortMixVO(sMixVO);
-			if(sMixVO.getSort1Id() == null) {
+			if(sMixVO.getSort1Id() != null) {
 				sMixVO.setSort1Id(sort1Id);
 				sMixVO.setSort2Id(sort2Id);
 				sMix2Svc.insert(sMixVO);
 			}else {
-				req.setAttribute("errorMsgs", "分類組合重複");
+				req.setAttribute("errorMsg", "分類組合重複");
 				RequestDispatcher failureView = 
 						req.getRequestDispatcher("/back/shop/sortMix?action=select");
 				failureView.forward(req, res);
