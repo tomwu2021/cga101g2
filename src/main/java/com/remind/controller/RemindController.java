@@ -121,7 +121,7 @@ public class RemindController extends CommonController {
 		}
 		/*************************** 5.導向新增頁面 ****************************************/
 		if("goToInsert".equals(action)){
-			String url = "/CGA101G2/front/pet/remind/add.jsp";
+			String url =  req.getContextPath()+"/front/pet/remind/add.jsp";
 			res.sendRedirect(url);
 		}
 		/*************************** 6.查看所有紀錄 ****************************************/

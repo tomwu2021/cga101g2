@@ -2,7 +2,6 @@ package com.customer.service;
 
 import java.util.List;
 
-import com.customer.model.CustomerDAO;
 import com.customer.model.CustomerDAO_interface;
 import com.customer.model.CustomerJDBCDAO;
 import com.customer.model.CustomerVO;

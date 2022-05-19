@@ -12,10 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.amazonaws.services.s3.model.EmailAddressGrantee;
-import com.customer.model.*;
+import com.customer.model.CustomerDAO;
+import com.customer.model.CustomerVO;
 import com.customer.service.CustomerService;
-import com.google.gson.Gson;
 import com.util.JavaMail;
 
 @WebServlet("/contact")

@@ -75,7 +75,7 @@ public class PetActivityController extends CommonController {
 			// 正常送出
 			PetActivityService paSvc = new PetActivityService();
 			paSvc.addActivityRecord(Integer.parseInt(petId), activity,_recordTime);
-			String url = "/CGA101G2/activity?action=all_Display&petId="+petId;
+			String url = req.getContextPath()+"/activity?action=all_Display&petId="+petId;
 			res.sendRedirect(url);
 		}
 		
@@ -130,7 +130,7 @@ public class PetActivityController extends CommonController {
 		}
 		/*************************** 5.導向新增頁面 ****************************************/
 		if("goToInsert".equals(action)){
-			String url = "/CGA101G2/front/pet/activity/add.jsp";
+			String url = req.getContextPath()+"/front/pet/activity/add.jsp";
 			res.sendRedirect(url);
 		}
 		/*************************** 6.查看所有紀錄 ****************************************/
