@@ -4,7 +4,20 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	id="WebApp_ID" version="4.0">
 
+		<error-page>
+			<error-code>400</error-code>
+			<location>/index.html</location>
+		</error-page>
 
+		<error-page>
+			<error-code>404</error-code>
+			<location>/index.html</location>
+		</error-page>
+
+		<error-page>
+			<error-code>500</error-code>
+			<location>/index.html</location>
+		</error-page>
 
 
 	<filter>
@@ -18,6 +31,11 @@
 		<url-pattern>/back/article/*</url-pattern>
 		<url-pattern>/back/order/*</url-pattern>
 		<url-pattern>/back/empSelect.jsp</url-pattern>
+		<url-pattern>/back/shop/addProduct.jsp</url-pattern>
+		<url-pattern>/back/shop/listAllProduct.jsp</url-pattern>
+		<url-pattern>/back/shop/SelectProduct.jsp</url-pattern>
+		<url-pattern>/back/shop/sortMix.jsp</url-pattern>
+		<url-pattern>/back/shop/updateProduct.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
