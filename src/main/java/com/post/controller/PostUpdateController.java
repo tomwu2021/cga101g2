@@ -79,9 +79,7 @@ public class PostUpdateController extends HttpServlet {
 		    req.setAttribute("isOwner", isOwner); 	//memberIdIsMe
 		    
 		    String content = req.getParameter("content");
-		    if(content == null || content.trim().length() == 0) {
-		    	errorMsgs.put("content", "貼文內容勿空白");
-		    }
+		    
 		    
 		    //***收集照片參數開始***//
 		    //要被刪除的照片
