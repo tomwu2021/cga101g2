@@ -13,7 +13,6 @@ import com.article.model.ArticleVO;
 import com.article.service.ArticleService;
 import com.common.controller.CommonController;
 import com.picture.service.PictureService;
-import com.post.model.PostService;
 import com.post.model.PostVO;
 
 @WebServlet("/index.html")
