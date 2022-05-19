@@ -171,7 +171,9 @@
 
 											<c:if test="${memberId == isOwner}">
 												<!-- 刪除按鈕 -->
-												<button id="deletePost${postVO.postId}">Confirm</button>
+												
+												<button id="deletePost${postVO.postId}">X</button>
+												
 											</c:if>
 
 
