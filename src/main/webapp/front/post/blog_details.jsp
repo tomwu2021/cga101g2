@@ -32,7 +32,8 @@
 
 <script>
         function getContextPath() {
-            return "<%=request.getContextPath()%>";
+            return "<%=request.getContextPath()%>
+	";
 	}
 </script>
 
@@ -132,11 +133,14 @@ a, button {
 										</div>
 										<div class="blog_meta" style="width: 650px;">
 
-											<a href="<%=request.getContextPath()%>/PersonPost?memberId=${postVO.memberId}&action=getOne_For_Display">${postVO.membersVO.name}</a>
+											<a
+												href="<%=request.getContextPath()%>/PersonPost?memberId=${postVO.memberId}&action=getOne_For_Display">${postVO.membersVO.name}</a>
 											<!-- 檢舉功能 -->
 											<c:if test="${memberId != isOwner}">
-												<div id="popup22" class="opoups_height_width"
-													style="float: right;">檢舉</div>
+												<%if (loginId>0){%>>
+													<div id="popup22" class="opoups_height_width"
+														style="float: right;">檢舉</div>
+												<%} %>>
 											</c:if>
 
 										</div>
@@ -148,7 +152,8 @@ a, button {
 									<h2
 										style="margin-top: 8px; margin-left: 15px; margin-top: 20px; font-weight: bold;">
 										檢舉內容
-										<div id="viewForgotPassword" style="display: inline; color: red; font-weight: bold;"></div>
+										<div id="viewForgotPassword"
+											style="display: inline; color: red; font-weight: bold;"></div>
 									</h2>
 
 									<textarea type="text" name="forgotPassword" id="forgotPassword"
@@ -158,7 +163,7 @@ a, button {
 										style="font-size: 16px; background-color: orange" /> <span
 										id="closeBtn2">關閉</span>
 								</div>
-								
+
 								<c:if test="${memberId == isOwner}">
 									<!-- 修改按鈕 -->
 									<button id="updatePost${postVO.postId}"

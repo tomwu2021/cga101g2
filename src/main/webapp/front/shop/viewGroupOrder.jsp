@@ -181,13 +181,13 @@
 							<a href="<%=request.getContextPath()%>/front/order/myAccount.jsp">回訂單</a>
 						</div>
 
-						<div class="priduct_social">
-							<ul>
-								<li><a class="facebook" href="#" title="facebook"> <i
-										class="bi bi-share-fill"></i>分享PCLUB社群
-								</a></li>
-							</ul>
-						</div>
+<!-- 						<div class="priduct_social"> -->
+<!-- 							<ul> -->
+<!-- 								<li><a class="facebook" href="#" title="facebook"> <i -->
+<!-- 										class="bi bi-share-fill"></i>分享PCLUB社群 -->
+<!-- 								</a></li> -->
+<!-- 							</ul> -->
+<!-- 						</div> -->
 					</div>
 				</div>
 			</div>

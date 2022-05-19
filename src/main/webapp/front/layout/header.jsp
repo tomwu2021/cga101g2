@@ -8,7 +8,7 @@
 	Integer loginId = session.getAttribute("membersVO") == null ? -999
 			: ((MembersVO) session.getAttribute("membersVO")).getMemberId();
 	%>
-	<input id="loginId" value="<%=loginId%>">
+	<input type="hidden" id="loginId" value="<%=loginId%>">
 
 	<!--     筆記 fa-2x控制i的大小 -->
 	<div class="main_header sticky-header">
