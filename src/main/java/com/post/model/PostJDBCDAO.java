@@ -569,7 +569,10 @@ public class PostJDBCDAO implements PostDAO_interface {
 		}
 		return allList;
 	}
-	
+	/**
+	 * 把貼文狀態更新待審核
+	 * 
+	 */
 	
 	@Override
 	public boolean updateReport(Integer postId) {
@@ -587,6 +590,9 @@ public class PostJDBCDAO implements PostDAO_interface {
 
 		return true;
 	}
+	/**
+	 * 把貼文狀態更新正常
+	 */
 	@Override
 	public boolean updateNormal(Integer postId) {
 		final String UPDATEREPORT = "update post set status = 0 where post_id = ?";

@@ -7,13 +7,14 @@
 	   let postId = id.substring(10);
 	
         Swal.fire({
-            title: 'Are you sure?',
-            text: "確定修改這篇貼文嗎 ?",
+            title: '我要修改貼文',
+            text: " ",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: 'darkgrey',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: '確定',
+            cancelButtonText: '取消'
         }).then((result) => {      	
         	
             //點擊修改後跳修改頁面

@@ -233,30 +233,5 @@
 	</script>
 </body>
 
-<!-- <script>
-    function confirmEvent() {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you want to delete 確定刪除這篇貼文嗎 ?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: 'darkgrey',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-
-            //刪除方法
-
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Your post has been deleted.',
-                    'success'
-                )
-            }
-        });
-    }
-
-</script> -->
 
 </html>
