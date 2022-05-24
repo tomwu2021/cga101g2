@@ -13,9 +13,15 @@ function CheckProductName() {
 	var strProductName = String(productName);
 	let length = strProductName.trim().length;
 	if (length <= 4) {
+		input.on('blur', CheckProductName);
 		input.next().next().text("商品名稱不可小於5個字")
 	}
+	else if (length === 0) {
+		input.on('blur', CheckProductName);
+		input.next().next().text("商品名稱不可空白")
+	}
 	else if (length > 40) {
+		input.on('blur', CheckProductName);
 		input.next().next().text("商品名稱不可大於40個字")
 	} else {
 		//-1商品名稱空白,不可以送出
@@ -31,17 +37,13 @@ function CheckProductName() {
 			success: function(data) {
 				console.log(data);
 				input.on('blur', CheckProductName);
-				if (data.msg === '-1') {
-					input.next().next().text("不可空白")
-				}
-				else if (data.msg === '0') {
+				 if (data.msg === '0') {
 					input.next().next().text("與現有的商品名稱重複")
+					$("[id^='up']").attr("disabled","disabled");
 				}
 				else if (data.msg === '1') {
 					input.next().next().text(" ")
-					$("#upTo").removeAttr("disabled");
-					$("#upToShop").removeAttr("disabled");
-					$("#upToShopAndGropShop").removeAttr("disabled");
+					$("[id^='up']").removeAttr("disabled");
 				}
 			},
 			error: function(data) {

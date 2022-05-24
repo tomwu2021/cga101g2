@@ -97,7 +97,6 @@
 <%-- 																			===本次選擇:=== ===${fn:length(sort1_id)}=== --%>
 <%-- 																			===本次選擇:=== ===${sort1VOList}=== --%>
 																			<c:set var="userMsgsSort1_idArray" value="${userMsgsSort1.sort1_id}"/>
-																			====${fn:length(userMsgsSort1_idArray)}====
 																			
 																			<c:if test="${fn:length(userMsgsSort1_idArray) != fn:length(sort1VOList)}">
 																			
