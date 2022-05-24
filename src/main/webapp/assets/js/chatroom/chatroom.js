@@ -10,7 +10,7 @@ function getLoginId() {
 let socket_private;
 $(document).ready(() => {
 
-	socket_private = io('ws://localhost:3000/private', { query: `memberId=${getLoginId()}` });
+	socket_private = io(WEBSOCKET_URL + 'private', { query: `memberId=${getLoginId()}` });
 
 	socket_private.on('connection', function() {
 	});

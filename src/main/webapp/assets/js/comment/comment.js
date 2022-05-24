@@ -6,7 +6,7 @@ $(document).ready(() => {
         postId: postId,
         memberId: getLoginId()
     }
-    socket_post = io('ws://localhost:3000/post', {query: `memberId=${getLoginId()}`});
+    socket_post = io(WEBSOCKET_URL + 'post', {query: `memberId=${getLoginId()}`});
     socket_post.emit('add-member', postInfo, (data) => {
         console.log(data);
     });

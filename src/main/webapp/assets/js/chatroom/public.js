@@ -1,7 +1,8 @@
+const WEBSOCKET_URL = 'ws://http://18.181.208.180:3000/';
 let socket_public;
 let onlineFriends;
 $(document).ready(() => {
-    socket_public = io('ws://localhost:3000/public', {query: `memberId=${getLoginId()}`});
+    socket_public = io(WEBSOCKET_URL + 'public', {query: `memberId=${getLoginId()}`});
 
     socket_public.on('connection', function () {
         console.log('public connected!');
