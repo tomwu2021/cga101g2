@@ -35,9 +35,9 @@
 }
 </style>
 <!-- 取得session內物品 -->
-<%
-MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
-%>
+<%-- <% --%>
+<!-- // MembersVO membersVO = (MembersVO) session.getAttribute("membersVO"); -->
+<%-- %> --%>
 
 
 <!-- 主要內容 start -->
@@ -70,15 +70,15 @@ MembersVO membersVO = (MembersVO) session.getAttribute("membersVO");
 						<h3>Billing Details</h3>
 						<div class="row">
 
-							<div class="col-lg-6 mb-20">
+							<div class="col-lg-6 mb-20" id="mname">
 								<label>姓名 <span>*</span></label> <input type="text"
 									name="memberName" id="memberName">
 							</div>
-							<div class="col-12 mb-20">
+							<div class="col-12 mb-20" id="mpho">
 								<label>電話<span>*</span></label> <input type="text"
 									name="memberPhone" id="memberPhone">
 							</div>
-							<div class="col-12 mb-20">
+							<div class="col-12 mb-20" id="made">
 								<label>地址<span>*</span></label>
 								<div id="zipcode3">
 									<div class="f3" data-role="county"></div>

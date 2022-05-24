@@ -32,6 +32,7 @@ function buildRecentPost(post) {
     let likeCount = post.likeCount;
     let content = post.content;
     let memberId = post.memberId;
+    let postName = post.membersVO.name;
  
     html += `<div className="post_wrapper">
                     <span className="post_thumb" style="display:inline-block;margin-right:5px">
@@ -40,7 +41,7 @@ function buildRecentPost(post) {
                     </span>
                     <span className="post_info" style="display:inline-block;position:relative;top:15px;">
                         <h4>
-                             <a href="${getContextPath()}/detailPost?memberId=${memberId}&postId=${postId}&action=selectdetail" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${content}</a>
+                             <a href="${getContextPath()}/detailPost?memberId=${memberId}&postId=${postId}&action=selectdetail" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${postName} 發布新貼文了！</a>
                         </h4>
                         <span>${likeCount}個讚</span>
                     </span>

@@ -35,7 +35,7 @@
 <!-- 取得session內物品 -->
 <%
 Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shopingCart");
-MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
+// MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
 %>
 <%
 if (buylist != null && (buylist.size() > 0)) {

@@ -144,7 +144,7 @@ public class PictureController extends CommonController {
 			Integer memberId = Integer.parseInt(req.getParameter("memberId"));
 			req.setAttribute("albumId", albumId);
 			req.setAttribute("memberId", memberId);
-			if (membervo.getMemberId() == memberId) {
+			if (super.getIsOwner(req, res)==1) {
 				System.out.println("addShow:" + albumId);
 				super.routeTo(req, res, "My Photos", "addPicture");
 			}

@@ -32,8 +32,7 @@
 
 <script>
         function getContextPath() {
-            return "<%=request.getContextPath()%>
-	";
+            return "<%=request.getContextPath()%>";
 	}
 </script>
 
