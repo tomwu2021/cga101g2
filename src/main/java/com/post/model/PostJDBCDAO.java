@@ -380,10 +380,11 @@ public class PostJDBCDAO implements PostDAO_interface {
 	 */
 	@Override
 	public List<PostVO> selectHotPost() {
-		final String SELECT_HOTPOST = "select p.post_id, member_id, content, like_count, create_time, preview_url"
+		final String SELECT_HOTPOST = "select p.post_id, p.member_id,m.name, content, like_count, p.create_time, preview_url"
 				+ "                	   	from post p join post_pic pc on p.post_id = pc.post_id  "
 				+ "					    join picture pi on pc.picture_id = pi.picture_id  "
-				+ "						where DateDiff(curdate(), create_time) <= 7 AND status = 0 "
+				+ "					    join members m on m.member_id = p.member_id  "
+				+ "						where DateDiff(curdate(), p.create_time) <= 7 AND p.status = 0 "
 				+ "						order by like_count desc  " + "						limit 0,5 ";
 
 		List<PostVO> hotpostlist = new ArrayList<PostVO>();
@@ -394,15 +395,17 @@ public class PostJDBCDAO implements PostDAO_interface {
 
 			while (rs.next()) {
 				PostVO postVO = new PostVO();
+				MembersVO membersVO = new MembersVO();
 				PictureVO pictureVO = new PictureVO();
 				postVO.setPostId(rs.getInt("post_id"));
-				postVO.setMemberId(rs.getInt("member_id"));
+				postVO.setMemberId(rs.getInt("p.member_id"));
 				postVO.setContent(rs.getString("content"));
 				postVO.setLikeCount(rs.getInt("like_count"));
-				postVO.setCreateTime(rs.getDate("create_time"));
+				postVO.setCreateTime(rs.getDate("p.create_time"));
 				pictureVO.setUrl(rs.getString("preview_url"));
+				membersVO.setName(rs.getString("m.name"));
 				postVO.setPictureVO(pictureVO);
-
+				postVO.setMembersVO(membersVO);
 				hotpostlist.add(postVO);
 			}
 			return hotpostlist;
