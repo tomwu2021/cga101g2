@@ -351,6 +351,10 @@
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.3</version>
+				<configuration>
+					<warName>cga101g2</warName>
+<!--					<outputDirectory>my_output_path</outputDirectory>-->
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
