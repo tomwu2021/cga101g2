@@ -45,7 +45,7 @@ public class CheckProductNameServlet extends HttpServlet {
 			System.out.println(e.toString());
 		}
 
-		String productName = req.getParameter("productName");
+		String productName = req.getParameter("productName").trim();
 		if (productName == null || productName.trim().length() == 0) {
 			msg.put("msg", "-1");
 			String json = new Gson().toJson(msg);
@@ -56,14 +56,16 @@ public class CheckProductNameServlet extends HttpServlet {
 			ProductVO productVO = pdSvc.checkProdcutName(productName);
 			//0代表有重複,不可以送出
 			//1代表沒重複,可以送出
-			if (productVO.getProductName() == null) {
-				msg.put("msg", "1");
-				String json = new Gson().toJson(msg);
-				res.getWriter().write(json);
-			}else {
+			if (productVO.getProductId() != null) {
 				msg.put("msg", "0");
 				String json = new Gson().toJson(msg);
 				res.getWriter().write(json);
+				return;
+			}else {
+				msg.put("msg", "1");
+				String json = new Gson().toJson(msg);
+				res.getWriter().write(json);
+				return;
 			}
 		}
 

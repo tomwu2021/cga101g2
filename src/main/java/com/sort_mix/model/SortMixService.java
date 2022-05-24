@@ -134,7 +134,7 @@ public class SortMixService implements SortMixService_interface {
 	}
 	
 	public SortMixVO getOneBySortMixVO(SortMixVO sortMixVO) {
-		return dao.insert(sortMixVO);
+		return dao.getOneBySortMixVO(sortMixVO);
 	}
 	public SortMixVO insert(SortMixVO sortMixVO) {
 		return dao.insert(sortMixVO);

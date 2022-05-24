@@ -111,10 +111,10 @@ public class SortMixJNIDIDAO implements SortMixDAO_interface {
 			pstmt.setInt(2, sortMixVO.getSort2Id());
 
 			int rowCount = pstmt.executeUpdate();
-			System.out.println(rowCount + "row(s) insert!");
+			System.out.println(rowCount + "SortMixVOSortMixVOSortMixVOrow(s) SortMixVOSortMixVOSortMixVOSortMixVOinsert!");
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -335,18 +335,30 @@ public class SortMixJNIDIDAO implements SortMixDAO_interface {
 			pstmt.setInt(1, sortMixVO.getSort1Id());
 			pstmt.setInt(2, sortMixVO.getSort2Id());
 			
-			ResultSet rsSet = pstmt.executeQuery();
+			ResultSet rs = pstmt.executeQuery();
 			//此時結果集合包含兩張表格的數據,先分別獲取各自表中的數據
-			while (rsSet.next()) {
-				sMixVO.setSort1Id(rsSet.getInt("sort1_id"));
-				sMixVO.setSort2Id(rsSet.getInt("sort2_id"));
+			while (rs.next()) {
+				sMixVO.setSort1Id(rs.getInt("sort1_id"));
+				sMixVO.setSort2Id(rs.getInt("sort2_id"));
 			}
-			
+			System.out.println(sMixVO.getSort1Id());
+			System.out.println(sMixVO.getSort2Id());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 		return sMixVO;
+	}
+	
+	
+	public static void main(String[] args) {
+		SortMixJNIDIDAO DAO = new SortMixJNIDIDAO();
+		SortMixVO sMixVO = new SortMixVO();
+		sMixVO.setSort1Id(6);
+		sMixVO.setSort2Id(1);
+		sMixVO = DAO.getOneBySortMixVO(sMixVO);
+		System.out.println("==========sort1Id "+sMixVO.getSort1Id());
+		System.out.println("==========sort2Id "+sMixVO.getSort2Id());
 	}
 }

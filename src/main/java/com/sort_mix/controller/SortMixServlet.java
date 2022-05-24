@@ -105,137 +105,132 @@ public class SortMixServlet extends HttpServlet {
 		}
 
 		if ("deleteSort1VO".equals(action)) { // 來自addEmp.jsp的請求
-			/***************************1.接收請求參數***************************************/
+			/*************************** 1.接收請求參數 ***************************************/
 			Integer sort1Id = Integer.valueOf(req.getParameter("sort1Id"));
-			/***************************2.開始刪除資料***************************************/
+			/*************************** 2.開始刪除資料 ***************************************/
 			SortMixService sMix1Svc = new SortMixService();
 			sMix1Svc.deleteBySort1Id(sort1Id);
 			Sort1Service sort1Svc = new Sort1Service();
 			Sort1VO sort1VO = new Sort1VO();
 			sort1VO.setSort1Id(sort1Id);
 			sort1Svc.delete(sort1VO);
-			/***************************3.刪除完成,準備轉交(Send the Success view)***********/
+			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 			String url = "/back/shop/sortMix?action=select";
 			System.out.println(url);
-			req.setAttribute("msg", "刪除成功"); 
+			req.setAttribute("msg", "刪除成功");
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
-		
-		
+
 		if ("deleteSort2VO".equals(action)) { // 來自addEmp.jsp的請求
-			/***************************1.接收請求參數***************************************/
+			/*************************** 1.接收請求參數 ***************************************/
 			Integer sort2Id = Integer.valueOf(req.getParameter("sort2Id"));
-			/***************************2.開始刪除資料***************************************/
+			/*************************** 2.開始刪除資料 ***************************************/
 			SortMixService sMix1Svc = new SortMixService();
 			sMix1Svc.deleteBySort2Id(sort2Id);
 			Sort2Service sort2Svc = new Sort2Service();
 			Sort2VO sort2VO = new Sort2VO();
 			sort2VO.setSort2Id(sort2Id);
 			sort2Svc.delete(sort2VO);
-			/***************************3.刪除完成,準備轉交(Send the Success view)***********/
+			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 			String url = "/back/shop/sortMix?action=select";
 			System.out.println(url);
-			req.setAttribute("msg", "刪除成功"); 
+			req.setAttribute("msg", "刪除成功");
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
-		
-		if ("deleteSortMixVO".equals(action)) { 
-			/***************************1.接收請求參數***************************************/
+
+		if ("deleteSortMixVO".equals(action)) {
+			/*************************** 1.接收請求參數 ***************************************/
 			Integer sort1Id = Integer.valueOf(req.getParameter("sort1Id"));
 			Integer sort2Id = Integer.valueOf(req.getParameter("sort2Id"));
-			/***************************2.開始刪除資料***************************************/
+			/*************************** 2.開始刪除資料 ***************************************/
 			SortMixVO sMixVO = new SortMixVO();
 			sMixVO.setSort1Id(sort1Id);
 			sMixVO.setSort2Id(sort2Id);
 			SortMixService sMix1Svc = new SortMixService();
 			sMix1Svc.delete(sMixVO);
-			/***************************3.刪除完成,準備轉交(Send the Success view)***********/
+			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 			String url = "/back/shop/sortMix?action=select";
 			System.out.println(url);
-			req.setAttribute("msg", "刪除成功"); 
+			req.setAttribute("msg", "刪除成功");
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
-		
-		
 
 		if ("insertSort1VO".equals(action)) {
-			/***************************1.接收請求參數***************************************/
+			/*************************** 1.接收請求參數 ***************************************/
 			String sort1Name = req.getParameter("sort1Name");
-			/***************************2.開始新增資料***************************************/
+			/*************************** 2.開始新增資料 ***************************************/
 			Map<String, String> errorMsg = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsg", errorMsg);
 			Sort1Service sort1Svc = new Sort1Service();
 			Sort1VO sort1VO = new Sort1VO();
 			sort1VO = sort1Svc.selectBySort1Name(sort1Name);
-			if(sort1VO.getSort1Name() == null) {
+			if (sort1VO.getSort1Name() == null) {
 				sort1VO.setSort1Name(sort1Name);
 				sort1Svc.insert(sort1VO);
-			}else {
+			} else {
 				errorMsg.put("sort1Name", "主分類名稱重複");
 			}
-			/***************************3.刪除完成,準備轉交(Send the Success view)***********/
+			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 			String url = "/back/shop/sortMix?action=select";
 			System.out.println(url);
-			req.setAttribute("msg", "新增成功"); 
+			req.setAttribute("msg", "新增成功");
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
-		
 
 		if ("insertSort2VO".equals(action)) {
-			/***************************1.接收請求參數***************************************/
+			/*************************** 1.接收請求參數 ***************************************/
 			String sort2Name = req.getParameter("sort2Name");
-			/***************************2.開始新增資料***************************************/
+			/*************************** 2.開始新增資料 ***************************************/
 			Map<String, String> errorMsg = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsg", errorMsg);
 			Sort2Service sort2Svc = new Sort2Service();
 			Sort2VO sort2VO = new Sort2VO();
 			sort2VO = sort2Svc.selectBySort2Name(sort2Name);
-			if(sort2VO.getSort2Name() == null) {
+			if (sort2VO.getSort2Name() == null) {
 				sort2VO.setSort2Name(sort2Name);
 				sort2Svc.insert(sort2VO);
-			}else {
+			} else {
 				errorMsg.put("errorMsg", "子分類名稱重複");
 			}
-			/***************************3.刪除完成,準備轉交(Send the Success view)***********/
+			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 			String url = "/back/shop/sortMix?action=select";
 			System.out.println(url);
-			req.setAttribute("msg", "新增成功"); 
+			req.setAttribute("msg", "新增成功");
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
-		
+
 		if ("insertSortMixVO".equals(action)) {
-			/***************************1.接收請求參數***************************************/
+			/*************************** 1.接收請求參數 ***************************************/
 			Integer sort1Id = Integer.valueOf(req.getParameter("sort1Id"));
 			Integer sort2Id = Integer.valueOf(req.getParameter("sort2Id"));
-			/***************************2.開始新增資料***************************************/
-			Map<String, String> errorMsg = new LinkedHashMap<String, String>();
+			/*************************** 2.開始新增資料 ***************************************/
 			SortMixService sMix2Svc = new SortMixService();
 			SortMixVO sMixVO = new SortMixVO();
-			sMixVO = sMix2Svc.getOneBySortMixVO(sMixVO);
-			if(sMixVO.getSort1Id() != null) {
-				sMixVO.setSort1Id(sort1Id);
-				sMixVO.setSort2Id(sort2Id);
+			sMixVO.setSort1Id(sort1Id);
+			sMixVO.setSort2Id(sort2Id);
+			SortMixVO checkMixVO = sMix2Svc.getOneBySortMixVO(sMixVO);
+			if (checkMixVO.getSort1Id()== null) {
 				sMix2Svc.insert(sMixVO);
-			}else {
+				req.setAttribute("msg", "新增成功");
+				String url = "/back/shop/sortMix?action=select";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				return;
+			} else {
 				req.setAttribute("errorMsg", "分類組合重複");
-				RequestDispatcher failureView = 
-						req.getRequestDispatcher("/back/shop/sortMix?action=select");
-				failureView.forward(req, res);
+				String url = "/back/shop/sortMix?action=select";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
 				return;
 			}
-			/***************************3.刪除完成,準備轉交(Send the Success view)***********/
-			String url = "/back/shop/sortMix?action=select";
-			System.out.println(url);
-			req.setAttribute("msg", "新增成功"); 
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
+
 		}
-		
+
 	}
 
 }

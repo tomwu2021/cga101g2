@@ -47,10 +47,10 @@ public class jdbcUtil_CompositeQuery_ProductForFront {
 //				else
 					whereCondition.append(" and " + aCondition);
 
-				System.out.println("有送出查詢資料的欄位數count = " + count);
+//				System.out.println("有送出查詢資料的欄位數count = " + count);
 			}
 		}
-		System.out.println(whereCondition.toString());
+//		System.out.println(whereCondition.toString());
 		return whereCondition.toString();
 	}
 

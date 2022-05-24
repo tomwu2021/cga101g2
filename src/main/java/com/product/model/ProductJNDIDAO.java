@@ -390,7 +390,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 					+ jdbcUtil_CompositeQuery_Product.get_WhereCondition(map)
 					+ andSort1IdString
 					+ "group by product.product_id "
-				    + "order by product.product_id DESC LIMIT " + pageSize + " OFFSET " + pageNo;
+				    + "order by product.product_id  DESC LIMIT " + pageSize + " OFFSET " + pageNo;
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("List<ProductVO> getAll(Map<String, String[]> map, int pageSize, int pageNo)  ●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
@@ -562,7 +562,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 			        + "WHERE product.status NOT IN (0) "
 			        + jdbcUtil_CompositeQuery_ProductForFront.get_WhereConditionProductForFront(map)
 			        + "group by product.product_id "
-			        + "order by product.product_id DESC LIMIT " + pageSize + " OFFSET " + pageNo;
+			        + "order by rand() LIMIT " + pageSize + " OFFSET " + pageNo;
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("List<ProductVO> getForShopFront() ●●finalSQL(by DAO) = List<ProductVO> getForShopFront()" + finalSQL);
 			rs = pstmt.executeQuery();
@@ -691,7 +691,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 	@Override
 	public ProductVO checkProdcutName(String prodcutName) {
 		ProductVO productVO = new ProductVO();
-		final String CHECKNAME = "SELECT product_name "
+		final String CHECKNAME = "SELECT product_name ,product_id "
 							+ "FROM cga_02.product "
 							+ "WHERE product_name = ? ;";
 
@@ -701,15 +701,15 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 			pstmt.setString(1, prodcutName);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
+				productVO.setProductId(rs.getInt("product_id"));
 				productVO.setProductName(rs.getString("product_name"));
 			}
-
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-			return productVO;
+		return productVO;
 		}
 	}
 
