@@ -5,6 +5,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>CGA101G2</name>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 	<dependencies>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
