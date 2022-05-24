@@ -7,6 +7,7 @@
 	<%
 	Integer loginId = session.getAttribute("membersVO") == null ? -999
 			: ((MembersVO) session.getAttribute("membersVO")).getMemberId();
+	MembersVO membersVO=(MembersVO) session.getAttribute("membersVO");
 	%>
 	<input type="hidden" id="loginId" value="<%=loginId%>">
 
@@ -62,6 +63,9 @@
 									<li><a
 										href="<%=request.getContextPath()%>/front/contact.jsp">
 											找客服</a></li>
+																				<li><a
+										href="<%=request.getContextPath()%>/common?action=aboutUs">
+										    關於我們</a></li>
 								</ul>
 							</nav>
 						</div>
@@ -129,7 +133,14 @@
 								<a><i class="bi bi-person-circle"></i></a>
 								<div class="dropdown_links">
 									<div class="dropdown_links_list">
-										<h3>${membersVO.name}<small>&nbsp;您好！</small>
+									<%
+									String name;
+									if(loginId>0){
+										name=membersVO.getName();
+									}else{
+										name="";
+									} %>
+										<h3><%=name%><small>&nbsp;您好！</small>
 										</h3>
 										<ul>
 											<li><a title="前往會員中心"

@@ -1,5 +1,6 @@
 package com.common.controller;
 
+import javax.persistence.metamodel.SetAttribute;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,7 @@ import com.members.model.MembersService;
 import com.members.model.MembersVO;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/common")
 public class CommonController extends HttpServlet {
@@ -20,11 +22,50 @@ public class CommonController extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
-		MembersVO membersVO = memberSvc.selectForLogin("servlet@pet.com","!QAZ2wsx");
-		HttpSession session = req.getSession();
-		session.setAttribute("membersVO", membersVO);
-		req.setAttribute("membersVO", membersVO);
+		String action = req.getParameter("action");
+		
+		switch (action) {
+		case "aboutUs":
+			routeTo(req, res, "關於我們", "aboutUs");
+			break;
+		case "get1":
+			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/%E8%AC%9D%E9%96%94%E7%9A%93.mp4");
+			routeTo(req, res, "謝閔皓-專題成果影片", "introduction");
+			break;
+		case "get2":
+			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/%E6%9D%8E%E9%9F%8B%E8%93%81.mp4");
+			routeTo(req, res, "李葦蓁-專題成果影片", "introduction");
+			break;
+		case "get3":
+			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/%E9%83%AD%E9%9B%A8%E6%AC%A3(%E5%8A%A0%E9%80%9F2)_.mp4");
+			routeTo(req, res, "郭雨欣-專題成果影片", "introduction");
+			break;
+		case "get4":
+			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/%E5%BC%B5%E7%BF%94%E9%9B%B2.mp4");
+			routeTo(req, res, "張翔雲-專題成果影片", "introduction");
+			break;
+		case "get5":
+			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/%E5%8A%89%E9%9D%9C%E5%AE%9C.mp4");
+			routeTo(req, res, "劉靜宜-專題成果影片", "introduction");
+			break;
+		case "get6":
+			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/cga101g2-%E5%90%B3%E8%87%B4%E9%99%9E.mp4");
+			routeTo(req, res, "吳致陞-專題成果影片", "introduction");
+			break;
+		default:
 
+			MembersVO membersVO = memberSvc.selectForLogin("servlet@pet.com","!QAZ2wsx");
+			HttpSession session = req.getSession();
+			session.setAttribute("membersVO", membersVO);
+			req.setAttribute("membersVO", membersVO);
+		}
+		if("aboutUs".equals(action)) {
+			
+		}else {
+			
+		}
+		
+		
 	}
     /**
      * forward到指定之動態生成JSP頁面
