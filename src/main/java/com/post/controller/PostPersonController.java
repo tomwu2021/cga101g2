@@ -106,8 +106,8 @@ public class PostPersonController extends CommonController {
 				List<PostVO> personList = ps.selectPost(memberId);
 				
 				
-				MembersVO membersVO =new MembersVO();
-				membersVO = ps.selectmember(memberId); 
+				MembersVO ThismembersVO =new MembersVO();
+				ThismembersVO = ps.selectmember(memberId); 
 				
 				
 //				if (personList == null) {
@@ -124,7 +124,7 @@ public class PostPersonController extends CommonController {
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("personList", personList); 
 				
-				req.setAttribute("membersVO", membersVO);
+				req.setAttribute("ThismembersVO", ThismembersVO);
 				String url = "/front/post/personPost.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);

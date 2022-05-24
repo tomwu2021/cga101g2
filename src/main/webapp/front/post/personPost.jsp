@@ -103,9 +103,9 @@
 							<div id="demo_border" style="position: relative;">
 
 								<div id="image_photo">
-									<img src="${membersVO.url}">
+									<img src="${ThismembersVO.url}">
 								</div>
-								<div id="img_text">${membersVO.name}</div>
+								<div id="img_text">${ThismembersVO.name}</div>
 							</div>
 
 
