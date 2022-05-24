@@ -98,15 +98,16 @@ function buildComment(comment) {
 
 function showReplyInput(commentId) {
     getReply(commentId);
-    if(getLoginId()>0) {
-        $(`#go-reply-${commentId}`).show();
-    }
+
 }
 
 function getReply(commentId) {
     if (!$(`#reply-container-${commentId}`).hasClass('show-reply')) {
         $(`#reply-container-${commentId}`).show();
         $(`#reply-container-${commentId}`).addClass("show-reply");
+        if(getLoginId()>0) {
+        	$(`#go-reply-${commentId}`).show();
+    	}
     } else {
         $(`#reply-container-${commentId}`).hide();
         $(`#go-reply-${commentId}`).hide();

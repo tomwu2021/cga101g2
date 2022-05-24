@@ -77,7 +77,7 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 
 	public GroupOrderCheckController() {
 		super();
-		System.out.println("有執行");
+
 		List<GroupOrderVO> checkList = groupOrderService.check();
 		for (GroupOrderVO groupOrderVO : checkList) {
 			int established = 0;
@@ -171,7 +171,7 @@ public class GroupOrderCheckController extends HttpServlet implements Runnable {
 						.getAllByGroupOrderId(groupOrderVO.getGroupOrderId())) {
 					membersService.walletPaymentAddMoney(groupBuyerVO.getMemberId(),
 							groupOrderVO.getProductVO().getGroupPrice1() * groupBuyerVO.getProductAmount());
-//					// 加入一則通知
+					// 加入一則通知
 //					NotificationService notificationSvc = new NotificationService();
 //					NotificationVO notificationVO = new NotificationVO();
 //					notificationVO.setMemberId(groupBuyerVO.getMemberId());

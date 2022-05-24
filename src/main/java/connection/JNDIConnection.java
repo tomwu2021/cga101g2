@@ -15,9 +15,6 @@ public class JNDIConnection {
 		try {
 			DataSource ds = (DataSource) new javax.naming.InitialContext().lookup("java:comp/env/jdbc/cga_02");
 			con = ds.getConnection();
-			if (con != null) {
-				System.out.println("JNDI連線成功!");
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NamingException e) {

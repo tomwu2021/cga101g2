@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <footer class="footer_widgets foote_other">
-  <div class="footer_bottom">
+  <div class="footer_bottom" style="margin-top:270px">
       <div class="container">
           <div class="row align-items-center">
               <div class="col-lg-6 col-md-6">

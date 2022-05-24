@@ -50,7 +50,7 @@
 			<div class="form-select" style="display: flex;">
 				<form action="#" style="display: block;">
 					<select id="status">
-						<option value="">請選擇區間</option>
+						<option value="">請選擇狀態</option>
 						<option value="0">未完成</option>
 						<option value="1">取消</option>
 						<option value="2">已完成</option>
