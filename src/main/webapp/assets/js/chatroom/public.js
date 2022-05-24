@@ -1,4 +1,4 @@
-const WEBSOCKET_URL = 'ws://18.181.208.180:3000/';
+const WEBSOCKET_URL = 'wss://www.pclubxpclub.com:3000/';
 let socket_public;
 let onlineFriends;
 $(document).ready(() => {
