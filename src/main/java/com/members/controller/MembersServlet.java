@@ -789,18 +789,20 @@ public class MembersServlet extends HttpServlet {
 		// ewallet_password == null，代表此會員未消費，所以也不曾使用過紅利點數，因為要使用紅利點數就需要設定錢包密碼進行儲值消費
 		// 再判斷 bonus == 0，代表會員從未領過紅利點數
 		// 兩者條件成立即 => 首次登入發送紅利
-		if (memberSvc.selectBonusAmount(sessionMembersVO) == 0
-				&& memberSvc.geteWalletPassword(sessionMembersVO.getMemberId()) == null) {
+		if (sessionMembersVO != null) {
+			if (memberSvc.selectBonusAmount(sessionMembersVO) == 0
+					&& memberSvc.geteWalletPassword(sessionMembersVO.getMemberId()) == null) {
 
-			bonusMembersVO.setMemberId(sessionMembersVO.getMemberId());
-			bonusMembersVO.setBonusAmount(100);
-			memberSvc.changeBonus(bonusMembersVO);
+				bonusMembersVO.setMemberId(sessionMembersVO.getMemberId());
+				bonusMembersVO.setBonusAmount(100);
+				memberSvc.changeBonus(bonusMembersVO);
 
-			sessionMembersVO.setBonusAmount(100);
-			messages.put("firstLogin", "firstLogin");
-			String json = new Gson().toJson(messages);
-			res.getWriter().write(json);
-			return;
+				sessionMembersVO.setBonusAmount(100);
+				messages.put("firstLogin", "firstLogin");
+				String json = new Gson().toJson(messages);
+				res.getWriter().write(json);
+				return;
+			}
 		}
 		return;
 
