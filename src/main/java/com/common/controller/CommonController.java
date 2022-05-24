@@ -37,7 +37,7 @@ public class CommonController extends HttpServlet {
 			routeTo(req, res, "李葦蓁-專題成果影片", "introduction");
 			break;
 		case "get3":
-			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/%E9%83%AD%E9%9B%A8%E6%AC%A3(%E5%8A%A0%E9%80%9F2)_.mp4");
+			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/3.%E9%9B%A8%E6%AC%A3(%E5%8A%A0%E9%80%9F2)_.mp4");
 			routeTo(req, res, "郭雨欣-專題成果影片", "introduction");
 			break;
 		case "get4":
