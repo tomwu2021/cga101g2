@@ -6,6 +6,15 @@
 <script
 	src="<%=request.getContextPath()%>/assets/js/vendor/jquery-3.4.1.min.js"></script>
 <!--magnific popup min js-->
+<script>
+	// loading bar function
+	function loading(){
+		$("#spinner").show();
+	}
+	function offLoading(){
+		$("#spinner").hide();
+	}
+</script>
 <script
 	src="<%=request.getContextPath()%>/assets/js/jquery/jquery.magnific-popup.min.js"></script>
 <!--counterup min js-->

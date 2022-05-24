@@ -49,7 +49,6 @@ $(document).ready(()=>{
 function search() {
 
 	console.log(memberId);
-	let html = '';
 	$.get({
 		url: getContextPath() + "/album?memberId=" + memberId + "&action=getPersonAlbum" + "&fileName=" + fileName + "&thisPage=" + thisPage + "&order=create_time&pageSize="
 			+ pageSize + "&sort=" + sort + "&uploadTime=" + uploadTime,

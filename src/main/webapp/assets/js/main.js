@@ -700,16 +700,6 @@
         	$this.toggleClass('menu-open');
         }
     });
+
     
-    
-})(jQuery);	
-
-
-// loading bar function
-
-function loading(){
-	$("#spinner").show();
-}
-function offLoading(){
-	$("#spinner").hide();
-}
+})(jQuery);
