@@ -40,7 +40,7 @@ function getByFileName() {
 
 let previewSrc = "https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/newAlbum.png";
 
-$(document).ready({
+$(document).ready(()=>{
 	
 	search();
 	
