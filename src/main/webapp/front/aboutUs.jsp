@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<style>
+	#cloud:hover a i{
+		color:orangered;
+		cursor:pointer;
+		text-decoration: underline orangered;
+	}
+	#cloud a i {
+		color:darkslateblue;
+	}
+</style>
 	<div id="container" style="margin-top:40px;">
 	<div style="width: 1000px;margin: 70px auto 20px;">
 		<span style="width: 150px;height: 150px;">
@@ -211,9 +220,8 @@
 			</span>
 		</div>
 	</div>
-	
 	<!-- 張翔雲結束 -->
-					<div style="width: 1000px;margin: 70px auto 20px;">
+		<div style="width: 1000px;margin: 70px auto 20px;">
 		<span style="width: 150px;height: 150px;">
 			<img src="<%=request.getContextPath()%>/assets/img/headshot/5.png" style="max-width: 150px;max-height: 150px;">
 		</span>
@@ -262,7 +270,6 @@
 			</span>
 		</div>
 	</div>
-	
 	<!-- 劉靜宜結束 -->
 
 	<div style="width: 1000px;margin: 70px auto 20px;">
@@ -273,31 +280,40 @@
 			<strong>吳致陞</strong>
 		</span>
 		<div style="margin-top: 25px;background: whitesmoke;height: 179px;border-radius: 20px;box-shadow: 4px 4px 1px 0 #dee2e6;">
-			<span style="display: inline-block;margin-left: 30px;position: relative;top: 39px;min-width:280px;max-width:280px;">
+			<span style="display: inline-block;margin-left: 30px;position: relative;top: -10px;min-width:280px;max-width:280px;">
 				<div style="font-size: 16px;">
 					<i class="bi bi-telephone-fill" style="margin-right: 10px;"></i>
 					0970-543-201
-				</div>	
-			
+				</div>
+
 				<div style="position: relative;top: 35px;font-size: 16px;">
 					<i class="bi bi-envelope" style="margin-right: 10px;"></i>
 					wujs10354268@gmail.com
 				</div>
 			</span>
-			<span style="display: inline-block;margin-left: 0px;position: relative;top: 50px;min-width:370px;max-width:370px;">
+			<span style="display: inline-block;margin-left: 0px;position: relative;top: 14px;min-width:370px;max-width:370px;">
 				<span style="position: relative;top: 6px;">
 					<div style="font-size: 18px;font-weight: 700;">
 							前台功能
 					</div>
-					<div style="font-size: 14px; font-weight: 400;margin-top: 10px;">	
+					<div style="font-size: 14px; font-weight: 400;margin-top: 10px;">
 						社群動態留言
+						好友管理
 						聊天室
-						好友關係管理
-						相簿管理
+						相簿功能
+					</div>
+				</span>
+				<span style="position: relative;top: 40px;">
+					<div style="font-size: 18px; font-weight: 700;" id="cloud">
+						雲端功能<a href="https://image.pclubxpclub.com/thumbs/introduction/%E9%9B%B2%E7%AB%AF%E6%9E%B6%E6%A7%8B%E5%9C%96.png"><i>(架構圖)</i></a>
+					</div>
+					<div style="font-size: 14px;font-weight: 400;margin-top: 10px;">
+						雲端環境設計
+						雲端環境建置
 					</div>	
 				</span>
 			</span>
-			<span style="display: inline-block;margin-left: 40px;width: 220px;position: relative;height: 159px;border-radius: 15px;top: 10px;text-align: center;padding: 20px;left: 35px;">
+			<span style="display: inline-block;margin-left: 40px;width: 220px;position: relative;height: 159px;border-radius: 15px;top: -44px;text-align: center;padding: 20px;left: 35px;">
 				<div style="margin: auto;position: relative;top: calc(50% - 10px);height: 120px;font-size: 42px;text-align: center;">
 					<a href="<%=request.getContextPath()%>/common?action=get6"><i class="bi bi-camera-video" style="color: #F53737;"></i></a>
 				</div>
@@ -306,3 +322,4 @@
 	</div>
 	<!-- 吳致陞結束 -->
 	</div>
+

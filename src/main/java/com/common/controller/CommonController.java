@@ -29,31 +29,30 @@ public class CommonController extends HttpServlet {
 			routeTo(req, res, "關於我們", "aboutUs");
 			break;
 		case "get1":
-			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/%E8%AC%9D%E9%96%94%E7%9A%93.mp4");
+			req.setAttribute("url","https://image.pclubxpclub.com/thumbs/introduction/%E8%AC%9D%E9%96%94%E7%9A%93.mp4");
 			routeTo(req, res, "謝閔皓-專題成果影片", "introduction");
 			break;
 		case "get2":
-			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/%E6%9D%8E%E9%9F%8B%E8%93%81.mp4");
+			req.setAttribute("url","https://image.pclubxpclub.com/thumbs/introduction/%E6%9D%8E%E9%9F%8B%E8%93%81.mp4");
 			routeTo(req, res, "李葦蓁-專題成果影片", "introduction");
 			break;
 		case "get3":
-			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/3.%E9%9B%A8%E6%AC%A3(%E5%8A%A0%E9%80%9F2)_.mp4");
+			req.setAttribute("url","https://image.pclubxpclub.com/thumbs/introduction/3.%E9%9B%A8%E6%AC%A3(%E5%8A%A0%E9%80%9F2)_.mp4");
 			routeTo(req, res, "郭雨欣-專題成果影片", "introduction");
 			break;
 		case "get4":
-			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/%E5%BC%B5%E7%BF%94%E9%9B%B2.mp4");
+			req.setAttribute("url","https://image.pclubxpclub.com/thumbs/introduction/%E5%BC%B5%E7%BF%94%E9%9B%B2.mp4");
 			routeTo(req, res, "張翔雲-專題成果影片", "introduction");
 			break;
 		case "get5":
-			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/%E5%8A%89%E9%9D%9C%E5%AE%9C.mp4");
+			req.setAttribute("url","https://image.pclubxpclub.com/thumbs/introduction/%E5%8A%89%E9%9D%9C%E5%AE%9C.mp4");
 			routeTo(req, res, "劉靜宜-專題成果影片", "introduction");
 			break;
 		case "get6":
-			req.setAttribute("url","https://cga101-02.s3.ap-northeast-1.amazonaws.com/thumbs/introduction/cga101g2-%E5%90%B3%E8%87%B4%E9%99%9E.mp4");
+			req.setAttribute("url","https://image.pclubxpclub.com/thumbs/introduction/cga101g2-%E5%90%B3%E8%87%B4%E9%99%9E.mp4");
 			routeTo(req, res, "吳致陞-專題成果影片", "introduction");
 			break;
 		default:
-
 			MembersVO membersVO = memberSvc.selectForLogin("servlet@pet.com","!QAZ2wsx");
 			HttpSession session = req.getSession();
 			session.setAttribute("membersVO", membersVO);

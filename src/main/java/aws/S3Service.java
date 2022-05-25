@@ -23,7 +23,7 @@ public class S3Service {
 
 	public static final String PREVIEW_KEY = "thumbs/600x400/webp/";
 	public static final String BUCKETNAME = "cga101-02";
-	public static final String CDN = "https://d148yrb2gzai3l.cloudfront.net/";
+	public static final String CDN = "https://image.pclubxpclub.com/";
 	public static final String PRE_KEYNAME = "thumbs/600x400/webp/";
 	public static final String KEYNAME = "thumbs/";
 	
