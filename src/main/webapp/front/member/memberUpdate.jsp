@@ -102,37 +102,41 @@
 																								<div class="form-group row">
 																									<!-- 																									<div class="col-12 mb-20" id=made> -->
 																									<label class="col-md-3 form-control-label">地址</label>
-																									<font color=red>${messages.errorAddress}</font>
-																									<div id="zipcode3">
-																										<div class="f3" data-role="county"></div>
-																										<div class="f4" data-role="district"></div>
-																									</div>
-																									<input type="text" name="address"
-																										class="form-control"
-																										id="exampleFormControlInput1">
-																									<!-- 																									</div> -->
-																								</div>
-
-																								<!--! 提交按鈕 -->
-																								<div class="form-group row">
-																									<div class="col-md-9 ml-auto">
-																										<input type="hidden" name="action"
-																											value="updateMemberInfo"> <input
-																											type="submit" value="儲存"
-																											class="btn btn-primary">
+																									
+																									<div class="col-md-9">
+																										<div id="zipcode3">
+																											<div class="f3" data-role="county"></div>
+																											<div class="f4" data-role="district"></div>
+																										</div>
+																										<input type="text" name="address"
+																											class="form-control"
+																											id="exampleFormControlInput1">
+																											<font color=red>${messages.errorAddress}</font>
 																									</div>
 																								</div>
-																							</form>
-																							<!--! 提交按鈕結束 -->
 																						</div>
-																						<!-- !看會員提交圖片的css css/style.default.css 4195-->
-																						<div class="col-lg-6 mb-5"></div>
-																					</div>
-																				</div>
-																				<!--! Horizontal Form結束-->
 
+																						<!--! 提交按鈕 -->
+																						<div class="form-group row">
+
+																							<div class="col-md-9 ml-auto">
+																								<input type="hidden" name="action"
+																									value="updateMemberInfo"> <input
+																									type="submit" value="儲存"
+																									class="btn btn-primary">
+																							</div>
+																						</div>
+																						</form>
+																						<!--! 提交按鈕結束 -->
+																					</div>
+																					<!-- !看會員提交圖片的css css/style.default.css 4195-->
+																					<div class="col-lg-6 mb-5"></div>
+																				</div>
 																			</div>
+																			<!--! Horizontal Form結束-->
+
 																		</div>
+																	</div>
 																</section>
 															</div>
 														</div>

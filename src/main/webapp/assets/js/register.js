@@ -257,7 +257,7 @@ function registerVerification() {
 						timer: 1800
 
 					})
-					
+
 					function historyZero() {
 						history.go(0);
 					}
@@ -274,6 +274,16 @@ function registerVerification() {
 // 忘記密碼
 function sendforgotMail() {
 
+	if ($("#forgotPassword").val() === '') {
+		Swal.fire({
+			position: 'center',
+			icon: 'error',
+			title: "請輸入電子郵件",
+			showConfirmButton: false,
+			timer: 1800
+		})
+	}
+
 	let forgotPassword = $("#forgotPassword").val();
 	if (forgotPassword !== null && forgotPassword.length !== 0) {
 		let dataJSON = {
@@ -289,15 +299,24 @@ function sendforgotMail() {
 				success: function(json) {
 					let objectJSON = JSON.parse(json);
 					document.getElementById("viewForgotPassword").innerHTML = objectJSON.msgError;
-					Swal.fire({
-						position: 'center',
-						icon: 'success',
-						title: "寄送成功",
-						showConfirmButton: false,
-						timer: 1800
-
-					})
-				},
+					if (objectJSON.msgError === '查無此會員') {
+						Swal.fire({
+							position: 'center',
+							icon: 'error',
+							title: "查無此會員",
+							showConfirmButton: false,
+							timer: 1800
+						})
+					} else if (objectJSON.msgError === '已寄送新密碼至此信箱') {
+						Swal.fire({
+							position: 'center',
+							icon: 'success',
+							title: "已寄送新密碼至此信箱",
+							showConfirmButton: false,
+							timer: 1800
+						})
+					}
+				}
 			}
 		);
 	} else {
