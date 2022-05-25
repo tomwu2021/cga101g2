@@ -49,22 +49,22 @@ public class MembersServlet extends HttpServlet {
 		case "getRankName": // 取得會員等級
 			getRankName(req, res);
 			break;
-		case "updateMemberInfo": // 會員修改基本資料
+		case "updateMemberInfo": // 會員修改基本資料 -> 通知
 			updateMemberInfo(req, res);
 			break;
-		case "updateMemberPassword": // 會員修改密碼
+		case "updateMemberPassword": // 會員修改密碼 -> 通知
 			updateMemberPassword(req, res);
 			break;
-		case "walletAddMoney": // 會員儲值
+		case "walletAddMoney": // 會員儲值 -> 通知
 			walletAddMoney(req, res);
 			break;
-		case "updateMemberWalletPassword": // 會員修改錢包密碼
+		case "updateMemberWalletPassword": // 會員修改錢包密碼 會員儲值 -> 通知
 			updateMemberWalletPassword(req, res);
 			break;
 		case "checkWalletPassword": // 確認會員錢包密碼
 			checkWalletPassword(req, res);
 			break;
-		case "updateSetWalletPassword": // 設定錢包密碼
+		case "updateSetWalletPassword": // 設定錢包密碼 -> 通知
 			updateSetWalletPassword(req, res);
 			break;
 		case "memberWalletUsedRecord": // 會員儲值/消費紀錄
@@ -415,6 +415,14 @@ public class MembersServlet extends HttpServlet {
 		System.out.println(sessionMembersVO);
 		memberSvc.update(sessionMembersVO);
 
+		// 已成功修改會員基本資料
+		NotificationService notificationSvc = new NotificationService();
+		NotificationVO notificationVO = new NotificationVO();
+		notificationVO.setMemberId(sessionMembersVO.getMemberId());
+		notificationVO.setContext("已成功修改會員基本資料");
+		notificationVO.setUrl(getServletContext().getContextPath() + "/#");
+		notificationSvc.insert(notificationVO);
+
 		RequestDispatcher successView = req.getRequestDispatcher("/front/member/member.jsp");
 		successView.forward(req, res);
 		return;// 程式中斷
@@ -494,6 +502,15 @@ public class MembersServlet extends HttpServlet {
 			memberSvc.update(newMemberVO);
 
 			messages.put("updatePasswordSuccess", "修改密碼成功！");
+
+			// 寄送一則通知：已成功修改會員登入密碼
+			NotificationService notificationSvc = new NotificationService();
+			NotificationVO notificationVO = new NotificationVO();
+			notificationVO.setMemberId(sessionMembersVO.getMemberId());
+			notificationVO.setContext("已成功修改會員登入密碼");
+			notificationVO.setUrl(getServletContext().getContextPath() + "/#");
+			notificationSvc.insert(notificationVO);
+
 			// successful 的頁面
 			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberSuccess.jsp");
 			successView.forward(req, res);
@@ -558,7 +575,15 @@ public class MembersServlet extends HttpServlet {
 
 			// 儲值成功後判斷累積儲值金額修改會員等級
 			Integer sumChargeAmount = chargeRecordDAO.SumChargeAmount(currentMemberId);
-//			System.out.println(sumChargeAmount);
+//						System.out.println(sumChargeAmount);
+
+			// 會員儲值錢包成功！
+			NotificationService notificationSvc = new NotificationService();
+			NotificationVO notificationVO = new NotificationVO();
+			notificationVO.setMemberId(currentMemberId);
+			notificationVO.setContext("會員儲值錢包成功！");
+			notificationVO.setUrl(getServletContext().getContextPath() + "/front/member/memberWalletUsedRecord.jsp");
+			notificationSvc.insert(notificationVO);
 
 			if (sumChargeAmount >= 10001) {
 				memberSvc.updateRank(currentMemberId, 4);
@@ -665,6 +690,15 @@ public class MembersServlet extends HttpServlet {
 			sessionMembersVO
 					.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
 			messages.put("updatePasswordSuccess", "修改密碼成功！");
+
+			// 會員修改錢包密碼成功
+			NotificationService notificationSvc = new NotificationService();
+			NotificationVO notificationVO = new NotificationVO();
+			notificationVO.setMemberId(sessionMembersVO.getMemberId());
+			notificationVO.setContext("會員修改錢包密碼成功！");
+			notificationVO.setUrl(getServletContext().getContextPath() + "/#");
+			notificationSvc.insert(notificationVO);
+
 			// successful 的頁面
 			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberSuccess.jsp"); // 製作一個 success
 																											// 畫面
@@ -747,6 +781,15 @@ public class MembersServlet extends HttpServlet {
 			sessionMembersVO
 					.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
 			messages.put("updatePasswordSuccess", "成功設定錢包密碼！");
+
+			// 會員設定錢包密碼成功
+			NotificationService notificationSvc = new NotificationService();
+			NotificationVO notificationVO = new NotificationVO();
+			notificationVO.setMemberId(sessionMembersVO.getMemberId());
+			notificationVO.setContext("會員設定錢包密碼成功！");
+			notificationVO.setUrl(getServletContext().getContextPath() + "/#");
+			notificationSvc.insert(notificationVO);
+
 			// successful 的頁面
 			RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberSuccess.jsp");
 			successView.forward(req, res);
