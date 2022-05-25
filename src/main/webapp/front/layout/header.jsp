@@ -113,7 +113,7 @@
 											<%
 											if (loginId > 0) {
 											%>
-												<div id="viewNotification"></div>
+												<div id="viewNotification" style="overflow-y:scroll;"></div>
 											<%
 											}
 											%>
