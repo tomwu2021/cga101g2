@@ -21,7 +21,7 @@ public class FilterForMemberLogin implements Filter {
 		// 從 Session 來判斷 會員 是否登入
 		HttpSession session = req.getSession();
 		MembersVO membersVO = (MembersVO)session.getAttribute("membersVO");
-		String baseURL = req.getRequestURL().substring(0,req.getRequestURL().indexOf("/"));
+		String baseURL = req.getRequestURI().substring(0,req.getRequestURI().indexOf("/"));
 		if(membersVO == null) {
 			session.setAttribute("location", req.getRequestURL()); // 取得目前拜訪的網頁動態路徑，方便登入後重新回到此網頁
 			res.sendRedirect(baseURL+"/front/login.jsp"); // 重新導向到 login.jsp 登入畫面
