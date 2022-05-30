@@ -57,16 +57,16 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 					pstmt.setString(9, productVO.getDescription());
 
 					int rowCount = pstmt.executeUpdate();
-					System.out.println("ProductVO" + rowCount + "row(s) insert!");
+//					System.out.println("ProductVO" + rowCount + "row(s) insert!");
 
 					// 掘取對應的自增主鍵值
 					int next_product_id = 0;
 					ResultSet rs = pstmt.getGeneratedKeys();// 取得自動編號
 					if (rs.next()) {
 						next_product_id = rs.getInt(1);// 與上述無關,單純取得自動編號
-						System.out.println("自增主鍵值= " + next_product_id + "(剛新增成功的產品編號)");
+//						System.out.println("自增主鍵值= " + next_product_id + "(剛新增成功的產品編號)");
 					} else {
-						System.out.println("未取得自增主鍵值");
+//						System.out.println("未取得自增主鍵值");
 					}
 					// 把取得的主鍵放入productVO,讓servlet可以get
 					productVO.setProductId(next_product_id);

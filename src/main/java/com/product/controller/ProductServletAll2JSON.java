@@ -27,7 +27,6 @@ public class ProductServletAll2JSON extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
-//		req.setCharacterEncoding("UTF-8");
 		ProductService productService = new ProductService();
 	    List<ProductVO> list = productService.getAll();
 	    writePojo2Json(res,productService.getAll());

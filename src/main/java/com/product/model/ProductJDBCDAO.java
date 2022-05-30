@@ -55,16 +55,16 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 			pstmt.setString(9, productVO.getDescription());
 
 			int rowCount = pstmt.executeUpdate();
-			System.out.println("ProductVO" + rowCount + "row(s) insert!");
+//			System.out.println("ProductVO" + rowCount + "row(s) insert!");
 
 			// 掘取對應的自增主鍵值
 			int next_product_id = 0;
 			ResultSet rs = pstmt.getGeneratedKeys();// 取得自動編號
 			if (rs.next()) {
 				next_product_id = rs.getInt(1);// 與上述無關,單純取得自動編號
-				System.out.println("自增主鍵值= " + next_product_id + "(剛新增成功的產品編號)");
+//				System.out.println("自增主鍵值= " + next_product_id + "(剛新增成功的產品編號)");
 			} else {
-				System.out.println("未取得自增主鍵值");
+//				System.out.println("未取得自增主鍵值");
 			}
 			// 把取得的主鍵放入productVO,讓servlet可以get
 			productVO.setProductId(next_product_id);
@@ -146,12 +146,12 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 			}
 			pstmt.setInt(10, productVO.getProductId());
 
-			System.out.println("ProductVO update送出的字串"+UPDATE);
+//			System.out.println("ProductVO update送出的字串"+UPDATE);
 			
 			pstmt.executeUpdate();
 
 			int rowCount = pstmt.executeUpdate();
-			System.out.println(rowCount + "row(s) insert!");
+//			System.out.println(rowCount + "row(s) insert!");
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -304,7 +304,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 					+ "group by product.product_id "
 					+ "order by product.product_id DESC";
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("List<ProductVO> getAll(Map<String, String[]> map) ●●finalSQL(by DAO) = " + finalSQL);
+//			System.out.println("List<ProductVO> getAll(Map<String, String[]> map) ●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -358,7 +358,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 					+ "group by product.product_id "
 					+ "order by product_id ";
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println(" List<ProductVO> getForShopFront() ●●finalSQL(by DAO) = " + finalSQL);
+//			System.out.println(" List<ProductVO> getForShopFront() ●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -411,7 +411,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 					+ "group by product.product_id "
 					+ "order by product_id ";
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("List<ProductVO> getForGroupShopFront() ●●finalSQL(by DAO) = " + finalSQL);
+//			System.out.println("List<ProductVO> getForGroupShopFront() ●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -449,19 +449,16 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 
 	@Override
 	public int getForShopFrontTotalCount(Map<String, String[]> map) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getAllTotalCount(Map<String, String[]> map) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public ProductVO checkProdcutName(String prodcutName) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -514,57 +511,4 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 		productVO.setTopStatus(rs.getInt("top_status"));
 		return productVO;
 	}
-
-
-
-
-
-//	@Override
-	// public ProductVO getProductVOByID(int id) {
-
-	// ProductVO productVO = new ProductVO();
-	// List<ProductImgVO> productImgVOs = new ArrayList<ProductImgVO>();
-	// try (Connection connection = getRDSConnection();
-	// PreparedStatement pstmt = connection.prepareStatement(GET_ONE_STMT_ANDIMG)) {
-	//
-	// pstmt.setInt(1, id);
-	// ResultSet rs = pstmt.executeQuery();
-	// while (rs.next()) {
-	// //儲存各自的數據
-	// //儲存商品數據
-	// productVO.setProductId(rs.getInt("product_id"));
-	// productVO.setProductName(rs.getString("product_name"));
-	// productVO.setPrice(rs.getInt("price"));
-	// productVO.setAmount(rs.getInt("amount"));
-	// productVO.setUpdateTime(rs.getTimestamp("update_time"));
-	// productVO.setGroupAmount1(rs.getInt("group_amount1"));
-	// productVO.setGroupAmount2(rs.getInt("group_amount2"));
-	// productVO.setGroupAmount3(rs.getInt("group_amount3"));
-	// productVO.setGroupPrice1(rs.getInt("group_price1"));
-	// productVO.setSort2Id(rs.getInt("sort2_id"));
-	// productVO.setDescription(rs.getString("description"));
-	// productVO.setStatus(rs.getInt("status"));
-	// productVO.setTopStatus(rs.getInt("top_status"));
-	// //儲存照片數據
-	// ProductImgVO pImgVO = new ProductImgVO();
-	// pImgVO.setProductImgId(rs.getInt("product_img_id"));
-	// pImgVO.setProductId(rs.getInt("product_id"));
-	// pImgVO.setProductImgUrl(rs.getString("product_img_url"));
-	// pImgVO.setFileKey(rs.getString("file_key"));
-	// pImgVO.setFileName(rs.getString("file_name"));
-	// pImgVO.setSize(rs.getString("size"));
-	// pImgVO.setPreviewUrl(rs.getString("preview_url"));
-	// //把一個pImgVO放入集合中
-	// productImgVOs.add(pImgVO);
-	// }
-	// //3.建立商品跟照片"集合"實體的關係
-	// productVO.setProductId(productImgVOs);
-	// return productVO;
-	// } catch (SQLException se) {
-	// throw new RuntimeException("A database error occured. " + se.getMessage());
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// return null;
-	// }
 }

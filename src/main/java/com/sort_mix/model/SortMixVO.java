@@ -8,9 +8,6 @@ import com.sort2.model.Sort2VO;
 
 public class SortMixVO implements java.io.Serializable{
 
-	/**
-	 * Sort_maxVO
-	 */
 	private static final long serialVersionUID = 1L;
 	private  Integer sort1Id;
 	private  Integer sort2Id;

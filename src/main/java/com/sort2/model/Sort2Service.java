@@ -17,7 +17,6 @@ public class Sort2Service implements Sort2Service_interface{
 	
 	@Override
 	public boolean save(Sort2VO sort2vo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -28,7 +27,6 @@ public class Sort2Service implements Sort2Service_interface{
 
 	@Override
 	public boolean updateB(Sort2VO sort2vo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

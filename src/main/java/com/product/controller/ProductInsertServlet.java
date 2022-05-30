@@ -70,16 +70,6 @@ public class ProductInsertServlet extends HttpServlet {
 						.replace("%3A",":").replace("%40","@").replace("%3D","=")
 						.replace("%24","$").replace("%23","#").replace("%20"," ");
 			//****自助式轉碼****//
-			
-//			Integer price = null;
-//			try {
-//				
-//				if (price < 0) {
-//					errorMsgs.put("price", "價格不得低於0");
-//				}
-//			} catch (NumberFormatException e) {
-//				errorMsgs.put("price", "價格請填數字");
-//			}
 
 			Integer amount = null;
 			try {
@@ -247,15 +237,4 @@ public class ProductInsertServlet extends HttpServlet {
 		}
 	}
 
-//	// 取出上傳的檔案名稱 (因為API未提供method,所以必須自行撰寫)
-//	public String getFileNameFromPart(Part part) {
-//		String header = part.getHeader("content-disposition");
-//		System.out.println("header=" + header); // 測試用
-//		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
-//		System.out.println("filename=" + filename); // 測試用
-//		if (filename.length() == 0) {
-//			return null;
-//		}
-//		return filename;
-//	}
 }

@@ -197,45 +197,6 @@ public class ProductVO implements java.io.Serializable {
 //com.dept.model.DeptVO deptVO = deptSvc.getOneDept(deptno);
 //return deptVO;
 //}
-//for join dname from deptno
-//在多方的VO放入一方的SERVICE的GETBYID
-	
-
-	////	找到ProductImgVOList btye[]
-//	public List<ProductImgVO> getProductImgVOList() {
-//		com.product_img.model.ProductImgService daoSvc = new com.product_img.model.ProductImgService();
-//		List<ProductImgVO> productImgVOList= daoSvc.getProductImgVOsByProductId(productId);
-//		return productImgVOList;
-//	}
-//	找到Sort2VO
-//	public Sort2VO getSort2VO() {
-//		Sort2Service daoSvc = new Sort2Service();
-//		Sort2VO sort2VO = daoSvc.getOneById(sort2Id);
-//		return sort2VO;
-//	}
-	
-//	找到Sort1VOList
-//	public List<Sort1VO> getSort1VOList() {
-//		PSort1Service daoSvc = new PSort1Service();
-//		List<Sort1VO> sort1VOList = daoSvc.findSort1VOByproductId(productId);
-//		return sort1VOList;
-//	}
-	
-//	找到picV	
-//	public List<PictureVO> getPictureVOList() {
-//		com.product_img.model.ProductImgService daoSvc = new com.product_img.model.ProductImgService();
-//		List<PictureVO> pictureVOList = daoSvc.getPicVOsByProductId(productId);
-//		return pictureVOList;
-//	}
-
-	
-//	找到PSortVO
-//	public List<Sort1VO> getPSort1VO() {
-//		PSort1Service pSort1Svc = new PSort1Service();
-//		List<Sort1VO> pSort1VO = pSort1Svc.findSort1VOByproductId(productId);
-//		return pSort1VO;
-//	}
-
 	@Override
 	public String toString() {
 		return "ProductVO [productId=" + productId + ", productName=" + productName + ", price=" + price + ", amount="

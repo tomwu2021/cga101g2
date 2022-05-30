@@ -30,8 +30,5 @@ public class getAllSort1 extends HttpServlet {
 //		空虛的丟包給JSON輸出就結束了講義P123
 	}
 
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		doGet(request, response);
-//	}
 
 }

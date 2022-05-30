@@ -210,17 +210,6 @@ public class ProductService {
 		return dao.checkProdcutName(prodcutName);
 	}
 
-//	// 取出上傳的檔案名稱 (因為API未提供method,所以必須自行撰寫)
-//	public String getFileNameFromPart(Part part) {
-//		String header = part.getHeader("content-disposition");
-//		System.out.println("header=" + header); // 測試用
-//		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
-//		System.out.println("filename=" + filename); // 測試用
-//		if (filename.length() == 0) {
-//			return null;
-//		}
-//		return filename;
-//	}
 	public PageResult<ProductVO> getPageResult(PageQuery pq){
 		try (Connection con = JDBCConnection.getRDSConnection()){
 			ProductJDBCDAO pjdao = new ProductJDBCDAO();

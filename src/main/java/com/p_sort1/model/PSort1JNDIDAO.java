@@ -36,25 +36,21 @@ public class PSort1JNDIDAO implements PSort1DAO_interface{
 
 	@Override
 	public boolean delete(PSort1VO t) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public PSort1VO update(PSort1VO t) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public PSort1VO getOneById(Integer id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<PSort1VO> getAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -80,7 +76,6 @@ public class PSort1JNDIDAO implements PSort1DAO_interface{
 				sort1VO.setSort1Name(rsSet.getString("sort1_name"));
 				sort1VOList.add(sort1VO);
 			}
-//			System.out.println("public List<Sort1VO> findSort1VOByproductId(Integer productId)成功執行");
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {

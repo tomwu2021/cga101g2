@@ -14,9 +14,6 @@ import com.sort1.model.Sort1VO;
 
 public class Sort2JDBCDAO implements Sort2DAO_interface {
 
-//		private static final String DELETE = 
-//			"DELETE FROM emp2 where empno = ?";
-//	private static final String UPDATE = "UPDATE cga_02.sort2 " + "SET sort2_name= ? " + "where sort2_id = ?;";
 
 	@Override
 	public Sort2VO insert(Sort2VO sort2VO) {
@@ -44,7 +41,6 @@ public class Sort2JDBCDAO implements Sort2DAO_interface {
 
 	@Override
 	public boolean delete(Sort2VO t) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -55,7 +51,6 @@ public class Sort2JDBCDAO implements Sort2DAO_interface {
 
 		final String sort2Name = sort2VO.getSort2Name();
 		if (sort2Name != null && !sort2Name.isEmpty()) {
-			// "UPDATE members SET password = ?, phone = ?, "
 			UPDATE.append(" sort2_name = ? ");
 		}
 		UPDATE.append(" where sort2_id = ? ;");
@@ -143,7 +138,6 @@ public class Sort2JDBCDAO implements Sort2DAO_interface {
 
 	@Override
 	public List<Sort1VO> sort1VOList() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

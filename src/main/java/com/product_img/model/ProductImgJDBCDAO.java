@@ -21,8 +21,7 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 		try (Connection con = getRDSConnection(); 
 				PreparedStatement stmt = con.prepareStatement(INSERT_STMT, columns)) {
 			stmt.setInt(1, pImgVO.getProductImgId());
-			stmt.setInt(2, pImgVO.getProductId());			
-//			stmt.execute(); !!就是你重複提交資料 壞壞!!!!
+			stmt.setInt(2, pImgVO.getProductId());//			stmt.execute(); !!此行與line27重複提交!!!
 			
 			int rowCount = stmt.executeUpdate();
 			System.out.println("ProductImgVO "+rowCount + "row(s) insert!");
@@ -136,12 +135,12 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 				pictureVO.setSize(rs.getLong("size"));
 				pictureVO.setPreviewUrl(rs.getString("preview_url"));
 				pictureVO.setPreviewKey(rs.getString("preview_key"));
-				System.out.println("picture_id = " + pictureVO.getPictureId());
+//				System.out.println("picture_id = " + pictureVO.getPictureId());
 				list.add(pictureVO); // Store the row in the vector
 			}
-			System.out.println("Size = " + list.size());
+//			System.out.println("Size = " + list.size());
 			
-			System.out.println("List<PictureVO> getPicVOsByProductId(Integer productId) 執行成功");
+//			System.out.println("List<PictureVO> getPicVOsByProductId(Integer productId) 執行成功");
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
@@ -172,13 +171,12 @@ public class ProductImgJDBCDAO implements ProductImgDAO_interface {
 				PdImgVO.setImage(rs.getBytes("img"));
 				list.add(PdImgVO); // Store the row in the vector
 			}
-			System.out.println("Size = " + list.size());
-			System.out.println("List<PictureVO> getPicVOsByProductId(Integer productId) 執行成功");
+//			System.out.println("Size = " + list.size());
+//			System.out.println("List<PictureVO> getPicVOsByProductId(Integer productId) 執行成功");
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
-//			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}
 		return list;
 	}

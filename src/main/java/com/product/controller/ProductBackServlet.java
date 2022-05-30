@@ -108,15 +108,6 @@ public class ProductBackServlet extends HttpServlet {
 			} else{
 				sort1_id  = req.getParameterValues("sort1_id");
 				userMsgsSort1.put("sort1_id", sort1_id);
-				
-//				for (int i =0; i <= sort1_id.length ;i++) {
-//					String sort1_name1 = sort1Svc.getOneById(Integer.valueOf(sort1_id[i])).getSort1Name();
-//					String sort1_name[] = new String[Integer.valueOf(sort1_id.length)];
-//					sort1_name[i] = sort1_name1 ;
-//					System.out.println(sort1_name[i]);
-//				}
-//				userMsgsSort1.put("sort1_name", sort1_name);
-//				System.out.println(sort1_name);
 			}
 			
 			Sort2Service sort2Svc = new Sort2Service();

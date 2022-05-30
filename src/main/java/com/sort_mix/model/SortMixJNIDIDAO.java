@@ -182,13 +182,11 @@ public class SortMixJNIDIDAO implements SortMixDAO_interface {
 	
 	@Override
 	public SortMixVO update(SortMixVO t) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public SortMixVO getOneById(Integer id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -75,33 +75,4 @@ public class ProductRedis {
 		return newTotalView;
 	}
 
-	public static void main(String[] args) {
-		ProductRedis productRedis = new ProductRedis();
-//		productRedis.addProductIdTotalView(1);
-//		productRedis.getProductIdTotalView(1);
-
-		ProductJDBCDAO productJDBCDAO = new ProductJDBCDAO();
-		Map<String, String[]> map = new TreeMap<String, String[]>();
-		List<ProductVO> ProductVOList = productJDBCDAO.getForShopFront(map, 9999, 0);
-
-		pool = JedisUtil.getJedisPool();
-		Jedis jedis = pool.getResource();
-
-		try {
-			for (ProductVO ProductVO : ProductVOList) {
-				Integer productId = ProductVO.getProductId();
-				String key = "productId:" + productId + ":totalView";
-				int i = (int) (Math.random() * 999) + 250;
-				System.out.println("亂數成功");
-				/// 特別注意 切換DB空間
-				jedis.select(2);
-				jedis.incrBy(key, i);
-			}
-		} catch (Exception e) {
-			e.getMessage();
-		}finally {
-			if (jedis != null)
-				jedis.close();
-		}
-	}
 }

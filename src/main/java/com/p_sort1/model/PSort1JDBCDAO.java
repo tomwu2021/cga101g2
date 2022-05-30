@@ -35,25 +35,21 @@ public class PSort1JDBCDAO implements PSort1DAO_interface{
 
 	@Override
 	public boolean delete(PSort1VO t) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public PSort1VO update(PSort1VO t) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public PSort1VO getOneById(Integer id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<PSort1VO> getAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -90,7 +86,6 @@ public class PSort1JDBCDAO implements PSort1DAO_interface{
 
 	@Override
 	public boolean deletePSort1sByProductId(Integer productId) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

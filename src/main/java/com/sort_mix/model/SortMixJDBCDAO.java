@@ -239,25 +239,21 @@ public class SortMixJDBCDAO implements SortMixDAO_interface {
 
 	@Override
 	public List<ProductVO> getProductIdByMap(Map<String, String[]> map) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean deleteBySort2Id(Integer sort2Id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean deleteBySort1Id(Integer sort1Id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public SortMixVO getOneBySortMixVO(SortMixVO sortMixVO) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

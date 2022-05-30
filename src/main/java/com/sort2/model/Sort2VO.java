@@ -55,16 +55,6 @@ public class Sort2VO implements java.io.Serializable{
 	}
 
 	
-	//for join dname from deptno
-	//public com.dept.model.DeptVO getDeptVO() {
-	//com.dept.model.DeptService deptSvc = new com.dept.model.DeptService();
-	//com.dept.model.DeptVO deptVO = deptSvc.getOneDept(deptno);
-	//return deptVO;
-	//}
-	//for join dname from deptno
-	//在多方的VO放入一方的SERVICE的GETBYID
-		
-		
 //		搜尋Sort2ID時 透過 sortmix 獲得相對應的Sort1VO
 		public List<Sort1VO> getSort1VO() {
 			com.sort_mix.model.SortMixService daoSvc = new com.sort_mix.model.SortMixService();

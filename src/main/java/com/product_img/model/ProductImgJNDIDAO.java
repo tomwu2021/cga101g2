@@ -22,7 +22,7 @@ public class ProductImgJNDIDAO implements ProductImgDAO_interface {
 				PreparedStatement stmt = con.prepareStatement(INSERT_STMT, columns)) {
 			stmt.setInt(1, pImgVO.getProductImgId());
 			stmt.setInt(2, pImgVO.getProductId());
-//					stmt.execute(); !!就是你重複提交資料 懷懷!!!!
+//					stmt.execute(); !!stmt.execute(); !!此行與line27重複提交!!!
 
 			int rowCount = stmt.executeUpdate();
 			System.out.println("ProductImgVO " + rowCount + "row(s) insert!");
@@ -55,7 +55,6 @@ public class ProductImgJNDIDAO implements ProductImgDAO_interface {
 
 	@Override
 	public ProductImgVO update(ProductImgVO t) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -88,7 +87,8 @@ public class ProductImgJNDIDAO implements ProductImgDAO_interface {
 		List<ProductImgVO> list = new ArrayList<ProductImgVO>();
 		final String GET_ALL_STMT = "SELECT product_img_id,product_id,img  " + "FROM product_img  "
 				+ "order by product_img_id ";
-		try (Connection con = getRDSConnection(); PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT)) {
+		try (Connection con = getRDSConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT)) {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -167,9 +167,9 @@ public class ProductImgJNDIDAO implements ProductImgDAO_interface {
 				PdImgVO.setImage(rs.getBytes("img"));
 				list.add(PdImgVO); // Store the row in the vector
 			}
-			System.out.println("Size = " + list.size());
+//			System.out.println("Size = " + list.size());
 			
-			System.out.println("List<PictureVO> getPicVOsByProductId(Integer productId) 執行成功");
+//			System.out.println("List<PictureVO> getPicVOsByProductId(Integer productId) 執行成功");
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {

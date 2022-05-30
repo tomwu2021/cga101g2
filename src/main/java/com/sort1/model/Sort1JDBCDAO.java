@@ -22,7 +22,7 @@ public class Sort1JDBCDAO implements Sort1DAO_interface{
 			pstmt.setString(1, sort1VO.getSort1Name());
 
 			int rowCount = pstmt.executeUpdate();
-			System.out.println(rowCount + "row(s) insert!");
+//			System.out.println(rowCount + "row(s) insert!");
 			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -43,7 +43,7 @@ public class Sort1JDBCDAO implements Sort1DAO_interface{
 			pstmt.setInt(1, sort1VO.getSort1Id());
 
 			int rowCount = pstmt.executeUpdate();
-			System.out.println(rowCount + "row(s) updated!");
+//			System.out.println(rowCount + "row(s) updated!");
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -68,7 +68,7 @@ public class Sort1JDBCDAO implements Sort1DAO_interface{
 			pstmt.setInt(2, sort1VO.getSort1Id());
 
 			int rowCount = pstmt.executeUpdate();
-			System.out.println(rowCount + "row(s) updated!");
+//			System.out.println(rowCount + "row(s) updated!");
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
