@@ -12,7 +12,7 @@
             <div id="product-pages" class="expanded">
               <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
                 <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/shop?action=listProducts_Byfind" class="sidebar-link text-white pl-lg-5"onmouseover="hover_color(this);"  onmouseout="default_color(this);">商品總覽 </a></li>
-                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/shop/addProduct.jsp" class="sidebar-link text-white pl-lg-5"onmouseover="hover_color(this);"  onmouseout="default_color(this);">商品新增 </a></li>
+                <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/shop?action=addProduct" class="sidebar-link text-white pl-lg-5"onmouseover="hover_color(this);"  onmouseout="default_color(this);">商品新增 </a></li>
                 <li class="sidebar-list-item"><a href="<%=request.getContextPath()%>/back/shop/sortMix?action=select" class="sidebar-link text-white pl-lg-5"onmouseover="hover_color(this);"  onmouseout="default_color(this);">分類總覽</a></li>
               </ul>
             </div>

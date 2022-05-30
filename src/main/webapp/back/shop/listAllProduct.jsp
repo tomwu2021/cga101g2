@@ -324,13 +324,6 @@
 																				src="${productVO.pictureVOList.get(0).previewUrl}"
 																				alt="..." class="img-thumbnail"></td>
 																		</c:if>
-																		<!-- 此段是防止沒有照片所以跑版的判斷 開始-->
-																		<c:if test="${pictureVOList.size() == 0 }">
-																			<td style="width: 6%;"><img
-																				src="https://fakeimg.pl/350x200/ff0000/000"
-																				alt="..." class="img-thumbnail"></td>
-																		</c:if>
-																		<!-- 此段是防止沒有照片所以跑版的判斷	 結束-->
 																		<td>${productVO.productName}</td>
 
 
@@ -362,7 +355,6 @@
 																				<td class="table-primary">
 																					<input id="updateTopStatus${productVO.productId}"  value="${productVO.topStatus}"
 																					type="checkbox" data-toggle="toggle"  data-width="80" data-height="30"  data-onstyle="primary" data-offstyle="secondary" checked>
-<%-- 																				<input id="update${productVO.productId}" value="${productVO.productId}" type="checkbox" data-size="small">  --%>
 																				</td>
 																			</c:when>
 																		</c:choose>

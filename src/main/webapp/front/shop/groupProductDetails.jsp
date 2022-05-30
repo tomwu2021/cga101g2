@@ -44,8 +44,8 @@
 		</div>
 	</div>
 	<!--breadcrumbs area end-->
-
-	<!--! ========內容======== -->
+	
+<!--! ========內容======== -->
 	<!--product details start-->
 	<div class="product_details mt-100 mb-100">
 		<div class="container">
@@ -53,47 +53,27 @@
 				<div class="col-lg-6 col-md-6">
 					<div class="product-details-tab">
 						<div id="img-1" class="zoomWrapper single-zoom">
-							<jsp:useBean id="imgSvc" scope="page"
-								class="com.product_img.model.ProductImgService" />
-							<c:set var="pictureVOList" scope="page"
-								value="${imgSvc.getPicVOsByProductId(param.productId)}"></c:set>
-							<!-- 				<pictureVOList 首圖一張開始>				 -->
-							<!-- 				防止超出索引值判斷/有圖放圖/開始			 -->
-							<c:if test="${pictureVOList.size() != 0 }">
-								<a href="#"> <img id="zoom1"
-									src="${pictureVOList.get(0).url}"
-									data-zoom-image="${pictureVOList.get(0).url}" alt="big-1" />
-								</a>
-							</c:if>
-							<!-- 				防止超出索引值判斷/有圖放圖/開始		 -->
-							<!-- 				防止超出索引值判斷/沒圖放預設圖/開始			 -->
-							<c:if test="${pictureVOList.size() == 0 }">
-								<a href="#"> <img id="zoom1"
-									src="https://d148yrb2gzai3l.cloudfront.net/thumbs/132bbcf5-c503-11ec-99b3-a77a059327a2-pexels-alotrobo-1562983.jpg?d=600x400"
-									data-zoom-image="https://d148yrb2gzai3l.cloudfront.net/thumbs/132bbcf5-c503-11ec-99b3-a77a059327a2-pexels-alotrobo-1562983.jpg?d=600x400"
-									alt="big-1" />
-								</a>
-							</c:if>
-							<!-- 				防止超出索引值判斷/沒圖放預設圖/開始			 -->
-							<!-- 				<pictureVOList 首圖一結束>	-->
+<!-- 				<pictureVOList 首圖一開始>	-->
+<c:if test="${pictureVOList.size() >= 1 }">
+							<a href="#"> <img id="zoom1"
+								src="${pictureVOList.get(0).url}"
+								data-zoom-image="${pictureVOList.get(0).url}" alt="big-1" />
+							</a>
+</c:if>		
+<!-- 				<pictureVOList 首圖二開始>	-->
 						</div>
 						<div class="single-zoom-thumb">
 							<ul class="s-tab-zoom owl-carousel single-product-active"
 								id="gallery_01">
-								<!-- 				<pictureVOList 如果有第二張循環開始>				 -->
-								<!-- 				防止超出索引值判斷/有圖放圖/開始			 -->
-								<c:if
-									test="${pictureVOList.size() >= 2  && pictureVOList.size()!=0}">
-									<c:forEach var="pictureVO" items="${pictureVOList}">
-										<li><a href="#" class="elevatezoom-gallery active"
-											data-update="" data-image="${pictureVO.url}"
-											data-zoom-image="${pictureVO.url}"> <img
-												src="${pictureVO.url}" alt="zo-th-1" />
-										</a></li>
-									</c:forEach>
-								</c:if>
-								<!-- 				防止超出索引值判斷/有圖放圖/結束			 -->
-								<!-- 				<pictureVOList 如果有第二張循環結束>				 -->
+<c:if test="${pictureVOList.size() >= 2}">
+<c:forEach var="pictureVO" items="${pictureVOList}">
+								<li><a href="#" class="elevatezoom-gallery active"
+									data-update="" data-image="${pictureVO.previewUrl}"
+									data-zoom-image="${pictureVO.previewUrl}">
+										<img src="${pictureVO.previewUrl}" alt="zo-th-1" />
+								</a></li>
+</c:forEach>								
+</c:if>		
 							</ul>
 						</div>
 					</div>
@@ -111,6 +91,7 @@
 						</div>
 
 						<div class="price_box">
+							<p>PCLUB品質保證</p>
 							<p>PCLUB品質保證</p>
 						</div>
 

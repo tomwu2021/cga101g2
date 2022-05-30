@@ -198,5 +198,22 @@ public class ProductBackServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher("/back/shop/listAllProduct.jsp"); // 成功轉交shop.jsp
 			successView.forward(req, res);
 		}
+		
+		
+		
+		if ("addProduct".equals(action)) {
+
+			/*************************** 2.開始複合查詢 ***************************************/
+			Sort2Service sort2Svc = new Sort2Service();
+			List<Sort2VO> sort2list = sort2Svc.getAll();
+			
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			req.setAttribute("sort2list", sort2list); // 資料庫取出的list物件,存入request
+			// **********************轉交給後台的jsp***********************//
+
+			RequestDispatcher successView = req.getRequestDispatcher("/back/shop/addProduct.jsp"); // 成功轉交shop.jsp
+			successView.forward(req, res);
+		}
+		
 	}
 }

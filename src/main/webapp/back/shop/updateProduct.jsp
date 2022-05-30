@@ -128,12 +128,7 @@
 																		class="form-control form-control-success"
 																		onchange="get_sort1index()" name="sort2Id">
 
-																		<jsp:useBean id="sort2Svc" scope="page"
-																			class="com.sort2.model.Sort2Service" />
-																		<%-- <c:forEach var="deptVO" items="${deptSvc.all}"> --%>
-																		<%-- <option value="${deptVO.deptno}" ${(param.deptno==deptVO.deptno)? 'selected':'' } >${deptVO.dname} --%>
-																		<%-- </c:forEach> --%>
-																		<c:forEach var="sort2VO" items="${sort2Svc.getAll()}">
+																		<c:forEach var="sort2VO" items="${sort2list}">
 																			<option value="${sort2VO.sort2Id}"
 																				${(param.sort2Id==sort2VO.sort2Id)? 'selected':'' }>
 																				${sort2VO.sort2Name}</option>
@@ -144,12 +139,8 @@
 															<div class="form-group row">
 																<label class="col-md-3 form-control-label">對應主分類</label>
 																<div class="col-md-6 m-auto" id="sort2CheckBox">
-																	<jsp:useBean id="pSort1Svc" scope="page"
-																		class="com.p_sort1.model.PSort1Service" />
-																	<c:set var="sort1VOlist" scope="page"
-																		value="${pSort1Svc.findSort1VOByproductId(param.productId)}"></c:set>
-																	<c:if test="${sort1VOlist.size() !=0}">
-																		<c:forEach var="sort1VO" items="${sort1VOlist}">
+																	<c:if test="${pSort1VOlist.size() !=0}">
+																		<c:forEach var="sort1VO" items="${pSort1VOlist}">
 																			<div class="form-check form-check-inline">
 																				<input class="form-check-input" type="checkbox"
 																					name="sort1Id" id="inlineCheckbox1"
@@ -277,13 +268,6 @@
 																<!--上傳圖片的按鈕-->
 																<img src="<%=request.getContextPath()%>/assets/shop/backProduct/img/addimg.png"
 																 class="ml-3" style="height:200px;width:200px;" onclick="add()" id="addimage">
-<!-- 																<label class="btn btn-info"> -->
-<!-- 																 <input type="file" name="img" accept="image/*" multiple="multiple" -->
-<!-- 																		id="showimg" style="display: none;" multiple /> 上傳圖片 -->
-<!-- 																</label> -->
-<!-- 																<div class='row'> -->
-<!-- 																	<div id='previewMultiple'></div> -->
-<!-- 																</div> -->
 															</div>
 																<small class="form-text text-muted ml-3 text-danger">${errorMsgs.img}</small>
 														</div>

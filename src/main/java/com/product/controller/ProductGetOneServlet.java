@@ -19,10 +19,13 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.members.model.MembersVO;
+import com.p_sort1.model.PSort1Service;
+import com.p_sort1.model.PSort1VO;
 import com.picture.model.PictureVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 import com.product_img.model.ProductImgService;
+import com.sort1.model.Sort1VO;
 import com.sort2.model.Sort2Service;
 import com.sort2.model.Sort2VO;
 import com.wishlist.model.WishlistService;
@@ -97,15 +100,22 @@ public class ProductGetOneServlet extends HttpServlet {
 							.replace("$","%24").replace("#","%23").replace(" ","%20");
 							//****自助式轉碼****//
 						
-							
+						
 			String url = "/back/shop/updateProduct.jsp" + param;
 
 			ProductImgService pImgSvc = new ProductImgService();
 			List<PictureVO> pictureVOList = pImgSvc.getPicVOsByProductId(productId);
 			
+			Sort2Service sort2Svc = new Sort2Service();
+			List<Sort2VO> sort2list = sort2Svc.getAll();	
+			
+			PSort1Service pSvc = new PSort1Service();
+			List<Sort1VO> pSort1VOlist = pSvc.findSort1VOByproductId(productId);
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
 			req.setAttribute("pictureVOList", pictureVOList); // 資料庫取出的list物件,存入request
+			req.setAttribute("sort2list", sort2list); 
+			req.setAttribute("pSort1VOlist", pSort1VOlist); 
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 			successView.forward(req, res);
 
@@ -427,8 +437,8 @@ public class ProductGetOneServlet extends HttpServlet {
 			Sort2Service sort2Svc = new Sort2Service();
 			Sort2VO sort2VO = sort2Svc.getOneById(pdVO.getSort2Id());
 
-//			ProductImgService pdImgService = new ProductImgService();
-//			List<PictureVO> pictureVOList = pdImgService.getPicVOsByProductId(productId);
+			ProductImgService pImgSvc = new ProductImgService();
+			List<PictureVO> pictureVOList = pImgSvc.getPicVOsByProductId(productId);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			String param = "?productId=" + pdVO.getProductId()
@@ -454,10 +464,9 @@ public class ProductGetOneServlet extends HttpServlet {
 						//****自助式轉碼****//
 					// 子分類的名字
 			   			+ "&sort2Name=" + sort2VO.getSort2Name();
-			// 商品照片的集合
-//						+ "&pictureVOList=" + pdVO.getPictureVOList();
-//			req.setAttribute("pictureVOList", pictureVOList);
+			
 
+			req.setAttribute("pictureVOList", pictureVOList); // 資料庫取出的list物件,存入request
 			String url = "/front/shop/groupProductDetails.jsp" + param;
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 /front/shop/groupProductDetails.jsp"
 			successView.forward(req, res);

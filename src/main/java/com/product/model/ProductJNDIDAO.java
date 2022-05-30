@@ -151,10 +151,10 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 
 			pstmt.executeUpdate();
 
-			System.out.println("送出新增的SQL字串"+UPDATE);
+//			System.out.println("送出新增的SQL字串"+UPDATE);
 			
 			int rowCount = pstmt.executeUpdate();
-			System.out.println(rowCount + "row(s) update!");
+//			System.out.println(rowCount + "row(s) update!");
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -197,7 +197,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 			pstmt.setInt(2, productId);
 
 			int rowCount = pstmt.executeUpdate();
-			System.out.println(rowCount + "row(s) update(delete)!");
+//			System.out.println(rowCount + "row(s) update(delete)!");
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} catch (Exception e) {
@@ -306,7 +306,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 		
 		for(String key : map.keySet()){
 			   String[] value = map.get(key);
-			   System.out.println(key+"  "+value);
+//			   System.out.println(key+"  "+value);
 			}
 		
 		//*****Sort1分界點*****//
@@ -322,8 +322,8 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 			
 			if(sort1Id!=null) {
 				for (int i = 0; i < sort1Id.length; i++) {
-					System.out.println("分類串接");
-					System.out.println("從listAllproduct.jsp獲得查詢sort1["+i+"],sort1id : " + sort1Id[i]);
+//					System.out.println("分類串接");
+//					System.out.println("從listAllproduct.jsp獲得查詢sort1["+i+"],sort1id : " + sort1Id[i]);
 					count++;
 					if (count == 1) {
 						andSort1Id.append(" in ");
@@ -337,7 +337,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 					if (count == sort1Id.length) {
 						andSort1Id.append(" ) ");
 					}
-					System.out.println("StringBuffer andSort1Id 串接完成 :" + andSort1Id);
+//					System.out.println("StringBuffer andSort1Id 串接完成 :" + andSort1Id);
 					
 				}
 				map.remove("sort1_id");
@@ -354,14 +354,14 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 		String endTimeValue = null;
 		StringBuffer whereTime = new StringBuffer();
 		if(map.get("startTime") != null && map.get("endTime") != null) {
-			System.out.println("進入時間串接");
+//			System.out.println("進入時間串接");
 			startTime = map.get("startTime");
 			startTimeValue = startTime[0].toString();
-			System.out.println(startTimeValue);
+//			System.out.println(startTimeValue);
 			
-			endTime = map.get("endTime");
+//			endTime = map.get("endTime");
 			endTimeValue = endTime[0].toString();
-			System.out.println(endTimeValue);
+//			System.out.println(endTimeValue);
 			
 			whereTime.append(" WHERE  update_time BETWEEN  ");
 			whereTime.append(" ' " + startTimeValue + " ' " + " AND " + " ' " + endTimeValue +" ' " );
@@ -392,7 +392,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 					+ "group by product.product_id "
 				    + "order by product.product_id  DESC LIMIT " + pageSize + " OFFSET " + pageNo;
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("List<ProductVO> getAll(Map<String, String[]> map, int pageSize, int pageNo)  ●●finalSQL(by DAO) = " + finalSQL);
+//			System.out.println("List<ProductVO> getAll(Map<String, String[]> map, int pageSize, int pageNo)  ●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -432,7 +432,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 	}
 	@Override
 	public int getAllTotalCount(Map<String, String[]> map) {
-		System.out.println("後臺用的dao,算筆數");
+//		System.out.println("後臺用的dao,算筆數");
 		int total = 0;
 		
 		Connection con = null;
@@ -441,7 +441,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 
 		for(String key : map.keySet()){
 			   String[] value = map.get(key);
-			   System.out.println(key+"  "+value);
+//			   System.out.println(key+"  "+value);
 			}
 		
 		//*****Sort1分界點*****//
@@ -457,8 +457,8 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 			
 			if(sort1Id!=null) {
 				for (int i = 0; i < sort1Id.length; i++) {
-					System.out.println("分類串接");
-					System.out.println("從listAllproduct.jsp獲得查詢sort1["+i+"],sort1id : " + sort1Id[i]);
+//					System.out.println("分類串接");
+//					System.out.println("從listAllproduct.jsp獲得查詢sort1["+i+"],sort1id : " + sort1Id[i]);
 					count++;
 					if (count == 1) {
 						andSort1Id.append(" in ");
@@ -472,7 +472,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 					if (count == sort1Id.length) {
 						andSort1Id.append(" ) ");
 					}
-					System.out.println("StringBuffer andSort1Id 串接完成 :" + andSort1Id);
+//					System.out.println("StringBuffer andSort1Id 串接完成 :" + andSort1Id);
 					
 				}
 				map.remove("sort1_id");
@@ -489,14 +489,14 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 		String endTimeValue = null;
 		StringBuffer whereTime = new StringBuffer();
 		if(map.get("startTime") != null && map.get("endTime") != null) {
-			System.out.println("進入時間串接");
+//			System.out.println("進入時間串接");
 			startTime = map.get("startTime");
 			startTimeValue = startTime[0].toString();
-			System.out.println(startTimeValue);
+//			System.out.println(startTimeValue);
 			
 			endTime = map.get("endTime");
 			endTimeValue = endTime[0].toString();
-			System.out.println(endTimeValue);
+//			System.out.println(endTimeValue);
 			
 			whereTime.append(" AND  update_time BETWEEN  ");
 			whereTime.append(" ' " + startTimeValue + " ' " + " AND " + " ' " + endTimeValue +" ' " );
@@ -508,10 +508,10 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 		
 		
 		String andSort1IdString = andSort1Id.toString();
-		System.out.println(andSort1IdString);
+//		System.out.println(andSort1IdString);
 		
 		String whereTimeString = whereTime.toString();
-		System.out.println(whereTimeString);
+//		System.out.println(whereTimeString);
 		
 	
 		try {
@@ -523,7 +523,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 					+ jdbcUtil_CompositeQuery_Product.get_WhereCondition(map)
 					+ andSort1IdString ;
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("int getAllTotalCount(Map<String, String[]> map)●●finalSQL(by DAO) =" + finalSQL);
+//			System.out.println("int getAllTotalCount(Map<String, String[]> map)●●finalSQL(by DAO) =" + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -564,7 +564,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 			        + "group by product.product_id "
 			        + "order by rand() LIMIT " + pageSize + " OFFSET " + pageNo;
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("List<ProductVO> getForShopFront() ●●finalSQL(by DAO) = List<ProductVO> getForShopFront()" + finalSQL);
+//			System.out.println("List<ProductVO> getForShopFront() ●●finalSQL(by DAO) = List<ProductVO> getForShopFront()" + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -614,7 +614,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 			        + "WHERE product.status NOT IN (0) "
 			        + jdbcUtil_CompositeQuery_ProductForFront.get_WhereConditionProductForFront(map);
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("List<ProductVO> getForShopFront() ●●finalSQL(by DAO) = " + finalSQL);
+//			System.out.println("List<ProductVO> getForShopFront() ●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -652,7 +652,7 @@ public class ProductJNDIDAO implements ProductDAO_interface {
 					+ "group by product.product_id "
 					+ "order by product_id DESC";
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("List<ProductVO> getForGroupShopFront() ●●finalSQL(by DAO) = " + finalSQL);
+//			System.out.println("List<ProductVO> getForGroupShopFront() ●●finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

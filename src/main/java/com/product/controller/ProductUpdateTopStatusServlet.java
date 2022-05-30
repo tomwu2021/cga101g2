@@ -82,11 +82,7 @@ public class ProductUpdateTopStatusServlet extends HttpServlet {
 		if (top_status == 1) {
 			System.out.println("進入未推薦到推薦的判斷");
 			// 2-1.確認此商品是否有上架 呼叫用來給前台的JNDI 如果沒有的話會回傳空productVO
-//			SELECT * 
-//			FROM cga_02.product
-//			WHERE top_status =1 //錯誤參數
-//			AND product_id =1 
-//			AND status not in(0);
+
 			Map<String, String[]> map = new TreeMap<String, String[]>();
 //			map.put("top_status", new String[] { String.valueOf(top_status) }); //錯誤參數
 			map.put("product_id", new String[] { String.valueOf(product_id) });

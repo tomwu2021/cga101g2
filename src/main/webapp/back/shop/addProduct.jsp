@@ -7,11 +7,6 @@
 <%@ page import="com.sort_mix.model.*"%>
 <%@ page import="com.product.model.*"%>
 
-<%
-Sort2Service sort2Svc = new Sort2Service();
-List<Sort2VO> sort2list = sort2Svc.getAll();
-pageContext.setAttribute("sort2list", sort2list);
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -221,13 +216,6 @@ pageContext.setAttribute("sort2list", sort2list);
 																	src="<%=request.getContextPath()%>/assets/shop/backProduct/img/addimg.png"
 																	class="ml-3" style="height: 200px; width: 200px;"
 																	onclick="add();" id="addimage">
-																<!-- 																<label class="btn btn-info"> -->
-																<!-- 																 <input type="file" name="img" accept="image/*" multiple="multiple" -->
-																<!-- 																		id="showimg" style="display: none;" multiple /> 上傳圖片 -->
-																<!-- 																</label> -->
-																<!-- 																<div class='row'> -->
-																<!-- 																	<div id='previewMultiple'></div> -->
-																<!-- 																</div> -->
 															</div>
 															<small class="form-text text-muted ml-3 text-danger">${errorMsgs.img}</small>
 														</div>
