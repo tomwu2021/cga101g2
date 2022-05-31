@@ -53,12 +53,4 @@ public class Sort2VO implements java.io.Serializable{
 	public void setSort2Name(String sort2Name) {
 		this.sort2Name = sort2Name;
 	}
-
-	
-//		搜尋Sort2ID時 透過 sortmix 獲得相對應的Sort1VO
-		public List<Sort1VO> getSort1VO() {
-			com.sort_mix.model.SortMixService daoSvc = new com.sort_mix.model.SortMixService();
-			 List<Sort1VO> sort1VO = daoSvc.getSort1VOsBySort2Id(sort2Id);
-			return sort1VO;
-		}
 }
