@@ -20,9 +20,6 @@ import com.likelist.model.LikelistVO;
 import com.members.model.MembersVO;
 import com.post.model.PostService;
 import com.post.model.PostVO;
-import com.product.model.ProductVO;
-import com.wishlist.model.WishlistService;
-import com.wishlist.model.WishlistVO;
 
 @WebServlet("/MainPost")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 10 * 10 * 1024 * 1024, maxRequestSize = 10 * 10 * 1024

@@ -1,10 +1,5 @@
 package com.report.model;
 
-import com.common.exception.JDBCException;
-import com.common.model.PageQuery;
-import com.common.model.PageResult;
-import com.orders.model.OrdersVO;
-
 import java.util.List;
 
 public class ReportService {

@@ -174,46 +174,9 @@ a, button {
 
 
 							</div>
-							<!-- 放圖 -->
-							<%-- <div class="blog_thumb">
-                               <a href="#"><img src="${postVO.pictureVO.url}" alt=""></a>
-                           </div> --%>
-							<!--                             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="transform: translateY(-40px);"> -->
+							
 
-							<!--                                 <div class="carousel-inner"> -->
-
-							<%--                                     <% int count = 0;%> --%>
-							<%--                                     <c:forEach var="picture" items="${postVO.pictureList}"> --%>
-							<%--                                         <% if (count == 0) {%> --%>
-							<!--                                         <div class="carousel-item active"> -->
-							<%--                                             <img src="${picture.url}" class="d-block w-100" alt="..."> --%>
-							<!--                                         </div> -->
-							<%--                                         <% } %> --%>
-							<%--                                         <% if (count > 0) {%> --%>
-							<!--                                         <div class="carousel-item"> -->
-							<%--                                             <img src="${picture.url}" class="d-block w-100" alt="..."> --%>
-							<!--                                         </div> -->
-							<%--                                         <% } %> --%>
-							<%--                                         <%count++;%> --%>
-
-							<%--                                     </c:forEach> --%>
-
-							<!--                                 </div> -->
-
-							<!--                                 <button class="carousel-control-prev" type="button" -->
-							<!--                                         data-bs-target="#carouselExampleControls" data-bs-slide="prev"> -->
-							<!--                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
-							<!--                                     <span class="visually-hidden">Previous</span> -->
-							<!--                                 </button> -->
-
-							<!--                                 <button class="carousel-control-next" type="button" -->
-							<!--                                         data-bs-target="#carouselExampleControls" data-bs-slide="next"> -->
-							<!--                                     <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
-							<!--                                     <span class="visually-hidden">Next</span> -->
-							<!--                                 </button> -->
-							<!--                             </div> -->
-
-							<!-- 靜宜新版的放圖 開始-->
+							<!-- 新版的放圖 開始-->
 							<c:if test="${postVO.pictureList.size() != 0 }">
 								<div class="flexslider" style="width: 700px; margin-left: 80px;">
 									<ul class="slides">
@@ -224,7 +187,7 @@ a, button {
 									</ul>
 								</div>
 							</c:if>
-							<!-- 靜宜新版的放圖 結束-->
+							<!-- 新版的放圖 結束-->
 							<figcaption class="blog_content">
 
 								<div class="post_content">

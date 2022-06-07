@@ -1,7 +1,5 @@
 package com.likelist.model;
 
-import static connection.JNDIConnection.getRDSConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -129,7 +127,7 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 		try {
 			con = JNDIConnection.getRDSConnection();
 
-			// 1●設定於 pstm.executeUpdate()之前
+			// 1 設定於 pstm.executeUpdate()之前
 			con.setAutoCommit(false);
 
 			pstmt = con.prepareStatement(DELETE);
@@ -142,14 +140,14 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 			PostJDBCDAO dao = new PostJDBCDAO();
 			rowCount2 = dao.updateOnePostLikeCount(newLikeCount, postId, con);
 
-			// 2●設定於 pstm.executeUpdate()之後
+			// 2 設定於 pstm.executeUpdate()之後
 			con.commit();
 			con.setAutoCommit(true);
 			System.out.println(rowCount2 + "row(s) Post updateOnePostLikeCount!");
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
-					// 3●設定於當有exception發生時之catch區塊內
+					// 3 設定於當有exception發生時之catch區塊內
 					System.err.print("Transaction is being ");
 					System.err.println("rolled back-由-dept");
 					con.rollback();
@@ -193,7 +191,7 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 		try {
 			con = JNDIConnection.getRDSConnection();
 
-			// 1●設定於 pstm.executeUpdate()之前
+			// 1 設定於 pstm.executeUpdate()之前
 			con.setAutoCommit(false);
 
 			pstmt = con.prepareStatement(INSERT);
@@ -206,14 +204,14 @@ public class LikelistJDBCDAO implements LikelistDAO_interface {
 			PostJDBCDAO dao = new PostJDBCDAO();
 			rowCount2 = dao.updateOnePostLikeCount(newLikeCount, postId, con);
 
-			// 2●設定於 pstm.executeUpdate()之後
+			// 2 設定於 pstm.executeUpdate()之後
 			con.commit();
 			System.out.println(rowCount2 + "row(s) LikelistVO insertAndBoo!");
 			con.setAutoCommit(true);
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
-					// 3●設定於當有exception發生時之catch區塊內
+					// 3 設定於當有exception發生時之catch區塊內
 					System.err.print("Transaction is being ");
 					System.err.println("rolled back-由-dept");
 					con.rollback();

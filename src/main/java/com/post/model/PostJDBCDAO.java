@@ -8,16 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.text.AbstractDocument.Content;
-
 import com.members.model.MembersVO;
 import com.picture.model.PictureVO;
 
 import connection.JDBCConnection;
 import connection.JNDIConnection;
-import net.bytebuddy.asm.Advice.Return;
-
-import static connection.JNDIConnection.getRDSConnection;
 
 public class PostJDBCDAO implements PostDAO_interface {
 
@@ -156,46 +151,8 @@ public class PostJDBCDAO implements PostDAO_interface {
 	
 	@Override
 	public List<PostVO> getAll() {
-//		List<PostVO> list = new ArrayList<PostVO>();
-//		PostVO postVO = null;
-//		final String GETAll = "SELECT m.name,po.*,pic.picture_id,pic.url,pic.preview_url,pic2.url,pic2.preview_url "
-//				+ "		  FROM post po "
-//				+ "		  JOIN members m ON(po.member_id = m.member_id) "
-//				+ "		  JOIN pet p ON(m.member_id = p.member_id) "
-//				+ "		  JOIN picture pic ON(p.picture_id = pic.picture_id) "
-//				+ "		  JOIN post_pic ppc ON(ppc.post_id = po.post_id) "
-//				+ "		  JOIN picture pic2 ON(pic2.picture_id = ppc.picture_id) "
-//				+ "		  WHERE po.status = 0 and po.content like '%+?+%' "
-//				+ "		  group by po.post_id "
-//				+ "		  order by create_time desc "
-//				+ "		  limit 10 ";
-//
-//		try (Connection con = JDBCConnection.getRDSConnection();
-//				PreparedStatement pstmt = con.prepareStatement(GETAll);) {
-//			
-//			pstmt.setString(1, content);
-//			ResultSet rs = pstmt.executeQuery();
-//
-//			while (rs.next()) {
-//				postVO = new PostVO();
-//				postVO.setPostId(rs.getInt("post_id"));
-//				postVO.setMemberId(rs.getInt("member_id"));
-//				postVO.setContent(rs.getString("content"));
-//				postVO.setLikeCount(rs.getInt("like_count"));
-//				postVO.setStatus(rs.getInt("status"));
-//				postVO.setAuthority(rs.getInt("authority"));
-//				postVO.setCreateTime(rs.getDate("create_time"));
-//				postVO.setUpdateTime(rs.getDate("update_time"));
-//
-//				list.add(postVO);
-//			}
-//
-//		} catch (SQLException e) {
-//			throw new RuntimeException("A database error occured. " + e.getMessage());
-//		}
 		return null;
 	}
-	
 	
 	
 	/**
@@ -219,15 +176,8 @@ public class PostJDBCDAO implements PostDAO_interface {
 
 			if (rs.next()) {
 				
-//				PictureVO pictureVO = new PictureVO();
 				membersVO.setName(rs.getString("name"));
-				membersVO.setUrl(rs.getString("url"));
-				
-//				頭貼照片
-//				pictureVO.setPictureId(rs.getInt("picture_id"));
-//				pictureVO.setUrl(rs.getString("url"));
-//				pictureVO.setPreviewUrl(rs.getString("preview_url"));
-//				postVO.setPictureVO(pictureVO);			
+				membersVO.setUrl(rs.getString("url"));						
 			}
 
 		} catch (SQLException e) {

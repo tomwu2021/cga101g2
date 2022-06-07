@@ -1,7 +1,5 @@
 package com.likelist.controller;
 
-import static com.util.GSONUtil.json2Pojo;
-
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -22,20 +20,13 @@ import com.post.model.PostService;
 @WebServlet("/post/likelistServlet")
 public class LikelistServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-//	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-//		doPost(req, res);
-//	}
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-//		System.out.println("LikelistServlet 執行成功");
 		
 		// 訊息用 Map 存放
 		Map<String, String> msg = new LinkedHashMap<String, String>();
 		req.setAttribute("msgs", msg);
-
 		
-
 		Integer memberId = null;
 		HttpSession session = req.getSession();
 		if ((MembersVO) session.getAttribute("membersVO") != null) {
@@ -49,11 +40,9 @@ public class LikelistServlet extends HttpServlet {
 			return;
 		}
 		
-//		final Integer postId = json2Pojo(req, LikelistVO.class).getPostId();
-//		System.out.println("postId : " + postId);
 		final Integer postId = Integer.parseInt((String) req.getParameter("postId"));
 		final Integer val = Integer.parseInt((String) req.getParameter("val"));
-		// 收集參數
+		 //收集參數
 //		System.out.println("==============");
 //		System.out.println("postId:" + postId);
 //		System.out.println("val:" + val); // 0: insert, 1: delete
