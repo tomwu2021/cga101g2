@@ -100,8 +100,8 @@ public class MembersService {
 	}
 
 	// 查詢此帳號的資料
-	public MembersVO selectMemberIdByAccount(String account) {
-		return dao.selectMemberIdByAccount(account);
+	public MembersVO selectMemberByAccount(String account) {
+		return dao.selectMemberByAccount(account);
 	}
 
 	// 用 memberId 查 Rank 資訊

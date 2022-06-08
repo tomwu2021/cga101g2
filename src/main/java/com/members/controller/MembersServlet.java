@@ -17,6 +17,7 @@ import com.pet.service.PetService;
 import com.util.JavaMail;
 import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.WebServlet;
+import static core.util.SHA2.getSHA256;
 
 @WebServlet("/front/member.do")
 public class MembersServlet extends HttpServlet {
@@ -100,17 +101,17 @@ public class MembersServlet extends HttpServlet {
 
 	/*************************** 登入判斷 account password **********************/
 	public void forLogin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		res.setContentType("application/json; charset=UTF-8");
-		// 訊息存在 Map
+		
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
-
-		// service
+		res.setContentType("application/json; charset=UTF-8");
+		
 		MembersService memberSvc = new MembersService();
 
 		// 接收參數
 		String loginAccount = req.getParameter("loginAccount");
 		String loginPassword = req.getParameter("loginPassword");
+
 		// 檢查輸入是否有效
 		if (loginAccount == null || (loginAccount.trim()).length() == 0) {
 			messages.put("messagesAccount", "請輸入會員帳號");
@@ -118,7 +119,6 @@ public class MembersServlet extends HttpServlet {
 		if (loginPassword == null || (loginPassword.trim()).length() == 0) {
 			messages.put("messagesPassword", "請輸入會員密碼");
 		}
-
 		if (!messages.isEmpty()) {
 			messages.put("originalAccount", loginAccount);
 			RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
@@ -128,44 +128,42 @@ public class MembersServlet extends HttpServlet {
 
 		// 資料庫是否有此筆資料
 		Boolean boo = memberSvc.getOneByAccount(loginAccount);
-
 		if (boo == true) {
-			MembersVO membersVO = memberSvc.selectForLogin(loginAccount, loginPassword);
-			// 判斷停權會員無法登入
-
-			if (membersVO != null) {
-
-				if (membersVO.getStatus().equals(0)) {
-					messages.put("messagesAccount", "此帳號已被停權無法登入");
-					RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				} else {
-
-					HttpSession session = req.getSession();
-					session.setAttribute("membersVO", membersVO);
-					req.setAttribute("membersVO", membersVO); // 資料庫取出的 membersVO 物件，存入 req
-
-					if (session.getAttribute("location") != null) {
-						String url = session.getAttribute("location").toString();
-//						System.out.println(url);
-						res.sendRedirect(url);
-						return;
-					} else { // http://localhost:8081/CGA101G2
-						RequestDispatcher successView = req.getRequestDispatcher("/index.html");
-						successView.forward(req, res);
-						return;
-					}
-				}
-
-			} else if (membersVO == null) {
-				messages.put("messagesPassword", "請確認會員密碼");
+			MembersVO memberVO = memberSvc.selectMemberByAccount(loginAccount);
+			if (memberVO.getStatus().equals(0)) { // status 停權
+				messages.put("messagesAccount", "此帳號已被停權無法登入");
 				messages.put("originalAccount", loginAccount);
 				RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
 				failureView.forward(req, res);
 				return;
+			} else { // status 正常
+				// 將使用者輸入的值 與 memberId 字串串接進行雜湊
+				String sha256 = getSHA256(loginPassword, memberVO.getMemberId());
+				if (sha256.equals(memberVO.getPassword())) { // 輸入的值雜湊後，與資料庫的值相同
+					
+					HttpSession session = req.getSession();
+					session.setAttribute("membersVO", memberVO);
+					req.setAttribute("membersVO", memberVO); // 成功才將 memberVO 存到 session
+					
+					if (session.getAttribute("location") != null) {  // 判斷是否從 Filter 跳轉過來的
+						String url = session.getAttribute("location").toString();
+						res.sendRedirect(url);
+						return;
+					} else {  // 登入成功導向前台首頁
+						RequestDispatcher successView = req.getRequestDispatcher("/index.html");
+						successView.forward(req, res);
+						return;
+					}
+					
+				} else { // 與資料庫的值不相同
+					messages.put("messagesPassword", "請確認會員密碼");
+					messages.put("originalAccount", loginAccount);
+					RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
+					failureView.forward(req, res);
+					return;
+				}
 			}
-
+			
 		} else {
 			messages.put("originalAccount", loginAccount);
 			messages.put("messagesAccount", "請確認會員帳號");
@@ -174,7 +172,6 @@ public class MembersServlet extends HttpServlet {
 			failureView.forward(req, res);
 			return;
 		}
-
 	}
 
 	/*************************** 判斷帳號是否存在 **********************/
@@ -209,8 +206,6 @@ public class MembersServlet extends HttpServlet {
 				HttpSession sessionVC = req.getSession();
 				sessionVC.setAttribute("authCode", verificationCode);
 				sessionVC.setAttribute("registerAccount", registerAccount);
-
-//				System.out.println(verificationCode);
 
 				// 寄送 JavaMail
 				JavaMail javaMail = new JavaMail();
@@ -309,7 +304,7 @@ public class MembersServlet extends HttpServlet {
 		if (boo == true) {
 
 			// 用 account 取得 會員 Info
-			MembersVO newMemberVO = memberSvc.selectMemberIdByAccount(forgotPassword);
+			MembersVO newMemberVO = memberSvc.selectMemberByAccount(forgotPassword);
 			// 呼叫 DAO 修改資料庫密碼
 			String verificationCode = memberSvc.forgotPassword(newMemberVO);
 

@@ -625,7 +625,7 @@ public class MembersDAO implements MembersDAO_interface {
 
 	public Boolean getOneByAccount(String account, Connection con) {
 
-		final String SELECT_ONE_BYACCOUNT = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time "
+		final String SELECT_ONE_BYACCOUNT = "SELECT member_id,account,password,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time "
 				+ "FROM members where account = ?;";
 		if (con != null) {
 			try {
@@ -637,6 +637,7 @@ public class MembersDAO implements MembersDAO_interface {
 					MembersVO newMember = new MembersVO();
 					newMember.setMemberId(rs.getInt("member_id"));
 					newMember.setAccount(rs.getString("account"));
+					newMember.setAccount(rs.getString("password"));
 					newMember.setName(rs.getString("name"));
 					newMember.setAddress(rs.getString("address"));
 					newMember.setPhone(rs.getString("phone"));
@@ -655,9 +656,9 @@ public class MembersDAO implements MembersDAO_interface {
 	}
 
 	@Override
-	public MembersVO selectMemberIdByAccount(String account) {
+	public MembersVO selectMemberByAccount(String account) {
 		con = JNDIConnection.getRDSConnection();
-		MembersVO membersVO = selectMemberIdByAccount(account, con);
+		MembersVO membersVO = selectMemberByAccount(account, con);
 
 		try {
 			con.close();
@@ -667,8 +668,8 @@ public class MembersDAO implements MembersDAO_interface {
 		return membersVO;
 	}
 
-	public MembersVO selectMemberIdByAccount(String account, Connection con) {
-		final String SELECT_ONE_INFO_BYACCOUNT = "SELECT member_id,account,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time "
+	public MembersVO selectMemberByAccount(String account, Connection con) {
+		final String SELECT_ONE_INFO_BYACCOUNT = "SELECT member_id,account,password,name,address,phone,rank_id,ewallet_amount,bonus_amount,status,create_time "
 				+ "FROM members where account = ?;";
 		if (con != null) {
 			try {
@@ -680,6 +681,7 @@ public class MembersDAO implements MembersDAO_interface {
 					MembersVO newMember = new MembersVO();
 					newMember.setMemberId(rs.getInt("member_id"));
 					newMember.setAccount(rs.getString("account"));
+					newMember.setPassword(rs.getString("password"));
 					newMember.setName(rs.getString("name"));
 					newMember.setAddress(rs.getString("address"));
 					newMember.setPhone(rs.getString("phone"));

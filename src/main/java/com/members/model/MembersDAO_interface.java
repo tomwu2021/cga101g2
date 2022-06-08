@@ -48,8 +48,8 @@ public interface MembersDAO_interface extends JDBCDAO_Interface<MembersVO> {
 	// 驗證碼
 	public String genAuthCode();
 
-	// 用 account 查詢 id
-	public MembersVO selectMemberIdByAccount(String account);
+	// 用 account 查詢所有資料
+	public MembersVO selectMemberByAccount(String account);
 
 	// 用 memberId 查詢 rank 資訊
 	public RanksVO selectRankInfo(Integer memberId);
