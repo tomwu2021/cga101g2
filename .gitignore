@@ -7,3 +7,4 @@ CGA101G2.eml
 /.classpath/
 /.project/
 /src/main/webapp/websocket/node_modules/
+/out/
