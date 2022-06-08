@@ -17,7 +17,9 @@ import com.pet.service.PetService;
 import com.util.JavaMail;
 import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.WebServlet;
+
 import static core.util.SHA2.getSHA256;
+import static core.util.AuthCode.genAuthCode;
 
 @WebServlet("/front/member.do")
 public class MembersServlet extends HttpServlet {
@@ -265,7 +267,7 @@ public class MembersServlet extends HttpServlet {
 		// 將 雜湊 的值 更新到資料庫
 		newMember.setPassword(sha256);
 		memberSvc.update(newMember);
-		System.out.println(sha256);
+
 		messages.put("msgError", "");
 		messages.put("msgErrorVerificationCode", "");
 		messages.put("registerSuccessful", "註冊成功");
@@ -310,15 +312,20 @@ public class MembersServlet extends HttpServlet {
 		if (boo == true) {
 
 			// 用 account 取得 會員 Info
-			MembersVO newMemberVO = memberSvc.selectMemberByAccount(forgotPassword);
-			// 呼叫 DAO 修改資料庫密碼
-			String verificationCode = memberSvc.forgotPassword(newMemberVO);
+			MembersVO memberVO = memberSvc.selectMemberByAccount(forgotPassword);
+
+			// 取得驗證碼進行雜湊
+			String authCode = genAuthCode();
+			String sha256 = getSHA256(authCode, memberVO.getMemberId());
+			// 將 雜湊 的值 更新到資料庫
+			memberVO.setPassword(sha256);
+			memberSvc.update(memberVO);
 
 			// 寄送 JavaMail
 			JavaMail javaMail = new JavaMail();
 			javaMail.setRecipient(forgotPassword); // 收件人信箱
-			javaMail.setTxt("親愛的會員您好，您的新密碼為：" + verificationCode
-					+ "<br>請以此密碼重新登入 Pclub，登入後請至會員中心修改密碼。<br>本郵件由 Pclub 系統自動發出，請勿回覆！"); // 內文
+			javaMail.setTxt(
+					"親愛的會員您好，您的新密碼為：" + authCode + "<br>請以此密碼重新登入 Pclub，登入後請至會員中心修改密碼。<br>本郵件由 Pclub 系統自動發出，請勿回覆！"); // 內文
 			javaMail.SendMail(); // 送出
 
 			messages.put("msgError", "已寄送新密碼至此信箱");
@@ -398,9 +405,6 @@ public class MembersServlet extends HttpServlet {
 		String addressAll = req.getParameter("county") + req.getParameter("district") + " "
 				+ req.getParameter("address");
 
-//		String address = req.getParameter("address");
-//		System.out.println(messages);
-
 		if (!messages.isEmpty()) {//
 			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberUpdate.jsp");
 			failureView.forward(req, res);
@@ -439,19 +443,16 @@ public class MembersServlet extends HttpServlet {
 
 		HttpSession currentSession = req.getSession();
 		MembersVO sessionMembersVO = (MembersVO) currentSession.getAttribute("membersVO");
-//		String currentPassword = sessionMembersVO.getPassword();
-
-		// 舊密碼
-		String oldPhone = req.getParameter("oldPhone");
-		// 新密碼
-		String nwePhone = req.getParameter("newPhone");
-		// 確認密碼
-		String checkNewPhone = req.getParameter("checkNewPhone");
+		MembersService memberSvc = new MembersService();
+		
 		// 密碼正則表達
 		String regex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
-		// service
-		MembersService memberSvc = new MembersService();
 
+		String oldPhone = req.getParameter("oldPhone");// 舊密碼
+		String nwePhone = req.getParameter("newPhone");// 新密碼
+		String checkNewPhone = req.getParameter("checkNewPhone");// 確認密碼
+
+		// 判斷是否為空值
 		if (oldPhone == null || oldPhone.trim().length() == 0) {
 			messages.put("errorOldPhone", "*密碼不可為空");
 		}
@@ -463,7 +464,6 @@ public class MembersServlet extends HttpServlet {
 		}
 
 		if (!messages.isEmpty()) {
-			System.out.println("執行這行");
 			messages.put("userInput1", oldPhone);
 			messages.put("userInput2", nwePhone);
 
@@ -472,36 +472,34 @@ public class MembersServlet extends HttpServlet {
 			return;// 程式中斷
 		}
 
-		// 從資料庫拿值
-		String Password = memberSvc.getePassword(sessionMembersVO.getMemberId());
-		if (!Password.equals(oldPhone)) {
+		// 輸入的值雜湊後，和資料庫比對
+		String inputValue = getSHA256(oldPhone, sessionMembersVO.getMemberId());
+		String password = memberSvc.getePassword(sessionMembersVO.getMemberId());
+		
+		if (!inputValue.equals(password)) {
 			messages.put("errorOldPhone", "*密碼不符合");
 		}
-
 		if (!nwePhone.trim().matches(regex)) {
 			messages.put("errorNewPhone", "*密碼格式錯誤");
 		}
-
 		if (!checkNewPhone.equals(nwePhone)) {
 			messages.put("errorCheckNewPhone", "*密碼與前次輸入不相符");
 		}
-
 		if (!messages.isEmpty()) {
 			messages.put("userInput1", oldPhone);
 			messages.put("userInput2", nwePhone);
-
 			RequestDispatcher failureView = req.getRequestDispatcher("/front/member/memberPassword.jsp");
 			failureView.forward(req, res);
 			return;// 程式中斷
 		} else {
 
 			// 輸入正確後，呼叫 DAO 修改資料庫密碼 nwePhone
-
 			MembersVO newMemberVO = new MembersVO();
 			newMemberVO.setMemberId(sessionMembersVO.getMemberId());
-			newMemberVO.setPassword(nwePhone);
+			String sha256 = getSHA256(nwePhone, sessionMembersVO.getMemberId());
+			newMemberVO.setPassword(sha256);
 			memberSvc.update(newMemberVO);
-
+			
 			messages.put("updatePasswordSuccess", "修改密碼成功！");
 
 			// 寄送一則通知：已成功修改會員登入密碼
@@ -620,7 +618,6 @@ public class MembersServlet extends HttpServlet {
 				currentSession.removeAttribute("submit");
 				return;
 			}
-
 		}
 
 		RequestDispatcher successView = req.getRequestDispatcher("/front/member/memberWalletUsedRecord.jsp");
@@ -644,9 +641,6 @@ public class MembersServlet extends HttpServlet {
 
 		String oldWalletPassword = req.getParameter("oldWalletPassword");
 
-//		System.out.println(currentWalletPassword);
-//		System.out.println(oldWalletPassword);
-
 		if (oldWalletPassword == null || oldWalletPassword.trim().length() == 0) {
 			messages.put("errorOldoldWalletPassword", "*密碼不可為空");
 		} else {
@@ -657,7 +651,6 @@ public class MembersServlet extends HttpServlet {
 
 		String regex = "^[0-9]{6}$";
 		String newWalletPassword = req.getParameter("newWalletPassword");
-//		System.out.println(newWalletPassword);
 		if (newWalletPassword == null || newWalletPassword.trim().length() == 0) {
 			messages.put("errornewWalletPassword", "*密碼不可為空");
 		} else {
@@ -749,7 +742,6 @@ public class MembersServlet extends HttpServlet {
 
 		String regex = "^[0-9]{6}$";
 		String setWalletPassword = req.getParameter("setWalletPassword");
-//		System.out.println(setWalletPassword);
 		if (setWalletPassword == null || setWalletPassword.trim().length() == 0) {
 			messages.put("errorSetWalletPassword", "*密碼不可為空");
 		} else {
@@ -778,7 +770,6 @@ public class MembersServlet extends HttpServlet {
 			newMemberVO.setMemberId(sessionMembersVO.getMemberId());
 			newMemberVO.seteWalletPassword(setWalletPassword);
 			memberSvc.update(newMemberVO);
-//			System.out.println(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
 			sessionMembersVO
 					.seteWalletPassword(memberSvc.getOneById(sessionMembersVO.getMemberId()).geteWalletPassword());
 			messages.put("updatePasswordSuccess", "成功設定錢包密碼！");
@@ -810,8 +801,6 @@ public class MembersServlet extends HttpServlet {
 		ChargeRecordService chargeRecordSvc = new ChargeRecordService();
 
 		List<ChargeRecordVO> listAll = chargeRecordSvc.getAll(sessionMembersVO.getMemberId());
-
-//		System.out.println(listAll);
 
 		String json = new Gson().toJson(listAll);
 		res.getWriter().write(json);
@@ -853,7 +842,6 @@ public class MembersServlet extends HttpServlet {
 	}
 
 	public void logout(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-//		System.out.println("把拔別把我登出!!!!");
 		HttpSession session = req.getSession();
 		session.removeAttribute("membersVO");
 		RequestDispatcher failureView = req.getRequestDispatcher("/front/login.jsp");
@@ -898,6 +886,5 @@ public class MembersServlet extends HttpServlet {
 			res.getWriter().write(json);
 			return;
 		}
-
 	}
 }

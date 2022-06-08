@@ -5,8 +5,6 @@ import java.util.*;
 
 import com.chargeRecord.model.ChargeRecordDAO;
 import com.chargeRecord.model.ChargeRecordVO;
-import com.pet.model.PetVO;
-import com.pet.service.PetService;
 import com.ranks.model.RanksVO;
 
 import connection.JNDIConnection;
@@ -225,7 +223,7 @@ public class MembersDAO implements MembersDAO_interface {
 
 		String strGenAuthCode = "";
 		String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		Set set = new HashSet();
+		Set<Integer> set = new HashSet<Integer>();
 		int number01 = (int) (Math.random() * (25 - 0 + 1) + 0); // 0 ~ 25 一定有英文小寫
 		set.add(number01);
 		int number02 = (int) (Math.random() * (51 - 26 + 1)) + 26; // 26 ~ 51 一定有英文大寫
@@ -236,7 +234,7 @@ public class MembersDAO implements MembersDAO_interface {
 			int number = (int) (Math.random() * 61);
 			set.add(number);
 		}
-		Iterator objs = set.iterator();
+		Iterator<Integer> objs = set.iterator();
 		while (objs.hasNext()) {
 			char ch = str.charAt((int) objs.next());
 			strGenAuthCode += ch;

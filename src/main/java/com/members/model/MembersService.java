@@ -1,9 +1,6 @@
 package com.members.model;
 
-import java.sql.Connection;
 import java.util.*;
-
-import com.pet.model.PetVO;
 import com.ranks.model.RanksVO;
 
 public class MembersService {
