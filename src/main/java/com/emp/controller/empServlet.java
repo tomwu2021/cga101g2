@@ -190,7 +190,7 @@ public class empServlet extends HttpServlet {
 		String memberAccount = req.getParameter("memberAccount");
 //		System.out.println(memberAccount);
 		MembersService memberSvc = new MembersService();
-		MembersVO membersVO = memberSvc.selectMemberIdByAccount(memberAccount);
+		MembersVO membersVO = memberSvc.selectMemberByAccount(memberAccount);
 
 		// 用 信箱查詢 memberId
 		ChargeRecordService chargeRecordSvc = new ChargeRecordService();
