@@ -101,11 +101,11 @@ public class MembersServlet extends HttpServlet {
 
 	/*************************** 登入判斷 account password **********************/
 	public void forLogin(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
+
 		Map<String, String> messages = new LinkedHashMap<String, String>();
 		req.setAttribute("messages", messages);
 		res.setContentType("application/json; charset=UTF-8");
-		
+
 		MembersService memberSvc = new MembersService();
 
 		// 接收參數
@@ -140,21 +140,21 @@ public class MembersServlet extends HttpServlet {
 				// 將使用者輸入的值 與 memberId 字串串接進行雜湊
 				String sha256 = getSHA256(loginPassword, memberVO.getMemberId());
 				if (sha256.equals(memberVO.getPassword())) { // 輸入的值雜湊後，與資料庫的值相同
-					
+
 					HttpSession session = req.getSession();
 					session.setAttribute("membersVO", memberVO);
 					req.setAttribute("membersVO", memberVO); // 成功才將 memberVO 存到 session
-					
-					if (session.getAttribute("location") != null) {  // 判斷是否從 Filter 跳轉過來的
+
+					if (session.getAttribute("location") != null) { // 判斷是否從 Filter 跳轉過來的
 						String url = session.getAttribute("location").toString();
 						res.sendRedirect(url);
 						return;
-					} else {  // 登入成功導向前台首頁
+					} else { // 登入成功導向前台首頁
 						RequestDispatcher successView = req.getRequestDispatcher("/index.html");
 						successView.forward(req, res);
 						return;
 					}
-					
+
 				} else { // 與資料庫的值不相同
 					messages.put("messagesPassword", "請確認會員密碼");
 					messages.put("originalAccount", loginAccount);
@@ -163,7 +163,7 @@ public class MembersServlet extends HttpServlet {
 					return;
 				}
 			}
-			
+
 		} else {
 			messages.put("originalAccount", loginAccount);
 			messages.put("messagesAccount", "請確認會員帳號");
@@ -260,6 +260,12 @@ public class MembersServlet extends HttpServlet {
 		membersVO.setAccount(userAccount);
 		membersVO.setPassword(userCheckPassword);
 		MembersVO newMember = memberSvc.insert(membersVO);
+
+		String sha256 = getSHA256(userCheckPassword, newMember.getMemberId());
+		// 將 雜湊 的值 更新到資料庫
+		newMember.setPassword(sha256);
+		memberSvc.update(newMember);
+		System.out.println(sha256);
 		messages.put("msgError", "");
 		messages.put("msgErrorVerificationCode", "");
 		messages.put("registerSuccessful", "註冊成功");

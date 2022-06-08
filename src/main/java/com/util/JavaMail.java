@@ -14,7 +14,8 @@ public class JavaMail {
 // ---------------------------------------------------------基本資料
 
 	private String userName = "pclubpclub101@gmail.com"; // 寄件者信箱
-	private String password = "P@ssW0rd"; // 寄件者密碼
+//	private String password = "P@ssW0rd"; // 寄件者密碼
+	private String password = "xshrkvbrahpanocm"; // 寄件者密碼
 	private String recipient; // 收件者郵箱
 	private String subject = "Pclub 驗證碼"; // 標題
 	private String txt; // 內容
