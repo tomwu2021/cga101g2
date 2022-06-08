@@ -655,7 +655,7 @@ public class MembersJDBCDAO implements MembersDAO_interface {
 	}
 
 	@Override
-	public MembersVO selectMemberIdByAccount(String account) {
+	public MembersVO selectMemberByAccount(String account) {
 		con = JDBCConnection.getRDSConnection();
 		MembersVO membersVO = selectMemberIdByAccount(account, con);
 
