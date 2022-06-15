@@ -305,7 +305,11 @@
 				</span>
 				<span style="position: relative;top: 40px;">
 					<div style="font-size: 18px; font-weight: 700;" id="cloud">
-						雲端功能<a href="https://image.pclubxpclub.com/thumbs/introduction/%E9%9B%B2%E7%AB%AF%E6%9E%B6%E6%A7%8B%E5%9C%96.png"><i>(架構圖)</i></a>
+						雲端功能
+						<!-- <a href="https://image.pclubxpclub.com/thumbs/introduction/%E9%9B%B2%E7%AB%AF%E6%9E%B6%E6%A7%8B%E5%9C%96.png"> -->
+						 <a href="https://image.pclubxpclub.com/thumbs/introduction/%E9%9B%B2%E7%AB%AF%E6%9E%B6%E6%A7%8BL.png">
+							<i>(架構圖)</i>
+						</a>
 					</div>
 					<div style="font-size: 14px;font-weight: 400;margin-top: 10px;">
 						雲端環境設計
