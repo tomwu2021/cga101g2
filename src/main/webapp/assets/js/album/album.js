@@ -233,7 +233,7 @@ function commitAlbum() {
 function changeAuthority(albumId) {
 	let authHtml;
 	loading();
-	if ($("#authority-button" + albumId).hasClass("bi bi-lock")) {
+	if ($("#authority-button" + albumId).hasClass("bi-lock")) {
 		authority = 0;
 		console.log("unlock");
 		authHtml = "<i class='bi bi-unlock' id='authority-button'  title='unlock'></i>";

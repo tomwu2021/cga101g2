@@ -76,12 +76,12 @@ function makeList(e, relation) {
                 <div class="comment_list" style="margin: 20px auto;">
                     <div class="comment_thumb" style="width: 100px;height: 100px;">
                         <i class="bi bi-circle-fill ${isOnline(relation.memberId) ? 'online' : 'offline'}"></i>
-                        <a href="http://localhost:8081/CGA101G2/PersonPost?action=getOne_For_Display&memberId=${relation.memberId}">
+                        <a href="/${getContextPath()}/PersonPost?action=getOne_For_Display&memberId=${relation.memberId}">
                         <img src="${relation.previewUrl}" alt="" style="height:64%;width: 96%;margin-top: 16px;">
                         </a>
                     </div>
                     <div class="comment_content" style="width: calc(100% - 100px) !important;margin-left: 100px;height:100px">
-                        <a href="http://localhost:8081/CGA101G2/PersonPost?action=getOne_For_Display&memberId=${relation.memberId}">
+                        <a href="/${getContextPath()}/PersonPost?action=getOne_For_Display&memberId=${relation.memberId}">
                         <div class="comment_meta">
                             <h5>${relation.name}</h5>
                         </div>
