@@ -15,12 +15,12 @@ public class TestMembersDAO {
 //		System.out.println(membersVO1);
 
 		// update 情境二：會員可修改的資料 PASSWORD NAME ADDRESS PHONE E_WALLET_PASSWORD
-		MembersVO membersVO2 = new MembersVO();
-		membersVO2.setMemberId(4);
-		membersVO2.setName("小小吳");
-		membersVO2.setPhone("0911223344");
-		membersVO2.setAddress("30 雲林縣斗南鎮成功6611號");
-		dao.update(membersVO2);
+//		MembersVO membersVO2 = new MembersVO();
+//		membersVO2.setMemberId(4);
+//		membersVO2.setName("小小吳");
+//		membersVO2.setPhone("0911223344");
+//		membersVO2.setAddress("30 雲林縣斗南鎮成功6611號");
+//		dao.update(membersVO2);
 
 		// update 情境三：管理員可以修改此會員的狀態(停權/正常)
 //		MembersVO membersVO3 = new MembersVO();
@@ -86,5 +86,7 @@ public class TestMembersDAO {
 //		RanksVO ranksVO1 = new RanksVO(); 
 //		ranksVO1 = dao.selectRankInfo(3);
 //		System.out.println(ranksVO1);
+		
+		
 	}
 }

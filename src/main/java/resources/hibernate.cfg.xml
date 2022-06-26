@@ -14,5 +14,6 @@
   
   <mapping class="com.group_order.model.GroupOrderHibernateVO" />
   <mapping class="com.group_buyer.model.GroupBuyerHibernateVO" />
+  <mapping class="com.members.hibernate.pojo.MemberPojo" />
  </session-factory>
 </hibernate-configuration>
