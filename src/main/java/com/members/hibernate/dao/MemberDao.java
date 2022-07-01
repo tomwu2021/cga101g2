@@ -6,5 +6,8 @@ import core.dao.CoreDao;
 
 public interface MemberDao extends CoreDao<MemberPojo, Integer> {
 	
-	MemberPojo selectForLogin(String username, String password);
+	// 判斷此帳號在資料庫使否有資料
+	MemberPojo findOneByAccount(String account);
+
+	MemberPojo login(String account, String password);
 }

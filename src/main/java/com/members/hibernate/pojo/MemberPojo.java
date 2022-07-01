@@ -132,4 +132,28 @@ public class MemberPojo extends Core{
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
+
+	public MemberPojo(Integer memberId, String account, String password, String name, String address, String phone,
+			Integer rankId, Integer eWalletAmount, String eWalletPassword, Integer bonusAmount, Integer status,
+			Timestamp createTime) {
+		super();
+		this.memberId = memberId;
+		this.account = account;
+		this.password = password;
+		this.name = name;
+		this.address = address;
+		this.phone = phone;
+		this.rankId = rankId;
+		this.eWalletAmount = eWalletAmount;
+		this.eWalletPassword = eWalletPassword;
+		this.bonusAmount = bonusAmount;
+		this.status = status;
+		this.createTime = createTime;
+	}
+
+	public MemberPojo() {
+		super();
+	}
+	
+	
 }

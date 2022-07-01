@@ -1,18 +1,16 @@
 package com.members.hibernate.dao.impl;
 
 import static core.util.HibernateUtil.*;
+import static core.util.HibernateUtil.getSessionFactory;
 
 import java.util.List;
-import org.hibernate.Session;
 
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import com.members.hibernate.dao.MemberDao;
 import com.members.hibernate.pojo.MemberPojo;
 
 public class MemberDaoImpl implements MemberDao {
-
-	private Session getSession() {
-		return getSessionFactory().getCurrentSession();
-	}
 
 	@Override
 	public Integer insert(MemberPojo member) {
@@ -22,9 +20,9 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public Integer deleteById(Integer id) {
-		Session session = getSession();
-		MemberPojo member = session.load(MemberPojo.class, id);
-		session.delete(member);
+		MemberPojo member = new MemberPojo();
+		member.setMemberId(id);
+		getSession().remove(member);
 		return 1;
 	}
 
@@ -46,9 +44,23 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public MemberPojo selectForLogin(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public MemberPojo findOneByAccount(String account) {
+		Session session = getSessionFactory().openSession();
+		Query<MemberPojo> query = session.createQuery("FROM MemberPojo WHERE account = :account", MemberPojo.class)
+				.setParameter("account", account);
+		MemberPojo member = query.uniqueResult();
+		return member;
 	}
-	
+
+	@Override
+	public MemberPojo login(String account, String password) {
+		Session session = getSessionFactory().openSession();
+		Query<MemberPojo> query = session.createQuery("FROM MemberPojo WHERE account = :account AND password = :password", MemberPojo.class)
+				.setParameter("account", account)
+				.setParameter("password", password);
+		MemberPojo member = query.uniqueResult();
+		return member;
+	}
+
+
 }
