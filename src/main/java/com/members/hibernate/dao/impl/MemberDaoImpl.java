@@ -44,8 +44,8 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public MemberPojo findOneByAccount(String account) {
-		Session session = getSessionFactory().openSession();
+	public MemberPojo findOneByAccount(String account, Session session) {
+		
 		Query<MemberPojo> query = session.createQuery("FROM MemberPojo WHERE account = :account", MemberPojo.class)
 				.setParameter("account", account);
 		MemberPojo member = query.uniqueResult();
@@ -53,8 +53,7 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public MemberPojo login(String account, String password) {
-		Session session = getSessionFactory().openSession();
+	public MemberPojo login(String account, String password, Session session) {
 		Query<MemberPojo> query = session.createQuery("FROM MemberPojo WHERE account = :account AND password = :password", MemberPojo.class)
 				.setParameter("account", account)
 				.setParameter("password", password);

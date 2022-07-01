@@ -28,26 +28,41 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Integer getMemberIdByAccount(String account) {
-		MemberPojo member = dao.findOneByAccount(account);
-		
-		if(member == null) {
-			return -1;
+
+		Session session = getSessionFactory().openSession();
+		try {
+
+			Transaction transaction = session.beginTransaction();
+			MemberPojo member = dao.findOneByAccount(account, session);
+			if (member == null) {
+				return -1;
+			}
+			transaction.commit();
+			return member.getMemberId();
+		} catch (HibernateException e) {
+			session.getTransaction().rollback();
+			e.printStackTrace();
+			return null;
 		}
-		
-		return member.getMemberId();
 	}
 
 	@Override
 	public MemberPojo login(String account, String password, Integer memberId) {
-		
-		String passwordToSHA256 = getSHA256(password, memberId);
-		
-		MemberPojo member = dao.login(account, passwordToSHA256);
-		
-		if(member == null) {
+		Session session = getSessionFactory().openSession();
+		try {
+			Transaction transaction = session.beginTransaction();
+			String passwordToSHA256 = getSHA256(password, memberId);
+			MemberPojo member = dao.login(account, passwordToSHA256, session);
+			if (member == null) {
+				return null;
+			}
+			transaction.commit();
+			return member;
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			e.printStackTrace();
 			return null;
 		}
-		return member;
 	}
 
 }
